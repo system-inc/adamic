@@ -184,7 +184,7 @@ const (
 
 type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
-	roots, caches, temporary, kernel, system                                                 []string
+	roots, caches, temporary, kernel, system, buildLogs                                      []string
 	searched, executables                                                                    map[string]bool
 	// ran is every program a process of the run executed, as the trace names it.
 	ran map[string]bool
@@ -216,6 +216,12 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
 	}
 	facts.home, _ = os.UserHomeDir()
+	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
+	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a build
+	// tree's log under the home directory refused two estree products).
+	if log := os.Getenv("ADAMIC_BUILD_LOG"); log != "" {
+		facts.buildLogs = variants(filepath.Clean(log))
+	}
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
 		facts.temporary = append(facts.temporary, variants(place)...)
 	}
@@ -360,7 +366,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{}
 	}
 	switch {
-	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]):
+	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]) || slices.Contains(facts.buildLogs, name):
 		return classed{}
 	case under(name, facts.goRoot):
 		return classed{"go", "release"}
@@ -1182,17 +1188,35 @@ func declaredDrift(declared, reads []string) *drift {
 	if len(declared) == 0 {
 		return nil
 	}
-	covered := func(name, entry string) bool {
-		return name == entry || strings.HasPrefix(name, strings.TrimSuffix(entry, "/")+"/")
+	// An entry covers a read that is it, or that is under it (a read under "dir" or "dir/"). Each read climbs its own
+	// directories through these, rather than meeting every entry: home-6's dry run (Oct 11) had tsprinter's mutant
+	// products, 76,958 reads against 75,696 declared entries each, settling for over 20 minutes.
+	exactly, under := map[string][]string{}, map[string][]string{}
+	for _, entry := range declared {
+		exactly[entry] = append(exactly[entry], entry)
+		under[strings.TrimSuffix(entry, "/")] = append(under[strings.TrimSuffix(entry, "/")], entry)
 	}
 	result := &drift{}
 	read := map[string]bool{}
 	for _, name := range reads {
-		declaredHere := false
-		for _, entry := range declared {
-			if covered(name, entry) {
-				declaredHere, read[entry] = true, true
+		var covering []string
+		covering = append(covering, exactly[name]...)
+		for at := name; ; {
+			parent := path.Dir(at)
+			if parent == at || parent == "." {
+				break
 			}
+			if parent == "/" {
+				// "dir/" with dir empty: what an empty or "/" entry covers, every absolute read.
+				covering = append(covering, under[""]...)
+				break
+			}
+			covering = append(covering, under[parent]...)
+			at = parent
+		}
+		declaredHere := len(covering) > 0
+		for _, entry := range covering {
+			read[entry] = true
 		}
 		if !declaredHere && name != "." {
 			result.Undeclared++

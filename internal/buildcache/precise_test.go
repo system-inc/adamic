@@ -9,7 +9,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"slices"
+	"sort"
 	"strings"
 	"sync"
 	"testing"
@@ -1555,5 +1557,100 @@ func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
 	}
 	if settledTree.Load() != nil {
 		t.Fatal("the tree's values are still held after Settle")
+	}
+}
+
+// The census log (ADAMIC_BUILD_LOG) is buildcache's own bookkeeping, as the trace's journal is: a build that reads or
+// writes it is keyed without it, wherever it lives (Planner's shape B proof on Cloud, Oct 11: a build tree's log under
+// the home directory refused two estree products). Mutant: the log classed by where it is (here, a temporary file the
+// run didn't make).
+// Not parallel: newRig.
+func TestTheCensusLogIsNoInput(t *testing.T) {
+	r := newRig(t)
+	log := os.Getenv("ADAMIC_BUILD_LOG")
+	write(t, filepath.Dir(log), filepath.Base(log), "build earlier 0123456789ab hit 0.01\n")
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.open(r.pid, log)
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	for _, entry := range r.entries(t, build.NameKey) {
+		if strings.Contains(entry, filepath.Base(log)) {
+			t.Fatalf("the read set names the census log: %s", entry)
+		}
+	}
+}
+
+// declaredDriftByScan is declaredDrift as it was, meeting every entry for every read: what it says is the rule.
+func declaredDriftByScan(declared, reads []string) *drift {
+	if len(declared) == 0 {
+		return nil
+	}
+	covered := func(name, entry string) bool {
+		return name == entry || strings.HasPrefix(name, strings.TrimSuffix(entry, "/")+"/")
+	}
+	result := &drift{}
+	read := map[string]bool{}
+	for _, name := range reads {
+		declaredHere := false
+		for _, entry := range declared {
+			if covered(name, entry) {
+				declaredHere, read[entry] = true, true
+			}
+		}
+		if !declaredHere && name != "." {
+			result.Undeclared++
+			if len(result.UndeclaredPaths) < 20 {
+				result.UndeclaredPaths = append(result.UndeclaredPaths, name)
+			}
+		}
+	}
+	for _, entry := range declared {
+		if !read[entry] && !unkeyed(entry) {
+			result.Unread++
+			if len(result.UnreadPaths) < 20 {
+				result.UnreadPaths = append(result.UnreadPaths, entry)
+			}
+		}
+	}
+	sort.Strings(result.UndeclaredPaths)
+	return result
+}
+
+// The declared drift says what it said when it met every entry for every read, on the entries and reads that bend the
+// rule (a directory with and without its slash, a name that only starts like an entry, the root, absolute paths), and
+// does it at tsprinter's size in a moment: 76,958 reads against 75,696 entries settled for over 20 minutes on home-6's
+// dry run (Oct 11). Mutants: an entry with a slash covering itself; an entry covering a name it only starts like.
+func TestTheDeclaredDriftIsTheScansAtAnySize(t *testing.T) {
+	t.Parallel()
+	cases := []struct{ declared, reads []string }{
+		{[]string{"a", "a/", "a/b", "ab", ".", "", "/", "/abs", "c/d/"}, []string{"a", "a/b", "a/b/c", "ab", "ab/x", "abc", ".", "c", "c/d", "c/d/e", "/abs", "/abs/x", "/other", "x/y"}},
+		{[]string{"internal/x/"}, []string{"internal/x", "internal/x/y.go", "internal/xy/z.go"}},
+		{[]string{"go.mod", "go.sum"}, []string{"go.mod"}},
+	}
+	var declared, reads []string
+	for index := range 300 {
+		declared = append(declared, fmt.Sprintf("d%d/f%d.go", index%17, index), fmt.Sprintf("d%d/", index%23))
+		reads = append(reads, fmt.Sprintf("d%d/f%d.go", index%19, index), fmt.Sprintf("d%d/sub/f%d.go", index%29, index), fmt.Sprintf("e%d", index))
+	}
+	cases = append(cases, struct{ declared, reads []string }{declared, reads})
+	for _, each := range cases {
+		if got, want := declaredDrift(each.declared, each.reads), declaredDriftByScan(each.declared, each.reads); !reflect.DeepEqual(got, want) {
+			t.Fatalf("declared %q, reads %q:\ngot  %+v\nwant %+v", each.declared, each.reads, got, want)
+		}
+	}
+	declared, reads = nil, nil
+	for index := range 76_000 {
+		declared = append(declared, fmt.Sprintf("corpus/%d/%d.ts", index%400, index))
+		reads = append(reads, fmt.Sprintf("corpus/%d/%d.ts", index%400, index+index%2))
+	}
+	started := time.Now()
+	declaredDrift(declared, reads)
+	if took := time.Since(started); took > 3*time.Second {
+		t.Fatalf("76,000 reads against 76,000 entries took %v", took)
 	}
 }
