@@ -2,12 +2,16 @@ package markdownblocks
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func grainWidthInputs(t *testing.T) (string, []auditInput, int) {
@@ -73,26 +77,25 @@ func runGrainWidth(t *testing.T, shard int) {
 	grainPlanted(t)
 
 	dir := t.TempDir()
-	escape := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
-	var batch strings.Builder
-	for _, input := range inputs {
-		batch.WriteString("x" + escape.Replace(input.Text) + "\n")
-	}
+	batch := grainWidthBatch(inputs)
 	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(batch.String()))
-	cohere := filepath.Join(root, "cohere")
+	write(t, cases, batch)
 	goBinary := products.goBinary
+	fork := grainWidthFork(root)
 
-	want := grainExecute(t, nil, goBinary, cases)
+	var want, forkWidths run
+	if shard < grainCorpusShards {
+		want = grainExecute(t, nil, goBinary, cases)
+	} else {
+		want, forkWidths = grainWidthFullAnswers(t, goBinary, fork, batch)
+	}
 	clean(t, "Go StringWidth", want)
 	library := grainExecute(t, nil, "node", "testdata/width_library.mjs", widthDependencies, cases)
 	clean(t, "original dependencies", library)
 	equal(t, "Go versus original dependencies", library.stdout, want.stdout)
-	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-	if fork == "" {
-		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+	if shard < grainCorpusShards {
+		forkWidths = grainExecute(t, nil, "node", "testdata/width_fork.mjs", fork, cases)
 	}
-	forkWidths := grainExecute(t, nil, "node", "testdata/width_fork.mjs", fork, cases)
 	clean(t, "actual fork group-fit widths", forkWidths)
 	equal(t, "actual fork group-fit widths", forkWidths.stdout, want.stdout)
 	main := products.main
@@ -175,6 +178,77 @@ func runGrainWidth(t *testing.T, shard int) {
 
 	}
 
+}
+
+func grainWidthBatch(inputs []auditInput) []byte {
+	escape := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
+	var batch strings.Builder
+	for _, input := range inputs {
+		batch.WriteString("x" + escape.Replace(input.Text) + "\n")
+	}
+	return []byte(batch.String())
+}
+
+func grainWidthFork(root string) string {
+	if fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"); fork != "" {
+		return fork
+	}
+	return filepath.Join(root, "cohere/internal/format/prettier/bundles")
+}
+
+// The three mutant shards each need Go's and the fork's widths for the whole corpus, the same answers every time:
+// about 14 s of one core per shard, the fork's group-fit search over every Unicode scalar most of it. They are a
+// product keyed by the Go oracle's bytes, the fork bundle's, the fork script, Node's version and the whole batch.
+// The corpus shards still run Go and the fork live on their own groups, and the original dependencies run live here.
+func grainWidthFullAnswers(t *testing.T, goBinary, fork string, batch []byte) (run, run) {
+	t.Helper()
+	binary, err := os.ReadFile(goBinary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	standalone, err := os.ReadFile(filepath.Join(fork, "standalone.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := buildcache.Inputs{Name: "markdown-grain-width-full-answers", Files: []string{"stage1/cohere/markdownblocks/testdata/width_fork.mjs", "stage1/cohere/markdownblocks/grain30_width_test.go"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("fork-sha256=%x", sha256.Sum256(standalone)), fmt.Sprintf("cases-sha256=%x", sha256.Sum256(batch))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")}}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		scratch, err := os.MkdirTemp("", "markdown-width-cases-")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(scratch)
+		cases := filepath.Join(scratch, "cases.txt")
+		if err := os.WriteFile(cases, batch, 0644); err != nil {
+			return err
+		}
+		for _, side := range []struct {
+			name, file, command string
+			args                []string
+		}{{"Go StringWidth", "go.txt", goBinary, []string{cases}}, {"actual fork group-fit widths", "fork.txt", "node", []string{"testdata/width_fork.mjs", fork, cases}}} {
+			result := grainExecute(t, nil, side.command, side.args...)
+			if result.exitCode != 0 || len(result.stderr) > 0 {
+				return fmt.Errorf("%s exit %d stderr %s", side.name, result.exitCode, result.stderr)
+			}
+			if err := os.WriteFile(filepath.Join(directory, side.file), result.stdout, 0644); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	read := func(file string) run {
+		data, err := os.ReadFile(filepath.Join(directory, file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		return run{stdout: data}
+	}
+	return read("go.txt"), read("fork.txt")
+}
+
+func TestProduct_GrainMarkdownWidthFullAnswers(t *testing.T) {
+	t.Parallel()
+	root, inputs, _ := grainWidthInputs(t)
+	grainWidthFullAnswers(t, grainProduct(t, "width", "go").goBinary, grainWidthFork(root), grainWidthBatch(inputs))
 }
 
 func TestMarkdownUnicodeWidths_000(t *testing.T) { t.Parallel(); runGrainWidth(t, 0) }
