@@ -33,8 +33,10 @@ Discovery uses `go list ./...` and `go test -json -list . ./...`, including exam
 seed tests. Packages with no tests are build-only units. Ordinary units are top-level tests;
 the following audited parents have independently selectable, enumerable children:
 
-- `internal/oracle`: `TestNativeAgreesWithNode`, `TestInputAgreesWithNode`, and
-  `TestFreshWriteProbesStayRefused`.
+- `internal/oracle`: `TestInputAgreesWithNode` and `TestFreshWriteProbesStayRefused`. The tests over every
+  fixture (`TestNativeAgreesWithNode`, `TestWASIAgreesWithNode`, `TestWASIEmission`, `TestCountsAreRecorded`) and
+  `TestReviewProgramsAgreeWithNode`, `TestLoopCountersAgreeWithNode` and `TestLibraryMethodValueMutants` are families of
+  top-level tests instead, `<name>_000` and on, each case owned by the hash of its key (internal/oracle/families_test.go).
 - `stage1/cohere/typeaware`: the 15 literal `changes` rows of `TestVolumeAgreementAndMutants`.
 - `internal/native`: `TestNormalizeMatchesNode` and `TestStringIndexMatchesNode`.
 - `stage1/cohere/lint`: `TestMutants` and `TestVolumeMutants`.
@@ -100,9 +102,7 @@ must measure again on its own hardware.
 
 ## Parents kept whole
 
-`TestCountsAreRecorded` must see all fixture rows: its parent compares the complete reconstructed
-table with counts.md. Selecting some children makes the final check fail even when every selected
-row is correct. `TestEveryMutationIsInItsRange` checks an aggregate nonzero mutation count;
+`TestEveryMutationIsInItsRange` checks an aggregate nonzero mutation count;
 individual fixtures without mutations would fail the parent. These remain top-level units.
 `TestBridge` performs a complete bridge integration sequence without selectable subtests, and
 `TestPortMatchesGoCohere` in the JSON port compares and measures whole batches without subtests.

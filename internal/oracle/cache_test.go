@@ -450,6 +450,14 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 
 func TestMain(main *testing.M) {
 	status := main.Run()
+	// -update-counts' writer: the counts family's shards and TestCountsAreRecordedTable measured, and the table is
+	// written once, here, after every one of them has run (counts_test.go).
+	if *updateCounts && status == 0 {
+		if err := writeCounts(); err != nil {
+			fmt.Println(err)
+			status = 1
+		}
+	}
 	if gate.cache != nil {
 		for index, kind := range resultKinds {
 			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
