@@ -179,8 +179,8 @@ if "$wasiSDK"; then
   [ -e "$resource/lib/${builtins##*/}" ] && [ ! -L "$resource/lib/${builtins##*/}" ] || ln -sfn "$builtins" "$resource/lib/${builtins##*/}"
  done
  # A claimed WASI toolchain links: the WASI tests' own probe, with the clang they run.
- printf '#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n' > "$probe/wasi.c"
- "$tools/bin/clang" --target=wasm32-wasi --sysroot="$wasiDirectory/share/wasi-sysroot" -O2 "$probe/wasi.c" -o "$probe/wasi.wasm" ||
+ printf '#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n' > "$run/wasi.c"
+ "$tools/bin/clang" --target=wasm32-wasi --sysroot="$wasiDirectory/share/wasi-sysroot" -O2 "$run/wasi.c" -o "$run/wasi.wasm" ||
   { echo "setup: $tools/bin/clang can't link for wasm32-wasi with wasi-sdk $wasiVersion" >&2 && exit 1; }
  step "wasi sdk ready ($wasiDirectory, linking with $tools/bin/clang)"
 fi
