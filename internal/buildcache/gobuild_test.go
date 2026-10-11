@@ -559,6 +559,7 @@ func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
 // forked by a parallel test holds one until it execs), never named by the error and its path. Mutant: toolValue
 // running the tool once.
 func TestABusyToolIsAskedAgain(t *testing.T) {
+	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("exec refuses a file open for writing on Linux; elsewhere a tool is never busy this way")
 	}
