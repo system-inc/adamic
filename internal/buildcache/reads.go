@@ -428,20 +428,30 @@ func readTreeValue(root, kind, name string) string {
 	return "other " + info.Mode().Type().String()
 }
 
-// fileValue is a tracked file's content as git names it: its blob id and whether it is executable. A checkout's clean
-// file is valued by the id its index holds, unread, so keying tens of thousands of files costs git's stat pass, not a
-// hash of each; a dirty one, one changed since git was asked, or a file in a tree with no git is hashed as git hashes
-// a blob, so a checkout and an unpacked source of it value the same.
+// fileValue is a file's content entry in a read set: gitValue, or why the file couldn't be read.
 func fileValue(root, path string, info fs.FileInfo) string {
-	object, length, clean := cleanObject(root, path, info)
-	if clean {
-		return fmt.Sprintf("file %t %s", object.mode == "100755", object.id)
-	}
-	content, err := os.ReadFile(path)
+	value, err := gitValue(root, path, info)
 	if err != nil {
 		return "unreadable: " + err.Error()
 	}
-	return fmt.Sprintf("file %t %s", info.Mode()&0o111 != 0, blobID(content, length))
+	return "file " + value
+}
+
+// gitValue is a regular file's content as git names it: whether it is executable, and its blob id. A checkout's clean
+// file is valued by the id its index holds, unread, so keying tens of thousands of files costs git's stat pass, not a
+// hash of each; a dirty one, one changed since git was asked, or a file in a tree with no git is hashed as git hashes
+// a blob, so a checkout and an unpacked source of it value the same. A read set's content entry (fileValue) and a
+// declared file (hashPath) are both valued here.
+func gitValue(root, path string, info fs.FileInfo) (string, error) {
+	object, length, clean := cleanObject(root, path, info)
+	if clean {
+		return fmt.Sprintf("%t %s", object.mode == "100755", object.id), nil
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobID(content, length)), nil
 }
 
 // cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified a second

@@ -113,16 +113,17 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 // No product is keyed as an earlier version's was: Workshop's store held v1 trees' products under the very keys landable-6
 // asked for (relocating), and stamped v2 trees' under the keys landable-9b asked for (unstamped), each with other bytes
 // (Oct 11), and v3 native products, which named their build directory, under the keys landable-11 asked for (placeless).
-// A change to what a product holds for the same inputs is a new keyVersion, and this test names each one, so moving it
-// is a decision. Mutants: keyVersion back to v1, v2 or v3.
+// v4 keyed a declared file by its sha256, v5 by its git blob id (git's, #r47fdtt): the same bytes, under keys of their
+// own. A change to what a product holds for the same inputs, or to how its inputs are valued, is a new keyVersion, and
+// this test names each one, so moving it is a decision. Mutants: keyVersion back to v1, v2, v3 or v4.
 func TestAKeyNamesHowProductsAreHeld(t *testing.T) {
 	t.Parallel()
 	root := repository(t)
-	if keyVersion != "v4" {
+	if keyVersion != "v5" {
 		t.Fatalf("keyVersion is %q: name the new version here, and why its products' bytes differ, in keyVersion's comment", keyVersion)
 	}
 	now := key(t, root, base)
-	for _, earlier := range []string{"v1", "v2", "v3"} {
+	for _, earlier := range []string{"v1", "v2", "v3", "v4"} {
 		old, err := keyAt(earlier, root, base)
 		if err != nil {
 			t.Fatal(err)
@@ -130,6 +131,142 @@ func TestAKeyNamesHowProductsAreHeld(t *testing.T) {
 		if now == old {
 			t.Fatalf("the same inputs key %s under %s and under %s", now, earlier, keyVersion)
 		}
+	}
+}
+
+// declaredTree is a tree a product declares whole: files, one of them executable, a nested directory and a link.
+var declaredTree = map[string]string{"source/a.c": "int a;\n", "source/b.c": "int b;\n", "source/nested/run.sh": "#!/bin/sh\n", "flags.txt": "-O2\n"}
+
+var declared = Inputs{Name: "port", Files: []string{"source", "flags.txt"}}
+
+// plant writes declaredTree, with changes over it, under root: run.sh executable, source/link naming a.c.
+func plant(t *testing.T, root string, changes map[string]string) {
+	t.Helper()
+	for name, content := range declaredTree {
+		if changed, ok := changes[name]; ok {
+			content = changed
+		}
+		write(t, root, name, content)
+	}
+	if err := os.Chmod(filepath.Join(root, "source/nested/run.sh"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("a.c", filepath.Join(root, "source/link")); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// checkout is declaredTree committed in a repository of its own, every file older than git's racy margin and ours, so
+// git's index names each one clean. git is told not to trust a change time, so a test can chmod a file without git
+// reading it again to compare.
+func checkout(t *testing.T) string {
+	t.Helper()
+	root := t.TempDir()
+	plant(t, root, nil)
+	old := time.Now().Add(-time.Hour)
+	for name := range declaredTree {
+		if err := os.Chtimes(filepath.Join(root, name), old, old); err != nil {
+			t.Fatal(err)
+		}
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "config", "core.trustctime", "false")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "tree")
+	return root
+}
+
+// unpacked is declaredTree, with changes over it, as a source with no .git holds it: every file is hashed.
+func unpacked(t *testing.T, changes map[string]string) string {
+	t.Helper()
+	root := t.TempDir()
+	plant(t, root, changes)
+	return root
+}
+
+// A declared directory's clean tracked file is valued by the id git's index holds, never read (#r47fdtt: cohere's
+// files cost 5.7 s to read and hash on every hit). A file no one may read keys, and keys as an unpacked copy, which
+// hashes every file, keys it. Mutant: hashPath reading every file.
+func TestADeclaredCleanFileIsValuedUnread(t *testing.T) {
+	t.Parallel()
+	root := checkout(t)
+	unreadable := filepath.Join(root, "source/a.c")
+	if err := os.Chmod(unreadable, 0); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chmod(unreadable, 0o644) })
+	if _, err := os.ReadFile(unreadable); err == nil {
+		t.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
+	}
+	got, err := Key(root, declared)
+	if err != nil {
+		t.Fatalf("keying a clean tracked file read it: %v", err)
+	}
+	if want := key(t, unpacked(t, nil), declared); got != want {
+		t.Fatalf("a checkout valued unread keys %s, an unpacked copy hashed keys %s", got, want)
+	}
+}
+
+// A declared file whose working copy differs from git's index is hashed, never valued by the stale id: one git reports
+// changed (its time still old, so only git's comparison says so), and one changed after git was asked.
+// Mutant: a dirty file taken by its index id.
+func TestADeclaredDirtyFileIsHashed(t *testing.T) {
+	t.Parallel()
+	clean := key(t, checkout(t), declared)
+	changed := map[string]string{"source/a.c": "int Z;\n"}
+	want := key(t, unpacked(t, changed), declared)
+	t.Run("before git was asked", func(t *testing.T) {
+		t.Parallel()
+		root := checkout(t)
+		write(t, root, "source/a.c", changed["source/a.c"])
+		older := time.Now().Add(-2 * time.Hour)
+		if err := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); err != nil {
+			t.Fatal(err)
+		}
+		if got := key(t, root, declared); got != want || got == clean {
+			t.Fatalf("a file git reports changed keys %s: its new content keys %s, its index id %s", got, want, clean)
+		}
+	})
+	t.Run("after git was asked", func(t *testing.T) {
+		t.Parallel()
+		root := checkout(t)
+		if before := key(t, root, declared); before != clean {
+			t.Fatalf("an unchanged checkout keys %s, another %s", before, clean)
+		}
+		write(t, root, "source/a.c", changed["source/a.c"])
+		if got := key(t, root, declared); got != want {
+			t.Fatalf("a file changed after git was asked keys %s, its new content %s", got, want)
+		}
+	})
+}
+
+// A checkout and an unpacked source of the same tree key the same: the checkout by its index's ids, the source by
+// hashing every file as git hashes a blob, with or without the .tracked manifest a Loom runner's source carries
+// (which then keeps a shipped untracked file out). An exec bit is part of a file's value either way.
+// Mutant: the exec bit dropped from the value.
+func TestACheckoutAndItsUnpackedSourceKeyTheSame(t *testing.T) {
+	t.Parallel()
+	root := checkout(t)
+	want := key(t, root, declared)
+	if got := key(t, unpacked(t, nil), declared); got != want {
+		t.Fatalf("an unpacked source keys %s, its checkout %s", got, want)
+	}
+	runner := unpacked(t, nil)
+	write(t, runner, "source/node_modules/package/index.js", "module.exports = 1;\n")
+	listing, err := exec.Command("git", "-C", root, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	write(t, runner, ".tracked/files", string(listing))
+	if got := key(t, runner, declared); got != want {
+		t.Fatalf("a runner's source with its manifest keys %s, its checkout %s", got, want)
+	}
+	plain := unpacked(t, nil)
+	if err := os.Chmod(filepath.Join(plain, "source/nested/run.sh"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if key(t, plain, declared) == want {
+		t.Fatal("run.sh without its exec bit keys as the checkout does")
 	}
 }
 
