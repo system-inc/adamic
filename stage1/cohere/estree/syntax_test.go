@@ -21,7 +21,7 @@ func syntaxGrammar() []string {
 	}
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestSyntaxGrammar(t *testing.T) {
 	list := manifest(t, syntaxGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -35,7 +35,7 @@ func TestSyntaxGrammar(t *testing.T) {
 	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestSyntaxRefusals(t *testing.T) {
 	sources := []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
 	list := manifest(t, sources)
