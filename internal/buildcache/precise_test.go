@@ -1030,6 +1030,39 @@ func TestASiblingsProductIsAnInput(t *testing.T) {
 	}
 }
 
+// Two products built at once in one test process each hold the other's reads in their windows (the superset Kirk
+// accepted), but a read of a product while its build hadn't ended is that build writing its own output, never an
+// input: both settle, and neither names the other (Home's dry run, Oct 11: bridge-test-api and tsgo-asan.a were each
+// refused for reading the other, a cycle no key can value). A product read after its build ended stays an input,
+// which TestAProductReadingAnotherIsKeyedByItsKey holds. Mutants: the rule dropped (the cycle refuses both); every
+// product this trace built dropped (TestAProductReadingAnotherIsKeyedByItsKey reds).
+// Not parallel: newRig.
+func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	headerProduct := Product(t, header, building("header"))
+	portProduct := Product(t, port, building("port"))
+	built := r.built(t)
+	r.marker(r.pid, "build-begin", built["header"].Build)
+	r.marker(r.pid, "build-begin", built["port"].Build)
+	r.open(r.pid, "include/x.h")
+	r.write(r.pid, filepath.Join(headerProduct, "product"))
+	r.open(r.pid, filepath.Join(headerProduct, "product"))
+	r.open(r.pid, "source/a.c")
+	r.write(r.pid, filepath.Join(portProduct, "product"))
+	r.open(r.pid, filepath.Join(portProduct, "product"))
+	r.marker(r.pid, "build-end", built["header"].Build)
+	r.marker(r.pid, "build-end", built["port"].Build)
+	if settlement := r.settle(t); len(settlement.Settled) != 2 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	for _, pair := range [][2]string{{"header", "port"}, {"port", "header"}} {
+		if got := r.entries(t, built[pair[0]].NameKey); slices.Contains(got, "product "+built[pair[1]].NameKey) {
+			t.Fatalf("%s's read set names %s, a sibling still being built when it was read: %q", pair[0], pair[1], got)
+		}
+	}
+}
+
 // A write into the tree by any process of the run (go generate before go test, a test rewriting a golden file)
 // refuses every build: what they read isn't the tree that would be keyed (review 1).
 // Not parallel: newRig.

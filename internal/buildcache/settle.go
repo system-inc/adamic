@@ -453,14 +453,18 @@ type traceState struct {
 	unfinished map[int]string
 	open       map[string]int
 	ended      map[string]map[string]int
-	order      []string
-	lost       []string
-	started    bool
+	// lastReads is each ended build's paths by when they were last read in its window, and endedAt when it ended.
+	lastReads map[string]map[string]int
+	endedAt   map[string]int
+	order     []string
+	lost      []string
+	started   bool
 }
 
-// A pathReads is a process's reads of one path: their kinds, and when it first read the path (0 for a path it only wrote).
+// A pathReads is a process's reads of one path: their kinds, and when it first and last read the path (0 for a path it
+// only wrote).
 type pathReads struct {
-	kinds, firstRead int
+	kinds, firstRead, lastRead int
 }
 
 // A writer is a process that wrote a path, and when it first did; it stays a writer after it ends.
@@ -477,7 +481,7 @@ type traceCall struct {
 func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
-		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}}
+		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{}}
 	return state
 }
 
@@ -704,8 +708,11 @@ func (state *traceState) record(pid, process int, name string, kind int) {
 		state.reads[process][name] = found
 	}
 	found.kinds |= kind
-	if kind&^readWrite != 0 && found.firstRead == 0 {
-		found.firstRead = state.sequence
+	if kind&^readWrite != 0 {
+		if found.firstRead == 0 {
+			found.firstRead = state.sequence
+		}
+		found.lastRead = state.sequence
 	}
 }
 
@@ -730,7 +737,7 @@ func (state *traceState) marker(pid, process int, marker string) {
 		// but what they wrote before reading it: that is the build's own output, never an input. Only the build's own
 		// processes make output for it; what a sibling or a process above it wrote is an input like any other (a
 		// sibling's product, a generated file). A product is always a product, whoever wrote it.
-		snapshot := map[string]int{}
+		snapshot, last := map[string]int{}, map[string]int{}
 		for other, reads := range state.reads {
 			if !state.descends(other, owner) {
 				continue
@@ -742,10 +749,11 @@ func (state *traceState) marker(pid, process int, marker string) {
 				}
 				if kinds != 0 {
 					snapshot[name] |= kinds
+					last[name] = max(last[name], found.lastRead)
 				}
 			}
 		}
-		state.ended[id] = snapshot
+		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
 		state.order = append(state.order, id)
 	}
 }
@@ -800,6 +808,7 @@ func (state *traceState) exited(pid int) {
 				if found.firstRead != 0 && (kept.firstRead == 0 || found.firstRead < kept.firstRead) {
 					kept.firstRead = found.firstRead
 				}
+				kept.lastRead = max(kept.lastRead, found.lastRead)
 			}
 			return
 		}
@@ -925,6 +934,13 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			os.Remove(entry.Directory + ".lock")
 		}
 	}
+	// When each product this trace built ended its build: a read of it before then was its own build writing it.
+	productEnds := map[string]int{}
+	for id, entry := range built {
+		if end, ended := state.endedAt[id]; ended {
+			productEnds[entry.Directory] = end
+		}
+	}
 	recipes := map[string]recipe{}
 	settled := map[string]bool{}
 	for _, id := range state.order {
@@ -937,7 +953,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
-		set, reason := state.measured(entry, state.ended[id], products)
+		set, reason := state.measured(entry, state.ended[id], state.lastReads[id], products, productEnds)
 		if reason == "" {
 			own := processes[entry.Process]
 			name := recipeName(own)
@@ -988,7 +1004,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 }
 
 // measured is a build's reads as a read set, or the reason it can't be one.
-func (state *traceState) measured(entry journalEntry, reads map[string]int, products map[string]string) (readSet, string) {
+func (state *traceState) measured(entry journalEntry, reads, lastReads map[string]int, products map[string]string, productEnds map[string]int) (readSet, string) {
 	facts := state.facts
 	refused := map[string][]string{}
 	entries := map[readEntry]bool{}
@@ -1007,6 +1023,13 @@ func (state *traceState) measured(entry journalEntry, reads map[string]int, prod
 				modules = true
 			case found.kind == "product":
 				if found.detail == entry.Directory {
+					continue
+				}
+				// A product this trace built is an input only if its build had ended before this build read it: read
+				// while it was still being built, it was its own build writing it, which a superset window (a sibling in
+				// the same process) also holds, and two siblings holding each other would be a cycle no key can value
+				// (Home's dry run, Oct 11: bridge-test-api and tsgo-asan.a, each refused for reading the other).
+				if end, builtHere := productEnds[found.detail]; builtHere && lastReads[name] <= end {
 					continue
 				}
 				nameKey, ok := products[found.detail]
