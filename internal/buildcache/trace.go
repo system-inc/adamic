@@ -57,8 +57,13 @@ func keying(compute func()) {
 	defer runtime.UnlockOSThread()
 	mark("key-begin", "-")
 	defer mark("key-end", "-")
+	keyingNow.Add(1)
+	defer keyingNow.Add(-1)
 	compute()
 }
+
+// keyingNow is how many traced keyings this process is running: a test asks it whether a look ran as keying.
+var keyingNow atomic.Int64
 
 var builds atomic.Int64
 
