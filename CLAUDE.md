@@ -53,9 +53,9 @@ The input tests drop to uid 65534 when run as root, so TMPDIR must be world-trav
 Add a stage 1 lint rule only under `stage1/cohere/lint/rules/<slug>/`. Its directory
 owns `rule.json`, `rule.ts`, messages, its upstream Go `oracle.go` adapter,
 `mutant.json` and raw `testdata/*.ts.txt` witnesses. Omit `order` for new rules.
-Never edit a dispatch, oracle, corpus or copied-file list. Before building the lint
-driver, run `go run ./cmd/lint-registry`; tests regenerate and validate every
-descriptor automatically. Generated `.generated/` registries stay out of Git.
+Never edit a dispatch, oracle, corpus or copied-file list. After adding or changing a
+rule, run `go run ./cmd/lint-registry` and commit `.generated/`; the tests check it is
+current and never write it, since a test that writes the tree breaks a Loom runner.
 See `docs/lint-registration.md` for the descriptor and adapter contracts.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
