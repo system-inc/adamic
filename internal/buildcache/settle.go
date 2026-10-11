@@ -646,7 +646,7 @@ func (state *traceState) handle(call traceCall) {
 	switch {
 	case call.call == "fchdir":
 		if match := fdPath.FindStringSubmatch(call.arguments); match != nil && call.value == "0" {
-			state.directory[process] = match[1]
+			state.directory[process] = unescape(match[1])
 		}
 		return
 	case call.call == "getdents64" || call.call == "getdents":
@@ -654,7 +654,7 @@ func (state *traceState) handle(call traceCall) {
 		if match == nil {
 			return
 		}
-		name, kind = filepath.Clean(match[1]), readListing
+		name, kind = filepath.Clean(unescape(match[1])), readListing
 	default:
 		var rest string
 		name, rest = target(call.call, call.arguments, state.directory[process])
@@ -686,7 +686,7 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		// What an open resolved to, as the kernel names the descriptor: a read through a symbolic link reads its target.
-		if opened := filepath.Clean(call.opened); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") {
+		if opened := filepath.Clean(unescape(call.opened)); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") {
 			state.record(call.pid, process, opened, kind)
 		}
 	}
@@ -859,7 +859,7 @@ func target(call, arguments, directory string) (string, string) {
 			return "", arguments
 		}
 		if match[2] != "" {
-			base = match[2]
+			base = unescape(match[2])
 		}
 		arguments = arguments[len(match[0]):]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {
@@ -908,6 +908,9 @@ func secondTarget(call, rest, directory string) string {
 	return ""
 }
 
+// unescape is a path as strace spells it, quoted or decoded from a descriptor (--decode-fds=path), back in its bytes:
+// strace writes every byte outside printable ASCII, and the quotes and angle brackets around it, as an octal escape
+// (walking/\303\251.txt is walking/é.txt), which git ls-files -z never does.
 func unescape(text string) string {
 	if !strings.Contains(text, `\`) {
 		return text
