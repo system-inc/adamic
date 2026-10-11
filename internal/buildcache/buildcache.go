@@ -273,13 +273,24 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 	return true, nil
 }
 
+// keyVersion is how buildcache builds and holds what Key addresses, the one input no product declares: a change to what
+// a product's bytes hold for the same inputs moves it, so no key names two products. v2 is relocating's: a product
+// names itself and every other product by name key (relative.go), so the same inputs made other bytes than v1's
+// (Workshop, 02:50Z Oct 11: seven products a v1 tree published under one key, landable-6 built again, different).
+const keyVersion = "v2"
+
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
 func Key(root string, inputs Inputs) (string, error) {
+	return keyAt(keyVersion, root, inputs)
+}
+
+// keyAt is Key under the given version, so a test can key the same inputs under an older one.
+func keyAt(version, root string, inputs Inputs) (string, error) {
 	hash := sha256.New()
 	field := func(kind, value string) {
 		fmt.Fprintf(hash, "%s %d\n%s\n", kind, len(value), value)
 	}
-	field("buildcache", "v1")
+	field("buildcache", version)
 	field("name", portable(root, inputs.Name))
 	for _, name := range inputs.Files {
 		if err := hashPath(hash, root, name, field); err != nil {
