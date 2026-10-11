@@ -9,17 +9,29 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// tsgoArchive is the checker archive (./bridge/tsgo/archive as a c-archive), a product built ahead by
+// TestProduct_TSGoArchive. The units used to read it from ADAMIC_CLANG_TSGO_ARCHIVE, which only Workshop's env.sh
+// set, so on a runner both skipped (landable-15: internal/native's skip census).
+func tsgoArchive(t *testing.T) string {
+	t.Helper()
+	return buildcache.GoBuild(t, "tsgo.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
+}
+
+// TestProduct_TSGoArchive builds the checker archive the split units link, so the tree build builds it ahead.
+func TestProduct_TSGoArchive(t *testing.T) {
+	t.Parallel()
+	tsgoArchive(t)
+}
+
 // Not parallel: this test explicitly compares the object cache with its bypass on the same input.
 func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
 	t.Helper()
-	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
-	if archive == "" {
-		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
-	}
+	archive := tsgoArchive(t)
 	program, err := load.Load([]string{"../../stage1/cohere/typeaware/main.ts"})
 	if err != nil {
 		t.Fatal(err)
