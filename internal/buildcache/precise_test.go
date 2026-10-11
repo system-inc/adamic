@@ -1492,3 +1492,31 @@ func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
 		}
 	}
 }
+
+// Tracked looks for each directory's .git as keying, as it lists the repository: a traced build that asks Tracked of a
+// directory (tracked.PathsUnder's walk of the tree) never reads .git, which no key can name (home-5's dry run, Oct 11,
+// where tracked.Git's own look refused cssnumbers and cssstrings). Mutant: the look outside keying.
+// Not parallel: newRig, and statGit.
+func TestTrackedLooksForGitAsKeying(t *testing.T) {
+	r := newRig(t)
+	write(t, r.root, "source/deeper/c.c", "int c;\n")
+	gitIn(t, r.root, "add", ".")
+	gitIn(t, r.root, "commit", "-q", "-m", "deeper")
+	forgetTracked()
+	var looks, unkeyed []string
+	original := statGit
+	statGit = func(name string) (os.FileInfo, error) {
+		looks = append(looks, name)
+		if keyingNow.Load() == 0 {
+			unkeyed = append(unkeyed, name)
+		}
+		return original(name)
+	}
+	t.Cleanup(func() { statGit = original })
+	if !Tracked(r.root, filepath.Join(r.root, "source", "deeper", "c.c"), false) {
+		t.Fatal("a committed file isn't tracked")
+	}
+	if len(looks) < 3 || len(unkeyed) != 0 {
+		t.Fatalf("looked for .git at %q; outside keying at %q", looks, unkeyed)
+	}
+}
