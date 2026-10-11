@@ -330,6 +330,13 @@ var portShared struct {
 	realAnswers     map[string]map[query]string
 	totals          agreement
 	comparedShards  int
+
+	// The whole live corpus's cases file and Go cohere's answers to it, the same for the union and every
+	// mutant, so made once in a run: the 100 MiB ignore file alone takes seconds to write and answer.
+	fullOnce     sync.Once
+	fullPath     string
+	fullWant     string
+	fullAnswered bool
 }
 
 func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Timer {
@@ -338,7 +345,7 @@ func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Ti
 }
 
 func checkPortAnswerUnion(t *testing.T) {
-	preparePortAnswerInputs(t)
+	preparePortFullAnswers(t)
 	ownStart := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(ownStart).Seconds()) }()
 	deadline := portHardDeadline(t, "union", 90*time.Second)
@@ -346,7 +353,6 @@ func checkPortAnswerUnion(t *testing.T) {
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
 		t.Fatal("enumerated shard count differs from static planner count")
 	}
-	oracle := portShared.oracle
 	seenMutants := map[string]bool{}
 	for _, m := range mutants {
 		if seenMutants[m.name] {
@@ -358,14 +364,9 @@ func checkPortAnswerUnion(t *testing.T) {
 	asked := portShared.asked
 	portCaseShards(t, asked)
 	// Check the non-vacuity requirement over the live full corpus, independently of
-	// which comparison shards the current gate invocation selects.
-	gitAnswers := map[string][]string{}
-	for _, tr := range asked.Trees {
-		if tr.Git == "run" {
-			gitAnswers[tr.Name] = portGitCheckIgnore(t, tr)
-		}
-	}
-	a := againstGit(asked, gitAnswers, portGoAnswers(t, oracle, asked))
+	// which comparison shards the current gate invocation selects. Git's answers are
+	// setup's, which asked git check-ignore of every tree that runs it.
+	a := againstGit(asked, portShared.gitAnswers, portShared.fullWant)
 	if a.compared == 0 || a.ignored == 0 || a.reincluded == 0 {
 		t.Fatalf("git was asked too little: %+v", a)
 	}
@@ -429,6 +430,23 @@ func preparePortAnswerInputs(t *testing.T) {
 	}
 }
 
+// preparePortFullAnswers writes the whole live corpus's cases file into the shared scratch, which TestMain
+// removes, and asks Go cohere its answers, once in a run.
+func preparePortFullAnswers(t *testing.T) {
+	t.Helper()
+	preparePortAnswerInputs(t)
+	portShared.fullOnce.Do(func() {
+		start := time.Now()
+		portShared.fullPath = casesFile(t, portShared.scratch, portShared.asked)
+		portShared.fullWant = portGoAnswers(t, portShared.oracle, portShared.asked)
+		portShared.fullAnswered = true
+		t.Logf("shared full-corpus answers ready: %.3fs", time.Since(start).Seconds())
+	})
+	if !portShared.fullAnswered {
+		t.Fatal("shared full-corpus answers failed")
+	}
+}
+
 func runPortAnswerShard(t *testing.T, index int) {
 	if !portSelected(t, index) {
 		return
@@ -448,6 +466,7 @@ func runPortAnswerShard(t *testing.T, index int) {
 			t.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
 		applied = &m
+		preparePortFullAnswers(t)
 	}
 	product := portProducts(t, applied)
 	t.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
@@ -456,12 +475,12 @@ func runPortAnswerShard(t *testing.T, index int) {
 	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 90*time.Second)
 	defer deadline.Stop()
 
-	subset := asked
+	subset, path, want := asked, portShared.fullPath, portShared.fullWant
 	if index < portComparisonShards {
 		subset = shards[index].asked
+		path = casesFile(t, t.TempDir(), subset)
+		want = portGoAnswers(t, oracle, subset)
 	}
-	path := casesFile(t, subset)
-	want := portGoAnswers(t, oracle, subset)
 	gitAnswers := map[string][]string{}
 	for _, tr := range subset.Trees {
 		if tr.Git == "run" {
@@ -480,7 +499,17 @@ func runPortAnswerShard(t *testing.T, index int) {
 	}
 	dir := product
 	node := portNode(t, filepath.Join(dir, "main.ts"), path)
-	nat := portNative(t, dir, path)
+	// On Linux a comparison shard's one sanitized run is also its leak check: LeakSanitizer acts only at
+	// exit, so the run answers as it does with detection off, and a leak is a report on stderr and a
+	// nonzero exit, which the native side refuses. The 100 MiB ignore file made running twice cost
+	// seconds. A mutant runs with detection off, so it is caught by its answers alone.
+	leakChecked := index < portComparisonShards && runtime.GOOS == "linux"
+	var nat run
+	if leakChecked {
+		nat = portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
+	} else {
+		nat = portNative(t, dir, path)
+	}
 	if index < portComparisonShards {
 		backend := portNode(t, filepath.Join(dir, "program.mjs"), path)
 		for _, side := range []struct {
@@ -488,23 +517,25 @@ func runPortAnswerShard(t *testing.T, index int) {
 			result run
 		}{{"Node", node}, {"native", nat}, {"JavaScript backend", backend}} {
 			if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
+				if side.name == "native" && leakChecked {
+					t.Fatalf("native, leak detection on: exit %d, stderr %q", side.result.exitCode, side.result.stderr)
+				}
 				t.Fatalf("%s: exit %d, stderr %q", side.name, side.result.exitCode, side.result.stderr)
 			}
 			if diff := firstDifference(string(side.result.stdout), want); diff != "" {
 				t.Errorf("%s and Go cohere differ: %s", side.name, diff)
 			}
 		}
-		var leak run
 		switch runtime.GOOS {
 		case "linux":
-			leak = portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
+			// The native run above was the leak check.
 		case "darwin":
-			leak = portExecute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
+			leak := portExecute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
+			if leak.exitCode != 0 {
+				t.Errorf("leaks: exit %d: %s %s", leak.exitCode, leak.stdout, leak.stderr)
+			}
 		default:
 			t.Fatalf("no leak check for %s", runtime.GOOS)
-		}
-		if leak.exitCode != 0 {
-			t.Errorf("leaks: exit %d: %s %s", leak.exitCode, leak.stdout, leak.stderr)
 		}
 		a := againstGit(subset, gitAnswers, string(node.stdout))
 		for _, diff := range a.differences {

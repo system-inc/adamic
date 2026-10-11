@@ -286,9 +286,9 @@ func portDirectory(t *testing.T, applied *mutant) string {
 	return directory
 }
 
-// casesFile writes asked as the cases file main.ts reads (case.ts says the format), and returns its
-// path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
-func casesFile(t *testing.T, asked cases) string {
+// casesFile writes asked into directory as the cases file main.ts reads (case.ts says the format), and
+// returns its path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
+func casesFile(t *testing.T, directory string, asked cases) string {
 	t.Helper()
 	escape := strings.NewReplacer("\\", "\\\\", "\t", "\\t", "\n", "\\n", "\r", "\\r")
 	var text strings.Builder
@@ -340,7 +340,7 @@ func casesFile(t *testing.T, asked cases) string {
 	for _, glob := range asked.Globs {
 		record("glob", glob.Pattern, glob.Text, bit(glob.Path))
 	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(directory, "cases.txt")
 	if err := os.WriteFile(path, []byte(text.String()), 0o644); err != nil {
 		t.Fatal(err)
 	}
