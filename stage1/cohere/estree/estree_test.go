@@ -46,8 +46,16 @@ func root(t *testing.T) string {
 	}
 	return path
 }
+
+// build is the port at path built natively, and its emitted JavaScript. A sanitized build is miscBuild's product, made
+// ahead by a TestProduct_ for every path a test builds, so path must be a file of this checkout or of a product (a
+// temporary copy would key a product no TestProduct_ makes). Only the unsanitized build, which TestThroughput alone
+// asks for, is still made here.
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
+	if sanitize {
+		return miscBuild(t, path)
+	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
@@ -153,7 +161,7 @@ func firstDifference(want, got []byte) string {
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestGeneratedAgreement(t *testing.T) {
 	path, err := filepath.Abs("main.ts")
 	if err != nil {

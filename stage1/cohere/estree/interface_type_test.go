@@ -5,13 +5,11 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestInterfaceTypeMethodGap(t *testing.T) {
 	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
 	if err != nil {
@@ -33,14 +31,7 @@ func TestInterfaceTypeMethodGap(t *testing.T) {
 		t.Fatalf("recorded lowering gap changed: %v", err)
 	}
 	t.Logf("Node prints 1; lowering refuses before native emission: %s", err)
-	source, err := os.ReadFile(main)
-	if err != nil {
-		t.Fatal(err)
-	}
-	control := filepath.Join(t.TempDir(), "control.ts")
-	if err = os.WriteFile(control, []byte(strings.Replace(strings.Replace(string(source), "type(minimum = 0, conditional = true)", "typeValue(minimum: number, conditional: boolean)", 1), "console.log(parse(new ParserLike()).toString());", "const parser = new ParserLike();\nconsole.log(parse({type: (minimum: number, conditional: boolean) => parser.typeValue(minimum, conditional)}).toString());", 1)), 0644); err != nil {
-		t.Fatal(err)
-	}
+	control := estreeInterfaceControlPath(t)
 	loaded, err = load.Load([]string{control})
 	if err != nil {
 		t.Fatal(err)
