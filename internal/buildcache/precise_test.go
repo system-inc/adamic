@@ -1444,3 +1444,51 @@ func TestTheReportNamesEachProductsOutcome(t *testing.T) {
 		t.Fatalf("a product of a lost run reads %v", got[1])
 	}
 }
+
+// strace writes a path's bytes outside printable ASCII as octal escapes, in a quoted argument and in a path it decodes
+// from a descriptor alike (strace 6.8 on Home: openat(AT_FDCWD, "w\303\251.txt", O_RDONLY) = 3</tmp/w\303\251.txt>),
+// and git ls-files -z names the same file by its bytes. Every spelling is read back to its bytes, so a tracked file with
+// such a name is keyed, never refused as untracked (Home's dry run, Oct 11: internal/oracle/testdata/walking/é.txt and
+// reading/\357\277\275.txt refused 29 products). Mutants: the opened path, the listed directory, or an at-call's directory
+// left escaped, or the directory fchdir moves to.
+// Not parallel: newRig.
+func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
+	r := newRig(t)
+	write(t, r.root, "source/é.c", "int e;\n")
+	write(t, r.root, "dé/x.txt", "x\n")
+	write(t, r.root, "dé/\uFFFD.txt", "replacement\n")
+	gitIn(t, r.root, "add", ".")
+	gitIn(t, r.root, "commit", "-q", "-m", "names outside ASCII")
+	forgetTracked()
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	escaped := func(name string) string {
+		var spelled strings.Builder
+		for _, b := range []byte(r.path(name)) {
+			if b < 0x20 || b >= 0x7f || b == '"' || b == '<' || b == '>' || b == '\\' {
+				fmt.Fprintf(&spelled, `\%o`, b)
+				continue
+			}
+			spelled.WriteByte(b)
+		}
+		return spelled.String()
+	}
+	r.window(build.Build, func() {
+		r.add(r.pid, `openat(AT_FDCWD, "%s", O_RDONLY|O_CLOEXEC) = 3<%s>`, escaped("source/é.c"), escaped("source/é.c"))
+		r.add(r.pid, `openat(AT_FDCWD, "%s", O_RDONLY|O_DIRECTORY|O_CLOEXEC) = 4<%s>`, escaped("dé"), escaped("dé"))
+		r.add(r.pid, `getdents64(4<%s>, 0x55d0 /* 4 entries */, 32768) = 112`, escaped("dé"))
+		r.add(r.pid, `openat(4<%s>, "x.txt", O_RDONLY|O_CLOEXEC) = 5<%s>`, escaped("dé"), escaped("dé/x.txt"))
+		r.add(r.pid, `openat(4<%s>, "\357\277\275.txt", O_RDONLY|O_CLOEXEC) = 6<%s>`, escaped("dé"), escaped("dé/\uFFFD.txt"))
+		r.add(r.pid, `fchdir(4<%s>) = 0`, escaped("dé"))
+		r.add(r.pid, `newfstatat(AT_FDCWD, "y.txt", 0x7ffd5e1c, 0) = -1 ENOENT (No such file or directory)`)
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"content source/é.c", "listing dé", "content dé/x.txt", "content dé/\uFFFD.txt", "exists dé/y.txt"} {
+		if !slices.Contains(got, want) {
+			t.Fatalf("the read set %q doesn't name %q", got, want)
+		}
+	}
+}
