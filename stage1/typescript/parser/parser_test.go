@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -130,7 +131,7 @@ func compilerManifest(t *testing.T) (string, int) {
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
 	}
-	output, err := exec.Command("git", "-C", source, "rev-parse", "HEAD").Output()
+	output, err := toolchain.GitCommand("-C", source, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
 		t.Fatalf("corpus pin differs: %q %v", output, err)
 	}
