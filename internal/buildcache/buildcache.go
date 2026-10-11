@@ -687,6 +687,10 @@ var tools sync.Map
 // it is installed reads as <name>: toolReport drops InstalledDir and installedAs rewrites the install prefix.
 // Tool("go", "env", names...) reports each variable as goSetting keys it (gobuild.go): the release a GOTOOLCHAIN
 // selects rather than the policy that selected it, the workspace's content rather than its path, and no locations.
+//
+// A bare name is the program toolchain.Path resolves it to (under ADAMIC_TOOLS first, as a box's PATH has it), the one a
+// build asking toolchain runs. The tool runs with this process's own environment, as a test's own exec of it does; a
+// GoBuild product keys its go and its settings under toolchain.Env instead (goRelease, goSettings).
 func Tool(name string, arguments ...string) string {
 	command := strings.Join(append([]string{name}, arguments...), " ")
 	entry, _ := tools.LoadOrStore(command, &toolRun{})
@@ -722,7 +726,11 @@ func toolValue(name, label string, arguments []string) string {
 		}
 	} else {
 		var output, diagnostics bytes.Buffer
-		var err error
+		path, err := toolchain.Path(name)
+		if err != nil {
+			// As a run that couldn't start reports it: no output, then the error.
+			return label + ":  (" + err.Error() + ")"
+		}
 		// A tool written a moment ago can be busy for a moment more (ETXTBSY): a process forked meanwhile, by a test
 		// running beside this one, holds the writer's descriptor until it execs, and exec refuses a file open for
 		// writing. That says nothing of the tool, so it is asked again rather than named by the error and its path
@@ -730,7 +738,7 @@ func toolValue(name, label string, arguments []string) string {
 		for attempt := 0; ; attempt++ {
 			output.Reset()
 			diagnostics.Reset()
-			run := exec.Command(name, arguments...)
+			run := exec.Command(path, arguments...)
 			run.Stdout, run.Stderr = &output, &diagnostics
 			if err = run.Run(); !errors.Is(err, syscall.ETXTBSY) || attempt == toolBusyAttempts {
 				break
@@ -741,7 +749,7 @@ func toolValue(name, label string, arguments []string) string {
 		if strings.TrimSpace(report) == "" {
 			report = diagnostics.String()
 		}
-		value = label + ": " + toolReport(installedAs(name, report))
+		value = label + ": " + toolReport(installedAs(path, report))
 		if err != nil {
 			value += " (" + err.Error() + ")"
 		}
@@ -766,19 +774,16 @@ func toolReport(output string) string {
 
 // installedAs rewrites the tool's install prefix, the directory above the bin it runs from, to <name> in its report:
 // clang -print-resource-dir says /opt/adamic-tools/llvm/lib/clang/20 on a cloud box and
-// /home/ahra/adamic-tools/llvm/lib/clang/20 on Workshop for one clang, and both read <clang>/lib/clang/20.
-func installedAs(name, report string) string {
-	path, err := exec.LookPath(name)
-	if err != nil {
-		return report
-	}
+// /home/ahra/adamic-tools/llvm/lib/clang/20 on Workshop for one clang, and both read <clang>/lib/clang/20. path is the
+// program that ran, as toolchain.Path resolved it.
+func installedAs(path, report string) string {
 	path, _ = filepath.Abs(path)
 	for _, executable := range []string{path, resolved(path)} {
 		bin := filepath.Dir(executable)
 		if executable == "" || filepath.Base(bin) != "bin" || filepath.Dir(bin) == string(filepath.Separator) {
 			continue
 		}
-		report = replacePath(report, filepath.Dir(bin), "<"+filepath.Base(name)+">")
+		report = replacePath(report, filepath.Dir(bin), "<"+filepath.Base(path)+">")
 	}
 	return report
 }
