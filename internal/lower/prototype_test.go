@@ -6,13 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Sweep the lowering entry points directly: the earlier unbound-method refusal must not mask a
@@ -154,14 +154,19 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 }
 
 // Node decides the sweep's membership, including the legacy accessors omitted by TypeScript's
-// declarations. Those must be rejected by the checker before lowering ever sees them.
+// declarations. Those must be rejected by the checker before lowering ever sees them. Node is the
+// toolchain's (#m27xj48); a sandbox without it fails instead of skipping, so the sweep never passes
+// having swept nothing.
 func nodePrototypeMembers(t *testing.T) []string {
 	t.Helper()
-	node, err := exec.LookPath("node")
+	node, err := toolchain.Path("node")
 	if err != nil {
+		if toolchain.Sandboxed() {
+			t.Fatal(err)
+		}
 		t.Skip("Node is needed to enumerate Object.prototype")
 	}
-	output, err := exec.Command(node, "-e", "console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))").Output()
+	output, err := toolchain.Command(node, "-e", "console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))").Output()
 	if err != nil {
 		t.Fatal(err)
 	}
