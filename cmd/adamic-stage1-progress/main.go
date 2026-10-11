@@ -18,6 +18,8 @@ import (
 	"strconv"
 	"strings"
 	"text/tabwriter"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type coverage struct {
@@ -69,7 +71,7 @@ type inventory struct {
 }
 
 func git(root string, args ...string) ([]byte, error) {
-	command := exec.Command("git", append([]string{"-C", root}, args...)...)
+	command := toolchain.GitCommand(append([]string{"-C", root}, args...)...)
 	output, err := command.Output()
 	if err != nil {
 		return nil, fmt.Errorf("git %s: %w", strings.Join(args, " "), err)
@@ -115,7 +117,7 @@ func loadInventory(root, pin string) (*inventory, error) {
 	if len(names) == 0 {
 		return nil, fmt.Errorf("no cohere internal Go sources at %s", pin)
 	}
-	command := exec.Command("git", "-C", root, "cat-file", "--batch")
+	command := toolchain.GitCommand("-C", root, "cat-file", "--batch")
 	command.Stdin = strings.NewReader(strings.Join(hashes, "\n") + "\n")
 	output, err := command.Output()
 	if err != nil {
@@ -436,7 +438,7 @@ func pending(root string) ([]string, []string, error) {
 		if !strings.HasPrefix(ref, "origin/codex/stage1-") && ref != "origin/codex/typescript-scanner" {
 			continue
 		}
-		command := exec.Command("git", "-C", root, "merge-base", "--is-ancestor", ref, "origin/main")
+		command := toolchain.GitCommand("-C", root, "merge-base", "--is-ancestor", ref, "origin/main")
 		err := command.Run()
 		if err == nil {
 			integrated = append(integrated, ref)

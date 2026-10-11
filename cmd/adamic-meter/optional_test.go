@@ -3,12 +3,12 @@ package main
 import (
 	"bytes"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestAdaptOptionalPropertiesPreservesRuntimeAndDisk(t *testing.T) {
@@ -67,7 +67,7 @@ func TestAdaptOptionalPropertiesPreservesRuntimeAndDisk(t *testing.T) {
 
 func nodeOptionalSource(t *testing.T, source string) []byte {
 	t.Helper()
-	command := exec.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `import {stripTypeScriptTypes} from 'node:module'; let source = ''; for await (const part of process.stdin) source += part; await import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(source)).toString('base64'));`)
+	command := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `import {stripTypeScriptTypes} from 'node:module'; let source = ''; for await (const part of process.stdin) source += part; await import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(source)).toString('base64'));`)
 	command.Stdin = strings.NewReader(source)
 	out, err := command.CombinedOutput()
 	if err != nil {
