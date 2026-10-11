@@ -6,9 +6,11 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 )
 
 // forgetInputs drops the requests this process keyed, for a test that changes the tree or go's environment under the
@@ -497,5 +499,82 @@ func TestGoTestMutatedPlantsAndKeysEachMutation(t *testing.T) {
 		if _, err := keyed(refused); err == nil {
 			t.Errorf("%+v was keyed, want it refused", refused)
 		}
+	}
+}
+
+// GoExports' export data is the same at every commit that changes nothing it compiles: a test main is package main,
+// and go stamps the commit into every one it compiles unless -buildvcs=false, so its export data's build id moved at
+// each commit under an unmoved key (landable-8, internal/ir: 4 of 335 files, each a test main's). Built uncached here
+// at two commits a note apart. Mutant: GoExports' go list without -buildvcs=false.
+// Not parallel: inRepository changes the working directory and repositoryRoot.
+func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.22\n")
+	write(t, root, "tool/main.go", "package main\n\nfunc main() {}\n")
+	write(t, root, "tool/main_test.go", "package main\n\nimport \"testing\"\n\nfunc TestNothing(t *testing.T) {}\n")
+	write(t, root, "notes.txt", "one\n")
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "one")
+	inRepository(t, root)
+	cached(t)
+	t.Setenv("ADAMIC_BUILD_CACHE", "off")
+	// GoExports itself, whatever the environment a gate gives it.
+	t.Setenv("GOFLAGS", "")
+	testMain := func() []byte {
+		t.Helper()
+		directory := GoExports(t, "./tool")
+		content, err := os.ReadFile(filepath.Join(directory, "listing.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var listing []ListedPackage
+		if err := json.Unmarshal(content, &listing); err != nil {
+			t.Fatal(err)
+		}
+		for _, listed := range listing {
+			if listed.ImportPath == "github.com/system-inc/adamic/tool.test" && listed.Export != "" {
+				data, err := os.ReadFile(filepath.Join(directory, listed.Export))
+				if err != nil {
+					t.Fatal(err)
+				}
+				return data
+			}
+		}
+		t.Fatalf("the listing holds no test main's export data: %s", content)
+		return nil
+	}
+	first := testMain()
+	write(t, root, "notes.txt", "two\n")
+	gitIn(t, root, "commit", "-q", "-am", "two")
+	if second := testMain(); !slices.Equal(first, second) {
+		t.Fatal("a test main's export data differs between two commits that change nothing it compiles")
+	}
+}
+
+// A tool written a moment ago is asked again while it is busy (ETXTBSY: a descriptor open for writing, as a process
+// forked by a parallel test holds one until it execs), never named by the error and its path. Mutant: toolValue
+// running the tool once.
+func TestABusyToolIsAskedAgain(t *testing.T) {
+	if runtime.GOOS != "linux" {
+		t.Skip("exec refuses a file open for writing on Linux; elsewhere a tool is never busy this way")
+	}
+	tool := filepath.Join(t.TempDir(), "busytool")
+	writer, err := os.OpenFile(tool, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o755)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := writer.WriteString("#!/bin/sh\necho 'busytool 1.0'\n"); err != nil {
+		t.Fatal(err)
+	}
+	go func() {
+		time.Sleep(100 * time.Millisecond)
+		writer.Close()
+	}()
+	if got := Tool(tool, "--version"); got != "busytool --version: busytool 1.0" {
+		t.Fatalf("a tool busy for a moment reported %q", got)
 	}
 }

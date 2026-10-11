@@ -82,14 +82,16 @@ func Adamic(t testing.TB) string {
 func GoExports(t testing.TB, packages ...string) string {
 	t.Helper()
 	request := goRequest{verb: "list -export", output: "listing.json", pkg: strings.Join(packages, " ")}
-	request.arguments = []string{"-trimpath"}
+	// -buildvcs=false: a test main is package main, and go stamps the commit into every one it compiles, so without it
+	// the export data of each test main differs at every commit under the same key (landable-8: internal/ir's product).
+	request.arguments = []string{"-trimpath", "-buildvcs=false"}
 	inputs, err := request.inputs()
 	if err != nil {
 		t.Fatalf("go list -export %s: %v", request.pkg, err)
 	}
 	root, _ := repositoryRoot()
 	return Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", append([]string{"list", "-trimpath", "-export", "-deps", "-test", "-json"}, packages...)...)
+		command := exec.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
 		command.Dir = root
 		output, err := command.Output()
 		if err != nil {

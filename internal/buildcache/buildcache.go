@@ -651,6 +651,12 @@ func Tool(name string, arguments ...string) string {
 	return report.value
 }
 
+// A tool busy as it is executed is asked again, up to toolBusyAttempts times toolBusyWait apart.
+const (
+	toolBusyAttempts = 50
+	toolBusyWait     = 20 * time.Millisecond
+)
+
 // A toolRun is one tool's report, run once however many tests ask for it at the same time.
 type toolRun struct {
 	once  sync.Once
@@ -668,9 +674,21 @@ func toolValue(name, label string, arguments []string) string {
 		}
 	} else {
 		var output, diagnostics bytes.Buffer
-		run := exec.Command(name, arguments...)
-		run.Stdout, run.Stderr = &output, &diagnostics
-		err := run.Run()
+		var err error
+		// A tool written a moment ago can be busy for a moment more (ETXTBSY): a process forked meanwhile, by a test
+		// running beside this one, holds the writer's descriptor until it execs, and exec refuses a file open for
+		// writing. That says nothing of the tool, so it is asked again rather than named by the error and its path
+		// (landable-8, on Cloud: TestAToolsReportNamesTheToolNotItsPlace under a loaded unit).
+		for attempt := 0; ; attempt++ {
+			output.Reset()
+			diagnostics.Reset()
+			run := exec.Command(name, arguments...)
+			run.Stdout, run.Stderr = &output, &diagnostics
+			if err = run.Run(); !errors.Is(err, syscall.ETXTBSY) || attempt == toolBusyAttempts {
+				break
+			}
+			time.Sleep(toolBusyWait)
+		}
 		report := output.String()
 		if strings.TrimSpace(report) == "" {
 			report = diagnostics.String()
