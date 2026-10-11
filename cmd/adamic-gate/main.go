@@ -1110,16 +1110,7 @@ func merge(dirs []string, out string) error {
 				observed[r.Package]++
 			}
 		}
-		for pkg, n := range declared {
-			if observed[pkg] != n {
-				m.Errors = append(m.Errors, "invocation/terminal count mismatch: "+pkg)
-			}
-		}
-		for pkg, n := range observed {
-			if declared[pkg] != n {
-				m.Errors = append(m.Errors, "unrecorded package invocation: "+pkg)
-			}
-		}
+		m.Errors = append(m.Errors, invocationCountErrors(declared, observed)...)
 		for _, line := range lines {
 			match := cacheHits.FindStringSubmatch(line)
 			if match == nil || match[2] != "0" {
@@ -1211,6 +1202,33 @@ func merge(dirs []string, out string) error {
 	}
 	return nil
 }
+
+// invocationCountErrors names each package whose go test invocations and terminal events disagree, in package order, so a
+// record's errors are the same bytes on every run (ranging over the maps would order them by Go's per-run hash seed).
+func invocationCountErrors(declared, observed map[string]int) []string {
+	var problems []string
+	for _, pkg := range sortedKeys(declared) {
+		if observed[pkg] != declared[pkg] {
+			problems = append(problems, "invocation/terminal count mismatch: "+pkg)
+		}
+	}
+	for _, pkg := range sortedKeys(observed) {
+		if declared[pkg] != observed[pkg] {
+			problems = append(problems, "unrecorded package invocation: "+pkg)
+		}
+	}
+	return problems
+}
+
+func sortedKeys(counts map[string]int) []string {
+	keys := make([]string, 0, len(counts))
+	for key := range counts {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return keys
+}
+
 func compare(path, log string) error {
 	if info, err := os.Stat(path); err == nil && info.IsDir() {
 		path = filepath.Join(path, "merged.json")

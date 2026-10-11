@@ -129,3 +129,23 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 		t.Fatal("corrupt log accepted")
 	}
 }
+
+// A merge's count errors are the same bytes on every run: twelve disagreeing packages each way, asked 50 times, come back
+// in package order every time. Ranging over the maps instead would reorder them on nearly every call.
+func TestInvocationCountErrorsAreInPackageOrder(t *testing.T) {
+	t.Parallel()
+	declared, observed := map[string]int{}, map[string]int{}
+	for index := range 12 {
+		declared["declared/"+string(rune('a'+index))] = 1
+		observed["observed/"+string(rune('a'+index))] = 1
+	}
+	first := invocationCountErrors(declared, observed)
+	if len(first) != 24 || !sort.SliceIsSorted(first[:12], func(i, j int) bool { return first[i] < first[j] }) || !sort.SliceIsSorted(first[12:], func(i, j int) bool { return first[12+i] < first[12+j] }) {
+		t.Fatalf("errors out of package order: %q", first)
+	}
+	for range 50 {
+		if again := invocationCountErrors(declared, observed); !reflect.DeepEqual(again, first) {
+			t.Fatalf("errors moved between calls:\n%q\n%q", first, again)
+		}
+	}
+}
