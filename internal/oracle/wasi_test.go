@@ -13,22 +13,29 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// TestWASIAgreesWithNode runs every ordinary fixture as a WASI command.
+// TestWASIAgreesWithNode runs every ordinary fixture as a WASI command, as a family (families_test.go):
+// TestWASIAgreesWithNode_000 and on each run the fixtures their shard owns.
 // Opt in with ADAMIC_ORACLE_WASI=1; these observations always run uncached.
-func TestWASIAgreesWithNode(t *testing.T) {
-	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
+func runWASIAgreesShard(t *testing.T, shard int) {
+	t.Helper()
+	planted, probing := familyProbe("TestWASIAgreesWithNode")
+	var mutate func(string, *ir.Program)
+	if probing {
+		// TestFamiliesCatchAPlantedCase's mutant: TestTheOracleCatchesOneByte's byte, after lowering.
+		mutate = func(path string, program *ir.Program) {
+			if path == planted {
+				program.Strings[0] += "!"
+			}
+		}
 	}
-	shards := wasiFixtureShards()
-	if err := wasiFixtureUnion(shards); err != nil {
-		t.Fatal(err)
+	runWASIFixtures(t, familyCases(t, "TestWASIAgreesWithNode", shard, fixturePaths()), mutate)
+}
+
+func wasiFixtureDifference(name string, expected, actual run) error {
+	if difference := disagreement(expected, actual); difference != "" {
+		return fmt.Errorf("%s: %s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", name, difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 	}
-	for ordinal, rows := range shards {
-		t.Run(wasiShardName(ordinal), func(t *testing.T) {
-			t.Parallel()
-			runWASIFixtures(t, rows, nil)
-		})
-	}
+	return nil
 }
 
 // Setup belongs inside the selected shard, including the Node helper's native
@@ -140,8 +147,10 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 	}
 }
 
-// Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
-func TestWASIEmission(t *testing.T) {
+// Compile every emitted translation unit for the 32-bit ABI independently of runtime linking, as a family
+// (families_test.go): TestWASIEmission_000 and on each compile the fixtures their shard owns.
+func runWASIEmissionShard(t *testing.T, shard int) {
+	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -150,7 +159,9 @@ func TestWASIEmission(t *testing.T) {
 		t.Fatal(err)
 	}
 	compiler := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
-	for _, fixture := range fixtures {
+	_, probing := familyProbe("TestWASIEmission")
+	for _, index := range familyCases(t, "TestWASIEmission", shard, fixturePaths()) {
+		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
@@ -164,9 +175,14 @@ func TestWASIEmission(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			code := native.C(program)
+			if probing {
+				// TestFamiliesCatchAPlantedCase's mutant: C that no target compiles.
+				code += "\nint planted = ;\n"
+			}
 			directory := t.TempDir()
 			source := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(source, []byte(native.C(program)), 0644); err != nil {
+			if err := os.WriteFile(source, []byte(code), 0644); err != nil {
 				t.Fatal(err)
 			}
 			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))

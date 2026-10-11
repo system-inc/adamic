@@ -81,6 +81,11 @@ func reviewPrograms(t *testing.T, category string, check func(*testing.T, string
 	if len(paths) == 0 {
 		t.Fatalf("no review programs in %s", category)
 	}
+	reviewEach(t, paths, check)
+}
+
+func reviewEach(t *testing.T, paths []string, check func(*testing.T, string)) {
+	t.Helper()
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
 			reviewSkip(t, path)
@@ -147,10 +152,39 @@ func reviewRefusal(t *testing.T, path string) error {
 	return nil
 }
 
-func TestReviewProgramsAgreeWithNode(t *testing.T) {
-	t.Parallel()
-	reviewPrograms(t, "agree", func(t *testing.T, path string) {
-		if err := reviewAgreement(t, path, reviewPinned(t, path)); err != nil {
+// reviewAgreePrograms is every agree program's file name, the key TestReviewProgramsAgreeWithNode's family
+// (families_test.go) owns it by.
+func reviewAgreePrograms() []string {
+	paths, _ := filepath.Glob(filepath.Join(reviewRoot, "agree", "*.a"))
+	names := make([]string, len(paths))
+	for index, path := range paths {
+		names[index] = filepath.Base(path)
+	}
+	return names
+}
+
+// TestReviewProgramsAgreeWithNode is a family (families_test.go): TestReviewProgramsAgreeWithNode_000 and on each run
+// the agree programs their shard owns, keeping the TestReviewPrograms prefix Judge's review lane reads.
+func runReviewAgreeShard(t *testing.T, shard int) {
+	t.Helper()
+	planted, probing := familyProbe("TestReviewProgramsAgreeWithNode")
+	names := reviewAgreePrograms()
+	if len(names) == 0 {
+		t.Fatal("no review programs in agree")
+	}
+	var paths []string
+	for _, index := range familyCases(t, "TestReviewProgramsAgreeWithNode", shard, names) {
+		paths = append(paths, filepath.Join(reviewRoot, "agree", names[index]))
+	}
+	reviewEach(t, paths, func(t *testing.T, path string) {
+		expected := reviewPinned(t, path)
+		if probing && filepath.Base(path) == planted {
+			// TestFamiliesCatchAPlantedCase's mutant: TestReviewProgramsSelfTest's wrong output, one byte more than Node's.
+			wrong := onNode(t, path)
+			wrong.stdout = append(append([]byte(nil), wrong.stdout...), '!')
+			expected = &wrong
+		}
+		if err := reviewAgreement(t, path, expected); err != nil {
 			t.Fatal(err)
 		}
 	})
