@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Fixed shard counts have headroom for corpus growth, including empty shards.
@@ -374,7 +375,7 @@ func miscReferenceCommand(oracle string, args ...string) ([]byte, error) {
 
 // Match native's archiver selection, including its GNU ar fallback.
 func miscArchiverTool() string {
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err == nil {
 		candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
 		if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {

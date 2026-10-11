@@ -18,6 +18,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // All paths passed to Product are repository-relative. Go dependencies include
@@ -61,7 +62,7 @@ func recoveryDependencies(t *testing.T, repo string) recoverySources {
 	if sources, ok := recoveryDiscovered.sources[repo]; ok {
 		return sources
 	}
-	cmd := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	cmd := toolchain.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
 	cmd.Dir = repo
 	output, err := cmd.Output()
 	if err != nil {
@@ -191,7 +192,7 @@ func recoveryStableNative(repo, directory, source string) error {
 	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
-	cmd := exec.Command("clang", args...)
+	cmd := toolchain.Command("clang", args...)
 	cmd.Dir = work
 	if output, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("sanitized native build: %w: %s", err, output)
