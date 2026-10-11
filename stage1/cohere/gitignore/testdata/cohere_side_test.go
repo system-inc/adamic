@@ -482,6 +482,28 @@ func adamicMakeQueries(t *testing.T, root string, queries []adamicQuery) {
 
 // adamicWalk is compareWithGit's walk: every path below root, not entering a nested repository or a
 // directory the matcher excludes, whose own entries are still asked about.
+// adamicNestedRepository reports whether directory is a repository of its own, which a real tree's walk leaves to
+// that repository, as git does: it holds .git, or, in a Loom runner's source, which carries no .git (#cyasrr4), the
+// tree's .tracked manifest records it as one (.tracked/<its path>/HEAD, as adamic's internal/tracked reads it).
+func adamicNestedRepository(directory string) bool {
+	if _, err := os.Lstat(filepath.Join(directory, ".git")); err == nil {
+		return true
+	}
+	for root := filepath.Dir(directory); ; root = filepath.Dir(root) {
+		if info, err := os.Stat(filepath.Join(root, ".tracked")); err == nil && info.IsDir() {
+			relative, err := filepath.Rel(root, directory)
+			if err != nil {
+				return false
+			}
+			_, err = os.Stat(filepath.Join(root, ".tracked", relative, "HEAD"))
+			return err == nil
+		}
+		if filepath.Dir(root) == root {
+			return false
+		}
+	}
+}
+
 func adamicWalk(t *testing.T, root string) []adamicQuery {
 	t.Helper()
 	matcher, err := New(root)
@@ -502,10 +524,8 @@ func adamicWalk(t *testing.T, root string) []adamicQuery {
 				continue
 			}
 			isDirectory := entry.Type()&fs.ModeType == fs.ModeDir
-			if isDirectory {
-				if _, err := os.Lstat(filepath.Join(root, filepath.FromSlash(relative), ".git")); err == nil {
-					continue
-				}
+			if isDirectory && adamicNestedRepository(filepath.Join(root, filepath.FromSlash(relative))) {
+				continue
 			}
 			queries = append(queries, adamicQuery{relative, isDirectory})
 			if isDirectory {

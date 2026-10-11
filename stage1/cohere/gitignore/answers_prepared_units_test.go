@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // ADAMIC_TEST_SHARD=i/n runs shard numbers congruent to i modulo n; unset runs all.
@@ -708,13 +709,29 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 		input.WriteString(query.Path)
 		input.WriteByte(0)
 	}
-	command := portCommand(t, "git", "-c", "core.excludesFile="+emptyExclude, "-c", "core.ignorecase=false",
-		"check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")
-	command.Dir = tree.Disk
-	command.Env = []string{
+	environment := []string{
 		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
 		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
 	}
+	arguments := []string{"-c", "core.excludesFile=" + emptyExclude, "-c", "core.ignorecase=false"}
+	if !tracked.Git(tree.Disk) {
+		// A Loom runner's source has no .git (#cyasrr4), and check-ignore needs a repository even with --no-index. An
+		// empty one, with the tree as its work tree and an empty info/exclude, reads only the tree's .gitignore files,
+		// as tracked does for its own ignore rules.
+		repository := filepath.Join(scratch, "repository")
+		initialize := exec.Command("git", "init", "-q", "--bare", repository)
+		initialize.Env = environment
+		if output, err := initialize.CombinedOutput(); err != nil {
+			t.Fatalf("git init for %s: %v\n%s", tree.Disk, err, output)
+		}
+		if err := os.WriteFile(filepath.Join(repository, "info", "exclude"), nil, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		arguments = append([]string{"--git-dir=" + repository, "--work-tree=" + tree.Disk, "-c", "core.bare=false"}, arguments...)
+	}
+	command := portCommand(t, "git", append(arguments, "check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")...)
+	command.Dir = tree.Disk
+	command.Env = environment
 	command.Stdin = &input
 	var standardOutput, standardError bytes.Buffer
 	command.Stdout = &standardOutput
