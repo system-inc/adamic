@@ -1,6 +1,9 @@
 package lower
 
 import (
+	"maps"
+	"slices"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -181,8 +184,9 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			function.ArgumentsCount = local + 1
 			changed = true
 		}
-		for signature, implementations := range l.result.MethodTargets {
-			targets := append([]int{signature}, implementations...)
+		// By signature, never in the map's order: each local's index is in its C name.
+		for _, signature := range slices.Sorted(maps.Keys(l.result.MethodTargets)) {
+			targets := append([]int{signature}, l.result.MethodTargets[signature]...)
 			reads := false
 			for _, target := range targets {
 				reads = reads || l.result.Functions[target].ArgumentsCount != 0
