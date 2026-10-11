@@ -13,7 +13,7 @@ func acceptanceGrammar() []string {
 	}
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestAcceptanceGrammar(t *testing.T) {
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -27,7 +27,7 @@ func TestAcceptanceGrammar(t *testing.T) {
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestAcceptanceDiagnostics(t *testing.T) {
 	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
 	list := manifest(t, sources)
@@ -49,14 +49,14 @@ func TestAcceptanceDiagnostics(t *testing.T) {
 	t.Logf("%d Go refusals explicitly refused before deadline on all builds", len(sources))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestAcceptanceDiagnosticControl(t *testing.T) {
 	list := manifest(t, []string{"++await 42;"})
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
 	if !strings.Contains(statuses, `"status":"error"`) {
 		t.Fatal(statuses)
 	}
-	main := mutantPort(t, "pipeline.ts", "if(syntax !== '')", "if(false)")
+	main := estreeDiagnosticControlPath(t)
 	binary, _ := build(t, main, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if !strings.Contains(string(got), "0 Program ") {

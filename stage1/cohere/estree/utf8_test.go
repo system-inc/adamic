@@ -11,7 +11,7 @@ func cookedSurrogates() []string {
 	return []string{"'\\ud800a\\udc00';", "'\\ud800';", "'\\udfff';", "'\\ud800\\udc00';", "'\\ud800\\ud800';", "`a\\ud800b`;", "tag`a\\ud800b`;", "const key = {'\\ud800': 1};"}
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestCookedSurrogates(t *testing.T) {
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -25,11 +25,11 @@ func TestCookedSurrogates(t *testing.T) {
 	t.Logf("%d cooked-surrogate files, %d bytes match Go", len(cookedSurrogates()), len(want))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestCookedSurrogateMutant(t *testing.T) {
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "protocol.ts", `result += '\\ufffd\\ufffd\\ufffd';`, `result += '\\ufffd';`)
+	path := estreeCookedSurrogateMutantPath(t)
 	binary, _ := build(t, path, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if d := firstDifference(want, got); d == "" {
@@ -58,7 +58,7 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 	t.Log("Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates")
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestLossyInputRefusal(t *testing.T) {
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(t, main, true)
