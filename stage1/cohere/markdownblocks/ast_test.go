@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 // Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
@@ -84,18 +84,25 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 		t.Fatal(err)
 	}
 	equal(t, "pinned bundle", installed, pinned)
+	// The lowered port and its sanitized and release builds are products (TestProduct_MarkdownAST*), not built
+	// in this test each run.
+	lowered := pilotLoweredProduct(t, "ast")
+	products := grainProducts{backend: filepath.Join(lowered, "program.mjs"), sanitized: pilotNativeProductFromLowered(t, "ast", lowered, true), release: pilotNativeProductFromLowered(t, "ast", lowered, false)}
 	main, err := filepath.Abs("testdata/ast_probe.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	program := lowered(t, main)
-	answer, binary := natively(t, program, nativeCases)
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	answer := execute(t, environment, products.sanitized, nativeCases)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
 		{"actual Go preprocessing from AST transport", execute(t, nil, goBinary, "--facts", nativeCases)},
-		{"actual original AST preprocessing", execute(t, nil, "node", "testdata/ast_library.mjs", fork, nativeCases)}, {"native AST preprocessing", answer}, {"source Node", onNode(t, main, nativeCases)}, {"backend", onJavaScriptBackend(t, program, nativeCases)},
+		{"actual original AST preprocessing", execute(t, nil, "node", "testdata/ast_library.mjs", fork, nativeCases)}, {"native AST preprocessing", answer}, {"source Node", onNode(t, main, nativeCases)}, {"backend", onNode(t, products.backend, nativeCases)},
 	} {
 		clean(t, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
@@ -112,7 +119,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 			}
 		}
 	}
-	if report := leaks(t, program, binary, nativeCases); report != "" {
+	if report := grainLeaks(t, products, nativeCases); report != "" {
 		t.Fatal(report)
 	}
 	for _, m := range []struct{ name, file, from, to string }{
@@ -156,10 +163,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 			}
 		})
 	}
-	fast := filepath.Join(dir, "fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
+	fast := products.release
 	for _, side := range []struct {
 		name, command string
 		args          []string
@@ -209,4 +213,19 @@ func astGoOracle(t *testing.T) string {
 func TestProduct_MarkdownASTGo(t *testing.T) {
 	t.Parallel()
 	astGoOracle(t)
+}
+
+func TestProduct_MarkdownASTLowered(t *testing.T) {
+	t.Parallel()
+	pilotLoweredProduct(t, "ast")
+}
+
+func TestProduct_MarkdownASTNativeSanitized(t *testing.T) {
+	t.Parallel()
+	pilotNativeProduct(t, "ast", true)
+}
+
+func TestProduct_MarkdownASTNativeRelease(t *testing.T) {
+	t.Parallel()
+	pilotNativeProduct(t, "ast", false)
 }
