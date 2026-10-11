@@ -146,9 +146,9 @@ const (
 )
 
 type traceFacts struct {
-	root, cache, trace, goRoot, goCache, goModules, tools, home string
-	roots, caches, temporary, kernel, system                    []string
-	searched, executables                                       map[string]bool
+	root, cache, trace, goRoot, goCache, goModules, goTelemetry, tools, home string
+	roots, caches, temporary, kernel, system                                 []string
+	searched, executables                                                    map[string]bool
 	// ran is every program a process of the run executed, as the trace names it.
 	ran map[string]bool
 }
@@ -167,6 +167,11 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		return nil, err
 	}
 	facts.goRoot, facts.goCache, facts.goModules = values["GOROOT"], values["GOCACHE"], values["GOMODCACHE"]
+	// Go's telemetry, which every go command reads and counts into as it runs (its upload days, its counters), and which
+	// GOENV=off doesn't turn off: go's own bookkeeping, as its build cache is, never an input to what it builds.
+	if configuration, err := os.UserConfigDir(); err == nil {
+		facts.goTelemetry = filepath.Join(configuration, "go", "telemetry")
+	}
 	facts.home, _ = os.UserHomeDir()
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
 		facts.temporary = append(facts.temporary, variants(place)...)
@@ -316,7 +321,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{}
 	case under(name, facts.goRoot):
 		return classed{"go", "release"}
-	case under(name, facts.goCache):
+	case under(name, facts.goCache), under(name, facts.goTelemetry):
 		return classed{}
 	case under(name, facts.goModules):
 		return classed{"module", name}
@@ -343,7 +348,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 				return classed{"above", filepath.ToSlash(relative)}
 			}
 		}
-		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
+		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
 			if place != "" && under(place, name) {
 				return classed{}
 			}
