@@ -20,15 +20,16 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 	if err != nil || !info.IsDir() {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
 	}
-	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries.
-	entries, err := tracked.Files(checkout)
+	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries; inside a
+	// traced build, a walk its read set keys (tscAgreementPrepare lists here while it builds, #1p6sent).
+	paths, err := tracked.PathsUnder(checkout, root)
 	if err != nil {
 		return nil, fmt.Errorf("corpus root %s: tracked files: %w", root, err)
 	}
 	var files []string
-	for _, entry := range tracked.Under(entries, root) {
-		if strings.HasSuffix(entry.Path, ".ts") {
-			files = append(files, filepath.Join(checkout, entry.Path))
+	for _, name := range paths {
+		if strings.HasSuffix(name, ".ts") {
+			files = append(files, filepath.Join(checkout, name))
 		}
 	}
 	// Without .git, a .ts file the manifest leaves out (and no .gitignore ignores) is a stale manifest, refused.
