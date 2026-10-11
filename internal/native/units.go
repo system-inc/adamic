@@ -364,10 +364,12 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 }
 
 func buildUnits(source, output string, options Options) error {
-	return buildUnitsWithLibrary(source, output, options, "", nil)
+	return buildUnitsWithLibrary(source, output, options, "", "")
 }
 
-func buildUnitsWithLibrary(source, output string, options Options, library string, extraLinkFlags []string) error {
+// buildUnitsWithLibrary links the units with library, or the program's own runtime when it is empty, and with the
+// checker archive at the absolute path archive (checkerArchivePath) when it isn't empty.
+func buildUnitsWithLibrary(source, output string, options Options, library string, archive string) error {
 	header, units, err := splitC(source)
 	if err != nil {
 		return err
@@ -401,11 +403,10 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			common = append(common, file)
 		}
 	}
-	cache, err := os.UserCacheDir()
+	cache, err := cacheDirectory("native-units")
 	if err != nil {
 		return err
 	}
-	cache = filepath.Join(cache, "adamic", "units")
 	jobs := options.Jobs
 	if jobs == 0 {
 		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
@@ -452,12 +453,25 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
+	// The link runs from the units' directory, so the checker archive goes by a link's name there and the output by
+	// its absolute path, as BuildTSGo links.
+	output, err = filepath.Abs(output)
+	if err != nil {
+		return err
+	}
 	arguments := append(Flags(options), "-o", output)
 	arguments = append(arguments, objects...)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
-	arguments = append(arguments, extraLinkFlags...)
+	if archive != "" {
+		if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
+			return err
+		}
+		arguments = append(append(arguments, checkerArchive, "-lpthread", "-ldl"), objectPrefixFlags()...)
+	}
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	link := exec.Command(compiler, arguments...)
+	link.Dir = directory
+	if output, err := link.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)
 	}
 	return nil

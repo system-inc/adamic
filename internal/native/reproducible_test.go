@@ -13,10 +13,10 @@ import (
 
 // A native binary's bytes are a function of its source and options, wherever it's built (Oct 9: a stored
 // typescript-parser-native carried ~/.cache/adamic/runtime/.build-<random> in its debug info, so it never matched a
-// rebuild and the build cache's audit called it poisoned). Two builds of one program, each with its own home (so its
-// own runtime cache), temporary directory and output directory, of different lengths, must be byte for byte the same.
-// Sanitized, so the debug info is in them.
-// Not parallel: points HOME, XDG_CACHE_HOME and TMPDIR at this test through t.Setenv.
+// rebuild and the build cache's audit called it poisoned). Two builds of one program, each with its own home and build
+// cache (so its own runtime cache, which lives under the build cache), temporary directory and output directory, of
+// different lengths, must be byte for byte the same. Sanitized, so the debug info is in them.
+// Not parallel: points HOME, XDG_CACHE_HOME, ADAMIC_BUILD_CACHE_DIR and TMPDIR at this test through t.Setenv.
 func TestBuildIsTheSameFromAnyDirectory(t *testing.T) {
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
 	if err != nil {
@@ -37,6 +37,7 @@ func TestBuildIsTheSameFromAnyDirectory(t *testing.T) {
 		}
 		t.Setenv("HOME", filepath.Join(root, "home"))
 		t.Setenv("XDG_CACHE_HOME", filepath.Join(root, "cache"))
+		t.Setenv("ADAMIC_BUILD_CACHE_DIR", filepath.Join(root, "cache", "adamic-build"))
 		t.Setenv("TMPDIR", filepath.Join(root, "tmp"))
 		binary := filepath.Join(root, "out", "program")
 		if err := Build(source, binary, Options{Sanitize: true}); err != nil {

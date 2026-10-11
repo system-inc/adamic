@@ -13,6 +13,8 @@ import (
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 type runtimeFile struct {
@@ -94,11 +96,21 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	if err != nil {
 		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
-	cache, err := os.UserCacheDir()
+	cache, err := cacheDirectory("native-runtime")
+	if err != nil {
+		return "", err
+	}
+	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), cache)
+}
+
+// cacheDirectory is where a native cache named name lives: under the build cache (location.BuildCache), never under
+// this machine's home on native's own account, so a sandboxed build that names its cache writes nothing under HOME.
+func cacheDirectory(name string) (string, error) {
+	cache, err := location.BuildCache()
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	return filepath.Join(cache, name), nil
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
@@ -196,7 +208,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 			continue
 		}
 		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
-		// The build directory is random and the cache sits under each machine's home, so neither may reach an object:
+		// The build directory is random and the cache sits where each machine keeps it, so neither may reach an object:
 		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
 		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 		arguments := append(append(append([]string{}, flags...), prefixMaps(temporary, "/adamic-runtime")...), "-c", file.name, "-o", object)

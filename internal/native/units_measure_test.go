@@ -19,7 +19,8 @@ func TestMeasureClangUnits(t *testing.T) {
 		t.Skip("set ADAMIC_CLANG_MEASURE to emitted C evidence directory")
 	}
 	cache := filepath.Join(directory, "cache")
-	t.Setenv("XDG_CACHE_HOME", cache)
+	// The native caches live under the build cache, so this benchmark's scratch cache is one.
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	t.Setenv("ADAMIC_NATIVE_SPLIT", "0")
 	selected := os.Getenv("ADAMIC_CLANG_PROGRAM")
@@ -168,7 +169,7 @@ func TestMeasureClangUnits(t *testing.T) {
 				run(program, mode.name+"-whole", round, mode.options, source, false)
 				for _, jobs := range []int{1, 5} {
 					// Only remove the named object-cache directory in this benchmark's scratch cache.
-					if err := os.RemoveAll(filepath.Join(cache, "adamic", "units")); err != nil {
+					if err := os.RemoveAll(filepath.Join(cache, "native-units")); err != nil {
 						t.Fatal(err)
 					}
 					options := mode.options
