@@ -119,17 +119,23 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 	t.Logf("%s: own work %.3fs", jsonPortClassOrderKey, time.Since(start).Seconds())
 }
 
+// The class-order fixture is one indivisible case, and its sanitizer passes are about 28 s of one core's work (_001 28.8 s,
+// _002 27.2 s alone on one core, Workshop Oct 11). Run in parallel beside the package's ASan shards, _002 passed its 90 s
+// deadline on Home (landable-20, 20:41Z): contention, not work, and no split shortens one case. So the three run as
+// sequential tests, which go test finishes before it resumes any parallel one, and each has the unit to itself.
+
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
-	t.Parallel()
 	jsonPortClassOrderRun(t, 0)
 }
+
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
-	t.Parallel()
 	jsonPortClassOrderRun(t, 1)
 }
 
+// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_002(t *testing.T) {
-	t.Parallel()
 	jsonPortClassOrderRun(t, 2)
 }
 
