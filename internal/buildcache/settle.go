@@ -14,11 +14,12 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
-	"regexp"
 	"slices"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
+	"unicode"
 )
 
 // Settle turns a traced run into keyed products (#vt46geg). The trace is strace -f's output (cmd/traced's flags:
@@ -62,7 +63,11 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	for _, relative := range slices.Sorted(maps.Keys(state.treeWrites)) {
 		state.lost = append(state.lost, "the run wrote into the tree (tree write: "+relative+")")
 	}
-	return state.settle(entries), nil
+	settledTree.Store(&sync.Map{})
+	defer settledTree.Store(nil)
+	settlement := state.settle(entries)
+	settlement.CommandExited, settlement.CommandStatus = state.commandStatus >= 0, state.commandStatus
+	return settlement, nil
 }
 
 // TreeState is the repository's state as git sees it, and the machine's packages: HEAD, every file's status
@@ -128,10 +133,50 @@ func TreeState() (string, error) {
 	return state.String(), err
 }
 
-// A Settlement is what Settle did with each build, in the order the builds ended.
+// A Settlement is what Settle did with each build, in the order the builds ended: a line each for people, and a
+// Report each for Loom's tree builder.
 type Settlement struct {
 	Settled []string
 	Refused []string
+	Reports []Report
+	// CommandExited says the trace holds the command's own exit, with CommandStatus its status.
+	CommandExited bool
+	CommandStatus int
+}
+
+// A Report is one product's outcome as cmd/traced writes it to ADAMIC_TRACE_REPORT, one JSON line each, for Loom's
+// tree builder: settled under Key (with how many reads its set names), found already built under Key, or refused for
+// Reason. When the whole run can't
+// be keyed (a lost trace, the tree changed or written), one line more comes first, with outcome lost, its Reason and
+// no product; every product of that run is refused too.
+type Report struct {
+	Name    string `json:"name,omitempty"`
+	NameKey string `json:"nameKey,omitempty"`
+	Key     string `json:"key,omitempty"`
+	Outcome string `json:"outcome"`
+	Reason  string `json:"reason,omitempty"`
+	Reads   int    `json:"reads,omitempty"`
+}
+
+// Report outcomes.
+const (
+	ReportSettled = "settled"
+	ReportRefused = "refused"
+	ReportFound   = "found"
+	ReportLost    = "lost"
+)
+
+// WriteReport writes reports to file, one JSON line each, replacing what it held.
+func WriteReport(file string, reports []Report) error {
+	var lines []byte
+	for _, report := range reports {
+		line, err := json.Marshal(report)
+		if err != nil {
+			return err
+		}
+		lines = append(append(lines, line...), '\n')
+	}
+	return os.WriteFile(file, lines, 0o644)
 }
 
 // Read kinds, as bits: what a key must name about a path.
@@ -145,14 +190,16 @@ const (
 )
 
 type traceFacts struct {
-	root, cache, trace, goRoot, goCache, goModules, tools, home string
-	roots, caches, temporary, kernel, system                    []string
-	searched, executables                                       map[string]bool
+	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
+	roots, caches, temporary, kernel, system, buildLogs                                      []string
+	searched, executables                                                                    map[string]bool
+	// ran is every program a process of the run executed, as the trace names it.
+	ran map[string]bool
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
 func settleFacts(root, cache, trace string) (*traceFacts, error) {
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
 	facts.roots, facts.caches = variants(root), variants(cache)
 	output, err := exec.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
@@ -164,7 +211,29 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		return nil, err
 	}
 	facts.goRoot, facts.goCache, facts.goModules = values["GOROOT"], values["GOCACHE"], values["GOMODCACHE"]
+	// Go's telemetry, which every go command reads and counts into as it runs (its upload days, its counters), and which
+	// GOENV=off doesn't turn off: go's own bookkeeping, as its build cache is, never an input to what it builds.
+	if configuration, err := os.UserConfigDir(); err == nil {
+		facts.goTelemetry = filepath.Join(configuration, "go", "telemetry")
+	}
+	// The native runtime cache (internal/native's cachedRuntime): each runtime under the address of everything its
+	// compile read (runtimeKey: its sources, flags, compiler and version, platform, and the system headers it read), as
+	// Go's build cache addresses an action, so what a build reads there is no entry.
+	if user, err := os.UserCacheDir(); err == nil {
+		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
+	}
 	facts.home, _ = os.UserHomeDir()
+	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
+	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a build
+	// tree's log under the home directory refused two estree products).
+	// The trace's report (ADAMIC_TRACE_REPORT) is the same kind of bookkeeping, and a path every run names afresh: a
+	// build that looks at the ADAMIC_ locations (Relative) looked at it (#n9jc61n, Planner's skip proof on Home, Oct 11:
+	// markdown-list-layout-shared-v3 keyed its own run's logs/product-388.trace.jsonl).
+	for _, variable := range []string{"ADAMIC_BUILD_LOG", "ADAMIC_TRACE_REPORT"} {
+		if log := os.Getenv(variable); log != "" {
+			facts.buildLogs = append(facts.buildLogs, variants(filepath.Clean(log))...)
+		}
+	}
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
 		facts.temporary = append(facts.temporary, variants(place)...)
 	}
@@ -209,7 +278,7 @@ func under(path, place string) bool {
 }
 
 // classed is one read as a key names it: kind is an entry kind (content, listing, exists, above, home, product,
-// tool, toolset, go), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
+// tool, toolset, go, filesystem, absolute), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
 // needs (the kernel, the machine's system files, Go's own cache, the build cache's bookkeeping).
 type classed struct {
 	kind, detail string
@@ -256,6 +325,9 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 }
 
 func (facts *traceFacts) classifyPath(name string, kinds int) classed {
+	if kinds == readAbsent && facts.caseProbe(name) {
+		return classed{"filesystem", "case"}
+	}
 	looked := kinds&^(readStat|readAbsent) == 0
 	for _, root := range facts.roots {
 		if !under(name, root) {
@@ -293,6 +365,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if name == cache {
 			return classed{}
 		}
+		// A lookup in the cache that missed read nothing, as a miss in Go's build cache reads nothing: namedProduct asking
+		// whether a product is pending under this trace, or one whose build never finished (Planner's step 5 tree on Home,
+		// Oct 11: three bridge-test-stage0 builds refused for "unknown product" at a pending path that wasn't there).
+		if kinds == readAbsent {
+			return classed{}
+		}
 		parts := strings.Split(strings.TrimPrefix(name, cache+"/"), "/")
 		switch {
 		// Named under the cache as the journal names it, whichever spelling the trace used.
@@ -306,11 +384,11 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{}
 	}
 	switch {
-	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]):
+	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]) || slices.Contains(facts.buildLogs, name):
 		return classed{}
 	case under(name, facts.goRoot):
 		return classed{"go", "release"}
-	case under(name, facts.goCache):
+	case under(name, facts.goCache), under(name, facts.goTelemetry), under(name, facts.nativeRuntimes):
 		return classed{}
 	case under(name, facts.goModules):
 		return classed{"module", name}
@@ -331,15 +409,29 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if facts.searched[filepath.Dir(name)] {
 			return classed{}
 		}
+		aboveTree := slices.ContainsFunc(facts.roots, func(root string) bool { return under(root, name) })
+		// A step of a walk down to a known place (realpath's lstat of each parent of the build cache) is the place's,
+		// never keyed, unless it leads to the tree too, which above keys: where a run's cache sits isn't an input (#n9jc61n,
+		// Planner's skip proof on Home, Oct 11: 12 products re-keyed between two runs of one tree, each naming its own
+		// run's directory, ../trees-2 against ../trees-3).
+		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.nativeRuntimes, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
+			if place != "" && under(place, name) && !aboveTree {
+				return classed{}
+			}
+		}
 		for _, root := range facts.roots {
 			if under(root, filepath.Dir(name)) {
 				relative, _ := filepath.Rel(root, name)
 				return classed{"above", filepath.ToSlash(relative)}
 			}
 		}
-		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
-			if place != "" && under(place, name) {
-				return classed{}
+		// A path beside one of the build cache's parents (node's node_modules and package.json search, walking up from a
+		// product it runs) is keyed as above keys the tree's, relative to the cache: each run's cache sits elsewhere,
+		// and what is beside it is the same.
+		for _, cache := range facts.caches {
+			if under(cache, filepath.Dir(name)) {
+				relative, _ := filepath.Rel(cache, name)
+				return classed{"above cache", filepath.ToSlash(relative)}
 			}
 		}
 	}
@@ -353,10 +445,18 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			return classed{"system", name}
 		}
 	}
+	// A path that resolves through a symbolic link is what it resolves to (~/.adamic-tools, the link PATH runs clang
+	// through, is ~/adamic-tools, the tools directory): its target is classed in its place, as strictly as if it had
+	// been named. A machine file's link is keyed as itself (the system places, above), never resolved.
+	if real := resolved(name); real != "" && real != name {
+		return facts.classifyPath(real, kinds)
+	}
 	for _, place := range facts.temporary {
 		if under(name, place) {
-			// What the build's own processes made there never reaches here (record leaves it out).
-			if kinds&(readContent|readExec) != 0 {
+			// What the build's own processes made there never reaches here (record leaves it out). A directory opened
+			// without O_DIRECTORY reads as content, but a directory has none (what it lists is getdents', its own read):
+			// go's os.RemoveAll opens the temporary directory so to remove what the build made in it.
+			if kinds&(readContent|readExec) != 0 && !isDirectory(name) {
 				return classed{refusal + "temp not made by this run", name}
 			}
 			return classed{}
@@ -371,7 +471,32 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 		return classed{refusal + "home", name}
 	}
+	// A path anywhere else that was only looked for (a module resolver's virtual root, /adamic-prelude; clang's search for
+	// a GCC installation, /opt/rh) is keyed by whether and as what it exists, the same on every machine that answers
+	// alike; reading what one holds is still refused.
+	if looked {
+		return classed{"absolute", name}
+	}
 	return classed{refusal + "other", name}
+}
+
+// caseProbe says whether a lookup that missed was a program asking whether the file system is case-sensitive:
+// typescript-go's osvfs stats its own executable with every letter's case swapped as it starts (os.go's
+// fileSystemCaseSensitivity), in every process that links it, and the answer is the machine's, not a path's. Only a
+// swap of a program the run executed is one; any other path in another case is the path it names.
+func (facts *traceFacts) caseProbe(name string) bool {
+	swapped := swapCase(name)
+	return swapped != name && (facts.ran[swapped] || facts.executables[swapped])
+}
+
+// swapCase is name with each letter's case swapped, as osvfs swaps it.
+func swapCase(name string) string {
+	return strings.Map(func(r rune) rune {
+		if upper := unicode.ToUpper(r); upper != r {
+			return upper
+		}
+		return unicode.ToLower(r)
+	}, name)
 }
 
 func isKey(name string) bool {
@@ -403,14 +528,20 @@ type traceState struct {
 	unfinished map[int]string
 	open       map[string]int
 	ended      map[string]map[string]int
-	order      []string
-	lost       []string
-	started    bool
+	// lastReads is each ended build's paths by when they were last read in its window, and endedAt when it ended.
+	lastReads map[string]map[string]int
+	endedAt   map[string]int
+	order     []string
+	lost      []string
+	started   bool
+	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
+	command, commandStatus int
 }
 
-// A pathReads is a process's reads of one path: their kinds, and when it first read the path (0 for a path it only wrote).
+// A pathReads is a process's reads of one path: their kinds, and when it first and last read the path (0 for a path it
+// only wrote).
 type pathReads struct {
-	kinds, firstRead int
+	kinds, firstRead, lastRead int
 }
 
 // A writer is a process that wrote a path, and when it first did; it stays a writer after it ends.
@@ -425,21 +556,11 @@ type traceCall struct {
 }
 
 func newTraceState(facts *traceFacts) *traceState {
-	state := &traceState{facts: facts, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
+	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
-		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}}
+		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{}}
 	return state
 }
-
-var (
-	traceLine   = regexp.MustCompile(`^(\d+)\s+(.*)$`)
-	resumedLine = regexp.MustCompile(`^<\.\.\. (\w+) resumed>\s?(.*)$`)
-	callLine    = regexp.MustCompile(`^(\w+)\((.*)\)\s+=\s+(-?\d+|\?)(?:<([^>]*)>)?(?:\s+(E[A-Z0-9]+))?`)
-	exitLine    = regexp.MustCompile(`^\+\+\+ (?:exited with \d+|killed by \w+(?: \(core dumped\))?) \+\+\+$`)
-	directoryFD = regexp.MustCompile(`^(AT_FDCWD|-?\d+)(?:<([^>]*)>)?,\s*`)
-	quoted      = regexp.MustCompile(`^"((?:[^"\\]|\\.)*)"`)
-	fdPath      = regexp.MustCompile(`^-?\d+<([^>]*)>`)
-)
 
 var (
 	atCalls = set("openat", "openat2", "newfstatat", "fstatat64", "statx", "faccessat", "faccessat2", "readlinkat", "execveat", "mkdirat",
@@ -484,13 +605,15 @@ func (state *traceState) read(trace io.Reader) error {
 }
 
 func (state *traceState) line(text string) {
-	match := traceLine.FindStringSubmatch(text)
-	if match == nil {
+	number, rest, ok := splitTraceLine(text)
+	if !ok {
 		return
 	}
-	pid, _ := strconv.Atoi(match[1])
-	rest := match[2]
-	if exitLine.MatchString(rest) {
+	pid, _ := strconv.Atoi(number)
+	if isExit(rest) {
+		if code, exited := strings.CutPrefix(rest, "+++ exited with "); exited && state.started && pid == state.command {
+			state.commandStatus, _ = strconv.Atoi(strings.TrimSuffix(code, " +++"))
+		}
 		state.exited(pid)
 		return
 	}
@@ -498,30 +621,30 @@ func (state *traceState) line(text string) {
 		state.unfinished[pid] = strings.TrimSpace(strings.TrimSuffix(rest, "<unfinished ...>"))
 		return
 	}
-	if resumed := resumedLine.FindStringSubmatch(rest); resumed != nil {
+	if tail, resumed := resumedTail(rest); resumed {
 		start, ok := state.unfinished[pid]
 		if !ok {
 			return
 		}
 		delete(state.unfinished, pid)
-		tail := resumed[2]
 		if strings.HasPrefix(tail, ")") || strings.HasPrefix(tail, ",") {
 			rest = start + tail
 		} else {
 			rest = start + " " + tail
 		}
 	}
-	call := callLine.FindStringSubmatch(rest)
-	if call == nil {
+	call, ok := parseCall(rest)
+	if !ok {
 		return
 	}
-	state.handle(traceCall{pid: pid, call: call[1], arguments: call[2], value: call[3], opened: call[4], errno: call[5]})
+	state.handle(traceCall{pid: pid, call: call.call, arguments: call.arguments, value: call.value, opened: call.opened, errno: call.errno})
 }
 
 func (state *traceState) handle(call traceCall) {
 	if !state.started {
 		// The first process in the trace is the command strace ran, in the directory it ran from.
 		state.started = true
+		state.command = call.pid
 		state.process[call.pid] = call.pid
 		state.reads[call.pid] = map[string]*pathReads{}
 		state.directory[call.pid], _ = os.Getwd()
@@ -556,16 +679,16 @@ func (state *traceState) handle(call traceCall) {
 	kind := 0
 	switch {
 	case call.call == "fchdir":
-		if match := fdPath.FindStringSubmatch(call.arguments); match != nil && call.value == "0" {
-			state.directory[process] = match[1]
+		if decoded, ok := descriptorPath(call.arguments); ok && call.value == "0" {
+			state.directory[process] = unescape(decoded)
 		}
 		return
 	case call.call == "getdents64" || call.call == "getdents":
-		match := fdPath.FindStringSubmatch(call.arguments)
-		if match == nil {
+		decoded, ok := descriptorPath(call.arguments)
+		if !ok {
 			return
 		}
-		name, kind = filepath.Clean(match[1]), readListing
+		name, kind = filepath.Clean(unescape(decoded)), readListing
 	default:
 		var rest string
 		name, rest = target(call.call, call.arguments, state.directory[process])
@@ -597,7 +720,7 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		// What an open resolved to, as the kernel names the descriptor: a read through a symbolic link reads its target.
-		if opened := filepath.Clean(call.opened); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") {
+		if opened := filepath.Clean(unescape(call.opened)); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") {
 			state.record(call.pid, process, opened, kind)
 		}
 	}
@@ -629,6 +752,9 @@ func readKind(call, rest string, failed bool) int {
 }
 
 func (state *traceState) record(pid, process int, name string, kind int) {
+	if kind&readExec != 0 {
+		state.facts.ran[name] = true
+	}
 	if state.keying[pid] > 0 || state.keyingTree[process] {
 		return
 	}
@@ -651,8 +777,11 @@ func (state *traceState) record(pid, process int, name string, kind int) {
 		state.reads[process][name] = found
 	}
 	found.kinds |= kind
-	if kind&^readWrite != 0 && found.firstRead == 0 {
-		found.firstRead = state.sequence
+	if kind&^readWrite != 0 {
+		if found.firstRead == 0 {
+			found.firstRead = state.sequence
+		}
+		found.lastRead = state.sequence
 	}
 }
 
@@ -677,7 +806,7 @@ func (state *traceState) marker(pid, process int, marker string) {
 		// but what they wrote before reading it: that is the build's own output, never an input. Only the build's own
 		// processes make output for it; what a sibling or a process above it wrote is an input like any other (a
 		// sibling's product, a generated file). A product is always a product, whoever wrote it.
-		snapshot := map[string]int{}
+		snapshot, last := map[string]int{}, map[string]int{}
 		for other, reads := range state.reads {
 			if !state.descends(other, owner) {
 				continue
@@ -689,10 +818,11 @@ func (state *traceState) marker(pid, process int, marker string) {
 				}
 				if kinds != 0 {
 					snapshot[name] |= kinds
+					last[name] = max(last[name], found.lastRead)
 				}
 			}
 		}
-		state.ended[id] = snapshot
+		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
 		state.order = append(state.order, id)
 	}
 }
@@ -747,6 +877,7 @@ func (state *traceState) exited(pid int) {
 				if found.firstRead != 0 && (kept.firstRead == 0 || found.firstRead < kept.firstRead) {
 					kept.firstRead = found.firstRead
 				}
+				kept.lastRead = max(kept.lastRead, found.lastRead)
 			}
 			return
 		}
@@ -757,23 +888,23 @@ func (state *traceState) exited(pid int) {
 func target(call, arguments, directory string) (string, string) {
 	base := directory
 	if atCalls[call] {
-		match := directoryFD.FindStringSubmatch(arguments)
-		if match == nil {
+		decoded, length, ok := directoryArgument(arguments)
+		if !ok {
 			return "", arguments
 		}
-		if match[2] != "" {
-			base = match[2]
+		if decoded != "" {
+			base = unescape(decoded)
 		}
-		arguments = arguments[len(match[0]):]
+		arguments = arguments[length:]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {
 		return "", arguments
 	}
-	match := quoted.FindStringSubmatch(arguments)
-	if match == nil {
+	quotedName, length, ok := quotedArgument(arguments)
+	if !ok {
 		return "", arguments
 	}
-	name := unescape(match[1])
-	rest := arguments[len(match[0]):]
+	name := unescape(quotedName)
+	rest := arguments[length:]
 	if name == "" && strings.Contains(rest, "AT_EMPTY_PATH") {
 		if base == "" {
 			return "", rest
@@ -794,11 +925,11 @@ func secondTarget(call, rest, directory string) string {
 	switch call {
 	case "rename", "link", "symlink":
 		rest = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(rest), ","))
-		match := quoted.FindStringSubmatch(rest)
-		if match == nil {
+		quotedName, _, ok := quotedArgument(rest)
+		if !ok {
 			return ""
 		}
-		name := unescape(match[1])
+		name := unescape(quotedName)
 		if !filepath.IsAbs(name) && directory != "" {
 			name = filepath.Join(directory, name)
 		}
@@ -811,6 +942,9 @@ func secondTarget(call, rest, directory string) string {
 	return ""
 }
 
+// unescape is a path as strace spells it, quoted or decoded from a descriptor (--decode-fds=path), back in its bytes:
+// strace writes every byte outside printable ASCII, and the quotes and angle brackets around it, as an octal escape
+// (walking/\303\251.txt is walking/é.txt), which git ls-files -z never does.
 func unescape(text string) string {
 	if !strings.Contains(text, `\`) {
 		return text
@@ -863,13 +997,24 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			built[entry.Build] = entry
 		}
 	}
+	if len(state.lost) > 0 {
+		settlement.Reports = append(settlement.Reports, Report{Outcome: ReportLost, Reason: "the whole run can't be keyed: " + strings.Join(state.lost, "; ")})
+	}
 	refuse := func(entry journalEntry, reason string) {
 		settlement.Refused = append(settlement.Refused, fmt.Sprintf("refused %s (name key %s): %s", entry.Name, entry.NameKey[:min(12, len(entry.NameKey))], reason))
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Outcome: ReportRefused, Reason: reason})
 		// Never placed: a pending product that can't be keyed leaves the cache.
 		if under(entry.Directory, filepath.Join(facts.cache, "pending")) {
 			os.RemoveAll(entry.Directory)
 			os.Remove(entry.Directory + ".inputs")
 			os.Remove(entry.Directory + ".lock")
+		}
+	}
+	// When each product this trace built ended its build: a read of it before then was its own build writing it.
+	productEnds := map[string]int{}
+	for id, entry := range built {
+		if end, ended := state.endedAt[id]; ended {
+			productEnds[entry.Directory] = end
 		}
 	}
 	recipes := map[string]recipe{}
@@ -884,7 +1029,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
-		set, reason := state.measured(entry, state.ended[id], products)
+		set, reason := state.measured(entry, state.ended[id], state.lastReads[id], products, productEnds)
 		if reason == "" {
 			own := processes[entry.Process]
 			name := recipeName(own)
@@ -914,20 +1059,41 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 		// Only Workshop's tree builder publishes: the product, then its read set, so a set never names a product the
 		// store doesn't hold.
+		report := Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries)}
 		if publishing() {
 			if err = publish(evaluated.key, entry.Name, product); err == nil {
 				err = publishReads(facts.cache, entry.NameKey)
 			}
 			if err != nil {
-				line += "; publish failed: " + err.Error()
+				// Still settled: placed under its key here, and only the store lacks it.
+				report.Reason = "publish failed: " + err.Error()
+				line += "; " + report.Reason
 			}
 		}
 		settlement.Settled = append(settlement.Settled, line)
+		settlement.Reports = append(settlement.Reports, report)
 	}
 	for id, entry := range built {
 		if !settled[id] {
 			refuse(entry, "a lost trace: its build's markers aren't in the trace")
 		}
+	}
+	// What the run found already built, under its key in the cache: a test's products are these and the ones it
+	// settled (Planner's step 5 proof on Home, Oct 11: a tree that took a test's products from the census lost every
+	// one found). One this trace built itself is pending until it settles, and its settlement is its line.
+	names, reported := map[string]string{}, map[string]bool{}
+	for _, entry := range entries {
+		if entry.Name != "" && entry.NameKey != "" {
+			names[entry.NameKey] = entry.Name
+		}
+	}
+	for _, entry := range entries {
+		key := filepath.Base(entry.Directory)
+		if entry.Event != "found" || !isKey(key) || !slices.Contains(facts.caches, filepath.Dir(entry.Directory)) || reported[entry.NameKey+key] {
+			continue
+		}
+		reported[entry.NameKey+key] = true
+		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound})
 	}
 	os.Remove(filepath.Join(facts.cache, "pending", filepath.Base(facts.trace)))
 	sort.Strings(settlement.Refused)
@@ -935,7 +1101,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 }
 
 // measured is a build's reads as a read set, or the reason it can't be one.
-func (state *traceState) measured(entry journalEntry, reads map[string]int, products map[string]string) (readSet, string) {
+func (state *traceState) measured(entry journalEntry, reads, lastReads map[string]int, products map[string]string, productEnds map[string]int) (readSet, string) {
 	facts := state.facts
 	refused := map[string][]string{}
 	entries := map[readEntry]bool{}
@@ -954,6 +1120,13 @@ func (state *traceState) measured(entry journalEntry, reads map[string]int, prod
 				modules = true
 			case found.kind == "product":
 				if found.detail == entry.Directory {
+					continue
+				}
+				// A product this trace built is an input only if its build had ended before this build read it: read
+				// while it was still being built, it was its own build writing it, which a superset window (a sibling in
+				// the same process) also holds, and two siblings holding each other would be a cycle no key can value
+				// (Home's dry run, Oct 11: bridge-test-api and tsgo-asan.a, each refused for reading the other).
+				if end, builtHere := productEnds[found.detail]; builtHere && lastReads[name] <= end {
 					continue
 				}
 				nameKey, ok := products[found.detail]
@@ -1013,14 +1186,14 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
 		for _, other := range file.Sets {
-			if before, err := evaluate(root, cache, nameKey, other, 0); err == nil && len(differing(other, before)) == 0 {
+			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
 				set.Entries = sortedEntries(set.Entries, other.Entries)
 				continue
 			}
 			kept = append(kept, other)
 		}
 		var err error
-		if evaluated, err = evaluate(root, cache, nameKey, set, 0); err != nil {
+		if evaluated, err = evaluate(root, cache, nameKey, set, 0, nil); err != nil {
 			return err
 		}
 		for index := range set.Entries {
@@ -1070,17 +1243,35 @@ func declaredDrift(declared, reads []string) *drift {
 	if len(declared) == 0 {
 		return nil
 	}
-	covered := func(name, entry string) bool {
-		return name == entry || strings.HasPrefix(name, strings.TrimSuffix(entry, "/")+"/")
+	// An entry covers a read that is it, or that is under it (a read under "dir" or "dir/"). Each read climbs its own
+	// directories through these, rather than meeting every entry: home-6's dry run (Oct 11) had tsprinter's mutant
+	// products, 76,958 reads against 75,696 declared entries each, settling for over 20 minutes.
+	exactly, under := map[string][]string{}, map[string][]string{}
+	for _, entry := range declared {
+		exactly[entry] = append(exactly[entry], entry)
+		under[strings.TrimSuffix(entry, "/")] = append(under[strings.TrimSuffix(entry, "/")], entry)
 	}
 	result := &drift{}
 	read := map[string]bool{}
 	for _, name := range reads {
-		declaredHere := false
-		for _, entry := range declared {
-			if covered(name, entry) {
-				declaredHere, read[entry] = true, true
+		var covering []string
+		covering = append(covering, exactly[name]...)
+		for at := name; ; {
+			parent := path.Dir(at)
+			if parent == at || parent == "." {
+				break
 			}
+			if parent == "/" {
+				// "dir/" with dir empty: what an empty or "/" entry covers, every absolute read.
+				covering = append(covering, under[""]...)
+				break
+			}
+			covering = append(covering, under[parent]...)
+			at = parent
+		}
+		declaredHere := len(covering) > 0
+		for _, entry := range covering {
+			read[entry] = true
 		}
 		if !declaredHere && name != "." {
 			result.Undeclared++

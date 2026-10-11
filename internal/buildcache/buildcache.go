@@ -29,10 +29,10 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
-	"slices"
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"testing"
 	"time"
@@ -114,31 +114,32 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	var described string
+	var described, name string
 	var looked found
 	keying(func() {
-		described = describe(root, inputs)
-		looked, err = productFor(root, cache, nameKey, 0)
+		described, name = describe(root, inputs), portable(root, inputs.Name)
+		looked, err = productFor(root, cache, nameKey, 0, nil)
 	})
 	if err != nil {
 		return "", "", err
 	}
 	// The store's read sets for this name key join the cache's, so a machine with none of its own finds what the store
-	// holds (#vt46geg).
+	// holds (#vt46geg). Find (find.go) joins them the same way, for many name keys at once.
 	if looked.directory == "" && storeAddress() != "" {
-		if remote := fetchReads(nameKey); len(remote) > 0 {
-			if err = mergeReads(cache, nameKey, inputs.Name, remote); err != nil {
-				return "", "", err
-			}
-			keying(func() { looked, err = productFor(root, cache, nameKey, 0) })
+		joined, err := joinStoreReads(cache, nameKey, name)
+		if err != nil {
+			return "", "", err
+		}
+		if joined {
+			keying(func() { looked, err = productFor(root, cache, nameKey, 0, nil) })
 			if err != nil {
 				return "", "", err
 			}
 		}
 	}
 	if looked.directory != "" {
-		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: looked.directory})
-		refreshPublished(cache, nameKey, looked.key, looked.directory, inputs.Name)
+		journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: looked.directory})
+		refreshPublished(cache, nameKey, looked.key, looked.directory, name)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
@@ -163,8 +164,8 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			if err != nil {
 				return "", "", err
 			}
-			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
-			refreshPublished(cache, nameKey, key, product, inputs.Name)
+			journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: product})
+			refreshPublished(cache, nameKey, key, product, name)
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
@@ -337,28 +338,30 @@ type place struct{ path, name string }
 // its resolved main.ts, missed on every checkout but the one that built it).
 func places(root string) []place {
 	var found []place
-	add := func(path, name string) {
+	seen := map[string]bool{}
+	add := func(path, name string, resolution func(string) string) {
 		if !filepath.IsAbs(path) || filepath.Clean(path) == string(filepath.Separator) {
 			return
 		}
-		for _, candidate := range []string{filepath.Clean(path), resolved(path)} {
-			if candidate != "" && !slices.ContainsFunc(found, func(other place) bool { return other.path == candidate }) {
+		for _, candidate := range []string{filepath.Clean(path), resolution(path)} {
+			if candidate != "" && !seen[candidate] {
+				seen[candidate] = true
 				found = append(found, place{candidate, name})
 			}
 		}
 	}
 	if root != "" {
-		add(root, "<repository>")
+		add(root, "<repository>", resolved)
 	}
 	if cache, err := cacheLocation(); err == nil {
-		add(cache, "<build cache>")
+		add(cache, "<build cache>", resolved)
 	}
 	if home, err := os.UserHomeDir(); err == nil {
-		add(home, "~")
+		add(home, "~", resolved)
 	}
 	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
 		products.Range(func(directory, key any) bool {
-			add(directory.(string), "<build cache>/"+key.(string))
+			add(directory.(string), "<build cache>/"+key.(string), productResolved)
 			return true
 		})
 	}
@@ -367,10 +370,29 @@ func places(root string) []place {
 }
 
 func resolved(path string) string {
+	resolutions.Add(1)
 	if value, err := filepath.EvalSymlinks(path); err == nil {
 		return value
 	}
 	return ""
+}
+
+// resolutions counts the paths this process has resolved: a test asks it.
+var resolutions atomic.Int64
+
+// productResolutions holds what each product directory places has met resolves to. places runs for every key a process
+// computes, over every product it holds, and a resolution is a stat per path element, each one a stop under a trace
+// (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving product directories
+// for the keys it checks). A product directory doesn't move once a process holds it, so each resolves once.
+var productResolutions sync.Map
+
+func productResolved(directory string) string {
+	if value, ok := productResolutions.Load(directory); ok {
+		return value.(string)
+	}
+	value := resolved(directory)
+	productResolutions.Store(directory, value)
+	return value
 }
 
 // replacePath replaces path with name where it stands as a whole path: not inside a longer name (/work/adamic in
@@ -550,12 +572,22 @@ func Tracked(root, name string, directory bool) bool {
 	return true
 }
 
+// statGit is os.Lstat, of a directory's .git: a test watches it.
+var statGit = os.Lstat
+
 func repositoryAt(directory string) *trackedFiles {
 	if found, ok := repositories.Load(directory); ok {
 		return found.(*trackedFiles)
 	}
 	var files *trackedFiles
-	if _, err := os.Lstat(filepath.Join(directory, ".git")); err == nil {
+	// Whether directory holds .git is a look at .git, which no product's read set may hold, so it is keying, as the
+	// listing is: a build that asks Tracked of a directory never reads .git (#1p6sent, a traced walk of the tree).
+	repository := false
+	keying(func() {
+		_, err := statGit(filepath.Join(directory, ".git"))
+		repository = err == nil
+	})
+	if repository {
 		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
 		var listed, dirty []byte
 		var err error

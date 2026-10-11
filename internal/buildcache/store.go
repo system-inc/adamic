@@ -245,10 +245,16 @@ func describeProduct(key, name, directory string) (manifest, error) {
 	return product, err
 }
 
-// publishToken is the write credential, or "" on a machine that doesn't hold one.
+// publishToken is the write credential, or "" on a machine that doesn't hold one. A run trusted as main's
+// (ADAMIC_BUILD_STORE_TRUST=main) may fall back to the box's token at ~/.loom/publish-token; any other run writes only
+// with the token file it is handed, so a candidate's tree is never given the box's credential by default (the 8.1
+// review, Oct 11: build-tree's traced products fell back to it for main and candidate trees alike).
 func publishToken() string {
 	path := os.Getenv("ADAMIC_BUILD_STORE_TOKEN")
 	if path == "" {
+		if !trusted() {
+			return ""
+		}
 		home, err := os.UserHomeDir()
 		if err != nil {
 			return ""
@@ -421,10 +427,11 @@ func newestReads(store, namespace, nameKey string) (day, index int, ok bool) {
 	return 0, 0, false
 }
 
-// fetchReads is nameKey's read sets in the store, newest first. An unreachable store, or a file that doesn't check, is
-// no sets: a lookup then misses, never trusts it.
-func fetchReads(nameKey string) []readSet {
+// fetchReads is nameKey's read sets in the store, newest first, and the product's name as the newest file holding any
+// names it. An unreachable store, or a file that doesn't check, is no sets: a lookup then misses, never trusts it.
+func fetchReads(nameKey string) (string, []readSet) {
 	store := storeAddress()
+	var name string
 	var sets []readSet
 	for _, namespace := range readsNamespaces() {
 		day, index, ok := newestReads(store, namespace, nameKey)
@@ -441,10 +448,13 @@ func fetchReads(nameKey string) []readSet {
 		}
 		var published publishedReads
 		if json.Unmarshal(content, &published) == nil && published.NameKey == nameKey && published.File.Version == readsVersion {
+			if name == "" && len(published.File.Sets) > 0 {
+				name = published.File.Name
+			}
 			sets = append(sets, published.File.Sets...)
 		}
 	}
-	return sets
+	return name, sets
 }
 
 // publishReads stores nameKey's read set file as today's next ref, after its blob.

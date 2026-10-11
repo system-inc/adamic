@@ -18,15 +18,23 @@
 // and one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are
 // neither placed nor published. It exits with the command's status, or 3 when the command passed and a product was
 // refused. Linux only: strace 6 with --seccomp-bpf and --decode-fds=path.
+//
+// With ADAMIC_TRACE_REPORT naming a file, it also writes there one JSON line per product (buildcache.Report: name,
+// nameKey, key and reads when settled, reason when refused), for Loom's tree builder. A run that can't be keyed at all
+// writes one line more, outcome lost, first; one that can't trace or settle (exit 2) writes only that line. The file is
+// emptied before the command runs, so a report left by an earlier run never reads as this one's.
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"syscall"
@@ -51,15 +59,28 @@ func main() {
 		flag.Usage()
 		os.Exit(2)
 	}
-	status, err := run(flag.Args())
+	report := os.Getenv("ADAMIC_TRACE_REPORT")
+	if report != "" {
+		if absolute, err := filepath.Abs(report); err == nil {
+			report = absolute
+		}
+		if err := os.WriteFile(report, nil, 0o644); err != nil {
+			fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", err)
+			os.Exit(2)
+		}
+	}
+	status, err := run(flag.Args(), report)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "traced:", err)
+		if report != "" {
+			buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + err.Error()}})
+		}
 		os.Exit(2)
 	}
 	os.Exit(status)
 }
 
-func run(command []string) (int, error) {
+func run(command []string, report string) (int, error) {
 	if runtime.GOOS != "linux" {
 		return 0, errors.New("tracing is strace's, on Linux (Workshop); here a product builds only with ADAMIC_BUILD_STORE=off, for this machine alone")
 	}
@@ -115,7 +136,8 @@ func run(command []string) (int, error) {
 		done <- settled{settlement, err}
 	}()
 	strace := exec.Command("strace", append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...)
-	strace.Stdin, strace.Stdout, strace.Stderr = os.Stdin, os.Stdout, os.Stderr
+	complaints := &straceComplaints{}
+	strace.Stdin, strace.Stdout, strace.Stderr = os.Stdin, os.Stdout, io.MultiWriter(os.Stderr, complaints)
 	status := 0
 	if err = strace.Run(); err != nil {
 		var exit *exec.ExitError
@@ -133,12 +155,60 @@ func run(command []string) (int, error) {
 	if result.err != nil {
 		return 0, fmt.Errorf("settling %s: %v", directory, result.err)
 	}
-	report := strings.Join(append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...), "\n") + "\n"
-	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(report), 0o644)
-	fmt.Print(report)
+	// strace exits with the command's status, but exits 1 when ptrace(PTRACE_LISTEN) fails on a tracee already gone, which
+	// loses nothing: a tracee still running would never have been resumed, and the run couldn't have ended (home-7's dry
+	// run, Oct 11: 3 of 454 tests exited 1 though go test passed and their products settled). Then the run's status is
+	// the command's own exit, as the trace holds it. After any other complaint of strace's, the trace may be missing
+	// events, so strace's status stands and the run reads as failed.
+	if result.settlement.CommandExited && status != result.settlement.CommandStatus && complaints.onlyListen() {
+		fmt.Fprintf(os.Stderr, "traced: strace exited %d after %d failed PTRACE_LISTEN on tracees already gone; the command exited %d, the run's status\n",
+			status, len(complaints.lines), result.settlement.CommandStatus)
+		status = result.settlement.CommandStatus
+	}
+	if report != "" {
+		if err = buildcache.WriteReport(report, result.settlement.Reports); err != nil {
+			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
+		}
+	}
+	lines := strings.Join(append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...), "\n") + "\n"
+	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(lines), 0o644)
+	fmt.Print(lines)
 	fmt.Printf("traced: %d settled, %d refused; journal and report in %s\n", len(result.settlement.Settled), len(result.settlement.Refused), directory)
 	if status == 0 && len(result.settlement.Refused) > 0 {
 		status = 3
 	}
 	return status, nil
+}
+
+// straceComplaints keeps strace's own lines from the stderr it shares with the command: each one it prints as
+// "strace: ...".
+type straceComplaints struct {
+	partial []byte
+	lines   []string
+}
+
+func (complaints *straceComplaints) Write(data []byte) (int, error) {
+	complaints.partial = append(complaints.partial, data...)
+	for {
+		end := bytes.IndexByte(complaints.partial, '\n')
+		if end < 0 {
+			return len(data), nil
+		}
+		if line := string(complaints.partial[:end]); strings.HasPrefix(line, "strace: ") {
+			complaints.lines = append(complaints.lines, line)
+		}
+		complaints.partial = complaints.partial[end+1:]
+	}
+}
+
+var listenFailed = regexp.MustCompile(`^strace: ptrace\(PTRACE_LISTEN,pid:\d+,sig:\d+\): Input/output error$`)
+
+// onlyListen says strace complained, and only of PTRACE_LISTEN failing with EIO.
+func (complaints *straceComplaints) onlyListen() bool {
+	for _, line := range complaints.lines {
+		if !listenFailed.MatchString(line) {
+			return false
+		}
+	}
+	return len(complaints.lines) > 0
 }

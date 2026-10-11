@@ -13,6 +13,8 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 )
@@ -41,8 +43,9 @@ import (
 // whose values differ from the ones its newest set recorded.
 const keptSets = 4
 
-// readsVersion versions the read set file and every key derived from it.
-const readsVersion = "buildcache reads v3"
+// readsVersion versions the read set file and every key derived from it. v4: a product read is valued by its bytes
+// (productDigest), where v3 valued it by its key.
+const readsVersion = "buildcache reads v4"
 
 type readsFile struct {
 	Version string    `json:"version"`
@@ -59,10 +62,11 @@ type readSet struct {
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
-// above the tree, relative to it), home (paths in the home directory, ~-relative), product (a name key), tool (a path
+// above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
+// for, by whether and as what it exists), product (a name key), tool (a path
 // under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
-// machine file, by the dpkg package that installed it unchanged or by itself) or settings (the build settings of the
-// binary that ran the build). Value is what it was when recorded, shortened, so a miss can
+// machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case: whether the file system
+// is case-sensitive, which osvfs asks as it starts) or settings (the build settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
 // name what changed; the key hashes the full value.
 type readEntry struct {
 	Kind  string `json:"kind"`
@@ -217,7 +221,10 @@ type evaluation struct {
 // evaluate values every entry of set on the tree at root and hashes them under nameKey. A product entry is valued
 // at that product's key on the same tree, which needs one of its sets to name a product in the cache; one that
 // can't is an error naming it, so the product reading it can't be keyed either.
-func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, error) {
+func evaluate(root, cache, nameKey string, set readSet, depth int, known productMemo) (evaluation, error) {
+	if known == nil {
+		known = productMemo{}
+	}
 	if depth > 16 {
 		return evaluation{}, fmt.Errorf("products read each other more than 16 deep at %s", nameKey[:12])
 	}
@@ -229,7 +236,7 @@ func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, 
 	field("name key", nameKey)
 	result := evaluation{values: make([]string, len(set.Entries))}
 	for index, entry := range set.Entries {
-		value, err := entryValue(root, cache, entry, depth)
+		value, err := entryValue(root, cache, entry, depth, known)
 		if err != nil {
 			return evaluation{}, err
 		}
@@ -240,7 +247,7 @@ func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, 
 	return result, nil
 }
 
-func entryValue(root, cache string, entry readEntry, depth int) (string, error) {
+func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, error) {
 	switch entry.Kind {
 	case "content", "listing", "exists":
 		if !local(entry.Path) {
@@ -260,6 +267,13 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		return "link " + target, nil
 	case "above":
 		return existence(filepath.Join(root, filepath.FromSlash(entry.Path))), nil
+	case "above cache":
+		return existence(filepath.Join(cache, filepath.FromSlash(entry.Path))), nil
+	case "absolute":
+		if !filepath.IsAbs(entry.Path) {
+			return "", fmt.Errorf("an absolute entry %q isn't an absolute path", entry.Path)
+		}
+		return existence(entry.Path), nil
 	case "home":
 		home, err := os.UserHomeDir()
 		if err != nil {
@@ -267,14 +281,17 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		}
 		return existence(filepath.Join(home, filepath.FromSlash(strings.TrimPrefix(entry.Path, "~/")))), nil
 	case "product":
-		found, err := productFor(root, cache, entry.Path, depth+1)
+		found, err := productFor(root, cache, entry.Path, depth+1, known)
 		if err != nil {
 			return "", err
 		}
 		if found.key == "" {
 			return "", fmt.Errorf("it reads product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
 		}
-		return found.key, nil
+		// By the bytes it read, not by the key they're under: another trace settling the same product records the union
+		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
+		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
+		return productDigest(found.directory)
 	case "tool":
 		return Tool(filepath.Join(toolsRoot(), filepath.FromSlash(entry.Path)), "--version"), nil
 	case "toolset":
@@ -292,13 +309,107 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		return systemValue(entry.Path), nil
 	case "settings":
 		return binarySettings(), nil
+	case "filesystem":
+		if entry.Path != "case" {
+			return "", fmt.Errorf("a file system entry %q names nothing a machine answers", entry.Path)
+		}
+		return caseSensitivity(), nil
 	}
 	return "", fmt.Errorf("a read set entry of unknown kind %q", entry.Kind)
+}
+
+// settledTree holds each tree entry's value while Settle runs, by root, kind and path. Settle values every product it
+// settles and every product each one reads, each in a pass of its own, so a family of products that read one another
+// and the same directories valued each listing again in every pass (home-5's dry run, Oct 11: css's PostCSS answers,
+// up to 40 sibling products and 3,047 listings each, settled for over 20 minutes). The tree is the same from Settle's
+// start to its end, or every build is refused (TreeState), so a value read once holds for all of it. Nil outside
+// Settle: a runner, or a test that changes the tree between lookups, values afresh.
+var settledTree atomic.Pointer[sync.Map]
+
+// treeValuesRead counts the tree values this process read rather than held: a test asks it.
+var treeValuesRead atomic.Int64
+
+// productDigests holds each product directory's digest once a process has it: a key's bytes never change.
+var productDigests sync.Map
+
+// productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
+// content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once.
+func productDigest(directory string) (string, error) {
+	if value, ok := productDigests.Load(directory); ok {
+		return value.(string), nil
+	}
+	kept := directory + ".digest"
+	if content, err := os.ReadFile(kept); err == nil && len(content) == 64 {
+		productDigests.Store(directory, string(content))
+		return string(content), nil
+	}
+	hash := sha256.New()
+	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(directory, path)
+		if err != nil {
+			return err
+		}
+		relative = filepath.ToSlash(relative)
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		switch {
+		case entry.IsDir():
+			fmt.Fprintf(hash, "directory %q\n", relative)
+		case info.Mode()&fs.ModeSymlink != 0:
+			target, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			fmt.Fprintf(hash, "link %q %q\n", relative, target)
+		case info.Mode().IsRegular():
+			content, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			sum := sha256.Sum256(content)
+			fmt.Fprintf(hash, "file %q %t %x\n", relative, info.Mode()&0o111 != 0, sum)
+		default:
+			fmt.Fprintf(hash, "other %q %s\n", relative, info.Mode().Type())
+		}
+		return nil
+	})
+	if err != nil {
+		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
+	}
+	value := hex.EncodeToString(hash.Sum(nil))
+	productDigests.Store(directory, value)
+	if temporary, err := os.CreateTemp(filepath.Dir(directory), filepath.Base(kept)+".*"); err == nil {
+		_, writeErr := temporary.WriteString(value)
+		if closeErr := temporary.Close(); writeErr != nil || closeErr != nil || os.Rename(temporary.Name(), kept) != nil {
+			os.Remove(temporary.Name())
+		}
+	}
+	return value, nil
 }
 
 // treeValue is a tree path as the tree carries it: a path git doesn't track (in a checkout; an unpacked source tracks
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
 func treeValue(root, kind, name string) string {
+	held := settledTree.Load()
+	if held == nil {
+		return readTreeValue(root, kind, name)
+	}
+	key := root + "\x00" + kind + "\x00" + name
+	if value, ok := held.Load(key); ok {
+		return value.(string)
+	}
+	value := readTreeValue(root, kind, name)
+	held.Store(key, value)
+	return value
+}
+
+func readTreeValue(root, kind, name string) string {
+	treeValuesRead.Add(1)
 	path := filepath.Join(root, filepath.FromSlash(name))
 	info, err := os.Stat(path)
 	if err != nil || name != "." && !Tracked(root, path, info.IsDir()) {
@@ -418,6 +529,26 @@ func existence(path string) string {
 	return "other " + info.Mode().Type().String()
 }
 
+// caseSensitivity is the file system's answer to osvfs's probe, asked as osvfs asks it: whether this process's own
+// executable exists with every letter's case swapped.
+func caseSensitivity() string {
+	executable, err := os.Executable()
+	if err != nil {
+		return "unknown: " + err.Error()
+	}
+	swapped := swapCase(executable)
+	switch _, err := os.Stat(swapped); {
+	case swapped == executable:
+		return "unknown: its executable's path has no letters"
+	case err == nil:
+		return "insensitive"
+	case errors.Is(err, fs.ErrNotExist):
+		return "sensitive"
+	default:
+		return "unknown: " + err.Error()
+	}
+}
+
 // toolsRoot is where Workshop's tools live: ADAMIC_TOOLS, or ~/adamic-tools. A tool entry names a path under it, so
 // the same tools under another home value the same.
 func toolsRoot() string {
@@ -438,7 +569,40 @@ type found struct {
 	keys                []string
 }
 
-func productFor(root, cache, nameKey string, depth int) (found, error) {
+// A productMemo holds each product one pass has looked up, by name key (Home's dry run, Oct 11: nine traces settled for
+// over two hours, each product read valuing every product it reads again, for every reader, ten deep). A pass is one
+// top-level productFor or evaluate, over one tree and one cache, so no answer outlives what it was given.
+type productMemo map[string]*productLookup
+
+// A productLookup is one product's answer in a pass; done is false while it is still being looked up, so meeting it
+// again then is a cycle.
+type productLookup struct {
+	done   bool
+	result found
+	err    error
+}
+
+// productFor is the product nameKey names on the tree at root, once per pass (known: nil starts one). A product read
+// while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
+// than at depth 16 down every branch.
+func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
+	if known == nil {
+		known = productMemo{}
+	}
+	if lookup, seen := known[nameKey]; seen {
+		if !lookup.done {
+			return found{}, fmt.Errorf("products read each other in a cycle at %s", nameKey[:min(12, len(nameKey))])
+		}
+		return lookup.result, lookup.err
+	}
+	lookup := &productLookup{}
+	known[nameKey] = lookup
+	lookup.result, lookup.err = lookupProduct(root, cache, nameKey, depth, known)
+	lookup.done = true
+	return lookup.result, lookup.err
+}
+
+func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (found, error) {
 	file, err := loadReads(cache, nameKey)
 	if err != nil {
 		return found{}, err
@@ -449,7 +613,7 @@ func productFor(root, cache, nameKey string, depth int) (found, error) {
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
-		evaluated, err := evaluate(root, cache, nameKey, set, depth)
+		evaluated, err := evaluate(root, cache, nameKey, set, depth, known)
 		if err != nil {
 			if index == 0 {
 				result.why = err.Error()

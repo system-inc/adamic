@@ -156,7 +156,7 @@ func recorded(t *testing.T) string {
 	}
 	nameKey := NameKey(root, thisPackage)
 	set := readSet{Entries: []readEntry{{Kind: "content", Path: "internal/buildcache/buildcache.go"}}}
-	evaluated, err := evaluate(root, cache, nameKey, set, 0)
+	evaluated, err := evaluate(root, cache, nameKey, set, 0, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -478,7 +478,8 @@ func TestReadSetsOutliveTheStoresLifecycle(t *testing.T) {
 		t.Helper()
 		t.Setenv("ADAMIC_BUILD_STORE", address)
 		defer t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
-		return len(fetchReads(build.NameKey)) > 0
+		_, sets := fetchReads(build.NameKey)
+		return len(sets) > 0
 	}
 	day += 3
 	store.expire(day, readsLifetime)
@@ -570,5 +571,32 @@ func TestTheTreeBuilderRestoresABlobTheStoreLost(t *testing.T) {
 	store.mutex.Unlock()
 	if !restored {
 		t.Fatalf("the tree builder used a product missing a blob and didn't publish it again: %q", store.writes)
+	}
+}
+
+// Only a run trusted as main's falls back to the box's token at ~/.loom/publish-token; a candidate's run writes only
+// with a token file it is handed, so it is never given the box's credential by default (the 8.1 review, Oct 11).
+// Mutant: the fallback for every run.
+// Not parallel: t.Setenv for HOME and the store's variables.
+func TestOnlyMainFallsBackToTheBoxToken(t *testing.T) {
+	home := t.TempDir()
+	write(t, filepath.Join(home, ".loom"), "publish-token", "box-token\n")
+	t.Setenv("HOME", home)
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", "")
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "main")
+	if got := publishToken(); got != "box-token" {
+		t.Fatalf("main's run read the token %q, want the box's", got)
+	}
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "")
+	if got := publishToken(); got != "" {
+		t.Fatalf("a candidate's run took the box's token %q", got)
+	}
+	handed := filepath.Join(t.TempDir(), "candidate-token")
+	if err := os.WriteFile(handed, []byte("candidate-token\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", handed)
+	if got := publishToken(); got != "candidate-token" {
+		t.Fatalf("a candidate's run handed a token file read %q", got)
 	}
 }
