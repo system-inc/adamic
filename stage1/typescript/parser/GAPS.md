@@ -218,7 +218,8 @@ use the operator field. Import attributes additionally carry element count,
 trailing comma and multiline fields. These fields prevent identical child
 sequences from hiding different declaration meanings.
 
-`TestWholeCompilerAgrees` compares every compiler file as a whole tree.
+`TestWholeCompilerAgrees_000` to `_015` compare every compiler file as a whole tree,
+each file in the shard its base name hashes to.
 Generated files cover every requested declaration and statement family,
 including with, resource declarations, decorators, parameter decorators,
 static blocks, accessors, index signatures, dotted namespaces, ambient modules,

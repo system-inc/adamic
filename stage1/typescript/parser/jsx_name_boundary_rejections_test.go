@@ -31,8 +31,8 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	return exit.ExitCode(), stderr.String()
 }
 
-// Not parallel: one control binary holds every name boundary before mutant builds.
 func TestJsxNameBoundaryRejections(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	directory, _ := filepath.Abs(".")
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -65,11 +65,7 @@ func TestJsxNameBoundaryRejections(t *testing.T) {
 		}
 		t.Logf("%s: Go diagnoses; Node/native refuse identically", item.name)
 	}
-	changes := []struct{ name, from, to, control string }{
-		{"private name accepted", "if(this.parser.kind() !== 'Identifier' && !this.parser.kind().endsWith('Keyword'))", "if(this.parser.kind() !== 'Identifier' && !this.parser.kind().endsWith('Keyword') && this.parser.kind() !== 'PrivateIdentifier')", "private member"},
-		{"escaped name accepted", "if((this.parser.scanner.flags & 1032) !== 0)", "if((this.parser.scanner.flags & 0) !== 0)", "escaped tag"},
-	}
-	for _, change := range changes {
+	for _, change := range jsxNameBoundaryChanges() {
 		t.Run(change.name, func(t *testing.T) {
 			mutant := copyPort(t, "jsx.ts", change.from, change.to)
 			mutantBinary := buildPort(t, mutant, true)
