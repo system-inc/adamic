@@ -20,6 +20,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // Freeze repository JSON so selection need not rerun this package on every
@@ -58,12 +59,44 @@ func gitPinnedInput(root string, input []byte, arguments ...string) ([]byte, err
 // corpus.pin names (untracked). Workshop builds it from a checkout that holds both, and the tests read only it, the
 // source archive and the cohere submodule's tracked files. Git objects are content addressed, so the pin alone
 // names the repository bytes; the lockfile names the provisioned ones, and corpus.pin checks both byte for byte.
-func jsonPinnedCorpusInputs() buildcache.Inputs {
+//
+// The repository's tracked JSON is declared too. The corpus carries the pin's JSON text, whose reports name the
+// machines they ran on (/tmp/adamic-gate/..., /private/tmp/...), and buildcache's relocation check passes such a path
+// only when a tracked file the product declares holds it (#arw7837). Those reports are tracked and unchanged since the
+// pin, so the product's key also moves when one of them does.
+func jsonPinnedCorpusInputs() (buildcache.Inputs, error) {
+	jsonTrackedSources.once.Do(func() {
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			jsonTrackedSources.err = err
+			return
+		}
+		entries, err := tracked.Files(root)
+		if err != nil {
+			jsonTrackedSources.err = err
+			return
+		}
+		for _, entry := range entries {
+			if !entry.Submodule() && strings.HasSuffix(entry.Path, ".json") {
+				jsonTrackedSources.files = append(jsonTrackedSources.files, entry.Path)
+			}
+		}
+	})
+	if jsonTrackedSources.err != nil {
+		return buildcache.Inputs{}, jsonTrackedSources.err
+	}
 	return buildcache.Inputs{
 		Name:  "json pinned corpus",
-		Files: []string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"},
+		Files: append([]string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"}, jsonTrackedSources.files...),
 		Flags: []string{"repository JSON at " + repositoryCorpusCommit, "provisioned " + provisionedCorpusPrefix + " inputs named by corpus.pin"},
-	}
+	}, nil
+}
+
+// jsonTrackedSources is the repository's tracked JSON, listed once per process.
+var jsonTrackedSources struct {
+	once  sync.Once
+	files []string
+	err   error
 }
 
 func buildJSONPinnedCorpus(directory string) error {
@@ -88,7 +121,11 @@ func buildJSONPinnedCorpus(directory string) error {
 // The product test and every corpus reader share one recipe and key.
 func TestProduct_JSONPinnedCorpus(t *testing.T) {
 	t.Parallel()
-	buildcache.Product(t, jsonPinnedCorpusInputs(), buildJSONPinnedCorpus)
+	inputs, err := jsonPinnedCorpusInputs()
+	if err != nil {
+		t.Fatal(err)
+	}
+	buildcache.Product(t, inputs, buildJSONPinnedCorpus)
 }
 
 // Every test in a process reads the product once. Callers get slice copies because hash partitioning sorts its
@@ -102,7 +139,12 @@ var pinnedCorpusRead struct {
 func pinnedCorpusProduct(t testing.TB) (tracked, provisioned []textCase) {
 	t.Helper()
 	pinnedCorpusRead.once.Do(func() {
-		directory, err := buildcache.Get(jsonPinnedCorpusInputs(), buildJSONPinnedCorpus)
+		inputs, err := jsonPinnedCorpusInputs()
+		if err != nil {
+			pinnedCorpusRead.err = fmt.Errorf("json pinned corpus inputs: %w", err)
+			return
+		}
+		directory, err := buildcache.Get(inputs, buildJSONPinnedCorpus)
 		if err == nil {
 			pinnedCorpusRead.tracked, err = readCorpusRecords(filepath.Join(directory, "repository"))
 		}
