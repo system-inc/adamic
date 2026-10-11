@@ -3,9 +3,10 @@ package typeaware
 import (
 	"context"
 	"encoding/json"
-	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Product declarations and check units use these same builders. Dependencies
@@ -25,7 +26,7 @@ func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, so
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	command := exec.Command("go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
+	command := toolchain.Command("go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
 	command.Dir = filepath.Join(h.repository, "cohere")
 	return h.sixBuildProduct(productName, command)
 }
@@ -39,7 +40,7 @@ func typeAwareOracle(h *harness, kind string) string {
 }
 
 func sixFactsCostGo(h *harness) string {
-	return h.sixBuildProduct("facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+	return h.sixBuildProduct("facts-cost-go-build", toolchain.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
 }
 
 func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) string {

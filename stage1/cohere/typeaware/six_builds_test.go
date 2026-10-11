@@ -16,6 +16,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The oracle recipe records all inputs for internal/buildcache.
@@ -84,7 +85,7 @@ func (h *harness) sixSourceInputs() []string {
 		{h.repository, []string{"./cmd/adamic", "./bridge/tsgo/archive", "./bridge/tsgo/cost", "./bridge/tsgo/checker"}},
 		{filepath.Join(h.repository, "cohere"), []string{"./internal/lint/rules/typescript"}},
 	} {
-		cmd := exec.Command("go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
+		cmd := toolchain.Command("go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
 		cmd.Dir = request.dir
 		data, err := typeAwareCommandOutput(cmd)
 		if err != nil {
@@ -181,7 +182,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	in.Toolchain = append([]string(nil), h.sixVersions...)
 	// Include effective Go configuration, not only exported values: GOENV may
 	// provide flags and compiler settings. The callback has the same environment.
-	env := exec.Command("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOWORK", "GOMOD")
+	env := toolchain.Command("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOWORK", "GOMOD")
 	env.Dir = command.Dir
 	env.Env = command.Env
 	data, err := typeAwareCommandOutput(env)
