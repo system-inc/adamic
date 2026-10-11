@@ -145,7 +145,8 @@ type Settlement struct {
 }
 
 // A Report is one product's outcome as cmd/traced writes it to ADAMIC_TRACE_REPORT, one JSON line each, for Loom's
-// tree builder: settled under Key (with how many reads its set names), or refused for Reason. When the whole run can't
+// tree builder: settled under Key (with how many reads its set names), found already built under Key, or refused for
+// Reason. When the whole run can't
 // be keyed (a lost trace, the tree changed or written), one line more comes first, with outcome lost, its Reason and
 // no product; every product of that run is refused too.
 type Report struct {
@@ -161,6 +162,7 @@ type Report struct {
 const (
 	ReportSettled = "settled"
 	ReportRefused = "refused"
+	ReportFound   = "found"
 	ReportLost    = "lost"
 )
 
@@ -1050,6 +1052,23 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if !settled[id] {
 			refuse(entry, "a lost trace: its build's markers aren't in the trace")
 		}
+	}
+	// What the run found already built, under its key in the cache: a test's products are these and the ones it
+	// settled (Planner's step 5 proof on Home, Oct 11: a tree that took a test's products from the census lost every
+	// one found). One this trace built itself is pending until it settles, and its settlement is its line.
+	names, reported := map[string]string{}, map[string]bool{}
+	for _, entry := range entries {
+		if entry.Name != "" && entry.NameKey != "" {
+			names[entry.NameKey] = entry.Name
+		}
+	}
+	for _, entry := range entries {
+		key := filepath.Base(entry.Directory)
+		if entry.Event != "found" || !isKey(key) || !slices.Contains(facts.caches, filepath.Dir(entry.Directory)) || reported[entry.NameKey+key] {
+			continue
+		}
+		reported[entry.NameKey+key] = true
+		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound})
 	}
 	os.Remove(filepath.Join(facts.cache, "pending", filepath.Base(facts.trace)))
 	sort.Strings(settlement.Refused)
