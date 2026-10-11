@@ -343,7 +343,7 @@ func TestSixGoBuildsAreUnstamped(t *testing.T) {
 		{[]string{"go", "build", "-buildvcs=true", "./p"}, []string{"go", "build", "-buildvcs=true", "./p"}},
 		{[]string{"go", "build", "-buildvcs=false", "./p"}, []string{"go", "build", "-buildvcs=false", "./p"}},
 		{[]string{"go", "env", "GOFLAGS"}, []string{"go", "env", "GOFLAGS"}},
-		{[]string{"clang", "build", "x.c"}, []string{"clang", "build", "x.c"}},
+		{[]string{"node", "build", "x.js"}, []string{"node", "build", "x.js"}},
 	} {
 		cmd := exec.Command(command.arguments[0], command.arguments[1:]...)
 		unstamped(cmd)
