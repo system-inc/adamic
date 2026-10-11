@@ -11,7 +11,6 @@ import (
 	"io/fs"
 	"maps"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 	"slices"
@@ -204,7 +203,8 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
 	facts.roots, facts.caches = variants(root), variants(cache)
-	output, err := exec.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
+	// Where a product's go keeps things: toolchain's go, under the environment GoBuild gives it.
+	output, err := toolchain.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
 	if err != nil {
 		return nil, fmt.Errorf("go env: %v", err)
 	}
@@ -1325,7 +1325,8 @@ func recipeOf(root string, process journalEntry) recipe {
 	if test {
 		arguments = append(arguments, "-test")
 	}
-	environment := os.Environ()
+	// The binary's own build settings over toolchain's environment, the one GoBuild's go builds under.
+	var environment []string
 	for _, setting := range process.Settings {
 		key, value, _ := strings.Cut(setting, "=")
 		switch key {
@@ -1335,8 +1336,8 @@ func recipeOf(root string, process journalEntry) recipe {
 			environment = append(environment, key+"="+value)
 		}
 	}
-	command := exec.Command("go", append(arguments, pkg)...)
-	command.Dir, command.Env = root, environment
+	command := toolchain.Command("go", append(arguments, pkg)...)
+	command.Dir, command.Env = root, toolchain.Env(environment...)
 	output, err := command.Output()
 	if err != nil {
 		return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
