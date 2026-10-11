@@ -83,16 +83,37 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 	return stderr.String() + stdout.String(), err
 }
 
-func TestMapHashProbeBound(t *testing.T) {
+// The probe's two allocators, by name. Each probe builds and runs the runtime on its own, 10 s alone on one core, so
+// each is its own top-level test below, and TestMapHashAllocatorsEachHaveOneTest holds the two in step.
+var mapHashProbeAllocators = map[string]bool{"malloc": false, "slabs": true}
+
+func TestMapHashProbeBoundMalloc(t *testing.T) {
 	t.Parallel()
-	for _, slabs := range []bool{false, true} {
-		t.Run(map[bool]string{false: "malloc", true: "slabs"}[slabs], func(t *testing.T) {
-			output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
-			t.Log(output)
-			if err != nil {
-				t.Fatalf("runtime map hash: %v", err)
-			}
-		})
+	runMapHashProbeBound(t, "malloc")
+}
+
+func TestMapHashProbeBoundSlabs(t *testing.T) {
+	t.Parallel()
+	runMapHashProbeBound(t, "slabs")
+}
+
+// An allocator added to the table without its test, or a test naming an allocator that isn't there, fails here
+// without building anything.
+func TestMapHashAllocatorsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	checkNamedWrappers(t, "map_hash_test.go", "TestMapHashProbeBound", "runMapHashProbeBound", mapHashProbeAllocators)
+}
+
+func runMapHashProbeBound(t *testing.T, name string) {
+	t.Helper()
+	slabs, ok := mapHashProbeAllocators[name]
+	if !ok {
+		t.Fatalf("no map hash probe allocator %q", name)
+	}
+	output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
+	t.Log(output)
+	if err != nil {
+		t.Fatalf("runtime map hash: %v", err)
 	}
 }
 
