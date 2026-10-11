@@ -217,7 +217,7 @@ func under(path, place string) bool {
 }
 
 // classed is one read as a key names it: kind is an entry kind (content, listing, exists, above, home, product,
-// tool, toolset, go, filesystem), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
+// tool, toolset, go, filesystem, absolute), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
 // needs (the kernel, the machine's system files, Go's own cache, the build cache's bookkeeping).
 type classed struct {
 	kind, detail string
@@ -364,10 +364,18 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			return classed{"system", name}
 		}
 	}
+	// A path that resolves through a symbolic link is what it resolves to (~/.adamic-tools, the link PATH runs clang
+	// through, is ~/adamic-tools, the tools directory): its target is classed in its place, as strictly as if it had
+	// been named. A machine file's link is keyed as itself (the system places, above), never resolved.
+	if real := resolved(name); real != "" && real != name {
+		return facts.classifyPath(real, kinds)
+	}
 	for _, place := range facts.temporary {
 		if under(name, place) {
-			// What the build's own processes made there never reaches here (record leaves it out).
-			if kinds&(readContent|readExec) != 0 {
+			// What the build's own processes made there never reaches here (record leaves it out). A directory opened
+			// without O_DIRECTORY reads as content, but a directory has none (what it lists is getdents', its own read):
+			// go's os.RemoveAll opens the temporary directory so to remove what the build made in it.
+			if kinds&(readContent|readExec) != 0 && !isDirectory(name) {
 				return classed{refusal + "temp not made by this run", name}
 			}
 			return classed{}
@@ -381,6 +389,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			return classed{"home", "~/" + strings.TrimPrefix(strings.TrimPrefix(name, facts.home), "/")}
 		}
 		return classed{refusal + "home", name}
+	}
+	// A path anywhere else that was only looked for (a module resolver's virtual root, /adamic-prelude; clang's search for
+	// a GCC installation, /opt/rh) is keyed by whether and as what it exists, the same on every machine that answers
+	// alike; reading what one holds is still refused.
+	if looked {
+		return classed{"absolute", name}
 	}
 	return classed{refusal + "other", name}
 }
