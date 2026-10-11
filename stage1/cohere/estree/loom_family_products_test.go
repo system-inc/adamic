@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -22,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Four workers use the gate's four CPUs; source, sanitizer flags and cases stay fixed.
@@ -342,7 +342,7 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 	t.Helper()
 	estreeFamilyDependencies.once.Do(func() {
 		repo := root(t)
-		command := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
+		command := toolchain.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
 		command.Dir = repo
 		output, err := command.Output()
 		if err != nil {
