@@ -21,6 +21,10 @@ import (
 
 const testVolumeConfigGuardAndMutantShards = 16
 
+// The corpus guard is its own family: one shard holding every corpus file it owns plus a control's worth of setup was
+// 43 s alone on one core (Workshop, Oct 11), and its owner moved with the checkout, since it hashed absolute paths.
+const testVolumeConfigGuardCorpusShards = 32
+
 type volumeGuardCase struct{ key, text string }
 
 func volumeGuardShard(key string) int {
@@ -51,26 +55,47 @@ func volumeGuardUnion(t *testing.T, buckets [][]volumeGuardCase, controls []stri
 	}
 
 }
-func volumeGuardCorpus(h *volumeGuardHarness, shard int, name, oracle, binary, config, manifest string) {
+
+// volumeGuardCorpusShard owns a corpus file by its path relative to its corpus's root, the same on every machine.
+func volumeGuardCorpusShard(key string) int {
+	sum := sha256.Sum256([]byte(key))
+	return int(sum[0]) % testVolumeConfigGuardCorpusShards
+}
+
+// volumeGuardCorpusPaths are a corpus manifest's files, each checked to occur once, with the key each is owned by.
+func volumeGuardCorpusPaths(t *testing.T, root, manifest string) ([]string, []string) {
+	t.Helper()
 	data, err := os.ReadFile(manifest)
 	if err != nil {
-		h.t.Fatal(err)
+		t.Fatal(err)
 	}
-	var paths []string
+	var paths, keys []string
 	seen := map[string]bool{}
 	for _, path := range strings.Split(strings.TrimSpace(string(data)), "\n") {
 		if path == "" {
 			continue
 		}
 		if seen[path] {
-			h.t.Fatalf("duplicate corpus case %s", path)
+			t.Fatalf("duplicate corpus case %s", path)
 		}
 		seen[path] = true
-		if volumeGuardShard(filepath.ToSlash(filepath.Clean(path))) == shard {
+		key, err := filepath.Rel(root, path)
+		if err != nil || key == ".." || strings.HasPrefix(key, ".."+string(filepath.Separator)) {
+			t.Fatalf("corpus case %s outside %s", path, root)
+		}
+		paths, keys = append(paths, path), append(keys, filepath.ToSlash(key))
+	}
+	return paths, keys
+}
+func volumeGuardCorpus(h *volumeGuardHarness, shard int, name, oracle, binary, config, root, manifest string) {
+	all, keys := volumeGuardCorpusPaths(h.t, root, manifest)
+	var paths []string
+	for i, path := range all {
+		if volumeGuardCorpusShard(keys[i]) == shard {
 			paths = append(paths, path)
 		}
 	}
-	h.t.Logf("%s union=%d shard cases=%d", name, len(seen), len(paths))
+	h.t.Logf("%s union=%d shard cases=%d", name, len(all), len(paths))
 	if len(paths) != 0 {
 		volumeGuardCompare(h, name+"-final-asan", oracle, binary, config, h.write(name+"-shard.manifest", strings.Join(paths, "\n")+"\n"))
 	}
@@ -252,14 +277,72 @@ func runVolumeConfigGuardShard(t *testing.T, shard int) {
 			}
 		}
 	}
-	if manifest := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"); manifest != "" {
-		volumeGuardCorpus(h, shard, "repository", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
+}
+
+// runVolumeConfigGuardCorpusShard compares the shard's slice of each corpus on Go and the sanitized native.
+func runVolumeConfigGuardCorpusShard(t *testing.T, shard int) {
+	t.Helper()
+	repositoryManifest, corpus := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"), os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if repositoryManifest == "" && corpus == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout, or ADAMIC_VOLUME_REPOSITORY_MANIFEST")
 	}
-	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
+	products := volumeGuardProductsFor(t)
+	ctx, cancel := volumeGuardUnitContext(t.Name())
+	defer cancel()
+	started := time.Now()
+	defer func() {
+		elapsed := time.Since(started)
+		t.Logf("corpus-shard-%03d elapsed_s=%.6f cooked=%t", shard, elapsed.Seconds(), ctx.Err() != nil)
+		if ctx.Err() != nil {
+			t.Error("cooked: shard exceeded 90s (over budget)")
+		}
+	}()
+	h := &volumeGuardHarness{harness: &harness{t: t, repository: products.repository, directory: t.TempDir()}, ctx: ctx}
+	if repositoryManifest != "" {
+		volumeGuardCorpus(h, shard, "repository", products.oracle, products.asan, filepath.Join(products.repository, "tsconfig.json"), products.repository, repositoryManifest)
+	}
+	if corpus != "" {
 		paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
-		volumeGuardCorpus(h, shard, "compiler", oracle, asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), h.write("compiler.manifest", strings.Join(paths, "\n")+"\n"))
+		volumeGuardCorpus(h, shard, "compiler", products.oracle, products.asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), corpus, h.write("compiler.manifest", strings.Join(paths, "\n")+"\n"))
 	}
 }
+
+// Every pinned compiler file is owned by exactly one corpus shard, and a planted disagreement in one is caught by its
+// owner alone.
+func TestVolumeConfigGuardCorpusUnion(t *testing.T) {
+	t.Parallel()
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
+	}
+	paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+	manifest := filepath.Join(t.TempDir(), "compiler.manifest")
+	if err := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	_, keys := volumeGuardCorpusPaths(t, corpus, manifest)
+	owned := make([]int, testVolumeConfigGuardCorpusShards)
+	caught := 0
+	for _, key := range keys {
+		owned[volumeGuardCorpusShard(key)]++
+		if key == "src/compiler/checker.ts" && !volumeGuardFindingBytesEqual([]byte(key+" planted disagreement"), []byte(key)) {
+			caught++
+			t.Logf("planted failure caught by TestVolumeConfigGuardCorpus_%03d", volumeGuardCorpusShard(key))
+		}
+		if !strings.HasPrefix(key, "src/compiler/") {
+			t.Fatalf("corpus key %s is not its file's place in the checkout", key)
+		}
+	}
+	total := 0
+	for _, count := range owned {
+		total += count
+	}
+	if total != len(paths) || caught != 1 {
+		t.Fatalf("union=%d/%d planted catches=%d", total, len(paths), caught)
+	}
+	t.Logf("union=%d compiler files across %d shards, each exactly once; owners per shard %v", total, testVolumeConfigGuardCorpusShards, owned)
+}
+
 func volumeGuardPreparationHarness(t *testing.T) *volumeGuardHarness {
 	t.Helper()
 	repository, err := filepath.Abs("../../..")
@@ -431,6 +514,134 @@ func TestVolumeConfigGuardAndMutant_014(t *testing.T) {
 func TestVolumeConfigGuardAndMutant_015(t *testing.T) {
 	t.Parallel()
 	runVolumeConfigGuardShard(t, 15)
+}
+func TestVolumeConfigGuardCorpus_000(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 0)
+}
+func TestVolumeConfigGuardCorpus_001(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 1)
+}
+func TestVolumeConfigGuardCorpus_002(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 2)
+}
+func TestVolumeConfigGuardCorpus_003(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 3)
+}
+func TestVolumeConfigGuardCorpus_004(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 4)
+}
+func TestVolumeConfigGuardCorpus_005(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 5)
+}
+func TestVolumeConfigGuardCorpus_006(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 6)
+}
+func TestVolumeConfigGuardCorpus_007(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 7)
+}
+func TestVolumeConfigGuardCorpus_008(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 8)
+}
+func TestVolumeConfigGuardCorpus_009(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 9)
+}
+func TestVolumeConfigGuardCorpus_010(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 10)
+}
+func TestVolumeConfigGuardCorpus_011(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 11)
+}
+func TestVolumeConfigGuardCorpus_012(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 12)
+}
+func TestVolumeConfigGuardCorpus_013(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 13)
+}
+func TestVolumeConfigGuardCorpus_014(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 14)
+}
+func TestVolumeConfigGuardCorpus_015(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 15)
+}
+func TestVolumeConfigGuardCorpus_016(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 16)
+}
+func TestVolumeConfigGuardCorpus_017(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 17)
+}
+func TestVolumeConfigGuardCorpus_018(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 18)
+}
+func TestVolumeConfigGuardCorpus_019(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 19)
+}
+func TestVolumeConfigGuardCorpus_020(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 20)
+}
+func TestVolumeConfigGuardCorpus_021(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 21)
+}
+func TestVolumeConfigGuardCorpus_022(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 22)
+}
+func TestVolumeConfigGuardCorpus_023(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 23)
+}
+func TestVolumeConfigGuardCorpus_024(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 24)
+}
+func TestVolumeConfigGuardCorpus_025(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 25)
+}
+func TestVolumeConfigGuardCorpus_026(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 26)
+}
+func TestVolumeConfigGuardCorpus_027(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 27)
+}
+func TestVolumeConfigGuardCorpus_028(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 28)
+}
+func TestVolumeConfigGuardCorpus_029(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 29)
+}
+func TestVolumeConfigGuardCorpus_030(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 30)
+}
+func TestVolumeConfigGuardCorpus_031(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardCorpusShard(t, 31)
 }
 
 // Bound both the driver and compilers it launches without an external deadline tool.
