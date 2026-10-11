@@ -75,7 +75,6 @@ func TestSplitUnitCoverage(t *testing.T) {
 		{"decode_ascii_test.go", "TestDecodeASCIIUnit", "runDecodeASCIIUnit", "native", 45},
 		{"decode_ascii_test.go", "TestDecodeASCIIWASIUnit", "runDecodeASCIIUnit", "wasi", 45},
 		{"normalize_test.go", "TestNormalizeMatchesNodePoints", "runNormalizeUnit", "", 17},
-		{"normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeUnit", "", 1},
 	} {
 		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
 		if err != nil {
@@ -87,12 +86,9 @@ func TestSplitUnitCoverage(t *testing.T) {
 			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
 				continue
 			}
-			index := 0
-			if plan.units != 1 {
-				index, err = strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
-				if err != nil || index < 0 || index >= plan.units || function.Name.Name != fmt.Sprintf("%s%02d", plan.prefix, index) {
-					t.Fatalf("unexpected unit %s", function.Name.Name)
-				}
+			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if err != nil || index < 0 || index >= plan.units || function.Name.Name != fmt.Sprintf("%s%02d", plan.prefix, index) {
+				t.Fatalf("unexpected unit %s", function.Name.Name)
 			}
 			if seen[index] || len(function.Body.List) != 2 {
 				t.Fatalf("invalid wrapper %s", function.Name.Name)
@@ -126,10 +122,6 @@ func TestSplitUnitCoverage(t *testing.T) {
 			if !ok || helper.Name != plan.helper {
 				t.Fatalf("wrong helper in %s", function.Name.Name)
 			}
-			wantIndex := index
-			if plan.units == 1 {
-				wantIndex = 17
-			}
 			wantArguments := 2
 			if plan.target != "" {
 				wantArguments = 3
@@ -138,7 +130,7 @@ func TestSplitUnitCoverage(t *testing.T) {
 				t.Fatalf("wrong arguments in %s", function.Name.Name)
 			}
 			actual, ok := call.Args[len(call.Args)-1].(*ast.BasicLit)
-			if !ok || actual.Value != strconv.Itoa(wantIndex) {
+			if !ok || actual.Value != strconv.Itoa(index) {
 				t.Fatalf("wrong range in %s", function.Name.Name)
 			}
 			if plan.target != "" {
@@ -480,6 +472,35 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 				t.Errorf("missing %s%02d", plan.prefix, index)
 			}
 		}
+	}
+}
+
+// checkRangesTile holds a table of ranges, each its own top-level test, to cases 0 to total: every
+// case in exactly one range, none left out, none swept twice, none past the end. A row is named by
+// its bounds, first and last both included, in format ("%X to %X"), so a name can't drift from what
+// its test sweeps.
+func checkRangesTile(t *testing.T, format string, total int, rows map[string]testUnitRange) {
+	t.Helper()
+	pieces := make([]testUnitRange, 0, len(rows))
+	for name, piece := range rows {
+		if piece.last <= piece.first {
+			t.Errorf("range %q is empty: %d to %d", name, piece.first, piece.last)
+		}
+		if want := fmt.Sprintf(format, piece.first, piece.last-1); name != want {
+			t.Errorf("range %q sweeps %s", name, want)
+		}
+		pieces = append(pieces, piece)
+	}
+	sort.Slice(pieces, func(left, right int) bool { return pieces[left].first < pieces[right].first })
+	next := 0
+	for _, piece := range pieces {
+		if piece.first != next {
+			t.Errorf("range %#x to %#x leaves a gap or overlaps: the ranges before it end at %#x", piece.first, piece.last, next)
+		}
+		next = max(next, piece.last)
+	}
+	if next != total {
+		t.Errorf("ranges end at %#x, want %#x", next, total)
 	}
 }
 
