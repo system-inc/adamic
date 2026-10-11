@@ -65,17 +65,11 @@ func TestTypedArrayViewsCannotChangeRepresentation(t *testing.T) {
 func TestTypedArrayFromArray(t *testing.T) {
 	t.Parallel()
 	// Only native shows FromArray selecting the array-copy constructor rather than the length constructor.
-	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([1, 2]);
-console.log(values.length.toString());
-for (const value of values) { console.log(value.toString()); }
-`)
+	lowersAndAgreesWithNodeNative(t, "TypedArrayFromArray")
 }
 
 func TestTypedArrayFromEmptyArray(t *testing.T) {
 	t.Parallel()
 	// Only native shows FromArray selecting the empty-array constructor rather than the length constructor.
-	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([]);
-console.log(values.length.toString());
-for (const value of values) { console.log(value.toString()); }
-`)
+	lowersAndAgreesWithNodeNative(t, "TypedArrayFromEmptyArray")
 }
