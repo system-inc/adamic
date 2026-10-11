@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
@@ -14,6 +15,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -42,22 +44,111 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	}
 	return data
 }
-func build(t *testing.T, directory string) string {
-	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	ir, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "helpers")
-	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+
+// A nativeMutation is one planted change to the helper sources: old, which must occur in file exactly once, becomes
+// new. The zero value is the unmutated program.
+type nativeMutation struct{ file, old, new string }
+
+// The sources of the helpers program, copied whole into a mutant's directory.
+var helperSources = []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"}
+
+// nativeProducts holds one nativeProduct per mutation, so each is got once per process.
+var nativeProducts sync.Map
+
+type nativeProduct struct {
+	once   sync.Once
+	binary string
 }
+
+// helpersNative is the sanitized native helpers program built with m planted, as a product the tree build makes ahead
+// (TestProduct_CommentsNative and the mutants' declarations), so no comparison pays for clang. native.Build serializes
+// its own runtime cache entries, so products build in parallel.
+func helpersNative(t *testing.T, m nativeMutation) string {
+	t.Helper()
+	value, _ := nativeProducts.LoadOrStore(m, &nativeProduct{})
+	product := value.(*nativeProduct)
+	product.once.Do(func() {
+		name := "comments-native"
+		if m.file != "" {
+			name += "-mutant-" + m.file
+		}
+		files := []string{"go.mod", "go.work", "internal", "stage1/typescript", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/comments/comments_test.go"}
+		for _, file := range helperSources {
+			files = append(files, "stage1/cohere/lint/helpers/comments/"+file)
+		}
+		flags := []string{"native.Build", "Sanitize=true", "mutation=" + m.file + ":" + m.old + "=>" + m.new, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
+		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+		directory := buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+			source := "."
+			if m.file != "" {
+				source = t.TempDir()
+				if err := writeMutant(source, m); err != nil {
+					return err
+				}
+			}
+			program, err := load.Load([]string{filepath.Join(source, "main.ts")})
+			if err != nil {
+				return err
+			}
+			ir, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				return err
+			}
+			return native.Build(native.C(ir), filepath.Join(directory, "helpers"), native.Options{Sanitize: true})
+		})
+		product.binary = filepath.Join(directory, "helpers")
+	})
+	if product.binary == "" {
+		t.Fatal("helpers native product failed earlier in this process")
+	}
+	return product.binary
+}
+
+// writeMutant copies the helper sources into directory with m planted, their imports from outside the package made
+// absolute.
+func writeMutant(directory string, m nativeMutation) error {
+	parserRoot, err := filepath.Abs("../../../../typescript")
+	if err != nil {
+		return err
+	}
+	options, err := filepath.Abs("../options_json.ts")
+	if err != nil {
+		return err
+	}
+	for _, file := range helperSources {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			return err
+		}
+		text := string(data)
+		if file == m.file {
+			if strings.Count(text, m.old) != 1 {
+				return fmt.Errorf("mutant anchor count %d in %s", strings.Count(text, m.old), file)
+			}
+			text = strings.Replace(text, m.old, m.new, 1)
+		}
+		text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
+		text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
+		if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func TestProduct_CommentsNative(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, nativeMutation{})
+}
+
+// jsxGuardMutant removes the TSX adapter guard.
+var jsxGuardMutant = nativeMutation{"main.ts", "if(adapted < 0 && name.endsWith('.tsx'))", "if(false)"}
+
+func TestProduct_CommentsJsxGuardMutant(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, jsxGuardMutant)
+}
+
 func compare(t *testing.T, got, want []byte) {
 	t.Helper()
 	if bytes.Equal(got, want) {
@@ -92,38 +183,19 @@ func TestProduct_CommentsOracle(t *testing.T) {
 	oracle(t)
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestCommentsMatchCohere(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs("testdata/witnesses.json")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.ts")
 	want := run(t, "", oracle(t), path)
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", build(t, "."), path), want)
+	compare(t, run(t, "", helpersNative(t, nativeMutation{}), path), want)
 	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
-// The inventory assumes a common AST adapter. This comparison isolates that
-// contract from the separate stage-1 parser, using Go's actual traversal spans.
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
-func TestConsumerCommentHelpers(t *testing.T) {
-	original, _ := filepath.Abs("testdata/consumers.json")
-	goOracle := oracle(t)
-	adapted := run(t, "", goOracle, "--ast", original)
-	path := filepath.Join(t.TempDir(), "adapted.json")
-	if err := os.WriteFile(path, adapted, 0644); err != nil {
-		t.Fatal(err)
-	}
-	want := run(t, "", goOracle, original)
-	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
-	entry, _ := filepath.Abs("main.ts")
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", build(t, "."), path), want)
-	t.Logf("Go, Node and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
-}
-
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestJsxParserGapIsExplicit(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
 		t.Fatal(err)
@@ -132,7 +204,7 @@ func TestJsxParserGapIsExplicit(t *testing.T) {
 	if err = json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
-	binary := build(t, ".")
+	binary := helpersNative(t, nativeMutation{})
 	goOracle := oracle(t)
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.ts")
@@ -167,30 +239,8 @@ func TestJsxParserGapIsExplicit(t *testing.T) {
 
 // Removing the TSX adapter guard must compile and accept the known wrong parse,
 // rather than merely crashing on one of the other unsupported JSX forms.
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestJsxAdapterGuardMutant(t *testing.T) {
-	directory := t.TempDir()
-	for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := string(data)
-		if file == "main.ts" {
-			old := "if(adapted < 0 && name.endsWith('.tsx'))"
-			if strings.Count(text, old) != 1 {
-				t.Fatal("guard mutant anchor changed")
-			}
-			text = strings.Replace(text, old, "if(false)", 1)
-		}
-		parserRoot, _ := filepath.Abs("../../../../typescript")
-		options, _ := filepath.Abs("../options_json.ts")
-		text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
-		text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-		if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
+	t.Parallel()
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
 		t.Fatal(err)
@@ -204,7 +254,7 @@ func TestJsxAdapterGuardMutant(t *testing.T) {
 	if err := os.WriteFile(path, corpus, 0644); err != nil {
 		t.Fatal(err)
 	}
-	output, stderr, err := gapRun(t, []string{build(t, directory), path})
+	output, stderr, err := gapRun(t, []string{helpersNative(t, jsxGuardMutant), path})
 	if err != nil || stderr != "" {
 		t.Fatalf("mutant must finish normally, not crash: %v %s", err, stderr)
 	}
