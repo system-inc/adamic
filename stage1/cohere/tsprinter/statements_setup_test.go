@@ -6,9 +6,9 @@ import (
 )
 
 type statementSharedProducts struct {
-	Cases, Want, Specs, Port, CompilerHash, LoweredDir string
-	Binary, Release, Library, LibraryHash              string
-	Elapsed                                            float64
+	Cases, Want, Specs, Port, LoweredDir  string
+	Binary, Release, Library, LibraryHash string
+	Elapsed                               float64
 }
 
 var statementCaseContexts sync.Map
