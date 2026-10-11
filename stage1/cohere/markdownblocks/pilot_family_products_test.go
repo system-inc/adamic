@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"sync"
 	"testing"
@@ -201,19 +202,8 @@ func tokenizerEventReady(t *testing.T) tokenizerEventSetup {
 		shards := tokenizerEventShards(tokenizerEventKeys(names))
 		validateTokenizerEventUnion(t, len(inputs), shards)
 		products := pilotProductsReady(t, "events")
-		// The full-corpus oracle uses temporary transport; mutant shards copy the batch.
-		dir, err := os.MkdirTemp("", "markdown-events-cases-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		defer os.RemoveAll(dir)
-		cases := filepath.Join(dir, "cases.txt")
 		batch := numericBatch(inputs)
-		write(t, cases, batch)
-		ctx, cancel := markdownLayoutSetupContext(t.Context())
-		defer cancel()
-		want := malformedEventsExecute(t, ctx, nil, products.goBinary, cases)
-		clean(t, "full Go mutant oracle", want)
+		want := run{stdout: tokenizerEventAnswers(t, products.goBinary, batch)}
 		answers := bytes.Split(bytes.TrimSuffix(want.stdout, []byte("\n")), []byte("\n"))
 		if len(answers) != len(inputs) {
 			t.Fatalf("Go oracle rows %d, want %d", len(answers), len(inputs))
@@ -238,6 +228,51 @@ func tokenizerEventReady(t *testing.T) tokenizerEventSetup {
 		t.Fatal("tokenizer preparation failed")
 	}
 	return tokenizerEventShared
+}
+
+// The full-corpus Go answers are a product keyed by the oracle binary's bytes and the whole numeric batch's, so
+// the first shard compares against Go's answers without rerunning Go on all 79000 cases, which cost it about 19 s
+// of one core. Every shard still runs actual Go on its own cases. The full-corpus oracle uses temporary transport;
+// mutant shards copy the batch.
+func tokenizerEventAnswers(t *testing.T, goBinary string, batch []byte) []byte {
+	t.Helper()
+	binary, err := os.ReadFile(goBinary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := buildcache.Inputs{Name: "markdownblocks-tokenizer-events-answers", Files: []string{"stage1/cohere/markdownblocks/pilot_family_products_test.go"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("cases-sha256=%x", sha256.Sum256(batch))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		scratch, err := os.MkdirTemp("", "markdown-events-cases-")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(scratch)
+		cases := filepath.Join(scratch, "cases.txt")
+		if err := os.WriteFile(cases, batch, 0644); err != nil {
+			return err
+		}
+		ctx, cancel := markdownLayoutSetupContext(t.Context())
+		defer cancel()
+		want, err := pilotExecuteResult(ctx, nil, goBinary, cases)
+		if err != nil {
+			return err
+		}
+		if want.exitCode != 0 || len(want.stderr) > 0 {
+			return fmt.Errorf("full Go mutant oracle exit %d stderr %s", want.exitCode, want.stderr)
+		}
+		return os.WriteFile(filepath.Join(directory, "answers.txt"), want.stdout, 0644)
+	})
+	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return answers
+}
+
+func TestProduct_TokenizerEventsAnswers(t *testing.T) {
+	t.Parallel()
+	_, inputs, _, _ := tokenizerEventLiveEnumeration(t)
+	tokenizerEventAnswers(t, pilotGoProduct(t, "events"), numericBatch(inputs))
 }
 
 // Child cancellation kills the process group; the caller owns the work deadline.
