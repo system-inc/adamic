@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
 	"net/http/httptest"
 	"os"
 	"os/exec"
@@ -1604,20 +1605,18 @@ func declaredDriftByScan(declared, reads []string) *drift {
 		}
 		if !declaredHere && name != "." {
 			result.Undeclared++
-			if len(result.UndeclaredPaths) < 20 {
-				result.UndeclaredPaths = append(result.UndeclaredPaths, name)
-			}
+			result.UndeclaredPaths = append(result.UndeclaredPaths, name)
 		}
 	}
 	for _, entry := range declared {
 		if !read[entry] && !unkeyed(entry) {
 			result.Unread++
-			if len(result.UnreadPaths) < 20 {
-				result.UnreadPaths = append(result.UnreadPaths, entry)
-			}
+			result.UnreadPaths = append(result.UnreadPaths, entry)
 		}
 	}
 	sort.Strings(result.UndeclaredPaths)
+	sort.Strings(result.UnreadPaths)
+	result.UndeclaredPaths, result.UnreadPaths = result.UndeclaredPaths[:min(20, len(result.UndeclaredPaths))], result.UnreadPaths[:min(20, len(result.UnreadPaths))]
 	return result
 }
 
@@ -1652,6 +1651,34 @@ func TestTheDeclaredDriftIsTheScansAtAnySize(t *testing.T) {
 	declaredDrift(declared, reads)
 	if took := time.Since(started); took > 3*time.Second {
 		t.Fatalf("76,000 reads against 76,000 entries took %v", took)
+	}
+}
+
+// The drift's sample of undeclared and unread paths is the first 20 of all of them, sorted, however the reads arrive:
+// they come from a map, so a sample cut before it was sorted named other paths each run (Loom, Oct 11). Mutant: the
+// sample cut before sorting.
+func TestTheDriftSamplesTheSameTwentyPathsInAnyOrder(t *testing.T) {
+	t.Parallel()
+	var declared, reads []string
+	for index := range 50 {
+		declared = append(declared, fmt.Sprintf("declared/%02d.go", index))
+		reads = append(reads, fmt.Sprintf("undeclared/%02d.go", index))
+	}
+	var wantUndeclared, wantUnread []string
+	for index := range 20 {
+		wantUndeclared = append(wantUndeclared, fmt.Sprintf("undeclared/%02d.go", index))
+		wantUnread = append(wantUnread, fmt.Sprintf("declared/%02d.go", index))
+	}
+	for permutation := range 8 {
+		shuffled := func(paths []string) []string {
+			paths = slices.Clone(paths)
+			rand.New(rand.NewPCG(uint64(permutation), 1)).Shuffle(len(paths), func(i, j int) { paths[i], paths[j] = paths[j], paths[i] })
+			return paths
+		}
+		got := declaredDrift(shuffled(declared), shuffled(reads))
+		if got.Undeclared != 50 || got.Unread != 50 || !slices.Equal(got.UndeclaredPaths, wantUndeclared) || !slices.Equal(got.UnreadPaths, wantUnread) {
+			t.Fatalf("permutation %d: %+v", permutation, got)
+		}
 	}
 }
 
