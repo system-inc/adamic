@@ -99,7 +99,7 @@ func prepareMode(root string, test262 string, work string, buildAdamic adamicBui
 	if err != nil {
 		return nil, err
 	}
-	cache, version, context, err := prepareCache()
+	cache, version, context, err := prepareCache(root)
 	if err != nil {
 		return nil, err
 	}

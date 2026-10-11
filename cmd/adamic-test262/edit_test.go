@@ -148,7 +148,12 @@ func TestRunnerLocationHelper(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST262_CONTEXT_HELPER") != "1" {
 		return
 	}
-	cache, _, context, err := prepareCache()
+	// A caller standing in a copy of the tree names that copy's root; by default this one's.
+	root := os.Getenv("ADAMIC_TEST262_CONTEXT_ROOT")
+	if root == "" {
+		root = "../.."
+	}
+	cache, _, context, err := prepareCache(root)
 	if err != nil {
 		t.Fatal(err)
 	}
