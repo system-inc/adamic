@@ -152,19 +152,10 @@ func prepareCSSNumbersSetup(t *testing.T) {
 			}
 			write(t, keep+".files.json", manifest)
 		}
+		// Only what every unit reads is fetched here; the port's and each mutant's products wait for the units that
+		// read them (numbersPrepareUnitProducts).
 		goBinary := numbersPreparedOracle(t)
 		main, _ := filepath.Abs("main.ts")
-		build := numbersPreparedProgram(t, -1)
-		sanitized := numbersPreparedNative(t, -1, true)
-		fast := numbersPreparedNative(t, -1, false)
-		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
-		mutants := make(map[string]numbersProgram)
-		mutantBinaries := make(map[string]string)
-		for index, mutation := range numbersMutations {
-			product := numbersPreparedProgram(t, index)
-			mutants[mutation.name] = product
-			mutantBinaries[mutation.name] = numbersPreparedNative(t, index, true)
-		}
 		library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
 		goIdentity := numbersOracleIdentity(t, goBinary)
@@ -188,6 +179,10 @@ func prepareCSSNumbersSetup(t *testing.T) {
 			}()
 			switch unit.kind {
 			case "batch":
+				build := numbersPreparedProgram(t, -1)
+				sanitized := numbersPreparedNative(t, -1, true)
+				// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
+				fast := numbersPreparedNative(t, -1, false)
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, numbersInput(corpus.texts[unit.lo:unit.hi]))
 				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
@@ -210,6 +205,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 					checkNumbersOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
 			case "raw":
+				sanitized := numbersPreparedNative(t, -1, true)
 				path := filepath.Join(t.TempDir(), "raw.css")
 				text := corpus.raw[unit.lo]
 				write(t, path, []byte(text))
@@ -235,8 +231,8 @@ func prepareCSSNumbersSetup(t *testing.T) {
 				clean(t, "Go", want)
 				mutation := numbersMutations[unit.lo]
 				for _, r := range []run{
-					numbersExecute(t, numbersSanitizerEnvironment(false), mutantBinaries[mutation.name], "--batch", cases),
-					numbersOnNode(t, mutants[mutation.name].main, "--batch", cases),
+					numbersExecute(t, numbersSanitizerEnvironment(false), numbersPreparedNative(t, unit.lo, true), "--batch", cases),
+					numbersOnNode(t, numbersPreparedProgram(t, unit.lo).main, "--batch", cases),
 				} {
 					clean(t, "mutant", r)
 					if bytes.Equal(r.stdout, want.stdout) {
@@ -258,7 +254,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 				args := []string{cases}
 				switch side {
 				case "native":
-					command = fast
+					command = numbersPreparedNative(t, -1, false)
 					args = []string{"--batch", cases}
 				case "Node":
 					runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -290,11 +286,19 @@ func prepareCSSNumbersSetup(t *testing.T) {
 
 func runCSSNumbersShard(t *testing.T, ordinal int) {
 	t.Helper()
-	// Fetch shared products once per process before starting this shard's clock.
+	// Fetch shared products once per process, and this unit's own, before starting this shard's clock.
 	prepareCSSNumbersSetup(t)
 	if numbersTopSetup.run == nil {
 		t.Fatal("shared setup did not complete")
 	}
+	unit, chosen := numbersTopSetup.units[ordinal], false
+	for _, selected := range selectedNumbersUnits(t, numbersTopSetup.units) {
+		chosen = chosen || selected.name == unit.name
+	}
+	if !chosen {
+		t.Skip("excluded by ADAMIC_TEST_SHARD")
+	}
+	numbersPrepareUnitProducts(t, unit)
 	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked TestCSSNumbers_%03d: case deadline exceeded 90s", ordinal)) })
 	defer timer.Stop()
 	started := time.Now()
@@ -303,17 +307,7 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
 		}
 	}()
-	if numbersTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
-	}
-	selected := selectedNumbersUnits(t, numbersTopSetup.units)
-	for _, unit := range selected {
-		if unit.name == numbersTopSetup.units[ordinal].name {
-			numbersTopSetup.run(t, unit)
-			return
-		}
-	}
-	t.Skip("excluded by ADAMIC_TEST_SHARD")
+	numbersTopSetup.run(t, unit)
 }
 
 func write(t *testing.T, path string, b []byte) {
