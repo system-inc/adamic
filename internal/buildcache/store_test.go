@@ -478,7 +478,8 @@ func TestReadSetsOutliveTheStoresLifecycle(t *testing.T) {
 		t.Helper()
 		t.Setenv("ADAMIC_BUILD_STORE", address)
 		defer t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
-		return len(fetchReads(build.NameKey)) > 0
+		_, sets := fetchReads(build.NameKey)
+		return len(sets) > 0
 	}
 	day += 3
 	store.expire(day, readsLifetime)

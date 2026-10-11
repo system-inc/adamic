@@ -114,22 +114,23 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	var described string
+	var described, name string
 	var looked found
 	keying(func() {
-		described = describe(root, inputs)
+		described, name = describe(root, inputs), portable(root, inputs.Name)
 		looked, err = productFor(root, cache, nameKey, 0, nil)
 	})
 	if err != nil {
 		return "", "", err
 	}
 	// The store's read sets for this name key join the cache's, so a machine with none of its own finds what the store
-	// holds (#vt46geg).
+	// holds (#vt46geg). Find (find.go) joins them the same way, for many name keys at once.
 	if looked.directory == "" && storeAddress() != "" {
-		if remote := fetchReads(nameKey); len(remote) > 0 {
-			if err = mergeReads(cache, nameKey, inputs.Name, remote); err != nil {
-				return "", "", err
-			}
+		joined, err := joinStoreReads(cache, nameKey, name)
+		if err != nil {
+			return "", "", err
+		}
+		if joined {
 			keying(func() { looked, err = productFor(root, cache, nameKey, 0, nil) })
 			if err != nil {
 				return "", "", err
@@ -138,7 +139,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	}
 	if looked.directory != "" {
 		journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: looked.directory})
-		refreshPublished(cache, nameKey, looked.key, looked.directory, inputs.Name)
+		refreshPublished(cache, nameKey, looked.key, looked.directory, name)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
@@ -164,7 +165,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 				return "", "", err
 			}
 			journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: product})
-			refreshPublished(cache, nameKey, key, product, inputs.Name)
+			refreshPublished(cache, nameKey, key, product, name)
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
