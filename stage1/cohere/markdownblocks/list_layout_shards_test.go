@@ -83,6 +83,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
+// Step 5 of #vt46geg measures a small change: this comment is it.
 func buildListLayoutSetup(t *testing.T) {
 	t.Helper()
 	listLayoutBuildOnce.Do(func() {
