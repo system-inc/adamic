@@ -59,9 +59,10 @@ func printerCorpusFiles(t *testing.T) []string {
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
-	command := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
-	if data, err := output(command); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("TypeScript pin: %q %v", data, err)
+	// The pin is a check, never an input: tracked.Head asks git as key-time work, with the home's configuration out of
+	// reach (home-6's dry run, Oct 11: this git read ~/.gitconfig inside the build, refusing it and the Go oracle beside it).
+	if head, err := tracked.Head(source); err != nil || head != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+		t.Fatalf("TypeScript pin: %q %v", head, err)
 	}
 	var files []string
 	for _, path := range repositoryCorpusRoots {
