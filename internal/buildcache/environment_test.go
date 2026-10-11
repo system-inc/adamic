@@ -3,6 +3,7 @@ package buildcache
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -62,5 +63,43 @@ func TestAHomesGitConfigurationReachesNeitherTrackedNorAKey(t *testing.T) {
 		if gotTracked[name] != want {
 			t.Errorf("under a hostile home Tracked(%s) = %v, under an empty one %v", name, gotTracked[name], want)
 		}
+	}
+}
+
+// A bare name in Tool is the program toolchain.Path resolves, the one a build asking toolchain runs: under
+// ADAMIC_TOOLS ahead of PATH, its install prefix still read as <name>, so the report is the one PATH's copy of the same
+// tool gives. In a sandbox, a tool only on PATH is reported by toolchain's error, so a product needing it fails rather
+// than keying PATH's. Mutants: Tool running the name from PATH; installedAs looking the bare name up on PATH.
+// Not parallel: t.Setenv.
+func TestAToolIsTheProgramToolchainResolves(t *testing.T) {
+	directory, elsewhere := t.TempDir(), t.TempDir()
+	fake := func(bin, version string) {
+		script := "#!/bin/sh\necho 'adamic-fake-tool " + version + "'\necho \"resources: " + filepath.Dir(bin) + "/lib\"\n"
+		write(t, bin, "adamic-fake-tool", script)
+		if err := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	fake(filepath.Join(directory, "bin"), "1.0")
+	fake(filepath.Join(elsewhere, "bin"), "2.0")
+	t.Setenv("PATH", filepath.Join(elsewhere, "bin")+string(filepath.ListSeparator)+os.Getenv("PATH"))
+	t.Setenv("ADAMIC_SANDBOX", "")
+	forget := func() { tools.Range(func(name, _ any) bool { tools.Delete(name); return true }) }
+	t.Cleanup(forget)
+	t.Setenv("ADAMIC_TOOLS", "")
+	forget()
+	if got, want := Tool("adamic-fake-tool", "--version"), "adamic-fake-tool --version: adamic-fake-tool 2.0\nresources: <adamic-fake-tool>/lib"; got != want {
+		t.Errorf("with no tools directory, Tool = %q, want PATH's %q", got, want)
+	}
+	t.Setenv("ADAMIC_TOOLS", directory)
+	forget()
+	if got, want := Tool("adamic-fake-tool", "--version"), "adamic-fake-tool --version: adamic-fake-tool 1.0\nresources: <adamic-fake-tool>/lib"; got != want {
+		t.Errorf("Tool = %q, want the tools directory's %q", got, want)
+	}
+	t.Setenv("ADAMIC_TOOLS", t.TempDir())
+	t.Setenv("ADAMIC_SANDBOX", "1")
+	forget()
+	if got := Tool("adamic-fake-tool", "--version"); !strings.Contains(got, "ADAMIC_SANDBOX=1") || strings.Contains(got, "2.0") {
+		t.Errorf("in a sandbox, a tool only on PATH reported %q", got)
 	}
 }
