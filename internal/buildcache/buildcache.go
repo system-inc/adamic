@@ -550,12 +550,22 @@ func Tracked(root, name string, directory bool) bool {
 	return true
 }
 
+// statGit is os.Lstat, of a directory's .git: a test watches it.
+var statGit = os.Lstat
+
 func repositoryAt(directory string) *trackedFiles {
 	if found, ok := repositories.Load(directory); ok {
 		return found.(*trackedFiles)
 	}
 	var files *trackedFiles
-	if _, err := os.Lstat(filepath.Join(directory, ".git")); err == nil {
+	// Whether directory holds .git is a look at .git, which no product's read set may hold, so it is keying, as the
+	// listing is: a build that asks Tracked of a directory never reads .git (#1p6sent, a traced walk of the tree).
+	repository := false
+	keying(func() {
+		_, err := statGit(filepath.Join(directory, ".git"))
+		repository = err == nil
+	})
+	if repository {
 		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
 		var listed, dirty []byte
 		var err error

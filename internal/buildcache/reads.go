@@ -13,6 +13,8 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 )
@@ -310,9 +312,35 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 	return "", fmt.Errorf("a read set entry of unknown kind %q", entry.Kind)
 }
 
+// settledTree holds each tree entry's value while Settle runs, by root, kind and path. Settle values every product it
+// settles and every product each one reads, each in a pass of its own, so a family of products that read one another
+// and the same directories valued each listing again in every pass (home-5's dry run, Oct 11: css's PostCSS answers,
+// up to 40 sibling products and 3,047 listings each, settled for over 20 minutes). The tree is the same from Settle's
+// start to its end, or every build is refused (TreeState), so a value read once holds for all of it. Nil outside
+// Settle: a runner, or a test that changes the tree between lookups, values afresh.
+var settledTree atomic.Pointer[sync.Map]
+
+// treeValuesRead counts the tree values this process read rather than held: a test asks it.
+var treeValuesRead atomic.Int64
+
 // treeValue is a tree path as the tree carries it: a path git doesn't track (in a checkout; an unpacked source tracks
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
 func treeValue(root, kind, name string) string {
+	held := settledTree.Load()
+	if held == nil {
+		return readTreeValue(root, kind, name)
+	}
+	key := root + "\x00" + kind + "\x00" + name
+	if value, ok := held.Load(key); ok {
+		return value.(string)
+	}
+	value := readTreeValue(root, kind, name)
+	held.Store(key, value)
+	return value
+}
+
+func readTreeValue(root, kind, name string) string {
+	treeValuesRead.Add(1)
 	path := filepath.Join(root, filepath.FromSlash(name))
 	info, err := os.Stat(path)
 	if err != nil || name != "." && !Tracked(root, path, info.IsDir()) {
