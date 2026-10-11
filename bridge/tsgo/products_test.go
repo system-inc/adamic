@@ -92,7 +92,7 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 		var dependency struct {
 			Dir                                                                        string
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			Module                                                                     *struct{ GoMod, Dir string }
+			Module                                                                     *struct{ Path, Version, GoMod, Dir string }
 		}
 		if err := decoder.Decode(&dependency); err == io.EOF {
 			break
@@ -115,7 +115,14 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 					if err != nil {
 						t.Fatal(err)
 					}
-					external[path] = fmt.Sprintf("%x", sha256.Sum256(content))
+					// Named by module, version and the file's path inside the module, never by where this machine's module
+					// cache sits: a Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed every
+					// bridge product apart from Workshop's (landable-10's run, 35 go builds on Cloud).
+					inside, err := filepath.Rel(dependency.Module.Dir, path)
+					if err != nil {
+						t.Fatal(err)
+					}
+					external[dependency.Module.Path+"@"+dependency.Module.Version+"/"+filepath.ToSlash(inside)] = fmt.Sprintf("%x", sha256.Sum256(content))
 				}
 			}
 		}
