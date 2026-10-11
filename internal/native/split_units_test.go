@@ -482,3 +482,91 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 		}
 	}
 }
+
+// checkNamedWrappers holds a table whose rows are each their own top-level test to those tests. The
+// row's name, not its place, picks its test: "BMP low halves" is prefix+"BMPLowHalves", whose body
+// is t.Parallel() and then helper(t, "BMP low halves"). Every function in file whose name starts
+// with prefix must be one of those, so a row without its test, a test for a row that isn't there,
+// or one that runs another row's case fails here, before anything is built.
+func checkNamedWrappers[Row any](t *testing.T, file, prefix, helper string, rows map[string]Row) {
+	t.Helper()
+	if len(rows) == 0 {
+		t.Fatalf("%s has no rows", prefix)
+	}
+	want := make(map[string]string, len(rows))
+	for row := range rows {
+		name := prefix
+		for _, word := range strings.Fields(row) {
+			name += strings.ToUpper(word[:1]) + word[1:]
+		}
+		if earlier, ok := want[name]; ok {
+			t.Fatalf("rows %q and %q both name %s", earlier, row, name)
+		}
+		want[name] = row
+	}
+	tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := make(map[string]bool, len(rows))
+	for _, declaration := range tree.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, prefix) {
+			continue
+		}
+		row, ok := want[function.Name.Name]
+		if !ok {
+			t.Errorf("%s names no row of its table", function.Name.Name)
+			continue
+		}
+		found[function.Name.Name] = true
+		if len(function.Body.List) != 2 {
+			t.Errorf("%s must be t.Parallel() then %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		parallel, ok := function.Body.List[0].(*ast.ExprStmt)
+		if !ok {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		parallelCall, ok := parallel.X.(*ast.CallExpr)
+		if !ok {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		selector, ok := parallelCall.Fun.(*ast.SelectorExpr)
+		if !ok || selector.Sel.Name != "Parallel" || len(parallelCall.Args) != 0 {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		if receiver, ok := selector.X.(*ast.Ident); !ok || receiver.Name != "t" {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		statement, ok := function.Body.List[1].(*ast.ExprStmt)
+		if !ok {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		call, ok := statement.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 2 {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		called, isHelper := call.Fun.(*ast.Ident)
+		argument, isT := call.Args[0].(*ast.Ident)
+		label, isLiteral := call.Args[1].(*ast.BasicLit)
+		named := ""
+		if isLiteral && label.Kind == token.STRING {
+			named, _ = strconv.Unquote(label.Value)
+		}
+		if !isHelper || called.Name != helper || !isT || argument.Name != "t" || named != row {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+		}
+	}
+	for name, row := range want {
+		if !found[name] {
+			t.Errorf("row %q has no top-level test %s", row, name)
+		}
+	}
+}
