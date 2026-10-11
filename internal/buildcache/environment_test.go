@@ -1,6 +1,7 @@
 package buildcache
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
@@ -101,5 +102,47 @@ func TestAToolIsTheProgramToolchainResolves(t *testing.T) {
 	forget()
 	if got := Tool("adamic-fake-tool", "--version"); !strings.Contains(got, "ADAMIC_SANDBOX=1") || strings.Contains(got, "2.0") {
 		t.Errorf("in a sandbox, a tool only on PATH reported %q", got)
+	}
+}
+
+// A GoBuild product's key and bytes are the same whatever the caller's environment holds beyond what the key reads:
+// a go configuration file (GOENV) setting GOFLAGS and the architecture level, which reach the bytes, an ADAMIC_JUNK, and
+// a GIT_DIR naming nothing, which broke the key's go list before (its build stamping asked git). Mutants: the build's go
+// run with the whole environment (the bytes move); the key's go list or go env run with it (the key fails or moves).
+// Not parallel: t.Setenv, cached.
+func TestAGoProductIsTheSameWhateverElseTheEnvironmentHolds(t *testing.T) {
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	// No GOFLAGS of the caller's, so the configuration file's would be go's, and go list would stamp a build through git.
+	t.Setenv("GOFLAGS", "")
+	build := func() (string, []byte) {
+		t.Helper()
+		cached(t)
+		forgetInputs()
+		inputs, err := goRequest{verb: "build", output: "hello", pkg: "./internal/buildcache/testdata/hello", arguments: reproducible(nil)}.inputs()
+		if err != nil {
+			t.Fatal(err)
+		}
+		content, err := os.ReadFile(GoBuild(t, "hello", "./internal/buildcache/testdata/hello", nil))
+		if err != nil {
+			t.Fatal(err)
+		}
+		return key(t, root, inputs), content
+	}
+	wantKey, wantBytes := build()
+	configuration := filepath.Join(t.TempDir(), "env")
+	write(t, filepath.Dir(configuration), "env", "GOFLAGS=-tags=junk\nGOARM64=v8.1\nGOAMD64=v3\n")
+	t.Setenv("GOENV", configuration)
+	t.Setenv("ADAMIC_JUNK", t.TempDir())
+	t.Setenv("GIT_DIR", filepath.Join(t.TempDir(), "nothing"))
+	t.Cleanup(forgetInputs)
+	gotKey, gotBytes := build()
+	if gotKey != wantKey {
+		t.Errorf("with junk in the environment the key is %s, without %s", gotKey, wantKey)
+	}
+	if !bytes.Equal(gotBytes, wantBytes) {
+		t.Errorf("with junk in the environment the product is %d other bytes", len(gotBytes))
 	}
 }

@@ -698,7 +698,18 @@ func Tool(name string, arguments ...string) string {
 	// Parallel tests asking at once wait on the first one's run rather than each running the tool.
 	report.once.Do(func() {
 		label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
-		keying(func() { report.value = toolValue(name, label, arguments) })
+		keying(func() { report.value = toolValue(name, label, arguments, nil) })
+	})
+	return report.value
+}
+
+// goRelease is Tool("go", "version") as a GoBuild product's go runs: toolchain's go under toolchain.Env, whose GOENV=off
+// keeps a configuration file's GOTOOLCHAIN from picking another release than the build's. Its report reads as Tool's.
+func goRelease() string {
+	entry, _ := tools.LoadOrStore("go version\x00toolchain.Env", &toolRun{})
+	report := entry.(*toolRun)
+	report.once.Do(func() {
+		keying(func() { report.value = toolValue("go", "go version", []string{"version"}, toolchain.Env()) })
 	})
 	return report.value
 }
@@ -715,11 +726,15 @@ type toolRun struct {
 	value string
 }
 
-// toolValue runs a tool for Tool: what it reads is the key's, never a build's.
-func toolValue(name, label string, arguments []string) string {
+// toolValue runs a tool for Tool: what it reads is the key's, never a build's. environment is the whole environment it
+// runs with, this process's own when nil.
+func toolValue(name, label string, arguments, environment []string) string {
 	var value string
 	if filepath.Base(name) == "go" && len(arguments) > 0 && arguments[0] == "env" {
-		settings, _, err := goSettings("", nil, arguments[1:])
+		if environment == nil {
+			environment = os.Environ()
+		}
+		settings, _, err := goSettings("", environment, arguments[1:])
 		value = label + ": " + strings.Join(settings, "\n")
 		if err != nil {
 			value += " (" + err.Error() + ")"
@@ -739,6 +754,7 @@ func toolValue(name, label string, arguments []string) string {
 			output.Reset()
 			diagnostics.Reset()
 			run := exec.Command(path, arguments...)
+			run.Env = environment
 			run.Stdout, run.Stderr = &output, &diagnostics
 			if err = run.Run(); !errors.Is(err, syscall.ETXTBSY) || attempt == toolBusyAttempts {
 				break

@@ -40,6 +40,10 @@
 //     configuration file under them is never read (GOENV=off below), so a home holds nothing a build reads.
 //   - TMPDIR: where go and the C compiler write scratch files, removed when they finish. -trimpath and cgo's own
 //     prefix maps keep the name out of the bytes.
+//   - PWD: how the caller spells its working directory (/var or /private/var on a Mac). A program trusts it only once
+//     it has checked it names its own directory (os.Getwd), so a tool run elsewhere ignores it, and one run where the
+//     caller stands spells its directory as the caller does, which a workspace file naming a module by that spelling
+//     needs (go matches go.work's use lines against it). exec.Cmd sets it only for a command with no Env of its own.
 //   - PATH, with ADAMIC_TOOLS's bin and go/bin directories put first when they exist, as env.sh puts them: go finds
 //     the C compiler a cgo build runs on PATH, and Path must find the same one, or the key's report of the compiler
 //     would name another than the build ran. PATH is a selector whose selection the key reads (the tool's report).
@@ -90,7 +94,7 @@ var goLocations = []string{"GOCACHE", "GOMODCACHE", "GOPATH", "GOTMPDIR", "GOCAC
 	"GONOSUMCHECK", "GONOPROXY", "GOPRIVATE", "GOINSECURE", "GOVCS", "GOAUTH"}
 
 // carried are the rest of what Env passes from the caller (the package doc says why for each). PATH is Env's own.
-var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
+var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "PWD", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
 	"HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "no_proxy", "all_proxy", "SSL_CERT_FILE", "SSL_CERT_DIR"}
 
 // gocacheSettings is the prefix of the shared Go cache's own settings (cmd/adamic-gocacheprog), passed with GOCACHEPROG.

@@ -15,6 +15,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // GoBuild is the product of 'go build <arguments> -o <output> <pkg>' run at the repository root with environment
@@ -91,7 +93,7 @@ func GoExports(t testing.TB, packages ...string) string {
 	}
 	root, _ := repositoryRoot()
 	return Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
+		command := toolchain.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
 		command.Dir = root
 		output, err := command.Output()
 		if err != nil {
@@ -187,9 +189,9 @@ func goProduct(t testing.TB, request goRequest) string {
 			defer cleanup()
 			arguments = planted
 		}
-		command := exec.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
+		command := toolchain.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
 		command.Dir = filepath.Join(root, request.module)
-		command.Env = append(os.Environ(), request.environment...)
+		command.Env = toolchain.Env(request.environment...)
 		if combined, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("go %s %s: %v\n%s", request.verb, request.pkg, err, combined)
 		}
@@ -323,15 +325,10 @@ func reproducible(arguments []string) []string {
 // product with -a, which compiles every package again, and the flag in the key retires a product built without it.
 const rebuildEverything = "go build -a: a header outside its package"
 
-// The go env values a build reads beyond its sources, resolved by go itself so a default counts like a setting, and
-// keyed as goSetting says: GOFLAGS without its -p share (portable), the workspace by content, the release
-// GOTOOLCHAIN selects.
-var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX",
-	"CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"}
-
-// goSettings runs go env for names in directory (the working directory when empty) with environment added, and
-// returns each variable as goSetting keys it, in the order asked, with the values go reported. -json among names is
-// ignored: the report is the same either way.
+// goSettings runs go env for names in directory (the working directory when empty) with environment, the whole
+// environment go runs with (toolchain.Env for a product, this process's own for Tool), and returns each variable as
+// goSetting keys it, in the order asked, with the values go reported. -json among names is ignored: the report is the
+// same either way.
 func goSettings(directory string, environment, names []string) (settings []string, values map[string]string, err error) {
 	keying(func() { settings, values, err = goSettingsKeyed(directory, environment, names) })
 	return settings, values, err
@@ -344,9 +341,9 @@ func goSettingsKeyed(directory string, environment, names []string) ([]string, m
 			asked = append(asked, name)
 		}
 	}
-	command := exec.Command("go", append([]string{"env", "-json", "GOVERSION"}, asked...)...)
+	command := toolchain.Command("go", append([]string{"env", "-json", "GOVERSION"}, asked...)...)
 	command.Dir = directory
-	command.Env = append(os.Environ(), environment...)
+	command.Env = environment
 	output, err := command.Output()
 	if err != nil {
 		var exit *exec.ExitError
@@ -399,7 +396,7 @@ func goWorkspace(path string) string {
 	if path == "" || path == "off" {
 		return "GOWORK=off"
 	}
-	output, err := exec.Command("go", "work", "edit", "-json", path).Output()
+	output, err := toolchain.Command("go", "work", "edit", "-json", path).Output()
 	if err != nil {
 		return "GOWORK unreadable: " + err.Error()
 	}
@@ -522,9 +519,9 @@ func (request goRequest) identity(root string) (string, overlayKey, error) {
 func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, error) {
 	directory := filepath.Join(root, request.module)
 	run := func(arguments ...string) ([]byte, error) {
-		command := exec.Command("go", arguments...)
+		command := toolchain.Command("go", arguments...)
 		command.Dir = directory
-		command.Env = append(os.Environ(), request.environment...)
+		command.Env = toolchain.Env(request.environment...)
 		output, err := command.Output()
 		if err != nil {
 			var exit *exec.ExitError
@@ -643,7 +640,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			return Inputs{}, err
 		}
 	}
-	settings, values, err := goSettings(directory, request.environment, goEnvironment)
+	// The go env values a build reads beyond its sources (toolchain.GoSettings, each of which toolchain.Env passes), asked
+	// of go under the environment the build gets, so a default counts like a setting, keyed as goSetting says: GOFLAGS
+	// without its -p share (portable), the workspace by content, the release GOTOOLCHAIN selects.
+	settings, values, err := goSettings(directory, toolchain.Env(request.environment...), toolchain.GoSettings)
 	if err != nil {
 		return Inputs{}, err
 	}
@@ -664,7 +664,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	if request.verb != "build" || request.module != "" {
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
-	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
+	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{goRelease()}}
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
