@@ -62,10 +62,6 @@ func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
 	}
 	return jsonTopState.cases, jsonTopState.shards
 }
-func jsonTopGoToolchain() ([]string, error) {
-	jsonTopState.goOnce.Do(func() { jsonTopState.goTools, jsonTopState.goErr = jsonGoToolchain() })
-	return jsonTopState.goTools, jsonTopState.goErr
-}
 func jsonTopClangToolchain() ([]string, error) {
 	jsonTopState.clangOnce.Do(func() { jsonTopState.clangTools, jsonTopState.clangErr = jsonClangToolchain() })
 	return jsonTopState.clangTools, jsonTopState.clangErr

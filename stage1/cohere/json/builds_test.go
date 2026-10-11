@@ -98,12 +98,14 @@ func jsonClangToolchain() ([]string, error) {
 	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
 }
 
-func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
+func jsonLoweredPortInputs() jsonBuildInputs {
 	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/builds_test.go"}
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
-	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, jsonBuildEnvironment("GOFLAGS", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: toolchain}
+	// It lowers in this process and runs clang, never go: its compiler is keyed by its sources (Files) and the Go
+	// release, not by go env or GOFLAGS, which differ between the tree builder and a runner (#nm31pcn).
+	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, jsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: []string{runtime.Version()}}
 }
 
 // The immutable lowering product contains the copied TypeScript and both emitted
@@ -197,64 +199,6 @@ func jsonLoweredProducts(t *testing.T, dir, entry string) jsonProducts {
 		t.Fatal(err)
 	}
 	return jsonProducts{entry: filepath.Join(dir, entry), script: filepath.Join(dir, "program.mjs"), c: string(source)}
-}
-
-func jsonPrepareMutation(t *testing.T, mutation printerMutation) jsonProducts {
-	tools, err := jsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := jsonLoweredPortInputs(tools)
-	inputs.Name = "json lowered printer mutant"
-	inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutation=%+v", mutation))
-	dir := jsonBuildUnit(t, "build-lowered-mutant", inputs, func(dir string) error { return buildJSONLoweredPortMutation(dir, &mutation) })
-	return jsonLoweredProducts(t, dir, "main.ts")
-}
-
-func jsonPrepareFixture(t *testing.T, path string) jsonProducts {
-	tools, err := jsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := jsonLoweredPortInputs(tools)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	absolute, err := filepath.Abs(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	relative, err := filepath.Rel(root, absolute)
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs.Name = "json lowered gap fixture"
-	inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
-	inputs.Flags = append(inputs.Flags, "entry="+filepath.ToSlash(relative))
-	dir := jsonBuildUnit(t, "build-lowered-fixture", inputs, func(dir string) error {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		entry := filepath.Join(dir, filepath.Base(path))
-		if err := os.WriteFile(entry, source, 0644); err != nil {
-			return err
-		}
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
-		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
-	})
-	return jsonLoweredProducts(t, dir, filepath.Base(path))
 }
 
 func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {

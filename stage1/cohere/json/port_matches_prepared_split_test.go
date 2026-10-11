@@ -410,12 +410,14 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 	return nil
 }
 
-func portMatchesJsonLoweredPortInputs(toolchain []string) portMatchesJsonBuildInputs {
+func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
 	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/port_matches_prepared_split_test.go"}
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
-	return portMatchesJsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, portMatchesJsonBuildEnvironment("GOFLAGS", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: toolchain}
+	// It lowers in this process and runs clang, never go: its compiler is keyed by its sources (Files) and the Go
+	// release, not by go env or GOFLAGS, which differ between the tree builder and a runner (#nm31pcn).
+	return portMatchesJsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, portMatchesJsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: []string{runtime.Version()}}
 }
 
 // The immutable lowering product contains the copied TypeScript and both emitted
@@ -624,7 +626,7 @@ func portMatchesProduct(t *testing.T, name string) string {
 				Toolchain: goTools,
 			}, portMatchesBuildJSONGoOracle)
 		case "lowered":
-			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(goTools), portMatchesBuildJSONLoweredPort)
+			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
 		case "release", "sanitized":
 			lowered := portMatchesProduct(t, "lowered")
 			source, err := os.ReadFile(filepath.Join(lowered, "main.c"))

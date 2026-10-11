@@ -245,16 +245,12 @@ func jsonPortTopShard(t *testing.T, target int) {
 		t.Fatal(err)
 	}
 	setup := time.Now()
-	goTools, err := jsonTopGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
 	clangTools, err := jsonTopClangToolchain()
 	if err != nil {
 		t.Fatal(err)
 	}
 	oracleDir := jsonTopOracle(t)
-	loweredDir := jsonTopProduct(t, "lowered", jsonLoweredPortInputs(goTools), buildJSONLoweredPort)
+	loweredDir := jsonTopProduct(t, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
 	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 	if err != nil {
 		t.Fatal(err)
