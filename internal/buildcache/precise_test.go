@@ -1654,3 +1654,33 @@ func TestTheDeclaredDriftIsTheScansAtAnySize(t *testing.T) {
 		t.Fatalf("76,000 reads against 76,000 entries took %v", took)
 	}
 }
+
+// The settlement holds the command's own exit as the trace records it, for cmd/traced to read when strace's own status
+// is strace's, not the command's. A child's exit is never the command's. Mutant: any process's exit taken.
+// Not parallel: newRig.
+func TestTheSettlementHoldsTheCommandsExit(t *testing.T) {
+	for _, each := range []struct {
+		lines  []string
+		exited bool
+		status int
+	}{
+		{[]string{"command +++ exited with 0 +++"}, true, 0},
+		{[]string{"command +++ exited with 2 +++"}, true, 2},
+		{[]string{"child +++ exited with 7 +++"}, false, -1},
+		{[]string{"command +++ killed by SIGKILL +++"}, false, -1},
+		{nil, false, -1},
+	} {
+		r := newRig(t)
+		child := r.pid + 1
+		r.open(r.pid, "source/a.c")
+		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+		r.open(child, "source/b.c")
+		for _, line := range each.lines {
+			r.lines = append(r.lines, strings.NewReplacer("command", fmt.Sprint(r.pid), "child", fmt.Sprint(child)).Replace(line))
+		}
+		settlement := r.settle(t)
+		if settlement.CommandExited != each.exited || each.exited && settlement.CommandStatus != each.status {
+			t.Fatalf("%q: exited %v with %d, want %v with %d", each.lines, settlement.CommandExited, settlement.CommandStatus, each.exited, each.status)
+		}
+	}
+}
