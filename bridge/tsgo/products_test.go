@@ -33,7 +33,7 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		"product=" + name,
 		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
 		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
-		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -I bridge/tsgo -lpthread -ldl -lm",
+		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -ffile-compilation-dir=. -I bridge/tsgo -lpthread -ldl -lm, by relative names from <repository>",
 		"native build --tsgo <archive>; --sanitize; --count",
 		"repository=" + repository,
 	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
@@ -314,7 +314,9 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
 	if archiveName, ok := drivers[name]; ok {
 		archive := bridgeProduct(t, repository, archiveName)
-		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-I", filepath.Join(repository, "bridge/tsgo"), filepath.Join(repository, "bridge/tsgo/testdata/api.c"), archive, "-lpthread", "-ldl", "-lm", "-o", destination))
+		// The driver compiles from the repository (run's directory) by relative names, with its compilation directory
+		// named ".", so the sanitized binary's globals and debug info name no checkout (#rmmw95x).
+		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-ffile-compilation-dir=.", "-I", "bridge/tsgo", "bridge/tsgo/testdata/api.c", archive, "-lpthread", "-ldl", "-lm", "-o", destination))
 	}
 	binaries := map[string]struct {
 		compiler, fixture, archive string
