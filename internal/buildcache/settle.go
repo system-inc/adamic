@@ -360,6 +360,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if name == cache {
 			return classed{}
 		}
+		// A lookup in the cache that missed read nothing, as a miss in Go's build cache reads nothing: namedProduct asking
+		// whether a product is pending under this trace, or one whose build never finished (Planner's step 5 tree on Home,
+		// Oct 11: three bridge-test-stage0 builds refused for "unknown product" at a pending path that wasn't there).
+		if kinds == readAbsent {
+			return classed{}
+		}
 		parts := strings.Split(strings.TrimPrefix(name, cache+"/"), "/")
 		switch {
 		// Named under the cache as the journal names it, whichever spelling the trace used.
