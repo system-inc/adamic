@@ -235,7 +235,9 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
 		t.Fatal(err)
 	}
-	source := strings.Repeat("assert.sameValue(1, 1);\n", 1800)
+	// Each line is about 442 bytes of C, so 1000 lines are about 455 KB, 1.7 times the old limit: room for a
+	// leaner emitter, without the 800 KB main of 1800 lines, which made this test 23 s alone on one core.
+	source := strings.Repeat("assert.sameValue(1, 1);\n", 1000)
 	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
