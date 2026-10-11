@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -147,7 +148,9 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 	t.Helper()
 	item := syntaxMutantEnumeration()[index]
 	inputs := syntaxMutantSetupInputs(t)
-	inputs.Name = "syntax-mutant-ready-v2-" + item.name
+	// v3: Want names its sources' directory as <sources>, so a v2 product, which named a temporary directory, isn't
+	// one this reads.
+	inputs.Name = "syntax-mutant-ready-v3-" + item.name
 	return buildcache.Product(t, inputs, func(dir string) error {
 		main, binary := syntaxMutantProducts(t, item)
 		oracle := filepath.Join(syntaxMutantOracleProduct(t), "oracle")
@@ -160,7 +163,10 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 		if index != 0 {
 			args = []string{"--audit", list, t.TempDir()}
 		}
-		want := execute(t, "", oracle, args...)
+		// The oracle names each source by its path, and the sources sit in a temporary directory of this build, random per
+		// build, so Want names that directory <sources> (landable-16c's tree, Oct 11: syntax-mutant-ready-v2 products
+		// differed build to build, the path hidden from relocatable in Want's base64). No reader compares the paths.
+		want := bytes.ReplaceAll(execute(t, "", oracle, args...), []byte(filepath.Dir(list)), []byte("<sources>"))
 		// Main and Binary are other products, named by their keys (#tqrqx60).
 		data, err := json.Marshal(syntaxMutantPrepared{Main: buildcache.Relative(main), Binary: buildcache.Relative(binary), Sources: sources, Want: want})
 		if err != nil {

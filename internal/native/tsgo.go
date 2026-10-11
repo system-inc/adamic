@@ -92,7 +92,10 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return err
 	}
-	units := []string{filepath.Join(directory, "main.c")}
+	// clang is given no absolute path to read, as Build gives it none: it compiles each unit by its name from inside the
+	// directory, so a sanitized binary's globals don't name it (landable-16c's tree, Oct 11: bridge-test-wrong-native,
+	// -healthy-region and -native-asan named /tmp/adamic-tsgo-<random>/adamic.c and every runtime unit, random per build).
+	units := []string{"main.c"}
 	entries, err := runtime.ReadDir("runtime")
 	if err != nil {
 		return err
@@ -107,16 +110,22 @@ func BuildTSGo(source, output, archive string, options Options) error {
 			return err
 		}
 		if strings.HasSuffix(path, ".c") {
-			units = append(units, path)
+			units = append(units, entry.Name())
 		}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
 		return err
 	}
-	arguments := append(tsgoFlags(source, options), "-o", output)
+	output, err = filepath.Abs(output)
+	if err != nil {
+		return err
+	}
+	arguments := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), "-o", output)
 	arguments = append(arguments, units...)
 	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
-	combined, err := exec.Command("clang", arguments...).CombinedOutput()
+	command := exec.Command("clang", arguments...)
+	command.Dir = directory
+	combined, err := command.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
