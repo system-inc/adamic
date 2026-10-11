@@ -449,7 +449,8 @@ func fileValue(root, path string, info fs.FileInfo) string {
 
 // gitValue is a regular file's content as git names it: whether it is executable, and its blob id. A checkout's clean
 // file is valued by the id its index holds, unread, so keying tens of thousands of files costs git's stat pass, not a
-// hash of each; a dirty one, one changed since git was asked, or a file in a tree with no git is hashed as git hashes
+// hash of each, and an unpacked source's file by the id its manifest's listing holds; a dirty one, one changed since
+// git was asked or the listing was written, or a file in a tree with neither git nor a manifest is hashed as git hashes
 // a blob, so a checkout and an unpacked source of it value the same. A read set's content entry (fileValue) and a
 // declared file (hashPath) are both valued here.
 func gitValue(root, path string, info fs.FileInfo) (string, error) {
@@ -465,7 +466,8 @@ func gitValue(root, path string, info fs.FileInfo) (string, error) {
 }
 
 // cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified a second
-// before git was asked or later, it is hashed instead (git's own racy-clean margin covers what came before).
+// before git was asked or later, it is hashed instead (git's own racy-clean margin covers what came before). In an
+// unpacked source it is the manifest's object, under the same margin before the listing was written.
 func cleanObject(root, name string, info fs.FileInfo) (gitObject, int, bool) {
 	for at := filepath.Dir(name); inside(root, at) || at == root; at = filepath.Dir(at) {
 		files := repositoryAt(at)

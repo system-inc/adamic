@@ -535,8 +535,9 @@ func unkeyed(name string) bool {
 type trackedFiles struct {
 	paths, directories map[string]bool
 	all                bool
-	// objects are git's ids of the files the index holds, by path, with their modes; dirty are those whose working
-	// copy differs from the index when taken, so a read set values a clean file by its id without reading it.
+	// objects are git's ids of the files the index (or an unpacked source's manifest) holds, by path, with their modes;
+	// dirty are those whose working copy differs from the index when taken, so a read set values a clean file by its id
+	// without reading it. taken is when git was asked, or when the manifest's listing was written.
 	objects map[string]gitObject
 	dirty   map[string]bool
 	taken   time.Time
@@ -631,16 +632,25 @@ func repositoryAt(directory string) *trackedFiles {
 				files.directories[parent] = true
 			}
 		}
-	} else if listing, ok := manifestListing(directory); ok {
+	} else if listing, taken, ok := manifestListing(directory); ok {
 		// A Loom runner's source has no .git: build-tree ships git's answers for each repository in a manifest, so the
 		// tracked files are its listing and nothing else, never the npm packages or the manifest the source carries
-		// beside them (#59paqn3). Every file is hashed, which is its git blob id, so the key is a checkout's.
-		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
+		// beside them (#59paqn3). A file is valued by the blob id the listing holds for it, unread, as a checkout's
+		// clean file is by its index's, when it was last modified a second before the listing was written: the source
+		// was unpacked from the commit the listing names (Loom checks every file against it before it ships one), so
+		// only a change since, which moves the file's time past the listing's, can make the two differ, and such a file
+		// is hashed (#szswjtc: a runner's lookup read and hashed every file of a product's read set, 8 to 27 s a hit).
+		// Either way a file's value is its git blob id, so the key is a checkout's.
+		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: taken}
 		for _, line := range strings.Split(string(listing), "\x00") {
-			// <mode> <type> <id>\t<path>, as git ls-tree -r -z --full-tree HEAD writes it.
-			_, name, ok := strings.Cut(line, "\t")
+			// <mode> <type> <id>\t<path>, as git ls-tree -r -z --full-tree HEAD writes it. A submodule's entry (a
+			// commit) names its repository's commit, not a file's content, so only a blob is a file's id.
+			fields, name, ok := strings.Cut(line, "\t")
 			if !ok || name == "" {
 				continue
+			}
+			if parts := strings.Fields(fields); len(parts) == 3 && parts[1] == "blob" {
+				files.objects[name] = gitObject{mode: parts[0], id: parts[2]}
 			}
 			files.paths[name] = true
 			for parent := path.Dir(name); parent != "."; parent = path.Dir(parent) {
@@ -657,20 +667,29 @@ func repositoryAt(directory string) *trackedFiles {
 // builder/tracked.go writes them, `git ls-tree -r -z --full-tree HEAD` byte for byte).
 const trackedManifestDirectory = ".tracked"
 
-// manifestListing is directory's repository's listing from the manifest at or above it, when the manifest records
-// directory as a repository; a directory it doesn't record isn't one.
-func manifestListing(directory string) ([]byte, bool) {
+// manifestListing is directory's repository's listing from the manifest at or above it, and when it was written (its
+// modification time), when the manifest records directory as a repository; a directory it doesn't record isn't one.
+func manifestListing(directory string) ([]byte, time.Time, bool) {
 	for root := directory; ; root = filepath.Dir(root) {
 		if info, err := os.Stat(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
 			relative, err := filepath.Rel(root, directory)
 			if err != nil || relative == trackedManifestDirectory || strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
-				return nil, false
+				return nil, time.Time{}, false
 			}
-			listing, err := os.ReadFile(filepath.Join(root, trackedManifestDirectory, relative, "files"))
-			return listing, err == nil
+			file, err := os.Open(filepath.Join(root, trackedManifestDirectory, relative, "files"))
+			if err != nil {
+				return nil, time.Time{}, false
+			}
+			defer file.Close()
+			info, err := file.Stat()
+			if err != nil {
+				return nil, time.Time{}, false
+			}
+			listing, err := io.ReadAll(file)
+			return listing, info.ModTime(), err == nil
 		}
 		if filepath.Dir(root) == root {
-			return nil, false
+			return nil, time.Time{}, false
 		}
 	}
 }

@@ -241,8 +241,8 @@ func TestADeclaredDirtyFileIsHashed(t *testing.T) {
 }
 
 // A checkout and an unpacked source of the same tree key the same: the checkout by its index's ids, the source by
-// hashing every file as git hashes a blob, with or without the .tracked manifest a Loom runner's source carries
-// (which then keeps a shipped untracked file out). An exec bit is part of a file's value either way.
+// hashing every file as git hashes a blob, or with the .tracked manifest a Loom runner's source carries (which then
+// keeps a shipped untracked file out) by its ids, here hashed still, every file written within a second of it. An exec bit is part of a file's value either way.
 // Mutant: the exec bit dropped from the value.
 func TestACheckoutAndItsUnpackedSourceKeyTheSame(t *testing.T) {
 	t.Parallel()
