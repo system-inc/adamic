@@ -44,7 +44,8 @@ func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Input
 func syntaxMutantIRProduct(t *testing.T, item syntaxMutant) string {
 	t.Helper()
 	inputs := syntaxMutantProductInputs(t, item)
-	inputs.Name = "estree-syntax-mutant-ir-" + item.name
+	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
+	inputs.Name = "estree-syntax-mutant-ir-v2-" + item.name
 	return buildcache.Product(t, inputs, func(dir string) error {
 		main := mutantPort(t, item.file, item.from, item.to)
 		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))

@@ -259,7 +259,8 @@ func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 			return err
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(source, "main.ts")})
+	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
+	program, err := load.LoadDisplayed([]string{filepath.Join(source, "main.ts")}, buildcache.Relative)
 	if err != nil {
 		return err
 	}

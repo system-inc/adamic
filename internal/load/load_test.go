@@ -267,3 +267,33 @@ func TestHouseStyleOptionsDoNotRejectValidControlFlow(t *testing.T) {
 		t.Fatalf("the explicit result still needs undefined: %v", diagnostics)
 	}
 }
+
+// A program loaded with a display names its files through it, everywhere it names them: a file's name, a node's
+// position, a declaration's file, and a diagnostic. Lowered-program products load so to name no build directory
+// (#tqrqx60: landable-13b's estree products held their random build directory, so no two builds were the same bytes).
+// Mutant: displayName ignoring the display.
+func TestALoadedProgramNamesItsFilesAsDisplayed(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t, [2]string{"main.ts", "import { half } from './helper.ts';\nconst answer = half(84);\n"},
+		[2]string{"helper.ts", "export function half(value: number): number {\n\treturn value / 2;\n}\n"})
+	directory := filepath.Dir(paths[0])
+	display := func(name string) string { return strings.Replace(name, directory, "<build cache>/product", 1) }
+	program, err := LoadDisplayed(paths[:1], display)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := program.FileName(program.Files()[0]); got != "<build cache>/product/main.ts" {
+		t.Errorf("the file is named %q", got)
+	}
+	for _, declaration := range program.Declarations(context.Background()) {
+		if strings.Contains(declaration.File, directory) || !strings.HasPrefix(declaration.File, "<build cache>/product/") {
+			t.Errorf("%s %s is declared in %q", declaration.Kind, declaration.Name, declaration.File)
+		}
+	}
+	broken := writeProgram(t, [2]string{"main.ts", "const broken: number = 'x';\n"})
+	_, err = LoadDisplayed(broken, func(name string) string { return strings.Replace(name, filepath.Dir(broken[0]), "<repository>", 1) })
+	var rejected *CheckError
+	if !errors.As(err, &rejected) || len(rejected.Diagnostics) != 1 || !strings.HasPrefix(rejected.Diagnostics[0], "<repository>/main.ts:1:7: ") {
+		t.Errorf("the diagnostic reads %v", err)
+	}
+}

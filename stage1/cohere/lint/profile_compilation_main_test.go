@@ -305,7 +305,8 @@ func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte
 
 func compilationLowered(t *testing.T, inputs buildcache.Inputs) string {
 	return buildcache.Product(t, inputs, func(dir string) error {
-		program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+		// Named placelessly: the IR's positions would otherwise carry this checkout's path (#tqrqx60).
+		program, err := load.LoadDisplayed([]string{filepath.Join(packageDirectory, "main.ts")}, buildcache.Relative)
 		if err != nil {
 			return err
 		}
