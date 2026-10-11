@@ -191,6 +191,8 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 }
 
 // The child of TestAProductReadsTheSameUnderAnotherPath: a process whose repository is the tree it runs in.
+// Not parallel: the child process TestAProductReadsTheSameUnderAnotherPath starts, alone in its process with its own
+// tree and cache.
 func TestRelocationChild(t *testing.T) {
 	mode := os.Getenv("ADAMIC_BUILDCACHE_RELOCATION")
 	if mode == "" {
