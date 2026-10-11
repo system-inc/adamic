@@ -755,6 +755,10 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
+	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
+	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
+	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
+	defer os.RemoveAll(capture)
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {
