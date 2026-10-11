@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sort"
 	"strconv"
 	"sync"
@@ -15,12 +16,20 @@ import (
 	"time"
 )
 
-// Only buckets exceeding 30s in both isolated command walls are subdivided.
-// Each child keeps every comparison for its cases. Shared products are fetched
-// before portMatchesRunItems starts the child's own-work deadline.
+// jsonGrain30Ordinals are the buckets whose whole run is more than about 45 s of one core's work, half the 90 s deadline,
+// even at 512 buckets: each is split into children, and each child keeps every comparison for its cases. A unit runs one
+// shard per CPU (testguard.Share), so a shard's wall time is its one-core work at any share (Loom, landable-18 run 6:
+// _126 past 90 s at 32 CPUs on an idle box). Shared products are fetched before portMatchesRunItems starts the child's
+// own-work deadline.
+var jsonGrain30Ordinals = []int{}
+
+// jsonGrain30SeparateLeakOrdinals are the split buckets whose largest indivisible fixture still passes the budget with
+// both sanitizer passes in one child: their leak pass runs as a child of its own.
+var jsonGrain30SeparateLeakOrdinals = []int{}
+
 func jsonGrain30Names(ordinal int) []string {
-	switch ordinal {
-	case 1, 4, 61, 110:
+	switch {
+	case slices.Contains(jsonGrain30Ordinals, ordinal):
 		names := []string{fmt.Sprintf("TestPortMatchesGoCohere_%03d_000", ordinal), fmt.Sprintf("TestPortMatchesGoCohere_%03d_001", ordinal)}
 		if jsonGrain30SeparateLeak(ordinal) {
 			names = append(names, fmt.Sprintf("TestPortMatchesGoCohere_%03d_002", ordinal))
@@ -82,7 +91,7 @@ func jsonGrain30Union(items []textCase, parts [][]textCase) error {
 // sanitizer passes run serially. Match the existing class-order arrangement:
 // each case has one agreement owner and one independent leak-pass owner.
 func jsonGrain30SeparateLeak(ordinal int) bool {
-	return ordinal == 1 || ordinal == 61 || ordinal == 110
+	return slices.Contains(jsonGrain30SeparateLeakOrdinals, ordinal)
 }
 
 type jsonGrain30Work struct {
@@ -229,18 +238,6 @@ func jsonGrain30Sides(t *testing.T, path string) []run {
 	return results
 }
 
-func TestPortMatchesGoCohere_001_000(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 1, 0) }
-func TestPortMatchesGoCohere_001_001(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 1, 1) }
-func TestPortMatchesGoCohere_001_002(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 1, 2) }
-func TestPortMatchesGoCohere_004_000(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 4, 0) }
-func TestPortMatchesGoCohere_004_001(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 4, 1) }
-func TestPortMatchesGoCohere_061_000(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 61, 0) }
-func TestPortMatchesGoCohere_061_001(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 61, 1) }
-func TestPortMatchesGoCohere_061_002(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 61, 2) }
-func TestPortMatchesGoCohere_110_000(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 110, 0) }
-func TestPortMatchesGoCohere_110_001(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 110, 1) }
-func TestPortMatchesGoCohere_110_002(t *testing.T) { t.Parallel(); jsonGrain30Run(t, 110, 2) }
-
 func TestJSONGrain30Union(t *testing.T) {
 	t.Parallel()
 	shards := portMatchesPartition(t)
@@ -280,7 +277,7 @@ func TestJSONGrain30Union(t *testing.T) {
 		}
 		bindings[function.Name.Name] = binding
 	}
-	for _, ordinal := range []int{1, 4, 61, 110} {
+	for _, ordinal := range jsonGrain30Ordinals {
 		items := shards[ordinal]
 		parts := jsonGrain30Parts(items)
 		work := jsonGrain30Plan(ordinal, items)
