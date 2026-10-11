@@ -101,13 +101,19 @@ int main(int count, char **arguments) {
 		}
 		return 0;
 	}
-	// Every string of one to four letters of the alphabet.
+	// Every string of one to four letters of the alphabet, or those numbered first up to last in that order.
+	size_t first = count == 4 ? (size_t)strtoull(arguments[2], NULL, 10) : 0;
+	size_t last = count == 4 ? (size_t)strtoull(arguments[3], NULL, 10) : SIZE_MAX;
+	size_t ordinal = 0;
 	for (size_t length = 1; length <= 4; length++) {
 		size_t total = 1;
 		for (size_t index = 0; index < length; index++) {
 			total *= LETTERS;
 		}
-		for (size_t number = 0; number < total; number++) {
+		for (size_t number = 0; number < total; number++, ordinal++) {
+			if (ordinal < first || ordinal >= last) {
+				continue;
+			}
 			uint32_t points[4];
 			size_t rest = number;
 			for (size_t index = length; index-- > 0;) {
@@ -175,9 +181,15 @@ if (process.argv[1] === 'points') {
 		}
 	}
 } else {
+	const first = process.argv.length === 4 ? Number(process.argv[2]) : 0;
+	const last = process.argv.length === 4 ? Number(process.argv[3]) : Infinity;
+	let ordinal = 0;
 	for (let length = 1; length <= 4; length++) {
 		const total = alphabet.length ** length;
-		for (let number = 0; number < total; number++) {
+		for (let number = 0; number < total; number++, ordinal++) {
+			if (ordinal < first || ordinal >= last) {
+				continue;
+			}
 			const points = [];
 			let rest = number;
 			for (let index = 0; index < length; index++) {
@@ -210,9 +222,10 @@ var normalizeAlphabet = []string{
 	"0xd800", "0xdc00", "0xc5",
 }
 
-func runNormalizeUnit(t *testing.T, index int) {
+// normalizeHarnessBinary builds the harness once for every test of the sweep, through the test build
+// cache, and gives the oracle that enumerates the same strings.
+func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
 	t.Helper()
-	defer checkGrainBudget(t)()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -229,18 +242,20 @@ func runNormalizeUnit(t *testing.T, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(built, "harness")
-	oracle := strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
+	return filepath.Join(built, "harness"), strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
+}
+
+func runNormalizeUnit(t *testing.T, index int) {
+	t.Helper()
+	defer checkGrainBudget(t)()
 	pieces := unitRanges(0x110000, normalizePointUnitSize)
-	if index < len(pieces) {
-		piece := pieces[index]
-		first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
-		compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
-		return
+	if index >= len(pieces) {
+		t.Fatalf("no code point unit %d", index)
 	}
-	letters := len(normalizeAlphabet)
-	compareStreams(t, letters+letters*letters+letters*letters*letters+letters*letters*letters*letters,
-		[]string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
+	binary, oracle := normalizeHarnessBinary(t)
+	piece := pieces[index]
+	first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
+	compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
 }
 
 func TestNormalizeMatchesNodePoints00(t *testing.T) {
@@ -328,7 +343,55 @@ func TestNormalizeMatchesNodePoints16(t *testing.T) {
 	runNormalizeUnit(t, 16)
 }
 
-func TestNormalizeMatchesNodeContexts(t *testing.T) {
+// The strings the contexts sweep is cut into, numbered in the order the harness and the oracle
+// enumerate them (every string of one letter, then of two, three and four), by their bounds, first
+// to last, both included. The whole sweep is more than one test should carry alone, so each range is
+// its own top-level test below, and TestNormalizeContextRangesTile holds the ranges to every string
+// once and to their tests.
+var normalizeContextRanges = map[string]testUnitRange{
+	"0 to 86549":       {0, 86550},
+	"86550 to 173099":  {86550, 173100},
+	"173100 to 259649": {173100, 259650},
+	"259650 to 346199": {259650, 346200},
+}
+
+func TestNormalizeMatchesNodeContexts0To86549(t *testing.T) {
 	t.Parallel()
-	runNormalizeUnit(t, 17)
+	runNormalizeContexts(t, "0 to 86549")
+}
+
+func TestNormalizeMatchesNodeContexts86550To173099(t *testing.T) {
+	t.Parallel()
+	runNormalizeContexts(t, "86550 to 173099")
+}
+
+func TestNormalizeMatchesNodeContexts173100To259649(t *testing.T) {
+	t.Parallel()
+	runNormalizeContexts(t, "173100 to 259649")
+}
+
+func TestNormalizeMatchesNodeContexts259650To346199(t *testing.T) {
+	t.Parallel()
+	runNormalizeContexts(t, "259650 to 346199")
+}
+
+// A range that leaves a string out or sweeps one twice, a range without its test, or a test naming a
+// range that isn't there fails here without building anything.
+func TestNormalizeContextRangesTile(t *testing.T) {
+	t.Parallel()
+	letters := len(normalizeAlphabet)
+	checkRangesTile(t, "%d to %d", letters+letters*letters+letters*letters*letters+letters*letters*letters*letters, normalizeContextRanges)
+	checkNamedWrappers(t, "normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeContexts", normalizeContextRanges)
+}
+
+func runNormalizeContexts(t *testing.T, name string) {
+	t.Helper()
+	defer checkGrainBudget(t)()
+	contexts, ok := normalizeContextRanges[name]
+	if !ok {
+		t.Fatalf("no context range %q", name)
+	}
+	binary, oracle := normalizeHarnessBinary(t)
+	first, last := strconv.Itoa(contexts.first), strconv.Itoa(contexts.last)
+	compareStreams(t, contexts.last-contexts.first, []string{binary, "contexts", first, last}, []string{"node", "--eval", oracle, "contexts", first, last})
 }
