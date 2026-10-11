@@ -43,8 +43,9 @@ import (
 // whose values differ from the ones its newest set recorded.
 const keptSets = 4
 
-// readsVersion versions the read set file and every key derived from it.
-const readsVersion = "buildcache reads v3"
+// readsVersion versions the read set file and every key derived from it. v4: a product read is valued by its bytes
+// (productDigest), where v3 valued it by its key.
+const readsVersion = "buildcache reads v4"
 
 type readsFile struct {
 	Version string    `json:"version"`
@@ -285,7 +286,10 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		if found.key == "" {
 			return "", fmt.Errorf("it reads product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
 		}
-		return found.key, nil
+		// By the bytes it read, not by the key they're under: another trace settling the same product records the union
+		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
+		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
+		return productDigest(found.directory)
 	case "tool":
 		return Tool(filepath.Join(toolsRoot(), filepath.FromSlash(entry.Path)), "--version"), nil
 	case "toolset":
@@ -322,6 +326,69 @@ var settledTree atomic.Pointer[sync.Map]
 
 // treeValuesRead counts the tree values this process read rather than held: a test asks it.
 var treeValuesRead atomic.Int64
+
+// productDigests holds each product directory's digest once a process has it: a key's bytes never change.
+var productDigests sync.Map
+
+// productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
+// content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once.
+func productDigest(directory string) (string, error) {
+	if value, ok := productDigests.Load(directory); ok {
+		return value.(string), nil
+	}
+	kept := directory + ".digest"
+	if content, err := os.ReadFile(kept); err == nil && len(content) == 64 {
+		productDigests.Store(directory, string(content))
+		return string(content), nil
+	}
+	hash := sha256.New()
+	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(directory, path)
+		if err != nil {
+			return err
+		}
+		relative = filepath.ToSlash(relative)
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		switch {
+		case entry.IsDir():
+			fmt.Fprintf(hash, "directory %q\n", relative)
+		case info.Mode()&fs.ModeSymlink != 0:
+			target, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			fmt.Fprintf(hash, "link %q %q\n", relative, target)
+		case info.Mode().IsRegular():
+			content, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			sum := sha256.Sum256(content)
+			fmt.Fprintf(hash, "file %q %t %x\n", relative, info.Mode()&0o111 != 0, sum)
+		default:
+			fmt.Fprintf(hash, "other %q %s\n", relative, info.Mode().Type())
+		}
+		return nil
+	})
+	if err != nil {
+		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
+	}
+	value := hex.EncodeToString(hash.Sum(nil))
+	productDigests.Store(directory, value)
+	if temporary, err := os.CreateTemp(filepath.Dir(directory), filepath.Base(kept)+".*"); err == nil {
+		_, writeErr := temporary.WriteString(value)
+		if closeErr := temporary.Close(); writeErr != nil || closeErr != nil || os.Rename(temporary.Name(), kept) != nil {
+			os.Remove(temporary.Name())
+		}
+	}
+	return value, nil
+}
 
 // treeValue is a tree path as the tree carries it: a path git doesn't track (in a checkout; an unpacked source tracks
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
