@@ -1089,14 +1089,14 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
 		for _, other := range file.Sets {
-			if before, err := evaluate(root, cache, nameKey, other, 0); err == nil && len(differing(other, before)) == 0 {
+			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
 				set.Entries = sortedEntries(set.Entries, other.Entries)
 				continue
 			}
 			kept = append(kept, other)
 		}
 		var err error
-		if evaluated, err = evaluate(root, cache, nameKey, set, 0); err != nil {
+		if evaluated, err = evaluate(root, cache, nameKey, set, 0, nil); err != nil {
 			return err
 		}
 		for index := range set.Entries {
