@@ -752,7 +752,7 @@ func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(t *testing.T) {
 			t.Fatalf("the read set %q lacks %q", got, want)
 		}
 	}
-	if value, _ := entryValue(r.root, r.cache, readEntry{Kind: "link", Path: "lib"}, 0); value != "link source" {
+	if value, _ := entryValue(r.root, r.cache, readEntry{Kind: "link", Path: "lib"}, 0, nil); value != "link source" {
 		t.Fatalf("a symbolic link to a directory values %q", value)
 	}
 	write(t, r.root, "source/a.c", "int a2;\n")
@@ -969,7 +969,7 @@ func TestAFileIsValuedByItsGitObject(t *testing.T) {
 	}
 	gitIn(t, r.root, "update-index", "--refresh", "-q")
 	forgetTracked()
-	inCheckout, err := evaluate(r.root, r.cache, nameKey, set, 0)
+	inCheckout, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -982,12 +982,12 @@ func TestAFileIsValuedByItsGitObject(t *testing.T) {
 		content, _ := os.ReadFile(filepath.Join(r.root, name))
 		write(t, unpacked, name, string(content))
 	}
-	if inSource, err := evaluate(unpacked, r.cache, nameKey, set, 0); err != nil || inSource.key != inCheckout.key {
+	if inSource, err := evaluate(unpacked, r.cache, nameKey, set, 0, nil); err != nil || inSource.key != inCheckout.key {
 		t.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, err)
 	}
 	// Changed after git was asked, with git's answer still held: hashed, so the key moves.
 	write(t, r.root, "source/a.c", "int a2;\n")
-	if after, _ := evaluate(r.root, r.cache, nameKey, set, 0); after.key == inCheckout.key {
+	if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == inCheckout.key {
 		t.Fatal("a file changed after git was asked kept its old id")
 	}
 }
@@ -1060,6 +1060,62 @@ func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
 		if got := r.entries(t, built[pair[0]].NameKey); slices.Contains(got, "product "+built[pair[1]].NameKey) {
 			t.Fatalf("%s's read set names %s, a sibling still being built when it was read: %q", pair[0], pair[1], got)
 		}
+	}
+}
+
+// A product many others read is valued once per pass: 12 layers of 3 products, each reading the 3 below, is 3^12
+// evaluations without a memo (Home's dry run, Oct 11: nine traces settled for over two hours, ten deep) and 36 with
+// one. Two products reading each other fail at once, named as a cycle. Mutants: productFor without its memo (the graph
+// runs past its deadline); the cycle never marked (it runs to depth 16 down every branch).
+// Not parallel: newRig.
+func TestAProductIsValuedOncePerPass(t *testing.T) {
+	r := newRig(t)
+	nameKeyOf := func(layer, index int) string {
+		return fmt.Sprintf("%064x", layer*16+index+1)
+	}
+	for layer := range 12 {
+		for index := range 3 {
+			set := readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+			if layer > 0 {
+				for below := range 3 {
+					set.Entries = append(set.Entries, readEntry{Kind: "product", Path: nameKeyOf(layer-1, below)})
+				}
+			}
+			set.Entries = sortedEntries(set.Entries)
+			evaluated, err := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			set.Key = evaluated.key
+			if err := recordReads(r.cache, nameKeyOf(layer, index), fmt.Sprintf("layer %d product %d", layer, index), set); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	started := time.Now()
+	top, err := productFor(r.root, r.cache, nameKeyOf(11, 0), 0, nil)
+	if err != nil || top.directory == "" {
+		t.Fatalf("the top of the graph: %+v, %v", top, err)
+	}
+	if took := time.Since(started); took > 5*time.Second {
+		t.Fatalf("valuing 36 products took %v", took)
+	}
+	cycle := func(from, to string) {
+		t.Helper()
+		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: to}})}
+		if err := recordReads(r.cache, from, "cycle "+from[:4], set); err != nil {
+			t.Fatal(err)
+		}
+	}
+	first, second := strings.Repeat("e", 64), strings.Repeat("f", 64)
+	cycle(first, second)
+	cycle(second, first)
+	looked, err := productFor(r.root, r.cache, first, 0, nil)
+	if err != nil || looked.directory != "" || !strings.Contains(looked.why, "cycle") {
+		t.Fatalf("two products reading each other: %+v, %v", looked, err)
 	}
 }
 
@@ -1246,12 +1302,12 @@ func TestAFileGitStopsComparingIsHashed(t *testing.T) {
 			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
 			gitIn(t, r.root, "update-index", "--refresh", "-q")
 			forgetTracked()
-			before, _ := evaluate(r.root, r.cache, nameKey, set, 0)
+			before, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 			gitIn(t, r.root, "update-index", flag, "source/a.c")
 			write(t, r.root, "source/a.c", "int Z;\n")
 			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
 			forgetTracked()
-			if after, _ := evaluate(r.root, r.cache, nameKey, set, 0); after.key == before.key {
+			if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == before.key {
 				t.Fatalf("source/a.c edited under %s kept its key", flag)
 			}
 		})

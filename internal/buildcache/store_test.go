@@ -156,7 +156,7 @@ func recorded(t *testing.T) string {
 	}
 	nameKey := NameKey(root, thisPackage)
 	set := readSet{Entries: []readEntry{{Kind: "content", Path: "internal/buildcache/buildcache.go"}}}
-	evaluated, err := evaluate(root, cache, nameKey, set, 0)
+	evaluated, err := evaluate(root, cache, nameKey, set, 0, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

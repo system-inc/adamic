@@ -165,7 +165,7 @@ func productDirectory(nameKey string) string {
 }
 
 func namedProduct(root, cache, nameKey string) string {
-	if looked, err := productFor(root, cache, nameKey, 0); err == nil && looked.directory != "" {
+	if looked, err := productFor(root, cache, nameKey, 0, nil); err == nil && looked.directory != "" {
 		return looked.directory
 	}
 	if traceDirectory() != "" {

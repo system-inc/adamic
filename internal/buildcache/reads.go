@@ -218,7 +218,10 @@ type evaluation struct {
 // evaluate values every entry of set on the tree at root and hashes them under nameKey. A product entry is valued
 // at that product's key on the same tree, which needs one of its sets to name a product in the cache; one that
 // can't is an error naming it, so the product reading it can't be keyed either.
-func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, error) {
+func evaluate(root, cache, nameKey string, set readSet, depth int, known productMemo) (evaluation, error) {
+	if known == nil {
+		known = productMemo{}
+	}
 	if depth > 16 {
 		return evaluation{}, fmt.Errorf("products read each other more than 16 deep at %s", nameKey[:12])
 	}
@@ -230,7 +233,7 @@ func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, 
 	field("name key", nameKey)
 	result := evaluation{values: make([]string, len(set.Entries))}
 	for index, entry := range set.Entries {
-		value, err := entryValue(root, cache, entry, depth)
+		value, err := entryValue(root, cache, entry, depth, known)
 		if err != nil {
 			return evaluation{}, err
 		}
@@ -241,7 +244,7 @@ func evaluate(root, cache, nameKey string, set readSet, depth int) (evaluation, 
 	return result, nil
 }
 
-func entryValue(root, cache string, entry readEntry, depth int) (string, error) {
+func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, error) {
 	switch entry.Kind {
 	case "content", "listing", "exists":
 		if !local(entry.Path) {
@@ -273,7 +276,7 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		}
 		return existence(filepath.Join(home, filepath.FromSlash(strings.TrimPrefix(entry.Path, "~/")))), nil
 	case "product":
-		found, err := productFor(root, cache, entry.Path, depth+1)
+		found, err := productFor(root, cache, entry.Path, depth+1, known)
 		if err != nil {
 			return "", err
 		}
@@ -469,7 +472,40 @@ type found struct {
 	keys                []string
 }
 
-func productFor(root, cache, nameKey string, depth int) (found, error) {
+// A productMemo holds each product one pass has looked up, by name key (Home's dry run, Oct 11: nine traces settled for
+// over two hours, each product read valuing every product it reads again, for every reader, ten deep). A pass is one
+// top-level productFor or evaluate, over one tree and one cache, so no answer outlives what it was given.
+type productMemo map[string]*productLookup
+
+// A productLookup is one product's answer in a pass; done is false while it is still being looked up, so meeting it
+// again then is a cycle.
+type productLookup struct {
+	done   bool
+	result found
+	err    error
+}
+
+// productFor is the product nameKey names on the tree at root, once per pass (known: nil starts one). A product read
+// while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
+// than at depth 16 down every branch.
+func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
+	if known == nil {
+		known = productMemo{}
+	}
+	if lookup, seen := known[nameKey]; seen {
+		if !lookup.done {
+			return found{}, fmt.Errorf("products read each other in a cycle at %s", nameKey[:min(12, len(nameKey))])
+		}
+		return lookup.result, lookup.err
+	}
+	lookup := &productLookup{}
+	known[nameKey] = lookup
+	lookup.result, lookup.err = lookupProduct(root, cache, nameKey, depth, known)
+	lookup.done = true
+	return lookup.result, lookup.err
+}
+
+func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (found, error) {
 	file, err := loadReads(cache, nameKey)
 	if err != nil {
 		return found{}, err
@@ -480,7 +516,7 @@ func productFor(root, cache, nameKey string, depth int) (found, error) {
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
-		evaluated, err := evaluate(root, cache, nameKey, set, depth)
+		evaluated, err := evaluate(root, cache, nameKey, set, depth, known)
 		if err != nil {
 			if index == 0 {
 				result.why = err.Error()
