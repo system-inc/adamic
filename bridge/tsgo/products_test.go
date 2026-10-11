@@ -19,6 +19,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
@@ -78,7 +79,7 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 	if sources, ok := bridgeDiscovered.sources[repository]; ok {
 		return sources
 	}
-	command := exec.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
+	command := toolchain.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
 	command.Dir = repository
 	data, err := command.Output()
 	if err != nil {
