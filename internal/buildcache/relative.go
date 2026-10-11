@@ -14,6 +14,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 )
 
@@ -306,7 +307,12 @@ type declaredVouching struct {
 	files []string
 	once  sync.Once
 	texts [][]byte
+	// tokens is every whole path token of texts: each maximal run of path bytes and separators.
+	tokens map[string]bool
 }
+
+// vouchingScans counts the tokens holds looked for through every declared text: a test asks it.
+var vouchingScans atomic.Int64
 
 func declaredText(files []string) *declaredVouching {
 	return &declaredVouching{files: files}
@@ -345,7 +351,29 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 				return nil
 			})
 		}
+		vouching.tokens = map[string]bool{}
+		for _, text := range vouching.texts {
+			for start := 0; start < len(text); {
+				if !pathByte(text[start]) && text[start] != '/' {
+					start++
+					continue
+				}
+				end := start
+				for end < len(text) && (pathByte(text[end]) || text[end] == '/') {
+					end++
+				}
+				vouching.tokens[string(text[start:end])] = true
+				start = end
+			}
+		}
 	})
+	// A token of path bytes and separators alone stands whole in a text exactly when it is one of the text's maximal
+	// runs of them: looked up, once the texts are read (json's pinned corpus, landable-14b's tree, Oct 11: every token
+	// its product holds scanned against 819 declared files ran past go test's 10 minutes). Any other token is looked for.
+	if !strings.ContainsFunc(token, func(r rune) bool { return r >= 0x80 || !pathByte(byte(r)) && r != '/' }) {
+		return vouching.tokens[token]
+	}
+	vouchingScans.Add(1)
 	for _, text := range vouching.texts {
 		for _, found := range pathTokens(string(text), token, false) {
 			if found == token {

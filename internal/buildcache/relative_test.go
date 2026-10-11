@@ -9,6 +9,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 )
 
 // A product built here that names this machine fails its build, naming the file and the place (#tqrqx60); one that
@@ -516,5 +517,52 @@ func TestAPathADeclaredInputCarriesPasses(t *testing.T) {
 		if err == nil || !strings.Contains(err.Error(), "holds a path of the machine that built it") {
 			t.Errorf("%s: the build gave %v, want a refusal", refused.name, err)
 		}
+	}
+}
+
+// Vouching is a lookup once the declared files are read: json's pinned corpus product, 819 declared tracked files and
+// a token for every report path it carries, ran past go test's 10 minutes on landable-14b's tree (Oct 11) scanning
+// every file for every token. Here 800 files and 8,000 tokens build with no token scanned for. Mutant: every token scanned for.
+// Not parallel: inRepository changes the working directory and repositoryRoot; cached and t.Setenv set the environment.
+func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("HOME", home)
+	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
+	var carried strings.Builder
+	for file := range 800 {
+		var report strings.Builder
+		for run := range 10 {
+			token := filepath.Join(home, "runs", fmt.Sprintf("report-%d", file), fmt.Sprintf("run-%d", run), "result.json")
+			fmt.Fprintf(&report, `{"directory":"%s","padding":"%s"},`+"\n", token, strings.Repeat("x", 200))
+			fmt.Fprintf(&carried, "case %s\n", token)
+		}
+		write(t, root, fmt.Sprintf("reports/%03d/run.json", file), report.String())
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "tree")
+	inRepository(t, root)
+	cached(t)
+	forgetTracked()
+	scans := vouchingScans.Load()
+	started := time.Now()
+	_, err = Get(Inputs{Name: "vouched at size", Files: []string{"reports"}}, func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "corpus"), []byte(carried.String()), 0o644)
+	})
+	if err != nil {
+		t.Fatalf("8,000 vouched paths were refused: %v", err)
+	}
+	if scanned := vouchingScans.Load() - scans; scanned != 0 {
+		t.Fatalf("%d lookups of 8,000 tokens scanned every declared file", scanned)
+	}
+	if took := time.Since(started); took > 30*time.Second {
+		t.Fatalf("8,000 tokens against 800 declared files took %v", took)
 	}
 }
