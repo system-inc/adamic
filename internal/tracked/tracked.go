@@ -259,7 +259,7 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		return nil, err
 	}
 	defer os.RemoveAll(scratch)
-	environment := append(os.Environ(), "GIT_CONFIG_GLOBAL="+os.DevNull, "GIT_CONFIG_NOSYSTEM=1")
+	environment := GitEnvironment()
 	initialize := exec.Command("git", "init", "-q", "--bare", scratch)
 	initialize.Env = environment
 	if output, err := initialize.CombinedOutput(); err != nil {
@@ -594,8 +594,19 @@ func names(data []byte) []string {
 	return strings.Split(string(data), "\x00")
 }
 
+// GitEnvironment is the environment every git this package and its callers run gets: the process's own, with git's
+// global and system configuration out of reach, and the excludes and attributes files that default under the home
+// directory pointed at nothing. A git answer then depends on the repository alone, never on the machine's home
+// (#1p6sent: a product build read ~/.gitconfig through it, which no key can name).
+func GitEnvironment() []string {
+	return append(os.Environ(), "GIT_CONFIG_GLOBAL="+os.DevNull, "GIT_CONFIG_NOSYSTEM=1",
+		"GIT_CONFIG_COUNT=2", "GIT_CONFIG_KEY_0=core.excludesFile", "GIT_CONFIG_VALUE_0="+os.DevNull,
+		"GIT_CONFIG_KEY_1=core.attributesFile", "GIT_CONFIG_VALUE_1="+os.DevNull)
+}
+
 func git(directory string, arguments ...string) ([]byte, error) {
 	command := exec.Command("git", append([]string{"-C", directory}, arguments...)...)
+	command.Env = GitEnvironment()
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	output, err := command.Output()
