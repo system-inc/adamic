@@ -11,6 +11,12 @@ var numbersPreparedPrograms = make([]struct {
 	program numbersProgram
 }, len(numbersMutations)+1)
 
+// numbersPreparedNatives holds each native product once per process: [mutation+1][0] fast, [1] sanitized.
+var numbersPreparedNatives = make([][2]struct {
+	once sync.Once
+	path string
+}, len(numbersMutations)+1)
+
 func numbersPreparedProgram(t *testing.T, mutation int) numbersProgram {
 	t.Helper()
 	state := &numbersPreparedPrograms[mutation+1]
@@ -27,6 +33,9 @@ func numbersPreparedProgram(t *testing.T, mutation int) numbersProgram {
 		}
 		state.program = buildNumbersProgram(t, name, main)
 	})
+	if state.program.dir == "" {
+		t.Fatal("lowering product was not prepared")
+	}
 	return state.program
 }
 
@@ -39,7 +48,36 @@ func numbersPreparedNative(t *testing.T, mutation int, sanitize bool) string {
 	if mutation >= 0 {
 		name = numbersMutations[mutation].name + "-sanitized"
 	}
-	return buildNumbersNative(t, name, numbersPreparedProgram(t, mutation), sanitize)
+	index := 0
+	if sanitize {
+		index = 1
+	}
+	state := &numbersPreparedNatives[mutation+1][index]
+	state.once.Do(func() { state.path = buildNumbersNative(t, name, numbersPreparedProgram(t, mutation), sanitize) })
+	if state.path == "" {
+		t.Fatalf("native product %s was not prepared", name)
+	}
+	return state.path
+}
+
+// numbersPrepareUnitProducts fetches the products one unit reads and no other kind needs. A shard calls it before
+// its clock starts, so shared setup holds only what every unit reads, and a mutant's builds wait for nobody else.
+func numbersPrepareUnitProducts(t *testing.T, unit numbersUnit) {
+	t.Helper()
+	switch unit.kind {
+	case "batch":
+		numbersPreparedProgram(t, -1)
+		numbersPreparedNative(t, -1, true)
+		numbersPreparedNative(t, -1, false)
+	case "raw":
+		numbersPreparedNative(t, -1, true)
+	case "mutant":
+		numbersPreparedNative(t, unit.lo, true)
+	case "throughput":
+		if unit.side == "native" {
+			numbersPreparedNative(t, -1, false)
+		}
+	}
 }
 
 func TestProduct_CSSNumbersGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
