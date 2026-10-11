@@ -78,8 +78,8 @@ func build(t *testing.T, directory string) string {
 	return binary
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestHelpersMatchCohere(t *testing.T) {
+	t.Parallel()
 	goOracle := oracle(t)
 	catalog := run(t, "", goOracle, "catalog")
 	descriptor := run(t, "", goOracle, "descriptors")
@@ -101,7 +101,7 @@ func TestHelpersMatchCohere(t *testing.T) {
 	entry, _ := filepath.Abs("main.ts")
 	node := run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, catalogPath)
 	compare(t, node, want)
-	compare(t, run(t, "", build(t, "."), cases, catalogPath), want)
+	compare(t, run(t, "", helperMutantProduct(t, helperClean), cases, catalogPath), want)
 	t.Logf("%d oracle output lines matched Go, Node and sanitized native", len(strings.Split(strings.TrimSpace(string(want)), "\n")))
 }
 func compare(t *testing.T, got, want []byte) {
@@ -157,9 +157,9 @@ func smallFixture(t *testing.T, corpus any) string {
 	return path
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestMessageRefusalsMatchGo(t *testing.T) {
-	binary := build(t, ".")
+	t.Parallel()
+	binary := helperMutantProduct(t, helperClean)
 	goOracle := oracle(t)
 	catalog, _ := filepath.Abs("testdata/catalog.json")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
@@ -206,8 +206,8 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 	t.Logf("%d message refusal cases match Go on Node and sanitized native", len(cases))
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestKnownGapsAreExplicit(t *testing.T) {
+	t.Parallel()
 	corpus := map[string]any{"Definitions": map[string]string{
 		"regex":  `{"type":"array","items":{"type":"string","pattern":"x"}}`,
 		"custom": `{"kind":"unsupported"}`,
@@ -224,5 +224,5 @@ func TestKnownGapsAreExplicit(t *testing.T) {
 	entry, _ := filepath.Abs("main.ts")
 	want := []byte("NotYet: unsupported schema keyword pattern\nNotYet: custom or unsupported Go option type\nNotYet: Unicode fold for untagged option keys\nvalid\n")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog), want)
-	compare(t, run(t, "", build(t, "."), path, catalog), want)
+	compare(t, run(t, "", helperMutantProduct(t, helperClean), path, catalog), want)
 }
