@@ -50,6 +50,14 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 			t.Errorf("%s: the build gave %v, want a refusal naming manifest.json and %s", refused.name, err, refused.place)
 		}
 	}
+	// A gob is data a test reads back, not a binary's debug information: a path in one is refused as text's is, zero
+	// bytes and all (landable-13b: estree's program.gob named its random build directory). Mutant: gob skipped as binary.
+	_, err = Get(inputs("a gob"), func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "program.gob"), append([]byte{0x1a, 0, 0xff}, "m"+filepath.Join(directory, "source", "main.ts")+":3:7"...), 0o644)
+	})
+	if err == nil || !strings.Contains(err.Error(), "program.gob names") || !strings.Contains(err.Error(), "a product directory") {
+		t.Errorf("a gob naming its own directory: the build gave %v, want a refusal naming program.gob", err)
+	}
 	// A product built for this machine alone lands under local/, so nothing a build made may stay anywhere in the cache.
 	filepath.WalkDir(cache, func(path string, entry fs.DirEntry, err error) error {
 		if err == nil && entry.IsDir() && path != cache && entry.Name() != "local" {

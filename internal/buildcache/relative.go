@@ -247,7 +247,8 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 // cache (so any product in it, and this one's scratch directory), a product built uncached, the home directory, the
 // temporary directory, or a location an ADAMIC_ variable names (ADAMIC_TYPESCRIPT_SOURCE). A file holding a zero byte
 // is a binary, whose paths are debug information no test reads (native prefix maps are their own work), and so is a
-// macOS .dSYM bundle; every other file is text a reader parses, and must say <repository> and <build cache>/<name key>.
+// macOS .dSYM bundle, unless it is data a test reads back (dataFormats); every other file is text a reader parses, and
+// must say <repository> and <build cache>/<name key>.
 //
 // One path is not the builder's: a whole path token that occurs, as the same whole token, in a tracked file among the
 // product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries (#arw7837:
@@ -256,10 +257,12 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 func relocatable(inputs Inputs, directory string) error {
 	places := machinePlaces()
 	vouching := declaredText(inputs.Files)
-	return textFiles(directory, func(file string, content []byte, _ fs.FileMode) error {
+	return readFiles(directory, true, func(file string, content []byte, _ fs.FileMode) error {
 		text := string(content)
+		// In data, the byte before a string is its length, any byte at all, so a path there starts wherever it is found.
+		data := slices.Contains(dataFormats, filepath.Ext(file))
 		for _, place := range places {
-			for _, token := range pathTokens(text, place.path) {
+			for _, token := range pathTokens(text, place.path, data) {
 				if vouching.holds(token, places) {
 					continue
 				}
@@ -275,8 +278,9 @@ func relocatable(inputs Inputs, directory string) error {
 }
 
 // pathTokens are the whole path tokens of text in which path stands as a whole path, by replacePath's rule: each runs
-// from where path starts to the last path byte or separator after it, so /tmp/adamic-gate/x/y.json is one token.
-func pathTokens(text, path string) []string {
+// from where path starts to the last path byte or separator after it, so /tmp/adamic-gate/x/y.json is one token. In
+// data (anyBefore), path may follow any byte.
+func pathTokens(text, path string, anyBefore bool) []string {
 	var tokens []string
 	for offset := 0; ; {
 		index := strings.Index(text[offset:], path)
@@ -285,7 +289,7 @@ func pathTokens(text, path string) []string {
 		}
 		start := offset + index
 		end := start + len(path)
-		before := start == 0 || !pathByte(text[start-1]) && text[start-1] != '/'
+		before := anyBefore || start == 0 || !pathByte(text[start-1]) && text[start-1] != '/'
 		after := end == len(text) || text[end] == '/' || !pathByte(text[end])
 		if before && after {
 			for end < len(text) && (pathByte(text[end]) || text[end] == '/') {
@@ -343,7 +347,7 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 		}
 	})
 	for _, text := range vouching.texts {
-		for _, found := range pathTokens(string(text), token) {
+		for _, found := range pathTokens(string(text), token, false) {
 			if found == token {
 				return true
 			}
@@ -356,6 +360,17 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 // (a binary's paths are debug information no test reads, and native prefix maps are their own work), outside a macOS
 // .dSYM bundle.
 func textFiles(directory string, each func(file string, content []byte, mode fs.FileMode) error) error {
+	return readFiles(directory, false, each)
+}
+
+// dataFormats are binary formats a product writes as data a test reads back, never a binary's debug information, so
+// relocatable reads their paths as it reads text's (landable-13b: estree's program.gob named its random build
+// directory, and the zero-byte skip let it through to the key check). Nothing rewrites them: a name Relative writes
+// changes a string's length, which gob records beside it.
+var dataFormats = []string{".gob"}
+
+// readFiles is textFiles, and with data, every file in one of dataFormats too.
+func readFiles(directory string, data bool, each func(file string, content []byte, mode fs.FileMode) error) error {
 	return filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -373,7 +388,7 @@ func textFiles(directory string, each func(file string, content []byte, mode fs.
 		if err != nil {
 			return err
 		}
-		if bytes.IndexByte(content[:min(len(content), 8000)], 0) >= 0 {
+		if bytes.IndexByte(content[:min(len(content), 8000)], 0) >= 0 && !(data && slices.Contains(dataFormats, filepath.Ext(file))) {
 			return nil
 		}
 		info, err := entry.Info()
