@@ -2,6 +2,7 @@ package buildcache
 
 import (
 	"crypto/md5"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http/httptest"
@@ -1367,5 +1368,79 @@ func TestAMachineFilesHashIsKeptAcrossProcesses(t *testing.T) {
 	write(t, filepath.Dir(path), "crtbegin.o", "another object, longer")
 	if got := systemValue(path); got == first || strings.Contains(got, "kept-by") {
 		t.Fatalf("a file changed in place valued %q", got)
+	}
+}
+
+// The report Loom's tree builder reads (ADAMIC_TRACE_REPORT, one JSON line each): a settled product by its name, name
+// key, key and how many reads its set names; a refused one by its reason and no key; and a run that can't be keyed by
+// a lost line first, then each of its products refused. Mutants: a settled report without its key, a refusal never
+// reported, the lost line dropped, and a field renamed off the wire (nameKey).
+// Not parallel: newRig.
+func TestTheReportNamesEachProductsOutcome(t *testing.T) {
+	lines := func(t *testing.T, reports []Report) []map[string]any {
+		t.Helper()
+		file := filepath.Join(t.TempDir(), "report.jsonl")
+		if err := WriteReport(file, reports); err != nil {
+			t.Fatal(err)
+		}
+		content, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var found []map[string]any
+		for _, line := range strings.Split(strings.TrimSuffix(string(content), "\n"), "\n") {
+			var fields map[string]any
+			if err := json.Unmarshal([]byte(line), &fields); err != nil {
+				t.Fatalf("a report line isn't JSON: %q: %v", line, err)
+			}
+			found = append(found, fields)
+		}
+		return found
+	}
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	Product(t, header, building("header"))
+	Product(t, port, building("port"))
+	built := r.built(t)
+	r.window(built["header"].Build, func() { r.open(r.pid, "include/x.h") })
+	write(t, r.root, "scratch.txt", "x")
+	r.window(built["port"].Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.open(r.pid, "scratch.txt")
+	})
+	settlement := r.settle(t)
+	got := lines(t, settlement.Reports)
+	if len(got) != 2 {
+		t.Fatalf("the report is %v; want header settled and port refused", got)
+	}
+	file, err := loadReads(r.cache, built["header"].NameKey)
+	if err != nil || len(file.Sets) != 1 {
+		t.Fatalf("header's read sets: %+v, %v", file, err)
+	}
+	settled := map[string]any{"name": "header", "nameKey": built["header"].NameKey, "key": file.Sets[0].Key, "outcome": "settled",
+		"reads": float64(len(file.Sets[0].Entries))}
+	if fmt.Sprint(got[0]) != fmt.Sprint(settled) {
+		t.Fatalf("the settled line is %v; want %v", got[0], settled)
+	}
+	reason, _ := got[1]["reason"].(string)
+	if got[1]["name"] != "port" || got[1]["nameKey"] != built["port"].NameKey || got[1]["outcome"] != "refused" ||
+		!strings.Contains(reason, "untracked: scratch.txt") || got[1]["key"] != nil {
+		t.Fatalf("the refused line is %v", got[1])
+	}
+	r = newRig(t)
+	Product(t, port, building("built in a tree it wrote"))
+	build := r.built(t)["port"]
+	r.write(r.pid, "include/x.h")
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	got = lines(t, r.settle(t).Reports)
+	if len(got) != 2 {
+		t.Fatalf("the report of a run that can't be keyed is %v; want the lost line, then port refused", got)
+	}
+	reason, _ = got[0]["reason"].(string)
+	if len(got[0]) != 2 || got[0]["outcome"] != "lost" || !strings.Contains(reason, "tree write: include/x.h") {
+		t.Fatalf("the lost line is %v", got[0])
+	}
+	if got[1]["name"] != "port" || got[1]["outcome"] != "refused" || got[1]["key"] != nil {
+		t.Fatalf("a product of a lost run reads %v", got[1])
 	}
 }
