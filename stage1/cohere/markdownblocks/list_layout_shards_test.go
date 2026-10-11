@@ -394,22 +394,16 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			t.Fatal(err)
 		}
 		sum := sha256.Sum256(source)
-		product := buildcache.Product(t, buildcache.Inputs{Name: name, Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-			options := native.Options{Sanitize: sanitize}
-			library, err := native.RuntimeLibraryForSource("", string(source), options)
-			if err != nil {
+		// v2: built by native.Build, so a v1 binary, which named its build directory, isn't one this reads.
+		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v2", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
-			path := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				return err
-			}
-			args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
-			args = append(args, native.RuntimeLinkFlags(library)...)
-			args = append(args, "-lm")
-			output, err := combinedOutput(listLayoutCommand(t, "clang", args...))
-			if err != nil {
-				return fmt.Errorf("native build: %w\n%s", err, output)
+			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
+			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata, random
+			// per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
+			if err := native.Build(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: sanitize}); err != nil {
+				return fmt.Errorf("native build: %w", err)
 			}
 			return nil
 		})
@@ -489,21 +483,13 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 					flags[index] = "-O0"
 				}
 			}
-			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-				library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
-				if err != nil {
+			// v2: built by native.BuildFlags, which names no build directory, so a v1 binary, which did, isn't one this reads.
+			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v2", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}
-				path := filepath.Join(directory, "main.c")
-				if err := os.WriteFile(path, source, 0644); err != nil {
-					return err
-				}
-				arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
-				arguments = append(arguments, native.RuntimeLinkFlags(library)...)
-				arguments = append(arguments, "-lm")
-				output, err := combinedOutput(listLayoutCommand(t, "clang", arguments...))
-				if err != nil {
-					return fmt.Errorf("mutant build: %w\n%s", err, output)
+				if err := native.BuildFlags(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: true}, flags); err != nil {
+					return fmt.Errorf("mutant build: %w", err)
 				}
 				return nil
 			})

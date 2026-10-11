@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -114,6 +115,19 @@ func Build(source string, output string, options Options) error {
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
+	return buildOne(source, output, options, Flags(options))
+}
+
+// BuildFlags is Build with the compiler flags the caller gives in place of Flags(options), in one translation unit
+// (markdownblocks' mutant canary, at -O0): the binary names no build directory, as Build's doesn't.
+func BuildFlags(source string, output string, options Options, flags []string) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
+	return buildOne(source, output, options, flags)
+}
+
+func buildOne(source string, output string, options Options, flags []string) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -136,7 +150,7 @@ func Build(source string, output string, options Options) error {
 		return fmt.Errorf("native: %w", err)
 	}
 	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
-	arguments := append(append(append(Flags(options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime", "-o", output)
+	arguments := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime", "-o", output)
 	if !options.Request {
 		arguments = append(arguments, "main.c")
 	}
