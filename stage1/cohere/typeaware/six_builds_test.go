@@ -169,6 +169,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	if command.Dir == "" {
 		command.Dir = h.repository
 	}
+	unstamped(command)
 	canonical := func(text string) string {
 		text = strings.ReplaceAll(text, h.directory, "$WORK")
 		return strings.ReplaceAll(text, h.repository, "$REPO")
@@ -201,24 +202,11 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 		in.Flags = append(in.Flags, "env "+key+"="+sixEnvironment(command, key))
 	}
 	in.Flags = append(in.Flags, "cwd="+canonical(command.Dir))
-	// Go embeds VCS metadata by default. Preserve the existing flags and declare
-	// this implicit input too, rather than silently changing -buildvcs behavior.
-	// With -buildvcs=false in effect (cloud/setup.sh exports it) nothing is
-	// stamped, so the commit isn't an input and an unpacked source with no .git
-	// keys what a checkout does (#t37sw0f).
-	if slices.Contains(strings.Fields(settings["GOFLAGS"]), "-buildvcs=false") {
-		in.Flags = append(in.Flags, "vcs: not stamped, -buildvcs=false")
-	} else {
-		revision, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "rev-parse", "HEAD"))
-		if err != nil {
-			h.t.Fatal(err)
-		}
-		status, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "status", "--porcelain"))
-		if err != nil {
-			h.t.Fatal(err)
-		}
-		in.Flags = append(in.Flags, "vcs.revision="+strings.TrimSpace(string(revision)), fmt.Sprintf("vcs.modified=%t", len(status) != 0))
-	}
+	// Go stamps a build with its commit and whether the checkout is modified unless told not to, so every go build here
+	// passes -buildvcs=false itself (unstamped), whatever GOFLAGS says: a stamped product's bytes and key named the commit
+	// and vcs.modified, so a second checkout, or the same one with a stray file, missed it and every product reading it
+	// (#t37sw0f, typeaware six type-symbol-checker and typeaware-volume-type-symbol-native). Nothing reads the stamp.
+	in.Flags = append(in.Flags, "vcs: not stamped, -buildvcs=false")
 
 	file := ""
 	seen := map[string]bool{}
@@ -302,6 +290,18 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	return sixProduct{Inputs: in, Build: sixCommandBuild(command, file), File: file}
 }
 
+// unstamped makes a go build or go test -c command pass -buildvcs=false, right after its verb, unless it already says
+// how to stamp; any other command is left as it is.
+func unstamped(command *exec.Cmd) {
+	if len(command.Args) < 2 || filepath.Base(command.Args[0]) != "go" || command.Args[1] != "build" && command.Args[1] != "test" {
+		return
+	}
+	if slices.ContainsFunc(command.Args[2:], func(argument string) bool { return strings.HasPrefix(argument, "-buildvcs") }) {
+		return
+	}
+	command.Args = slices.Insert(command.Args, 2, "-buildvcs=false")
+}
+
 func compactSixFiles(files []string) []string {
 	var result []string
 	for _, file := range files {
@@ -330,6 +330,27 @@ func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {
 func (h *harness) sixBuildOnce(product sixProduct) string {
 	h.t.Helper()
 	return buildcache.Product(h.t, buildcache.Inputs(product.Inputs), product.Build)
+}
+
+// Every go build or go test -c a six product runs is unstamped, so neither its bytes nor its key name the commit or a
+// stray file (#t37sw0f); a command that already says how to stamp, and any other tool, is left as it is. Mutants: no
+// -buildvcs=false added; one added to a command that already chose.
+func TestSixGoBuildsAreUnstamped(t *testing.T) {
+	t.Parallel()
+	for _, command := range []struct{ arguments, want []string }{
+		{[]string{"go", "build", "-o", "x", "./p"}, []string{"go", "build", "-buildvcs=false", "-o", "x", "./p"}},
+		{[]string{"go", "test", "-c", "-o", "x", "./p"}, []string{"go", "test", "-buildvcs=false", "-c", "-o", "x", "./p"}},
+		{[]string{"go", "build", "-buildvcs=true", "./p"}, []string{"go", "build", "-buildvcs=true", "./p"}},
+		{[]string{"go", "build", "-buildvcs=false", "./p"}, []string{"go", "build", "-buildvcs=false", "./p"}},
+		{[]string{"go", "env", "GOFLAGS"}, []string{"go", "env", "GOFLAGS"}},
+		{[]string{"clang", "build", "x.c"}, []string{"clang", "build", "x.c"}},
+	} {
+		cmd := exec.Command(command.arguments[0], command.arguments[1:]...)
+		unstamped(cmd)
+		if !slices.Equal(cmd.Args, command.want) {
+			t.Errorf("%q became %q, want %q", command.arguments, cmd.Args, command.want)
+		}
+	}
 }
 
 // Exercise the callback boundary with a real child process: the requested

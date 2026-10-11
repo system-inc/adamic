@@ -59,7 +59,7 @@ func typeSymbolMust(h *harness, label, name string, args ...string) result {
 }
 
 func typeSymbolOracle(h *harness) string {
-	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json", false)
+	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json")
 }
 
 func typeSymbolFileHash(path string) (string, error) {

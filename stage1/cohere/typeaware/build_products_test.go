@@ -18,19 +18,14 @@ func typeAwareProductHarness(t *testing.T) *harness {
 	return h
 }
 
-func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, source, overlayName string, buildVCSFalse bool) string {
+func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, source, overlayName string) string {
 	h.t.Helper()
 	virtual := filepath.Join(h.repository, "cohere", virtualName)
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	args := []string{"build"}
-	if buildVCSFalse {
-		args = append(args, "-buildvcs=false")
-	}
-	args = append(args, "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
-	command := exec.Command("go", args...)
+	command := exec.Command("go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
 	command.Dir = filepath.Join(h.repository, "cohere")
 	return h.sixBuildProduct(productName, command)
 }
@@ -40,7 +35,7 @@ func typeAwareOracle(h *harness, kind string) string {
 	if kind == "six" {
 		source, virtual = "oracle_six.go", "adamic_six_oracle.go"
 	}
-	return typeAwareOverlayOracle(h, "oracle-build", "oracle", virtual, source, "oracle-overlay.json", false)
+	return typeAwareOverlayOracle(h, "oracle-build", "oracle", virtual, source, "oracle-overlay.json")
 }
 
 func sixFactsCostGo(h *harness) string {
