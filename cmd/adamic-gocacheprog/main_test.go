@@ -18,6 +18,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: this subprocess entry point owns stdin/stdout and exits the process.
@@ -68,8 +70,14 @@ func fakeStore(t *testing.T) (*store, *httptest.Server) {
 	return s, server
 }
 
+// helperSettings are what the helper process reads, pointed at a test's own store and directory.
+func helperSettings(dir, url, trust, token string) map[string]string {
+	return map[string]string{"ADAMIC_CACHE_HELPER": "1", "ADAMIC_GOCACHE_DIR": dir, "ADAMIC_GOCACHE_STORE": url, "ADAMIC_GOCACHE_WRITE": url, "ADAMIC_GOCACHE_TRUST": trust, "ADAMIC_GOCACHE_TOKEN": token, "GOWORK": "off", "GOCACHEPROG": ""}
+}
+
+// helperEnv is this process's environment with helperSettings over it, for the helper, a copy of this test binary.
 func helperEnv(dir, url, trust, token string) []string {
-	overrides := map[string]string{"ADAMIC_CACHE_HELPER": "1", "ADAMIC_GOCACHE_DIR": dir, "ADAMIC_GOCACHE_STORE": url, "ADAMIC_GOCACHE_WRITE": url, "ADAMIC_GOCACHE_TRUST": trust, "ADAMIC_GOCACHE_TOKEN": token, "GOWORK": "off", "GOCACHEPROG": ""}
+	overrides := helperSettings(dir, url, trust, token)
 	result := []string{}
 	for _, v := range os.Environ() {
 		key, _, _ := strings.Cut(v, "=")
@@ -258,14 +266,19 @@ func runGo(t *testing.T, dir, url, token string, args ...string) (string, time.D
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
-	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command comes from PATH.
-	goCommand, err := exec.LookPath("go")
+	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
+	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
+	goCommand, err := toolchain.Path("go")
 	if err != nil {
-		t.Skipf("no go command on PATH: %v", err)
+		t.Skipf("no go command: %v", err)
 	}
 	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
-	cmd.Env = append(helperEnv(t.TempDir(), url, "main", token), "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")
+	var settings []string
+	for key, value := range helperSettings(t.TempDir(), url, "main", token) {
+		settings = append(settings, key+"="+value)
+	}
+	cmd.Env = toolchain.Env(append(settings, "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")...)
 	start := time.Now()
 	b, err := cmd.CombinedOutput()
 	elapsed := time.Since(start)
