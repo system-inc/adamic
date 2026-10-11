@@ -24,7 +24,8 @@ func lossyInputControlPrepare(t *testing.T) {
 		lossyInputControlShared.oracle = scalarEdgeOracle(t)
 		mutation := lossyInputControlMutation()
 		lowered := threePortLoweredProduct(t, mutation)
-		lossyInputControlShared.source = filepath.Join(lowered, "source", "main.ts")
+		// node reads the copy whose imports name this checkout; the product names it <repository> (#tqrqx60).
+		lossyInputControlShared.source = resolvedPort(t, lowered, filepath.Join("source", "main.ts"))
 		lossyInputControlShared.native = threePortNativeProduct(t, mutation)
 	})
 	if lossyInputControlShared.native == "" {
