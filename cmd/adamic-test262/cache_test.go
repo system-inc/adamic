@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -354,12 +356,12 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 // Not parallel: changes the process-wide ADAMIC_GATE_UNCACHED environment.
 func TestCacheBypassPreservesIdentity(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	before, versionBefore, contextBefore, err := prepareCache()
+	before, versionBefore, contextBefore, err := prepareCache("../..")
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	after, versionAfter, contextAfter, err := prepareCache()
+	after, versionAfter, contextAfter, err := prepareCache("../..")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -369,5 +371,75 @@ func TestCacheBypassPreservesIdentity(t *testing.T) {
 	}
 	if before.directory != after.directory || versionBefore != versionAfter {
 		t.Fatal("cache bypass changed directory or Node version")
+	}
+}
+
+// runnerContext runs this binary's TestRunnerLocationHelper standing in directory, as the runner of
+// the checkout at root, under environment, and returns the compiler, native and Node contexts it
+// derived. A child process, because the working directory and environment are the process's own.
+func runnerContext(t *testing.T, directory string, root string, environment []string) string {
+	t.Helper()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(executable, "-test.run=^TestRunnerLocationHelper$")
+	command.Dir = directory
+	command.Env = append(append([]string{}, environment...),
+		"PWD="+directory, "ADAMIC_TEST262_CONTEXT_HELPER=1", "ADAMIC_TEST262_CONTEXT_ROOT="+root)
+	output, err := command.CombinedOutput()
+	if err != nil {
+		t.Fatalf("helper: %v: %s", err, output)
+	}
+	return string(output)
+}
+
+// The same tree checked out at two paths of different depth keys the same observations. A runner
+// standing elsewhere in the tree, where a relative -root or -work names other files, does not.
+func TestContextIgnoresCheckoutLocation(t *testing.T) {
+	t.Parallel()
+	scratch := t.TempDir()
+	var packages []string
+	for _, checkout := range []string{"a/adamic", "bb/cc/adamic"} {
+		directory := filepath.Join(scratch, filepath.FromSlash(checkout), "cmd", "adamic-test262")
+		if err := os.MkdirAll(directory, 0700); err != nil {
+			t.Fatal(err)
+		}
+		packages = append(packages, directory)
+	}
+	environment := os.Environ()
+	first := runnerContext(t, packages[0], "../..", environment)
+	second := runnerContext(t, packages[1], "../..", environment)
+	if first != second {
+		t.Fatalf("moving the checkout changed the context: %s vs %s", first, second)
+	}
+	root := filepath.Join(scratch, "a", "adamic")
+	if runnerContext(t, root, ".", environment) == first {
+		t.Fatal("a runner standing elsewhere in the checkout reused the package's context")
+	}
+}
+
+// A variable no child reads leaves the context alone; one that changes what Node prints does not.
+func TestContextEnvironment(t *testing.T) {
+	t.Parallel()
+	directory, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var environment []string
+	for _, variable := range os.Environ() {
+		name, _, _ := strings.Cut(variable, "=")
+		if name != "HOME" && name != "TZ" && name != "ADAMIC_JUNK" {
+			environment = append(environment, variable)
+		}
+	}
+	plain := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir()))
+	junk := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir(), "ADAMIC_JUNK=1"))
+	if plain != junk {
+		t.Fatalf("an unrelated variable and HOME changed the context: %s vs %s", plain, junk)
+	}
+	zoned := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir(), "TZ=Pacific/Kiritimati"))
+	if zoned == plain {
+		t.Fatal("a time zone, which changes Node's Date output, reused the context")
 	}
 }
