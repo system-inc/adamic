@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "packages": {
+    "cmd/adamic-gocacheprog": "its point is go itself: go build -x with this program as GOCACHEPROG, cold then warm, read from go's own trace (main_test.go:291, :294)",
+    "internal/buildcache": "it tests its own builds: byte-identical across checkout paths, fresh = cold = warm, the key follows every input; the cache is forced fresh, so even its products build (identity_test.go:33, gobuild_test.go:152)"
+  }
+}
