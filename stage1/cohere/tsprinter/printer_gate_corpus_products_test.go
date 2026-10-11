@@ -39,12 +39,7 @@ func statementDeclaredLibraryOracle(t *testing.T, number, side int) {
 	if library == "" {
 		t.Skip("set ADAMIC_TS_PRETTIER")
 	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	compilerHash := statementFileHash(t, executable)
-	statementLibraryOracle(t, number, side, shard, compilerHash, statementDirectoryHash(t, library), library)
+	statementLibraryOracle(t, number, side, shard, statementDirectoryHash(t, library), library)
 }
 func TestProduct_TSPrinterStatementsNPM_000(t *testing.T) {
 	t.Parallel()

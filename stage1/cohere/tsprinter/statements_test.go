@@ -122,11 +122,6 @@ func statementPrepareCommon(t *testing.T) statementSharedProducts {
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	port, _ := filepath.Abs("statementsMain.ts")
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	compilerHash := statementFileHash(t, executable)
 	loweredDir := printerGateLowered(t, "statements")
 	binary, release := printerGateNative(t, "statements", true)+"/port", printerGateNative(t, "statements", false)+"/port"
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
@@ -150,7 +145,7 @@ func statementPrepareCommon(t *testing.T) statementSharedProducts {
 	libraryHash := statementDirectoryHash(t, library)
 	elapsed := time.Since(setup).Seconds()
 	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(want, "\n"), len(shards))
-	return statementSharedProducts{Cases: cases, Want: want, Specs: specs, Port: port, CompilerHash: compilerHash, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed}
+	return statementSharedProducts{Cases: cases, Want: want, Specs: specs, Port: port, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed}
 }
 
 func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
@@ -164,7 +159,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	t.Cleanup(func() { t.Logf("shard CPU: %.3fs", statementCPU()-cpu) })
 	cases, want, specs := products.Cases, products.Want, products.Specs
 	shards := statementShards(t, cases, want, specs)
-	port, compilerHash := products.Port, products.CompilerHash
+	port := products.Port
 	binary, release, library := products.Binary, products.Release, products.Library
 	loweredDir := products.LoweredDir
 
@@ -183,7 +178,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 			continue
 		}
 		for side := 0; side < 2; side++ {
-			directory := statementLibraryOracle(t, number, side, shard, compilerHash, libraryHash, library)
+			directory := statementLibraryOracle(t, number, side, shard, libraryHash, library)
 			answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
 			if err != nil {
 				t.Fatal(err)
@@ -236,7 +231,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	}
 }
 
-func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, compilerHash, libraryHash, library string) string {
+func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, libraryHash, library string) string {
 	t.Helper()
 	name, script, files, oracleFlags := "npm", "testdata/expressions.mjs", []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}
 	if side == 1 {
@@ -249,7 +244,9 @@ func statementLibraryOracle(t *testing.T, number, side int, shard statementShard
 	return printerGateOnce(t, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
 		// The cases name their files by absolute path, hashed out of Key's reach, so the hash reads them as the tree spells
 		// them; the npm library is keyed by its bytes (npm bytes sha256), the embedded one by Files, neither by where it is,
-		// and NODE_PATH is a location (#t37sw0f).
+		// and NODE_PATH is a location (#t37sw0f). The test binary isn't an input: the oracle is node running the script over
+		// the cases, and hashing the binary keyed a product apart between Workshop's go test and a runner's prebuilt
+		// binary of the same package (landable-10, key check).
 		root, _ := filepath.Abs(repository)
 		upstream, _ := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
 		specs, err := os.ReadFile(shard.specs)
@@ -257,7 +254,7 @@ func statementLibraryOracle(t *testing.T, number, side int, shard statementShard
 			t.Fatal(err)
 		}
 		cases := strings.ReplaceAll(strings.ReplaceAll(string(specs), upstream+"/", "typescript/"), root+"/", "repo/")
-		flags := append(oracleFlags, "builder sha256="+compilerHash, "cases sha256="+statementBytesHash([]byte(cases)), "library="+name, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"))
+		flags := append(oracleFlags, "cases sha256="+statementBytesHash([]byte(cases)), "library="+name, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"))
 		return statementProduct(t, buildcache.Inputs{
 			Name:  fmt.Sprintf("tsprinter-statements-%s-oracle-shard-%03d-v1", name, number),
 			Files: files, Flags: flags,

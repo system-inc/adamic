@@ -12,6 +12,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
@@ -59,7 +61,6 @@ func runWASIUnit(t *testing.T, unit int) {
 	}
 	phase := time.Now()
 	directory := t.TempDir()
-	setupDirectory := directory
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -141,13 +142,9 @@ func runWASIUnit(t *testing.T, unit int) {
 	directory, objects = runtimeBuild(false)
 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
 	phase = time.Now()
-	compiler := filepath.Join(setupDirectory, "adamic")
-	command := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
-	command.Dir = repository
-	if output, err := cache.Command(command, setupDirectory); err != nil {
-		t.Fatalf("compiler setup: %v\n%s", err, output)
-	}
-	t.Logf("WASI compiler build/cache phase %.3fs", time.Since(phase).Seconds())
+	// The shared stage 0 product, built ahead by TestProduct_WASICompiler: a runner never builds it (#5qykzj5).
+	compiler := buildcache.Adamic(t)
+	t.Logf("WASI compiler fetch phase %.3fs", time.Since(phase).Seconds())
 	generate := func(t *testing.T, fixture string) string {
 		t.Helper()
 		started := time.Now()
@@ -294,6 +291,12 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 		exit = failed.ExitCode()
 	}
 	return wasiObservation{stdout.Bytes(), stderr.Bytes(), exit}
+}
+
+// TestProduct_WASICompiler builds the stage 0 compiler the WASI units run, so the tree build builds it ahead.
+func TestProduct_WASICompiler(t *testing.T) {
+	t.Parallel()
+	buildcache.Adamic(t)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.

@@ -127,26 +127,36 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	// Neither the build directory nor the runtime cache under this machine's home may reach the binary, so its bytes are a
+	// function of its inputs wherever it's built (see cachedRuntime). clang is never given an absolute path to read: it
+	// compiles main.c from inside the build directory, and finds the runtime's headers and archive through runtime, a link
+	// there to the cache. The prefix maps cover debug info and __FILE__, but ASan's metadata for globals keeps each source
+	// file as clang was given it (Workshop, Oct 11: <tmp>/adamic-build-<random>/main.c and <cache>/.../adamic.h in .rodata).
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
+	arguments := append(append(append(Flags(options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime", "-o", output)
 	if !options.Request {
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, "main.c")
 	}
 	if options.Target == "wasm32-wasi" {
-		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
+		arguments = append(arguments, "-Xlinker", "--whole-archive", runtimeArchive, "-Xlinker", "--no-whole-archive")
 	} else {
-		arguments = append(arguments, RuntimeLinkFlags(library)...)
+		arguments = append(arguments, RuntimeLinkFlags(runtimeArchive)...)
 	}
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	if options.Request {
 		// Runtime constructors precede module initialization at the same default priority.
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, "main.c")
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
 	command := exec.Command(compilerName(options), arguments...)
+	command.Dir = directory
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

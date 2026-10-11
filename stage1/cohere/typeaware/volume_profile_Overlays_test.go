@@ -8,6 +8,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const testVolumeProfileOverlaysShards = 3
@@ -78,8 +80,19 @@ func TestVolumeProfileOverlays_002(t *testing.T) {
 	runVolumeProfileOverlayShard(t, 2)
 }
 
-// Overlays read temporary files outside the repository, so these Go tests must
-// run directly rather than through the repository-input product cache.
+// volumeProfileOverlayBinary is bridge/tsgo/checker's test binary with change planted in facts.go, a product
+// (buildcache.GoTestMutated) built ahead by TestProduct_profile_overlay_*, and the directory go test would run it in.
+func volumeProfileOverlayBinary(t *testing.T, change volumeProfileOverlayChange) (binary, directory string) {
+	t.Helper()
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary = buildcache.GoTestMutated(t, "", "checker-"+change.name+".test", "./bridge/tsgo/checker", nil,
+		[]buildcache.Mutation{{File: "bridge/tsgo/checker/facts.go", Before: change.from, After: change.to}})
+	return binary, filepath.Join(repository, "bridge/tsgo/checker")
+}
+
 func runVolumeProfileOverlayShard(t *testing.T, shard int) {
 	t.Helper()
 	repository, err := filepath.Abs("../../..")
@@ -94,12 +107,12 @@ func runVolumeProfileOverlayShard(t *testing.T, shard int) {
 				continue
 			}
 			found = true
-			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-			// The deadline kills the whole process group, compiler children included;
-			// go test's own -timeout doesn't bound dependency compilation.
+			binary, directory := volumeProfileOverlayBinary(t, change)
+			// The deadline kills the whole process group, the test binary's children included.
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			t.Cleanup(cancel)
-			command := exec.CommandContext(ctx, "go", "test", "-overlay", overlay, "./bridge/tsgo/checker", "-run", "^TestExactIndexMatchesCompilerNodes$", "-count=1", "-timeout=90s")
+			command := exec.CommandContext(ctx, binary, "-test.run", "^TestExactIndexMatchesCompilerNodes$", "-test.count=1", "-test.timeout=90s")
+			command.Dir = directory
 			command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 			command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 			command.WaitDelay = 5 * time.Second
@@ -107,18 +120,33 @@ func runVolumeProfileOverlayShard(t *testing.T, shard int) {
 			deadline := ctx.Err() == context.DeadlineExceeded
 			cancel()
 			if deadline {
-				t.Fatalf("COOKED: %s exceeded the 90s hard deadline (60s budget); go test %.6fs", change.name, result.elapsed.Seconds())
+				t.Fatalf("COOKED: %s exceeded the 90s hard deadline (60s budget); checker test %.6fs", change.name, result.elapsed.Seconds())
 			}
 			if result.elapsed > 60*time.Second {
-				t.Fatalf("COOKED: %s exceeded the 60s budget; go test %.6fs", change.name, result.elapsed.Seconds())
+				t.Fatalf("COOKED: %s exceeded the 60s budget; checker test %.6fs", change.name, result.elapsed.Seconds())
 			}
 			if result.err == nil || !bytes.Contains(result.stdout, []byte("exact index changed compiler node")) {
 				t.Fatalf("%s not caught by AST identity: %v %s %s", change.name, result.err, result.stdout, result.stderr)
 			}
-			t.Logf("%s: compiler AST identity oracle catches wrong selector; go test %.6fs; cooked=false", change.name, result.elapsed.Seconds())
+			t.Logf("%s: compiler AST identity oracle catches wrong selector; checker test %.6fs; cooked=false", change.name, result.elapsed.Seconds())
 		}
 		if !found {
 			t.Fatalf("shard %03d contains unknown mutation %s", shard, name)
 		}
 	}
+}
+
+func TestProduct_profile_overlay_index_kind(t *testing.T) {
+	t.Parallel()
+	volumeProfileOverlayBinary(t, volumeProfileOverlayChanges()[0])
+}
+
+func TestProduct_profile_overlay_root_kind(t *testing.T) {
+	t.Parallel()
+	volumeProfileOverlayBinary(t, volumeProfileOverlayChanges()[1])
+}
+
+func TestProduct_profile_overlay_index_end(t *testing.T) {
+	t.Parallel()
+	volumeProfileOverlayBinary(t, volumeProfileOverlayChanges()[2])
 }

@@ -79,6 +79,14 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 			if err != nil {
 				return err
 			}
+			// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a checkout,
+			// which a runner's source never holds, so walking it keyed this product apart (landable-10, key check).
+			if !buildcache.Tracked(repository, path, entry.IsDir()) {
+				if entry.IsDir() {
+					return filepath.SkipDir
+				}
+				return nil
+			}
 			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 				relative, err := filepath.Rel(repository, path)
 				if err != nil {

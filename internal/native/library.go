@@ -127,7 +127,10 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	hash := sha256.New()
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
-	part("adamic-runtime-v2")
+	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
+	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
+	// v4: the address names the system headers the compile read (headersRead), so no archive addressed without them is.
+	part("adamic-runtime-v4")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
@@ -194,8 +197,13 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 			continue
 		}
 		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
-		arguments := append(append([]string{}, flags...), "-c", filepath.Join(temporary, file.name), "-o", object)
-		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+		// The build directory is random and the cache sits under each machine's home, so neither may reach an object:
+		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
+		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
+		arguments := append(append(append([]string{}, flags...), prefixMaps(temporary, "/adamic-runtime")...), "-c", file.name, "-o", object)
+		command := exec.Command(compiler, arguments...)
+		command.Dir = temporary
+		if output, err := command.CombinedOutput(); err != nil {
 			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
 		}
 		objects = append(objects, object)
@@ -316,6 +324,17 @@ func dependencies(rules []byte) []string {
 		}
 	}
 	return names
+}
+
+// prefixMaps maps directory to name in everything a compile records of a path (debug info, __FILE__), under each
+// spelling of it: as given, and as the system resolves it, which clang may record instead (macOS's temporary and cache
+// directories sit under /var, a link to /private/var, and a build there kept its directory, landable-12 on a Mac).
+func prefixMaps(directory, name string) []string {
+	maps := []string{"-ffile-prefix-map=" + directory + "=" + name}
+	if real, err := filepath.EvalSymlinks(directory); err == nil && real != directory {
+		maps = append(maps, "-ffile-prefix-map="+real+"="+name)
+	}
+	return maps
 }
 
 // RuntimeLinkFlags retains every translation unit, as Build did when linking the object files
