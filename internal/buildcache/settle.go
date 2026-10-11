@@ -226,8 +226,13 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
 	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a build
 	// tree's log under the home directory refused two estree products).
-	if log := os.Getenv("ADAMIC_BUILD_LOG"); log != "" {
-		facts.buildLogs = variants(filepath.Clean(log))
+	// The trace's report (ADAMIC_TRACE_REPORT) is the same kind of bookkeeping, and a path every run names afresh: a
+	// build that looks at the ADAMIC_ locations (Relative) looked at it (#n9jc61n, Planner's skip proof on Home, Oct 11:
+	// markdown-list-layout-shared-v3 keyed its own run's logs/product-388.trace.jsonl).
+	for _, variable := range []string{"ADAMIC_BUILD_LOG", "ADAMIC_TRACE_REPORT"} {
+		if log := os.Getenv(variable); log != "" {
+			facts.buildLogs = append(facts.buildLogs, variants(filepath.Clean(log))...)
+		}
 	}
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
 		facts.temporary = append(facts.temporary, variants(place)...)
@@ -404,15 +409,29 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if facts.searched[filepath.Dir(name)] {
 			return classed{}
 		}
+		aboveTree := slices.ContainsFunc(facts.roots, func(root string) bool { return under(root, name) })
+		// A step of a walk down to a known place (realpath's lstat of each parent of the build cache) is the place's,
+		// never keyed, unless it leads to the tree too, which above keys: where a run's cache sits isn't an input (#n9jc61n,
+		// Planner's skip proof on Home, Oct 11: 12 products re-keyed between two runs of one tree, each naming its own
+		// run's directory, ../trees-2 against ../trees-3).
+		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.nativeRuntimes, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
+			if place != "" && under(place, name) && !aboveTree {
+				return classed{}
+			}
+		}
 		for _, root := range facts.roots {
 			if under(root, filepath.Dir(name)) {
 				relative, _ := filepath.Rel(root, name)
 				return classed{"above", filepath.ToSlash(relative)}
 			}
 		}
-		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.nativeRuntimes, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
-			if place != "" && under(place, name) {
-				return classed{}
+		// A path beside one of the build cache's parents (node's node_modules and package.json search, walking up from a
+		// product it runs) is keyed as above keys the tree's, relative to the cache: each run's cache sits elsewhere,
+		// and what is beside it is the same.
+		for _, cache := range facts.caches {
+			if under(cache, filepath.Dir(name)) {
+				relative, _ := filepath.Rel(cache, name)
+				return classed{"above cache", filepath.ToSlash(relative)}
 			}
 		}
 	}
