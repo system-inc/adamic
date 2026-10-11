@@ -208,7 +208,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
-					expected := stringsRawGoAnswers(t, goBinary, goIdentity, text, pref)
+					expected := stringsRawGoAnswer(t, goBinary, goIdentity, corpus, unit.lo, pref)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), stringsOnNode(t, main, args...)} {
