@@ -20,6 +20,8 @@ import (
 	"strings"
 	"sync"
 	"unicode"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Settle turns a traced run into keyed products (#vt46geg). The trace is strace -f's output (cmd/traced's flags:
@@ -87,7 +89,7 @@ func TreeState() (string, error) {
 				return ""
 			}
 			var output []byte
-			if output, err = exec.Command("git", append([]string{"-C", directory}, arguments...)...).Output(); err != nil {
+			if output, err = toolchain.GitCommand(append([]string{"-C", directory}, arguments...)...).Output(); err != nil {
 				err = fmt.Errorf("git -C %s %s: %v", directory, strings.Join(arguments, " "), err)
 			}
 			return string(output)

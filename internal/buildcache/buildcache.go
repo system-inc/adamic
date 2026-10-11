@@ -36,6 +36,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Inputs are everything that can change a product. Name is one per build function. Files are repository-relative
@@ -597,10 +599,12 @@ func repositoryAt(directory string) *trackedFiles {
 		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
 		var listed, dirty []byte
 		var err error
-		// git reads .git, which no product's read set may hold: listing what the tree carries is keying.
+		// git reads .git, which no product's read set may hold: listing what the tree carries is keying. It runs with
+		// toolchain's git environment, so nothing of the home (a ~/.gitconfig's filter, fsmonitor or autocrlf) shapes
+		// what it says the tree holds.
 		keying(func() {
-			if listed, err = exec.Command("git", "-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
-				dirty, err = exec.Command("git", "-C", directory, "diff-files", "--name-only", "-z").Output()
+			if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
+				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--name-only", "-z").Output()
 			}
 		})
 		if err != nil {

@@ -4,17 +4,17 @@ package corpusfiles
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
 func g(t *testing.T, dir string, args ...string) string {
 	t.Helper()
-	c := exec.Command("git", append([]string{"-C", dir, "-c", "user.name=x", "-c", "user.email=x@x", "-c", "commit.gpgsign=false", "-c", "protocol.file.allow=always"}, args...)...)
+	c := toolchain.GitCommand(append([]string{"-C", dir, "-c", "user.name=x", "-c", "user.email=x@x", "-c", "commit.gpgsign=false", "-c", "protocol.file.allow=always"}, args...)...)
 	out, err := c.CombinedOutput()
 	if err != nil {
 		t.Fatalf("git %v: %v %s", args, err, out)
@@ -106,7 +106,7 @@ func TestAdversarialHeadNotBoundToFiles(t *testing.T) {
 		t.Fatal(err)
 	}
 	// Replace cohere's files with the old commit's listing and the tree with old content; HEAD stays the pin.
-	listing, _ := exec.Command("git", "-C", sub, "ls-tree", "-r", "-z", "--full-tree", old).Output()
+	listing, _ := toolchain.GitCommand("-C", sub, "ls-tree", "-r", "-z", "--full-tree", old).Output()
 	os.WriteFile(filepath.Join(source, ".tracked/cohere/files"), listing, 0o644)
 	w(t, source, "readme", "r\n")
 	w(t, source, "cohere/x/a.css", "a{}\n")
