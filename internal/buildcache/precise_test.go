@@ -1825,3 +1825,28 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 		t.Fatalf("the report is %+v; want header found under %s and port settled", reports, file.Sets[0].Key[:12])
 	}
 }
+
+// A build that looks for a product in the cache and doesn't find it read nothing: a pending product of this trace that
+// isn't there, or a key with no product, is no entry and no refusal. Reading what is there of a product the run
+// never built is still refused. Mutant: a missed lookup classed by its path.
+// Not parallel: newRig.
+func TestALookupInTheCacheThatMissedIsNoRead(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, filepath.Join(r.cache, "pending", filepath.Base(r.trace), strings.Repeat("c2", 32)))
+		r.missing(r.pid, filepath.Join(r.cache, strings.Repeat("d3", 32), "product"))
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("lookups that missed: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	r.retrace(t, "read")
+	Product(t, Inputs{Name: "reader", Files: []string{"source"}}, building("reader"))
+	reader := r.built(t)["reader"]
+	r.window(reader.Build, func() { r.open(r.pid, filepath.Join(r.cache, strings.Repeat("e4", 32), "product")) })
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "unknown product") {
+		t.Fatalf("a read of a product nobody built: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
