@@ -141,7 +141,7 @@ func buildOne(source string, output string, options Options, flags []string) err
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	// Neither the build directory nor the runtime cache under this machine's home may reach the binary, so its bytes are a
+	// Neither the build directory nor this machine's runtime cache may reach the binary, so its bytes are a
 	// function of its inputs wherever it's built (see cachedRuntime). clang is never given an absolute path to read: it
 	// compiles main.c from inside the build directory, and finds the runtime's headers and archive through runtime, a link
 	// there to the cache. The prefix maps cover debug info and __FILE__, but ASan's metadata for globals keeps each source
