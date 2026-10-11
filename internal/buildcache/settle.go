@@ -1188,17 +1188,35 @@ func declaredDrift(declared, reads []string) *drift {
 	if len(declared) == 0 {
 		return nil
 	}
-	covered := func(name, entry string) bool {
-		return name == entry || strings.HasPrefix(name, strings.TrimSuffix(entry, "/")+"/")
+	// An entry covers a read that is it, or that is under it (a read under "dir" or "dir/"). Each read climbs its own
+	// directories through these, rather than meeting every entry: home-6's dry run (Oct 11) had tsprinter's mutant
+	// products, 76,958 reads against 75,696 declared entries each, settling for over 20 minutes.
+	exactly, under := map[string][]string{}, map[string][]string{}
+	for _, entry := range declared {
+		exactly[entry] = append(exactly[entry], entry)
+		under[strings.TrimSuffix(entry, "/")] = append(under[strings.TrimSuffix(entry, "/")], entry)
 	}
 	result := &drift{}
 	read := map[string]bool{}
 	for _, name := range reads {
-		declaredHere := false
-		for _, entry := range declared {
-			if covered(name, entry) {
-				declaredHere, read[entry] = true, true
+		var covering []string
+		covering = append(covering, exactly[name]...)
+		for at := name; ; {
+			parent := path.Dir(at)
+			if parent == at || parent == "." {
+				break
 			}
+			if parent == "/" {
+				// "dir/" with dir empty: what an empty or "/" entry covers, every absolute read.
+				covering = append(covering, under[""]...)
+				break
+			}
+			covering = append(covering, under[parent]...)
+			at = parent
+		}
+		declaredHere := len(covering) > 0
+		for _, entry := range covering {
+			read[entry] = true
 		}
 		if !declaredHere && name != "." {
 			result.Undeclared++
