@@ -184,9 +184,9 @@ func miscBuild(t *testing.T, path string) (string, string) {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "estree-misc-sanitized-emitted",
-		Files:     []string{"internal", "bridge", "go.mod", "stage1/typescript", "stage1/cohere/estree"},
-		Flags:     flags,
+		Name:  "estree-misc-sanitized-emitted",
+		Files: []string{"internal", "bridge", "go.mod", "stage1/typescript", "stage1/cohere/estree"},
+		Flags: flags,
 		// The compiler this build runs is keyed by its sources (Files) and the Go release, never by this test binary's bytes,
 		// which differ wherever it was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
