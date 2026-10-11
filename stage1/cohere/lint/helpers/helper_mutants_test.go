@@ -41,14 +41,17 @@ func helperMutantGroup(index int) []helperMutation {
 	return group
 }
 
-var helperProducts [helperMutantShards + 1]struct {
+// helperClean is the index of the unmutated native build, after the mutants.
+const helperClean = helperMutantShards
+
+var helperProducts [helperMutantShards + 2]struct {
 	once   sync.Once
 	binary string
 }
 var helperNativeBuild sync.Mutex
 
-// index -1 is the Go oracle; other indices name independently built native mutants.
-// Both build-phase declarations and shards call this exact recipe and key.
+// index -1 is the Go oracle; helperClean is the unmutated native build; other indices name independently built
+// native mutants. Both build-phase declarations and shards call this exact recipe and key.
 func helperMutantProduct(t *testing.T, index int) string {
 	t.Helper()
 	product := &helperProducts[index+1]
@@ -57,10 +60,17 @@ func helperMutantProduct(t *testing.T, index int) string {
 		flags := []string{"go build", "overlay=oracle.go,catalog.go,descriptors.go"}
 		tools := []string{buildcache.Tool("go", "version")}
 		files := []string{"cohere", "stage1/cohere/lint/helpers/testdata/oracle.go", "stage1/cohere/lint/helpers/testdata/catalog.go", "stage1/cohere/lint/helpers/testdata/descriptors.go", "stage1/cohere/lint/helpers/helpers_test.go", "stage1/cohere/lint/helpers/helper_mutants_test.go"}
+		// The clean build is a mutant's recipe and key with no mutation planted.
+		var m helperMutation
 		if index >= 0 {
-			m := helperMutations()[index]
-			name = "helper-mutants-" + m.file
-			flags = []string{"native.Build", "Sanitize=true", "mutation=" + m.old + "=>" + m.replacement, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
+			name = "helper-native"
+			var mutation []string
+			if index != helperClean {
+				m = helperMutations()[index]
+				name = "helper-mutants-" + m.file
+				mutation = []string{"mutation=" + m.old + "=>" + m.replacement}
+			}
+			flags = append(append([]string{"native.Build", "Sanitize=true"}, mutation...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 			tools = append(tools, buildcache.Tool("clang", "--version"))
 			files = append(files, "go.mod", "go.work", "internal", "stage1/cohere/lint/helpers/main.ts", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/option_schema.ts", "stage1/cohere/lint/helpers/policy_message.ts", "stage1/cohere/lint/helpers/strict_options.ts")
 		}
@@ -69,7 +79,6 @@ func helperMutantProduct(t *testing.T, index int) string {
 			if index < 0 {
 				binary = oracle(t)
 			} else {
-				m := helperMutations()[index]
 				source := filepath.Join(directory, "source")
 				if err := os.Mkdir(source, 0755); err != nil {
 					return err
@@ -110,6 +119,7 @@ func TestProduct_HelperMutantsJSON(t *testing.T)    { t.Parallel(); helperMutant
 func TestProduct_HelperMutantsSchema(t *testing.T)  { t.Parallel(); helperMutantProduct(t, 1) }
 func TestProduct_HelperMutantsMessage(t *testing.T) { t.Parallel(); helperMutantProduct(t, 2) }
 func TestProduct_HelperMutantsStrict(t *testing.T)  { t.Parallel(); helperMutantProduct(t, 3) }
+func TestProduct_HelperNative(t *testing.T)         { t.Parallel(); helperMutantProduct(t, helperClean) }
 
 func TestHelperMutants_000(t *testing.T) { t.Parallel(); runHelperMutant(t, 0) }
 func TestHelperMutants_001(t *testing.T) { t.Parallel(); runHelperMutant(t, 1) }
