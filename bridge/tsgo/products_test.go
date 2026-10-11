@@ -31,7 +31,7 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 	sources := bridgeDependencies(t, repository)
 	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
 		"product=" + name,
-		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
+		"go build -trimpath -buildmode=c-archive; go build -trimpath; go test -c -trimpath; -overlay; -o=<product>",
 		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
 		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -ffile-compilation-dir=. -I bridge/tsgo -lpthread -ldl -lm, by relative names from <repository>",
 		"native build --tsgo <archive>; --sanitize; --count",
@@ -57,9 +57,10 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		}
 	}
 	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
-	// asks for what Workshop built. Stage 0, the oracle and the checker archive are the same bytes from any path (with
-	// -trimpath and -buildvcs=false, which cloud/setup.sh exports and GOFLAGS keys); a native product's debug
-	// information still names the path it was built at, until its build maps that prefix.
+	// asks for what Workshop built. Every go build here passes -trimpath itself rather than trusting GOFLAGS for it
+	// (Loom's tree builder sets only -buildvcs=false), so stage 0, the oracle and the archives name no checkout: go then
+	// maps the module's directory out of cgo's C compiles too (-ffile-prefix-map), and the drivers and natives linking
+	// an archive carry none of its paths (#ax8mr31: tsgo-asan.a gave bridge-test-api 689).
 	return inputs
 }
 
@@ -268,7 +269,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	destination := filepath.Join(directory, name)
 	command := func(tool string, arguments ...string) *exec.Cmd { return exec.CommandContext(ctx, tool, arguments...) }
 	if strings.HasSuffix(name, ".a") {
-		arguments := []string{"build", "-buildmode=c-archive", "-o", destination}
+		arguments := []string{"build", "-trimpath", "-buildmode=c-archive", "-o", destination}
 		mutants := map[string][3]string{
 			"length.a": {"bridge/tsgo/archive/main.go", "result._type = buffer(answer.Type)", "result._type = buffer(answer.Type)\n\tresult._type.length++"},
 			"stale.a":  {"bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant: retain the released program in the live registry."},
@@ -295,7 +296,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		if name == "oracle" {
 			pkg = "./bridge/tsgo/oracle"
 		}
-		return run(command("go", "build", "-o", destination, pkg))
+		return run(command("go", "build", "-trimpath", "-o", destination, pkg))
 	}
 	if name == "region-stage0" || name == "linkage.test" {
 		path, before, after := "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)"
@@ -307,9 +308,9 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 			return err
 		}
 		if name == "linkage.test" {
-			return run(command("go", "test", "-c", "-overlay", replacement, "-o", destination, "./bridge/tsgo"))
+			return run(command("go", "test", "-c", "-trimpath", "-overlay", replacement, "-o", destination, "./bridge/tsgo"))
 		}
-		return run(command("go", "build", "-overlay", replacement, "-o", destination, "./cmd/adamic"))
+		return run(command("go", "build", "-trimpath", "-overlay", replacement, "-o", destination, "./cmd/adamic"))
 	}
 	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
 	if archiveName, ok := drivers[name]; ok {
