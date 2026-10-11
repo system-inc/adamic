@@ -3,16 +3,15 @@ package unicodeproperties
 import (
 	"bytes"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const (
@@ -239,21 +238,39 @@ func TestUnicodeNodeShardCoverage(t *testing.T) {
 
 }
 
+// unicodeShardPlants are the two planted failures a shard must catch alone, each a change to canonicalize_test.go
+// that leaves valid Node patterns and every width, count and scanner control intact.
+var unicodeShardPlants = map[string]buildcache.Mutation{
+	// A wrong expected equivalence class: only the selected first shard fails its Node comparison.
+	"class": {File: "internal/unicodeproperties/canonicalize_test.go", Before: "body := text.String()", After: "body := text.String()" + "\n if index == 0 { body = fmt.Sprintf(\"%X %X\", canon, canon) }"},
+	// A non-singleton appended to the first stride: a valid GROUP pattern whose Node fold adds U+0061.
+	"stride": {File: "internal/unicodeproperties/canonicalize_test.go", Before: "for _, group := range strides {", After: `for index, group := range strides {
+		if index == 0 { group = append(append([]uint32{}, group...), 0x41) }`},
+}
+
+// unicodeShardPlantBinary is this package's test binary with a plant from unicodeShardPlants, a product built ahead
+// (buildcache.GoTestMutated): the mutated source lives in the product, and the unit only runs it (#5qykzj5).
+func unicodeShardPlantBinary(t testing.TB, plant string) string {
+	t.Helper()
+	return buildcache.GoTestMutated(t, "", "unicodeproperties.test", "./internal/unicodeproperties", nil, []buildcache.Mutation{unicodeShardPlants[plant]})
+}
+
+func TestProduct_UnicodePropertiesClassPlant(t *testing.T) {
+	t.Parallel()
+	unicodeShardPlantBinary(t, "class")
+}
+
+func TestProduct_UnicodePropertiesStridePlant(t *testing.T) {
+	t.Parallel()
+	unicodeShardPlantBinary(t, "stride")
+}
+
 // Plant a wrong expected equivalence class, leaving valid Node patterns and
 // all width, count and scanner controls intact. Only the selected first shard
 // fails its Node comparison; a neighboring top-level range remains green.
 func TestUnicodeNodeShardPlantedFailure(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("canonicalize_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	old := "body := text.String()"
-	if strings.Count(string(source), old) != 1 {
-		t.Fatal("plant site changed")
-	}
-	changed := strings.Replace(string(source), old, old+"\n if index == 0 { body = fmt.Sprintf(\"%X %X\", canon, canon) }", 1)
-	runUnicodeShardPlant(t, changed, "^TestCanonicalizeUnicodeNodeRange[01]$", "BAD CLASS iu 61 EXTRA 41", "TestCanonicalizeUnicodeNodeRange0/0000-0016-", "TestCanonicalizeUnicodeNodeRange1")
+	runUnicodeShardPlant(t, "class", "^TestCanonicalizeUnicodeNodeRange[01]$", "BAD CLASS iu 61 EXTRA 41", "TestCanonicalizeUnicodeNodeRange0/0000-0016-", "TestCanonicalizeUnicodeNodeRange1")
 }
 
 // A non-singleton appended to the first stride is a valid GROUP pattern whose
@@ -261,39 +278,14 @@ func TestUnicodeNodeShardPlantedFailure(t *testing.T) {
 // shards in its range and the neighboring stride range must pass.
 func TestUnicodeNodeStridePlantedFailure(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("canonicalize_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	old := "for _, group := range strides {"
-	if strings.Count(string(source), old) != 1 {
-		t.Fatal("stride plant site changed")
-	}
-	changed := strings.Replace(string(source), old, `for index, group := range strides {
-		if index == 0 { group = append(append([]uint32{}, group...), 0x41) }`, 1)
-	runUnicodeShardPlant(t, changed, "^TestCanonicalizeUnicodeNodeRange[23]$", "BAD GROUP iu n", "TestCanonicalizeUnicodeNodeRange2/4050-4058-", "TestCanonicalizeUnicodeNodeRange3")
+	runUnicodeShardPlant(t, "stride", "^TestCanonicalizeUnicodeNodeRange[23]$", "BAD GROUP iu n", "TestCanonicalizeUnicodeNodeRange2/4050-4058-", "TestCanonicalizeUnicodeNodeRange3")
 }
 
-func runUnicodeShardPlant(t *testing.T, changed, run, bad, failedShard, passedRange string) {
+// runUnicodeShardPlant runs the planted test binary in this package's directory, as go test ran it. Keying refuses a
+// plant whose Before isn't in canonicalize_test.go exactly once, so a moved plant site fails here.
+func runUnicodeShardPlant(t *testing.T, plant, run, bad, failedShard, passedRange string) {
 	t.Helper()
-	dir := t.TempDir()
-	replacement := filepath.Join(dir, "canonicalize_test.go")
-	if err := os.WriteFile(replacement, []byte(changed), 0600); err != nil {
-		t.Fatal(err)
-	}
-	original, err := filepath.Abs("canonicalize_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{original: replacement}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(dir, "overlay.json")
-	if err = os.WriteFile(path, overlay, 0600); err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command("go", "test", "-overlay", path, ".", "-count=1", "-parallel=4", "-timeout=75s", "-run", run, "-v")
+	command := exec.Command(unicodeShardPlantBinary(t, plant), "-test.count=1", "-test.parallel=4", "-test.timeout=75s", "-test.run", run, "-test.v")
 	output, err := command.CombinedOutput()
 	if err == nil || bytes.Contains(output, []byte("build failed")) || !bytes.Contains(output, []byte(bad)) || !bytes.Contains(output, []byte("--- FAIL: "+failedShard)) || !bytes.Contains(output, []byte("--- PASS: "+passedRange+" (")) {
 		t.Fatalf("plant did not fail only its Node shard: %v %s", err, output)
