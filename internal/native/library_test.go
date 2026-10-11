@@ -264,6 +264,7 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 // that changes one makes another runtime, never the cached one (#vt46geg: a traced build reads the runtime cache as no
 // entry, which only an address of everything the compile read makes safe). Mutants: runtimeKey not hashing headers;
 // scanHeaders skipping what is outside the sources; headersRead's memo shared across flags.
+// Not parallel: it clears headerScans, the process's memo every runtime build reads.
 func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 	compiler, err := exec.LookPath("clang")
 	if err != nil {
@@ -310,6 +311,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 
 // clang -M writes make rules: a backslash continues a line and escapes a space inside a path.
 func TestDependenciesReadClangsRules(t *testing.T) {
+	t.Parallel()
 	rules := "answer.o: answer.c /usr/include/stdio.h \\\n  /opt/with\\ space/x.h\nother.o: other.c\n"
 	got := dependencies([]byte(rules))
 	want := []string{"answer.c", "/usr/include/stdio.h", "/opt/with space/x.h", "other.c"}
