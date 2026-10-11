@@ -65,7 +65,9 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	}
 	settledTree.Store(&sync.Map{})
 	defer settledTree.Store(nil)
-	return state.settle(entries), nil
+	settlement := state.settle(entries)
+	settlement.CommandExited, settlement.CommandStatus = state.commandStatus >= 0, state.commandStatus
+	return settlement, nil
 }
 
 // TreeState is the repository's state as git sees it, and the machine's packages: HEAD, every file's status
@@ -137,6 +139,9 @@ type Settlement struct {
 	Settled []string
 	Refused []string
 	Reports []Report
+	// CommandExited says the trace holds the command's own exit, with CommandStatus its status.
+	CommandExited bool
+	CommandStatus int
 }
 
 // A Report is one product's outcome as cmd/traced writes it to ADAMIC_TRACE_REPORT, one JSON line each, for Loom's
@@ -502,6 +507,8 @@ type traceState struct {
 	order     []string
 	lost      []string
 	started   bool
+	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
+	command, commandStatus int
 }
 
 // A pathReads is a process's reads of one path: their kinds, and when it first and last read the path (0 for a path it
@@ -522,7 +529,7 @@ type traceCall struct {
 }
 
 func newTraceState(facts *traceFacts) *traceState {
-	state := &traceState{facts: facts, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
+	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{}}
 	return state
@@ -577,6 +584,9 @@ func (state *traceState) line(text string) {
 	}
 	pid, _ := strconv.Atoi(number)
 	if isExit(rest) {
+		if code, exited := strings.CutPrefix(rest, "+++ exited with "); exited && state.started && pid == state.command {
+			state.commandStatus, _ = strconv.Atoi(strings.TrimSuffix(code, " +++"))
+		}
 		state.exited(pid)
 		return
 	}
@@ -607,6 +617,7 @@ func (state *traceState) handle(call traceCall) {
 	if !state.started {
 		// The first process in the trace is the command strace ran, in the directory it ran from.
 		state.started = true
+		state.command = call.pid
 		state.process[call.pid] = call.pid
 		state.reads[call.pid] = map[string]*pathReads{}
 		state.directory[call.pid], _ = os.Getwd()

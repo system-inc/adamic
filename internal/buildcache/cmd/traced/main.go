@@ -26,12 +26,15 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"syscall"
@@ -133,7 +136,8 @@ func run(command []string, report string) (int, error) {
 		done <- settled{settlement, err}
 	}()
 	strace := exec.Command("strace", append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...)
-	strace.Stdin, strace.Stdout, strace.Stderr = os.Stdin, os.Stdout, os.Stderr
+	complaints := &straceComplaints{}
+	strace.Stdin, strace.Stdout, strace.Stderr = os.Stdin, os.Stdout, io.MultiWriter(os.Stderr, complaints)
 	status := 0
 	if err = strace.Run(); err != nil {
 		var exit *exec.ExitError
@@ -151,6 +155,16 @@ func run(command []string, report string) (int, error) {
 	if result.err != nil {
 		return 0, fmt.Errorf("settling %s: %v", directory, result.err)
 	}
+	// strace exits with the command's status, but exits 1 when ptrace(PTRACE_LISTEN) fails on a tracee already gone, which
+	// loses nothing: a tracee still running would never have been resumed, and the run couldn't have ended (home-7's dry
+	// run, Oct 11: 3 of 454 tests exited 1 though go test passed and their products settled). Then the run's status is
+	// the command's own exit, as the trace holds it. After any other complaint of strace's, the trace may be missing
+	// events, so strace's status stands and the run reads as failed.
+	if result.settlement.CommandExited && status != result.settlement.CommandStatus && complaints.onlyListen() {
+		fmt.Fprintf(os.Stderr, "traced: strace exited %d after %d failed PTRACE_LISTEN on tracees already gone; the command exited %d, the run's status\n",
+			status, len(complaints.lines), result.settlement.CommandStatus)
+		status = result.settlement.CommandStatus
+	}
 	if report != "" {
 		if err = buildcache.WriteReport(report, result.settlement.Reports); err != nil {
 			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
@@ -164,4 +178,37 @@ func run(command []string, report string) (int, error) {
 		status = 3
 	}
 	return status, nil
+}
+
+// straceComplaints keeps strace's own lines from the stderr it shares with the command: each one it prints as
+// "strace: ...".
+type straceComplaints struct {
+	partial []byte
+	lines   []string
+}
+
+func (complaints *straceComplaints) Write(data []byte) (int, error) {
+	complaints.partial = append(complaints.partial, data...)
+	for {
+		end := bytes.IndexByte(complaints.partial, '\n')
+		if end < 0 {
+			return len(data), nil
+		}
+		if line := string(complaints.partial[:end]); strings.HasPrefix(line, "strace: ") {
+			complaints.lines = append(complaints.lines, line)
+		}
+		complaints.partial = complaints.partial[end+1:]
+	}
+}
+
+var listenFailed = regexp.MustCompile(`^strace: ptrace\(PTRACE_LISTEN,pid:\d+,sig:\d+\): Input/output error$`)
+
+// onlyListen says strace complained, and only of PTRACE_LISTEN failing with EIO.
+func (complaints *straceComplaints) onlyListen() bool {
+	for _, line := range complaints.lines {
+		if !listenFailed.MatchString(line) {
+			return false
+		}
+	}
+	return len(complaints.lines) > 0
 }
