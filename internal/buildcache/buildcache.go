@@ -39,8 +39,9 @@ import (
 )
 
 // Inputs are everything that can change a product. Name is one per build function. Files are repository-relative
-// files and directories, hashed by content (a directory by every name and file under it, sorted). Flags are every
-// flag and environment value the build reads. Toolchain names the tools, from Tool or runtime.Version().
+// files and directories, valued by content (a file by its git blob id and exec bit, a directory by every name and file
+// under it, sorted). Flags are every flag and environment value the build reads. Toolchain names the tools, from Tool
+// or runtime.Version().
 type Inputs struct {
 	Name      string
 	Files     []string
@@ -283,8 +284,12 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 // published before (landable-9b: 54 refs/action conflicts, each against a ref written at 04:14Z). v4 is placeless: a
 // native product's debug info no longer names the random directory it was built in (native.Build and the runtime map it,
 // #tsn1wp8), so its bytes are the same build to build, and differ from every v3 product that named its directory
-// (landable-11: lint-profile-profiled and yaml-scalars-native, against refs landable-10 wrote).
-const keyVersion = "v4"
+// (landable-11: lint-profile-profiled and yaml-scalars-native, against refs landable-10 wrote). v5 is git's: a declared
+// file is valued as a read set values it, by its git blob id and exec bit, a clean tracked file by the id git's index
+// holds without reading it (#r47fdtt: a full hit of cssstrings' Setup spent 15 to 19 s hashing declared trees, all of
+// cohere 5.7 s, in every process that keyed it). A product's bytes are v4's, but every declared key moves, so each
+// misses once, under a version that says why.
+const keyVersion = "v5"
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
 func Key(root string, inputs Inputs) (string, error) {
@@ -501,12 +506,13 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			}
 			field("symlink", relative+" -> "+target)
 		case info.Mode().IsRegular():
-			content, err := os.ReadFile(path)
+			// As a read set values it: a clean tracked file by the id git's index holds, unread, anything else hashed as
+			// git hashes a blob, so a checkout and an unpacked source key the same.
+			value, err := gitValue(root, path, info)
 			if err != nil {
 				return err
 			}
-			sum := sha256.Sum256(content)
-			field("file", fmt.Sprintf("%s %t %x", relative, info.Mode()&0o111 != 0, sum))
+			field("file", relative+" "+value)
 		default:
 			return fmt.Errorf("input %s is neither a file, a directory nor a symlink", relative)
 		}
