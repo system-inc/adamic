@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -97,33 +96,6 @@ func jsonClangToolchain() ([]string, error) {
 	}
 	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
 	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
-}
-
-// buildJSONGoOracle writes the driver and overlay only into its product directory.
-// Go's usual module/action caches remain managed by the Go toolchain.
-func buildJSONGoOracle(dir string) error {
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return err
-	}
-	source, err := filepath.Abs("testdata/cohere_driver.go")
-	if err != nil {
-		return err
-	}
-	overlay := filepath.Join(dir, "overlay.json")
-	encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(overlay, encoded, 0644); err != nil {
-		return err
-	}
-	command := exec.Command("go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
-	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-		return fmt.Errorf("Go driver: %w\n%s", err, output)
-	}
-	return nil
 }
 
 func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
@@ -218,20 +190,6 @@ func jsonBuildUnit(parent *testing.T, name string, in buildcache.Inputs, build f
 	})
 }
 
-// GoBuild refuses overlays. Until this oracle has a normal repository package,
-// build it locally, once per parent, without hand-listing Go cache inputs.
-func jsonGoOracleUnit(parent *testing.T) string {
-	return jsonRunBuildUnit(parent, "build-go-oracle", func(t testing.TB) string {
-		start := time.Now()
-		dir := parent.TempDir()
-		if err := buildJSONGoOracle(dir); err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("local Go oracle overlay build %.3fs", time.Since(start).Seconds())
-		return dir
-	})
-}
-
 func jsonLoweredProducts(t *testing.T, dir, entry string) jsonProducts {
 	t.Helper()
 	source, err := os.ReadFile(filepath.Join(dir, "main.c"))
@@ -318,35 +276,6 @@ func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
 }
 
 type jsonProducts struct{ oracle, entry, script, release, sanitized, c string }
-
-func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
-	t.Helper()
-	tools, err := jsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := jsonGoOracleUnit(t)
-	lowered := jsonBuildUnit(t, "build-lowered-port", jsonLoweredPortInputs(tools), buildJSONLoweredPort)
-	products := jsonProducts{oracle: filepath.Join(oracle, "go-cohere"), entry: filepath.Join(lowered, "main.ts"), script: filepath.Join(lowered, "program.mjs")}
-	if !release && !sanitized {
-		return products
-	}
-	clang, err := jsonClangToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if release {
-		products.release = filepath.Join(jsonBuildUnit(t, "build-release", jsonNativePortInputs(string(source), false, clang), buildJSONReleasePort(string(source))), "port")
-	}
-	if sanitized {
-		products.sanitized = filepath.Join(jsonBuildUnit(t, "build-sanitized", jsonNativePortInputs(string(source), true, clang), buildJSONSanitizedPort(string(source))), "port")
-	}
-	return products
-}
 
 // A warm product must have the same key despite Go's fresh compiler scratch path.
 func TestJSONGoToolchainStable(t *testing.T) {

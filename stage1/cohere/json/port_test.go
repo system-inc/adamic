@@ -570,28 +570,6 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 	}
 }
 
-func buildGoDriver(t *testing.T) string {
-	t.Helper()
-	directory := t.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/cohere_driver.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay := filepath.Join(directory, "overlay.json")
-	writeJSON(t, overlay, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "command/formatter_comparison/main.go"): source}})
-	binary := filepath.Join(directory, "go-cohere")
-	command := bounded(t, "go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
-	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-		t.Fatalf("Go driver: %v\n%s", err, output)
-	}
-	return binary
-}
-
 func TestSingleFileStdoutDriver(t *testing.T) {
 	t.Parallel()
 	cases := []textCase{{"probe.json", `{"text":"é😀","items":[1,2,3]}`}, {"package.json", `{"text":"é😀","items":[1,2,3]}`}}
