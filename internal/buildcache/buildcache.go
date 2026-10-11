@@ -279,8 +279,11 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 // (Workshop, 02:50Z Oct 11: seven products a v1 tree published under one key, landable-6 built again, different). v3 is
 // unstamped: Loom's unit environment builds with -buildvcs=false since 05:01Z Oct 11, and a hand-rolled product (a go
 // build, a c-archive) keys the flags it declares, never GOFLAGS, so its v2 keys still named the stamped bytes trees had
-// published before (landable-9b: 54 refs/action conflicts, each against a ref written at 04:14Z).
-const keyVersion = "v3"
+// published before (landable-9b: 54 refs/action conflicts, each against a ref written at 04:14Z). v4 is placeless: a
+// native product's debug info no longer names the random directory it was built in (native.Build and the runtime map it,
+// #tsn1wp8), so its bytes are the same build to build, and differ from every v3 product that named its directory
+// (landable-11: lint-profile-profiled and yaml-scalars-native, against refs landable-10 wrote).
+const keyVersion = "v4"
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
 func Key(root string, inputs Inputs) (string, error) {

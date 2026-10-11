@@ -228,7 +228,9 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 						units = append(units, path)
 					}
 				}
-				flags := append(native.Flags(options), "-g", "-o", filepath.Join(dir, kind))
+				// Debug info names where it was compiled: the build's own directory, random per build, maps to one name, so
+				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path).
+				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"=/adamic-lint-profile", "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := exec.CommandContext(context.Background(), "clang", flags...)
