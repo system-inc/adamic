@@ -6,14 +6,12 @@ package gitignore
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 	"testing"
 	"unicode/utf8"
@@ -263,108 +261,6 @@ func largest() bool {
 // gitSource is the git checkout git's corpora are read from, as cohere's tests read them, or "".
 func gitSource() string {
 	return os.Getenv("COHERE_GIT_SOURCE")
-}
-
-// askedCases has cohere's side generate every case, with the trees laid out under the test's scratch
-// directory.
-func askedCases(t *testing.T) cases {
-	t.Helper()
-	scratch, err := filepath.EvalSymlinks(t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	seed := int64(generatedSeed)
-	if value := os.Getenv("COHERE_GITIGNORE_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
-		}
-	}
-	generated := 40
-	if value := os.Getenv("COHERE_GITIGNORE_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
-		}
-	}
-	repositoryRoot, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	realTrees := []string{repositoryRoot, filepath.Join(repositoryRoot, "cohere")}
-	output := filepath.Join(scratch, "cases.json")
-	cohereSide(t, map[string]any{
-		"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated,
-		"gitSource": gitSource(), "realTrees": realTrees, "output": output, "largest": largest(),
-	})
-	contents, err := os.ReadFile(output)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var asked cases
-	if err := json.Unmarshal(contents, &asked); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("seed %d, %d generated trees", seed, generated)
-	return asked
-}
-
-// goCohere is Go cohere's answer to every case.
-func goCohere(t *testing.T, asked cases) string {
-	t.Helper()
-	directory := t.TempDir()
-	casesPath := filepath.Join(directory, "cases.json")
-	encoded, err := json.Marshal(asked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(casesPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	output := filepath.Join(directory, "answers.txt")
-	cohereSide(t, map[string]any{"mode": "answer", "cases": casesPath, "output": output})
-	answers, err := os.ReadFile(output)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return string(answers)
-}
-
-// cohereSide runs testdata/cohere_side_test.go inside cohere's gitignore package, by overlay, with a
-// request.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
-	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-		filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side,
-	}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/gitignore")
-	command.Dir = cohere
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side, %s: %v\n%s", request["mode"], err, output)
-	}
 }
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
