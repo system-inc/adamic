@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -18,25 +17,19 @@ import (
 
 func goWidth(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/width_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	goBinary := filepath.Join(t.TempDir(), "go-width")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	goBinary := goWidthOracle(t)
 	return run(t, "", nil, goBinary, cases)
+}
+
+// goWidthOracle is formatter_comparison over testdata/width_go.go, a product built ahead (#5qykzj5).
+func goWidthOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-width", "width_go.go")
+}
+
+func TestProduct_YAMLWidthGo(t *testing.T) {
+	t.Parallel()
+	goWidthOracle(t)
 }
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).

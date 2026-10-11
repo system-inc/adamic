@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,24 +16,7 @@ import (
 
 func goFormat(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/format_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	goBinary := filepath.Join(t.TempDir(), "go-format")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	goBinary := goFormatOracle(t)
 	expected := run(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
@@ -59,6 +41,17 @@ func goFormat(t *testing.T, cases string) []byte {
 		}
 	}
 	return expected
+}
+
+// goFormatOracle is formatter_comparison over testdata/format_go.go, a product built ahead (#5qykzj5).
+func goFormatOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-format", "format_go.go")
+}
+
+func TestProduct_YAMLFormatGo(t *testing.T) {
+	t.Parallel()
+	goFormatOracle(t)
 }
 
 func formatCases(t *testing.T) (string, int, int) {

@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,38 +16,7 @@ import (
 
 func goCompose(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	adapter, err := filepath.Abs("testdata/compose_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	numbers := filepath.Join(root, "cohere/internal/format/yaml/compose/numbers.go")
-	original, err := os.ReadFile(numbers)
-	if err != nil {
-		t.Fatal(err)
-	}
-	exports, err := os.ReadFile("testdata/compose_exports.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := strings.Replace(string(original), "import (", "import (\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", 1) + string(exports)
-	replacement := filepath.Join(t.TempDir(), "numbers.go")
-	if err := os.WriteFile(replacement, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): adapter, numbers: replacement}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "go-compose")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison")
+	binary := goComposeOracle(t)
 	expected := run(t, "", nil, binary, cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
@@ -73,6 +41,18 @@ func goCompose(t *testing.T, cases string) []byte {
 		}
 	}
 	return expected
+}
+
+// goComposeOracle is formatter_comparison over testdata/compose_go.go, with compose's numbers.go opened to it by
+// testdata/compose_exports.txt, a product built ahead (#5qykzj5).
+func goComposeOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-compose", "compose_go.go", numbersExports(t, "\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "compose_exports.txt")...)
+}
+
+func TestProduct_YAMLComposeGo(t *testing.T) {
+	t.Parallel()
+	goComposeOracle(t)
 }
 func composeCases(t *testing.T) (string, int, int) {
 	path, files, count := lexCases(t)

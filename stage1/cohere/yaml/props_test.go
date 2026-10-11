@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -16,38 +15,7 @@ import (
 
 func goProps(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	adapter, err := filepath.Abs("testdata/props_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	numbers := filepath.Join(root, "cohere/internal/format/yaml/compose/numbers.go")
-	original, err := os.ReadFile(numbers)
-	if err != nil {
-		t.Fatal(err)
-	}
-	exports, err := os.ReadFile("testdata/props_exports.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := strings.Replace(string(original), "import (", "import (\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", 1) + string(exports)
-	replacement := filepath.Join(t.TempDir(), "numbers.go")
-	if err := os.WriteFile(replacement, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): adapter, numbers: replacement}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "go-props")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison")
+	binary := goPropsOracle(t)
 	expected := run(t, "", nil, binary, cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
@@ -72,6 +40,18 @@ func goProps(t *testing.T, cases string) []byte {
 		}
 	}
 	return expected
+}
+
+// goPropsOracle is formatter_comparison over testdata/props_go.go, with compose's numbers.go opened to it by
+// testdata/props_exports.txt, a product built ahead (#5qykzj5).
+func goPropsOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-props", "props_go.go", numbersExports(t, "\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "props_exports.txt")...)
+}
+
+func TestProduct_YAMLPropsGo(t *testing.T) {
+	t.Parallel()
+	goPropsOracle(t)
 }
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-props-* diagnostic files.

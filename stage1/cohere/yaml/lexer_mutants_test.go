@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
@@ -105,24 +104,7 @@ func lexCases(t *testing.T) (string, int, int) {
 
 func goLexer(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/lexer_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "go-lexer")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison")
+	binary := goLexerOracle(t)
 	if directory := os.Getenv("ADAMIC_YAML_ARTIFACTS"); directory != "" {
 		if err := os.MkdirAll(directory, 0755); err != nil {
 			t.Fatal(err)
@@ -136,6 +118,17 @@ func goLexer(t *testing.T, cases string) []byte {
 		}
 	}
 	return run(t, "", nil, binary, cases)
+}
+
+// goLexerOracle is formatter_comparison over testdata/lexer_go.go, a product built ahead (#5qykzj5).
+func goLexerOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-lexer", "lexer_go.go")
+}
+
+func TestProduct_YAMLLexerGo(t *testing.T) {
+	t.Parallel()
+	goLexerOracle(t)
 }
 
 func nativeLexer(t *testing.T, directory, cases string, sanitizer bool) ([]byte, []byte) {
