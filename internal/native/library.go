@@ -2,6 +2,7 @@ package native
 
 import (
 	"crypto/sha256"
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -9,6 +10,7 @@ import (
 	"path"
 	"path/filepath"
 	goruntime "runtime"
+	"sort"
 	"strings"
 	"sync"
 )
@@ -118,15 +120,19 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 	return files, nil
 }
 
-func runtimeKey(files []runtimeFile, flags []string, compiler string, version string) string {
+// runtimeKey addresses a compiled runtime by everything its compile reads: the sources and headers, the flags, the
+// compiler and its version, the platform, and headers, the system headers the compile reads (headersRead), so a
+// runtime compiled against other C library or compiler headers is never taken for this one.
+func runtimeKey(files []runtimeFile, flags []string, compiler string, version string, headers string) string {
 	hash := sha256.New()
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
-	part("adamic-runtime-v1")
+	part("adamic-runtime-v2")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
 	part(version)
+	part(headers)
 	fmt.Fprintf(hash, "%d:", len(flags))
 	for _, flag := range flags {
 		part(flag)
@@ -141,7 +147,11 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 }
 
 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
-	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version))
+	headers, err := headersRead(files, flags, compiler)
+	if err != nil {
+		return "", err
+	}
+	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version, headers))
 	library := filepath.Join(directory, "runtime.a")
 	value, _ := runtimeBuilds.LoadOrStore(directory, &sync.Mutex{})
 	lock := value.(*sync.Mutex)
@@ -205,6 +215,107 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		}
 	}
 	return library, nil
+}
+
+// headerScans holds each process's scan of the headers a runtime's compile reads, once per sources, flags and compiler:
+// the system's headers don't change while a process runs.
+var headerScans sync.Map
+
+type headerScan struct {
+	once    sync.Once
+	headers string
+	err     error
+}
+
+// headersRead is every header outside the runtime's own sources that compiling them reads, as the compiler lists its
+// dependencies (-M): the C library's headers and the compiler's own, each by its path and the sha256 of what it holds.
+// A traced build reads the runtime cache as no entry, as it reads Go's build cache (#vt46geg), and only an address of
+// everything the compile read makes that safe: these headers are the one part the sources, flags and compiler don't name.
+func headersRead(files []runtimeFile, flags []string, compiler string) (string, error) {
+	value, _ := headerScans.LoadOrStore(runtimeKey(files, flags, compiler, "", ""), &headerScan{})
+	scan := value.(*headerScan)
+	scan.once.Do(func() { scan.headers, scan.err = scanHeaders(files, flags, compiler) })
+	return scan.headers, scan.err
+}
+
+func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, error) {
+	directory, err := os.MkdirTemp("", "adamic-runtime-headers-")
+	if err != nil {
+		return "", fmt.Errorf("native: runtime headers: %w", err)
+	}
+	defer os.RemoveAll(directory)
+	var sources []string
+	for _, file := range files {
+		if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); err != nil {
+			return "", fmt.Errorf("native: runtime headers: %w", err)
+		}
+		if strings.HasSuffix(file.name, ".c") {
+			sources = append(sources, file.name)
+		}
+	}
+	if len(sources) == 0 {
+		return "", nil
+	}
+	command := exec.Command(compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
+	command.Dir = directory
+	rules, err := command.Output()
+	if err != nil {
+		var exit *exec.ExitError
+		if errors.As(err, &exit) {
+			return "", fmt.Errorf("native: listing the runtime's headers: %w\n%s", err, exit.Stderr)
+		}
+		return "", fmt.Errorf("native: listing the runtime's headers: %w", err)
+	}
+	seen := map[string]bool{}
+	var headers []string
+	for _, name := range dependencies(rules) {
+		if !filepath.IsAbs(name) {
+			name = filepath.Join(directory, name)
+		}
+		name = filepath.Clean(name)
+		if seen[name] || strings.HasPrefix(name, directory+string(filepath.Separator)) {
+			continue
+		}
+		seen[name] = true
+		contents, err := os.ReadFile(name)
+		if err != nil {
+			return "", fmt.Errorf("native: runtime header %s: %w", name, err)
+		}
+		headers = append(headers, fmt.Sprintf("%s %x", name, sha256.Sum256(contents)))
+	}
+	sort.Strings(headers)
+	return strings.Join(headers, "\n"), nil
+}
+
+// dependencies are the prerequisites of make rules as clang -M writes them: "object: source header ...", a line
+// continued by a backslash, a space inside a path escaped by one.
+func dependencies(rules []byte) []string {
+	var names []string
+	for _, line := range strings.Split(strings.ReplaceAll(string(rules), "\\\n", " "), "\n") {
+		_, prerequisites, found := strings.Cut(line, ": ")
+		if !found {
+			continue
+		}
+		var name strings.Builder
+		for index := 0; index < len(prerequisites); index++ {
+			switch character := prerequisites[index]; {
+			case character == '\\' && index+1 < len(prerequisites) && prerequisites[index+1] == ' ':
+				name.WriteByte(' ')
+				index++
+			case character == ' ' || character == '\t':
+				if name.Len() > 0 {
+					names = append(names, name.String())
+					name.Reset()
+				}
+			default:
+				name.WriteByte(character)
+			}
+		}
+		if name.Len() > 0 {
+			names = append(names, name.String())
+		}
+	}
+	return names
 }
 
 // RuntimeLinkFlags retains every translation unit, as Build did when linking the object files

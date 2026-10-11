@@ -482,6 +482,51 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
 	}
 }
 
+// The native runtime cache holds each compiled runtime under the address of everything its compile read
+// (internal/native's runtimeKey, system headers included), as Go's build cache does, so a native build reading a
+// runtime's headers and archive there is keyed by nothing more (Workshop, Oct 11: typescript-parser-native was refused
+// for ~/.cache/adamic/runtime/<key>/adamic.h). Content elsewhere in the user cache directory is still refused.
+// Mutants: the runtime cache not classed; the walk down to it not classed.
+// Not parallel: newRig.
+func TestTheNativeRuntimeCacheIsAddressedByWhatItsCompileRead(t *testing.T) {
+	user, err := os.UserCacheDir()
+	if err != nil {
+		t.Skip("no user cache directory here:", err)
+	}
+	runtimes := filepath.Join(user, "adamic", "runtime")
+	runtime := filepath.Join(runtimes, strings.Repeat("ab", 32))
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, filepath.Join(user, "adamic"))
+		r.open(r.pid, filepath.Join(runtime, "adamic.h"))
+		r.open(r.pid, filepath.Join(runtime, "runtime.a"))
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("a native build reading its runtime: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, build.NameKey)
+	if err != nil || len(file.Sets) != 1 {
+		t.Fatalf("read sets: %+v, %v", file, err)
+	}
+	for _, entry := range file.Sets[0].Entries {
+		if entry.Kind == "home" || entry.Kind == "absolute" {
+			t.Fatalf("the runtime cache keyed the product: %+v", entry)
+		}
+	}
+	r = newRig(t)
+	Product(t, port, building("built"))
+	build = r.built(t)["port"]
+	beside := filepath.Join(user, "adamic", "elsewhere", "x.h")
+	r.window(build.Build, func() { r.open(r.pid, beside) })
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
+		t.Fatalf("content beside the runtime cache: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
 // A build whose markers aren't both in the trace is a lost trace: refused, and so is every build of a trace that
 // holds a process it never placed under a parent.
 // Not parallel: newRig.

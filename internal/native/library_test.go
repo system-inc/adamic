@@ -18,11 +18,11 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 		t.Fatal(err)
 	}
 	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
-	key := runtimeKey(files, flags, "clang", "version 1")
+	key := runtimeKey(files, flags, "clang", "version 1", "")
 	for index, flag := range flags {
 		changed := append([]string{}, flags[:index]...)
 		changed = append(changed, flags[index+1:]...)
-		if runtimeKey(files, changed, "clang", "version 1") == key {
+		if runtimeKey(files, changed, "clang", "version 1", "") == key {
 			t.Errorf("omitting %s did not change the key", flag)
 		}
 	}
@@ -30,19 +30,19 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 		changed := append([]runtimeFile{}, files...)
 		changed[index].contents = append([]byte{}, file.contents...)
 		changed[index].contents[0] ^= 1
-		if runtimeKey(changed, flags, "clang", "version 1") == key {
+		if runtimeKey(changed, flags, "clang", "version 1", "") == key {
 			t.Errorf("changing %s did not change the key", file.name)
 		}
 	}
-	if runtimeKey(files, flags, "clang", "version 2") == key {
+	if runtimeKey(files, flags, "clang", "version 2", "") == key {
 		t.Error("compiler version missing from key")
 	}
-	if runtimeKey(files, flags, "other-clang", "version 1") == key {
+	if runtimeKey(files, flags, "other-clang", "version 1", "") == key {
 		t.Error("compiler path missing from key")
 	}
 	changed := append([]string{}, flags...)
 	changed[0], changed[1] = changed[1], changed[0]
-	if runtimeKey(files, changed, "clang", "version 1") == key {
+	if runtimeKey(files, changed, "clang", "version 1", "") == key {
 		t.Error("flag order missing from key")
 	}
 }
@@ -52,15 +52,15 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 func TestRuntimeKeyKeepsBoundaries(t *testing.T) {
 	t.Parallel()
 	files := []runtimeFile{{"a.c", []byte("int a;\n")}}
-	if runtimeKey(files, []string{"a", "bc"}, "clang", "version 1") == runtimeKey(files, []string{"ab", "c"}, "clang", "version 1") {
+	if runtimeKey(files, []string{"a", "bc"}, "clang", "version 1", "") == runtimeKey(files, []string{"ab", "c"}, "clang", "version 1", "") {
 		t.Error(`flags ["a" "bc"] and ["ab" "c"] share a key`)
 	}
-	if runtimeKey(files, nil, "clang", "version 1") == runtimeKey(files, nil, "clangv", "ersion 1") {
+	if runtimeKey(files, nil, "clang", "version 1", "") == runtimeKey(files, nil, "clangv", "ersion 1", "") {
 		t.Error(`compiler "clang" with version "version 1" and "clangv" with "ersion 1" share a key`)
 	}
 	split := []runtimeFile{{"a.c", []byte("bc")}}
 	moved := []runtimeFile{{"a.cb", []byte("c")}}
-	if runtimeKey(split, nil, "clang", "version 1") == runtimeKey(moved, nil, "clang", "version 1") {
+	if runtimeKey(split, nil, "clang", "version 1", "") == runtimeKey(moved, nil, "clang", "version 1", "") {
 		t.Error(`file "a.c" holding "bc" and "a.cb" holding "c" share a key`)
 	}
 }
@@ -161,7 +161,8 @@ func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	log := filepath.Join(directory, "compiled")
 	// Quote paths for /bin/sh without relying on the shell's environment or global test settings.
 	quote := func(value string) string { return "'" + strings.ReplaceAll(value, "'", "'\\''") + "'" }
-	script := fmt.Sprintf("#!/bin/sh\nif [ \"$1\" != '--version' ]; then echo compiled >> %s; fi\nexec %s \"$@\"\n", quote(log), quote(compiler))
+	// Neither its version nor the listing of the headers its compile reads (-M) is a compilation.
+	script := fmt.Sprintf("#!/bin/sh\ncase \" $* \" in *' --version '*|*' -M '*) ;; *) echo compiled >> %s ;; esac\nexec %s \"$@\"\n", quote(log), quote(compiler))
 	if err := os.WriteFile(wrapper, []byte(script), 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -256,5 +257,63 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 	}
 	if len(entries) != 1 {
 		t.Fatalf("want one published entry with no temporary builds, got %d", len(entries))
+	}
+}
+
+// A runtime is addressed by the system headers its compile reads, by what they hold: a C library or compiler upgrade
+// that changes one makes another runtime, never the cached one (#vt46geg: a traced build reads the runtime cache as no
+// entry, which only an address of everything the compile read makes safe). Mutants: runtimeKey not hashing headers;
+// scanHeaders skipping what is outside the sources; headersRead's memo shared across flags.
+func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
+	compiler, err := exec.LookPath("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	system := t.TempDir()
+	header := filepath.Join(system, "answer_system.h")
+	files := []runtimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
+	flags := append(Flags(Options{}), "-isystem", system)
+	cache := t.TempDir()
+	build := func(value string) string {
+		t.Helper()
+		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		// A new process scans again; within one, the system's headers are taken as fixed.
+		headerScans.Clear()
+		headers, err := headersRead(files, flags, compiler)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(headers, header) {
+			t.Fatalf("the headers the compile reads don't name %s:\n%s", header, headers)
+		}
+		library, err := cachedRuntime(files, flags, compiler, "test compiler", cache)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return filepath.Dir(library)
+	}
+	first, second := build("42"), build("43")
+	if first == second {
+		t.Fatalf("a changed system header kept the runtime %s", first)
+	}
+	if again := build("42"); again != first {
+		t.Fatalf("the same system header made another runtime: %s, then %s", first, again)
+	}
+	headerScans.Clear()
+	plain, err := headersRead(files, Flags(Options{}), compiler)
+	if err == nil || strings.Contains(plain, header) {
+		t.Fatalf("without -isystem the compile can't find the header, so listing it must fail: %q, %v", plain, err)
+	}
+}
+
+// clang -M writes make rules: a backslash continues a line and escapes a space inside a path.
+func TestDependenciesReadClangsRules(t *testing.T) {
+	rules := "answer.o: answer.c /usr/include/stdio.h \\\n  /opt/with\\ space/x.h\nother.o: other.c\n"
+	got := dependencies([]byte(rules))
+	want := []string{"answer.c", "/usr/include/stdio.h", "/opt/with space/x.h", "other.c"}
+	if strings.Join(got, "|") != strings.Join(want, "|") {
+		t.Fatalf("got %q, want %q", got, want)
 	}
 }

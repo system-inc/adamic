@@ -278,7 +278,7 @@ var unitBuilds sync.Map
 // Preprocessed source/header bytes, ordered flags, compiler identity/version and platform enter
 // the key. Preprocessing on every lookup also observes ambient and system include dependencies.
 func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
-	return runtimeKey(files, append([]string{"adamic-units-v2"}, flags...), compiler, version)
+	return runtimeKey(files, append([]string{"adamic-units-v2"}, flags...), compiler, version, "")
 }
 
 func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {

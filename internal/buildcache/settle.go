@@ -146,9 +146,9 @@ const (
 )
 
 type traceFacts struct {
-	root, cache, trace, goRoot, goCache, goModules, goTelemetry, tools, home string
-	roots, caches, temporary, kernel, system                                 []string
-	searched, executables                                                    map[string]bool
+	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
+	roots, caches, temporary, kernel, system                                                 []string
+	searched, executables                                                                    map[string]bool
 	// ran is every program a process of the run executed, as the trace names it.
 	ran map[string]bool
 }
@@ -171,6 +171,12 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	// GOENV=off doesn't turn off: go's own bookkeeping, as its build cache is, never an input to what it builds.
 	if configuration, err := os.UserConfigDir(); err == nil {
 		facts.goTelemetry = filepath.Join(configuration, "go", "telemetry")
+	}
+	// The native runtime cache (internal/native's cachedRuntime): each runtime under the address of everything its
+	// compile read (runtimeKey: its sources, flags, compiler and version, platform, and the system headers it read), as
+	// Go's build cache addresses an action, so what a build reads there is no entry.
+	if user, err := os.UserCacheDir(); err == nil {
+		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
 	}
 	facts.home, _ = os.UserHomeDir()
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
@@ -321,7 +327,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{}
 	case under(name, facts.goRoot):
 		return classed{"go", "release"}
-	case under(name, facts.goCache), under(name, facts.goTelemetry):
+	case under(name, facts.goCache), under(name, facts.goTelemetry), under(name, facts.nativeRuntimes):
 		return classed{}
 	case under(name, facts.goModules):
 		return classed{"module", name}
@@ -348,7 +354,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 				return classed{"above", filepath.ToSlash(relative)}
 			}
 		}
-		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
+		for _, place := range append(append([]string{facts.goRoot, facts.goCache, facts.goModules, facts.goTelemetry, facts.nativeRuntimes, facts.tools, facts.trace}, facts.caches...), facts.temporary...) {
 			if place != "" && under(place, name) {
 				return classed{}
 			}
