@@ -374,6 +374,49 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
 	}
 }
 
+// Every go command reads and counts into Go's telemetry in the home directory as it runs, and GOENV=off doesn't stop it
+// (Workshop, Oct 10: every product was refused for ~/.config/go/telemetry/local/weekends). It is go's bookkeeping, as
+// its build cache is: no entry, never a refusal. Content elsewhere in the home directory is still refused. Mutants: the
+// telemetry directory not classed; the walk down to it not classed (its lookups keyed as home entries).
+// Not parallel: newRig.
+func TestGosTelemetryIsGosOwnBookkeeping(t *testing.T) {
+	configuration, err := os.UserConfigDir()
+	if err != nil {
+		t.Skip("no configuration directory here:", err)
+	}
+	telemetry := filepath.Join(configuration, "go", "telemetry")
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, filepath.Join(configuration, "go"))
+		r.open(r.pid, filepath.Join(telemetry, "local", "weekends"))
+		r.write(r.pid, filepath.Join(telemetry, "local", "go@go1.27.1-go1.27.1-linux-amd64-2026-10-11.v1.count"))
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("a build whose go read its telemetry: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, build.NameKey)
+	if err != nil || len(file.Sets) != 1 {
+		t.Fatalf("read sets: %+v, %v", file, err)
+	}
+	for _, entry := range file.Sets[0].Entries {
+		if entry.Kind == "home" {
+			t.Fatalf("go's telemetry keyed the product: %+v", entry)
+		}
+	}
+	r = newRig(t)
+	Product(t, port, building("built"))
+	build = r.built(t)["port"]
+	beside := filepath.Join(configuration, "go", "env")
+	r.window(build.Build, func() { r.open(r.pid, beside) })
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
+		t.Fatalf("a configuration file beside the telemetry: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
 // A build whose markers aren't both in the trace is a lost trace: refused, and so is every build of a trace that
 // holds a process it never placed under a parent.
 // Not parallel: newRig.
