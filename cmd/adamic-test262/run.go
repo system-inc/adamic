@@ -55,8 +55,7 @@ type adamicBuilder func(output string) error
 // goBuildAdamic builds ./cmd/adamic of the checkout at root.
 func goBuildAdamic(root string) adamicBuilder {
 	return func(output string) error {
-		build := toolchain.Command("go", "build", "-o", output, "./cmd/adamic")
-		build.Dir = root
+		build := toolchain.CommandIn(root, "go", "build", "-o", output, "./cmd/adamic")
 		if combined, err := build.CombinedOutput(); err != nil {
 			return fmt.Errorf("building adamic: %w\n%s", err, combined)
 		}
