@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"io"
 	"os"
 	"os/exec"
@@ -22,6 +23,12 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
 	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
+		// in dir with PWD to match. A program a test built (the Go oracle, the native build) runs as named, with this
+		// process's environment.
+		cmd = toolchain.CommandIn(dir, name, args...)
+	}
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
 		t.Fatal(err)
@@ -188,6 +195,9 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 		for _, command := range [][]string{{binary, path, catalog}, {"node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog}} {
 			// Refusals are silent until their final panic; protect startup with FirstOutput.
 			cmd := exec.Command(command[0], command[1:]...)
+			if !strings.ContainsRune(command[0], filepath.Separator) { // node, through internal/toolchain; the native build runs as named
+				cmd = toolchain.Command(command[0], command[1:]...)
+			}
 			output, err := os.CreateTemp(t.TempDir(), "stdout-")
 			if err != nil {
 				t.Fatal(err)
