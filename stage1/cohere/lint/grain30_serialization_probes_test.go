@@ -56,9 +56,7 @@ func grain30IsolationResult(index int, output []byte, err error) error {
 func grain30Isolation(t *testing.T, index int) {
 	t.Helper()
 	started := time.Now()
-	if index == 4 {
-		completeSuggestionReady(t)
-	}
+	// The child prepares and looks up everything its selected test reads; this process reads none of it.
 	output, err := grain30Probe(t, grain30IsolationCases[index].test, false)
 	t.Logf("preparation: %.3fs", time.Since(started).Seconds())
 	own := time.Now()
@@ -101,9 +99,7 @@ func grain30PlantResult(shard int, output []byte, err error) error {
 
 func grain30Plant(t *testing.T, shard int) {
 	t.Helper()
-	started := time.Now()
-	completeSuggestionReady(t)
-	t.Logf("preparation: %.3fs", time.Since(started).Seconds())
+	// The child prepares and looks up everything its leaf reads; this process reads none of it.
 	own := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
 	output, err := grain30Probe(t, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), true)
