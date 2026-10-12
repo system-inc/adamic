@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -526,12 +527,21 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 
 // bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
 // its own, and when the deadline passes or the test ends, the whole group is killed. A fixture that
-// loops, or a child left with nowhere to write, is stopped instead of orphaned.
+// loops, or a child left with nowhere to write, is stopped instead of orphaned. A bare name runs the
+// program toolchain.Path finds, so the node a run answers with is the one the result cache's identity
+// asked for its version; one Path can't find fails as it starts, with Path's error.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
+	path, err := toolchain.Path(name)
+	if err != nil {
+		path = name
+	}
+	command := exec.CommandContext(ctx, path, arguments...)
+	if err != nil {
+		command.Err = err
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
