@@ -13,6 +13,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -38,6 +39,80 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 	return runtimeLibrary(directory, options, featureFlags(source))
 }
 
+// A RuntimeRequest is one archive of the embedded runtime a build links, as a supplier (SupplyRuntimes) is asked for
+// it. Parts are everything its key reads, as runtimeKey hashes them (runtimeKeyParts), so a key made of them moves
+// whenever the archive's does. Features and Options are what asked for it.
+type RuntimeRequest struct {
+	Parts    []string
+	Features []string
+	Options  Options
+	files    []runtimeFile
+	flags    []string
+	compiler string
+}
+
+// Build compiles the archive into directory as the runtime cache holds one, runtime.a beside the runtime's files,
+// compiling up to workers of its translation units at once: one where a test waits on it, as the cache compiles, and
+// more where a product build is given the CPUs for it.
+func (request RuntimeRequest) Build(directory string, workers int) error {
+	return compileRuntime(request.files, request.flags, request.compiler, directory, workers)
+}
+
+// runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
+// runtime cache (SupplyRuntimes).
+var runtimeSupplier atomic.Pointer[func(RuntimeRequest) (string, error)]
+
+// suppliedRuntimes holds what the supplier gave for each key, asked once per process, as the cache is.
+var suppliedRuntimes sync.Map
+
+type suppliedRuntime struct {
+	once    sync.Once
+	library string
+	err     error
+}
+
+// SupplyRuntimes has supplier provide every archive of the embedded runtime this process links, instead of the runtime
+// cache: it returns the directory holding the request's archive, which it may fill with the request's Build, or the
+// error a build linking it fails with. It is asked once per key in a process. Another checkout's runtime
+// (RuntimeLibrary's directory) and split tsgo's still come from the cache. internal/oracle's tests supply each from a
+// buildcache product, which a runner reads and never builds (#sqmn7jk: lap 3's red was these archives compiled inside
+// the first test to need one, 27 s alone where the program takes 5).
+func SupplyRuntimes(supplier func(RuntimeRequest) (string, error)) {
+	runtimeSupplier.Store(&supplier)
+}
+
+// RuntimeRequestFor is the request a build of a program with these features (as Features names them) and options
+// makes of the supplier, for a product to build ahead.
+func RuntimeRequestFor(options Options, features ...string) (RuntimeRequest, error) {
+	var source strings.Builder
+	for _, feature := range features {
+		if !slicesContain(runtimeFeatures, feature) {
+			return RuntimeRequest{}, fmt.Errorf("native: no runtime feature %s", feature)
+		}
+		fmt.Fprintf(&source, "#define %s 1\n", feature)
+	}
+	files, flags, compiler, version, err := runtimeInputs("", options, featureFlags(source.String()))
+	if err != nil {
+		return RuntimeRequest{}, err
+	}
+	return runtimeRequest(files, flags, compiler, version, options)
+}
+
+// runtimeFeatures are the runtime's features a program's C turns on with a leading #define (cProgram), in the order
+// their -D flags are given.
+var runtimeFeatures = []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}
+
+// Features are the runtime features a program's C turns on, in runtimeFeatures' order.
+func Features(source string) []string {
+	var features []string
+	for _, feature := range runtimeFeatures {
+		if strings.Contains(source, "#define "+feature+" 1\n") {
+			features = append(features, feature)
+		}
+	}
+	return features
+}
+
 // sourceFlags compiles anything built for one program's emitted C: its runtime library, a split
 // unit, the checker-archive build. It is the one home for those flags, so a new build path that
 // starts from Flags(options) alone meets adamic.h's layouts without the program's features.
@@ -50,17 +125,50 @@ func sourceFlags(source string, options Options) []string {
 // those #defines) sees the same layouts.
 func featureFlags(source string) []string {
 	var flags []string
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
-		if strings.Contains(source, "#define "+feature+" 1\n") {
-			flags = append(flags, "-D"+feature+"=1")
-		}
+	for _, feature := range Features(source) {
+		flags = append(flags, "-D"+feature+"=1")
 	}
 	return flags
 }
 
 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
-	if err := ValidateOptions(options); err != nil {
+	files, flags, compiler, version, err := runtimeInputs(directory, options, extraFlags)
+	if err != nil {
 		return "", err
+	}
+	if supplier := runtimeSupplier.Load(); supplier != nil && directory == "" {
+		request, err := runtimeRequest(files, flags, compiler, version, options)
+		if err != nil {
+			return "", err
+		}
+		value, _ := suppliedRuntimes.LoadOrStore(partsKey(request.Parts), &suppliedRuntime{})
+		supplied := value.(*suppliedRuntime)
+		supplied.once.Do(func() {
+			held, err := (*supplier)(request)
+			if err != nil {
+				supplied.err = err
+				return
+			}
+			supplied.library = filepath.Join(held, "runtime.a")
+			if info, err := os.Stat(supplied.library); err != nil || !info.Mode().IsRegular() {
+				supplied.err = fmt.Errorf("native: the supplied runtime %s holds no runtime.a", held)
+			}
+		})
+		return supplied.library, supplied.err
+	}
+	cache, err := cacheDirectory("native-runtime")
+	if err != nil {
+		return "", err
+	}
+	return cachedRuntime(files, flags, compiler, version, cache)
+}
+
+// runtimeInputs are what a runtime archive is compiled from: the runtime's files (directory's, or the embedded
+// runtime's when it is empty, without the units of features the flags leave off), the flags, and the compiler with its
+// version.
+func runtimeInputs(directory string, options Options, extraFlags []string) ([]runtimeFile, []string, string, string, error) {
+	if err := ValidateOptions(options); err != nil {
+		return nil, nil, "", "", err
 	}
 	var sources fs.FS = runtime
 	root := "runtime"
@@ -69,7 +177,7 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	}
 	files, err := readRuntime(sources, root)
 	if err != nil {
-		return "", fmt.Errorf("native: runtime: %w", err)
+		return nil, nil, "", "", fmt.Errorf("native: runtime: %w", err)
 	}
 	if !slicesContain(extraFlags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1") {
 		kept := files[:0]
@@ -92,17 +200,13 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	// The program toolchain resolves is the one the key names and every step of the build runs.
 	compiler, err := toolchain.Path(compilerName(options))
 	if err != nil {
-		return "", fmt.Errorf("native: %w", err)
+		return nil, nil, "", "", fmt.Errorf("native: %w", err)
 	}
 	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
-		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
+		return nil, nil, "", "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
-	cache, err := cacheDirectory("native-runtime")
-	if err != nil {
-		return "", err
-	}
-	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), cache)
+	return files, append(Flags(options), extraFlags...), compiler, string(version), nil
 }
 
 // cacheDirectory is where a native cache named name lives: under the build cache (location.BuildCache), never under
@@ -134,35 +238,58 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 	return files, nil
 }
 
-// runtimeKey addresses a compiled runtime by everything its compile reads: the sources and headers, the flags, the
-// compiler and its version, the platform, and headers, the system headers the compile reads (headersRead), so a
-// runtime compiled against other C library or compiler headers is never taken for this one.
+// runtimeKey addresses a compiled runtime by everything its compile reads (runtimeKeyParts).
 func runtimeKey(files []runtimeFile, flags []string, compiler string, version string, headers string) string {
-	hash := sha256.New()
-	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
-	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
+	return partsKey(runtimeKeyParts(files, flags, compiler, version, headers))
+}
+
+// runtimeKeyParts is everything a compiled runtime's compile reads: the sources and headers, each by its name and what
+// it holds, the flags, the compiler and its version, the archiver beside it, the platform, and headers, the system headers the compile reads
+// (headersRead), so a runtime compiled against other C library or compiler headers is never taken for this one. A
+// supplied runtime's product is keyed by the same parts (RuntimeRequest), so the two keys can't move apart.
+func runtimeKeyParts(files []runtimeFile, flags []string, compiler string, version string, headers string) []string {
 	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
 	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
 	// v4: the archive's members carry no time (ZERO_AR_DATE), so a v3 archive Apple's ar stamped isn't reused.
 	// v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under whatever the
 	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
-	part("adamic-runtime-v5")
-	part(goruntime.GOOS)
-	part(goruntime.GOARCH)
-	part(compiler)
-	part(version)
-	part(headers)
-	fmt.Fprintf(hash, "%d:", len(flags))
+	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
+	parts := []string{"adamic-runtime-v6", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH, "compiler " + compiler, "version " + version,
+		"archiver " + archiverName(compiler), "headers " + headers}
 	for _, flag := range flags {
-		part(flag)
+		parts = append(parts, "flag "+flag)
 	}
-	fmt.Fprintf(hash, "%d:", len(files))
 	for _, file := range files {
-		part(file.name)
-		fmt.Fprintf(hash, "%d:", len(file.contents))
-		hash.Write(file.contents)
+		parts = append(parts, fmt.Sprintf("file %s %x", file.name, sha256.Sum256(file.contents)))
+	}
+	return parts
+}
+
+// partsKey hashes parts, each behind its length, so parts that join to the same bytes still key apart.
+func partsKey(parts []string) string {
+	hash := sha256.New()
+	fmt.Fprintf(hash, "%d:", len(parts))
+	for _, part := range parts {
+		fmt.Fprintf(hash, "%d:", len(part))
+		hash.Write([]byte(part))
 	}
 	return fmt.Sprintf("%x", hash.Sum(nil))
+}
+
+// runtimeRequest is the request for the archive these inputs compile, its parts read as the cache's key reads them.
+func runtimeRequest(files []runtimeFile, flags []string, compiler string, version string, options Options) (RuntimeRequest, error) {
+	headers, err := headersRead(files, flags, compiler)
+	if err != nil {
+		return RuntimeRequest{}, err
+	}
+	var features []string
+	for _, feature := range runtimeFeatures {
+		if slicesContain(flags, "-D"+feature+"=1") {
+			features = append(features, feature)
+		}
+	}
+	return RuntimeRequest{Parts: runtimeKeyParts(files, flags, compiler, version, headers), Features: features, Options: options,
+		files: files, flags: flags, compiler: compiler}, nil
 }
 
 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
@@ -187,7 +314,26 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+	if err := os.Chmod(temporary, 0o755); err != nil {
+		return "", err
+	}
+	if err := compileRuntime(files, flags, compiler, temporary, 1); err != nil {
+		return "", err
+	}
+	// Publish everything together. A competing process may already have published this key; its
+	// identical complete entry wins, while this process removes only its own temporary directory.
+	if err := os.Rename(temporary, directory); err != nil {
+		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
+			return "", fmt.Errorf("native: publishing runtime: %w", err)
+		}
+	}
+	return library, nil
+}
+
+// compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, and
+// archives them as runtime.a there, in the files' order whatever order they finished in.
+func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int) error {
+	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
 			for i := range files {
@@ -199,50 +345,51 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	}
 
 	// Headers live beside the archive, from the same snapshot that produced its objects.
-	if err := os.Chmod(temporary, 0o755); err != nil {
-		return "", err
-	}
+	var sources []string
 	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
-			return "", err
+		if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); err != nil {
+			return err
+		}
+		if strings.HasSuffix(file.name, ".c") {
+			sources = append(sources, file.name)
 		}
 	}
-	var objects []string
-	for _, file := range files {
-		if !strings.HasSuffix(file.name, ".c") {
-			continue
-		}
-		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
-		// The build directory is random and the cache sits where each machine keeps it, so neither may reach an object:
-		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
-		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
-		arguments := append(append(append([]string{}, flags...), prefixMaps(temporary, "/adamic-runtime")...), "-c", file.name, "-o", object)
-		command := toolchain.CommandIn(temporary, compiler, arguments...)
-		if output, err := command.CombinedOutput(); err != nil {
-			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
-		}
-		objects = append(objects, object)
+	if len(sources) == 0 {
+		return fmt.Errorf("native: runtime has no C sources")
 	}
-	if len(objects) == 0 {
-		return "", fmt.Errorf("native: runtime has no C sources")
+	objects := make([]string, len(sources))
+	failures := make([]error, len(sources))
+	slots := make(chan struct{}, max(1, workers))
+	var compiles sync.WaitGroup
+	for index, source := range sources {
+		slots <- struct{}{}
+		compiles.Go(func() {
+			defer func() { <-slots }()
+			objects[index] = filepath.Join(directory, strings.TrimSuffix(source, ".c")+".o")
+			// The build directory is random and the cache sits where each machine keeps it, so neither may reach an
+			// object: mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native
+			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
+			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
+			command := toolchain.CommandIn(directory, compiler, arguments...)
+			if output, err := command.CombinedOutput(); err != nil {
+				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
+			}
+		})
+	}
+	compiles.Wait()
+	if err := errors.Join(failures...); err != nil {
+		return err
 	}
 	// Each member carries no time: Apple's ar stamps the time it ran into a member's header, which ld's debug map copies
 	// beside the member's name, so two builds of one program linked against runtimes archived a second apart differed
 	// (TestBuildIsTheSameFromAnyDirectory on a Mac, Oct 12). ZERO_AR_DATE has it write zero; llvm-ar writes zero anyway.
-	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
+	arguments := append([]string{"rcs", filepath.Join(directory, "runtime.a")}, objects...)
 	archive := toolchain.Command(archiverName(compiler), arguments...)
 	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
 	if output, err := archive.CombinedOutput(); err != nil {
-		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
+		return fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
-	// Publish everything together. A competing process may already have published this key; its
-	// identical complete entry wins, while this process removes only its own temporary directory.
-	if err := os.Rename(temporary, directory); err != nil {
-		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
-			return "", fmt.Errorf("native: publishing runtime: %w", err)
-		}
-	}
-	return library, nil
+	return nil
 }
 
 // prefixMaps maps directory to name in everything a compile records of a path (debug info, __FILE__), under each
