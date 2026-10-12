@@ -40,7 +40,9 @@ var tscAgreementFamilyProducts [2]struct {
 }
 
 // tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build here, the TSC filter, the
-// oracle outputs it asks for and relabels, the oracle it names, and the tracked listing of the corpus.
+// oracle outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle
+// runs and its output is captured (statementContextCommand; bounded and combinedOutput). printerGateOnce, in
+// printer_gate_products_test.go, is only a per-process memo, and the oracle it builds is keyed by its bytes.
 var tscAgreementRecipe = []string{
 	"stage1/cohere/tsprinter/tsc_corpus_split_test.go",
 	"stage1/cohere/tsprinter/tsc_corpus_test.go",
@@ -48,6 +50,8 @@ var tscAgreementRecipe = []string{
 	"stage1/cohere/tsprinter/expression_products_test.go",
 	"stage1/cohere/tsprinter/expressions_test.go",
 	"stage1/cohere/tsprinter/corpus_test.go",
+	"stage1/cohere/tsprinter/statements_shards_test.go",
+	"stage1/cohere/tsprinter/helpers_test.go",
 }
 
 // tscAgreementInputs are what the corpus product's build reads: the TSC corpus, the gaps file, the Go oracle that
