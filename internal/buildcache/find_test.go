@@ -7,6 +7,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // lookedUpAlone is a name key's answer as one product test's lookup gives it: a pass of its own, nothing held.
@@ -221,7 +223,7 @@ func recordedProduct(t *testing.T, r *rig, nameKey string, entries []readEntry, 
 // settledTree (Find's end drops them); a miss held as found is; a traced process holding nothing.
 // Not parallel: newRig, and treeValuesRead counts the whole process's reads.
 func TestAProcessWhoseTreeCannotChangeValuesEachProductOnce(t *testing.T) {
-	for _, mode := range []string{"read", "traced"} {
+	for _, mode := range []string{"read", "traced", "unpacked"} {
 		t.Run(mode, func(t *testing.T) { processValuesEachProductOnce(t, mode) })
 	}
 }
@@ -239,16 +241,21 @@ func processValuesEachProductOnce(t *testing.T, mode string) {
 	if want.Outcome != FindingFound {
 		t.Fatalf("outside read mode and a trace: %+v", want)
 	}
-	if mode == "read" {
+	root := r.root
+	switch mode {
+	case "read":
 		t.Setenv("ADAMIC_BUILD_CACHE", "read")
-	} else {
+	case "traced":
 		t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	case "unpacked":
+		// Neither read mode nor a trace: Loom's key check, untraced over the source a runner unpacks.
+		root = unpackedRig(t, r)
 	}
 	var products int64
 	lookup := func(nameKey string) (found, int64) {
 		t.Helper()
 		before, productsBefore := treeValuesRead.Load(), productsLookedUp.Load()
-		looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
+		looked, err := productFor(root, r.cache, nameKey, 0, nil)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -278,6 +285,30 @@ func processValuesEachProductOnce(t *testing.T, mode string) {
 	if looked, _ = lookup(late); looked.key != lateKey {
 		t.Fatalf("a product that arrived after a lookup missed it isn't found: %+v", looked)
 	}
+}
+
+// unpackedRig is r's tree as Loom unpacks it for a runner: its tracked files, with no .git, and git's listing in a
+// .tracked manifest.
+func unpackedRig(t *testing.T, r *rig) string {
+	t.Helper()
+	git := func(arguments ...string) string {
+		t.Helper()
+		output, err := toolchain.GitCommand(append([]string{"-C", r.root}, arguments...)...).Output()
+		if err != nil {
+			t.Fatalf("git %v: %v", arguments, err)
+		}
+		return string(output)
+	}
+	root := t.TempDir()
+	for _, name := range strings.Split(strings.TrimSpace(git("ls-files")), "\n") {
+		content, err := os.ReadFile(filepath.Join(r.root, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		write(t, root, name, string(content))
+	}
+	write(t, root, ".tracked/files", git("ls-tree", "-r", "-z", "--full-tree", "HEAD"))
+	return root
 }
 
 // Outside read mode and a trace a lookup values the tree afresh: a builder, or a test, changes it between lookups, and

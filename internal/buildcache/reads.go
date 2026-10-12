@@ -353,14 +353,37 @@ func readMode() bool {
 	return os.Getenv("ADAMIC_BUILD_CACHE") == "read"
 }
 
-// heldForLife says whether what this process values of the tree, and each product it finds, holds for its life: in
-// read mode, whose source never changes under it, and under a trace, whose tree is the same from the run's start to its
-// end or every build of the run is refused (TreeState before and after, and any write into the tree, Settle). A traced
-// process that looked up each product afresh valued the whole chain each one reads every time: css's PostCSS answers
-// read the products their process read before them, about 30 siblings each, so one hit valued 163,866 entries under
-// strace and took 62 to 182 s, and a shard of 49 never finished inside the 14-minute bound (lap 3, #47ykkmr).
-func heldForLife() bool {
-	return readMode() || traceDirectory() != ""
+// heldForLife says whether what this process values of the tree at root, and each product it finds there, holds for
+// its life: in read mode, whose source never changes under it; under a trace, whose tree is the same from the run's
+// start to its end or every build of the run is refused (TreeState before and after, and any write into the tree,
+// Settle); and over an unpacked source (unpackedSource), which Loom assembles once from the tree's chunks and nothing
+// changes after. A traced process that looked up each product afresh valued the whole chain each one reads every time:
+// css's PostCSS answers read the products their process read before them, about 30 siblings each, so one hit valued
+// 163,866 entries under strace and took 62 to 182 s, and a shard of 49 never finished inside the 14-minute bound (lap 3,
+// #47ykkmr). Loom's key check runs a package's product tests over an unpacked source untraced and not in read mode, and
+// css's ran into its 10-minute timeout the same way (lap 4, #y7c0t4q).
+func heldForLife(root string) bool {
+	return readMode() || traceDirectory() != "" || unpackedSource(root)
+}
+
+// unpackedSources holds, by root, whether a root is an unpacked source.
+var unpackedSources sync.Map
+
+// unpackedSource says whether root is a source Loom unpacked: no .git, and git's answers in its .tracked manifest
+// (manifestListing), as a runner's source and the key check's stand-in for one are. Looking is keying, as Tracked's
+// look at .git is: no read set may hold .git or the manifest.
+func unpackedSource(root string) bool {
+	if found, ok := unpackedSources.Load(root); ok {
+		return found.(bool)
+	}
+	unpacked := false
+	keying(func() {
+		_, gitErr := statGit(filepath.Join(root, ".git"))
+		info, manifestErr := os.Stat(filepath.Join(root, trackedManifestDirectory, "files"))
+		unpacked = gitErr != nil && manifestErr == nil && info.Mode().IsRegular()
+	})
+	unpackedSources.Store(root, unpacked)
+	return unpacked
 }
 
 // treeValuesRead counts the tree values this process read rather than held: a test asks it.
@@ -451,7 +474,7 @@ func productDigest(directory string) (string, error) {
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
 func treeValue(root, kind, name string) string {
 	held := settledTree.Load()
-	if heldForLife() {
+	if heldForLife(root) {
 		held = &readTree
 	}
 	if held == nil {
@@ -678,7 +701,7 @@ type productLookup struct {
 // while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
 // than at depth 16 down every branch.
 func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
-	held := heldForLife()
+	held := heldForLife(root)
 	heldKey := root + "\x00" + cache + "\x00" + nameKey
 	if held {
 		if result, ok := readProducts.Load(heldKey); ok {
