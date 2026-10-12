@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -152,10 +153,7 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 	t.Helper()
 	var products tableLayoutProducts
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
+	var err error
 	products.main, err = filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -202,55 +200,16 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 			return filepath.Join(directory, "program"), nil
 		}))
 	}
-	directory := filepath.Join(artifactDirectory, "table-layout-builds")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
+	// The Go oracles are buildcache.GoBuildIn products (markdownLayoutGoOracle).
 	for _, mode := range []string{"list", "document"} {
 		if target != "" && target != mode {
 			continue
 		}
-		driver := "list_go.go"
 		command := "adamic_markdown_lists"
 		if mode == "document" {
-			driver = "document_go.go"
 			command = "adamic_markdown_doclayout"
 		}
-		driverPath, err := filepath.Abs(filepath.Join("testdata", driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		main := filepath.Join(cohere, "cmd", command, "main.go")
-		replacements := map[string]string{main: driverPath}
-		if mode == "list" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-		if err != nil {
-			t.Fatal(err)
-		}
-		overlayPath := filepath.Join(directory, mode+".json")
-		write(t, overlayPath, overlay)
-		goInputs := buildcache.Inputs{Name: "markdown table Go " + mode, Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/" + driver}, Flags: []string{string(overlay)}, Toolchain: []string{buildcache.Tool("go", "version")}}
-		if mode == "list" {
-			goInputs.Files = append(goInputs.Files, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
-		}
-		product := buildcache.Product(t, goInputs, func(product string) error {
-			ctx, cancel := markdownLayoutSetupContext(t.Context())
-			defer cancel()
-			build := tableLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)
-			build.Dir = cohere
-			if output, err := build.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(product, "oracle")
+		binary := markdownLayoutGoOracle(t, command)
 		if mode == "list" {
 			products.list = binary
 		} else {
@@ -589,10 +548,10 @@ func tableLayoutChecks(t *testing.T, ctx context.Context, fixture *layoutFixture
 	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
 }
 
-// Build keys include source and compiler inputs, never this test's shard wrappers.
+// Build keys include source and the compiler (compilerinputs.Lowering), never this test's shard wrappers.
 func tableLayoutBuildFiles(t *testing.T) []string {
 	t.Helper()
-	files := []string{"internal", "cohere", "go.mod", "go.work"}
+	files := compilerinputs.Lowering()
 	for _, pattern := range []string{"*.ts", "testdata/*.ts", "../markdowninline/*.ts"} {
 		matches, err := filepath.Glob(pattern)
 		if err != nil {

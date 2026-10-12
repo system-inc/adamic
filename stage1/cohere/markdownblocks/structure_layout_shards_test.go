@@ -2,24 +2,21 @@ package markdownblocks
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 )
@@ -157,13 +154,11 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
 	return structureLayoutBuildProduct(t, root, "")
 }
 
-func structureLayoutBuildProduct(t *testing.T, root, target string) structureLayoutProducts {
-	p := structureLayoutProducts{root: root}
-	main, err := filepath.Abs("testdata/list_probe.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	files := []string{"stage1/cohere/markdownblocks/testdata/list_probe.ts", "stage1/cohere/markdowninline", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "go.mod"}
+// structureLayoutBuildFiles keys the lowered port and its natives: the compiler that lowers and builds them
+// (compilerinputs.Lowering), the probe, markdowninline and this package's .ts.
+func structureLayoutBuildFiles(t *testing.T) []string {
+	t.Helper()
+	files := append(compilerinputs.Lowering(), "stage1/cohere/markdownblocks/testdata/list_probe.ts", "stage1/cohere/markdowninline")
 	sources, err := filepath.Glob("*.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -171,6 +166,16 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 	for _, source := range sources {
 		files = append(files, "stage1/cohere/markdownblocks/"+source)
 	}
+	return files
+}
+
+func structureLayoutBuildProduct(t *testing.T, root, target string) structureLayoutProducts {
+	p := structureLayoutProducts{root: root}
+	main, err := filepath.Abs("testdata/list_probe.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := structureLayoutBuildFiles(t)
 	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-lowered", Files: files, Flags: []string{main}, Toolchain: []string{runtime.Version()}}, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
@@ -220,58 +225,16 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 	if target == "native" {
 		return p
 	}
-	cohere := filepath.Join(root, "cohere")
+	// The Go oracles are buildcache.GoBuildIn products (markdownLayoutGoOracle), fetched warm rather than built by
+	// whichever shard first enters sync.Once.
 	for _, item := range []struct {
-		command, driver string
-		bridge          bool
-	}{{"adamic_markdown_lists", "list_go.go", true}, {"adamic_markdown_doclayout", "document_go.go", false}} {
+		command string
+		bridge  bool
+	}{{"adamic_markdown_lists", true}, {"adamic_markdown_doclayout", false}} {
 		if target != "" && target != item.command {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", item.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		main := filepath.Join(cohere, "cmd", item.command, "main.go")
-		replace := map[string]string{main: driver}
-		if item.bridge {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		// Keep overlay files inside the content-addressed product. Their source
-		// paths are stable, so warm setup fetches the Go oracle instead of
-		// charging whichever shard first enters sync.Once for a new build.
-		goFiles := []string{"cohere/internal", "cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/mutation_aliasing", "cohere/static_single_assignment", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/" + item.driver}
-		if item.bridge {
-			goFiles = append(goFiles, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
-		}
-		goDir := buildcache.Product(t, buildcache.Inputs{
-			Name: "markdown-structure-go-" + item.command, Files: goFiles,
-			Flags:     []string{"overlay=" + string(overlay), "main=" + main, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
-			Toolchain: []string{buildcache.Tool("go", "version")},
-		}, func(dir string) error {
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command, cancel := structureLayoutCommand("go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)
-			defer cancel()
-			command.Dir = cohere
-			if output, err := combinedOutput(command); err != nil {
-				return fmt.Errorf("Go bridge: %w\n%s", err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(goDir, "oracle")
+		binary := markdownLayoutGoOracle(t, item.command)
 		if item.bridge {
 			p.goList = binary
 		} else {
@@ -577,20 +540,4 @@ func structureLayoutDeadline(t *testing.T, name string) *time.Timer {
 		fmt.Fprintf(os.Stderr, "%s cooked: over budget at 90s\n", name)
 		os.Exit(124)
 	})
-}
-
-// Setup has no deadline; cancellation still kills the compiler process group.
-func structureLayoutCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := markdownLayoutSetupContext(context.Background())
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = 5 * time.Second
-	return command, cancel
 }
