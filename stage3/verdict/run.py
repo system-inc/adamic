@@ -69,8 +69,8 @@ def driver_suite(binary, output, tiny):
 
 
 def upstream_tree():
-    """The pinned upstream checkout, as apply finds it: STAGE3_VERDICT_UPSTREAM, else the gate inputs' TypeScript
-    checkout, ADAMIC_TYPESCRIPT_SOURCE. The verdict never clones one, from a mirror or the network, so a runner without
+    """The pinned upstream checkout, as apply reads it, with the verdict's own override first: STAGE3_VERDICT_UPSTREAM,
+    else the gate inputs' TypeScript checkout, ADAMIC_TYPESCRIPT_SOURCE. The verdict never clones one, from a mirror or the network, so a runner without
     either refuses plainly. (cohere/TypeScript is Adamic's fork, not the pinned upstream: it holds no tests/.)"""
     configured = os.environ.get('STAGE3_VERDICT_UPSTREAM') or os.environ.get('ADAMIC_TYPESCRIPT_SOURCE')
     if not configured:
