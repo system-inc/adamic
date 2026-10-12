@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand/v2"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"syscall"
@@ -126,7 +125,7 @@ func runWithInput(t *testing.T, input string, name string, arguments ...string) 
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := programCommand(ctx, "", name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
