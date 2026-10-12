@@ -625,6 +625,35 @@ func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
 	}
 }
 
+// One tool run through two links reports the same: a runner's $ADAMIC_TOOLS/bin/clang, whose prefix is the start of
+// the one the tool reports (adamic-tools/llvm), and Workshop's ~/.adamic-tools/bin/clang, a link to that directory
+// (#94aa17s).
+func TestAToolsReportIsTheSameThroughEitherLink(t *testing.T) {
+	t.Parallel()
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	tools := filepath.Join(home, "adamic-tools")
+	write(t, tools, "llvm/bin/fakecc", "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n")
+	if err := os.Chmod(filepath.Join(tools, "llvm/bin/fakecc"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(filepath.Join(tools, "llvm/bin/fakecc"), filepath.Join(tools, "bin/fakecc")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
+		t.Fatal(err)
+	}
+	runner, workshop := Tool(filepath.Join(tools, "bin/fakecc"), "--resources"), Tool(filepath.Join(home, ".adamic-tools/bin/fakecc"), "--resources")
+	if runner != workshop || !strings.Contains(runner, "resources: <fakecc>/lib/fakecc/20") {
+		t.Fatalf("one tool through two links reported\n%s\nand\n%s", runner, workshop)
+	}
+}
+
 // GOTOOLCHAIN, GOROOT and GOTOOLDIR name the release they select; a location is never valued (#t37sw0f).
 func TestAGoSettingNamesTheReleaseNotThePolicy(t *testing.T) {
 	t.Parallel()
