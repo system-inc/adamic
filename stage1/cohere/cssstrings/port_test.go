@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
@@ -325,34 +326,33 @@ func equal(t *testing.T, name string, a, b []byte) {
 	}
 }
 
+// stringsPreparedOracle is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
+// lays over it, a product (buildcache.GoBuildIn) built ahead. The overlay names this checkout's paths, so it sits in a
+// temporary directory and is never part of the product (#tqrqx60).
 func stringsPreparedOracle(t *testing.T) string {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	bridge, _ := filepath.Abs("testdata/bridge.go")
-	driver, _ := filepath.Abs("testdata/go_driver.go")
+	bridge, err := filepath.Abs("testdata/bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	driver, err := filepath.Abs("testdata/go_driver.go")
+	if err != nil {
+		t.Fatal(err)
+	}
 	cohere := filepath.Join(root, "cohere")
-	oracleDir := stringsGoProduct(t, "Go oracle", func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-		}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := stringsGoCommand(t, cohere, "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-			return fmt.Errorf("Go bridge: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(oracleDir, "go-printer")
+	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
+		mainPath: driver,
+	}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, []string{"-overlay=" + overlayPath})
 }
