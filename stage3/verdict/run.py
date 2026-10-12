@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parent
 DRIVER = ROOT.parent / 'drivers/tsc'
 sys.path.insert(0, str(DRIVER))
 from corpus import PIN, materialize, baseline_output
+sys.path.insert(0, str(ROOT.parent))
+from caches import stage3_cache
 
 
 def write_json(path, value):
@@ -74,7 +76,7 @@ def upstream_tree(output):
         tree = Path(configured).resolve()
     else:
         tree = output / 'upstream'
-        mirror = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))) / 'typescript.git'
+        mirror = stage3_cache() / 'typescript.git'
         with (output / 'upstream.log').open('wb') as log:
             source = str(mirror) if mirror.is_dir() else 'https://github.com/microsoft/TypeScript.git'
             subprocess.run(['git', 'clone', '--depth', '1', '--branch', 'v6.0.3', source, str(tree)],
