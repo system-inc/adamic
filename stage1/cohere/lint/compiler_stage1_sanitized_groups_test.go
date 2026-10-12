@@ -114,7 +114,7 @@ func TestProduct_CompilerAgreementLowered(t *testing.T) {
 	compilerAgreementMeasureProduct(t, compilerAgreementLowered)
 }
 
-func TestCompilerAndStage1Agree_6484(t *testing.T) {
+func TestCompilerAndStage1Agree_6564(t *testing.T) {
 	t.Parallel()
 	t.Skip("awaits devtools/heavy-units: pending #5ggwf8c; combined sanitized checker.ts/all run moved to that heavy-unit task, not dropped; #m9es0rv adds the heavy census class and budget exemption")
 }
@@ -187,7 +187,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			if c.key == compilerAgreementCheckerKey && c.rule != "all" && unit != compilerAgreementOwner(c)*compilerAgreementSides+side {
 				t.Fatalf("checker rule %s moved on side %d", c.rule, side)
 			}
-			if c.key == compilerAgreementCheckerKey && c.rule == "all" && unit != 6480+side {
+			if c.key == compilerAgreementCheckerKey && c.rule == "all" && unit != (compilerAgreementFileBuckets*compilerAgreementRuleGroups+compilerAgreementFixBuckets+compilerAgreementCheckerGroups)*compilerAgreementSides+side {
 				t.Fatalf("checker/all moved on side %d", side)
 			}
 		}
