@@ -29,17 +29,26 @@ func TestCommandDiagnosticsDropOnlyModuleDownloads(t *testing.T) {
 	}
 }
 
-// Not parallel: each case runs this test binary again with a fake go first on PATH.
+// Not parallel: each case runs this test binary again with a fake go as the toolchain's.
 // execute passes a go command whose only stderr is module downloads, and fails one that writes anything else.
-// Not parallel: t.Setenv changes the process-wide PATH in the stderr probe.
+// Not parallel: t.Setenv changes the process-wide ADAMIC_TOOLS in the stderr probe.
 func TestExecuteFailsOnStderrOtherThanModuleDownloads(t *testing.T) {
 	if lines := os.Getenv("ADAMIC_LINT_STDERR_PROBE"); lines != "" {
-		bin := t.TempDir()
-		script := "#!/bin/sh\nprintf '%s' \"$ADAMIC_LINT_STDERR_PROBE\" >&2\n"
-		if err := os.WriteFile(filepath.Join(bin, "go"), []byte(script), 0755); err != nil {
+		// execute resolves go through toolchain, under ADAMIC_TOOLS and toolchain's environment, so the fake is the tools
+		// directory's go and carries its stderr in a file of its own rather than in an environment variable.
+		tools := t.TempDir()
+		if err := os.MkdirAll(filepath.Join(tools, "bin"), 0755); err != nil {
 			t.Fatal(err)
 		}
-		t.Setenv("PATH", bin+string(os.PathListSeparator)+os.Getenv("PATH"))
+		stderr := filepath.Join(tools, "stderr")
+		if err := os.WriteFile(stderr, []byte(lines), 0644); err != nil {
+			t.Fatal(err)
+		}
+		script := "#!/bin/sh\ncat '" + stderr + "' >&2\n"
+		if err := os.WriteFile(filepath.Join(tools, "bin", "go"), []byte(script), 0755); err != nil {
+			t.Fatal(err)
+		}
+		t.Setenv("ADAMIC_TOOLS", tools)
 		execute(t, "", "go", "version")
 		return
 	}
