@@ -77,17 +77,12 @@ func sharedPath(name string) (string, error) {
 	return filepath.Join(directory, name), nil
 }
 
-// run is execute without a test: output goes to a file, never a pipe, and anything on standard error is
-// a failure, as execute requires.
+// run is execute without a test, for a tool: output goes to a file, never a pipe, and anything on standard error
+// is a failure, as execute requires. The tool is the one internal/toolchain resolves, under its environment plus
+// environment, in directory with PWD to match (the go command trusts PWD over the real working directory).
 func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	command := exec.Command(name, args...)
-	command.Dir = directory
-	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
-	// real working directory, so a stale one resolves the module through the wrong path.
-	command.Env = append(os.Environ(), environment...)
-	if directory != "" {
-		command.Env = append(command.Env, "PWD="+directory)
-	}
+	command := toolchain.CommandIn(directory, name, args...)
+	command.Env = append(command.Env, environment...)
 	output, err := os.CreateTemp(sharedDirectory, "stdout-")
 	if err != nil {
 		return nil, err

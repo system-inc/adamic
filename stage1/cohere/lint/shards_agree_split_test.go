@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
 	"os"
@@ -252,7 +253,12 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 	for _, path := range portFiles(t) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(path))
 	}
-	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+	if name == "capture" || strings.HasPrefix(name, "prepared") {
+		// The capture runs cohere's go test with toolchain's go, and the prepared corpus holds its rows.
+		tools = append(tools, lintGoSettings())
+	}
+	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
 }
 func testShardsAgreeUpstream(t *testing.T) []string {
 	d := buildcache.Product(t, testShardsAgreeInputs(t, "capture"), func(d string) error {
@@ -663,14 +669,23 @@ func TestShardsAgreeChecker_N_Count(t *testing.T) {
 }
 
 // Product recipes run without a test-side deadline. The build phase owns their ceiling.
+// testShardsAgreeRun runs name in directory. A bare name is a tool (the capture's go): the one internal/toolchain
+// resolves, under its environment plus environment, with PWD set to directory. A path is a program a test built (the
+// port, the oracle), run as named with this process's environment.
 func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	command := exec.CommandContext(context.Background(), name, args...)
-	command.Dir = directory
-	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
-	// real working directory, so a stale one resolves the module through the wrong path.
-	command.Env = append(os.Environ(), environment...)
-	if directory != "" {
-		command.Env = append(command.Env, "PWD="+directory)
+	var command *exec.Cmd
+	if strings.ContainsRune(name, filepath.Separator) {
+		command = exec.Command(name, args...)
+		command.Dir = directory
+		// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
+		// real working directory, so a stale one resolves the module through the wrong path.
+		command.Env = append(os.Environ(), environment...)
+		if directory != "" {
+			command.Env = append(command.Env, "PWD="+directory)
+		}
+	} else {
+		command = toolchain.CommandIn(directory, name, args...)
+		command.Env = append(command.Env, environment...)
 	}
 	output, err := os.CreateTemp(sharedDirectory, "stdout-")
 	if err != nil {
