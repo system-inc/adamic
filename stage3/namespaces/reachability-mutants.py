@@ -13,7 +13,7 @@ end = original.index('func (l *lowering) namespaceReadyValue(', start)
 header = original[start:original.index('{', start)+1]
 mutations = [
     ('reaching-as-unreaching', original.replace('case ast.KindFunctionDeclaration:\n\t\t\tif declaration.Body() != nil {\n\t\t\t\treturn declaration\n\t\t\t}', 'case ast.KindFunctionDeclaration:\n\t\t\treturn nil'), './internal/lower', '^TestNamespaceInitializationReachability$', 'reaching call lost its initialization refusal'),
-    ('drop-runtime-readiness', original[:start] + header + '\n\treturn nil\n}\n\n' + original[end:], './internal/oracle', '^TestNativeAgreesWithNode$/internal/oracle/testdata/namespaces_unknown_function_before.a$', 'exit codes differ'),
+    ('drop-runtime-readiness', original[:start] + header + '\n\treturn nil\n}\n\n' + original[end:], './internal/oracle', '^TestNativeAgreesWithNode_/internal/oracle/testdata/namespaces_unknown_function_before.a$', 'exit codes differ'),
 ]
 for name, changed, package, pattern, expected in mutations:
     assert changed != original, name
@@ -38,7 +38,7 @@ try:
     enums.write_text(enum_original.replace(needle, '', 1))
     log = scratch / 'inline-away-namespace-read.log'
     with log.open('w') as output:
-        result = subprocess.run(['go', 'test', './internal/oracle', '-run', '^TestNativeAgreesWithNode$/internal/oracle/testdata/namespaces_unknown_enum_before.a$', '-count=1', '-v'], cwd=root, env=dict(os.environ, ADAMIC_GATE_UNCACHED='1'), stdout=output, stderr=subprocess.STDOUT)
+        result = subprocess.run(['go', 'test', './internal/oracle', '-run', '^TestNativeAgreesWithNode_/internal/oracle/testdata/namespaces_unknown_enum_before.a$', '-count=1', '-v'], cwd=root, env=dict(os.environ, ADAMIC_GATE_UNCACHED='1'), stdout=output, stderr=subprocess.STDOUT)
     observed = log.read_text()
     assert result.returncode != 0 and 'exit codes differ' in observed and 'build failed' not in observed, observed
     print('inline-away-namespace-read caught: exit codes differ', log)
