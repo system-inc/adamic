@@ -142,8 +142,11 @@ func mutantOracleCorpusInputs(root string, index int, oracle string) printerBuil
 // mutantOracleBinary), computed without building or fetching it.
 func mutantOracleKey(t *testing.T, root string, index int) string {
 	t.Helper()
-	inputs := documentOracleInputs(t)
-	if mutations[index].entry != "docMain.ts" {
+	// Only the doc mutation keys the doc oracle, so its package never joins another mutation's reads.
+	var inputs buildcache.Inputs
+	if mutations[index].entry == "docMain.ts" {
+		inputs = documentOracleInputs(t)
+	} else {
 		inputs = mutantOracleInputs(t, mutations[index])
 	}
 	key, err := buildcache.Key(root, inputs)
