@@ -4,7 +4,6 @@ import argparse
 import difflib
 import json
 from pathlib import Path
-import os
 import re
 import subprocess
 import tempfile
@@ -108,15 +107,12 @@ def api_check(results, sanctioned):
     errors = []
     if recorded_diff != actual_diff:
         errors.append('baseline.diff does not exactly describe the API snapshots (extra, missing, or changed diff lines)')
-    env = dict(os.environ)
-    cache = Path(env.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
-    env['NODE_PATH'] = str(cache / 'api/node_modules') + os.pathsep + env.get('NODE_PATH', '')
     with tempfile.TemporaryDirectory(prefix='stage3-lane-api-') as scratch:
         pristine = Path(scratch) / 'original.d.ts'
         pristine.write_bytes(original)
         normalized = json.loads(subprocess.check_output(
             ['node', str(LANE / 'normalize-api.cjs'), str(pristine), str(reference), str(local)],
-            text=True, env=env, stderr=subprocess.PIPE))
+            text=True, stderr=subprocess.PIPE))
     wanted = {row['declaration']: row for row in sanctioned['normalized_changes']}
     # Some adapters already update their proved reference lines (currently 40).
     # Require these accepted reference changes to be an exact subset of the sanction.

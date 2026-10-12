@@ -20,11 +20,12 @@ FORMAT = 'adamic-stage3-tree-v1'
 
 def product_key():
     # Names, modes, empty directories and bytes all participate. Tables outside
-    # adapt are generated outputs, not inputs. API locks pin the adapter parser.
+    # adapt are generated outputs, not inputs. API locks pin the adapter parser,
+    # and the installed parser's bytes by their pinned digest (a build checks it).
     digest = hashlib.sha256(FORMAT.encode())
     digest.update(subprocess.check_output(['node', '--version']).strip())
-    inputs = [stage / 'source.json', stage / 'apply.py',
-              stage / 'api/package.json', stage / 'api/package-lock.json']
+    inputs = [stage / 'source.json', stage / 'apply.py', stage / 'api/package.json',
+              stage / 'api/package-lock.json', stage / 'api/node_modules.sha256']
     inputs += sorted(path for path in (stage / 'adapt').rglob('*')
                      if '__pycache__' not in path.parts)
     for path in inputs:
@@ -152,7 +153,8 @@ def publish_hook(store, key):
     payloads.append(dict(path=str(manifest_path), asset='adamic/build-cache/' + manifest_path.name))
     return dict(format=FORMAT, key=key,
                 inputs=['stage3/source.json', 'stage3/apply.py', 'stage3/api/package.json',
-                        'stage3/api/package-lock.json', 'stage3/adapt/** (except __pycache__)',
+                        'stage3/api/package-lock.json', 'stage3/api/node_modules.sha256',
+                        'stage3/adapt/** (except __pycache__)',
                         'node --version'],
                 pinned_source=json.loads((stage / 'source.json').read_text()),
                 payloads=payloads, publish_order='parts first, manifest last')
@@ -174,26 +176,67 @@ def typescript_source(pin):
     return Path(source)
 
 
-def api_modules():
-    """stage3/api's packages, installed from its lockfile by the tree's build or the runner, never by apply.
+def installed_packages(project):
+    """An npm project's packages, installed from its lockfile by the tree's build or the runner, never by apply.
 
-    npm's hidden lockfile records what was installed, in a prebuilt tree and in a runner's linked copy alike, so it
-    must name exactly the lockfile's packages, and each package must be the version the lockfile pins.
+    npm's hidden lockfile records what was installed, in a prebuilt tree and in a runner's linked copy alike: each
+    package it names must be the lockfile's entry, a package it leaves out must be one the lockfile marks optional
+    (another platform's), and each package must be the version the lockfile pins.
     """
-    api = stage / 'api'
-    modules = api / 'node_modules'
-    lockfile = api / 'package-lock.json'
+    modules = project / 'node_modules'
+    lockfile = project / 'package-lock.json'
     try:
         installed = json.loads((modules / '.package-lock.json').read_text())['packages']
         wanted = {name: entry for name, entry in json.loads(lockfile.read_text())['packages'].items() if name}
-        if installed != wanted:
+        if any(wanted.get(name) != entry for name, entry in installed.items()):
             raise ValueError('its hidden lockfile names other packages')
-        for name, entry in wanted.items():
-            if json.loads((api / name / 'package.json').read_text())['version'] != entry['version']:
-                raise ValueError(f'{name} is not version {entry["version"]}')
+        absent = [name for name, entry in wanted.items() if name not in installed and not entry.get('optional')]
+        if absent:
+            raise ValueError(f'{absent[0]} is not installed')
+        for name in installed:
+            if json.loads((project / name / 'package.json').read_text())['version'] != wanted[name]['version']:
+                raise ValueError(f'{name} is not version {wanted[name]["version"]}')
     except (OSError, KeyError, ValueError) as error:
-        raise RuntimeError(f'{modules} is not an install of {lockfile} ({error}); apply never runs npm, '
+        raise RuntimeError(f'{modules} is not an install of {lockfile} ({error}); stage3 never runs npm, '
                            f'so the tree must provide them') from error
+    return modules
+
+
+# prepare.sh writes this into a checkout's linked stage3/api/node_modules; a prebuilt tree's has none.
+runnerMarker = '.fast-gate-lockfile-sha256'
+
+
+def packages_digest(modules):
+    """sha256 over an install's every entry in sorted order: a directory's name, a regular file's bytes and executable
+    bit, a symlink's target text. Only the runner's lockfile marker is left out."""
+    digest = hashlib.sha256()
+    for path in sorted(modules.rglob('*'), key=lambda path: path.relative_to(modules).as_posix()):
+        name = path.relative_to(modules).as_posix()
+        if name == runnerMarker:
+            continue
+        if path.is_symlink():
+            record = [name, 'symlink', os.readlink(path)]
+        elif path.is_dir():
+            record = [name, 'directory']
+        elif path.is_file():
+            with path.open('rb') as source:
+                record = [name, 'file', bool(path.stat().st_mode & 0o111),
+                          hashlib.file_digest(source, 'sha256').hexdigest()]
+        else:
+            raise RuntimeError(f'{path} is neither a file, a directory nor a symlink')
+        digest.update(json.dumps(record, separators=(',', ':')).encode() + b'\n')
+    return digest.hexdigest()
+
+
+def pinned_packages(project):
+    """installed_packages, whose bytes must also be the ones <project>/node_modules.sha256 pins, since a version
+    check reads no bytes. Only a platform-independent install can be pinned this way."""
+    modules = installed_packages(project)
+    pin = project / 'node_modules.sha256'
+    actual = packages_digest(modules)
+    if actual != pin.read_text().strip():
+        raise RuntimeError(f'{modules} hashes to {actual}, not the {pin.read_text().strip()} that {pin} pins; '
+                           f'its bytes are not the lockfile\'s install')
     return modules
 
 
@@ -205,8 +248,9 @@ def build_product(out):
     adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
     adaptation_env = dict(os.environ)
     if any(directory.name != '00-setup' for directory in adaptations):
-        adaptation_env['NODE_PATH'] = str(api_modules())
-    run('git', 'clone', '--no-hardlinks', str(source), str(out))
+        adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
+    # A file:// clone, since a local path ignores --depth: the pinned commit alone, not the checkout's history.
+    run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
     # The product names no path on the machine that built it.
     run('git', '-C', str(out), 'remote', 'remove', 'origin')
     run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
@@ -263,7 +307,12 @@ def main():
     parser.add_argument('--publish-hook', action='store_true',
                         help='print local payload paths and key for developer tools publisher')
     parser.add_argument('--key', action='store_true', help='print the input hash only')
+    parser.add_argument('--packages-digest', action='store_true',
+                        help='print the digest of stage3/api/node_modules, for stage3/api/node_modules.sha256')
     args = parser.parse_args()
+    if args.packages_digest:
+        print(packages_digest(installed_packages(stage / 'api')))
+        return
     key = product_key()
     if args.key:
         print(key)

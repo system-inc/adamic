@@ -29,8 +29,10 @@ compiler API, parse current text, and document changed and declined sites.
 When later adapters exist, apply exposes stock 6.0.3 through NODE_PATH from
 `stage3/api/node_modules`, which the tree provides installed from
 api/package-lock.json (a prebuilt tree carries it, a runner links it in). Apply
-never runs npm, and refuses an install that isn't that lockfile's; adapters can
-require("typescript").
+never runs npm, and refuses an install that isn't that lockfile's, or whose bytes
+aren't the ones `api/node_modules.sha256` pins (a lockfile change regenerates it
+with `stage3/apply.sh --packages-digest > stage3/api/node_modules.sha256`);
+adapters can require("typescript").
 Never weaken Adamic's checker options to improve the census.
 
 The oracle does npm ci, npm run build, and npm test with --light=false,
