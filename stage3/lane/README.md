@@ -12,9 +12,9 @@ directory and prints its absolute path on the first line. With an argument,
 the results directory must be new. The verdict remains the last stdout line.
 The lane calls this checkout's unmodified
 `stage3/apply.sh` with `results/adapted-tree`, then its unmodified
-`stage3/oracle/run.sh` with that tree and `results/oracle`. Apply's normal
-`STAGE3_CACHE` override also selects the pinned TypeScript compiler API used
-by the declaration guard. All command output goes to logs. The lane writes
+`stage3/oracle/run.sh` with that tree and `results/oracle`. The declaration
+guard uses the pinned TypeScript compiler API from the tree's
+`stage3/api/node_modules`. All command output goes to logs. The lane writes
 `execution.json`, `report.json`, a copy of the adapted tree's `patch-set.md`,
 and a one-line `verdict.txt`; its own exit is
 zero only for PASS. Existing results are never replaced. To replay the guard
@@ -41,16 +41,15 @@ in so count changes require an intentional edit.
 ## Generating the sanction
 
 The manifest is generated from the pinned pristine snapshot, independently of
-any full-apply oracle diff. After apply has installed the stock API dependency:
+any full-apply oracle diff, with the stock API dependency the tree provides:
 
 ```sh
-NODE_PATH="${STAGE3_CACHE:-$HOME/.cache/adamic-stage3}/api/node_modules" \
-  python3 stage3/lane/generate-api.py \
-  "${STAGE3_CACHE:-$HOME/.cache/adamic-stage3}/typescript.git" \
+NODE_PATH="$PWD/stage3/api/node_modules" \
+  python3 stage3/lane/generate-api.py "$ADAMIC_TYPESCRIPT_SOURCE" \
   > /tmp/lane-generate.log 2>&1
 ```
 
-The argument can also be a pinned TypeScript checkout. Generation reads pinned
+The argument is the pinned TypeScript checkout. Generation reads pinned
 Git objects, rather than trusting modified checkout files. The reconstruction
 uses these adaptations' mechanical proof data:
 

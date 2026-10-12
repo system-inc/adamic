@@ -8,7 +8,7 @@ import subprocess
 
 lane = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('typescript_git', type=Path, help='pinned checkout or the apply cache bare repository')
+parser.add_argument('typescript_git', type=Path, help='the pinned TypeScript checkout (ADAMIC_TYPESCRIPT_SOURCE)')
 parser.add_argument('--output', type=Path, default=lane / 'sanctioned-api.json')
 args = parser.parse_args()
 proof = json.loads(subprocess.check_output(['node', str(lane / 'generate-api.cjs'),
