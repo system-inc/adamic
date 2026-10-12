@@ -184,9 +184,6 @@ func TestBehavior(t *testing.T){
 }
 `
 
-// behaviorProbe is the test binary of a module holding Rewrite's output for behaviorSource beside behaviorAST and
-// behaviorTest: a product built ahead (go test -c with GOWORK off, which vets it as go test did), so the unit runs it
-// without go. Rewrite runs in this process, so its source and this file key it.
 // probeToolchain is the probe's go, asked as its build runs go: toolchain's, under toolchain's environment with GOWORK
 // off, at the repository, whose go and toolchain directives the probe's module declares, so GOTOOLCHAIN selects the
 // same release for the key as for the build, and a go env file (which toolchain's GOENV=off never reads) reaches neither.
@@ -205,6 +202,9 @@ func probeToolchain(t *testing.T) []string {
 	return reports
 }
 
+// behaviorProbe is the test binary of a module holding Rewrite's output for behaviorSource beside behaviorAST and
+// behaviorTest: a product built ahead (go test -c with GOWORK off, which vets it as go test did), so the unit runs it
+// without go. Rewrite runs in this process, so its source and this file key it.
 func behaviorProbe(t *testing.T) string {
 	t.Helper()
 	inputs := buildcache.Inputs{
