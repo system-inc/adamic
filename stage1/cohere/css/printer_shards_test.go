@@ -92,13 +92,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 	index := variant + 1
 	cssExecutableOnce[index].Do(func() {
 		sanitize := variant != 3
-		inputs := buildcache.Inputs{
-			Name:      "css-printer-executable-" + strconv.Itoa(variant),
-			Files:     []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "bridge/tsgo", "cohere/policy", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
-			Flags:     append(native.Flags(native.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
-		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
+		directory := buildcache.Product(t, cssPrinterInputs(variant), func(dir string) error {
 			var mutation *mutant
 			if variant >= 0 && variant < len(printerMutants) {
 				mutation = &printerMutants[variant]
@@ -131,6 +125,15 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 		t.Fatalf("css printer product %d unavailable: its build failed earlier in this process (see that test's log)", variant)
 	}
 	return cssExecutables[index]
+}
+
+func cssPrinterInputs(variant int) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "css-printer-executable-" + strconv.Itoa(variant),
+		Files:     cssLoweringFiles(),
+		Flags:     append(native.Flags(native.Options{Sanitize: variant != 3}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+	}
 }
 
 func TestProduct_CSSPrinterParserOracle(t *testing.T)        { t.Parallel(); cssOracleProduct(t, false) }
