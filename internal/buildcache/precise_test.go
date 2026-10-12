@@ -8,7 +8,6 @@ import (
 	"math/rand/v2"
 	"net/http/httptest"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"reflect"
 	"slices"
@@ -17,6 +16,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A rig is a traced Workshop in miniature (#vt46geg): a git checkout of its own as the repository, a build cache, and
@@ -63,12 +64,36 @@ func newRig(t *testing.T) *rig {
 	return &rig{root: root, cache: cache, trace: trace, pid: os.Getpid()}
 }
 
+// linkDeclaredTools links each tool the declared tools directory (ADAMIC_TOOLS) holds into bin, a tools directory a
+// test makes to stand a fake tool in, but for a name bin already holds: pointed at that directory, toolchain.Path still
+// finds every other tool where it found it before, and a sandbox (ADAMIC_SANDBOX=1) still finds them at all. A name in
+// both bin and go/bin is bin's, as Path finds it.
+func linkDeclaredTools(t *testing.T, bin string) {
+	t.Helper()
+	declared := os.Getenv("ADAMIC_TOOLS")
+	if declared == "" {
+		return
+	}
+	for _, directory := range []string{filepath.Join(declared, "bin"), filepath.Join(declared, "go", "bin")} {
+		entries, _ := os.ReadDir(directory)
+		for _, entry := range entries {
+			link := filepath.Join(bin, entry.Name())
+			if _, err := os.Lstat(link); err == nil {
+				continue
+			}
+			if err := os.Symlink(filepath.Join(directory, entry.Name()), link); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+}
+
 // gitIn runs git in directory, never starting git's background auto-gc or maintenance: a detached one still writing
 // .git/objects when the test ends fails t.TempDir's cleanup (TestVouchingIsALookupAtTheCorpusSize, whose commit of a
 // corpus starts one: `.git/objects: directory not empty`).
 func gitIn(t *testing.T, directory string, arguments ...string) {
 	t.Helper()
-	command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main", "-c", "gc.auto=0", "-c", "maintenance.auto=false"}, arguments...)...)
+	command := toolchain.GitCommand(append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main", "-c", "gc.auto=0", "-c", "maintenance.auto=false"}, arguments...)...)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("git %v: %v\n%s", arguments, err, output)
 	}
@@ -453,6 +478,8 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
 	if err := os.Chmod(filepath.Join(tools, "bin", "clang"), 0o755); err != nil {
 		t.Fatal(err)
 	}
+	// The rig's git, and the key's, are toolchain's, found where they were before this tools directory took over.
+	linkDeclaredTools(t, filepath.Join(tools, "bin"))
 	t.Setenv("ADAMIC_TOOLS", tools)
 	scratch, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
@@ -989,7 +1016,7 @@ func TestAFileIsValuedByItsGitObject(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	object, err := exec.Command("git", "-C", r.root, "rev-parse", "HEAD:source/a.c").Output()
+	object, err := toolchain.GitCommand("-C", r.root, "rev-parse", "HEAD:source/a.c").Output()
 	if err != nil || inCheckout.values[0] != "file false "+strings.TrimSpace(string(object)) {
 		t.Fatalf("source/a.c values %q, git names it %q (%v)", inCheckout.values[0], object, err)
 	}
