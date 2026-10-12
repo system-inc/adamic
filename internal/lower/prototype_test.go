@@ -113,10 +113,10 @@ func TestInheritedLibraryReadReceiversEachHaveOneTest(t *testing.T) {
 		if !ok || !strings.HasPrefix(function.Name.Name, prefix) {
 			continue
 		}
-		// The wrapper's second statement must be the sweep of one named receiver, so the name read
-		// here is the receiver that wrapper really runs.
+		// The wrapper's first statement must be t.Parallel() and its second the sweep of one named
+		// receiver, so the name read here is the receiver that wrapper really runs.
 		var receiver string
-		if statements := function.Body.List; len(statements) == 2 {
+		if statements := function.Body.List; len(statements) == 2 && isParallelCall(statements[0]) {
 			if expression, ok := statements[1].(*ast.ExprStmt); ok {
 				if call, ok := expression.X.(*ast.CallExpr); ok && len(call.Args) == 2 {
 					if name, ok := call.Fun.(*ast.Ident); ok && name.Name == "sweepInheritedLibraryReads" {
@@ -144,6 +144,24 @@ func TestInheritedLibraryReadReceiversEachHaveOneTest(t *testing.T) {
 			t.Errorf("receiver %q has %d wrapper tests, want exactly 1", receiver, wrappers[receiver])
 		}
 	}
+}
+
+// isParallelCall is whether statement is t.Parallel().
+func isParallelCall(statement ast.Stmt) bool {
+	expression, ok := statement.(*ast.ExprStmt)
+	if !ok {
+		return false
+	}
+	call, ok := expression.X.(*ast.CallExpr)
+	if !ok || len(call.Args) != 0 {
+		return false
+	}
+	selector, ok := call.Fun.(*ast.SelectorExpr)
+	if !ok || selector.Sel.Name != "Parallel" {
+		return false
+	}
+	receiver, ok := selector.X.(*ast.Ident)
+	return ok && receiver.Name == "t"
 }
 
 // Sweep the lowering entry points directly: the earlier unbound-method refusal must not mask a
