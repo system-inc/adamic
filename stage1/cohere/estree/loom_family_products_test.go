@@ -342,8 +342,7 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 	t.Helper()
 	estreeFamilyDependencies.once.Do(func() {
 		repo := root(t)
-		command := toolchain.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
-		command.Dir = repo
+		command := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
 		output, err := command.Output()
 		if err != nil {
 			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", err)
