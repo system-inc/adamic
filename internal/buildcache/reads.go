@@ -481,9 +481,13 @@ func gitValue(root, path string, info fs.FileInfo) (string, error) {
 	return fmt.Sprintf("%t %s", info.Mode()&0o111 != 0, blobID(content, length)), nil
 }
 
-// cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified a second
-// before git was asked or later, it is hashed instead (git's own racy-clean margin covers what came before). In an
-// unpacked source it is the manifest's object, under the same margin before the listing was written.
+// cleanObject is the index's object for a file whose working copy git found clean, unchanged since: modified, or its
+// inode changed, a second before git was asked or later, it is hashed instead (git's own racy-clean margin covers what
+// came before). In an unpacked source it is the manifest's object, under the same margin before the listing was
+// written. The inode's change time (ctime) is asked as well as the modification time because a test can edit a tracked
+// file and set its modification time back (os.Chtimes), which a modification time alone reads as unchanged, and
+// nothing but the clock sets a ctime: the edit and the Chtimes each set it to now (Operations' scout, #szswjtc). A
+// file whose ctime can't be read is hashed.
 func cleanObject(root, name string, info fs.FileInfo) (gitObject, int, bool) {
 	for at := filepath.Dir(name); inside(root, at) || at == root; at = filepath.Dir(at) {
 		files := repositoryAt(at)
@@ -504,7 +508,9 @@ func cleanObject(root, name string, info fs.FileInfo) (gitObject, int, bool) {
 		}
 		relative = filepath.ToSlash(relative)
 		object, ok := files.objects[relative]
-		if !ok || files.dirty[relative] || !strings.HasPrefix(object.mode, "100") || !info.ModTime().Before(files.taken.Add(-time.Second)) {
+		margin := files.taken.Add(-time.Second)
+		changed, known := changeTime(info)
+		if !ok || files.dirty[relative] || !strings.HasPrefix(object.mode, "100") || !info.ModTime().Before(margin) || !known || !changed.Before(margin) {
 			return gitObject{}, length, false
 		}
 		return object, length, true

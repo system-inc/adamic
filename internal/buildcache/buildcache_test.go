@@ -186,7 +186,8 @@ func unpacked(t *testing.T, changes map[string]string) string {
 
 // A declared directory's clean tracked file is valued by the id git's index holds, never read (#r47fdtt: cohere's
 // files cost 5.7 s to read and hash on every hit). A file no one may read keys, and keys as an unpacked copy, which
-// hashes every file, keys it. Mutant: hashPath reading every file.
+// hashes every file, keys it. Its chmod sets its change time to now, so the test waits out the racy margin before it
+// asks: no clock but the real one sets a ctime. Mutant: hashPath reading every file.
 func TestADeclaredCleanFileIsValuedUnread(t *testing.T) {
 	t.Parallel()
 	root := checkout(t)
@@ -198,6 +199,7 @@ func TestADeclaredCleanFileIsValuedUnread(t *testing.T) {
 	if _, err := os.ReadFile(unreadable); err == nil {
 		t.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
 	}
+	time.Sleep(1100 * time.Millisecond)
 	got, err := Key(root, declared)
 	if err != nil {
 		t.Fatalf("keying a clean tracked file read it: %v", err)
@@ -208,8 +210,9 @@ func TestADeclaredCleanFileIsValuedUnread(t *testing.T) {
 }
 
 // A declared file whose working copy differs from git's index is hashed, never valued by the stale id: one git reports
-// changed (its time still old, so only git's comparison says so), and one changed after git was asked.
-// Mutant: a dirty file taken by its index id.
+// changed (its time still old, so only git's comparison says so), one changed after git was asked, and one changed
+// after git was asked whose modification time was set back, which only its change time (ctime) says moved.
+// Mutants: a dirty file taken by its index id; the change time not asked (the time set back takes the stale id).
 func TestADeclaredDirtyFileIsHashed(t *testing.T) {
 	t.Parallel()
 	clean := key(t, checkout(t), declared)
@@ -236,6 +239,21 @@ func TestADeclaredDirtyFileIsHashed(t *testing.T) {
 		write(t, root, "source/a.c", changed["source/a.c"])
 		if got := key(t, root, declared); got != want {
 			t.Fatalf("a file changed after git was asked keys %s, its new content %s", got, want)
+		}
+	})
+	t.Run("after git was asked, its time set back", func(t *testing.T) {
+		t.Parallel()
+		root := checkout(t)
+		if before := key(t, root, declared); before != clean {
+			t.Fatalf("an unchanged checkout keys %s, another %s", before, clean)
+		}
+		write(t, root, "source/a.c", changed["source/a.c"])
+		older := time.Now().Add(-2 * time.Hour)
+		if err := os.Chtimes(filepath.Join(root, "source/a.c"), older, older); err != nil {
+			t.Fatal(err)
+		}
+		if got := key(t, root, declared); got != want {
+			t.Fatalf("a file changed after git was asked, its modification time set back, keys %s, its new content %s", got, want)
 		}
 	})
 }
