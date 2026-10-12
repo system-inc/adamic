@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -62,6 +63,14 @@ func printerGateGoOracle(t *testing.T) string {
 	})
 }
 
+// printerGateLoweredFiles are what a family's lowering reads: the compiler, which runs in this process, so its code is
+// in the key by name (compilerinputs.Lowering), not cohere whole, whose TypeScript submodule a populated tree hashed for
+// every lookup (#4ycgm2n); then the port and the TypeScript it imports. TestPrinterGateLoweredKeyCoversWhatItReads
+// holds it to what the loader reads.
+func printerGateLoweredFiles() []string {
+	return append(compilerinputs.Lowering(), "stage1/cohere/tsprinter", "stage1/typescript")
+}
+
 func printerGateLowered(t *testing.T, family string) string {
 	t.Helper()
 	return printerGateOnce(t, "lowered-"+family, func() string {
@@ -74,8 +83,8 @@ func printerGateLowered(t *testing.T, family string) string {
 			t.Fatal(err)
 		}
 		return buildcache.Product(t, buildcache.Inputs{
-			Name:  "tsprinter-lowered-" + family + "-v2",
-			Files: []string{"go.mod", "go.work", "cohere", "internal", "stage1/cohere/tsprinter", "stage1/typescript"},
+			Name:  "tsprinter-lowered-" + family + "-v3",
+			Files: printerGateLoweredFiles(),
 			Flags: []string{"entry=" + entry}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			program := lowered(t, path)
