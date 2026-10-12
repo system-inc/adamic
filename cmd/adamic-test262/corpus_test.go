@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // TestClassifyCorpus locks the skip rules, including negative parse and early error. A runner that
@@ -191,11 +192,14 @@ assert(true);
 // Counting that refusal as a pass fails this.
 func TestMiniRunner(t *testing.T) {
 	t.Parallel()
-	if _, err := exec.LookPath("clang"); err != nil {
-		t.Skip("clang not on PATH")
-	}
-	if _, err := exec.LookPath("node"); err != nil {
-		t.Skip("node not on PATH")
+	// A sandbox declares its tools, so one missing there is a failure, never a skip that passes having run nothing.
+	for _, tool := range []string{"clang", "node"} {
+		if _, err := toolchain.Path(tool); err != nil {
+			if toolchain.Sandboxed() {
+				t.Fatal(err)
+			}
+			t.Skip(tool, "not found:", err)
+		}
 	}
 	work := t.TempDir()
 	engine, err := prepare(t, "testdata/mini", work)
