@@ -246,17 +246,13 @@ func testShardsAgreeRows(t *testing.T, rows []string) []string {
 func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 	t.Helper()
 	files := []string{"internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/go.mod", "cohere/go.sum", "go.mod", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "stage1/cohere/lint/testdata/oracle.go"}
-	if name == "oracle" || name == "capture" {
+	if name == "capture" {
 		files = append(files, "stage1/cohere/lint/shards_agree_split_test.go")
 	}
 	for _, path := range portFiles(t) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(path))
 	}
 	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
-}
-func testShardsAgreeOracle(t *testing.T) string {
-	d := buildcache.Product(t, testShardsAgreeInputs(t, "oracle"), func(d string) error { _, err := testShardsAgreeGoOracleIn(packageDirectory, d); return err })
-	return filepath.Join(d, "oracle")
 }
 func testShardsAgreeUpstream(t *testing.T) []string {
 	d := buildcache.Product(t, testShardsAgreeInputs(t, "capture"), func(d string) error {
@@ -394,7 +390,7 @@ func testShardsAgreePrepare(t *testing.T) string {
 	inputs := testShardsAgreePreparedInputs(t)
 	d := buildcache.Product(t, inputs, func(d string) error {
 		binary := testShardsAgreeBinary(t, packageDirectory)
-		oracle := testShardsAgreeOracle(t)
+		oracle := lintGoOracleProduct(t)
 		generatedRows := generated(t)
 		generatedPaths := map[string]bool{}
 		for _, row := range generatedRows {
@@ -721,58 +717,6 @@ func testShardsAgreeRecoveryRows(t *testing.T, oracle string, rows []string) []s
 		result[index] = strings.Join(fields, "\t")
 	}
 	return result
-}
-
-func testShardsAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := testShardsAgreeRun(root, nil, "go", args...); err != nil {
-		return "", err
-	}
-	return binary, nil
 }
 
 // captureUpstream runs cohere's own tests for sourceRoot's rules under a capture overlay and writes each

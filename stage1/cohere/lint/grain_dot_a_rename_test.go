@@ -24,7 +24,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testDotARenameShards = 2
@@ -93,14 +92,6 @@ func dotARenameSource(t *testing.T) string {
 	return directory
 }
 
-func dotARenameOracle(t *testing.T) string {
-	t.Helper()
-	return dotARenameProduct(t, 1, dotARenameInputs(t, "oracle", []string{"go build -overlay", packageDirectory}), func(dir string) error {
-		_, err := dotARenameGoOracleIn(packageDirectory, dir)
-		return err
-	})
-}
-
 func dotARenameLowered(t *testing.T, renamed bool) string {
 	t.Helper()
 	name, directory, slot := "original", packageDirectory, 2
@@ -163,13 +154,6 @@ func TestProduct_DotARenameSource(t *testing.T) {
 	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
 }
 
-func TestProduct_DotARenameOracle(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	dotARenameOracle(t)
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
-}
-
 func TestProduct_DotARenameOriginalLowered(t *testing.T) {
 	t.Parallel()
 	dotARenameLowered(t, false)
@@ -190,73 +174,6 @@ func TestProduct_DotARenameRenamedNative(t *testing.T) {
 	dotARenameNative(t, true)
 }
 
-func dotARenameGoOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
-	command.Dir = root
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	var diagnostics bytes.Buffer
-	command.Stderr = &diagnostics
-	if err := command.Run(); err != nil || len(commandDiagnostics("go", diagnostics.Bytes())) != 0 {
-		return "", fmt.Errorf("Go oracle build: %v\n%s", err, diagnostics.Bytes())
-	}
-	return binary, nil
-}
-
 func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	t.Helper()
 	started := time.Now()
@@ -271,7 +188,7 @@ func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	workers.Add(3)
 	go func() {
 		defer workers.Done()
-		p.Oracle = filepath.Join(dotARenameOracle(t), "oracle")
+		p.Oracle = lintGoOracleProduct(t)
 	}()
 	go func() {
 		defer workers.Done()

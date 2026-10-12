@@ -208,32 +208,8 @@ func rulesAgreeNative(t *testing.T) string {
 	return rulesAgreeBinaryDirectory
 }
 
-var rulesAgreeOracleOnce, rulesAgreeCaptureOnce sync.Once
-var rulesAgreeOracleDirectory, rulesAgreeCaptureDirectory string
-
-func rulesAgreeOracle(t *testing.T) string {
-	t.Helper()
-	rulesAgreeOracleOnce.Do(func() {
-		directory := packageDirectory
-		// GoBuild is not present on this main. Cache the original overlay build
-		// as a Product so a filtered shard never recompiles everyone's oracle.
-		oracleInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-go-oracle",
-			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
-			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK")},
-			Toolchain: []string{runtime.Version()},
-		}
-		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
-			_, err := rulesAgreeGoOracleIn(directory, output)
-			return err
-		})
-
-	})
-	if rulesAgreeOracleDirectory == "" {
-		t.Fatal("oracle preparation failed")
-	}
-	return rulesAgreeOracleDirectory
-}
+var rulesAgreeCaptureOnce sync.Once
+var rulesAgreeCaptureDirectory string
 
 func rulesAgreeCapture(t *testing.T) string {
 	t.Helper()
@@ -276,8 +252,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
 	rulesAgreeOnce.Do(func() {
 		directory := packageDirectory
-		oracleDirectory := rulesAgreeOracle(t)
-		oracle := filepath.Join(oracleDirectory, "oracle")
+		oracle := lintGoOracleProduct(t)
 		corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
 		if err != nil {
 			t.Fatal(err)
@@ -579,58 +554,6 @@ func TestRulesAgree_014(t *testing.T) {
 func TestRulesAgree_015(t *testing.T) {
 	t.Parallel()
 	rulesAgreeRunShard(t, 15)
-}
-
-func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := rulesAgreeCaptureRun(root, nil, args...); err != nil {
-		return "", err
-	}
-	return binary, nil
 }
 
 // Shared Go compilation and capture have no setup deadline.

@@ -2,7 +2,6 @@ package lint
 
 import (
 	"github.com/system-inc/adamic/internal/buildcache"
-	"strings"
 	"sync"
 	"testing"
 )
@@ -18,11 +17,12 @@ func lintGoOracleProduct(t *testing.T) string {
 	t.Helper()
 	lintOracleOnce.Do(func() {
 		prepareRegistry(t, packageDirectory)
-		path, virtualFiles, err := goOracleOverlay(packageDirectory, t.TempDir())
+		path, err := goOracleOverlay(packageDirectory, t.TempDir())
 		if err != nil {
 			t.Fatal(err)
 		}
-		lintOraclePath = buildcache.GoBuildIn(t, "cohere", "oracle", strings.Join(virtualFiles, " "), []string{"-overlay=" + path})
+		// Each rule's oracle.go is built only through the overlay (//go:build lintoracle), never in its own directory.
+		lintOraclePath = buildcache.GoBuildIn(t, "cohere", "oracle", "./"+goOraclePackage, []string{"-tags=lintoracle", "-overlay=" + path})
 	})
 	if lintOraclePath == "" {
 		t.Fatal("lint Go oracle build failed earlier in this process")
