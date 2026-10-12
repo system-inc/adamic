@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -47,9 +48,10 @@ var rulesAgreePrepared *rulesAgreeProducts
 var rulesAgreeLoweredDirectory, rulesAgreeBinaryDirectory string
 var rulesAgreeBuildInputs buildcache.Inputs
 
-// Hash production sources and embedded inputs, including the port's generated
-// registry and compiler dependencies. Test moves and captured test corpora are
-// not inputs to lowering and must not turn a warm fetch into a cold rebuild.
+// Hash the compiler (compilerinputs.Lowering) and the port's production sources,
+// including its generated registry. Test moves in the port, captured test corpora
+// and tsc's testdata are not inputs to lowering and must not turn a warm fetch
+// into a cold rebuild.
 func rulesAgreeSourceInputs(t *testing.T) []string {
 	t.Helper()
 	return rulesAgreeSourceInputsAt(t, filepath.Clean(repository))
@@ -57,8 +59,8 @@ func rulesAgreeSourceInputs(t *testing.T) []string {
 
 func rulesAgreeSourceInputsAt(t *testing.T, root string) []string {
 	t.Helper()
-	files := []string{"go.mod", "go.work"}
-	for _, directory := range []string{"internal", "bridge", "stage1/typescript", "stage1/cohere/lint", "cohere"} {
+	files := compilerinputs.Lowering()
+	for _, directory := range []string{"stage1/typescript", "stage1/cohere/lint"} {
 		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, walkErr error) error {
 			if walkErr != nil {
 				return walkErr
@@ -91,17 +93,12 @@ func rulesAgreeSourceInputsAt(t *testing.T, root string) []string {
 	return files
 }
 
-// Protect the warm-fetch contract: test-only moves preserve the key, while
-// actual port, registry, lowering, and embedded runtime edits invalidate it.
+// Protect the warm-fetch contract: test-only moves in the port and tsc's testdata
+// preserve the key, while actual port, registry, lowering, and embedded runtime
+// edits invalidate it.
 func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
-	for _, directory := range []string{"internal", "bridge", "stage1/typescript", "stage1/cohere/lint", "cohere"} {
-		if err := os.MkdirAll(filepath.Join(root, directory), 0755); err != nil {
-			t.Fatal(err)
-		}
-	}
-	sources := []string{"go.mod", "go.work", "stage1/cohere/lint/main.a", "stage1/cohere/lint/rules/probe/rule.ts", "stage1/cohere/lint/.generated/registry.ts", "stage1/cohere/lint/rules/probe/rule.json", "internal/lower/lower.go", "internal/native/runtime/heap.h", "internal/load/prelude.d.ts", "cohere/TypeScript/tsc/checker.go"}
 	write := func(name, content string) {
 		path := filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
@@ -111,6 +108,19 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	// The tree holds every path the key names, each a directory or a file as the repository's is.
+	for _, name := range append(compilerinputs.Lowering(), "stage1/typescript", "stage1/cohere/lint") {
+		info, err := os.Stat(filepath.Join(repository, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !info.IsDir() {
+			write(name, "original")
+		} else if err := os.MkdirAll(filepath.Join(root, name), 0755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	sources := []string{"go.mod", "go.work", "stage1/cohere/lint/main.a", "stage1/cohere/lint/rules/probe/rule.ts", "stage1/cohere/lint/.generated/registry.ts", "stage1/cohere/lint/rules/probe/rule.json", "internal/lower/lower.go", "internal/native/runtime/heap.h", "internal/load/prelude.d.ts", "cohere/TypeScript/tsc/internal/checker/checker.go"}
 	for _, name := range sources {
 		write(name, "original")
 	}
@@ -122,8 +132,8 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 		return result
 	}
 	original := key()
-	write("internal/lower/new_shards_test.go", "package lower // a moved test")
 	write("stage1/cohere/lint/new_shards_test.go", "package lint // a moved test")
+	write("cohere/TypeScript/tsc/testdata/baselines/reference/probe.js", "a baseline")
 	if key() != original {
 		t.Fatal("test-only moves invalidated the lowered product")
 	}
@@ -218,7 +228,7 @@ func rulesAgreeCapture(t *testing.T) string {
 		directory := packageDirectory
 		captureInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-capture",
-			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
+			Files:     append([]string{"stage1/cohere/lint", "go.mod", "go.work"}, upstreamCaptureFiles...),
 			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
 			Toolchain: []string{runtime.Version(), lintGoSettings()},
 		}

@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -41,7 +42,7 @@ func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 	if change.File == "" {
 		change.File = d.Module
 	}
-	files := []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint/rules", "stage1/cohere/lint/yepesta_build_test.go", "stage1/cohere/lint/lint_test.go"}
+	files := append(compilerinputs.Lowering(), "stage1/typescript", "stage1/cohere/lint/rules", "stage1/cohere/lint/yepesta_build_test.go", "stage1/cohere/lint/lint_test.go")
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join(jsxTextnodesPackage, file)))
 	}

@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -145,13 +146,27 @@ func completeSuggestionFixture(t *testing.T, mutant bool) string {
 	return directory
 }
 
+// completeSuggestionProductFiles is what the lowered and native products read: the compiler, this recipe, the port with
+// the TypeScript parser and scanner it imports, the registry that generates its dispatch, and the fixture's rule.
 func completeSuggestionProductFiles(t *testing.T) []string {
 	t.Helper()
-	files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
+	files := append(compilerinputs.Lowering(), "stage1/typescript", "stage1/cohere/lint/registry",
+		"stage1/cohere/lint/complete_suggestion_serialization_shards_test.go", "stage1/cohere/lint/testdata/serialization/rule.a")
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
-	files = append(files, "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
+	return files
+}
+
+// completeSuggestionOracleFiles is what the Go oracle's build reads: cohere's packages it compiles, this recipe, the
+// registry that generates its dispatch from the fixture's descriptors, and the oracle sources laid over cohere.
+func completeSuggestionOracleFiles(t *testing.T) []string {
+	t.Helper()
+	files := append(lintFixtureOracleFiles(t, "testdata/oracle.go", "testdata/serialization/oracle.go"), "stage1/cohere/lint/registry",
+		"stage1/cohere/lint/complete_suggestion_serialization_shards_test.go", "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
+	for _, file := range portFiles(t) {
+		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
+	}
 	return files
 }
 
@@ -159,7 +174,7 @@ func completeSuggestionProductFiles(t *testing.T) []string {
 func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, directory string) string {
 	t.Helper()
 	return buildcache.Product(t, buildcache.Inputs{
-		Name: "complete-suggestion-go-oracle", Files: completeSuggestionProductFiles(t),
+		Name: "complete-suggestion-go-oracle", Files: completeSuggestionOracleFiles(t),
 		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1"},
 		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
 	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
