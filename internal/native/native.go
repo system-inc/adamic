@@ -10,12 +10,13 @@ import (
 	"embed"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"slices"
 	"strings"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -160,8 +161,7 @@ func buildOne(source string, output string, options Options, flags []string) err
 	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := exec.Command(compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
-		compile.Dir = directory
+		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		if combined, err := compile.CombinedOutput(); err != nil {
 			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 		}
@@ -194,8 +194,7 @@ func buildOne(source string, output string, options Options, flags []string) err
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := exec.Command(compilerName(options), arguments...)
-	command.Dir = directory
+	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

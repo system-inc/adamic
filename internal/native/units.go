@@ -3,11 +3,12 @@ package native
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A split is a post-processing prototype of C's output. It deliberately understands only the
@@ -297,8 +298,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 			return "", err
 		}
 	}
-	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
-	preprocess.Dir = temporary
+	preprocess := toolchain.CommandIn(temporary, compiler, append(append([]string{}, flags...), "-E", unit.name)...)
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
 	preprocessed, err := preprocess.Output()
@@ -331,8 +331,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	// Clang emits GNU line-marker syntax even for C11. Accept only that generated syntax;
 	// keep all other pedantic diagnostics, including extensions outside system headers.
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
-	command := exec.Command(compiler, arguments...)
-	command.Dir = temporary
+	command := toolchain.CommandIn(temporary, compiler, arguments...)
 	if output, err := command.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
@@ -385,11 +384,11 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		return err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return err
 	}
@@ -482,8 +481,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
-	link := exec.Command(compiler, arguments...)
-	link.Dir = directory
+	link := toolchain.CommandIn(directory, compiler, arguments...)
 	if output, err := link.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)
 	}
