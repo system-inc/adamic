@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -21,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A result is evidence, not a saved verdict: ordinary fixture comparisons and counts still run.
@@ -178,7 +178,7 @@ func identity(t *testing.T) gateIdentity {
 			return
 		}
 		gate.cache = &resultCache{directory: filepath.Join(directory, "adamic", "gate")}
-		version, err := exec.Command("node", "--version").CombinedOutput()
+		version, err := toolchain.Command("node", "--version").CombinedOutput()
 		if err != nil {
 			gateError = fmt.Errorf("node --version: %w: %s", err, version)
 			return
