@@ -176,7 +176,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 			case "batch":
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, stringsInput(corpus.texts[unit.lo:unit.hi]))
-				want := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
+				want := stringsBatchGoAnswers(t, goBinary, goIdentity, corpus, unit)
 				clean(t, "Go", want)
 				for _, side := range []struct {
 					name   string
@@ -191,7 +191,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 				}
 				stringsLeaks(t, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := stringsOracleAnswers(t, "Prettier", "node", []string{script, library}, stringsInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
+					answer := stringsBatchPrettierAnswers(t, library, libraryIdentity, corpus, unit)
 					clean(t, "Prettier", answer)
 					checkStringsOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
@@ -208,7 +208,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
-					expected := stringsOracleAnswers(t, "Go", goBinary, nil, []byte(pref+stringsEncode.Replace(text)+"\n"), goIdentity)
+					expected := stringsRawGoAnswer(t, goBinary, goIdentity, corpus, unit.lo, pref)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), stringsOnNode(t, main, args...)} {
