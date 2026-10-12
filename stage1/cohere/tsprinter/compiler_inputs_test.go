@@ -13,12 +13,34 @@ import (
 )
 
 // tsprinterCompilerInputs are the repository paths the compiler a port is lowered and built by links: every
-// in-repository package internal/load, internal/lower and internal/native depend on, cohere/TypeScript/tsc's Go port
-// among them, and each module file that pins one. That code is compiled into this test binary, so no trace of a build
+// in-repository package internal/load, internal/lower and internal/native depend on, and each module file that pins one.
+// From cohere/TypeScript/tsc that is its go.mod, go.sum and the package directories linked (539 files), never tsc whole:
+// tsc is 66,741 of the submodule's 67,144 files, baselines and fourslash tests the compiler never links (Compiler's
+// review). Nested packages sit under their parent's entry. That code is compiled into this test binary, so no trace of a build
 // can see it: the key has to name it. TestMutantNativeInputsCoverWhatItReads keeps the list complete, and every entry
 // needed, as markdownblocks' TestLoweringInputsCoverCompilerDependencies keeps its loweringCompilerInputs.
 var tsprinterCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
+	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript-shim",
+	"cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript/tsc/internal/ast",
+	"cohere/TypeScript/tsc/internal/astnav", "cohere/TypeScript/tsc/internal/binder",
+	"cohere/TypeScript/tsc/internal/bundled", "cohere/TypeScript/tsc/internal/checker",
+	"cohere/TypeScript/tsc/internal/collections", "cohere/TypeScript/tsc/internal/compiler",
+	"cohere/TypeScript/tsc/internal/contentmapper", "cohere/TypeScript/tsc/internal/core",
+	"cohere/TypeScript/tsc/internal/debug", "cohere/TypeScript/tsc/internal/diagnostics",
+	"cohere/TypeScript/tsc/internal/evaluator", "cohere/TypeScript/tsc/internal/glob",
+	"cohere/TypeScript/tsc/internal/ipc", "cohere/TypeScript/tsc/internal/jsnum", "cohere/TypeScript/tsc/internal/json",
+	"cohere/TypeScript/tsc/internal/jsonrpc", "cohere/TypeScript/tsc/internal/locale",
+	"cohere/TypeScript/tsc/internal/module", "cohere/TypeScript/tsc/internal/modulespecifiers",
+	"cohere/TypeScript/tsc/internal/nativepath", "cohere/TypeScript/tsc/internal/nodebuilder",
+	"cohere/TypeScript/tsc/internal/osutil", "cohere/TypeScript/tsc/internal/outputpaths",
+	"cohere/TypeScript/tsc/internal/packagejson", "cohere/TypeScript/tsc/internal/parser",
+	"cohere/TypeScript/tsc/internal/printer", "cohere/TypeScript/tsc/internal/pseudochecker",
+	"cohere/TypeScript/tsc/internal/scanner", "cohere/TypeScript/tsc/internal/semver",
+	"cohere/TypeScript/tsc/internal/sourcemap", "cohere/TypeScript/tsc/internal/spanmap",
+	"cohere/TypeScript/tsc/internal/stringutil", "cohere/TypeScript/tsc/internal/symlinks",
+	"cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers",
+	"cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath",
+	"cohere/TypeScript/tsc/internal/vfs",
 	"cohere/internal/lint/checking", "cohere/internal/lint/ecmascript/binding", "cohere/internal/lint/ecmascript/comments",
 	"cohere/internal/lint/ecmascript/control_flow_graph", "cohere/internal/lint/ecmascript/imports", "cohere/internal/lint/ecmascript/jsx",
 	"cohere/internal/lint/ecmascript/module", "cohere/internal/lint/ecmascript/module_roots", "cohere/internal/lint/ecmascript/nextjs",
@@ -93,6 +115,12 @@ func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 	declared := mutantNativeBuildFiles(t)
 	if gaps := compilerInputGaps(declared, needed); len(gaps) > 0 {
 		t.Fatalf("mutant natives' key misses compiler inputs: %s", strings.Join(gaps, ", "))
+	}
+	// tsc whole can't come back: no declared input may hold the submodule's 48,000 baselines.
+	for _, input := range tsprinterCompilerInputs {
+		if baselines := "cohere/TypeScript/tsc/testdata"; baselines == input || strings.HasPrefix(baselines, input+"/") {
+			t.Fatalf("compiler input %s holds %s, which no compiler links", input, baselines)
+		}
 	}
 	for index, dropped := range tsprinterCompilerInputs {
 		planted := append(append([]string(nil), tsprinterCompilerInputs[:index]...), tsprinterCompilerInputs[index+1:]...)
