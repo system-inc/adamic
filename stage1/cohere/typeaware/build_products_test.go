@@ -99,6 +99,19 @@ func TestProduct_suite_asan(t *testing.T) {
 	t.Parallel()
 	typeAwareNativeProduct(typeAwareProductHarness(t), "suite-asan", "testdata/sharded_suite.ts", true)
 }
+
+// The two mutant natives whose ASan link would otherwise fill their shard's own time (mutantNative says why): six's
+// facts-length (TestSixRuleAgreementAndMutants_028) and TypeAwareAgreement's wrong-node (_003).
+func TestProduct_six_facts_length_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("facts-length", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), checkerMutantArchive(t, "facts-length"), true)
+}
+func TestProduct_typeaware_wrong_node_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("wrong-node", typeAwareWrongNodeEntry(h), h.archive("checker", false), true)
+}
 func TestProduct_six_oracle(t *testing.T) {
 	t.Parallel()
 	typeAwareOracle(typeAwareProductHarness(t), "six")
