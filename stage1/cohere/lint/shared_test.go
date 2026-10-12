@@ -6,13 +6,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
+	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -354,4 +358,156 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
+}
+
+// upstreamCaptureFiles is what go test reads in cohere for its rule packages: cohere's modules (its go.work's, the
+// shim's and tsc's), the packages under cohere/internal and the tsc packages they link, every one under tsc's internal.
+// The tests read testdata only in their own packages, never tsc's baselines.
+var upstreamCaptureFiles = []string{"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/internal", "cohere/policy", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript/tsc/internal"}
+
+// lintFixtureOracleFiles is what go build compiles in cohere for a Go oracle whose overlay lays sources, and files of a
+// fixture copy outside the repository, over cohere. The copy keeps it from being a buildcache.GoBuildIn product, and
+// the compiler's list (compilerinputs.Lowering) isn't this build's: it links cohere packages no compiler package does.
+// So it is GoBuildIn's key by hand: every file of every repository package go list -deps reaches from the sources'
+// imports, run where the build runs, with each such module's go.mod and go.sum and cohere's go.work. A fixture file
+// laid over cohere imports nothing the sources don't; the sources themselves are the caller's to key.
+func lintFixtureOracleFiles(t *testing.T, sources ...string) []string {
+	t.Helper()
+	imports := map[string]bool{}
+	for _, source := range sources {
+		file, err := parser.ParseFile(token.NewFileSet(), source, nil, parser.ImportsOnly)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, spec := range file.Imports {
+			path, err := strconv.Unquote(spec.Path.Value)
+			if err != nil {
+				t.Fatal(err)
+			}
+			imports[path] = true
+		}
+	}
+	packages := make([]string, 0, len(imports))
+	for path := range imports {
+		packages = append(packages, path)
+	}
+	sort.Strings(packages)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if root, err = filepath.EvalSymlinks(root); err != nil {
+		t.Fatal(err)
+	}
+	command := lintCommand(context.Background(), filepath.Join(root, "cohere"), "go", append([]string{"list", "-deps", "-json"}, packages...)...)
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	listing, err := command.Output()
+	if err != nil {
+		t.Fatalf("go list: %v\n%s", err, &stderr)
+	}
+	files := map[string]bool{"cohere/go.work": true}
+	add := func(directory string, names ...string) {
+		for _, name := range names {
+			path, err := filepath.EvalSymlinks(filepath.Join(directory, name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if relative, err := filepath.Rel(root, path); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				files[filepath.ToSlash(relative)] = true
+			}
+		}
+	}
+	decoder := json.NewDecoder(bytes.NewReader(listing))
+	for decoder.More() {
+		var listed struct {
+			Dir                                                              string
+			Standard                                                         bool
+			Module                                                           *struct{ GoMod string }
+			GoFiles, CgoFiles, CFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+		}
+		if err := decoder.Decode(&listed); err != nil {
+			t.Fatal(err)
+		}
+		if listed.Standard {
+			continue
+		}
+		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles} {
+			add(listed.Dir, names...)
+		}
+		if listed.Module != nil && listed.Module.GoMod != "" {
+			for _, name := range []string{"go.mod", "go.sum"} {
+				if _, err := os.Stat(filepath.Join(filepath.Dir(listed.Module.GoMod), name)); err == nil {
+					add(filepath.Dir(listed.Module.GoMod), name)
+				}
+			}
+		}
+	}
+	result := make([]string, 0, len(files))
+	for file := range files {
+		result = append(result, file)
+	}
+	sort.Strings(result)
+	return result
+}
+
+// upstreamCaptureFiles is held to what the captures' go test links, as compilerinputs.Lowering is to the compiler's link
+// set: every repository package go list -deps -test names for cohere's rule packages, and each module file pinning one,
+// sits under an entry, on linux and darwin both, and no entry holds tsc's testdata. Mutant: cohere/policy dropped (it
+// names the gap).
+func TestUpstreamCaptureFilesCoverTheCapture(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	needed := map[string]bool{}
+	for _, system := range []string{"linux", "darwin"} {
+		command := toolchain.CommandIn(filepath.Join(root, "cohere"), "go", "list", "-deps", "-test", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/lint/rules/...")
+		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		listing, err := command.Output()
+		if err != nil {
+			t.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
+		}
+		for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
+			directory, goMod, _ := strings.Cut(line, "\t")
+			for _, path := range []string{directory, goMod} {
+				if relative, err := filepath.Rel(root, path); path != "" && err == nil && !strings.HasPrefix(relative, "..") {
+					needed[filepath.ToSlash(relative)] = true
+				}
+			}
+			if goMod != "" {
+				if sum := filepath.Join(filepath.Dir(goMod), "go.sum"); func() bool { _, err := os.Stat(sum); return err == nil }() {
+					if relative, err := filepath.Rel(root, sum); err == nil && !strings.HasPrefix(relative, "..") {
+						needed[filepath.ToSlash(relative)] = true
+					}
+				}
+			}
+		}
+	}
+	var missing []string
+	for path := range needed {
+		covered := false
+		for _, entry := range upstreamCaptureFiles {
+			if path == entry || strings.HasPrefix(path, entry+"/") {
+				covered = true
+				break
+			}
+		}
+		if !covered {
+			missing = append(missing, path)
+		}
+	}
+	sort.Strings(missing)
+	if len(missing) > 0 {
+		t.Fatalf("upstreamCaptureFiles misses what the captures' go test links: %s", strings.Join(missing, ", "))
+	}
+	for _, entry := range upstreamCaptureFiles {
+		if baselines := "cohere/TypeScript/tsc/testdata"; baselines == entry || strings.HasPrefix(baselines, entry+"/") {
+			t.Fatalf("upstreamCaptureFiles' %s holds %s, which no capture reads", entry, baselines)
+		}
+	}
+	t.Logf("%d linked directories and module files, each under one of upstreamCaptureFiles' %d entries", len(needed), len(upstreamCaptureFiles))
 }
