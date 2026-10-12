@@ -299,7 +299,13 @@ func bridgeRegion(r *bridgeRun, _ string, _ int) {
 	r.t.Logf("region probe: Go and native answer %s; %s", strings.TrimSpace(expected), strings.TrimSpace(report.String()))
 }
 func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
-	output, err := r.run("region-ownership", r.command(r.product("region-native"), r.config(), r.sample()))
+	command := r.command(r.product("region-native"), r.config(), r.sample())
+	// LeakSanitizer counts a stale copy of the leaked pointer, left on a stack or in a register, as a root, and then
+	// misses the leak. Whether one survives depends on the code the native links: with its archive's cgo built by clang
+	// rather than gcc (toolchain.Env), the default options missed it in 4 of 10 runs on Workshop. Without those roots,
+	// only globals, the heap and thread-local storage reach the result, so the unowned heap result is found every run.
+	command.Env = append(os.Environ(), "LSAN_OPTIONS=use_stacks=0:use_registers=0")
+	output, err := r.run("region-ownership", command)
 	if err == nil || !bytes.Contains(output, []byte("LeakSanitizer: detected memory leaks")) {
 		r.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", err, output)
 	}
