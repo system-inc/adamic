@@ -12,7 +12,6 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -354,8 +353,7 @@ func yepestaExecute(t *testing.T, directory, name string, args ...string) execut
 	}
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, name, args...)
-	cmd.Dir = directory
+	cmd := lintCommand(ctx, directory, name, args...)
 	out, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
