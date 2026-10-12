@@ -675,4 +675,11 @@ func TestAProductReachedThroughALinkIsReadWhereItPoints(t *testing.T) {
 	if err != nil || directory == link || string(content) != "import '"+filepath.Join(root, "go.mod")+"';\n" {
 		t.Fatalf("Resolved gave %s holding %q, %v; want a copy naming this checkout", directory, content, err)
 	}
+	through, err := productDigest(link)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes, err := productDigest(shared); err != nil || through != bytes {
+		t.Fatalf("the product's digest through its link is %s, its bytes' %s (%v)", through, bytes, err)
+	}
 }
