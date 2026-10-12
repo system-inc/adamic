@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.dont_write_bytecode = True
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from apply import installed_packages
+from npm_cli import npm
 
 
 def digest_files(root, files):
@@ -39,8 +40,8 @@ def input_key(root=ROOT):
     files = [file for file in stage.rglob('*') if file.is_file()
              and file.relative_to(stage).parts[0] not in ('lane', 'oracle')
              and '__pycache__' not in file.parts and 'node_modules' not in file.parts]
-    tools = {name: subprocess.check_output([name, '--version'], text=True).strip()
-             for name in ('node', 'npm', 'git', 'python3')}
+    tools = {name: subprocess.check_output([name, '--version'], text=True).strip() for name in ('node', 'git', 'python3')}
+    tools['npm'] = subprocess.check_output(npm('--version'), text=True).strip()
     # An arbitrary compiler API override is an additional untracked input.
     if os.environ.get('TSC_ADAPT_TYPESCRIPT'):
         raise ValueError('unset TSC_ADAPT_TYPESCRIPT for a reproducible artifact')
@@ -100,8 +101,8 @@ def prepare(cache, root=ROOT):
             phases = {}
             commands = [('apply', ['bash', str(root / 'stage3/apply.sh'), str(scratch / 'tree')]),
                         ('install', None),
-                        ('build', ['npm', 'run', 'build']),
-                        ('harness', ['npm', 'exec', 'hereby', '--', 'tests'])]
+                        ('build', npm('run', 'build')),
+                        ('harness', npm('exec', 'hereby', '--', 'tests'))]
             for name, command in commands:
                 begin = time.monotonic()
                 if command is None:
