@@ -1469,51 +1469,173 @@ func recipeOf(root string, process journalEntry) recipe {
 	return result
 }
 
-// localReplacements are the directories each place's go.mod and go.work replace modules with, absolute: go mod edit
-// and go work edit read the files alone, never the module graph or the network. A place without one names none.
+// localReplacements are the directories each place's go.mod and go.work replace modules with, absolute, read from the
+// files alone, never the module graph or the network. A place without one names none.
 func localReplacements(root string, places ...string) ([]string, error) {
 	var directories []string
-	for _, place := range places {
-		// Each file is named, so neither GOWORK nor GOFLAGS' -modfile can point the edit elsewhere.
-		for _, edit := range [][]string{{"mod", "edit", "-json", filepath.Join(place, "go.mod")}, {"work", "edit", "-json", filepath.Join(place, "go.work")}} {
-			if len(existing(place, filepath.Base(edit[3]))) == 0 {
-				continue
+	add := func(place string, replaced []string) {
+		for _, path := range replaced {
+			if directory := filepath.Join(place, path); !slices.Contains(directories, directory) {
+				directories = append(directories, directory)
 			}
-			replaced, err := replacementsIn(root, place, edit)
+		}
+	}
+	for _, place := range places {
+		if len(existing(place, "go.mod")) > 0 {
+			content, err := os.ReadFile(filepath.Join(place, "go.mod"))
 			if err != nil {
 				return nil, err
 			}
-			for _, directory := range replaced {
-				if !slices.Contains(directories, directory) {
-					directories = append(directories, directory)
+			replaced, err := goModReplacements(content)
+			if err != nil {
+				return nil, fmt.Errorf("%s: %v", filepath.Join(place, "go.mod"), err)
+			}
+			add(place, replaced)
+		}
+		if len(existing(place, "go.work")) > 0 {
+			// Named, so neither GOWORK nor GOFLAGS can point the edit elsewhere; a runner's go answers it (Loom's
+			// stand-in allows go work edit -json, as goWorkspace asks it).
+			output, err := toolchain.CommandIn(root, "go", "work", "edit", "-json", filepath.Join(place, "go.work")).Output()
+			if err != nil {
+				return nil, fmt.Errorf("go work edit: %v", err)
+			}
+			var file struct {
+				Replace []struct {
+					New struct{ Path, Version string }
 				}
 			}
+			if err := json.Unmarshal(output, &file); err != nil {
+				return nil, fmt.Errorf("go work edit: %v", err)
+			}
+			var replaced []string
+			for _, replacement := range file.Replace {
+				if replacement.New.Version == "" {
+					replaced = append(replaced, replacement.New.Path)
+				}
+			}
+			add(place, replaced)
 		}
 	}
 	return directories, nil
 }
 
-// replacementsIn is one go.mod's or go.work's local replacements, each a directory relative to the file's place.
-func replacementsIn(root, place string, edit []string) ([]string, error) {
-	output, err := toolchain.CommandIn(root, "go", edit...).Output()
-	if err != nil {
-		return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+// goModReplacements is go.mod's local replacements as go reads them: each replace directive's new path, in file order,
+// for every replacement that names no version (a directory, as go requires of one). It reads the file as
+// golang.org/x/mod/modfile lexes it (Go's own cmd/go vendors it): tokens split at spaces, a // comment to the line's
+// end outside a string, a string quoted with " (escapes) or ` (raw) on one line, ( ) [ ] { } and , each a token, and
+// => a token like any other word; a directive is one line, or a verb's ( block of lines up to its ). Of two directives
+// replacing one module (its path and version), the later stands where it is and the earlier goes, as go mod edit's
+// clean-up keeps them (modfile's removeDups): lap 4's go.mod replaces shim/parser twice. It runs no go command: a Loom
+// runner's stand-in go refuses go mod edit, and every unit keying a GoBuild product asked it (lap 4, 27 packages
+// broken at fetch).
+func goModReplacements(content []byte) ([]string, error) {
+	type replacement struct{ old, path string }
+	var replacements []replacement
+	block := ""
+	for number, line := range strings.Split(string(content), "\n") {
+		tokens, err := goModTokens(line)
+		if err != nil {
+			return nil, fmt.Errorf("line %d: %v", number+1, err)
+		}
+		var arguments []goModToken
+		switch {
+		case len(tokens) == 0:
+			continue
+		case block != "" && tokens[0].is(")"):
+			block = ""
+			continue
+		case block != "":
+			if block != "replace" {
+				continue
+			}
+			arguments = tokens
+		case len(tokens) == 3 && tokens[1].is("(") && tokens[2].is(")"):
+			// An empty block on one line: replace ().
+			continue
+		case len(tokens) == 2 && tokens[1].is("("):
+			block = tokens[0].text
+			continue
+		case tokens[0].text == "replace" && !tokens[0].quoted:
+			arguments = tokens[1:]
+		default:
+			continue
+		}
+		arrow := slices.IndexFunc(arguments, func(token goModToken) bool { return token.text == "=>" && !token.quoted })
+		if arrow < 1 || arrow > 2 || len(arguments) < arrow+2 || len(arguments) > arrow+3 {
+			return nil, fmt.Errorf("line %d: a replace go doesn't read: %s", number+1, strings.TrimSpace(line))
+		}
+		var old []string
+		for _, token := range arguments[:arrow] {
+			old = append(old, token.text)
+		}
+		path := ""
+		if len(arguments) == arrow+2 {
+			path = arguments[arrow+1].text
+		}
+		replacements = append(replacements, replacement{strings.Join(old, " "), path})
 	}
-	var file struct {
-		Replace []struct {
-			New struct{ Path, Version string }
+	var local []string
+	for index, each := range replacements {
+		later := slices.ContainsFunc(replacements[index+1:], func(other replacement) bool { return other.old == each.old })
+		if each.path != "" && !later {
+			local = append(local, each.path)
 		}
 	}
-	if err := json.Unmarshal(output, &file); err != nil {
-		return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
-	}
-	var directories []string
-	for _, replacement := range file.Replace {
-		if replacement.New.Version == "" {
-			directories = append(directories, filepath.Join(place, replacement.New.Path))
+	return local, nil
+}
+
+// A goModToken is one token of a go.mod line: its text, unquoted when it was a string, and whether it was one, since a
+// quoted ( or => is a path, never the punctuation or the arrow.
+type goModToken struct {
+	text        string
+	quoted      bool
+	punctuation bool
+}
+
+// is says whether the token is the punctuation mark mark.
+func (token goModToken) is(mark string) bool {
+	return token.punctuation && token.text == mark
+}
+
+// goModTokens is one go.mod line's tokens.
+func goModTokens(line string) ([]goModToken, error) {
+	var tokens []goModToken
+	for index := 0; index < len(line); {
+		switch c := line[index]; {
+		case c == ' ' || c == '\t' || c == '\r':
+			index++
+		case strings.HasPrefix(line[index:], "//"):
+			return tokens, nil
+		case strings.ContainsRune("()[]{},", rune(c)):
+			tokens = append(tokens, goModToken{text: string(c), punctuation: true})
+			index++
+		case c == '"' || c == '`':
+			end := index + 1
+			for end < len(line) && line[end] != c {
+				if c == '"' && line[end] == '\\' {
+					end++
+				}
+				end++
+			}
+			if end >= len(line) {
+				return nil, fmt.Errorf("a string that doesn't end on its line")
+			}
+			unquoted, err := strconv.Unquote(line[index : end+1])
+			if err != nil {
+				return nil, err
+			}
+			tokens = append(tokens, goModToken{text: unquoted, quoted: true})
+			index = end + 1
+		default:
+			end := index
+			for end < len(line) && !strings.ContainsRune(" \t\r()[]{},", rune(line[end])) && !strings.HasPrefix(line[end:], "//") {
+				end++
+			}
+			tokens = append(tokens, goModToken{text: line[index:end]})
+			index = end
 		}
 	}
-	return directories, nil
+	return tokens, nil
 }
 
 // withRecipe adds the recipe to a build's entries, in the order every machine reads them: by path, then kind.
