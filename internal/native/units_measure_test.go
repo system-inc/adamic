@@ -3,8 +3,9 @@ package native
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -42,12 +43,10 @@ func TestMeasureClangUnits(t *testing.T) {
 		t.Fatal(err)
 	}
 	metadata["commit"] = commit
-	// nproc reads the machine; go, clang and node are the tools the builds run, as toolchain resolves them.
-	processors, err := exec.Command("nproc").Output()
-	if err != nil {
-		t.Fatal(err)
-	}
-	metadata["nproc"] = strings.TrimSpace(string(processors))
+	// The processors this process may run on, as nproc reports them (both read the scheduler's affinity mask), without
+	// a process the gate's tools would have to declare; go, clang and node are the tools the builds run, as toolchain
+	// resolves them.
+	metadata["nproc"] = strconv.Itoa(goruntime.NumCPU())
 	for name, arguments := range map[string][]string{"go": {"version"}, "clang": {"--version"}, "node": {"--version"}} {
 		data, err := toolchain.Command(name, arguments...).Output()
 		if err != nil {
