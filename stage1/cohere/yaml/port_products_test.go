@@ -192,7 +192,8 @@ func (build yamlBuild) lowered(t *testing.T) string {
 func (build yamlBuild) native(t *testing.T) string {
 	t.Helper()
 	recipe := "lower+native.C+javascript.JavaScript " + strings.Join(build.entries, " ")
-	flags := native.Flags(build.options)
+	// Build branches on options Flags doesn't spell, Split and Request among them, so the options are keyed whole.
+	flags := append(native.Flags(build.options), fmt.Sprintf("options=%+v", build.options))
 	return yamlProduct(t, "native "+build.name+" "+recipe+" "+strings.Join(flags, " "), func() string {
 		lowered := build.lowered(t)
 		inputs := yamlPortInputs(t, "yaml-"+build.name+"-native")
@@ -331,6 +332,7 @@ func (mutants yamlMutants) product(t *testing.T, index int) string {
 		inputs := yamlPortInputs(t, "yaml-"+mutants.family+"-mutant")
 		inputs.Flags = append(inputs.Flags, recipe...)
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("options=%+v", options))
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		return buildcache.Product(t, inputs, func(directory string) error {
