@@ -493,6 +493,16 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 	return classed{refusal + "other", name}
 }
 
+// machine says whether name is in one of the system places, the machine's own files, keyed as themselves.
+func (facts *traceFacts) machine(name string) bool {
+	for _, place := range facts.system {
+		if under(name, place) {
+			return true
+		}
+	}
+	return false
+}
+
 // landsWhereMachinesAgree says whether a directory a lookup looked in is the file system's root, the home directory or
 // one of home's parents: what is there is the machine's, not the tree's place on it.
 func (facts *traceFacts) landsWhereMachinesAgree(directory string) bool {
@@ -739,7 +749,10 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		// What an open resolved to, as the kernel names the descriptor: a read through a symbolic link reads its target.
-		if opened := filepath.Clean(unescape(call.opened)); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") {
+		// Not for a machine file, which is keyed as itself and valued through its link (classifyPath): WSL makes
+		// /etc/resolv.conf a link to /mnt/wsl/resolv.conf, a place no key can name, and every traced store lookup's DNS
+		// read refused its product (Workshop, Oct 12: 866 of 866 in the smoke's tree).
+		if opened := filepath.Clean(unescape(call.opened)); call.opened != "" && filepath.IsAbs(opened) && opened != name && !strings.HasSuffix(opened, " (deleted)") && !state.facts.machine(name) {
 			state.record(call.pid, process, opened, kind)
 		}
 	}
