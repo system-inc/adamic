@@ -4,14 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -32,11 +30,6 @@ func (p *printerMutantProductOnce) get(t *testing.T, build func() string) string
 }
 
 var mutantSources, mutantLowered, mutantSanitized [3]printerMutantProductOnce
-var mutantOracle printerMutantProductOnce
-var mutantCorpus struct {
-	once       sync.Once
-	path, want string
-}
 
 func printerMutantSource(t *testing.T, number int) string {
 	t.Helper()
@@ -74,52 +67,13 @@ func printerMutantProducts(t *testing.T, number int) printerProducts {
 	return printerProducts{source: printerMutantSource(t, number), sanitized: printerMutantSanitized(t, number)}
 }
 
-func printerMutantOracle(t *testing.T) string {
-	t.Helper()
-	return mutantOracle.get(t, func() string {
-		// GoBuild is not available yet. Hash the entire pinned Cohere tree rather
-		// than a hand-selected dependency list, plus the overlay and workspace.
-		files := printerInputFiles(t, filepath.Join(repository, "cohere"), "testdata/cohere_side_test.go", "../testdata/cohere_side_test.go", "shards_test.go", "grain_mutant_test.go", filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work"))
-		for _, name := range []string{"go.sum", "go.work.sum"} {
-			path := filepath.Join(repository, name)
-			if _, err := os.Stat(path); err == nil {
-				files = append(files, printerInputFiles(t, path)...)
-			} else if !os.IsNotExist(err) {
-				t.Fatal(err)
-			}
-		}
-
-		return printerBuild(t, printerBuildInputs{
-			Name: "GraphQL mutant Go oracle", Files: files,
-			Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -overlay ./internal/format/graphql"},
-			Toolchain: buildcache.Tool("go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "GOTOOLCHAIN", "GOAMD64", "GOARM64", "GOARM", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM"),
-		}, func(dir string) error {
-			binary := printerOracle(t)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(dir+"/oracle", data, 0755)
-		}) + "/oracle"
-	})
-}
-
-func printerMutantCorpus(t *testing.T) (string, string) {
-	t.Helper()
-	mutantCorpus.once.Do(func() { mutantCorpus.path, mutantCorpus.want = printerCases(t, "defaults", printerMutantOracle(t)) })
-	if mutantCorpus.path == "" {
-		t.Fatal("shared GraphQL corpus preparation failed")
-	}
-	return mutantCorpus.path, mutantCorpus.want
-}
-
 func TestPrinterMutants_000(t *testing.T) { t.Parallel(); printerMutantUnit(t, 0) }
 func TestPrinterMutants_001(t *testing.T) { t.Parallel(); printerMutantUnit(t, 1) }
 func TestPrinterMutants_002(t *testing.T) { t.Parallel(); printerMutantUnit(t, 2) }
 func TestPrinterMutantUnion(t *testing.T) { t.Parallel(); printerMutantUnit(t, -1) }
 
-func TestProduct_GraphQLMutantOracle(t *testing.T)       { t.Parallel(); printerMutantOracle(t) }
-func TestProduct_GraphQLMutantDefaults(t *testing.T)     { t.Parallel(); printerMutantCorpus(t) }
+// The mutants read the defaults corpus every other test reads (printerCases), which TestProduct_GraphQLPrinterDefaults
+// declares, from the one Go oracle (printerOracle).
 func TestProduct_GraphQLMutantSource000(t *testing.T)    { t.Parallel(); printerMutantSource(t, 0) }
 func TestProduct_GraphQLMutantSource001(t *testing.T)    { t.Parallel(); printerMutantSource(t, 1) }
 func TestProduct_GraphQLMutantSource002(t *testing.T)    { t.Parallel(); printerMutantSource(t, 2) }
@@ -146,7 +100,7 @@ func printerMutantUnit(t *testing.T, unit int) {
 	if len(printerMutations) != testPrinterMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(printerMutations), testPrinterMutantsShards)
 	}
-	cases, want := printerMutantCorpus(t)
+	cases, want := printerCases(t, "defaults")
 	enumeration := enumeratePrinter(t, "defaults", cases, want)
 	var whole []printerCase
 	for number := range printerMutations {
