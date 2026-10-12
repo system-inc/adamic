@@ -537,5 +537,8 @@ func lintRuleOracleSources(t *testing.T) []string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if len(sources) == 0 {
+		t.Fatal("no rules/*/oracle.go: a fixture oracle's key would lose its rules' imports")
+	}
 	return sources
 }
