@@ -78,8 +78,7 @@ func scannerOracleProduct(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := toolchain.Command("go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
-		command.Dir = root
+		command := toolchain.CommandIn(root, "go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)
