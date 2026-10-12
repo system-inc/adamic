@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -12,8 +11,6 @@ import (
 	"syscall"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const testFileDriverShards = 8
@@ -48,39 +45,6 @@ func fileDriverCheckUnion(t *testing.T, shards [][]int, count int) {
 			t.Fatalf("case %d visited %d times", index, visits)
 		}
 	}
-}
-
-func fileDriverBuildFiles(t *testing.T) []string {
-	t.Helper()
-	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"}
-	// Include the transitive implementation inputs without hashing test evidence.
-	for _, directory := range []string{"stage1/cohere/yaml", "internal", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(repository, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "testdata" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if strings.HasSuffix(path, "_test.go") || (extension != ".go" && extension != ".ts" && extension != ".c" && extension != ".h") {
-				return nil
-			}
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
-			}
-			files = append(files, relative)
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	return files
 }
 
 func fileDriverSetup(t *testing.T) *fileDriverState {
@@ -256,47 +220,9 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 	return output.Bytes()
 }
 
-// fileDriverGoFormatProduct is cohere's formatter_comparison built over testdata/format_go.go, as a product.
-func fileDriverGoFormatProduct(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/format_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	files := append(fileDriverBuildFiles(t), "stage1/cohere/yaml/testdata/format_go.go")
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name: "yaml-file-driver-go-format", Files: files,
-		Flags:     []string{"build", "overlay=format_go.go", "./command/formatter_comparison"},
-		Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(directory string) error {
-		fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-format"), "./command/formatter_comparison")
-		return nil
-	})
-	return filepath.Join(product, "go-format")
-}
-
-// TestProduct_YAMLFileDriverGoFormat builds the Go formatter the file driver's shards compare against, so Workshop
-// builds it once and a shard only reads it.
-func TestProduct_YAMLFileDriverGoFormat(t *testing.T) {
-	t.Parallel()
-	fileDriverGoFormatProduct(t)
-}
-
 func fileDriverGoFormat(t *testing.T, cases string) []byte {
 	t.Helper()
-	goBinary := fileDriverGoFormatProduct(t)
+	goBinary := goFormatOracle(t)
 	expected := fileDriverRun(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {

@@ -3,7 +3,7 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"crypto/sha256"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -41,12 +41,18 @@ var formatterMutantsOracle struct {
 	product string
 }
 
-func formatterMutantsSetupInputs() buildcache.Inputs {
+// formatterMutantsSetupInputs keys the corpus and its expected answers by the Go oracle that answers them: goFormatOracle,
+// a product of its own keyed by go's answer, so this one reads its bytes rather than asking go again.
+func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs {
+	t.Helper()
+	binary, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
 	return buildcache.Inputs{
-		Name:      "yaml-formatter-mutants-oracle-and-corpus-v2",
-		Files:     []string{"cohere", "internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"},
-		Flags:     []string{"go build -overlay ./command/formatter_comparison", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
-		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED")},
+		Name:  "yaml-formatter-mutants-oracle-and-corpus-v3",
+		Files: []string{"cohere", "internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"},
+		Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))},
 	}
 }
 
@@ -59,8 +65,8 @@ func formatterMutantsDeadline(t *testing.T) func() {
 	return func() { timer.Stop() }
 }
 
-// Commands share their unit's deadline. Kill the entire process group, including
-// compilers spawned by go build, rather than leaving children behind.
+// Commands share their unit's deadline. Kill the entire process group rather than
+// leaving children behind.
 func formatterMutantsCommand(ctx context.Context, directory, name string, args ...string) ([]byte, error) {
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
@@ -77,7 +83,7 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	if err := command.Run(); err != nil {
 		return nil, fmt.Errorf("%s: %w\n%s", name, err, errOut.Bytes())
 	}
-	if errOut.Len() != 0 && name != "go" {
+	if errOut.Len() != 0 {
 		return nil, fmt.Errorf("%s stderr: %s", name, errOut.Bytes())
 	}
 	return out.Bytes(), nil
@@ -89,7 +95,8 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 		// Shared setup is bounded by the product unit, before shard own work starts.
 		ctx := context.Background()
 		started := time.Now()
-		product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
+		oracle := goFormatOracle(t)
+		product := buildcache.Product(t, formatterMutantsSetupInputs(t, oracle), func(directory string) error {
 			cases, _, count := formatCases(t)
 			data, err := os.ReadFile(cases)
 			if err != nil {
@@ -98,29 +105,7 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
 				return fmt.Errorf("corpus count disagrees with live enumeration")
 			}
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				return err
-			}
-			source, err := filepath.Abs("testdata/format_go.go")
-			if err != nil {
-				return err
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-			if err != nil {
-				return err
-			}
-			path := filepath.Join(directory, "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(path)
-			binary := filepath.Join(directory, "go-format")
-			if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
-				return err
-			}
-			expected, err := formatterMutantsCommand(ctx, "", binary, "--cases", cases)
+			expected, err := formatterMutantsCommand(ctx, "", oracle, "--cases", cases)
 			if err != nil {
 				return err
 			}
