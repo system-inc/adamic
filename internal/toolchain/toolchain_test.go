@@ -131,3 +131,23 @@ func TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse(t *testing.T) {
 		t.Error("a request's own setting didn't reach git")
 	}
 }
+
+// A command run in another directory (CommandIn, GitCommandIn) is told it stands there, as exec.Cmd tells one with no
+// Env of its own: its PWD is the directory, however the caller's PWD reads, and a relative directory is made absolute.
+// Mutant: in setting Dir alone (the tool reads the caller's PWD).
+// Not parallel: t.Setenv and t.Chdir.
+func TestACommandRunInADirectoryIsToldItStandsThere(t *testing.T) {
+	directory := t.TempDir()
+	t.Setenv("PWD", "/somewhere/else")
+	t.Setenv("ADAMIC_SANDBOX", "")
+	if got, err := CommandIn(directory, "sh", "-c", `printf %s "$PWD"`).Output(); err != nil || string(got) != directory {
+		t.Errorf("CommandIn ran with PWD %q (%v), want %q", got, err, directory)
+	}
+	if command := GitCommandIn(directory, "status"); command.Err != nil || command.Dir != directory || !slices.Contains(command.Env, "PWD="+directory) {
+		t.Errorf("GitCommandIn's Dir %q and environment %v (%v)", command.Dir, command.Env, command.Err)
+	}
+	t.Chdir(filepath.Dir(directory))
+	if got, err := CommandIn(filepath.Base(directory), "sh", "-c", `printf %s "$PWD"`).Output(); err != nil || string(got) != directory {
+		t.Errorf("a relative directory ran with PWD %q (%v), want %q", got, err, directory)
+	}
+}
