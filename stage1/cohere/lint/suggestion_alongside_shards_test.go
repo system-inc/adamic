@@ -123,7 +123,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	})
 	oracleInputs := inputs
 	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
-	oracleInputs.Files = append(lintFixtureOracleFiles(t, "testdata/oracle.go", "testdata/serialization/oracle.go"), "stage1/cohere/lint")
+	oracleInputs.Files = append(lintFixtureOracleFiles(t, append([]string{"testdata/oracle.go", "testdata/serialization/oracle.go"}, lintRuleOracleSources(t)...)...), "stage1/cohere/lint")
 	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
 	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
 	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {

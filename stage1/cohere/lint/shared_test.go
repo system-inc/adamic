@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -361,9 +362,11 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 }
 
 // upstreamCaptureFiles is what go test reads in cohere for its rule packages: cohere's modules (its go.work's, the
-// shim's and tsc's), the packages under cohere/internal and the tsc packages they link, every one under tsc's internal.
+// shim's and tsc's), the packages under cohere/internal and the tsc packages they link, each by name (fourslash and
+// tsc's other unlinked packages are thousands of files).
 // The tests read testdata only in their own packages, never tsc's baselines.
-var upstreamCaptureFiles = []string{"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/internal", "cohere/policy", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript/tsc/internal"}
+var upstreamCaptureFiles = []string{"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/internal", "cohere/policy", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum",
+	"cohere/TypeScript/tsc/internal/ast", "cohere/TypeScript/tsc/internal/astnav", "cohere/TypeScript/tsc/internal/binder", "cohere/TypeScript/tsc/internal/bundled", "cohere/TypeScript/tsc/internal/checker", "cohere/TypeScript/tsc/internal/collections", "cohere/TypeScript/tsc/internal/compiler", "cohere/TypeScript/tsc/internal/contentmapper", "cohere/TypeScript/tsc/internal/core", "cohere/TypeScript/tsc/internal/debug", "cohere/TypeScript/tsc/internal/diagnostics", "cohere/TypeScript/tsc/internal/evaluator", "cohere/TypeScript/tsc/internal/execute", "cohere/TypeScript/tsc/internal/glob", "cohere/TypeScript/tsc/internal/ipc", "cohere/TypeScript/tsc/internal/jsnum", "cohere/TypeScript/tsc/internal/json", "cohere/TypeScript/tsc/internal/jsonrpc", "cohere/TypeScript/tsc/internal/locale", "cohere/TypeScript/tsc/internal/module", "cohere/TypeScript/tsc/internal/modulespecifiers", "cohere/TypeScript/tsc/internal/nativepath", "cohere/TypeScript/tsc/internal/nodebuilder", "cohere/TypeScript/tsc/internal/osutil", "cohere/TypeScript/tsc/internal/outputpaths", "cohere/TypeScript/tsc/internal/packagejson", "cohere/TypeScript/tsc/internal/parser", "cohere/TypeScript/tsc/internal/printer", "cohere/TypeScript/tsc/internal/pseudochecker", "cohere/TypeScript/tsc/internal/scanner", "cohere/TypeScript/tsc/internal/semver", "cohere/TypeScript/tsc/internal/sourcemap", "cohere/TypeScript/tsc/internal/spanmap", "cohere/TypeScript/tsc/internal/stringutil", "cohere/TypeScript/tsc/internal/symlinks", "cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers", "cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath", "cohere/TypeScript/tsc/internal/vfs"}
 
 // lintFixtureOracleFiles is what go build compiles in cohere for a Go oracle whose overlay lays sources, and files of a
 // fixture copy outside the repository, over cohere. The copy keeps it from being a buildcache.GoBuildIn product, and
@@ -461,7 +464,8 @@ func TestUpstreamCaptureFilesCoverTheCapture(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	needed := map[string]bool{}
+	// cohere's go.work picks the modules the capture builds against, though go list names no package under it.
+	needed := map[string]bool{"cohere/go.work": true}
 	for _, system := range []string{"linux", "darwin"} {
 		command := toolchain.CommandIn(filepath.Join(root, "cohere"), "go", "list", "-deps", "-test", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/lint/rules/...")
 		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
@@ -488,21 +492,19 @@ func TestUpstreamCaptureFilesCoverTheCapture(t *testing.T) {
 		}
 	}
 	var missing []string
-	for path := range needed {
-		covered := false
-		for _, entry := range upstreamCaptureFiles {
-			if path == entry || strings.HasPrefix(path, entry+"/") {
-				covered = true
-				break
-			}
-		}
-		if !covered {
+	for _, path := range sortedKeys(needed) {
+		if !coveredBy(upstreamCaptureFiles, path) {
 			missing = append(missing, path)
 		}
 	}
-	sort.Strings(missing)
 	if len(missing) > 0 {
 		t.Fatalf("upstreamCaptureFiles misses what the captures' go test links: %s", strings.Join(missing, ", "))
+	}
+	for index, dropped := range upstreamCaptureFiles {
+		rest := append(append([]string(nil), upstreamCaptureFiles[:index]...), upstreamCaptureFiles[index+1:]...)
+		if !slices.ContainsFunc(sortedKeys(needed), func(path string) bool { return !coveredBy(rest, path) }) {
+			t.Fatalf("dropping %s from upstreamCaptureFiles leaves no gap: the captures link nothing under it", dropped)
+		}
 	}
 	for _, entry := range upstreamCaptureFiles {
 		if baselines := "cohere/TypeScript/tsc/testdata"; baselines == entry || strings.HasPrefix(baselines, entry+"/") {
@@ -510,4 +512,30 @@ func TestUpstreamCaptureFilesCoverTheCapture(t *testing.T) {
 		}
 	}
 	t.Logf("%d linked directories and module files, each under one of upstreamCaptureFiles' %d entries", len(needed), len(upstreamCaptureFiles))
+}
+
+// coveredBy reports whether one of entries is path or a directory holding it.
+func coveredBy(entries []string, path string) bool {
+	return slices.ContainsFunc(entries, func(entry string) bool { return path == entry || strings.HasPrefix(path, entry+"/") })
+}
+
+// sortedKeys is a set's members in order.
+func sortedKeys(set map[string]bool) []string {
+	keys := make([]string, 0, len(set))
+	for key := range set {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return keys
+}
+
+// lintRuleOracleSources are the rules' oracle.go files, which a fixture oracle lays over cohere beside its own sources,
+// so lintFixtureOracleFiles keys the packages they import too.
+func lintRuleOracleSources(t *testing.T) []string {
+	t.Helper()
+	sources, err := filepath.Glob("rules/*/oracle.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return sources
 }
