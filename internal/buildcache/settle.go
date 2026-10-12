@@ -1393,11 +1393,26 @@ func (state *traceState) testReads(settlement *Settlement, nameKey string, proce
 
 // placeTestMarker is a test read set's marker product under key: a directory naming the set it stands for, so a lookup
 // finds the set when its key names something in the cache, as a product's is found. Nothing reads it, and nothing
-// publishes it (Find's refresh passes over TestReadSetName).
+// publishes it (Find's refresh passes over TestReadSetName). Its file goes by a temporary file and a rename, as a read
+// sets file does: a seeded cache links a seed's files, and a write in place would write the seed's (Mentat's re-review).
 func placeTestMarker(cache, key, nameKey string) string {
 	marker := filepath.Join(cache, key)
-	if err := os.MkdirAll(marker, 0o755); err == nil {
-		os.WriteFile(filepath.Join(marker, "test-read-set"), []byte(nameKey+"\n"), 0o644)
+	if err := os.MkdirAll(marker, 0o755); err != nil {
+		return marker
+	}
+	partial, err := os.CreateTemp(marker, ".test-read-set-")
+	if err != nil {
+		return marker
+	}
+	_, err = partial.WriteString(nameKey + "\n")
+	if closeErr := partial.Close(); err == nil {
+		err = closeErr
+	}
+	if err == nil {
+		err = os.Rename(partial.Name(), filepath.Join(marker, "test-read-set"))
+	}
+	if err != nil {
+		os.Remove(partial.Name())
 	}
 	return marker
 }

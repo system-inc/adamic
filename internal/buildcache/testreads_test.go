@@ -1,6 +1,8 @@
 package buildcache
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
@@ -140,5 +142,31 @@ func TestATestReadSetHoldsWhatAProcessReadAfterTheCommandExited(t *testing.T) {
 	write(t, r.root, "include/x.h", "#define X 2\n")
 	if finding := findTestReads(t); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, "include/x.h") {
 		t.Fatalf("a change to what only the outliving process read: %+v", finding)
+	}
+}
+
+// A test read set's marker is placed by a rename, never written in place: a seeded cache links its seed's files, so a
+// write through the link would change the seed's (Mentat's re-review of #sfqdxvy). Mutant that fails it: the marker
+// written with os.WriteFile.
+func TestATestReadSetsMarkerNeverWritesThroughALink(t *testing.T) {
+	t.Parallel()
+	seed, cache := t.TempDir(), t.TempDir()
+	key := strings.Repeat("8", 64)
+	seeded := filepath.Join(seed, "test-read-set")
+	if err := os.WriteFile(seeded, []byte("the seed's\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(cache, key), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Link(seeded, filepath.Join(cache, key, "test-read-set")); err != nil {
+		t.Fatal(err)
+	}
+	marker := placeTestMarker(cache, key, testReadSetKey)
+	if content, _ := os.ReadFile(seeded); string(content) != "the seed's\n" {
+		t.Fatalf("the seed's file reads %q after the marker was placed", content)
+	}
+	if content, _ := os.ReadFile(filepath.Join(marker, "test-read-set")); string(content) != testReadSetKey+"\n" {
+		t.Fatalf("the marker reads %q", content)
 	}
 }
