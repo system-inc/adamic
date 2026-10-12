@@ -44,7 +44,7 @@ class LaneTableTests(unittest.TestCase):
                  patch.object(runner, 'link_packages') as linked, \
                  patch.object(runner, 'check_results', return_value=dict(status='pass', errors=[])):
                 self.assertEqual(runner.main(), 0)
-            linked.assert_called_once_with(runner.ROOT, output / 'adapted-tree')
+            linked.assert_called_once_with(runner.ROOT, output.resolve() / 'adapted-tree')
             self.assertEqual((output / 'patch-set.md').read_text(), 'Table for this apply\n')
             self.assertTrue((output / 'report.json').exists())
             self.assertEqual(len(calls), 2)
