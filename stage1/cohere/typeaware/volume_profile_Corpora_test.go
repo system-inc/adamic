@@ -207,12 +207,12 @@ type volumeProfileCorporaProductPaths struct {
 func volumeProfileCorporaProductInputs(ctx context.Context, h *harness) (buildcache.Inputs, buildcache.Inputs, buildcache.Inputs) {
 	plain := volumeProfileCorporaNativeInputs(ctx, h, false)
 	sanitized := volumeProfileCorporaNativeInputs(ctx, h, true)
-	// The independent Go oracle also depends on cohere's production lint rules.
-	// Include their complete pinned sources, module files and the overlay source.
+	// The independent Go oracle, which compiles cohere's production lint rules, is its own product
+	// (typeAwareVolumeOracle): the record of the products names it by its key, never by cohere's sources.
 	bundle := plain
 	bundle.Name = "typeaware volume corpus products"
-	bundle.Files = append(slices.Clone(plain.Files), "cohere/internal", "cohere/policy", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/typeaware/testdata/oracle_volume.go")
-	bundle.Flags = append(slices.Clone(plain.Flags), "corpus products format v2 cached emission", "Go builds -buildvcs=false", "asan CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+	bundle.Files = slices.Clone(plain.Files)
+	bundle.Flags = append(slices.Clone(plain.Flags), "corpus products format v2 cached emission", "Go builds -buildvcs=false", "asan CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all", "oracle "+typeAwareVolumeOracleKey(h.t, h.repository))
 	return plain, sanitized, bundle
 }
 
@@ -241,7 +241,7 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 	h := &harness{t: t, repository: repository}
 	_, _, inputs := volumeProfileCorporaProductInputs(ctx, h)
 	deadline := ctx
-	var stage0, archive, asanArchive, oracle string
+	var stage0, archive, asanArchive string
 	jobs := []struct {
 		name, output string
 		product      *string
@@ -259,22 +259,9 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 			return command
 		}},
-		{"typeaware volume oracle", "volume-oracle", &oracle, []string{"go build -buildvcs=false -overlay oracle_volume.go cohere/adamic_volume-oracle.go"}, func(directory string) *exec.Cmd {
-			virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
-			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-			if err != nil {
-				t.Fatal(err)
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			overlay := filepath.Join(t.TempDir(), "volume-oracle-overlay.json")
-			if err := os.WriteFile(overlay, data, 0600); err != nil {
-				t.Fatal(err)
-			}
-			command := volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
-			command.Dir = filepath.Join(repository, "cohere")
-			command.Env = append(command.Env, "PWD="+command.Dir)
-			return command
-		}},
+	}
+	if output == "volume-oracle" {
+		return typeAwareVolumeOracle(t, repository)
 	}
 	for _, job := range jobs {
 		if job.output != output {
