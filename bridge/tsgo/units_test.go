@@ -304,7 +304,16 @@ func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	// misses the leak. Whether one survives depends on the code the native links: with its archive's cgo built by clang
 	// rather than gcc (toolchain.Env), the default options missed it in 4 of 10 runs on Workshop. Without those roots,
 	// only globals, the heap and thread-local storage reach the result, so the unowned heap result is found every run.
-	command.Env = append(os.Environ(), "LSAN_OPTIONS=use_stacks=0:use_registers=0")
+	options := "LSAN_OPTIONS=use_stacks=0:use_registers=0"
+	command.Env = append(os.Environ(), options)
+	// The control: without those roots LeakSanitizer also reports memory a live frame still holds at exit, so the same
+	// options must find nothing in healthy-region, the owned variant of this program, sanitized too. Then the report
+	// below is the unowned result's, not the options' (Markup's review).
+	control := r.command(r.product("healthy-region"), r.config(), r.sample())
+	control.Env = append(os.Environ(), options)
+	if output, err := r.run("region-ownership-control", control); err != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
+		r.t.Fatalf("owned region variant reported under %s: %v\n%s", options, err, output)
+	}
 	output, err := r.run("region-ownership", command)
 	if err == nil || !bytes.Contains(output, []byte("LeakSanitizer: detected memory leaks")) {
 		r.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", err, output)
