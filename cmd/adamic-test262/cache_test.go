@@ -14,11 +14,16 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestNodeCacheProgram(t *testing.T) {
 	t.Parallel()
 	cache := &resultCache{directory: t.TempDir()}
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
 	module := filepath.Join(t.TempDir(), "program.mts")
 	for _, word := range []string{"before", "after"} {
 		source := fmt.Sprintf("console.log(%q);\n", word)
@@ -27,7 +32,7 @@ func TestNodeCacheProgram(t *testing.T) {
 		}
 		key := nodeResultKey(source, "node", "adapt", module, "context")
 		result := cache.reuse(key, func() (execution, bool) {
-			return runCommand(time.Second*15, nil, "node", module), true
+			return runCommand(time.Second*15, nil, node, module), true
 		})
 		if result.Stdout != word+"\n" {
 			t.Fatalf("changed Node program served %q, want %q", result.Stdout, word+"\n")
@@ -356,12 +361,16 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 // Not parallel: changes the process-wide ADAMIC_GATE_UNCACHED environment.
 func TestCacheBypassPreservesIdentity(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	before, versionBefore, contextBefore, err := prepareCache("../..")
+	tools, err := resolveTools()
+	if err != nil {
+		t.Fatal(err)
+	}
+	before, versionBefore, contextBefore, err := prepareCache("../..", tools)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	after, versionAfter, contextAfter, err := prepareCache("../..")
+	after, versionAfter, contextAfter, err := prepareCache("../..", tools)
 	if err != nil {
 		t.Fatal(err)
 	}
