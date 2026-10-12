@@ -56,8 +56,8 @@ func expressionGateShard(t *testing.T, number int) {
 		t.Skip("assigned to another box")
 	}
 	setup := time.Now()
-	cases, want, _ := expressionCorpus(t, false)
-	plan, answers := expressionUnits(t, cases, want, testExpressionsAgainstGoAndPrettierShards-1)
+	units := expressionGateUnitsOnce(t)
+	plan, answers := units.plan, units.answers
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
 		t.Skip("set ADAMIC_TS_PRETTIER to prettier@3.9.6")
@@ -67,6 +67,13 @@ func expressionGateShard(t *testing.T, number int) {
 	script, _ := filepath.Abs("testdata/expressions.mjs")
 	embeddedScript, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+	var shard corpusShard
+	var directory string
+	if number < len(plan.shards) {
+		shard = units.unit(t, number)
+	} else {
+		directory = units.gaps(t)
+	}
 	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
@@ -83,7 +90,6 @@ func expressionGateShard(t *testing.T, number int) {
 		return runCommand(nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...)
 	}
 	if number < len(plan.shards) {
-		shard := plan.shards[number]
 		check := func(name string, result run) {
 			if err := expressionDisagreement(plan, number, answers[number], result); err != nil {
 				t.Fatalf("%s: %v", name, err)
@@ -107,11 +113,6 @@ func expressionGateShard(t *testing.T, number int) {
 		comparePrinterLibraryCases(t, "embedded Prettier", runCommand(nil, "node", embeddedScript, bundles, shard.specs), shard.specs, "expressions", true, false)
 		return
 	}
-	directory := filepath.Dir(cases)
-	gapWant, err := os.ReadFile(directory + "/gap-answers.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
 	for _, side := range []struct {
 		name   string
 		result run
@@ -120,8 +121,8 @@ func expressionGateShard(t *testing.T, number int) {
 		{"native", runCommand([]string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, "--cases", directory+"/gaps.txt", "80")},
 		{"backend", node(products.backend, "--cases", directory+"/gaps.txt", "80")},
 	} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != string(gapWant) {
-			t.Fatalf("%s loud gaps: exit %d stderr %s diff %s", side.name, side.result.exitCode, side.result.stderr, firstDifference(string(side.result.stdout), string(gapWant)))
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != string(units.gapWant) {
+			t.Fatalf("%s loud gaps: exit %d stderr %s diff %s", side.name, side.result.exitCode, side.result.stderr, firstDifference(string(side.result.stdout), string(units.gapWant)))
 		}
 	}
 	result := runCommand(nil, "node", script, library, directory+"/gaps.json")
