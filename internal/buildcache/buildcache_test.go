@@ -4,13 +4,14 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A repository of its own under the test's directory, so keys hash files the test controls.
@@ -253,7 +254,7 @@ func TestACheckoutAndItsUnpackedSourceKeyTheSame(t *testing.T) {
 	}
 	runner := unpacked(t, nil)
 	write(t, runner, "source/node_modules/package/index.js", "module.exports = 1;\n")
-	listing, err := exec.Command("git", "-C", root, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
+	listing, err := toolchain.GitCommand("-C", root, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -506,7 +507,7 @@ func TestAKeyHashesWhatTheTreeCarries(t *testing.T) {
 	t.Parallel()
 	git := func(directory string, arguments ...string) {
 		t.Helper()
-		command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"}, arguments...)...)
+		command := toolchain.GitCommand(append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"}, arguments...)...)
 		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("git %v: %v\n%s", arguments, err, output)
 		}

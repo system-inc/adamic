@@ -2,9 +2,10 @@ package buildcache
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A Loom runner's source has no .git: build-tree unpacks the tree's tracked files from chunks and ships git's answers
@@ -16,7 +17,7 @@ import (
 func TestAKeyFromARunnersSourceIsTheCheckoutsKey(t *testing.T) {
 	git := func(directory string, arguments ...string) []byte {
 		t.Helper()
-		command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"}, arguments...)...)
+		command := toolchain.GitCommand(append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"}, arguments...)...)
 		output, err := command.Output()
 		if err != nil {
 			t.Fatalf("git %v: %v", arguments, err)
