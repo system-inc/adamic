@@ -184,11 +184,12 @@ func lintGoSettings() string {
 	return buildcache.Tool("go", append([]string{"env"}, toolchain.GoSettings...)...)
 }
 
-// lintCommand is a child for a test's own deadline: killed with its whole process group when ctx ends. A bare name is
-// a tool, the program internal/toolchain resolves under its environment, never PATH's with this process's; a path is
-// a program a test built, which runs as named with this process's environment. A tool toolchain can't resolve fails
-// as the command starts, with toolchain's error.
-func lintCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+// lintCommand is a child for a test's own deadline, run in directory (the caller's when empty) and killed with its
+// whole process group when ctx ends. A bare name is a tool, the program internal/toolchain resolves under its
+// environment with PWD set to directory, never PATH's with this process's; a path is a program a test built, which
+// runs as named with this process's environment. A tool toolchain can't resolve fails as the command starts, with
+// toolchain's error.
+func lintCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		if path, err := toolchain.Path(name); err != nil {
@@ -196,8 +197,16 @@ func lintCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 		} else {
 			command = exec.CommandContext(ctx, path, args...)
 			command.Env = toolchain.Env()
+			if directory != "" {
+				absolute, err := filepath.Abs(directory)
+				if err != nil {
+					command.Err = err
+				}
+				command.Env = append(command.Env, "PWD="+absolute)
+			}
 		}
 	}
+	command.Dir = directory
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

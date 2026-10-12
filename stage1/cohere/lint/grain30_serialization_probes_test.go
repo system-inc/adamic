@@ -30,7 +30,7 @@ func grain30Probe(t *testing.T, name string, plant bool) ([]byte, error) {
 	// bounds this whole top-level unit at 90 seconds.
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=0", "-test.v")
+	command := lintCommand(ctx, "", os.Args[0], "-test.run=^"+name+"$", "-test.timeout=0", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT="+strconv.FormatBool(plant))
 	if plant {
 		command.Env = append(command.Env, "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
