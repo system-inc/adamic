@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
@@ -48,14 +49,12 @@ type listLayoutManifest struct {
 	Mutants    []string
 }
 
-func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
+// listLayoutPortFiles are the port's own sources under root: every .ts and .go file of this package and markdowninline,
+// with the _test.go files when tests is set.
+func listLayoutPortFiles(t *testing.T, root string, tests bool) []string {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	files := []string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
+	var files []string
+	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline"} {
 		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
@@ -67,7 +66,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 				return nil
 			}
 			extension := filepath.Ext(path)
-			if (extension == ".go" && !strings.HasSuffix(path, "_test.go")) || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
+			if (extension == ".go" && (tests || !strings.HasSuffix(path, "_test.go"))) || extension == ".ts" {
 				relative, err := filepath.Rel(root, path)
 				if err != nil {
 					return err
@@ -80,7 +79,21 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return files
+}
+
+// listLayoutSetupInputs keys the shared setup product: the lowered backend, the mutants and the names of the native
+// products, all the compiler's, so the compiler (compilerinputs.Lowering) and the port's sources. The Go oracles are
+// GoBuildIn products of their own, fetched beside it (loadListLayoutSetup), so cohere's sources are their key's and not
+// this one's: v4, since the manifest no longer names them.
+func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := append(compilerinputs.Lowering(), listLayoutPortFiles(t, root, false)...)
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -104,17 +117,10 @@ func buildListLayoutSetup(t *testing.T) {
 				}
 				mutants[i] = relative
 			}
-			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
-			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
-			// in its own cache (#tqrqx60).
-			for i := 0; i < 2; i++ {
-				relative, err := filepath.Rel(directory, manifest.Paths[i])
-				if err != nil {
-					return err
-				}
-				manifest.Paths[i] = relative
-			}
-			for i := 2; i < len(manifest.Paths); i++ {
+			manifest := listLayoutManifest{Paths: []string{products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
+			// Native products are named by their keys, which a runner finds in its own cache (#tqrqx60). The Go oracles
+			// aren't named here: loadListLayoutSetup fetches them by their own keys.
+			for i := range manifest.Paths {
 				manifest.Paths[i] = buildcache.Relative(manifest.Paths[i])
 			}
 			data, err := json.Marshal(manifest)
@@ -296,86 +302,24 @@ func TestMarkdownListLayout_015(t *testing.T) {
 	runListLayoutShard(t, 15)
 }
 
+// listLayoutLoweredFiles keys the lowered port and the canary mutant: the compiler that lowers them
+// (compilerinputs.Lowering) and the port's sources, its tests among them.
+func listLayoutLoweredFiles(t *testing.T, root string) []string {
+	t.Helper()
+	return append(compilerinputs.Lowering(), listLayoutPortFiles(t, root, true)...)
+}
+
 func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProducts {
 	t.Helper()
 	var p listLayoutProducts
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		t.Fatal(err)
 	}
-	cohere := filepath.Join(root, "cohere")
-	buildGo := func(name, driver string, bridge bool) string {
-		main := filepath.Join(cohere, "cmd", name, "main.go")
-		absDriver, err := filepath.Abs(driver)
-		if err != nil {
-			t.Fatal(err)
-		}
-		replace := map[string]string{main: absDriver}
-		if bridge {
-			absBridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = absBridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		overlayPath := filepath.Join(dir, name+".json")
-		write(t, overlayPath, overlay)
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		binary := filepath.Join(dir, name)
-		command := listLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
-		command.Dir = cohere
-		if output, err := combinedOutput(command); err != nil {
-			t.Fatalf("Go bridge: %v\n%s", err, output)
-		}
-		return binary
-	}
 	var workers sync.WaitGroup
 	defer workers.Wait()
-	goListTask := startFixtureTask(&workers, func() (string, error) { return buildGo("adamic_markdown_lists", "testdata/list_go.go", true), nil })
-	goLayoutTask := startFixtureTask(&workers, func() (string, error) {
-		return buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false), nil
-	})
-	files := []string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}
-	// Hash compiler and port source, excluding unrelated evidence and TypeScript's fixture tree.
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if extension == ".go" || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	nativeFiles := []string{"internal/native/runtime"}
-	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, entry := range entries {
-		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".go") {
-			nativeFiles = append(nativeFiles, filepath.Join("internal/native", entry.Name()))
-		}
-	}
+	// The Go oracles are GoBuildIn products loadListLayoutSetup fetches; the lowered products hash the compiler and the
+	// port's sources, the natives the compiler that builds them.
+	files, nativeFiles := listLayoutLoweredFiles(t, root), markdownNativeFiles()
 	emit := func(main, name string) string {
 		return buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: []string{main}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
 			program, err := loweredResult(main)
@@ -498,7 +442,6 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	}
 	baseline := baselineTask.await(t)
 	p.javascript, p.sanitized, p.release = baseline.javascript, baseline.sanitized, baseline.release
-	p.goList, p.goLayout = goListTask.await(t), goLayoutTask.await(t)
 	return p
 }
 
@@ -811,10 +754,11 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if len(manifest.Paths) != 5 {
+	if len(manifest.Paths) != 3 {
 		t.Fatal("incomplete shared setup manifest")
 	}
-	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: buildcache.Absolute(manifest.Paths[2]), release: buildcache.Absolute(manifest.Paths[3]), canary: buildcache.Absolute(manifest.Paths[4]), javascript: manifest.JavaScript}
+	// The Go oracles are GoBuildIn products keyed by cohere's sources, which the setup's key leaves to them.
+	listLayoutShared = listLayoutProducts{goList: markdownLayoutGoOracle(t, "adamic_markdown_lists"), goLayout: markdownLayoutGoOracle(t, "adamic_markdown_doclayout"), sanitized: buildcache.Absolute(manifest.Paths[0]), release: buildcache.Absolute(manifest.Paths[1]), canary: buildcache.Absolute(manifest.Paths[2]), javascript: manifest.JavaScript}
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}
