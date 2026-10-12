@@ -3,6 +3,7 @@ package buildcache
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"regexp"
 	"slices"
 	"strings"
@@ -42,6 +43,11 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 		}
 		command.Env = append(command.Env, "GIT_NO_REPLACE_OBJECTS=1", "GIT_GRAFT_FILE=/dev/null", "GIT_CONFIG_NOSYSTEM=1",
 			"GIT_CONFIG_GLOBAL=/dev/null", "GIT_NO_LAZY_FETCH=1")
+		// The caller's trace2 event target, when it sets one, goes through: it observes git and can't change its answer,
+		// and json's tests read it to prove the corpus never fetches.
+		if target := os.Getenv("GIT_TRACE2_EVENT"); target != "" {
+			command.Env = append(command.Env, "GIT_TRACE2_EVENT="+target)
+		}
 		command.Stdin = bytes.NewReader(stdin)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
