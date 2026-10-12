@@ -2,6 +2,7 @@ package native
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -9,9 +10,12 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const recordFixtures = "testdata/records"
@@ -146,67 +150,164 @@ func recordDifference(a, b string) int {
 	return min(len(a), len(b))
 }
 
-// Build a changed runtime in an isolated cache, without editing the working tree. Each mutant
-// changes production C, links successfully, and is rejected by the named external check.
-func recordMutant(t *testing.T, file, before, after string) string {
+// recordMutant is the harness built against a changed runtime, without editing the working tree: the
+// mutant of that name in recordMutations, from the record-mutants product. Each mutant changes
+// production C, links successfully, and is rejected by the named external check.
+func recordMutant(t *testing.T, name string) string {
 	t.Helper()
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		t.Fatal(err)
+	return filepath.Join(recordMutants(t), name)
+}
+
+// recordMutation is one registered mutant's change to the runtime: before, in file, becomes after.
+type recordMutation struct{ name, file, before, after string }
+
+// recordMutations is every mutant a record test builds, from both tables: recordMutationCases, the
+// mutant units', and recordReadMutationCases, TestRecordReadMutants'. A test reaches its binary by the
+// mutant's name, and TestProduct_RecordMutants builds every one ahead under the key the tests fetch, so
+// a mutant in neither table has no binary.
+func recordMutations(t testing.TB) []recordMutation {
+	t.Helper()
+	var mutations []recordMutation
+	for _, mutant := range recordMutationCases {
+		mutations = append(mutations, recordMutation{mutant.name, mutant.file, mutant.before, mutant.after})
 	}
-	found := false
-	for index := range files {
-		if files[index].name == file {
-			contents := string(files[index].contents)
-			if !strings.Contains(contents, before) {
-				t.Fatalf("mutant input missing in %s", file)
-			}
-			files[index].contents = []byte(strings.Replace(contents, before, after, 1))
-			found = true
+	for _, mutant := range recordReadMutationCases {
+		mutations = append(mutations, recordMutation{mutant.name, "record.c", mutant.before, mutant.after})
+	}
+	seen := map[string]bool{}
+	for _, mutation := range mutations {
+		if seen[mutation.name] {
+			t.Fatalf("two record mutants are named %s, and each names its binary", mutation.name)
 		}
+		seen[mutation.name] = true
 	}
-	if !found {
-		t.Fatalf("runtime file missing: %s", file)
-	}
-	directory := t.TempDir()
-	compiler, err := exec.LookPath("clang")
-	if err != nil {
-		t.Fatal(err)
-	}
+	return mutations
+}
+
+// recordMutants is the record-mutants product, a product built ahead by TestProduct_RecordMutants: the
+// harness linked against each registered mutant's runtime, a binary named for the mutant, built as
+// cachedRuntime builds a runtime (Flags with Sanitize and Count, every translation unit). Every test
+// used to build its own mutant's whole runtime into a cache under the home directory and link it
+// through a cache keyed by the test binary's hash, which no product declares, so a runner that reads
+// products never found it. The runtime's unchanged translation units are the same in every mutant, so
+// they compile once; each mutant compiles only its changed file, and links every object directly,
+// which is what the whole-archive link of cachedRuntime's archive did.
+func recordMutants(t *testing.T) string {
+	t.Helper()
+	mutations := recordMutations(t)
 	flags := Flags(Options{Sanitize: true, Count: true})
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		t.Fatal(err)
+	inputs := buildcache.Inputs{
+		Name:      "record-mutants",
+		Files:     []string{"internal/native/runtime", "internal/native/testdata/records/harness.c", "internal/native/record_test.go", "internal/native/split_units_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Flags:     slices.Clone(flags),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}
-	cacheDirectory, err := os.UserCacheDir()
-	if err != nil {
-		t.Fatal(err)
+	for _, mutation := range mutations {
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutant %s %s %x %x", mutation.name, mutation.file, sha256.Sum256([]byte(mutation.before)), sha256.Sum256([]byte(mutation.after))))
 	}
-	library, err := cachedRuntime(files, flags, compiler, string(version), filepath.Join(cacheDirectory, "adamic", "record-mutants"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "main")
-	if err := os.WriteFile(source, []byte(recordHarness(t)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	arguments := append(flags, "-I", filepath.Dir(library), "-o", binary, source)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
-	arguments = append(arguments, "-lm")
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cache, err := newTestBuildCache(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(compiler, arguments...)
-	command.Dir = repository
-	if output, err := cache.Command(command, directory); err != nil {
-		t.Fatalf("mutant must compile: %v\n%s", err, output)
-	}
-	return binary
+	harness := recordHarness(t)
+	return buildcache.Product(t, inputs, func(directory string) error {
+		files, err := readRuntime(runtime, "runtime")
+		if err != nil {
+			return err
+		}
+		var sources []string
+		for _, file := range files {
+			if strings.HasSuffix(file.name, ".c") {
+				sources = append(sources, file.name)
+			}
+		}
+		scratch, err := os.MkdirTemp("", "adamic-record-mutants-")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(scratch)
+		// compile builds a directory's translation unit from inside it, mapped, so no object names the
+		// scratch directory (cachedRuntime's way).
+		compile := func(within, source string) error {
+			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+			command := exec.Command("clang", arguments...)
+			command.Dir = within
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
+			}
+			return nil
+		}
+		write := func(within string, files []runtimeFile) error {
+			if err := os.MkdirAll(within, 0o755); err != nil {
+				return err
+			}
+			for _, file := range files {
+				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+		unchanged := filepath.Join(scratch, "runtime")
+		if err := write(unchanged, files); err != nil {
+			return err
+		}
+		if err := eachInParallel(len(sources), func(index int) error { return compile(unchanged, sources[index]) }); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(harness), 0o644); err != nil {
+			return err
+		}
+		return eachInParallel(len(mutations), func(index int) error {
+			mutation := mutations[index]
+			// The mutant's directory holds the runtime's headers and its changed file, so that file compiles
+			// as it would among the rest.
+			var changed []runtimeFile
+			found := false
+			for _, file := range files {
+				if file.name == mutation.file {
+					contents := string(file.contents)
+					if !strings.Contains(contents, mutation.before) {
+						return fmt.Errorf("mutant %s: input missing in %s", mutation.name, mutation.file)
+					}
+					changed = append(changed, runtimeFile{file.name, []byte(strings.Replace(contents, mutation.before, mutation.after, 1))})
+					found = true
+				} else if strings.HasSuffix(file.name, ".h") {
+					changed = append(changed, file)
+				}
+			}
+			if !found || !strings.HasSuffix(mutation.file, ".c") {
+				return fmt.Errorf("mutant %s: runtime file missing: %s", mutation.name, mutation.file)
+			}
+			within := filepath.Join(scratch, "mutant-"+strconv.Itoa(index))
+			if err := write(within, changed); err != nil {
+				return err
+			}
+			if err := compile(within, mutation.file); err != nil {
+				return fmt.Errorf("mutant %s: %w", mutation.name, err)
+			}
+			// Linked from the scratch directory by relative names, mapped, so the binary names neither it
+			// nor the product.
+			arguments := append(append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutation.name), "main.c")
+			for _, source := range sources {
+				object := strings.TrimSuffix(source, ".c") + ".o"
+				if source == mutation.file {
+					arguments = append(arguments, filepath.Join(filepath.Base(within), object))
+				} else {
+					arguments = append(arguments, filepath.Join("runtime", object))
+				}
+			}
+			arguments = append(arguments, "-lm")
+			command := exec.Command("clang", arguments...)
+			command.Dir = scratch
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
+			}
+			return nil
+		})
+	})
+}
+
+// TestProduct_RecordMutants builds every registered record mutant, so the tree build builds them ahead.
+func TestProduct_RecordMutants(t *testing.T) {
+	t.Parallel()
+	recordMutants(t)
 }
 
 var recordMutationCases = []struct {
@@ -228,7 +329,7 @@ func runRecordMutantUnit(t *testing.T, unit int) {
 			continue
 		}
 		t.Run(mutant.name, func(t *testing.T) {
-			binary := recordMutant(t, mutant.file, mutant.before, mutant.after)
+			binary := recordMutant(t, mutant.name)
 			stdout, stderr, err := recordRun(binary, mutant.mode)
 			if mutant.caught == "Node" {
 				if err != nil {
@@ -246,19 +347,24 @@ func runRecordMutantUnit(t *testing.T, unit int) {
 	}
 }
 
+const recordGuardedMiss = "if (value == NULL) {\n\t\tcheck_missing_member(key);\n\t}"
+
+// recordReadMutationCases are TestRecordReadMutants' mutants of record.c, registered with
+// recordMutationCases in recordMutations so TestProduct_RecordMutants builds them too.
+var recordReadMutationCases = []struct {
+	name, before, after, operation string
+}{
+	// Restore JavaScript's inherited in result, which this own-only contract forbids.
+	{"prototype-membership-restored", "return adamic_record_get(record, key) != NULL;", "return adamic_record_get_own(record, key) != NULL || prototype_member(key);", "missing-has"},
+	{"missing-read-silent", recordGuardedMiss, "(void)key;", "missing-get"},
+	{"own-read-checked-as-missing", recordGuardedMiss, "check_missing_member(key);", "reads"},
+}
+
 func TestRecordReadMutants(t *testing.T) {
 	t.Parallel()
-	const guardedMiss = "if (value == NULL) {\n\t\tcheck_missing_member(key);\n\t}"
-	for _, mutant := range []struct {
-		name, before, after, operation string
-	}{
-		// Restore JavaScript's inherited in result, which this own-only contract forbids.
-		{"prototype-membership-restored", "return adamic_record_get(record, key) != NULL;", "return adamic_record_get_own(record, key) != NULL || prototype_member(key);", "missing-has"},
-		{"missing-read-silent", guardedMiss, "(void)key;", "missing-get"},
-		{"own-read-checked-as-missing", guardedMiss, "check_missing_member(key);", "reads"},
-	} {
+	for _, mutant := range recordReadMutationCases {
 		t.Run(mutant.name, func(t *testing.T) {
-			binary := recordMutant(t, "record.c", mutant.before, mutant.after)
+			binary := recordMutant(t, mutant.name)
 			if mutant.operation == "reads" {
 				stdout, stderr, err := recordRun(binary, "reads")
 				exit, ok := err.(*exec.ExitError)

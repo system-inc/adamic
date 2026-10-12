@@ -1,10 +1,15 @@
 package native
 
 import (
+	"crypto/sha256"
+	"fmt"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // The normalization sweep: native normalize against Node's, in all four forms, byte for byte as
@@ -222,37 +227,44 @@ var normalizeAlphabet = []string{
 	"0xd800", "0xdc00", "0xc5",
 }
 
-// normalizeHarnessBinary builds the harness once for every test of the sweep, through the test build
-// cache, and gives the oracle that enumerates the same strings.
+// normalizeHarnessBinary is the harness every test of the sweep runs, Build's sanitized binary of
+// normalizeHarness over the alphabet, a product built ahead by TestProduct_NormalizationProbe, and the
+// oracle that enumerates the same strings. Every test used to build it into a cache keyed by the test
+// binary's hash, which no product declares, so a runner that reads products never found it.
 func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
 	t.Helper()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cache, err := newTestBuildCache(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
 	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
-	built, err := cache.Tree("normalization-probe", [][]byte{[]byte(source)}, func(destination string) error {
-		return Build(source, filepath.Join(destination, "harness"), Options{Sanitize: true})
+	options := Options{Sanitize: true}
+	// Build reads ADAMIC_NATIVE_SPLIT, and the harness's own #defines choose the runtime's features, so
+	// the source's bytes key it beside the flags.
+	directory := buildcache.Product(t, buildcache.Inputs{
+		Name:      "normalization-probe",
+		Files:     []string{"internal/native"},
+		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}, func(directory string) error {
+		return Build(source, filepath.Join(directory, "harness"), options)
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	return filepath.Join(built, "harness"), strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
+	return filepath.Join(directory, "harness"), strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
+}
+
+// TestProduct_NormalizationProbe builds the harness every normalize sweep runs, so the tree build
+// builds it ahead.
+func TestProduct_NormalizationProbe(t *testing.T) {
+	t.Parallel()
+	normalizeHarnessBinary(t)
 }
 
 func runNormalizeUnit(t *testing.T, index int) {
 	t.Helper()
-	defer checkGrainBudget(t)()
 	pieces := unitRanges(0x110000, normalizePointUnitSize)
 	if index >= len(pieces) {
 		t.Fatalf("no code point unit %d", index)
 	}
 	binary, oracle := normalizeHarnessBinary(t)
+	// The unit's clock starts after the fetch, as a product's build is its own unit's.
+	defer checkGrainBudget(t)()
 	piece := pieces[index]
 	first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
 	compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
@@ -386,12 +398,13 @@ func TestNormalizeContextRangesTile(t *testing.T) {
 
 func runNormalizeContexts(t *testing.T, name string) {
 	t.Helper()
-	defer checkGrainBudget(t)()
 	contexts, ok := normalizeContextRanges[name]
 	if !ok {
 		t.Fatalf("no context range %q", name)
 	}
 	binary, oracle := normalizeHarnessBinary(t)
+	// The unit's clock starts after the fetch, as a product's build is its own unit's.
+	defer checkGrainBudget(t)()
 	first, last := strconv.Itoa(contexts.first), strconv.Itoa(contexts.last)
 	compareStreams(t, contexts.last-contexts.first, []string{binary, "contexts", first, last}, []string{"node", "--eval", oracle, "contexts", first, last})
 }
