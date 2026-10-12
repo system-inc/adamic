@@ -7,12 +7,14 @@ import (
 	"hash/fnv"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -51,9 +53,38 @@ func compilerExpressionsPartition(t *testing.T, paths []string) [][]string {
 	return shards
 }
 
+// compilerExpressionsFiles are what the lowered and native parser read: the compiler (compilerinputs.Lowering, which
+// holds internal whole, never cohere whole) and the parser and scanner ports.
+func compilerExpressionsFiles() []string {
+	return append(compilerinputs.Lowering(), "stage1/typescript/parser", "stage1/typescript/scanner")
+}
+
+// Each compiler product's key names the compiler, never tsc whole: a tsc baseline's edit keeps it and a linked tsc
+// package's edit moves it (compilerinputs.CheckKey), for the compiler expressions' products and the whole-mutant ports.
+// Mutant: cohere whole back in compilerExpressionsFiles.
+func TestParserKeysNameTheCompiler(t *testing.T) {
+	t.Parallel()
+	for name, files := range map[string][]string{
+		"compiler expressions": compilerExpressionsFiles(),
+		"whole-mutant port":    append(wholeMutantBuildFiles(), "stage1/typescript/parser/main.ts"),
+	} {
+		var own []string
+		for _, file := range files {
+			if !slices.Contains(compilerinputs.Lowering(), file) {
+				own = append(own, file)
+			}
+		}
+		if err := compilerinputs.CheckKey(own, func(root string) (string, error) {
+			return buildcache.Key(root, buildcache.Inputs{Name: name, Files: files})
+		}); err != nil {
+			t.Errorf("%s: %v", name, err)
+		}
+	}
+}
+
 func compilerExpressionsLower(t *testing.T, absolute string) string {
 	t.Helper()
-	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
+	files := compilerExpressionsFiles()
 	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
 	lowered := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-lowered", Files: files, Flags: []string{"native.C"}, Toolchain: tools}, func(dir string) error {
 		program, err := load.Load([]string{filepath.Join(absolute, "main.ts")})
@@ -72,7 +103,7 @@ func compilerExpressionsLower(t *testing.T, absolute string) string {
 func compilerExpressionsNative(t *testing.T, absolute string) string {
 	t.Helper()
 	lowered := compilerExpressionsLower(t, absolute)
-	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
+	files := compilerExpressionsFiles()
 	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
 	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-native", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
