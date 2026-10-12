@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -46,13 +47,47 @@ func typeAwareCompilerReport(compiler string) string {
 }
 
 // typeAwareSharedInputs keys a shared product: stage 0 and the checker archives, built by go under toolchain.Env, whose
-// cgo runs Env's CC, and the emitted C and native binaries, which native compiles with clang.
+// cgo runs Env's CC, and the emitted C and native binaries, which native compiles with clang. Their compilers are
+// typeAwareCompilerFiles, never cohere/internal or tsc whole (#4ycgm2n), then the ports they lower.
 func typeAwareSharedInputs(key string) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "typeaware shared " + key,
-		Files:     []string{"go.mod", "go.work", "internal", "cmd/adamic", "bridge/tsgo", "stage1/cohere/typeaware", "stage1/typescript", "cohere/go.mod", "cohere/go.sum", "cohere/internal", "cohere/TypeScript/tsc"},
+		Files:     typeAwareSharedFiles(),
 		Flags:     typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED"),
 		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))},
+	}
+}
+
+// typeAwareSharedFiles are the shared products' files: their compilers and the ports they lower.
+func typeAwareSharedFiles() []string {
+	return append(typeAwareCompilerFiles(), "stage1/cohere/typeaware", "stage1/typescript")
+}
+
+// Every compiler product's key names the compiler, never tsc whole: a tsc baseline's edit keeps each key and a linked
+// tsc package's edit moves it (compilerinputs.CheckKey). The shared products', the guard's (the agreement shards' too)
+// and the volume profile's compilers are each asked. Mutant: cohere/TypeScript/tsc whole back in typeAwareSharedFiles.
+func TestTypeAwareKeysNameTheCompiler(t *testing.T) {
+	t.Parallel()
+	for _, product := range []struct {
+		name  string
+		files []string
+	}{
+		{"shared", typeAwareSharedFiles()},
+		{"volume guard", volumeGuardInputs(context.Background(), "compiler probe", false).Files},
+		{"volume profile compilers", typeAwareCompilerFiles()},
+	} {
+		key := func(root string) (string, error) {
+			return buildcache.Key(root, buildcache.Inputs{Name: product.name, Files: product.files})
+		}
+		var own []string
+		for _, file := range product.files {
+			if !slices.Contains(compilerinputs.Lowering(), file) {
+				own = append(own, file)
+			}
+		}
+		if err := compilerinputs.CheckKey(own, key); err != nil {
+			t.Errorf("%s: %v", product.name, err)
+		}
 	}
 }
 
