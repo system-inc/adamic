@@ -93,6 +93,7 @@ func wholeMutantBuildOracleProduct(t *testing.T) string {
 		defer cancel()
 		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
+		command.Env = append(command.Env, "PWD="+root)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)
