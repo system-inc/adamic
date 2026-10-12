@@ -51,12 +51,25 @@ type fixture struct {
 
 // toolchainPath is the PATH setting toolchain.Env gives every tool.
 func toolchainPath() string {
-	for _, setting := range toolchain.Env() {
-		if strings.HasPrefix(setting, "PATH=") {
-			return setting
+	return toolchainSettings("PATH")[0]
+}
+
+// toolchainSettings are the settings toolchain.Env gives every tool for names, in its spelling: its PATH, and the C
+// compiler go builds cgo with (CC=clang and CXX=clang++ unless the caller names others).
+func toolchainSettings(names ...string) []string {
+	var settings []string
+	for _, name := range names {
+		found := false
+		for _, setting := range toolchain.Env() {
+			if strings.HasPrefix(setting, name+"=") {
+				settings, found = append(settings, setting), true
+			}
+		}
+		if !found {
+			panic("toolchain.Env sets no " + name)
 		}
 	}
-	panic("toolchain.Env sets no PATH")
+	return settings
 }
 
 func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
@@ -74,11 +87,12 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 	}
 	command.Dir = directory
 	// The PATH toolchain gives a tool, the declared tools directory's places first, so what a child runs by name
-	// itself (the hook scripts' go) is toolchain's too. environment, last, still wins. The rest of this process's
+	// itself (the hook scripts' go) is toolchain's too, and its CC and CXX, so the hook's cgo builds and the go env its
+	// key reads both name the compiler every other build uses (clang, not Linux's gcc). environment, last, still wins. The rest of this process's
 	// environment passes on purpose: the hooks read their ADAMIC_STAGE3_ settings from it, so a node fixture run
 	// also takes the caller's NODE_OPTIONS. python3 goes through toolchain.Path, and no box's setup puts it under
 	// ADAMIC_TOOLS, so a sandbox fails the python3 hooks, naming it, rather than run PATH's.
-	command.Env = append(append(os.Environ(), toolchainPath()), environment...)
+	command.Env = append(append(os.Environ(), toolchainSettings("PATH", "CC", "CXX")...), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = 5 * time.Second
@@ -516,4 +530,17 @@ func TestFixtureShardManifest(t *testing.T) {
 func fixtureShardIndex(name string, count int) int {
 	digest := sha256.Sum256([]byte(name))
 	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
+}
+
+// A child execute runs, as the oracle hook's scripts are, builds cgo with the C compiler toolchain gives every tool:
+// with no CC or CXX of the caller's, clang and clang++, not the gcc Linux's go would default to. The child here is a
+// shell printing both. Mutant: execute without toolchainSettings' CC and CXX, and the child sees neither.
+// Not parallel: clears CC and CXX through t.Setenv.
+func TestExecuteGivesChildrenTheToolchainsCompiler(t *testing.T) {
+	t.Setenv("CC", "")
+	t.Setenv("CXX", "")
+	result := execute(t, t.TempDir(), nil, "/bin/sh", "-c", `echo "$CC $CXX"`)
+	if result.Exit != 0 || result.Stdout != "clang clang++\n" {
+		t.Fatalf("a child saw %q (exit %d, stderr %q), want toolchain's clang and clang++", result.Stdout, result.Exit, result.Stderr)
+	}
 }
