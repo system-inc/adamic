@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testCompositionMatchesGoShards = 16
@@ -353,6 +354,20 @@ func compositionSetupCommand(t *testing.T, name string, arguments ...string) *ex
 	return compositionCommandContext(ctx, name, arguments...)
 }
 
+// compositionGoCommand is compositionSetupCommand for go as toolchain resolves it,
+// run in directory under toolchain.Env, the environment whose compilers the
+// oracle's key names.
+func compositionGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	resolved := toolchain.CommandIn(directory, "go", arguments...)
+	if resolved.Err != nil {
+		return resolved
+	}
+	command := compositionSetupCommand(t, resolved.Path, arguments...)
+	command.Dir, command.Env = resolved.Dir, resolved.Env
+	return command
+}
+
 func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, name, arguments...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -424,7 +439,9 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 }
 
 // The overlay source and the complete Go module trees address each oracle by
-// content. Corpus enumeration stays live: only its binary is cached.
+// content. Corpus enumeration stays live: only its binary is cached. The build
+// runs go under toolchain.Env (compositionGoCommand), so the key names the C and
+// C++ compilers that environment gives go, and the C compiler by its report.
 func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
@@ -433,12 +450,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{
-		Name:      name,
-		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
-	}
+	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
 	directory := buildcache.Product(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
 		if err != nil {
@@ -450,8 +462,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := compositionSetupCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
-		command.Dir = filepath.Join(repo, "cohere")
+		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -459,6 +470,15 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		return nil
 	})
 	return filepath.Join(directory, "oracle")
+}
+
+func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers cssCompilers) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      name,
+		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
+		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
+	}
 }
 
 func compositionInputs() buildcache.Inputs {

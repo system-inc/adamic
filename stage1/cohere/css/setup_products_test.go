@@ -6,6 +6,8 @@ import (
 	"runtime"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 var cssParserPreparedPrograms = make([]struct {
@@ -39,6 +41,39 @@ func cssParserPreparedNative(t *testing.T, mutation int) string {
 func cssParserPreparedLeaks(t *testing.T) string {
 	t.Helper()
 	return buildCSSParserUnsanitized(t, cssParserPreparedProgram(t, -1))
+}
+
+// Each Go oracle's key moves with the C or C++ compiler go builds it with, and with the C compiler's report, so a
+// changed compiler misses rather than reading a product another one built.
+func TestCSSGoOraclesRekeyCompiler(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	compilers := cssCompilers{"clang", "clang++", "clang version 18.1.8"}
+	for _, oracle := range []struct {
+		name   string
+		inputs func(cssCompilers) buildcache.Inputs
+	}{
+		{"parser oracle", func(compilers cssCompilers) buildcache.Inputs {
+			return cssParserGoProductInputs("Go parser oracle", compilers)
+		}},
+		{"composition corpus oracle", func(compilers cssCompilers) buildcache.Inputs {
+			return compositionOracleInputs("css-composition-corpus-oracle", "stage1/cohere/css/testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss", compilers)
+		}},
+		{"composition Go oracle", func(compilers cssCompilers) buildcache.Inputs {
+			return compositionOracleInputs("css-composition-go-oracle", "stage1/cohere/css/testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css", compilers)
+		}},
+	} {
+		key := buildcache.NameKey(root, oracle.inputs(compilers))
+		for _, other := range []cssCompilers{{"gcc", "clang++", compilers.report}, {"clang", "g++", compilers.report}, {"clang", "clang++", "clang version 19.1.7"}} {
+			if otherKey := buildcache.NameKey(root, oracle.inputs(other)); otherKey == key {
+				t.Fatalf("%s: compilers %+v kept its key %s", oracle.name, other, key[:12])
+			}
+		}
+		t.Logf("%s key %s moves with CC, CXX and the C compiler's report", oracle.name, key[:12])
+	}
 }
 
 func TestProduct_CSSParserGoOracle(t *testing.T)      { t.Parallel(); cssParserOracle(t) }
