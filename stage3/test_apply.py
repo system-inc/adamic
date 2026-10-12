@@ -55,11 +55,12 @@ class ApplyCheckoutTests(unittest.TestCase):
             try:
                 # A worktree holds no npm packages; it builds with a copy of this checkout's, which
                 # stage3/api/.gitignore ignores as a directory (a symlink would show as untracked).
-                shutil.copytree(APPLY.api_modules(), source / 'stage3/api/node_modules', symlinks=True)
+                shutil.copytree(APPLY.pinned_packages(ROOT / 'stage3/api'), source / 'stage3/api/node_modules',
+                                symlinks=True)
                 table = source / 'stage3/patch-set.md'
                 table.write_text(table.read_text() + '\n<!-- Deliberately stale test table. -->\n')
                 # Exercise working changes too, before the delivery commit.
-                for name in ['apply.py', 'apply.sh']:
+                for name in ['apply.py', 'apply.sh', 'api/node_modules.sha256']:
                     shutil.copyfile(ROOT / 'stage3' / name, source / 'stage3' / name)
                 helpers = subprocess.check_output(['git', '-C', str(ROOT), 'diff', '--name-only',
                                                    'HEAD', '--', 'stage3/adapt'], text=True).splitlines()
@@ -69,8 +70,8 @@ class ApplyCheckoutTests(unittest.TestCase):
                     target = source / name
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(ROOT / name, target)
-                subprocess.run(['git', '-C', str(source), 'add', 'stage3/patch-set.md',
-                                'stage3/apply.py', 'stage3/apply.sh', 'stage3/adapt'], check=True)
+                subprocess.run(['git', '-C', str(source), 'add', 'stage3/patch-set.md', 'stage3/apply.py',
+                                'stage3/apply.sh', 'stage3/api/node_modules.sha256', 'stage3/adapt'], check=True)
                 subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test',
                                 '-c', 'user.email=apply-test@example.invalid', 'commit', '-m',
                                 'Seed the apply checkout test'], check=True)
@@ -97,7 +98,7 @@ class ProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
             inputs = ['source.json', 'apply.py', 'api/package.json',
-                      'api/package-lock.json', 'adapt/00-setup/adapt.cjs',
+                      'api/package-lock.json', 'api/node_modules.sha256', 'adapt/00-setup/adapt.cjs',
                       'adapt/99-probe/proof.a', 'adapt/99-probe/helper.json']
             for name in inputs:
                 path = root / name
@@ -148,7 +149,8 @@ class ProductTests(unittest.TestCase):
     def test_new_adaptation_directory_changes_hash(self):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
-            for name in ['source.json', 'apply.py', 'api/package.json', 'api/package-lock.json']:
+            for name in ['source.json', 'apply.py', 'api/package.json', 'api/package-lock.json',
+                         'api/node_modules.sha256']:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(name)
@@ -171,29 +173,32 @@ class ProductTests(unittest.TestCase):
                     APPLY.build_product(Path(scratch) / 'output')
             self.assertFalse((Path(scratch) / 'output').exists())
 
-    def test_api_packages_come_installed_from_the_lockfile(self):
+    def test_packages_come_installed_from_the_lockfile(self):
         with tempfile.TemporaryDirectory() as scratch:
-            root = Path(scratch)
-            api = root / 'api'
+            api = Path(scratch) / 'api'
             packages = {'node_modules/typescript': dict(version='6.0.3', integrity='sha512-pinned')}
+            other_platform = {'node_modules/@esbuild/other': dict(version='0.27.3', optional=True)}
             api.mkdir()
-            (api / 'package-lock.json').write_text(json.dumps(dict(packages={'': dict(name='api'), **packages})))
+            (api / 'package-lock.json').write_text(json.dumps(dict(
+                packages={'': dict(name='api'), **packages, **other_platform})))
             (api / 'node_modules/typescript').mkdir(parents=True)
             (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.3')))
             hidden = api / 'node_modules/.package-lock.json'
-            with mock.patch.object(APPLY, 'stage', root):
-                with self.assertRaisesRegex(RuntimeError, 'is not an install of .*never runs npm'):
-                    APPLY.api_modules()
-                hidden.write_text(json.dumps(dict(packages=packages)))
-                self.assertEqual(APPLY.api_modules(), api / 'node_modules')
-                hidden.write_text(json.dumps(dict(packages={'node_modules/typescript': dict(
-                    version='6.0.3', integrity='sha512-other')})))
-                with self.assertRaisesRegex(RuntimeError, 'hidden lockfile names other packages'):
-                    APPLY.api_modules()
-                hidden.write_text(json.dumps(dict(packages=packages)))
-                (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.2')))
-                with self.assertRaisesRegex(RuntimeError, 'typescript is not version 6.0.3'):
-                    APPLY.api_modules()
+            with self.assertRaisesRegex(RuntimeError, 'is not an install of .*never runs npm'):
+                APPLY.installed_packages(api)
+            hidden.write_text(json.dumps(dict(packages=packages)))
+            self.assertEqual(APPLY.installed_packages(api), api / 'node_modules')
+            hidden.write_text(json.dumps(dict(packages={'node_modules/typescript': dict(
+                version='6.0.3', integrity='sha512-other')})))
+            with self.assertRaisesRegex(RuntimeError, 'hidden lockfile names other packages'):
+                APPLY.installed_packages(api)
+            hidden.write_text(json.dumps(dict(packages={})))
+            with self.assertRaisesRegex(RuntimeError, 'node_modules/typescript is not installed'):
+                APPLY.installed_packages(api)
+            hidden.write_text(json.dumps(dict(packages=packages)))
+            (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.2')))
+            with self.assertRaisesRegex(RuntimeError, 'typescript is not version 6.0.3'):
+                APPLY.installed_packages(api)
 
     def test_build_without_api_packages_installs_nothing(self):
         with tempfile.TemporaryDirectory() as scratch:
@@ -208,6 +213,73 @@ class ProductTests(unittest.TestCase):
                     mock.patch.object(APPLY, 'run', side_effect=AssertionError('ran before the packages were checked'))):
                 with self.assertRaisesRegex(RuntimeError, 'node_modules is not an install'):
                     APPLY.build_product(root / 'output')
+
+    def fake_api(self, root):
+        api = root / 'api'
+        packages = {'node_modules/typescript': dict(version='6.0.3', integrity='sha512-pinned')}
+        (api / 'node_modules/typescript/bin').mkdir(parents=True)
+        (api / 'package-lock.json').write_text(json.dumps(dict(packages={'': dict(name='api'), **packages})))
+        (api / 'node_modules/.package-lock.json').write_text(json.dumps(dict(packages=packages)))
+        (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.3')))
+        (api / 'node_modules/typescript/bin/tsc').write_text('#!/usr/bin/env node\n')
+        (api / 'node_modules/.bin').mkdir()
+        (api / 'node_modules/.bin/tsc').symlink_to('../typescript/bin/tsc')
+        (api / 'node_modules.sha256').write_text(APPLY.packages_digest(api / 'node_modules') + '\n')
+        return api
+
+    def test_packages_digest_pins_every_byte(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            api = self.fake_api(Path(scratch))
+            modules = api / 'node_modules'
+            pinned = APPLY.packages_digest(modules)
+            self.assertEqual(APPLY.pinned_packages(api), modules)
+            # The runner's marker is no package byte: a linked checkout and a prebuilt tree pin alike.
+            (modules / '.fast-gate-lockfile-sha256').write_text('a lockfile sha256\n')
+            self.assertEqual(APPLY.packages_digest(modules), pinned)
+            def refused():
+                with self.assertRaisesRegex(RuntimeError, 'node_modules hashes to [0-9a-f]{64}, not the [0-9a-f]{64} '
+                                                          'that .*node_modules.sha256 pins'):
+                    APPLY.pinned_packages(api)
+            tsc = modules / 'typescript/bin/tsc'
+            tsc.write_text('#!/usr/bin/env node\n// foreign\n')
+            refused()
+            tsc.write_text('#!/usr/bin/env node\n')
+            tsc.chmod(0o755)
+            refused()
+            tsc.chmod(0o644)
+            link = modules / '.bin/tsc'
+            link.unlink()
+            link.symlink_to('tsc')
+            refused()
+            link.unlink()
+            link.symlink_to('../typescript/bin/tsc')
+            (modules / 'typescript/empty').mkdir()
+            refused()
+            (modules / 'typescript/empty').rmdir()
+            self.assertEqual(APPLY.packages_digest(modules), pinned)
+
+    def test_build_with_pinned_packages_never_runs_npm(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            shutil.copyfile(ROOT / 'stage3/source.json', root / 'source.json')
+            api = self.fake_api(root)
+            for name in ['00-setup', '10-adaptation']:
+                (root / 'adapt' / name).mkdir(parents=True)
+            calls = []
+            def record(*arguments, **kwargs):
+                calls.append(arguments)
+                if arguments[:2] == ('git', 'clone'):
+                    Path(arguments[-1]).mkdir()
+            with (mock.patch.object(APPLY, 'stage', root),
+                    mock.patch.object(APPLY, 'typescript_source', return_value=root / 'typescript'),
+                    mock.patch.object(APPLY, 'run', side_effect=record) as run,
+                    mock.patch.object(APPLY.subprocess, 'check_output', return_value='')):
+                APPLY.build_product(root / 'output')
+            self.assertEqual([call for call in calls if call[0] in ('npm', 'npx')], [])
+            adapter = [call for call in run.call_args_list
+                       if call.args[:2] == ('node', str(root / 'adapt/10-adaptation/adapt.cjs'))]
+            self.assertEqual(adapter[0].kwargs['env']['NODE_PATH'], str(api / 'node_modules'))
+            self.assertIn('| 10-adaptation |', (root / 'output/patch-set.md').read_text())
 
     def test_typescript_source_is_the_pinned_gate_input(self):
         pin = json.loads((ROOT / 'stage3/source.json').read_text())
