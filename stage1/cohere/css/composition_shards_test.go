@@ -22,7 +22,6 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testCompositionMatchesGoShards = 16
@@ -384,20 +383,6 @@ func compositionSetupCommand(t *testing.T, name string, arguments ...string) *ex
 	return compositionCommandContext(ctx, name, arguments...)
 }
 
-// compositionGoCommand is compositionSetupCommand for go as toolchain resolves it,
-// run in directory under toolchain.Env, the environment whose compilers the
-// oracle's key names.
-func compositionGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := compositionSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
-
 func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, name, arguments...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -468,51 +453,43 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 	return ""
 }
 
-// The overlay source and the complete Go module trees address each oracle by
-// content. Corpus enumeration stays live: only its binary is cached. The build
-// runs go under toolchain.Env (compositionGoCommand), so the key names the C and
-// C++ compilers that environment gives go, and the C compiler by its report.
+// compositionOracle is the test binary go test would build with the side file at sidePath laid over cohere's
+// overlayTarget, a product (buildcache.GoTest) named name. Corpus enumeration stays live: only its binary is cached.
+// The overlay names this checkout's paths, so it sits in a temporary directory and is never part of the product
+// (#tqrqx60).
 func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
 	t.Helper()
-	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs(sidePath)
-	sideRelative, err := filepath.Rel(repo, side)
+	repo, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
-}
-
-func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers cssCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      name,
-		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
+	side, err := filepath.Abs(sidePath)
+	if err != nil {
+		t.Fatal(err)
 	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoTest(t, "cohere", name, packagePath, []string{"-overlay=" + overlayPath})
 }
 
 func compositionInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "css-composition-lowered", Files: []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "cohere", "go.mod", "go.work"}, Toolchain: []string{runtime.Version()}, Flags: []string{"C and JavaScript"}}
+	return buildcache.Inputs{Name: "css-composition-lowered", Files: cssLoweringFiles(), Toolchain: []string{runtime.Version()}, Flags: []string{"C and JavaScript"}}
+}
+
+// compositionNativeInputs keys the sanitized native built from the lowered product's C: what lowering read, as
+// compositionInputs keys it, with the build's flags and clang.
+func compositionNativeInputs() buildcache.Inputs {
+	inputs := compositionInputs()
+	inputs.Name = "css-composition-native"
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	return inputs
 }
 
 func compositionLoweredProduct(t *testing.T) (string, string) {
@@ -536,11 +513,7 @@ func compositionNativeProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := compositionInputs()
-	inputs.Name = "css-composition-native"
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeProduct := buildcache.Product(t, inputs, func(dir string) error {
+	nativeProduct := buildcache.Product(t, compositionNativeInputs(), func(dir string) error {
 		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	})
 	return filepath.Join(nativeProduct, "port")
