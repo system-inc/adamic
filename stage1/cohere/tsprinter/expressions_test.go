@@ -144,6 +144,24 @@ func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir str
 	if err != nil {
 		t.Fatal(err)
 	}
+	key := expressionKey(t, inputs)
+	digest, err := buildcache.Key(root, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return printerGateOnce(t, "expression-product-"+digest, func() string {
+		return buildcache.Product(t, key, build)
+	})
+}
+
+// expressionKey is the key expressionBuild builds inputs under: each repository file by its path, and a generated input
+// outside the repository by its bytes.
+func expressionKey(t *testing.T, inputs printerBuildInputs) buildcache.Inputs {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	for _, file := range inputs.Files {
 		relative, err := filepath.Rel(root, file)
@@ -163,11 +181,5 @@ func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir str
 		}
 	}
 	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	digest, err := buildcache.Key(root, key)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return printerGateOnce(t, "expression-product-"+digest, func() string {
-		return buildcache.Product(t, key, build)
-	})
+	return key
 }
