@@ -3,12 +3,11 @@ package json
 import (
 	"bufio"
 	"bytes"
-	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -19,7 +18,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -38,22 +36,6 @@ const repositoryCorpusIdentity = "09cd6c1c6a0fb423c2bf9cc1a56f5670218eca4088f0ba
 // stage3/api's lockfile, so no archive of tracked files carries them.
 const provisionedCorpusPrefix = "stage3/api/node_modules/"
 
-// gitPinnedInput runs Git on the checkout's own objects and nothing else. A test that reads the network isn't
-// deterministic, and a sandboxed runner has none (#arw7837). protocol.allow=never refuses every transport, so
-// neither a fetch nor a partial clone's lazy fetch of a missing object can reach a remote on any Git version (-c
-// reaches the lazy fetch's own git process through GIT_CONFIG_PARAMETERS); GIT_NO_LAZY_FETCH (Git 2.44) stops that
-// fetch before it starts.
-func gitPinnedInput(root string, input []byte, arguments ...string) ([]byte, error) {
-	command := exec.CommandContext(context.Background(), "git", append([]string{"-C", root, "-c", "protocol.allow=never"}, arguments...)...)
-	command.Env = append(os.Environ(), "GIT_NO_LAZY_FETCH=1")
-	command.Stdin = bytes.NewReader(input)
-	output, err := childguard.CombinedOutput(command, jsonGuard)
-	if err != nil {
-		return nil, fmt.Errorf("git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
-	}
-	return output, nil
-}
-
 // The corpus product holds every input a runner's source archive lacks: the pin's repository JSON (Git objects,
 // and Loom's source archive is the tree's tracked files with no history) and the provisioned node_modules files
 // corpus.pin names (untracked). Workshop builds it from a checkout that holds both, and the tests read only it, the
@@ -65,6 +47,12 @@ func gitPinnedInput(root string, input []byte, arguments ...string) ([]byte, err
 // only when a tracked file the product declares holds it (#arw7837). Those reports are tracked and unchanged since the
 // pin, so the product's key also moves when one of them does.
 func jsonPinnedCorpusInputs() (buildcache.Inputs, error) {
+	return jsonPinnedCorpusInputsAt(repositoryCorpusCommit)
+}
+
+// jsonPinnedCorpusInputsAt is the corpus product's key with the repository JSON at pin: the whole commit id is a flag,
+// so a different pin, which any change to a corpus file at it makes, is a different key.
+func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 	jsonTrackedSources.once.Do(func() {
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -88,8 +76,41 @@ func jsonPinnedCorpusInputs() (buildcache.Inputs, error) {
 	return buildcache.Inputs{
 		Name:  "json pinned corpus",
 		Files: append([]string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"}, jsonTrackedSources.files...),
-		Flags: []string{"repository JSON at " + repositoryCorpusCommit, "provisioned " + provisionedCorpusPrefix + " inputs named by corpus.pin"},
+		Flags: []string{"repository JSON at " + pin, "provisioned " + provisionedCorpusPrefix + " inputs named by corpus.pin"},
 	}, nil
+}
+
+// A different pin moves both the name key (what a runner finds the corpus by) and the declared key (what this machine
+// alone builds it by), so a corpus at another commit is never served for this one. A one-byte change to a corpus file at
+// the pin is a different commit id, so it is this case too. Keying builds nothing.
+func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys := func(pin string) (string, string) {
+		inputs, err := jsonPinnedCorpusInputsAt(pin)
+		if err != nil {
+			t.Fatal(err)
+		}
+		declared, err := buildcache.Key(root, inputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return buildcache.NameKey(root, inputs), declared
+	}
+	nameKey, declared := keys(repositoryCorpusCommit)
+	// The pin with its last hex digit changed: the smallest move to another commit id.
+	other := repositoryCorpusCommit[:39] + "1"
+	if other == repositoryCorpusCommit {
+		other = repositoryCorpusCommit[:39] + "2"
+	}
+	otherNameKey, otherDeclared := keys(other)
+	if otherNameKey == nameKey || otherDeclared == declared {
+		t.Fatalf("pin %s kept name key %s or key %s", other, nameKey[:12], declared[:12])
+	}
+	t.Logf("pin %s to %s: name key %s to %s, key %s to %s", repositoryCorpusCommit, other, nameKey[:12], otherNameKey[:12], declared[:12], otherDeclared[:12])
 }
 
 // jsonTrackedSources is the repository's tracked JSON, listed once per process.
@@ -104,7 +125,11 @@ func buildJSONPinnedCorpus(directory string) error {
 	if err != nil {
 		return err
 	}
-	tracked, err := repositoryCasesAtPin(root, repositoryCorpusCommit)
+	inputs, err := jsonPinnedCorpusInputs()
+	if err != nil {
+		return err
+	}
+	tracked, err := repositoryCasesAtPin(root, inputs, repositoryCorpusCommit)
 	if err != nil {
 		return err
 	}
@@ -208,7 +233,9 @@ func corpusPinManifest(root string) (corpusPin, error) {
 }
 
 // provisionedCorpusFiles reads the node_modules files corpus.pin names from the product builder's disk, where npm ci
-// --prefix stage3/api put them.
+// --prefix stage3/api put them. They're untracked, so a traced build could never key them; the reads run as key-time
+// work instead (buildcache.Keying), and that is sound only because each file must match the SHA256 corpus.pin gives it,
+// byte for byte: corpus.pin is a declared input, so any bytes accepted here are exactly what the key already names.
 func provisionedCorpusFiles(root string) ([]textCase, error) {
 	manifest, err := corpusPinManifest(root)
 	if err != nil {
@@ -219,9 +246,13 @@ func provisionedCorpusFiles(root string) ([]textCase, error) {
 		if !strings.HasPrefix(item.Path, provisionedCorpusPrefix) {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path)))
+		var data []byte
+		buildcache.Keying(func() { data, err = os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path))) })
 		if err != nil {
 			return nil, fmt.Errorf("pinned corpus input %s (npm ci --prefix stage3/api provisions it on the corpus product's builder): %w", item.Path, err)
+		}
+		if digest := fmt.Sprintf("%x", sha256.Sum256(data)); digest != item.SHA256 {
+			return nil, fmt.Errorf("pinned corpus input %s: SHA256 %s, corpus.pin names %s", item.Path, digest, item.SHA256)
 		}
 		if !utf8.Valid(data) {
 			return nil, fmt.Errorf("non-UTF-8 pinned corpus file %s", item.Path)
@@ -231,16 +262,18 @@ func provisionedCorpusFiles(root string) ([]textCase, error) {
 	return cases, nil
 }
 
-// repositoryCasesAtPin reads the pin's JSON from the checkout's own objects, on the corpus product's builder.
-// The TypeScript corpusfiles selector returns live paths, not pinned bytes.
-func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
+// repositoryCasesAtPin reads the pin's JSON from the checkout's own objects, on the corpus product's builder, through
+// buildcache.PinnedGit: as key-time work, since inputs names the pin, so a traced build never reads .git (#jwn3n9q).
+// PinnedGit also runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript
+// corpusfiles selector returns live paths, not pinned bytes.
+func repositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]textCase, error) {
 	if len(pin) != 40 || strings.Trim(pin, "0123456789abcdef") != "" {
 		return nil, fmt.Errorf("repository JSON: invalid commit pin %q", pin)
 	}
-	if _, err := gitPinnedInput(root, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run", pin, root, pin)
+	if _, err := buildcache.PinnedGit(root, inputs, pin, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
+		return nil, fmt.Errorf("repository JSON pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)", pin, root, pin, err)
 	}
-	tree, err := gitPinnedInput(root, nil, "ls-tree", "-r", "-z", pin)
+	tree, err := buildcache.PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
 	if err != nil {
 		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
 	}
@@ -259,7 +292,7 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 		return nil, fmt.Errorf("repository JSON pin %s has no JSON files", pin)
 	}
 	sort.Strings(names)
-	if err := pinnedBlobsPresent(root, pin, names, blobs); err != nil {
+	if err := pinnedBlobsPresent(root, inputs, pin, names, blobs); err != nil {
 		return nil, err
 	}
 	var requests strings.Builder
@@ -269,7 +302,7 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 		}
 		fmt.Fprintf(&requests, "%s:%s\n", pin, name)
 	}
-	batch, err := gitPinnedInput(root, []byte(requests.String()), "cat-file", "--batch")
+	batch, err := buildcache.PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
 	if err != nil {
 		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
 	}
@@ -308,12 +341,12 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 }
 
 // Loom's pool units are blobless clones (--filter=blob:none): the pin's commit and trees are there, but only the
-// blobs a checkout wrote. cat-file would try to fetch each missing one on its own, which gitPinnedInput refuses; this
+// blobs a checkout wrote. cat-file would try to fetch each missing one on its own, which PinnedGit refuses; this
 // names every JSON file whose blob is missing first, so the failure says which inputs the checkout lacks.
-func pinnedBlobsPresent(root, pin string, names []string, blobs map[string]string) error {
+func pinnedBlobsPresent(root string, inputs buildcache.Inputs, pin string, names []string, blobs map[string]string) error {
 	// --no-walk: the pin's own tree, not every object reachable through its history. --missing=print lists an absent
 	// object rather than fetching it.
-	objects, err := gitPinnedInput(root, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
+	objects, err := buildcache.PinnedGit(root, inputs, pin, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
 	if err != nil {
 		return fmt.Errorf("repository JSON pin %s: %w", pin, err)
 	}
@@ -395,6 +428,12 @@ func TestPinnedRepositoryCorpusIdentity(t *testing.T) {
 	t.Logf("3900 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
 }
 
+// fixtureCasesAtPin is repositoryCasesAtPin on a fixture repository, under a key that names the fixture's pin, as the
+// product's names its own.
+func fixtureCasesAtPin(root, pin string) ([]textCase, error) {
+	return repositoryCasesAtPin(root, buildcache.Inputs{Name: "json pinned corpus fixture", Flags: []string{"repository JSON at " + pin}}, pin)
+}
+
 func TestPinnedRepositoryCorpusIgnoresWorkingTree(t *testing.T) {
 	t.Parallel()
 	fixture := newRepositoryFixture(t)
@@ -402,7 +441,7 @@ func TestPinnedRepositoryCorpusIgnoresWorkingTree(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	before, err := repositoryCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -412,7 +451,7 @@ func TestPinnedRepositoryCorpusIgnoresWorkingTree(t *testing.T) {
 	if err := os.Remove(filepath.Join(fixture.root, "nested/second.json")); err != nil {
 		t.Fatal(err)
 	}
-	after, err := repositoryCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -429,7 +468,7 @@ func TestPinnedRepositoryCorpusPinMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	before, err := repositoryCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
+	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -439,7 +478,7 @@ func TestPinnedRepositoryCorpusPinMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	after, err := repositoryCasesAtPin(fixture.root, strings.TrimSpace(string(mutant)))
+	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(mutant)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -506,7 +545,7 @@ func TestPinnedRepositoryCorpusNeverFetches(t *testing.T) {
 		t.Fatal(err)
 	}
 	pin := strings.TrimSpace(string(head))
-	full, err := repositoryCasesAtPin(fixture.root, pin)
+	full, err := fixtureCasesAtPin(fixture.root, pin)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -516,7 +555,7 @@ func TestPinnedRepositoryCorpusNeverFetches(t *testing.T) {
 	fixtureGit(t, shallow, "init", "-q")
 	fixtureGit(t, shallow, "remote", "add", "origin", fixture.root)
 	var missing error
-	if fetches := gitFetchesTracing(t, func() { _, missing = repositoryCasesAtPin(shallow, pin) }); fetches != 0 {
+	if fetches := gitFetchesTracing(t, func() { _, missing = fixtureCasesAtPin(shallow, pin) }); fetches != 0 {
 		t.Fatalf("a checkout without the pin fetched %d times, want none", fetches)
 	}
 	if missing == nil || !strings.Contains(missing.Error(), pin) || !strings.Contains(missing.Error(), "not in the checkout") {
@@ -525,7 +564,7 @@ func TestPinnedRepositoryCorpusNeverFetches(t *testing.T) {
 	// The checkout step carries the pin, as a runner's must; the read then fetches nothing of its own.
 	fixtureGit(t, shallow, "fetch", "--quiet", "--depth=1", "origin", pin)
 	var after []textCase
-	if fetches := gitFetchesTracing(t, func() { after, err = repositoryCasesAtPin(shallow, pin) }); fetches != 0 || err != nil {
+	if fetches := gitFetchesTracing(t, func() { after, err = fixtureCasesAtPin(shallow, pin) }); fetches != 0 || err != nil {
 		t.Fatalf("a shallow checkout carrying the pin: %d fetches, %v", fetches, err)
 	}
 	if fmt.Sprint(full) != fmt.Sprint(after) {
@@ -582,7 +621,7 @@ func TestPinnedRepositoryCorpusBloblessCloneNeverFetches(t *testing.T) {
 	clone := filepath.Join(t.TempDir(), "blobless")
 	fixtureGit(t, fixture.root, "clone", "--quiet", "--filter=blob:none", "--no-checkout", "file://"+fixture.root, clone)
 	var missing error
-	if fetches := gitFetchesTracing(t, func() { _, missing = repositoryCasesAtPin(clone, pin) }); fetches != 0 {
+	if fetches := gitFetchesTracing(t, func() { _, missing = fixtureCasesAtPin(clone, pin) }); fetches != 0 {
 		t.Fatalf("a blobless clone fetched %d times, want none", fetches)
 	}
 	// A missing input is the checkout's, named, and never reads as a wrong answer (devtools/red-sort's WRONG).
@@ -592,7 +631,7 @@ func TestPinnedRepositoryCorpusBloblessCloneNeverFetches(t *testing.T) {
 		t.Fatalf("a blobless clone read the pinned corpus anyway, or didn't name what it lacks: %v", missing)
 	}
 	// A full clone has every blob and fetches nothing.
-	if fetches := gitFetchesTracing(t, func() { _, err = repositoryCasesAtPin(fixture.root, pin) }); fetches != 0 || err != nil {
+	if fetches := gitFetchesTracing(t, func() { _, err = fixtureCasesAtPin(fixture.root, pin) }); fetches != 0 || err != nil {
 		t.Fatalf("a full clone: %d fetches, %v", fetches, err)
 	}
 	t.Log(missing)
