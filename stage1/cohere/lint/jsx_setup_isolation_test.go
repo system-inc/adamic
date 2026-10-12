@@ -30,7 +30,7 @@ func TestJsxLintTreesSetupIsolation(t *testing.T) {
 	// them (landable-11 and 12c's runs, Home, where this asked for all three and failed).
 	products := []string{"jsx-tree-setup-v1"}
 	if regexp.MustCompile(`(?m)build jsx-tree-setup-v1 [0-9a-f]{12} miss `).Match(output) {
-		products = append(products, "jsx-parser", "jsx-membership")
+		products = append(products, "go_build_cohere/TypeScript/tsc_./adamic_jsx_oracle_oracle", "go_build_cohere_./adamic_jsx_inventory_oracle")
 	}
 	for _, product := range products {
 		if !productLookedUp(output, regexp.QuoteMeta(product)) {

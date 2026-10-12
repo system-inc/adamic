@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -247,7 +248,7 @@ func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
 		}
 		inputs := buildcache.Inputs{
 			Name:      fmt.Sprintf("factory-hooks-lowered-%d", index),
-			Files:     []string{"stage1/cohere/lint", "stage1/typescript", "internal", "cohere", "go.mod"},
+			Files:     append(compilerinputs.Lowering(), "stage1/cohere/lint", "stage1/typescript"),
 			Flags:     []string{"rules=no-debugger", fmt.Sprintf("mutated=%t", index == 1), string(module)},
 			Toolchain: []string{runtime.Version()},
 		}
@@ -284,7 +285,7 @@ func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) st
 			t.Fatal(err)
 		}
 		options := native.Options{Sanitize: true}
-		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: []string{"internal/native", "cohere", "internal/load"},
+		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: append(compilerinputs.Lowering(), "stage1/cohere/lint/factory_hooks_shards_test.go"),
 			Flags:     append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 		binary := buildcache.Product(t, inputs, func(destination string) error {
