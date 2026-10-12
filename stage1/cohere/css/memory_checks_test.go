@@ -52,13 +52,7 @@ func composedMemoryProduct(t *testing.T, index int) composedMemoryNatives {
 	t.Helper()
 	composedMemoryOnce[index].Do(func() {
 		mutation := composedMemoryMutations[index]
-		inputs := buildcache.Inputs{
-			Name:      "css-composed-memory-mutant-" + strconv.Itoa(index),
-			Files:     cssLoweringFiles,
-			Flags:     append(append(append([]string{"mutation=" + mutation.name}, native.Flags(native.Options{})...), native.Flags(native.Options{Sanitize: true})...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
-		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
+		directory := buildcache.Product(t, composedMemoryInputs(index), func(dir string) error {
 			main, err := filepath.Abs("print_main.ts")
 			if err != nil {
 				return err
@@ -96,6 +90,15 @@ func composedMemoryProduct(t *testing.T, index int) composedMemoryNatives {
 		t.Fatalf("composed memory mutant %d unavailable: its build failed earlier in this process (see that test's log)", index)
 	}
 	return composedMemoryProducts[index]
+}
+
+func composedMemoryInputs(index int) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "css-composed-memory-mutant-" + strconv.Itoa(index),
+		Files:     cssLoweringFiles(),
+		Flags:     append(append(append([]string{"mutation=" + composedMemoryMutations[index].name}, native.Flags(native.Options{})...), native.Flags(native.Options{Sanitize: true})...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+	}
 }
 
 // composedMemoryCheck runs one mutation's natives: the ordinary build keeps the printer's output, and only its
