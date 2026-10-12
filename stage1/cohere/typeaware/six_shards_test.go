@@ -290,8 +290,9 @@ func TestSixShardPlantedDisagreement(t *testing.T) {
 	}
 	t.Parallel()
 	for i := 0; i < testSixShardPlantedDisagreementShards; i++ {
+		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that wait
+		// counts as the parent's own time (99.6 s alone on one core, Home, for four subtests of 0.03 s each).
 		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
-			t.Parallel()
 			for _, gate := range []bool{false, true} {
 				pattern := "^TestSixShardPlantedDisagreement$"
 				selector := fmt.Sprintf("%d/4", i)
