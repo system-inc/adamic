@@ -61,10 +61,12 @@ type stringsAnswerCase struct {
 }
 
 // A process keys and looks up each answer product once: the key hashes every case's input, and every batch or raw
-// unit reads the same product.
+// unit reads the same product. A failure is kept, so every later caller reports the first one rather than a bare
+// "did not complete".
 type stringsAnswerProduct struct {
 	once      sync.Once
 	directory string
+	err       error
 }
 
 var stringsGoBatchAnswers, stringsPrettierBatchAnswers, stringsGoRawAnswers stringsAnswerProduct
@@ -111,8 +113,11 @@ func stringsAnswerProductInputs(name, identity, toolchain string, files []string
 func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare func() (stringsInputs, []stringsAnswerCase), command func(t *testing.T, input string) *exec.Cmd) string {
 	t.Helper()
 	product.once.Do(func() {
+		// Until the lookup returns, a failure is the first caller stopping in prepare or keying, with its own log.
+		product.err = fmt.Errorf("answer product: %s stopped before its lookup; its log has the failure", t.Name())
 		inputs, cases := prepare()
-		product.directory = stringsProduct(t, inputs, func(dir string) error {
+		keyed := stringsCacheInputs(t, inputs)
+		product.directory, product.err = buildcache.Get(keyed, func(dir string) error {
 			pending := make(chan stringsAnswerCase)
 			failures := make(chan error, len(cases))
 			var workers sync.WaitGroup
@@ -135,9 +140,12 @@ func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare
 			close(failures)
 			return <-failures
 		})
+		if product.err != nil {
+			product.err = fmt.Errorf("%s: %w", keyed.Name, product.err)
+		}
 	})
-	if product.directory == "" {
-		t.Fatal("answer product did not complete")
+	if product.err != nil {
+		t.Fatal(product.err)
 	}
 	return product.directory
 }
@@ -216,11 +224,14 @@ var stringsAnswerInputs struct {
 	oracleIdentity  string
 	library         string
 	libraryIdentity string
+	err             error
 }
 
 func prepareStringsAnswerInputs(t *testing.T) {
 	t.Helper()
 	stringsAnswerInputs.once.Do(func() {
+		// The helpers below stop the first caller with its own message; later callers name where to read it.
+		stringsAnswerInputs.err = fmt.Errorf("answer inputs: %s stopped reading them; its log has the failure", t.Name())
 		corpus := enumerateStrings(t)
 		if units := stringsUnits(corpus); len(units) != testCSSStringsShards {
 			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
@@ -232,9 +243,10 @@ func prepareStringsAnswerInputs(t *testing.T) {
 		}
 		stringsAnswerInputs.corpus = corpus
 		stringsAnswerInputs.oracle, stringsAnswerInputs.oracleIdentity = oracle, stringsOracleIdentity(t, oracle)
+		stringsAnswerInputs.err = nil
 	})
-	if stringsAnswerInputs.oracleIdentity == "" {
-		t.Fatal("answer inputs did not complete")
+	if stringsAnswerInputs.err != nil {
+		t.Fatal(stringsAnswerInputs.err)
 	}
 }
 
