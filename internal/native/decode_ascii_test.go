@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -32,8 +31,7 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	defer cancel()
 	run := func(t *testing.T, name string, args ...string) []byte {
 		t.Helper()
-		command := exec.CommandContext(ctx, name, args...)
-		command.Dir = repository
+		command := programCommand(ctx, repository, name, args...)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			t.Fatalf("%s %v: %v\n%s", name, args, err, output)

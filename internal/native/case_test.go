@@ -3,7 +3,6 @@ package native
 import (
 	"bufio"
 	"context"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -11,6 +10,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The sweep: native toUpperCase and toLowerCase against Node's, byte for byte, over every code point
@@ -339,7 +340,7 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	// finishes well inside five minutes, but in a full parallel gate it does not.
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, arguments[0], arguments[1:]...)
+	command := programCommand(ctx, "", arguments[0], arguments[1:]...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -371,7 +372,7 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 // characters changed.
 func TestCaseTablesMatchNodesUnicode(t *testing.T) {
 	t.Parallel()
-	output, err := exec.Command("node", "--print", "process.versions.unicode").Output()
+	output, err := toolchain.Command("node", "--print", "process.versions.unicode").Output()
 	if err != nil {
 		t.Fatal(err)
 	}

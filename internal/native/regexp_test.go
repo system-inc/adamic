@@ -281,7 +281,7 @@ func runRegExpBytecodeRandomNodeUnit(t *testing.T, unit int) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := programCommand(ctx, "", "node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
 for(const c of cases) {
