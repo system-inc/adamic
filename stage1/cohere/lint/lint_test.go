@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"io/fs"
 	"os"
@@ -73,6 +74,11 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
+	if name == "node" {
+		// Node is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run in directory
+		// with PWD to match. A program a test built (the Go oracle, a port) runs as named, with this process's environment.
+		command = toolchain.CommandIn(directory, name, args...)
+	}
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)

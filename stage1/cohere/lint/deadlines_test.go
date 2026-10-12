@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func guardExecutable(t *testing.T) string {
@@ -54,7 +55,7 @@ func TestChildCPUHangGuard(t *testing.T) {
 	if err := os.WriteFile(loop, []byte("for (;;) {}"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("node", loop)
+	command := toolchain.Command("node", loop)
 	started := time.Now()
 	err := testguard.Run(command, time.Second, testguard.Ceiling)
 	if err == nil || !strings.Contains(err.Error(), "child CPU hang guard exceeded") || !strings.Contains(err.Error(), "planted-endless-loop.js") {
@@ -65,7 +66,7 @@ func TestChildCPUHangGuard(t *testing.T) {
 
 func TestChildWallBackstop(t *testing.T) {
 	t.Parallel()
-	command := exec.Command("node", "-e", "setTimeout(()=>{},100000)")
+	command := toolchain.Command("node", "-e", "setTimeout(()=>{},100000)")
 	started := time.Now()
 	err := testguard.Run(command, time.Minute, 200*time.Millisecond)
 	if err == nil || !strings.Contains(err.Error(), "wall backstop exceeded") {
@@ -78,7 +79,7 @@ func TestChildWallBackstop(t *testing.T) {
 // The full compiler comparison additionally exercises real shards under burners.
 func TestChildCPUWaitGuard(t *testing.T) {
 	t.Parallel()
-	command := exec.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);`)
+	command := toolchain.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);`)
 	started := time.Now()
 	if err := testguard.Run(command, time.Second, testguard.Ceiling); err != nil {
 		t.Fatal(err)
