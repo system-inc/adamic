@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Discovery uses Go's effective dependency lists, including test sources and
@@ -206,7 +206,7 @@ func TestFixtureOracleProductIgnoresGoCacheLocation(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	goTool, err := exec.LookPath("go")
+	goTool, err := toolchain.Path("go")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -215,7 +215,8 @@ func TestFixtureOracleProductIgnoresGoCacheLocation(t *testing.T) {
 		cache := filepath.Join(t.TempDir(), name)
 		environment := []string{"GOCACHE=" + cache}
 		if name == "second" {
-			environment = append(environment, "PATH="+filepath.Dir(goTool)+string(os.PathListSeparator)+os.Getenv("PATH"))
+			// The same tools by another PATH: go's directory again, before the PATH toolchain gives a tool.
+			environment = append(environment, "PATH="+filepath.Dir(goTool)+string(os.PathListSeparator)+strings.TrimPrefix(toolchainPath(), "PATH="))
 		}
 		inputs := fixtureHookInputsEnvironment(t, repository, environment)
 		key, err := buildcache.Key(repository, inputs)
