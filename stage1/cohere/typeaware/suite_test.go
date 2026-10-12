@@ -343,7 +343,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
 		t := h.t
 		lengthArchive := typeAwareMutantArchive(h, "facts-length")
-		length := typeAwareBuild(h, stage0, "facts-length", entry, lengthArchive, true)
+		length := typeAwareSetup(h, "facts-length", func() string { return h.mutantNative("facts-length", entry, lengthArchive, true) })
 		got := h.run("facts-length-run", exec.Command(length, config, manifest))
 		if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
 			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
