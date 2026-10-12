@@ -453,21 +453,34 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
-	// The link runs from the units' directory, so the checker archive goes by a link's name there and the output by
-	// its absolute path, as BuildTSGo links.
+	// The link runs from the units' directory and gives it no input by its place on the machine: each unit's object,
+	// the runtime library and the checker archive go by a link's name there, and only the output by its absolute path,
+	// as BuildTSGo links. On macOS ld's debug map records every object it links that carries debug info, a sanitized
+	// build's all do, by the path it was given made absolute, which -oso_prefix takes the directory back off. Named by
+	// their places, a sanitized split binary held the build cache's path 57 times (measured on a Mac, Oct 11).
 	output, err = filepath.Abs(output)
 	if err != nil {
 		return err
 	}
 	arguments := append(Flags(options), "-o", output)
-	arguments = append(arguments, objects...)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	for index, object := range objects {
+		name := fmt.Sprintf("unit-%d.o", index)
+		if err := os.Symlink(object, filepath.Join(directory, name)); err != nil {
+			return err
+		}
+		arguments = append(arguments, name)
+	}
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
+		return err
+	}
+	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	if archive != "" {
 		if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
 			return err
 		}
-		arguments = append(append(arguments, checkerArchive, "-lpthread", "-ldl"), objectPrefixFlags()...)
+		arguments = append(arguments, checkerArchive, "-lpthread", "-ldl")
 	}
+	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
 	link := exec.Command(compiler, arguments...)
 	link.Dir = directory

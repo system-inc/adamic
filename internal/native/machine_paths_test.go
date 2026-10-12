@@ -140,3 +140,43 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 		}
 	}
 }
+
+// A sanitized split build's binary names no place of this machine's: its units' objects and the runtime library come
+// from the build cache and the link runs in a scratch directory, and on macOS ld's debug map names each object it links
+// with debug info (a sanitized build's all have it) by its path (#m27xj48: the build cache's path, 57 times). Linked by
+// a link's name in the scratch directory, which -oso_prefix takes off, the debug map names each by that name alone. On
+// Linux the linker names no input, so this holds there either way. Mutants (on macOS): the objects' paths back on the
+// link line, or the runtime library's; objectPrefixFlags off.
+func TestSplitBuildsNameNoPlaceOfTheirInputs(t *testing.T) {
+	t.Parallel()
+	cache, err := location.BuildCache()
+	if err != nil {
+		t.Fatal(err)
+	}
+	spellings := [][]byte{[]byte(cache), []byte("adamic-units-")}
+	if real, err := filepath.EvalSymlinks(cache); err == nil && real != cache {
+		spellings = append(spellings, []byte(real))
+	}
+	binary := filepath.Join(t.TempDir(), "split")
+	if err := Build(splitProbe, binary, Options{Split: true, Jobs: 2, Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	content, err := os.ReadFile(binary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The debug map names a unit's object and a runtime member, so both were linked with their debug info, each by the
+	// link's name alone (unit-0 holds only declarations, so it has none).
+	if goruntime.GOOS == "darwin" {
+		for _, linked := range []*regexp.Regexp{regexp.MustCompile(`\x00unit-[0-9]+\.o\x00`), regexp.MustCompile(`\x00runtime/[^\x00/]+\.a\([^\x00/]+\.o\)\x00`)} {
+			if !linked.Match(content) {
+				t.Errorf("the binary's debug map names nothing as %s", linked)
+			}
+		}
+	}
+	for _, spelling := range spellings {
+		if count := bytes.Count(content, spelling); count > 0 {
+			t.Errorf("the binary names %s %d times", spelling, count)
+		}
+	}
+}
