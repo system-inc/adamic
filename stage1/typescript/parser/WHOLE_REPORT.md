@@ -152,7 +152,7 @@ setup: done in 10s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 The focused final command was:
 
 ```sh
-ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test -count=1 -v -run '^(TestWholeCompilerAgrees|TestWholeGeneratedAgrees|TestEveryTypeNodeKindAgrees|TestWholeMutants|TestWholeCountCheckCatchesMutant|TestConditionalEmptyArrayGap)$' -timeout 30m ./stage1/typescript/parser > /tmp/typescript-parser-whole-final.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test -count=1 -v -run '^(TestWholeCompilerAgrees_[0-9]+|TestWholeGeneratedAgrees|TestEveryTypeNodeKindAgrees|TestWholeMutants|TestWholeCountCheckCatchesMutant|TestConditionalEmptyArrayGap)$' -timeout 30m ./stage1/typescript/parser > /tmp/typescript-parser-whole-final.log 2>&1
 ```
 
 PASS, 111.678s; [whole-final.log](validation/whole-final.log).
