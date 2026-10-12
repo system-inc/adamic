@@ -2,18 +2,17 @@ package json
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -29,7 +28,7 @@ func gitCorpus(root string, arguments ...string) ([]byte, error) {
 }
 
 func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, error) {
-	command := exec.CommandContext(context.Background(), "git", append([]string{"-C", root}, arguments...)...)
+	command := toolchain.GitCommand(append([]string{"-C", root}, arguments...)...)
 	command.Stdin = bytes.NewReader(input)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
