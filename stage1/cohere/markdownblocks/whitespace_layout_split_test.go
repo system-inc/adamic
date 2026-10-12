@@ -25,6 +25,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testMarkdownWhitespaceLayoutShards = 24
@@ -696,8 +697,8 @@ func whitespaceLayoutBuildFiles() []string {
 func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
 	t.Parallel()
 	root := markdownLayoutProductRoot(t)
-	command := bounded(t, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
-	command.Dir = root
+	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
+	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
 	listing, err := combinedOutput(command)
 	if err != nil {
 		t.Fatalf("go list: %v\n%s", err, listing)
