@@ -5,7 +5,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -17,10 +16,10 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const scannerShardCount = 16
@@ -55,36 +54,30 @@ func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) er
 	return prepared.directory
 }
 
+// scannerOracleProduct is typescript-go's scanner with testdata/oracle.go laid over a virtual main in its module, a
+// buildcache.GoBuildIn product keyed by the packages go compiles, never cohere/TypeScript/tsc whole, whose 66,741 files
+// (mostly baselines nothing links) a populated tree hashed for every lookup (#4ycgm2n). It returns the oracle binary.
+// The overlay names this checkout's paths: GoBuildIn keys its map and the side file, never its own path (#tqrqx60).
 func scannerOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := buildcache.Inputs{Name: "scanner-go-oracle", Files: []string{"cohere/TypeScript/tsc", "go.mod", "go.work", "stage1/typescript/scanner/testdata/oracle.go"}, Flags: []string{"go build", "-overlay", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{buildcache.Tool("go", "version")}}
-	return scannerFetch(t, inputs, func(directory string) error {
-		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-		if err != nil {
-			return err
-		}
-		side, err := filepath.Abs("testdata/oracle.go")
-		if err != nil {
-			return err
-		}
-		virtual := filepath.Join(root, "adamic_scanner_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(directory, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		command := toolchain.CommandIn(root, "go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
+	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/oracle.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	virtual := filepath.Join(root, "adamic_scanner_oracle.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoBuildIn(t, "cohere/TypeScript/tsc", "oracle", virtual, []string{"-overlay=" + path})
 }
 
 func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
@@ -100,8 +93,7 @@ func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 		contents[name] = data
 		flags = append(flags, name+"="+string(data))
 	}
-	inputs := buildcache.Inputs{Name: "scanner-native", Files: []string{"internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-	return scannerFetch(t, inputs, func(directory string) error {
+	return scannerFetch(t, scannerNativeInputs(flags), func(directory string) error {
 		for _, name := range portFiles {
 			if err := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); err != nil {
 				return err
@@ -117,6 +109,23 @@ func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 		}
 		return native.Build(native.C(lowered), filepath.Join(directory, "scanner"), options)
 	})
+}
+
+// scannerNativeInputs keys a scanner native: the compiler that lowers and builds it (compilerinputs.Lowering, never
+// cohere whole) and, in flags, the port's files by content and the build's options.
+func scannerNativeInputs(flags []string) buildcache.Inputs {
+	return buildcache.Inputs{Name: "scanner-native", Files: compilerinputs.Lowering(), Flags: flags, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+}
+
+// A native's key names the compiler, never tsc whole: a tsc baseline's edit keeps it and a linked tsc package's edit
+// moves it (compilerinputs.CheckKey). Mutant: cohere whole back in the native's files.
+func TestScannerNativeKeyNamesTheCompiler(t *testing.T) {
+	t.Parallel()
+	if err := compilerinputs.CheckKey(nil, func(root string) (string, error) {
+		return buildcache.Key(root, scannerNativeInputs([]string{"main.ts=stand-in"}))
+	}); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func scannerNative(t *testing.T, mutant int, sanitize bool) string {
