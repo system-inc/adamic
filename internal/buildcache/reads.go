@@ -341,17 +341,26 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 // Settle and Find: a builder, or a test that changes the tree between lookups, values afresh.
 var settledTree atomic.Pointer[sync.Map]
 
-// readTree holds each tree entry's value for the life of a read-mode process (readMode), as settledTree does for
-// Settle's: a runner's source is unpacked read-only and never changes under the process, so a test that looks up
-// several products valued every entry of each one's read set again (#szswjtc: TypeScript's readproofs, 8 to 27 s a
-// hit on a loaded Workshop). It is its own map, so Settle and Find, which set settledTree and clear it as they end,
-// never drop what a read-mode process holds.
+// readTree holds each tree entry's value for the life of a process whose tree can't change under it (heldForLife), as
+// settledTree does for Settle's: a test that looks up several products valued every entry of each one's read set again
+// (#szswjtc: TypeScript's readproofs, 8 to 27 s a hit on a loaded Workshop). It is its own map, so Settle and Find,
+// which set settledTree and clear it as they end, never drop what such a process holds.
 var readTree sync.Map
 
 // readMode is ADAMIC_BUILD_CACHE=read, a runner's process: it reads products and never builds them, over a source
-// that never changes under it, so what it values of the tree, and each product it finds, holds for its life.
+// that never changes under it.
 func readMode() bool {
 	return os.Getenv("ADAMIC_BUILD_CACHE") == "read"
+}
+
+// heldForLife says whether what this process values of the tree, and each product it finds, holds for its life: in
+// read mode, whose source never changes under it, and under a trace, whose tree is the same from the run's start to its
+// end or every build of the run is refused (TreeState before and after, and any write into the tree, Settle). A traced
+// process that looked up each product afresh valued the whole chain each one reads every time: css's PostCSS answers
+// read the products their process read before them, about 30 siblings each, so one hit valued 163,866 entries under
+// strace and took 62 to 182 s, and a shard of 49 never finished inside the 14-minute bound (lap 3, #47ykkmr).
+func heldForLife() bool {
+	return readMode() || traceDirectory() != ""
 }
 
 // treeValuesRead counts the tree values this process read rather than held: a test asks it.
@@ -442,7 +451,7 @@ func productDigest(directory string) (string, error) {
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
 func treeValue(root, kind, name string) string {
 	held := settledTree.Load()
-	if readMode() {
+	if heldForLife() {
 		held = &readTree
 	}
 	if held == nil {
@@ -646,11 +655,12 @@ type found struct {
 // process keeps what it found for its life besides (readProducts).
 type productMemo map[string]*productLookup
 
-// readProducts holds each product a read-mode process (readMode) has found, by root, cache and name key, so a test that
-// looks up several products, or one product many times, values each one's read set once (#szswjtc). Only a found
-// product is held: its tree never changes under the process, its directory is never taken away, and a read set joined
-// from the store later goes after the cache's own, so the set that found it still finds it first. A missing one is
-// looked up again, since a joined set can find what the cache's own didn't.
+// readProducts holds each product a process whose tree can't change under it (heldForLife) has found, by root, cache and
+// name key, so a test that looks up several products, or one product many times, values each one's read set once
+// (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process, its directory is never
+// taken away, and a read set joined from the store later goes after the cache's own, so the set that found it still
+// finds it first. A missing one is looked up again, since a joined set can find what the cache's own didn't. What a
+// traced build reads is never changed by it: a lookup is keying, which no read set takes (trace.go).
 var readProducts sync.Map
 
 // productsLookedUp counts the products this process looked up by their read sets rather than held: a test asks it.
@@ -668,7 +678,7 @@ type productLookup struct {
 // while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
 // than at depth 16 down every branch.
 func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
-	held := readMode()
+	held := heldForLife()
 	heldKey := root + "\x00" + cache + "\x00" + nameKey
 	if held {
 		if result, ok := readProducts.Load(heldKey); ok {

@@ -104,9 +104,10 @@ func forgetTracked() {
 	repositories.Range(func(key, _ any) bool { repositories.Delete(key); return true })
 }
 
-// forgetReadMode drops what a read-mode process holds for its life (readTree, readProducts), as a new runner process
-// starts with nothing.
-func forgetReadMode() {
+// forgetHeldForLife drops what a process whose tree can't change under it holds for its life (readTree, readProducts),
+// as a new process starts with nothing: a runner's in read mode, or a traced one, which every rig's trace makes this
+// test process.
+func forgetHeldForLife() {
 	readTree.Clear()
 	readProducts.Clear()
 }
@@ -193,7 +194,7 @@ func building(content string) func(directory string) error {
 // own, holding nothing an earlier lookup read (a test changes the tree between them, which a runner's never does).
 func reading(t *testing.T, inputs Inputs) (string, error) {
 	t.Helper()
-	forgetReadMode()
+	forgetHeldForLife()
 	t.Setenv("ADAMIC_BUILD_CACHE", "read")
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
 	defer t.Setenv("ADAMIC_BUILD_CACHE", "")
@@ -1032,8 +1033,10 @@ func TestAFileIsValuedByItsGitObject(t *testing.T) {
 	if inSource, err := evaluate(unpacked, r.cache, nameKey, set, 0, nil); err != nil || inSource.key != inCheckout.key {
 		t.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, err)
 	}
-	// Changed after git was asked, with git's answer still held: hashed, so the key moves.
+	// Changed after git was asked, with git's answer still held: hashed, so the key moves. Valued by a new process: the
+	// rig's trace makes this one hold what it valued for its life, and a traced run whose tree changed is refused whole.
 	write(t, r.root, "source/a.c", "int a2;\n")
+	forgetHeldForLife()
 	if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == inCheckout.key {
 		t.Fatal("a file changed after git was asked kept its old id")
 	}
@@ -1354,6 +1357,8 @@ func TestAFileGitStopsComparingIsHashed(t *testing.T) {
 			write(t, r.root, "source/a.c", "int Z;\n")
 			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
 			forgetTracked()
+			// Valued by a new process, as after the edit above: the rig's trace makes this one hold what it valued.
+			forgetHeldForLife()
 			if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == before.key {
 				t.Fatalf("source/a.c edited under %s kept its key", flag)
 			}

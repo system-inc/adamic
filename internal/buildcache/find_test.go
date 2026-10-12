@@ -211,28 +211,39 @@ func recordedProduct(t *testing.T, r *rig, nameKey string, entries []readEntry, 
 	return evaluated.key
 }
 
-// A read-mode process (a runner's: its source never changes under it) values each tree entry once for its life and
-// each product it finds once (#szswjtc: TypeScript's readproofs re-valued a product's whole read set on every lookup,
-// 8 to 27 s a hit): a second lookup of a product reads no tree value and answers the same, and another product reading
-// what the first read reads none either, even after Find has held and dropped values of its own. A product it misses
-// is looked up again, so one that arrives later is found. Mutants: no product held (each lookup values its read set
-// again, over held tree values); read mode's held tree values kept in settledTree (Find's end drops them); a miss
-// held as found is.
+// A process whose tree can't change under it values each tree entry once for its life and each product it finds once:
+// a read-mode one (a runner's: its source never changes under it; #szswjtc: TypeScript's readproofs re-valued a
+// product's whole read set on every lookup, 8 to 27 s a hit), and a traced one (its run's builds are all refused if the
+// tree changes; #47ykkmr: css's PostCSS answers, 62 to 182 s a hit under strace). A second lookup of a product reads no
+// tree value and answers the same, and another product reading what the first read reads none either, even after Find
+// has held and dropped values of its own. A product it misses is looked up again, so one that arrives later is found.
+// Mutants: no product held (each lookup values its read set again, over held tree values); the held tree values kept in
+// settledTree (Find's end drops them); a miss held as found is; a traced process holding nothing.
 // Not parallel: newRig, and treeValuesRead counts the whole process's reads.
-func TestAReadModeProcessValuesEachProductOnce(t *testing.T) {
+func TestAProcessWhoseTreeCannotChangeValuesEachProductOnce(t *testing.T) {
+	for _, mode := range []string{"read", "traced"} {
+		t.Run(mode, func(t *testing.T) { processValuesEachProductOnce(t, mode) })
+	}
+}
+
+func processValuesEachProductOnce(t *testing.T, mode string) {
 	r := newRig(t)
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	forgetReadMode()
-	t.Cleanup(forgetReadMode)
+	forgetHeldForLife()
+	t.Cleanup(forgetHeldForLife)
 	first, second, late := fmt.Sprintf("%064x", 1), fmt.Sprintf("%064x", 2), fmt.Sprintf("%064x", 3)
 	recordedProduct(t, r, first, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "content", Path: "source/a.c"}, {Kind: "listing", Path: "source"}}, true)
 	recordedProduct(t, r, second, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "product", Path: first}}, true)
 	lateKey := recordedProduct(t, r, late, []readEntry{{Kind: "content", Path: "go.mod"}}, false)
 	want := lookedUpAlone(t, r, second)
 	if want.Outcome != FindingFound {
-		t.Fatalf("outside read mode: %+v", want)
+		t.Fatalf("outside read mode and a trace: %+v", want)
 	}
-	t.Setenv("ADAMIC_BUILD_CACHE", "read")
+	if mode == "read" {
+		t.Setenv("ADAMIC_BUILD_CACHE", "read")
+	} else {
+		t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	}
 	var products int64
 	lookup := func(nameKey string) (found, int64) {
 		t.Helper()
@@ -269,14 +280,14 @@ func TestAReadModeProcessValuesEachProductOnce(t *testing.T) {
 	}
 }
 
-// Outside read mode a lookup values the tree afresh: a builder, or a test, changes it between lookups, and the second
-// answers for the tree as it is then. Mutant: read mode's per-process memo on in every mode.
+// Outside read mode and a trace a lookup values the tree afresh: a builder, or a test, changes it between lookups, and
+// the second answers for the tree as it is then. Mutant: the per-process memo on in every mode.
 // Not parallel: newRig.
-func TestOutsideReadModeEveryLookupValuesTheTreeAfresh(t *testing.T) {
+func TestOutsideReadModeAndATraceEveryLookupValuesTheTreeAfresh(t *testing.T) {
 	r := newRig(t)
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	forgetReadMode()
-	t.Cleanup(forgetReadMode)
+	forgetHeldForLife()
+	t.Cleanup(forgetHeldForLife)
 	nameKey := fmt.Sprintf("%064x", 4)
 	recordedProduct(t, r, nameKey, []readEntry{{Kind: "content", Path: "source/a.c"}}, true)
 	if before := lookedUpAlone(t, r, nameKey); before.Outcome != FindingFound {
