@@ -1,6 +1,7 @@
 package buildcache
 
 import (
+	"crypto/x509"
 	"io"
 	"net"
 	"net/http"
@@ -39,5 +40,28 @@ func TestAStoreHostResolvedByTheCallerIsNeverLookedUp(t *testing.T) {
 	t.Setenv(storeResolved, "store.invalid=not-an-address")
 	if _, err := get(); err == nil || !strings.Contains(err.Error(), "isn't an address") {
 		t.Fatalf("an address that isn't one: %v", err)
+	}
+}
+
+// A traced lookup's certificate roots are loaded as keying work, once, and pinned on the store client, so a handshake
+// inside a product's trace never reads the machine's certificate bundle (the smoke's css and yaml reds, Oct 12). Mutant:
+// the roots loaded outside the keying window.
+// Not parallel: t.Setenv and systemRoots.
+func TestTheStoresCertificateRootsAreLoadedAsKeying(t *testing.T) {
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	pool := x509.NewCertPool()
+	saved := systemRoots
+	t.Cleanup(func() { systemRoots = saved })
+	keyingWhenLoaded := int64(-1)
+	systemRoots = func() (*x509.CertPool, error) {
+		keyingWhenLoaded = keyingNow.Load()
+		return pool, nil
+	}
+	transport := storeTransport().(*http.Transport)
+	if keyingWhenLoaded < 1 {
+		t.Fatalf("the roots were loaded with %d keyings running", keyingWhenLoaded)
+	}
+	if transport.TLSClientConfig == nil || transport.TLSClientConfig.RootCAs != pool {
+		t.Fatal("the roots loaded aren't the store client's")
 	}
 }
