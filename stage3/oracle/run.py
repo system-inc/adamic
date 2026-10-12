@@ -15,7 +15,7 @@ sys.dont_write_bytecode = True
 from failure_details import read_failures, cause_counts, diff_previews, markdown
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from apply import installed_packages
-from npm_cli import npm
+from npm_cli import environment, npm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('tree', type=Path)
@@ -86,7 +86,7 @@ try:
             report['phases'][name] = dict(producer['phases'][name], artifact=producer['key'])
         report['artifact'] = producer['key']
     if args.prepared or packages() == 0:
-        if args.prepared or phase('build', npm('run', 'build')) == 0:
+        if args.prepared or phase('build', npm('run', 'build'), env=environment()) == 0:
             command = npm('test', '--', f'--workers={args.workers}', '--lint=false', '--no-colors')
             if args.prepared:
                 command = ['node', str(Path(__file__).with_name('run-prepared.mjs')), str(tree),
@@ -100,7 +100,7 @@ try:
                 report['timeout_ms'] = args.timeout
             observations = out / 'mocha-errors'
             observations.mkdir()
-            env = dict(os.environ, STAGE3_ERROR_DIR=str(observations))
+            env = dict(environment(), STAGE3_ERROR_DIR=str(observations))
             observer = Path(__file__).with_name('observe-errors.cjs').resolve()
             env['NODE_OPTIONS'] = env.get('NODE_OPTIONS', '') + ' --require=' + json.dumps(str(observer))
             code = phase('tests', command, args.limit_seconds, env)
