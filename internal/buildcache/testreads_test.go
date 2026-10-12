@@ -16,6 +16,16 @@ func testReadsRig(t *testing.T) *rig {
 	return r
 }
 
+// testReadsReport is the settlement's read set line, or nil.
+func testReadsReport(settlement Settlement) *Report {
+	for index := range settlement.Reports {
+		if settlement.Reports[index].Outcome == ReportReadSet {
+			return &settlement.Reports[index]
+		}
+	}
+	return nil
+}
+
 // testReadSetKey is a test read set's name key as Loom's tree builder would name it (#sfqdxvy).
 var testReadSetKey = strings.Repeat("7", 64)
 
@@ -49,8 +59,13 @@ func TestATestReadSetHoldsTheWholeRunsReads(t *testing.T) {
 		t.Fatalf("settled %q, test reads %q", settlement.Settled, settlement.TestReads)
 	}
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	if finding := findTestReads(t); finding.Outcome != FindingFound || finding.Name != TestReadSetName {
+	finding := findTestReads(t)
+	if finding.Outcome != FindingFound || finding.Name != TestReadSetName {
 		t.Fatalf("an unchanged tree: %+v", finding)
+	}
+	// The report names the set under the key cmd/find finds it by, for Loom to vouch with it and no other set.
+	if line := testReadsReport(settlement); line == nil || line.NameKey != testReadSetKey || line.Key != finding.Key || line.Reads == 0 {
+		t.Fatalf("the report's read set line is %+v, want %s under %s", line, testReadSetKey, finding.Key)
 	}
 	write(t, r.root, "include/x.h", "#define X 2\n")
 	if finding := findTestReads(t); finding.Outcome != FindingFound {
@@ -77,8 +92,8 @@ func TestAFailedRunRecordsNoTestReadSet(t *testing.T) {
 			r.open(r.pid, "notes.txt")
 			r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
 			r.add(r.pid, "%s", exit)
-			if settlement := r.settle(t); !strings.HasPrefix(settlement.TestReads, "no test read set: ") {
-				t.Fatalf("a run that %s: %q", exit, settlement.TestReads)
+			if settlement := r.settle(t); !strings.HasPrefix(settlement.TestReads, "no test read set: ") || testReadsReport(settlement) != nil {
+				t.Fatalf("a run that %s: %q, report %+v", exit, settlement.TestReads, testReadsReport(settlement))
 			}
 			t.Setenv("ADAMIC_BUILD_TRACE", "")
 			if finding := findTestReads(t); finding.Outcome != FindingMissing {
@@ -99,5 +114,31 @@ func TestTheTestReadSetKeyKeysNoProduct(t *testing.T) {
 	t.Setenv("ADAMIC_TRACE_TEST_KEY", testReadSetKey)
 	if with := NameKey(r.root, port); with != without {
 		t.Fatalf("ADAMIC_TRACE_TEST_KEY moved a name key: %s, without it %s", with, without)
+	}
+}
+
+// A process the command started that outlives it still reads for the run: what it reads after the command's exit is in
+// the test read set too (Mentat's review of 8.8). Mutant that fails it: an orphan's reads dropped when it has no live
+// ancestor, so the edit to what only it read stays found.
+// Not parallel: newRig.
+func TestATestReadSetHoldsWhatAProcessReadAfterTheCommandExited(t *testing.T) {
+	r := testReadsRig(t)
+	Product(t, port, building("built"))
+	child := r.pid + 1
+	r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+	r.add(r.pid, "+++ exited with 0 +++")
+	r.open(child, "include/x.h")
+	r.add(child, "+++ exited with 0 +++")
+	if settlement := r.settle(t); !strings.HasPrefix(settlement.TestReads, "test read set ") {
+		t.Fatalf("test reads %q", settlement.TestReads)
+	}
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	if finding := findTestReads(t); finding.Outcome != FindingFound {
+		t.Fatalf("an unchanged tree: %+v", finding)
+	}
+	write(t, r.root, "include/x.h", "#define X 2\n")
+	if finding := findTestReads(t); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, "include/x.h") {
+		t.Fatalf("a change to what only the outliving process read: %+v", finding)
 	}
 }

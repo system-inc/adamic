@@ -168,6 +168,9 @@ const (
 	ReportRefused = "refused"
 	ReportFound   = "found"
 	ReportLost    = "lost"
+	// ReportReadSet is the run's test read set (#sfqdxvy), recorded under NameKey (ADAMIC_TRACE_TEST_KEY) with its
+	// marker under Key: Loom vouches for the test with it only when cmd/find finds it under that very key.
+	ReportReadSet = "readSet"
 )
 
 // WriteReport writes reports to file, one JSON line each, replacing what it held.
@@ -931,6 +934,28 @@ func (state *traceState) exited(pid int) {
 	reads := state.reads[pid]
 	delete(state.reads, pid)
 	delete(state.directory, pid)
+	// A process that outlives the command has no live ancestor left to fold into: its reads join the run's, since the
+	// test read set is everything the run read, whenever it read it (Mentat's review of 8.8).
+	defer func() {
+		if state.runReads == nil || pid == state.command {
+			return
+		}
+		for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
+			if _, live := state.reads[ancestor]; live {
+				return
+			}
+		}
+		for name, found := range reads {
+			kinds := found.kinds
+			if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(state.command, name, found.firstRead) {
+				kinds &= readWrite
+			}
+			if kinds != 0 {
+				state.runReads[name] |= kinds
+				state.runLast[name] = max(state.runLast[name], found.lastRead)
+			}
+		}
+	}()
 	for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
 		if into, live := state.reads[ancestor]; live {
 			for name, found := range reads {
@@ -1145,7 +1170,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 	}
 	if nameKey := os.Getenv("ADAMIC_TRACE_TEST_KEY"); nameKey != "" {
-		settlement.TestReads = state.recordTestReads(nameKey, processes, recipes, products, productEnds)
+		state.recordTestReads(&settlement, nameKey, processes, recipes, products, productEnds)
 	}
 	// What the run found already built, under its key in the cache: a test's products are these and the ones it
 	// settled (Planner's step 5 proof on Home, Oct 11: a tree that took a test's products from the census lost every
@@ -1302,14 +1327,20 @@ func placeSettled(cache, key string, entry journalEntry) string {
 const TestReadSetName = "test read set"
 
 // recordTestReads records the whole run's reads as the test read set under nameKey, the name key Loom's tree builder
-// names in ADAMIC_TRACE_TEST_KEY (#sfqdxvy), and returns its line. A product test that only finds products another
+// names in ADAMIC_TRACE_TEST_KEY (#sfqdxvy), and gives settlement its line, and its report line when it's recorded:
+// outcome readSet, the name key and the marker's key, which Loom keeps to vouch with this set and no other. A product test that only finds products another
 // test built has no build, so no product's set holds the reads that decided the names it asked for; this set does: what
 // the command and every process it started read, keying aside and not what the run wrote before reading it (snapshot),
 // classed and keyed as a product's set is, with the recipe of the processes that journaled. Recorded by recordUnion
 // beside a marker product under its key, so cmd/find finds it exactly when every value the run read is what it was,
 // and never published. Only a run that can stand for the test's next run is recorded: nothing lost, the command
 // exited 0, and every process that journaled ran one recipe; any other records nothing, and its test runs.
-func (state *traceState) recordTestReads(nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) string {
+func (state *traceState) recordTestReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) {
+	settlement.TestReads = state.testReads(settlement, nameKey, processes, recipes, products, productEnds)
+}
+
+// testReads is recordTestReads' line, after recording the set and its report line when it can.
+func (state *traceState) testReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) string {
 	facts := state.facts
 	none := func(why string) string { return "no test read set: " + why }
 	switch {
@@ -1356,6 +1387,7 @@ func (state *traceState) recordTestReads(nameKey string, processes map[int]journ
 	if err != nil {
 		return none(err.Error())
 	}
+	settlement.Reports = append(settlement.Reports, Report{Name: TestReadSetName, NameKey: nameKey, Key: evaluated.key, Outcome: ReportReadSet, Reads: len(set.Entries)})
 	return fmt.Sprintf("test read set %s: %d reads", evaluated.key[:12], len(set.Entries))
 }
 
