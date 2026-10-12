@@ -162,7 +162,7 @@ func completeSuggestionProductFiles(t *testing.T) []string {
 // registry that generates its dispatch from the fixture's descriptors, and the oracle sources laid over cohere.
 func completeSuggestionOracleFiles(t *testing.T) []string {
 	t.Helper()
-	files := append(lintFixtureOracleFiles(t, "testdata/oracle.go", "testdata/serialization/oracle.go"), "stage1/cohere/lint/registry",
+	files := append(lintFixtureOracleFiles(t, append([]string{"testdata/oracle.go", "testdata/serialization/oracle.go"}, lintRuleOracleSources(t)...)...), "stage1/cohere/lint/registry",
 		"stage1/cohere/lint/complete_suggestion_serialization_shards_test.go", "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
