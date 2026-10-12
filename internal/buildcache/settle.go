@@ -458,6 +458,13 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 	if under(name, wslLibraries) && kinds&(readContent|readExec) != 0 {
 		return classed{refusal + "the Windows GPU driver", name}
 	}
+	// The machine's time zone (#cbw5jtf): /etc/localtime links to whatever zone the box was set to, which no key names
+	// (Server's Los Angeles against the house's Denver, Oct 12: every product a traced Go oracle built missed on Server).
+	// A unit's TZ=UTC reaches every tool (toolchain carries it), so a build that still reads it refuses; only a look at it
+	// is keyed, as a system path. The zone database itself (/usr/share/zoneinfo) is tzdata's, valued by its package.
+	if slices.Contains(machineZone, name) && kinds&(readContent|readExec) != 0 {
+		return classed{refusal + "the machine's time zone", name}
+	}
 	for _, place := range facts.system {
 		if under(name, place) {
 			// A machine directory a build only stat'd or opened to search in is keyed by whether and as what it exists,
