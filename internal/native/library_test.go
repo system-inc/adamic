@@ -1,12 +1,14 @@
 package native
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"testing/fstest"
 
@@ -41,6 +43,9 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	}
 	if runtimeKey(files, flags, "other-clang", "version 1", "") == key {
 		t.Error("compiler path missing from key")
+	}
+	if runtimeKey(files, flags, "clang", "version 1", "/usr/include/stdio.h 0a") == key {
+		t.Error("the system headers the compile reads missing from key")
 	}
 	changed := append([]string{}, flags...)
 	changed[0], changed[1] = changed[1], changed[0]
@@ -319,5 +324,94 @@ func TestDependenciesReadClangsRules(t *testing.T) {
 	want := []string{"answer.c", "/usr/include/stdio.h", "/opt/with space/x.h", "other.c"}
 	if strings.Join(got, "|") != strings.Join(want, "|") {
 		t.Fatalf("got %q, want %q", got, want)
+	}
+}
+
+// An archive is the same bytes however many of its units compiled at once: a product compiles them four at a time and
+// the cache one at a time, and either must be the other's archive. Mutant: archiving the objects as they finish.
+func TestARuntimeIsTheSameOnAnyNumberOfWorkers(t *testing.T) {
+	t.Parallel()
+	var files []runtimeFile
+	for index := range 8 {
+		files = append(files, runtimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
+	}
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var archives [][]byte
+	for _, workers := range []int{1, 4, 8} {
+		directory := t.TempDir()
+		if err := compileRuntime(files, Flags(Options{}), compiler, directory, workers); err != nil {
+			t.Fatal(err)
+		}
+		archive, err := os.ReadFile(filepath.Join(directory, "runtime.a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		archives = append(archives, archive)
+	}
+	for index, archive := range archives[1:] {
+		if !bytes.Equal(archive, archives[0]) {
+			t.Errorf("the archive compiled on %d workers differs from the one compiled on 1", []int{4, 8}[index])
+		}
+	}
+}
+
+// A supplier (SupplyRuntimes) gives every archive of the embedded runtime, asked once per key however many builds
+// want it, and its error is the build's; another checkout's runtime never goes to it. In a child process, since the
+// supplier is the process's. Mutants: the supplier asked for a directory's runtime; asked again for a key it gave.
+func TestASuppliedRuntimeIsAskedOncePerKey(t *testing.T) {
+	t.Parallel()
+	const variable = "ADAMIC_TEST_SUPPLIED_RUNTIME"
+	if directory := os.Getenv(variable); directory != "" {
+		var asked atomic.Int64
+		SupplyRuntimes(func(request RuntimeRequest) (string, error) {
+			asked.Add(1)
+			if request.Options.Count {
+				return "", fmt.Errorf("no counted runtime here")
+			}
+			held := filepath.Join(directory, fmt.Sprint(asked.Load()))
+			if err := os.MkdirAll(held, 0o755); err != nil {
+				return "", err
+			}
+			return held, os.WriteFile(filepath.Join(held, "runtime.a"), nil, 0o644)
+		})
+		libraries := make([]string, 8)
+		var callers sync.WaitGroup
+		for index := range libraries {
+			callers.Go(func() {
+				library, err := RuntimeLibrary("", Options{})
+				if err != nil {
+					t.Error(err)
+				}
+				libraries[index] = library
+			})
+		}
+		callers.Wait()
+		for _, library := range libraries {
+			if library != filepath.Join(directory, "1", "runtime.a") {
+				t.Fatalf("got %s, want the supplier's first archive", library)
+			}
+		}
+		if _, err := RuntimeLibrary("", Options{Count: true}); err == nil || !strings.Contains(err.Error(), "no counted runtime here") {
+			t.Fatalf("the supplier's error isn't the build's: %v", err)
+		}
+		checkout := t.TempDir()
+		if err := os.WriteFile(filepath.Join(checkout, "answer.c"), []byte("int answer(void) { return 42; }\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := RuntimeLibrary(checkout, Options{}); err != nil {
+			t.Fatal(err)
+		}
+		if got := asked.Load(); got != 2 {
+			t.Fatalf("the supplier was asked %d times, want 2 (the plain runtime once, the counted once)", got)
+		}
+		return
+	}
+	command := exec.Command(os.Args[0], "-test.run=^TestASuppliedRuntimeIsAskedOncePerKey$")
+	command.Env = append(os.Environ(), variable+"="+t.TempDir(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir())
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("%v\n%s", err, output)
 	}
 }
