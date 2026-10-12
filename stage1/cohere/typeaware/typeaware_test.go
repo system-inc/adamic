@@ -15,10 +15,12 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -189,7 +191,11 @@ func (h *harness) lowered(entry, name string) string {
 	var source string
 	var err error
 	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
-		source, err = cachedTypeAwareProduct("C "+entry, build)
+		key, keyErr := typeAwareLoweredKey(h.repository, entry)
+		if keyErr != nil {
+			h.t.Fatal(keyErr)
+		}
+		source, err = cachedTypeAwareProduct(key, build)
 	} else {
 		// Generated mutants belong to their check; scratch paths cannot be gate products.
 		source, err = build("")
@@ -221,7 +227,10 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 		}
 		return path
 	}
-	key := fmt.Sprintf("binary %x %s sanitize=%t", sha256.Sum256([]byte(source)), archive, sanitize)
+	key, err := typeAwareNativeKey("binary", source, archive, sanitize)
+	if err != nil {
+		h.t.Fatal(err)
+	}
 	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		return binary, compile(binary)
@@ -243,13 +252,17 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 
 // mutantNative is a mutant's native as a product, for a mutant whose compile would otherwise fill its shard's own time
 // (wrong-node's ASan link took 22.0 s of TestTypeAwareAgreementAndMutants_003's 24.4 s, and facts-length's 25.6 s of
-// TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is the emitted C's hash, as h.build's
-// cached natives are: emission names no path, so the same mutant lowered from two directories is the same C. Its
-// TestProduct_ makes it ahead; any other mutant still compiles inside its own check, as h.build does.
+// TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is typeAwareNativeKey's, as h.build's
+// cached natives' is: the emitted C's hash (emission names no path, so the same mutant lowered from two directories is
+// the same C) and the archive's. Its TestProduct_ makes it ahead; any other mutant still compiles inside its own check,
+// as h.build does.
 func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
 	source := h.lowered(entry, name)
-	key := fmt.Sprintf("mutant native %s %x %s sanitize=%t", name, sha256.Sum256([]byte(source)), archive, sanitize)
+	key, err := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
+	if err != nil {
+		h.t.Fatal(err)
+	}
 	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		started := time.Now()
@@ -261,6 +274,96 @@ func (h *harness) mutantNative(name, entry, archive string, sanitize bool) strin
 		h.t.Fatal(err)
 	}
 	return binary
+}
+
+// typeAwareLoweredKey keys an entry's emitted C by the entry's path in the repository, never where the checkout sits:
+// a key carries no machine path, or a runner's checkout reads none of the builder's products.
+func typeAwareLoweredKey(repository, entry string) (string, error) {
+	relative, err := filepath.Rel(repository, entry)
+	if err != nil {
+		return "", err
+	}
+	return "C " + filepath.ToSlash(relative), nil
+}
+
+// typeAwareNativeKey keys a native by kind, the emitted C's hash, the archive's bytes' hash and sanitize. The archive
+// is a product whose path names the cache directory, and so the machine, it sits in: by its bytes, the same archive
+// keys the same native wherever it is cached (tsgo's archive rebuilds byte for byte, Builder's Linux proof, Oct 12).
+func typeAwareNativeKey(kind, source, archive string, sanitize bool) (string, error) {
+	digest, err := typeAwareArchiveDigest(archive)
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%s %x archive=%s sanitize=%t", kind, sha256.Sum256([]byte(source)), digest, sanitize), nil
+}
+
+// typeAwareArchiveDigests are the archives' SHA256s, read once per process each: a product never changes in place.
+var typeAwareArchiveDigests sync.Map
+
+func typeAwareArchiveDigest(archive string) (string, error) {
+	if digest, ok := typeAwareArchiveDigests.Load(archive); ok {
+		return digest.(string), nil
+	}
+	data, err := os.ReadFile(archive)
+	if err != nil {
+		return "", err
+	}
+	digest := fmt.Sprintf("%x", sha256.Sum256(data))
+	typeAwareArchiveDigests.Store(archive, digest)
+	return digest, nil
+}
+
+// The keys of a native and of an emitted C carry no machine path: one product keys alike from two checkouts and two
+// cache directories, by name key and by declared key. Mutants: the archive's path back in the native's key; the
+// entry's absolute path back in the C's.
+func TestTypeAwareKeysCarryNoMachinePath(t *testing.T) {
+	t.Parallel()
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var natives, lowered []string
+	for _, machine := range []string{t.TempDir(), t.TempDir()} {
+		// Where the archive product sits under this machine's ADAMIC_BUILD_CACHE_DIR, and where its checkout is.
+		archive := filepath.Join(machine, "cache", "local", "d91f8adc3a72", "checker.a")
+		if err := os.MkdirAll(filepath.Dir(archive), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(archive, []byte("the same archive bytes on both machines"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		native, err := typeAwareNativeKey("binary", "int main(void) { return 0; }\n", archive, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		checkout := filepath.Join(machine, "checkout")
+		c, err := typeAwareLoweredKey(checkout, filepath.Join(checkout, "stage1/cohere/typeaware/main.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		natives, lowered = append(natives, native), append(lowered, c)
+	}
+	for _, keys := range []struct {
+		name string
+		keys []string
+	}{{"native", natives}, {"emitted C", lowered}} {
+		first, second := typeAwareSharedInputs(keys.keys[0]), typeAwareSharedInputs(keys.keys[1])
+		if a, b := buildcache.NameKey(repository, first), buildcache.NameKey(repository, second); a != b {
+			t.Fatalf("%s: name key %s on one machine, %s on the other (%q, %q)", keys.name, a[:12], b[:12], keys.keys[0], keys.keys[1])
+		}
+		a, err := buildcache.Key(repository, first)
+		if err != nil {
+			t.Fatal(err)
+		}
+		b, err := buildcache.Key(repository, second)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if a != b {
+			t.Fatalf("%s: declared key %s on one machine, %s on the other", keys.name, a[:12], b[:12])
+		}
+		t.Logf("%s: one name key and one declared key (%s) from two machines", keys.name, a[:12])
+	}
 }
 
 // typeAwareWrongNodeEntry writes the wrong-node mutant into h's directory and returns its entry: main.ts asking the
