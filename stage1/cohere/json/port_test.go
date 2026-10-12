@@ -254,21 +254,17 @@ func jsonPortTopRun(t *testing.T, target int, leak bool) {
 		t.Fatal(err)
 	}
 	setup := time.Now()
-	clangTools, err := jsonTopClangToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracleDir := jsonTopOracle(t)
+	oracle := jsonTopOracle(t)
 	loweredDir := jsonTopProduct(t, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
 	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	c := string(cBytes)
-	releaseDir := jsonTopProduct(t, "release", jsonNativePortInputs(c, false, clangTools), buildJSONReleasePort(c))
-	sanitizedDir := jsonTopProduct(t, "sanitized", jsonNativePortInputs(c, true, clangTools), buildJSONSanitizedPort(c))
+	releaseDir := jsonTopProduct(t, "release", jsonNativePortInputs(c, false, jsonTopState.clangTools), buildJSONReleasePort(c))
+	sanitizedDir := jsonTopProduct(t, "sanitized", jsonNativePortInputs(c, true, jsonTopState.clangTools), buildJSONSanitizedPort(c))
 	entry, script := filepath.Join(loweredDir, "main.ts"), filepath.Join(loweredDir, "program.mjs")
-	release, sanitized, oracle := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port"), filepath.Join(oracleDir, "go-cohere")
+	release, sanitized := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port")
 	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
 			t.Fatal(err)

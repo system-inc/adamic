@@ -47,7 +47,6 @@ var compilerSites = map[string]string{
 	"stage1/cohere/cssstrings/setup_products_test.go:TestCSSStringsGoOracleKeysTheCompilersEnvGivesGo": "sets CC and CXX to check the key reads them from toolchain.Env; compiles nothing",
 	"stage1/cohere/estree/misc_shards_test.go:miscArchiverTool":                                        "finds the archiver beside clang to name it in a key; compiles nothing",
 	"stage1/cohere/estree/recovery_cache_test.go:recoveryStableNative":                                 "compiles from its own work directory by relative names, with that directory's prefix maps",
-	"stage1/cohere/json/builds_test.go:jsonClangToolchain":                                             "names clang and its archiver in a key; compiles nothing",
 	"stage1/cohere/json/port_matches_prepared_split_test.go:portMatchesJsonClangToolchain":             "names clang and its archiver in a key; compiles nothing",
 	"stage1/cohere/lint/jsx_shards_test.go:TestJsxSetupKeyNamesTheBuildsCompiler":                      "sets CC to clang or gcc for child go env runs to check the key names it; compiles nothing",
 	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds":                      "the profiled build, unsanitized, with its directory prefix-mapped: debug info is all that names a path",

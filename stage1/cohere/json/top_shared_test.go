@@ -19,19 +19,17 @@ const testUpstreamRepositoryCorpusParityShards = 2048
 // ADAMIC_TEST_SHARD=i/n selects ordinals modulo n locally; unset runs every
 // generated top-level leaf. Isolated gate leaves use go test -timeout 90s.
 // Products and enumeration are shared once per process, before any comparisons.
+// Setup (portMatchesPrepareProducts) writes oracle, the Go oracle's binary, and clangTools once; a leaf reads them
+// only after portMatchesPrepare.
 var jsonTopState struct {
-	corpus              sync.Once
-	cases               []textCase
-	shards              []nativeChunk
-	oracle              sync.Once
-	oracleDir           string
-	oracleCached        bool
-	goOnce, clangOnce   sync.Once
-	goTools, clangTools []string
-	goErr, clangErr     error
-	products            sync.Map
-	reports             sync.Mutex
-	report              map[int]string
+	corpus     sync.Once
+	cases      []textCase
+	shards     []nativeChunk
+	oracle     string
+	clangTools []string
+	products   sync.Map
+	reports    sync.Mutex
+	report     map[int]string
 }
 
 type jsonTopBuild struct {
@@ -53,10 +51,6 @@ func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
 	}
 	return jsonTopState.cases, jsonTopState.shards
 }
-func jsonTopClangToolchain() ([]string, error) {
-	jsonTopState.clangOnce.Do(func() { jsonTopState.clangTools, jsonTopState.clangErr = jsonClangToolchain() })
-	return jsonTopState.clangTools, jsonTopState.clangErr
-}
 func jsonTopProduct(t *testing.T, key string, in buildcache.Inputs, build func(string) error) string {
 	t.Helper()
 	portMatchesPrepare(t)
@@ -66,13 +60,15 @@ func jsonTopProduct(t *testing.T, key string, in buildcache.Inputs, build func(s
 	}
 	return v.(*jsonTopBuild).dir
 }
+
+// jsonTopOracle is the Go oracle's binary, as shared setup prepared it.
 func jsonTopOracle(t *testing.T) string {
 	t.Helper()
 	portMatchesPrepare(t)
-	if jsonTopState.oracleDir == "" {
+	if jsonTopState.oracle == "" {
 		t.Fatal("shared setup did not prepare the Go oracle")
 	}
-	return jsonTopState.oracleDir
+	return jsonTopState.oracle
 }
 
 func jsonTopReport(t *testing.T, i int, value string) {
@@ -89,14 +85,10 @@ func jsonTopReport(t *testing.T, i int, value string) {
 	}
 }
 
-// The local overlay must outlive all parallel leaves. Shared Product directories
-// are read-only and never removed by the test process.
-// Not parallel: owns process-wide oracle cleanup and report aggregation after m.Run.
+// Shared Product directories are read-only and never removed by the test process.
+// Not parallel: owns process-wide report aggregation after m.Run.
 func TestMain(m *testing.M) {
 	code := m.Run()
-	if jsonTopState.oracleDir != "" && !jsonTopState.oracleCached {
-		os.RemoveAll(jsonTopState.oracleDir)
-	}
 	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" && len(jsonTopState.report) > 0 {
 		var keys []int
 		for k := range jsonTopState.report {
