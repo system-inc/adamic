@@ -20,7 +20,8 @@ python3 stage3/lane/prepare_shards.py /absolute/shared/artifact-cache > /tmp/sta
 export STAGE3_ARTIFACT=/absolute/shared/artifact-cache/INPUTS_HASH
 ```
 
-The producer runs apply, locked install, compiler build and harness build once.
+The producer runs apply, links the locked install (the tree's
+`stage3/typescript/node_modules`, never npm ci), compiler build and harness build once.
 It is not a test unit. It preserves the stock TypeScript 6.0.3 API parser beside
 the build. A cache hit verifies all payload bytes. A gate must prepare or restore
 this artifact before launching manifest units; units fail if it is absent and
