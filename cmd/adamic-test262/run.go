@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // engine owns one checkout's compiler, keyed runtime archive and observation cache. Each worker
@@ -37,6 +38,7 @@ type engine struct {
 	context          string
 	nodeContext      string
 	compiler         *compilerWorker
+	tools            runnerTools
 	inProcess        bool
 	compilerIdentity string
 	profile          *runProfile
@@ -53,7 +55,7 @@ type adamicBuilder func(output string) error
 // goBuildAdamic builds ./cmd/adamic of the checkout at root.
 func goBuildAdamic(root string) adamicBuilder {
 	return func(output string) error {
-		build := exec.Command("go", "build", "-o", output, "./cmd/adamic")
+		build := toolchain.Command("go", "build", "-o", output, "./cmd/adamic")
 		build.Dir = root
 		if combined, err := build.CombinedOutput(); err != nil {
 			return fmt.Errorf("building adamic: %w\n%s", err, combined)
@@ -99,7 +101,11 @@ func prepareMode(root string, test262 string, work string, buildAdamic adamicBui
 	if err != nil {
 		return nil, err
 	}
-	cache, version, context, err := prepareCache(root)
+	tools, err := resolveTools()
+	if err != nil {
+		return nil, err
+	}
+	cache, version, context, err := prepareCache(root, tools)
 	if err != nil {
 		return nil, err
 	}
@@ -119,6 +125,7 @@ func prepareMode(root string, test262 string, work string, buildAdamic adamicBui
 		runtimeKey:       filepath.Base(filepath.Dir(library)),
 		compilerIdentity: cacheKey(string(compilerBytes)),
 		cache:            cache, nodeVersion: version, context: context, nodeContext: cache.nodeContext,
+		tools:   tools,
 		include: filepath.Dir(library),
 		flags:   flags,
 		log:     os.Stderr,
@@ -329,7 +336,7 @@ func (e *engine) attempt(test classified) result {
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
 	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
-		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, "clang", arguments...) })
+		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, e.tools.clang, arguments...) })
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
 			return linked, false
@@ -348,7 +355,7 @@ func (e *engine) attempt(test classified) result {
 	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runProgram(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+		return runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -642,7 +649,7 @@ func withCrashPath(path string, reason string) string {
 }
 
 func test262Commit(test262 string) string {
-	command := exec.Command("git", "-C", test262, "rev-parse", "HEAD")
+	command := toolchain.GitCommand("-C", test262, "rev-parse", "HEAD")
 	output, err := command.Output()
 	if err != nil {
 		return ""

@@ -153,7 +153,11 @@ func TestRunnerLocationHelper(t *testing.T) {
 	if root == "" {
 		root = "../.."
 	}
-	cache, _, context, err := prepareCache(root)
+	tools, err := resolveTools()
+	if err != nil {
+		t.Fatal(err)
+	}
+	cache, _, context, err := prepareCache(root, tools)
 	if err != nil {
 		t.Fatal(err)
 	}
