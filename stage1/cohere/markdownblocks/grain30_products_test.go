@@ -64,43 +64,14 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	root := markdownLayoutProductRoot(t)
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata", recipe.probe)
 	p := grainProducts{main: main}
-	goTools := []string{buildcache.Tool("go", "version")}
-	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}
-	// GoBuild cannot key a newly synthesized overlay target yet: GoInputs stats that
-	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
-	// and reproducible flags declared. Generator/formatter products use GoBuild below.
 	if target == "" || target == "go" {
-		dir := buildcache.Product(t, grainGoInputs(name, markdownGoCompilers()), func(dir string) error {
-			replace := map[string]string{}
-			for to, from := range recipe.overlay {
-				replace[filepath.Join(root, "cohere", to)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
-			}
-			data, err := json.Marshal(map[string]any{"Replace": replace})
-			if err != nil {
-				return err
-			}
-			overlay := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlay, data, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlay)
-			args := append(append([]string{"build"}, grainGoBuildFlags...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
-			cmd := textGoCommand(t, filepath.Join(root, "cohere"), args...)
-			if output, err := textCombinedOutput(cmd); err != nil {
-				return fmt.Errorf("Go oracle: %w\n%s", err, output)
-			}
-			return nil
-		})
-		p.goBinary = filepath.Join(dir, "oracle")
+		p.goBinary = grainGoOracle(t, root, recipe)
 	}
 
 	if target == "go" {
 		return p
 	}
-	// Keyed by what lowering reads, the package's and markdowninline's TypeScript, the checker and the compiler, as
-	// the pilot families' lowering is; the whole package directory would rebuild every grain port on any test edit.
-	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: whitespaceLayoutBuildFiles(), Toolchain: goTools}, func(dir string) error {
+	lowerDir := buildcache.Product(t, grainLoweredInputs(name), func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -123,8 +94,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 			continue
 		}
 		options := native.Options{Sanitize: sanitize}
-		flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-grain-%s-native-%t", name, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: nativeTools}, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+		dir := buildcache.Product(t, grainNativeInputs(name, source, sanitize), func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 		if sanitize {
 			p.sanitized = filepath.Join(dir, "port")
 		} else {
@@ -134,19 +104,37 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	return p
 }
 
-// grainGoBuildFlags are the reproducible flags every grain Go oracle builds with, each named in its key.
-var grainGoBuildFlags = []string{"-trimpath", "-buildvcs=false", "-ldflags=-buildid="}
-
-// grainGoInputs keys name's Go oracle. The build runs go under toolchain.Env (textGoCommand), so the key names the C
-// and C++ compilers that environment gives go, and the C compiler by its report: the caller's CC and CXX are empty on a
-// box where go runs clang. The other variables pass to go as the caller set them.
-func grainGoInputs(name string, compilers markdownCompilers) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: []string{buildcache.Tool("go", "version"), compilers.report}, Flags: append([]string(nil), grainGoBuildFlags...)}
-	for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
-		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+// grainGoOracle is recipe's Go side, cohere with the testdata files its overlay lays over it, a product
+// (buildcache.GoBuildIn) built ahead. GoBuildIn sets the reproducible flags (-trimpath, -buildvcs=false, an empty build
+// ID) itself and keys the environment go resolves. The overlay names this checkout's paths, so it sits in a temporary
+// directory and is never part of the product (#tqrqx60).
+func grainGoOracle(t *testing.T, root string, recipe grainRecipe) string {
+	t.Helper()
+	replace := map[string]string{}
+	for to, from := range recipe.overlay {
+		replace[filepath.Join(root, "cohere", to)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
 	}
-	inputs.Flags = append(inputs.Flags, "CC="+compilers.c, "CXX="+compilers.cPlusPlus, buildcache.Tool("go", "env", "GOWORK"))
-	return inputs
+	data, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlay, data)
+	return buildcache.GoBuildIn(t, "cohere", "go-"+recipe.name, filepath.Join(root, "cohere/cmd", recipe.command, "main.go"), []string{"-overlay=" + overlay})
+}
+
+// grainLoweredInputs keys name's lowered port by what lowering reads (whitespaceLayoutBuildFiles, the compiler's
+// compilerinputs.Lowering and the package's and markdowninline's sources), as the pilot families' lowering is; the
+// whole package directory would rebuild every grain port on any test edit.
+func grainLoweredInputs(name string) buildcache.Inputs {
+	return buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: whitespaceLayoutBuildFiles(), Toolchain: []string{buildcache.Tool("go", "version")}}
+}
+
+// grainNativeInputs keys name's native port built from source, the lowered port's C, by its hash and the compiler that
+// builds it (markdownNativeFiles).
+func grainNativeInputs(name string, source []byte, sanitize bool) buildcache.Inputs {
+	flags := append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return buildcache.Inputs{Name: fmt.Sprintf("markdown-grain-%s-native-%t", name, sanitize), Files: markdownNativeFiles(), Flags: flags, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
 }
 
 func grainOwn(t *testing.T) func() {

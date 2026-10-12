@@ -52,8 +52,6 @@ var compilerSites = map[string]string{
 	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds":                      "the profiled build, unsanitized, with its directory prefix-mapped: debug info is all that names a path",
 	"stage1/cohere/lint/profile_test.go:buildProfile":                                                  "a profiling build into a scratch directory, never a product",
 	"stage1/cohere/markdownblocks/support_test.go:nativeMutant":                                        "a mutant compiled into a t.TempDir(), never a product",
-	"stage1/cohere/markdownblocks/go_compilers_test.go:TestMarkdownGoBuildsRekeyCompiler":              "keys the Go builds with named compilers and compares keys; compiles nothing",
-	"stage1/cohere/markdownblocks/go_compilers_test.go:TestMarkdownGoBuildsKeyTheCompilersEnvGivesGo":  "sets CC and CXX to check the keys read them from toolchain.Env; compiles nothing",
 	"stage1/cohere/typeaware/typeaware_cache_test.go:TestTypeAwareKeysNameTheBuildsCompiler":           "sets CC to check the keys name the compiler cgo runs; compiles nothing",
 	"stage1/cohere/typeaware/volume_profile_Controls_test.go:typeAwareCompilerKey":                     "names cgo's compiler in a key; compiles nothing",
 	"stage1/typescript/scanner/profile_test.go:TestProfileArtifacts":                                   "a profiling build into a scratch directory, never a product",

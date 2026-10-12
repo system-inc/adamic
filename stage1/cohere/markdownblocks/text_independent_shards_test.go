@@ -26,7 +26,6 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Each shard is killed at 90s, after shared setup and admission.
@@ -61,41 +60,6 @@ func textSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd 
 	ctx, cancel := markdownLayoutSetupContext(t.Context())
 	t.Cleanup(cancel)
 	return textCommand(t, ctx, name, arguments...)
-}
-
-// textGoCommand is textSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env, the
-// environment whose compilers the Go builds' keys name.
-func textGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := textSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
-
-// markdownCompilers are the C and C++ compilers go builds a Go product with, and the C compiler's report.
-type markdownCompilers struct{ c, cPlusPlus, report string }
-
-// markdownGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when
-// it names neither.
-func markdownGoCompilers() markdownCompilers {
-	var compilers markdownCompilers
-	for _, setting := range toolchain.Env() {
-		switch name, value, _ := strings.Cut(setting, "="); name {
-		case "CC":
-			compilers.c = value
-		case "CXX":
-			compilers.cPlusPlus = value
-		}
-	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
-	}
-	return compilers
 }
 
 func textCommand(t *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
@@ -333,14 +297,10 @@ func textBuildProducts(t *testing.T, root string) textProducts {
 func textBuildProduct(t *testing.T, root, target string) textProducts {
 	t.Helper()
 	started := time.Now()
-	tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
-	// The lowered port is keyed by what lowering reads (whitespaceLayoutBuildFiles, which
-	// TestLoweringInputsCoverCompilerDependencies keeps complete); the native builds by its C.
-	files := whitespaceLayoutBuildFiles()
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_probe.ts")
 	products := textProducts{main: main}
 	if target == "" || target == "lowered" || target == "sanitized" || target == "release" {
-		lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-lowered", Files: files, Toolchain: tools}, func(dir string) error {
+		lowerDir := buildcache.Product(t, textLoweredInputs(), func(dir string) error {
 			program, err := loweredResult(main)
 			if err != nil {
 				return err
@@ -360,8 +320,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 				continue
 			}
 			options := native.Options{Sanitize: sanitize}
-			inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
-			dir := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+			dir := buildcache.Product(t, textNativeInputs(source, sanitize), func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 			if sanitize {
 				products.sanitized = filepath.Join(dir, "port")
 			} else {
@@ -370,52 +329,31 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 		}
 	}
 	if target == "" || target == "go" {
-		goDir := buildcache.Product(t, textGoProductInputs("go", markdownGoCompilers()), func(dir string) error {
-			cohere := filepath.Join(root, "cohere")
-			mainPath := filepath.Join(cohere, "cmd/adamic_text/main.go")
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"), filepath.Join(cohere, "internal/format/markdown/adamic_text.go"): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go")}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command := textGoCommand(t, cohere, "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("Go splitText: %w\n%s", err, output)
-			}
-			return nil
-		})
-		products.goBinary = filepath.Join(goDir, "go-text")
+		// The Go side, cohere with testdata/text_go.go and text_bridge.go its overlay lays over it, a product
+		// (buildcache.GoBuildIn). The overlay names this checkout's paths, so it sits in a temporary directory and is
+		// never part of the product (#tqrqx60).
+		cohere := filepath.Join(root, "cohere")
+		mainPath := filepath.Join(cohere, "cmd/adamic_text/main.go")
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"), filepath.Join(cohere, "internal/format/markdown/adamic_text.go"): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go")}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+		write(t, overlayPath, overlay)
+		products.goBinary = buildcache.GoBuildIn(t, "cohere", "go-text", mainPath, []string{"-overlay=" + overlayPath})
 	}
-	// Regeneration is independent of case partitioning and executes once, after its build inputs.
-	var formatterDir, generatorDir string
+	// Regeneration is independent of case partitioning and executes once, after its build inputs. The formatter is
+	// cohere's command built in cohere (buildcache.GoBuildIn), the generator a package of this repository
+	// (buildcache.GoBuild): each keyed by what go list says it compiles and the environment go resolves.
+	var formatter, generator string
 	if target == "" || target == "formatter" {
-		formatterDir = buildcache.Product(t, textGoProductInputs("formatter", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, filepath.Join(root, "cohere"), "build", "-o", filepath.Join(dir, "cohere"), "./command/cohere")
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("formatter: %w\n%s", err, output)
-			}
-			return nil
-		})
+		formatter = buildcache.GoBuildIn(t, "cohere", "cohere", "./command/cohere", nil)
 	}
 	if target == "" || target == "generator" {
-		generatorDir = buildcache.Product(t, textGoProductInputs("generator", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, root, "build", "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("generator: %w\n%s", err, output)
-			}
-			return nil
-		})
+		generator = buildcache.GoBuild(t, "generate", "./stage1/cohere/markdownblocks/tools/generate_classes", nil)
 	}
 	if target == "" {
-		command := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
+		command := textSetupCommand(t, generator, "-check", "-formatter", formatter)
 		command.Dir = root
 		if output, err := textCombinedOutput(command); err != nil {
 			t.Fatalf("regeneration: %v\n%s", err, output)
@@ -425,21 +363,17 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	return products
 }
 
-// textGoProductInputs keys the text Go build target names: "go", "formatter" or "generator". Each runs go under
-// toolchain.Env (textGoCommand), so its key names the C and C++ compilers that environment gives go, and the C compiler
-// by its report: one the key didn't name could change a cgo dependency's bytes unseen.
-func textGoProductInputs(target string, compilers markdownCompilers) buildcache.Inputs {
-	flags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus}
-	tools := []string{buildcache.Tool("go", "version"), compilers.report}
-	switch target {
-	case "go":
-		return buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(flags, "go build", "overlay text_go.go,text_bridge.go"), Toolchain: tools}
-	case "formatter":
-		return buildcache.Inputs{Name: "markdownblocks-text-formatter", Files: []string{"cohere"}, Flags: flags, Toolchain: tools}
-	case "generator":
-		return buildcache.Inputs{Name: "markdownblocks-text-generator", Files: []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_classes"}, Flags: flags, Toolchain: tools}
-	}
-	panic("unknown text Go product " + target)
+// textLoweredInputs keys the lowered port by what lowering reads (whitespaceLayoutBuildFiles, the compiler's
+// compilerinputs.Lowering and the port's sources).
+func textLoweredInputs() buildcache.Inputs {
+	return buildcache.Inputs{Name: "markdownblocks-text-lowered", Files: whitespaceLayoutBuildFiles(), Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+}
+
+// textNativeInputs keys the native port built from source, the lowered port's C, by its hash and the compiler that
+// builds it (markdownNativeFiles).
+func textNativeInputs(source []byte, sanitize bool) buildcache.Inputs {
+	flags := append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: markdownNativeFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
 func textLeakReport(t *testing.T, products textProducts, cases string) string {
