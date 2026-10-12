@@ -2,6 +2,7 @@ package printer
 
 import (
 	"path/filepath"
+	"sync"
 	"testing"
 )
 
@@ -16,6 +17,40 @@ func printerInTreeSource(t *testing.T) string {
 	return path
 }
 
+// Each set of products is looked up once per process: a lookup lists the repository and keys every file it names, and
+// the five whitespace units all read the copy's.
+type printerProductsOnce struct {
+	once     sync.Once
+	products printerProducts
+}
+
+func (p *printerProductsOnce) get(t *testing.T, prepare func() printerProducts) printerProducts {
+	t.Helper()
+	p.once.Do(func() { p.products = prepare() })
+	if p.products.sanitized == "" {
+		t.Fatal("shared GraphQL product preparation failed earlier in this process (see that test's log)")
+	}
+	return p.products
+}
+
+var inTreeProducts, copyProducts printerProductsOnce
+
+func printerInTreeProducts(t *testing.T) printerProducts {
+	t.Helper()
+	return inTreeProducts.get(t, func() printerProducts { return preparePrinterProducts(t, printerInTreeSource(t)) })
+}
+
+// printerCopyProducts are the products of an unmutated copy of the port. Every copy holds the same bytes, so the first
+// caller's products are every copy's; each caller still runs Node on a copy of its own, since the first caller's copy
+// leaves with its test.
+func printerCopyProducts(t *testing.T) printerProducts {
+	t.Helper()
+	source := printerDirectory(t, "", "", "")
+	products := copyProducts.get(t, func() printerProducts { return preparePrinterProducts(t, source) })
+	products.source = source
+	return products
+}
+
 // No TestProduct_ built the in-tree printer or the whitespace gap's copy, so Workshop's combined proof (Oct 10) found
 // the lowered and sanitized printers missing on the reading checkout. These build exactly what preparePrinterProducts
 // reads for each.
@@ -26,12 +61,12 @@ func TestProduct_GraphQLPrinterInTreeLowered(t *testing.T) {
 
 func TestProduct_GraphQLPrinterInTreeNative(t *testing.T) {
 	t.Parallel()
-	preparePrinterProducts(t, printerInTreeSource(t))
+	printerInTreeProducts(t)
 }
 
 // The whitespace gap units lower an unmutated copy of the port (printerDirectory with no change) rather than the
 // package's own main.ts; this builds what they read, keyed as they key it.
 func TestProduct_GraphQLPrinterCopyNative(t *testing.T) {
 	t.Parallel()
-	preparePrinterProducts(t, printerDirectory(t, "", "", ""))
+	printerCopyProducts(t)
 }
