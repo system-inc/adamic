@@ -10,11 +10,12 @@ import (
 	"go/parser"
 	"go/token"
 	"hash/fnv"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -23,9 +24,9 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testMarkdownWhitespaceLayoutShards = 24
@@ -132,7 +133,8 @@ func whitespaceLayoutPrepare(t *testing.T) {
 			return err
 		}
 		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
-		paths := map[string]string{"go": products.goBinary, "goLayout": products.goLayout, "sanitized": products.sanitized, "release": products.release, "policy": policy.sanitized}
+		// The Go oracles aren't named here: whitespaceLayoutReadProducts fetches them by their own keys.
+		paths := map[string]string{"sanitized": products.sanitized, "release": products.release, "policy": policy.sanitized}
 		for name, path := range paths {
 			paths[name] = buildcache.Relative(path)
 		}
@@ -250,17 +252,23 @@ func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe s
 	return whitespaceLayoutBuildProduct(t, ctx, root, probe, target)
 }
 
-func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe, target string) whitespaceLayoutProducts {
-	main, err := filepath.Abs(filepath.Join("testdata", probe))
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := buildcache.Inputs{
+// whitespaceLayoutLoweredInputs keys the port lowered from testdata/probe, which its native builds extend
+// (whitespaceLayoutNativeProduct, whitespaceLayoutPolicySetup).
+func whitespaceLayoutLoweredInputs(probe string) buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "markdown-whitespace-layout-lowered-" + probe,
 		Files:     whitespaceLayoutBuildFiles(),
 		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
+}
+
+func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe, target string) whitespaceLayoutProducts {
+	main, err := filepath.Abs(filepath.Join("testdata", probe))
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := whitespaceLayoutLoweredInputs(probe)
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
@@ -283,50 +291,15 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	if target == "lowered" {
 		return products
 	}
-	// GoBuild is not on this base. Cache the unchanged Go overlay build commands as products.
-	dir := filepath.Join(artifactDirectory, "whitespace-products")
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []struct{ name, driver, command string }{
-		{"lists", "list_go.go", "adamic_markdown_lists"},
-		{"layout", "document_go.go", "adamic_markdown_doclayout"},
+	// The Go oracles are buildcache.GoBuildIn products (markdownLayoutGoOracle).
+	for _, mode := range []struct{ name, command string }{
+		{"lists", "adamic_markdown_lists"},
+		{"layout", "adamic_markdown_doclayout"},
 	} {
 		if target != "" && target != mode.name {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
-		replace := map[string]string{mainPath: driver}
-		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		overlayPath := filepath.Join(dir, mode.name+".json")
-		write(t, overlayPath, overlay)
-		goInputs := whitespaceLayoutSetupInputs(t)
-		goInputs.Name = "markdown-whitespace-layout-go-" + mode.name
-		goInputs.Flags = append(goInputs.Flags, "go build", "overlay="+mode.driver, "CGO_ENABLED="+os.Getenv("CGO_ENABLED"), "GOFLAGS="+os.Getenv("GOFLAGS"))
-		product := buildcache.Product(t, goInputs, func(product string) error {
-			command := whitespaceLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)
-			command.Dir = cohere
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(product, "oracle")
+		binary := markdownLayoutGoOracle(t, mode.command)
 		if mode.name == "lists" {
 			products.goBinary = binary
 		} else {
@@ -661,22 +634,11 @@ func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork strin
 	t.Logf("%d whitespace nodes, six modes each, match Go and unchanged original private fork functions", count)
 }
 
-// loweringCompilerInputs are the in-repository sources the compiler that lowers a port links, and the module files
-// that pin them, by the precise directories `go list -deps` names (all of cohere/internal would hash 92 MB of lint for
-// about 5.6 MB used). TestLoweringInputsCoverCompilerDependencies keeps the list complete and every entry needed.
-var loweringCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
-	"cohere/internal/lint/checking", "cohere/internal/lint/ecmascript/binding", "cohere/internal/lint/ecmascript/comments",
-	"cohere/internal/lint/ecmascript/control_flow_graph", "cohere/internal/lint/ecmascript/imports", "cohere/internal/lint/ecmascript/jsx",
-	"cohere/internal/lint/ecmascript/module", "cohere/internal/lint/ecmascript/module_roots", "cohere/internal/lint/ecmascript/nextjs",
-	"cohere/internal/lint/ecmascript/property", "cohere/internal/lint/ecmascript/react", "cohere/internal/lint/ecmascript/reference",
-	"cohere/internal/lint/ecmascript/regexsyntax", "cohere/internal/lint/ecmascript/scope", "cohere/internal/lint/ecmascript/text",
-	"cohere/internal/lint/linter", "cohere/internal/lint/rule", "cohere/internal/lint/rules/adamic", "cohere/internal/lint/rules/nexus",
-	"cohere/internal/types/sourcename", "cohere/policy", "cohere/rule_runner",
-}
-
+// whitespaceLayoutBuildFiles keys a port lowered from this package: the compiler that lowers and builds it
+// (compilerinputs.Lowering, kept complete by its own guard) and the port's own sources, this package's and
+// markdowninline's .ts and the testdata probes and drivers.
 func whitespaceLayoutBuildFiles() []string {
-	files := append([]string(nil), loweringCompilerInputs...)
+	files := compilerinputs.Lowering()
 	for _, directory := range []string{".", "../markdowninline", "testdata"} {
 		entries, err := os.ReadDir(directory)
 		if err != nil {
@@ -691,64 +653,51 @@ func whitespaceLayoutBuildFiles() []string {
 	return files
 }
 
-// The lowered ports are keyed by whitespaceLayoutBuildFiles, so it must cover every in-repository package the
-// compiler links and every module file that pins one, or an untraced cache could serve a stale port. Each listed
-// compiler input, dropped alone, must leave a gap, so the list carries nothing the compiler doesn't use.
-func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
-	t.Parallel()
-	root := markdownLayoutProductRoot(t)
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
-	listing, err := combinedOutput(command)
-	if err != nil {
-		t.Fatalf("go list: %v\n%s", err, listing)
-	}
-	needed := map[string]bool{"go.work": true}
-	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
-		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
-	}
-	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
-		directory, goMod, _ := strings.Cut(line, "\t")
-		if relative, ok := inside(directory); ok {
-			needed[relative] = true
-		}
-		if relative, ok := inside(goMod); ok && goMod != "" {
-			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
-				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
-			}
-		}
-	}
-	if gaps := loweringInputGaps(whitespaceLayoutBuildFiles(), needed); len(gaps) > 0 {
-		t.Fatalf("whitespaceLayoutBuildFiles misses lowering inputs: %s", strings.Join(gaps, ", "))
-	}
-	for index, dropped := range loweringCompilerInputs {
-		planted := append(append([]string(nil), loweringCompilerInputs[:index]...), loweringCompilerInputs[index+1:]...)
-		if len(loweringInputGaps(planted, needed)) == 0 {
-			t.Fatalf("dropping %s leaves no gap: it keys nothing the compiler links", dropped)
-		}
-	}
-	t.Logf("%d in-repository compiler directories and module files covered; each of %d declared inputs needed", len(needed), len(loweringCompilerInputs))
+// markdownNativeFiles keys a native port built from C the compiler emitted, which the key names by its hash: the
+// compiler that builds it, compilerinputs.Lowering, which holds internal/native and every package it links
+// (bridge/tsgo, internal/ir, internal/flow, internal/toolchain), where internal/native alone named none of them.
+func markdownNativeFiles() []string {
+	return compilerinputs.Lowering()
 }
 
-// loweringInputGaps returns the needed paths no declared path holds, sorted.
-func loweringInputGaps(declared []string, needed map[string]bool) []string {
-	var gaps []string
-	for path := range needed {
-		covered := false
-		for _, file := range declared {
-			if path == file || strings.HasPrefix(path, file+"/") {
-				covered = true
-				break
-			}
+// An edit to a package the compiler links must move every lowered, native and setup product's key, and an edit to
+// tsc's baselines, which nothing links, must keep it. Natives that extend a lowered product's Inputs (whitespace, quote,
+// structure, table) share its Files, so the lowered entry stands for them.
+func TestMarkdownBlocksCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
+	t.Parallel()
+	root := markdownLayoutProductRoot(t)
+	products := []buildcache.Inputs{
+		whitespaceLayoutLoweredInputs("list_probe.ts"), whitespaceLayoutLoweredInputs("whitespace_probe.ts"), whitespaceLayoutSetupInputs(t),
+		quoteLayoutLoweredInputs(),
+		malformedEventsLoweredInputs(), malformedEventsNativeInputs(native.Options{Sanitize: true}),
+		textLoweredInputs(), textNativeInputs(nil, true), textNativeInputs(nil, false),
+		{Name: "markdown-leaf-lowered", Files: leafCompositionLoweredFiles(t, root)}, leafCompositionNativeInputs("", true), leafCompositionNativeInputs("", false),
+		{Name: "markdown-structure-lowered and -native-modes", Files: structureLayoutBuildFiles(t)},
+		{Name: "markdown table lowered and natives", Files: tableLayoutBuildFiles(t)},
+		listLayoutSetupInputs(t), {Name: "markdown-list-layout-lowered and -canary-lowered", Files: listLayoutLoweredFiles(t, root)},
+		{Name: "markdown-list-layout natives and canary", Files: markdownNativeFiles()},
+	}
+	for _, family := range []string{"identifier", "events", "ast"} {
+		products = append(products, pilotLoweredInputs(family), pilotNativeInputs(family, nil, true), pilotNativeInputs(family, nil, false))
+	}
+	for _, name := range slices.Sorted(maps.Keys(grainRecipes)) {
+		products = append(products, grainLoweredInputs(name), grainNativeInputs(name, nil, true), grainNativeInputs(name, nil, false))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		linked, baselines := false, false
+		for _, entry := range product.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
 		}
-		if !covered {
-			gaps = append(gaps, path)
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", product.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", product.Name)
 		}
 	}
-	sort.Strings(gaps)
-	return gaps
+	t.Logf("checked %d compiler products' keys against a linked package and tsc's baselines", len(products))
 }
 
 var whitespaceLayoutPolicyOnce sync.Once
@@ -829,14 +778,17 @@ func TestMarkdownWhitespaceLayout_023(t *testing.T) { t.Parallel(); whitespaceLa
 var whitespaceLayoutReadyOnce sync.Once
 var whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared whitespaceLayoutProducts
 
+// whitespaceLayoutSetupInputs keys the setup product: the lowered backends and the names of the native products, all
+// the compiler's, so what lowering reads and this file's recipe. The Go oracles are GoBuildIn products of their own,
+// fetched beside it (whitespaceLayoutReadProducts), so cohere's sources are their key's and not this one's.
 func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	files := whitespaceLayoutBuildFiles()
-	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal")
-	return buildcache.Inputs{Name: "markdown-whitespace-layout-setup-v2", Files: files,
+	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go")
+	return buildcache.Inputs{Name: "markdown-whitespace-layout-setup-v3", Files: files,
 		Flags:     []string{root, os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"), os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), "Split=true", "Jobs=2"},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
 }
@@ -870,7 +822,9 @@ func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLay
 	if err != nil {
 		t.Fatal(err)
 	}
-	return whitespaceLayoutProducts{goBinary: paths["go"], goLayout: paths["goLayout"], sanitized: paths["sanitized"], release: paths["release"], backend: backend}, whitespaceLayoutProducts{sanitized: paths["policy"], backend: policy}
+	// The Go oracles are GoBuildIn products keyed by cohere's sources, which the setup's key leaves to them.
+	goBinary, goLayout := markdownLayoutGoOracle(t, "adamic_markdown_lists"), markdownLayoutGoOracle(t, "adamic_markdown_doclayout")
+	return whitespaceLayoutProducts{goBinary: goBinary, goLayout: goLayout, sanitized: paths["sanitized"], release: paths["release"], backend: backend}, whitespaceLayoutProducts{sanitized: paths["policy"], backend: policy}
 }
 
 func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *exec.Cmd {

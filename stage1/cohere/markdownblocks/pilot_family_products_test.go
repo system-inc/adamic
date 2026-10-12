@@ -11,7 +11,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"sort"
 	"sync"
 	"testing"
 
@@ -52,9 +51,7 @@ func TestProduct_MarkdownTextGenerator(t *testing.T) {
 
 func TestProduct_MarkdownMalformedEventsGo(t *testing.T) {
 	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	defer cancel()
-	malformedEventsGoProduct(t, ctx, markdownLayoutProductRoot(t))
+	malformedEventsGoProduct(t, markdownLayoutProductRoot(t))
 }
 func TestProduct_MarkdownMalformedEventsLowered(t *testing.T) {
 	t.Parallel()
@@ -69,7 +66,9 @@ func TestProduct_MarkdownMalformedEventsNative(t *testing.T) {
 	malformedEventsBuildProduct(t, ctx, filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata/mdast_probe.ts"), false)
 }
 
-// Both product declarations and independently selected shards fetch these recipes.
+// pilotGoProduct is family's Go side, cohere with the testdata files its overlay lays over it, a product
+// (buildcache.GoBuildIn) both product declarations and independently selected shards fetch. The overlay names this
+// checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
 func pilotGoProduct(t *testing.T, family string) string {
 	t.Helper()
 	root := markdownLayoutProductRoot(t)
@@ -80,49 +79,33 @@ func pilotGoProduct(t *testing.T, family string) string {
 		command, output = "adamic_chunks", "go-chunks"
 		targets = map[string]string{"cmd/adamic_chunks/main.go": "events_go.go", "internal/format/markdown/micromark/adamic_chunks.go": "events_bridge.go", "internal/format/markdown/micromark/adamic_event_transport.go": "events_transport.go"}
 	}
-	files := []string{"cohere"}
 	replace := make(map[string]string)
 	for target, source := range targets {
-		files = append(files, "stage1/cohere/markdownblocks/testdata/"+source)
 		replace[filepath.Join(cohere, target)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", source)
 	}
-	// Sort map-derived inputs to keep the recipe key deterministic.
-	sort.Strings(files)
-	flags := []string{"go build", "overlay:" + command}
-	for _, name := range []string{"GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "CC", "CXX"} {
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", output, filepath.Join(cohere, "cmd", command, "main.go"), []string{"-overlay=" + overlayPath})
+}
+
+// pilotLoweredInputs keys family's lowered port by what lowering reads (whitespaceLayoutBuildFiles, the compiler's
+// compilerinputs.Lowering and the port's sources).
+func pilotLoweredInputs(family string) buildcache.Inputs {
+	flags := []string{}
+	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-go", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		ctx, cancel := markdownLayoutSetupContext(t.Context())
-		defer cancel()
-		build := tableLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, output), filepath.Join(cohere, "cmd", command, "main.go"))
-		build.Dir = cohere
-		if result, err := build.CombinedOutput(); err != nil {
-			return fmt.Errorf("%s Go product: %w\n%s", family, err, result)
-		}
-		return nil
-	})
-	return filepath.Join(dir, output)
+	return buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-lowered", Files: whitespaceLayoutBuildFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}
 }
 
 func pilotLoweredProduct(t *testing.T, family string) string {
 	t.Helper()
 	root := markdownLayoutProductRoot(t)
-	flags := []string{}
-	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
-		flags = append(flags, name+"="+os.Getenv(name))
-	}
-	return buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-lowered", Files: whitespaceLayoutBuildFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
+	return buildcache.Product(t, pilotLoweredInputs(family), func(dir string) error {
 		program, err := loweredResult(filepath.Join(root, "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"))
 		if err != nil {
 			return err
@@ -146,16 +129,22 @@ func pilotNativeProductFromLowered(t *testing.T, family, lowered string, sanitiz
 		t.Fatal(err)
 	}
 	options := native.Options{Sanitize: sanitize}
-	flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)))
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
-		flags = append(flags, name+"="+os.Getenv(name))
-	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-pilot-%s-native-%t", family, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}, func(dir string) error {
+	dir := buildcache.Product(t, pilotNativeInputs(family, source, sanitize), func(dir string) error {
 		ctx, cancel := markdownLayoutSetupContext(t.Context())
 		defer cancel()
 		return whitespaceLayoutNativeBuild(ctx, string(source), filepath.Join(dir, "port"), options)
 	})
 	return filepath.Join(dir, "port")
+}
+
+// pilotNativeInputs keys family's native port built from source, the lowered port's C, by its hash and the compiler
+// that builds it (markdownNativeFiles).
+func pilotNativeInputs(family string, source []byte, sanitize bool) buildcache.Inputs {
+	flags := append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sha256.Sum256(source)))
+	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
+		flags = append(flags, name+"="+os.Getenv(name))
+	}
+	return buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-pilot-%s-native-%t", family, sanitize), Files: markdownNativeFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
 type pilotProducts struct{ main, goBinary, backend, sanitized, release string }
