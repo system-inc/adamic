@@ -34,6 +34,7 @@ var compilerSites = map[string]string{
 	"cmd/adamic-test262/run_test.go:TestProgramCPUDeadline":                                   "compiles a fixture into a t.TempDir(), never a product",
 	"internal/buildcache/precise_test.go:TestWhatABuildReadsOfTheMachineIsKeyed":              "a fake system directory's cc link, a path in a trace; nothing runs",
 	"internal/buildcache/precise_test.go:TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed": "a fake tools directory's clang script, run through a link in a trace; nothing compiles",
+	"internal/toolchain/toolchain_test.go:TestAToolsCompilersAreClangUnlessTheCallerNamesOne": "checks Env names clang and clang++ as CC and CXX; compiles nothing",
 	"internal/fuzz/run.go:TryFile":                                                            "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                               "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"internal/oracle/wasi_test.go:TestWASIEmission":                                           "the WASI SDK's clang, into a t.TempDir(), never a product",
