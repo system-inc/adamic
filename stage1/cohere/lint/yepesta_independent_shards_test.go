@@ -246,7 +246,7 @@ func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsx
 
 func yepestaPrepare(t *testing.T) string {
 	t.Helper()
-	directory := buildcache.Product(t, yepestaInputs(), func(out string) error {
+	directory := buildcache.Product(t, yepestaInputs(t), func(out string) error {
 		oracle := lintGoOracleProduct(t)
 		rows := jsxTextnodesRows(t, oracle)
 		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
@@ -304,10 +304,16 @@ type yepestaBundle struct {
 	Rows, Witnesses []string
 }
 
-// yepestaInputs name what changes the bundle: the sources it reads and the Go that builds its oracle. Which shard
-// reads which rows is decided at run time, and the native build is jsx-textnodes-mutant-native's, so neither keys it.
-func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()}}
+// yepestaInputs name what changes the bundle: the package's sources it reads, and the Go oracle it carries and whose
+// recovery marks its rows hold, by the oracle's bytes. Which shard reads which rows is decided at run time, and the
+// native build is jsx-textnodes-mutant-native's, so neither keys it.
+func yepestaInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	oracle, err := os.ReadFile(lintGoOracleProduct(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"stage1/cohere/lint"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(oracle))}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()}}
 }
 
 // Preparation runs once per process, including when a single shard is selected.
