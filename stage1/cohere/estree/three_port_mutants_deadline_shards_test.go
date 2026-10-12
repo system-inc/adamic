@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -311,6 +312,11 @@ func threePortReady(t *testing.T) *threePortPrepared {
 
 func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
+	// A tool named bare (go, node) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	if !strings.ContainsRune(name, filepath.Separator) {
+		tool := toolchain.Command(name, args...)
+		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
