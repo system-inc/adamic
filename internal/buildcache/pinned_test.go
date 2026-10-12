@@ -67,3 +67,17 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(t *testing.T) {
 		}
 	}
 }
+
+// The caller's trace2 event target reaches PinnedGit's git, so a test can count the processes git ran (json's
+// never-fetches tests). Mutant: the variable not passed, and the trace never written.
+func TestPinnedGitWritesTheCallersTraceTwoEvents(t *testing.T) {
+	root, pinned, _ := pinnedRepository(t)
+	events := filepath.Join(t.TempDir(), "events.json")
+	t.Setenv("GIT_TRACE2_EVENT", events)
+	if _, err := PinnedGit(root, Inputs{Name: "pinned corpus", Flags: []string{"at " + pinned}}, pinned, nil, "cat-file", "-e", pinned+"^{commit}"); err != nil {
+		t.Fatal(err)
+	}
+	if content, err := os.ReadFile(events); err != nil || !strings.Contains(string(content), `"cat-file"`) {
+		t.Fatalf("the trace2 events read %q: %v", content, err)
+	}
+}
