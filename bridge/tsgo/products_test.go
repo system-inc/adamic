@@ -79,8 +79,7 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 	if sources, ok := bridgeDiscovered.sources[repository]; ok {
 		return sources
 	}
-	command := toolchain.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
-	command.Dir = repository
+	command := toolchain.CommandIn(repository, "go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
 	data, err := command.Output()
 	if err != nil {
 		t.Fatalf("product dependencies: %v", err)
@@ -237,6 +236,10 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	defer cancel()
 	run := func(command *exec.Cmd) error {
 		command.Dir = repository
+		if command.Env != nil {
+			// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
+			command.Env = append(command.Env, "PWD="+repository)
+		}
 		output, err := command.CombinedOutput()
 		if write := os.WriteFile(filepath.Join(directory, "build.log"), output, 0o644); write != nil {
 			return write
