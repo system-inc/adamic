@@ -18,47 +18,8 @@ import (
 // Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
 func TestMarkdownASTPreprocessing(t *testing.T) {
 	parallelMarkdownMemory(t, 3)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	corpus, files := blockCorpus(t, root, "whitespace")
-	// This file sweep is small beside the mandatory generated and fixed checks.
-	selection := selectMarkdownFiles(t, root, corpus, files, 1)
-	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
-	}
-	corpus, files = selectedMarkdownInputs(corpus, files, selection)
-	type input struct {
-		Name, Text string
-		Mode       string
-		TabWidth   int
-	}
-	inputs := []input{}
-	for _, item := range corpus {
-		inputs = append(inputs, input{Name: item.Name, Text: item.Text, TabWidth: 4})
-	}
-	for _, text := range []string{"[[a\n[[wiki]]", "[[a\ntext ]]", "[[a **b** c]]", "[[a [x](/y) ]]", "> a\n> b", "> > a\n> > b", "> a >b\n> > c", " > a\n > b", "> **a\n> b**", "a\n    ===\nb", "\tcode\n", "\n    code", "![a [b] c](/x)", "![a\\]b](/x)", "![a\\[b](/x)", "![😀中](/x)", "![x][a]\n\n[a]: /x", "1. a\n2. b\n", "11. a\n1.  b\n", "11. a\n1. b\n", "1.   a\n2. b\n", "1.\n\n2.\n", "1. a\n\n        code\n", "1. a\n\n   - b\n", "a\u00a0 b\n", "a\u000b b\n", "a\u0085 b\n", "a\u3000中\n", "[[a\n**b**\n[[wiki]]", "a *b\n c* d", "\ufeffa\r\nb\rc\n"} {
-		for _, tab := range []int{1, 2, 3, 4, 8} {
-			inputs = append(inputs, input{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab})
-		}
-	}
-	inputs = append(inputs, input{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4})
-	dir := t.TempDir()
-	var batch bytes.Buffer
-	encoder := json.NewEncoder(&batch)
-	for _, item := range inputs {
-		if err := encoder.Encode(item); err != nil {
-			t.Fatal(err)
-		}
-	}
-	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
-	cohere := filepath.Join(root, "cohere")
-	goBinary := astGoOracle(t)
-	nativeCases := filepath.Join(dir, "native.txt")
-	want := execute(t, nil, goBinary, cases, nativeCases)
-	clean(t, "Go preprocessing", want)
+	fixture := markdownASTPrepare(t)
+	inputs, files, goBinary, nativeCases, fork, want := fixture.inputs, fixture.files, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	if keep := os.Getenv("ADAMIC_MARKDOWNAST_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
 			t.Fatal(err)
@@ -69,21 +30,8 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 		}
 		write(t, filepath.Join(keep, "native.txt"), data)
 		write(t, filepath.Join(keep, "want.txt"), want.stdout)
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(t, filepath.Join(keep, "cases.jsonl"), fixture.batch)
 	}
-	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-	if fork == "" {
-		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
-	}
-	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	equal(t, "pinned bundle", installed, pinned)
 	// The lowered port and its sanitized and release builds are products (TestProduct_MarkdownAST*), not built
 	// in this test each run.
 	lowered := pilotLoweredProduct(t, "ast")
@@ -163,7 +111,18 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 			}
 		})
 	}
-	fast := products.release
+	t.Logf("%d AST contexts: %d physical Markdown files, 4943 layout corpus plus five-tab-width generated cases; complete six-pass projected fields and shared position identity agree", len(inputs), files)
+}
+
+// The three-run timings of Go, the release port and the original preprocessing are their own test over the same
+// contexts, every timed run still checked against Go's bytes, so neither test carries both the comparisons and the
+// timings.
+// Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
+func TestMarkdownASTPreprocessingThroughput(t *testing.T) {
+	parallelMarkdownMemory(t, 3)
+	fixture := markdownASTPrepare(t)
+	inputs, goBinary, nativeCases, fork, want := fixture.inputs, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
+	fast := pilotNativeProductFromLowered(t, "ast", pilotLoweredProduct(t, "ast"), false)
 	for _, side := range []struct {
 		name, command string
 		args          []string
@@ -176,7 +135,77 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 		}
 		t.Logf("%s %.1f documents/s; three runs, startup, tree transport and output included; parsing excluded on all three sides", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
-	t.Logf("%d AST contexts: %d physical Markdown files, 4943 layout corpus plus five-tab-width generated cases; complete six-pass projected fields and shared position identity agree", len(inputs), files)
+}
+
+// markdownASTInput is one AST preprocessing context as the Go driver and the probes read it.
+type markdownASTInput struct {
+	Name, Text string
+	Mode       string
+	TabWidth   int
+}
+
+// markdownASTFixture is what both AST preprocessing tests start from: the contexts, Go's projected bytes for them,
+// the AST transport Go wrote for the other sides, and the pinned fork.
+type markdownASTFixture struct {
+	inputs                      []markdownASTInput
+	files                       int
+	batch                       []byte
+	goBinary, nativeCases, fork string
+	want                        run
+}
+
+func markdownASTPrepare(t *testing.T) markdownASTFixture {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus, files := blockCorpus(t, root, "whitespace")
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, corpus, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	corpus, files = selectedMarkdownInputs(corpus, files, selection)
+	inputs := []markdownASTInput{}
+	for _, item := range corpus {
+		inputs = append(inputs, markdownASTInput{Name: item.Name, Text: item.Text, TabWidth: 4})
+	}
+	for _, text := range []string{"[[a\n[[wiki]]", "[[a\ntext ]]", "[[a **b** c]]", "[[a [x](/y) ]]", "> a\n> b", "> > a\n> > b", "> a >b\n> > c", " > a\n > b", "> **a\n> b**", "a\n    ===\nb", "\tcode\n", "\n    code", "![a [b] c](/x)", "![a\\]b](/x)", "![a\\[b](/x)", "![😀中](/x)", "![x][a]\n\n[a]: /x", "1. a\n2. b\n", "11. a\n1.  b\n", "11. a\n1. b\n", "1.   a\n2. b\n", "1.\n\n2.\n", "1. a\n\n        code\n", "1. a\n\n   - b\n", "a\u00a0 b\n", "a\u000b b\n", "a\u0085 b\n", "a\u3000中\n", "[[a\n**b**\n[[wiki]]", "a *b\n c* d", "\ufeffa\r\nb\rc\n"} {
+		for _, tab := range []int{1, 2, 3, 4, 8} {
+			inputs = append(inputs, markdownASTInput{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab})
+		}
+	}
+	inputs = append(inputs, markdownASTInput{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4})
+	dir := t.TempDir()
+	var batch bytes.Buffer
+	encoder := json.NewEncoder(&batch)
+	for _, item := range inputs {
+		if err := encoder.Encode(item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	cases := filepath.Join(dir, "cases.jsonl")
+	write(t, cases, batch.Bytes())
+	cohere := filepath.Join(root, "cohere")
+	goBinary := astGoOracle(t)
+	nativeCases := filepath.Join(dir, "native.txt")
+	want := execute(t, nil, goBinary, cases, nativeCases)
+	clean(t, "Go preprocessing", want)
+	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
+	if fork == "" {
+		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+	}
+	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	equal(t, "pinned bundle", installed, pinned)
+	return markdownASTFixture{inputs: inputs, files: files, batch: batch.Bytes(), goBinary: goBinary, nativeCases: nativeCases, fork: fork, want: want}
 }
 
 // astGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
