@@ -30,43 +30,53 @@ import (
 // is half that alone would make its shard twice the rest, so it is solo: its own test, <name>_<its file's name>.
 var families = []family{
 	// 730 s over 946 fixtures, the four solo ones 6.7 to 11.9 s each.
-	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", solo: []string{
+	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", solo: []string{
 		"internal/oracle/testdata/bitwise_sweep.a",
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 		"internal/oracle/testdata/normalize_coverage_long.a",
 		"internal/oracle/testdata/user_iterators.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
-	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", requires: "ADAMIC_ORACLE_WASI", solo: []string{
+	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
 		"internal/oracle/testdata/bitwise_sweep.a",
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 	}},
 	// 201 s: each fixture's C compiled for wasm32.
-	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", requires: "ADAMIC_ORACLE_WASI"},
+	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "emitted C: ", requires: "ADAMIC_ORACLE_WASI"},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
-	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a"},
+	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
-	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a"},
+	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed"},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
-	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", oneProgram: true},
+	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
 	// 22.7 s: 20 mutants of library_method_values.a, each built and run.
-	{name: "TestLibraryMethodValueMutants", shards: 4, runner: "runLibraryMethodValueMutantsShard", keys: libraryMethodValueMutants, planted: "trim"},
+	{name: "TestLibraryMethodValueMutants", shards: 4, runner: "runLibraryMethodValueMutantsShard", keys: libraryMethodValueMutants, planted: "trim", caught: "mutant changed nothing"},
 }
 
 // A family is one test over many cases, run as shards. runner is the function each wrapper calls with its shard, keys
 // lists every case's key in the order the cases run, and planted is a key the family's runner plants a mutant in when
-// probed, which exactly its owner must catch. A family that runs only when requires is set to 1 skips otherwise. solo
-// names the keys run each in a test of its own instead of a shard: the runner is given -1 for the first, -2 for the
-// second, and so on. A family whose shard builds its cases into one program, oneProgram, has no subtest per case.
+// probed, which exactly its owner must catch, with caught in its failure. A family that runs only when requires is set
+// to 1 skips otherwise. solo names the keys run each in a test of its own instead of a shard: the runner is given -1
+// for the first, -2 for the second, and so on. A family whose shard builds its cases into one program, oneProgram, has
+// no subtest per case.
 type family struct {
 	name       string
 	shards     int
 	runner     string
 	keys       func() []string
 	planted    string
+	caught     string
 	requires   string
 	solo       []string
 	oneProgram bool
+}
+
+// A familyTest is one test of a family as its wrapper runs it: its name, the shard its wrapper gives the runner, and
+// the indices of the keys that shard runs.
+type familyTest struct {
+	name  string
+	shard int
+	cases []int
 }
 
 var updateFamilyWrappers = flag.Bool("update-family-wrappers", false, "rewrite "+familyWrappersPath+" from the families table")
@@ -108,13 +118,37 @@ func familyCases(t *testing.T, name string, shard int, keys []string) []int {
 	planted, probing := familyProbe(name)
 	var owned []int
 	for index, key := range keys {
-		solo := slices.Index(family.solo, key)
-		owns := solo < 0 && familyShard(key, family.shards) == shard || solo >= 0 && shard == -1-solo
-		if owns && (!probing || key == planted) {
+		if familyOwns(family, shard, key) && (!probing || key == planted) {
 			owned = append(owned, index)
 		}
 	}
 	return owned
+}
+
+// familyOwns says whether a shard runs a key: a solo key only in its own test, any other in the shard its hash names.
+func familyOwns(family family, shard int, key string) bool {
+	solo := slices.Index(family.solo, key)
+	return solo < 0 && familyShard(key, family.shards) == shard || solo >= 0 && shard == -1-solo
+}
+
+// familyTests is a family's tests, as its wrappers are generated: <name>_000 to <name>_<N-1>, then each solo test,
+// each with the keys familyOwns gives its shard.
+func familyTests(family family, keys []string) []familyTest {
+	var tests []familyTest
+	for shard := 0; shard < family.shards; shard++ {
+		tests = append(tests, familyTest{name: fmt.Sprintf("%s_%03d", family.name, shard), shard: shard})
+	}
+	for solo, key := range family.solo {
+		tests = append(tests, familyTest{name: familyTestName(family, key), shard: -1 - solo})
+	}
+	for test := range tests {
+		for index, key := range keys {
+			if familyOwns(family, tests[test].shard, key) {
+				tests[test].cases = append(tests[test].cases, index)
+			}
+		}
+	}
+	return tests
 }
 
 // familyTestName is the test that owns a key: its solo test, or the shard its hash names.
@@ -144,11 +178,8 @@ func familyWrappers(t *testing.T) []byte {
 	fmt.Fprintf(&text, "// After changing the table: go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers\n\n")
 	fmt.Fprintf(&text, "package oracle\n\nimport \"testing\"\n")
 	for _, family := range families {
-		for shard := 0; shard < family.shards; shard++ {
-			fmt.Fprintf(&text, "\nfunc %s_%03d(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n", family.name, shard, family.runner, shard)
-		}
-		for solo, key := range family.solo {
-			fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n", familyTestName(family, key), family.runner, -1-solo)
+		for _, test := range familyTests(family, nil) {
+			fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n", test.name, family.runner, test.shard)
 		}
 	}
 	formatted, err := format.Source(text.Bytes())
@@ -173,10 +204,85 @@ func TestFamilyWrappersAreCurrent(t *testing.T) {
 	}
 }
 
-// Every case of every family has one owner: its key is unique, since Go would run a repeated subtest name as #01 and
-// the two would share a shard; the hash keeps every key inside the family's shards; and a solo key is one of the
-// family's keys, named once, its test's name taken by no other. A probe left in the environment would thin every
-// shard to one case, so a real run refuses it.
+// A familyFault is a way a family's tests fail to run every case exactly once, in exactly one test.
+type familyFault int
+
+const (
+	// A test the family names, a shard or a solo key's, isn't among its tests.
+	familyTestMissing familyFault = iota + 1
+	// A case two tests run, or a key registered twice, which Go would run as two subtests, the second named #01.
+	familyCaseRepeated
+	// A case no test runs.
+	familyCaseOmitted
+	// A solo key that isn't one of the cases, or whose test's name is another's, or is all digits as a shard's is.
+	familySoloMisnamed
+)
+
+// A familyError is one fault in a family's tests, and what it found.
+type familyError struct {
+	fault   familyFault
+	message string
+}
+
+func (failure familyError) Error() string { return failure.message }
+
+func (fault familyFault) String() string {
+	return [...]string{"", "a test missing", "a case repeated", "a case omitted", "a solo misnamed"}[fault]
+}
+
+// familyShardLike is a solo name a shard's could be: all digits, as 007 is in <name>_007, or nothing.
+var familyShardLike = regexp.MustCompile(`^[0-9]*$`)
+
+// familyOwnership is every fault in how tests, each with the cases it runs, run a family's keys: every key unique,
+// every test the family names there, every case run by exactly one of them, and each solo key one of the cases with a
+// test name of its own that no shard's has or could have.
+func familyOwnership(family family, keys []string, tests []familyTest) []familyError {
+	var faults []familyError
+	fault := func(kind familyFault, format string, arguments ...any) {
+		faults = append(faults, familyError{fault: kind, message: family.name + ": " + fmt.Sprintf(format, arguments...)})
+	}
+	seen := map[string]bool{}
+	for _, key := range keys {
+		if seen[key] {
+			fault(familyCaseRepeated, "%s is registered twice", key)
+		}
+		seen[key] = true
+	}
+	names := map[string]bool{}
+	for _, key := range family.solo {
+		name := familySoloName(key)
+		if !seen[key] || names[name] || familyShardLike.MatchString(name) {
+			fault(familySoloMisnamed, "solo %s must be one of its cases, named once, with a test name of its own that no shard's could be (%s)", key, familyTestName(family, key))
+		}
+		names[name] = true
+	}
+	present := map[string]bool{}
+	owners := make([][]string, len(keys))
+	for _, test := range tests {
+		present[test.name] = true
+		for _, index := range test.cases {
+			owners[index] = append(owners[index], test.name)
+		}
+	}
+	for _, test := range familyTests(family, nil) {
+		if !present[test.name] {
+			fault(familyTestMissing, "no %s among its tests", test.name)
+		}
+	}
+	for index, tests := range owners {
+		switch {
+		case len(tests) == 0:
+			fault(familyCaseOmitted, "%s is run by no test", keys[index])
+		case len(tests) > 1:
+			fault(familyCaseRepeated, "%s is run by %s", keys[index], strings.Join(tests, " and "))
+		}
+	}
+	return faults
+}
+
+// Every case of every family has one owner: each test the family names runs the cases familyOwns gives its shard, and
+// together they run every key exactly once (familyOwnership). A probe left in the environment would thin every shard
+// to one case, so a real run refuses it.
 func TestFamiliesOwnEveryCaseOnce(t *testing.T) {
 	t.Parallel()
 	if value := os.Getenv(familyProbeVariable); value != "" {
@@ -187,33 +293,83 @@ func TestFamiliesOwnEveryCaseOnce(t *testing.T) {
 		if len(keys) == 0 {
 			t.Errorf("%s has no cases", family.name)
 		}
-		seen := map[string]bool{}
-		sizes := make([]int, family.shards)
-		for _, key := range keys {
-			if seen[key] {
-				t.Errorf("%s: %s is registered twice", family.name, key)
-			}
-			seen[key] = true
-			if !slices.Contains(family.solo, key) {
-				sizes[familyShard(key, family.shards)]++
-			}
-		}
-		if !seen[family.planted] {
+		if !slices.Contains(keys, family.planted) {
 			t.Errorf("%s: its planted case %s isn't one of its cases", family.name, family.planted)
 		}
-		names := map[string]bool{}
-		for _, key := range family.solo {
-			name := familyTestName(family, key)
-			if !seen[key] || names[name] {
-				t.Errorf("%s: solo %s must be one of its cases, named once, with a test name of its own (%s)", family.name, key, name)
-			}
-			names[name] = true
+		tests := familyTests(family, keys)
+		for _, failure := range familyOwnership(family, keys, tests) {
+			t.Error(failure)
 		}
 		smallest, largest := len(keys), 0
-		for _, size := range sizes {
-			smallest, largest = min(smallest, size), max(largest, size)
+		for _, test := range tests[:family.shards] {
+			smallest, largest = min(smallest, len(test.cases)), max(largest, len(test.cases))
 		}
 		t.Logf("%s: %d cases, each owned once, over %d shards of %d to %d and %d solo tests", family.name, len(keys), family.shards, smallest, largest, len(family.solo))
+	}
+}
+
+// The ownership check has to be able to fail, as wasi_shards_test.go's union check once proved: a family's tests with
+// a shard dropped, with one case run by two of them, or with one case run by none, and solo keys named as a shard's
+// test could be, are each refused, for that fault.
+func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
+	t.Parallel()
+	planted := family{name: "TestPlanted", shards: 4, solo: []string{"heavy/solo.a"}}
+	var keys []string
+	for index := range 24 {
+		keys = append(keys, fmt.Sprintf("case/%03d.a", index))
+	}
+	keys = append(keys, "heavy/solo.a")
+	tests := familyTests(planted, keys)
+	if faults := familyOwnership(planted, keys, tests); len(faults) != 0 {
+		t.Fatalf("the planted family's own tests must own every case once: %v", faults)
+	}
+	// The shard the first key belongs to, which therefore runs at least one case.
+	owner := familyShard(keys[0], planted.shards)
+	copied := func() []familyTest {
+		copies := make([]familyTest, len(tests))
+		for index, test := range tests {
+			copies[index] = familyTest{name: test.name, shard: test.shard, cases: slices.Clone(test.cases)}
+		}
+		return copies
+	}
+	missing := slices.Delete(copied(), owner, owner+1)
+	repeated := copied()
+	other := (owner + 1) % planted.shards
+	repeated[other].cases = append(repeated[other].cases, 0)
+	omitted := copied()
+	omitted[owner].cases = slices.DeleteFunc(omitted[owner].cases, func(index int) bool { return index == 0 })
+	twice := append(slices.Clone(keys), keys[0])
+	// One solo test named as shard 3's is, one named as a shard that doesn't exist would be.
+	shardLike := planted
+	shardLike.solo = []string{"case/003.a", "case/017.a", "heavy/solo.a"}
+	cases := []struct {
+		name   string
+		family family
+		keys   []string
+		tests  []familyTest
+		want   []familyFault
+	}{
+		{"a shard missing", planted, keys, missing, []familyFault{familyTestMissing, familyCaseOmitted}},
+		{"a case run twice", planted, keys, repeated, []familyFault{familyCaseRepeated}},
+		{"a case run by none", planted, keys, omitted, []familyFault{familyCaseOmitted}},
+		{"a key registered twice", planted, twice, familyTests(planted, twice), []familyFault{familyCaseRepeated}},
+		{"solo names like a shard's", shardLike, keys, familyTests(shardLike, keys), []familyFault{familySoloMisnamed}},
+	}
+	for _, each := range cases {
+		t.Run(each.name, func(t *testing.T) {
+			faults := familyOwnership(each.family, each.keys, each.tests)
+			var got []familyFault
+			for _, failure := range faults {
+				if !slices.Contains(got, failure.fault) {
+					got = append(got, failure.fault)
+				}
+			}
+			slices.Sort(got)
+			if !slices.Equal(got, each.want) {
+				t.Fatalf("faults %v, want exactly the kinds %v: %v", got, each.want, faults)
+			}
+			t.Logf("refused: %v", faults)
+		})
 	}
 }
 
@@ -250,7 +406,11 @@ func TestFamiliesCatchAPlantedCase(t *testing.T) {
 			if len(failed) != 1 || string(failed[0][1]) != owner || !caseFailed {
 				t.Fatalf("want exactly %s to fail, on %s; failed: %q\n%s", owner, family.planted, failed, output)
 			}
-			t.Logf("the mutant planted in %s failed exactly %s", family.planted, owner)
+			// Failing for another reason, a build that broke or a runner that crashed, isn't catching the mutant.
+			if !strings.Contains(string(output), family.caught) {
+				t.Fatalf("%s failed, but not with %q, the failure its planted mutant makes:\n%s", owner, family.caught, output)
+			}
+			t.Logf("the mutant planted in %s failed exactly %s, with %q", family.planted, owner, family.caught)
 		})
 	}
 }
