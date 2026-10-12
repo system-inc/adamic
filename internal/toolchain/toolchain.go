@@ -43,7 +43,11 @@
 //   - PWD: how the caller spells its working directory (/var or /private/var on a Mac). A program trusts it only once
 //     it has checked it names its own directory (os.Getwd), so a tool run elsewhere ignores it, and one run where the
 //     caller stands spells its directory as the caller does, which a workspace file naming a module by that spelling
-//     needs (go matches go.work's use lines against it). exec.Cmd sets it only for a command with no Env of its own.
+//     needs (go matches go.work's use lines against it). exec.Cmd sets it to the command's Dir only for a command
+//     with no Env of its own, which Command's never is, so a command run in another directory goes through CommandIn
+//     or GitCommandIn, which set Dir and PWD together: with the caller's PWD a C compiler records getcwd's resolved
+//     spelling (/private/tmp on a Mac) as the debug info's directory, which a prefix map of the unresolved one misses
+//     (native's TestSplitBuildsNameNoPlaceOfTheirInputs, from Compiler's conversion).
 //   - PATH, with ADAMIC_TOOLS's bin and go/bin directories put first when they exist, as env.sh puts them: go finds
 //     the C compiler a cgo build runs on PATH, and Path must find the same one, or the key's report of the compiler
 //     would name another than the build ran. PATH is a selector whose selection the key reads (the tool's report).
@@ -172,6 +176,32 @@ func GitCommand(arguments ...string) *exec.Cmd {
 	if command.Err == nil {
 		command.Env = GitEnv()
 	}
+	return command
+}
+
+// CommandIn is Command run in directory: its Dir, and PWD set to directory's absolute path, last, so it wins over the
+// caller's, as exec.Cmd sets it for a command with no Env.
+func CommandIn(directory, name string, arguments ...string) *exec.Cmd {
+	return in(directory, Command(name, arguments...))
+}
+
+// GitCommandIn is GitCommand run in directory, as CommandIn runs one.
+func GitCommandIn(directory string, arguments ...string) *exec.Cmd {
+	return in(directory, GitCommand(arguments...))
+}
+
+// in sets command's Dir to directory and its PWD to directory's absolute path, unless it failed to resolve.
+func in(directory string, command *exec.Cmd) *exec.Cmd {
+	command.Dir = directory
+	if command.Err != nil {
+		return command
+	}
+	absolute, err := filepath.Abs(directory)
+	if err != nil {
+		command.Err = err
+		return command
+	}
+	command.Env = append(command.Env, "PWD="+absolute)
 	return command
 }
 
