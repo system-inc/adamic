@@ -618,8 +618,14 @@ reads stage1/cohere/graphql/printer stage1/cohere/json/width.ts
 # TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
 # TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
 reads stage1/cohere/graphql/printer stage1/cohere/json/widthTables.ts
-# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via corpusCases — stage1/cohere/json/audit_test.go:74
-reads stage1/cohere/json *.json
+# json's repository corpus reads the pin's .json through Git, and from disk only the files its
+# testdata/corpus-vouching.txt names, which its pinned corpus product declares (#sgpawde, #gskb0x3): an edit to one
+# moves that product's key and so every json unit's, and an edit to any other .json reaches no json test. A pin bump
+# or a vouching edit is an edit to json's own testdata. What it still reads from disk beside them: the pinned cohere
+# paths (the cohere line below) and the provisioned stage3/api/node_modules, which npm ci builds from these two files.
+# corpusCases via pinnedCorpusFiles — stage1/cohere/json/audit_test.go:105, stage1/cohere/json/pinned_repository_corpus_test.go:463
+reads stage1/cohere/json stage3/api/package.json
+reads stage1/cohere/json stage3/api/package-lock.json
 # TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via corpusCases — stage1/cohere/json/audit_test.go:100
 # TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:187
 # TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:191
