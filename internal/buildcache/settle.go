@@ -1439,7 +1439,7 @@ func recipeOf(root string, process journalEntry) recipe {
 	// A module the main module replaces with a directory of the tree selects versions through its go.mod, whether or not
 	// the binary links a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab): only the main module's and the
 	// workspace's replace directives apply, so those name every such go.mod.
-	replaced, err := localReplacements(root)
+	replaced, err := localReplacements(root, root)
 	if err != nil {
 		return recipe{reason: err.Error()}
 	}
@@ -1462,32 +1462,48 @@ func recipeOf(root string, process journalEntry) recipe {
 	return result
 }
 
-// localReplacements are the directories root's go.mod and go.work replace modules with, absolute: go mod edit and go
-// work edit read the files alone, never the module graph or the network.
-func localReplacements(root string) ([]string, error) {
+// localReplacements are the directories each place's go.mod and go.work replace modules with, absolute: go mod edit
+// and go work edit read the files alone, never the module graph or the network. A place without one names none.
+func localReplacements(root string, places ...string) ([]string, error) {
 	var directories []string
-	// Each file is named, so neither GOWORK nor GOFLAGS' -modfile can point the edit elsewhere.
-	for _, edit := range [][]string{{"mod", "edit", "-json", filepath.Join(root, "go.mod")}, {"work", "edit", "-json", filepath.Join(root, "go.work")}} {
-		if edit[0] == "work" && len(existing(root, "go.work")) == 0 {
-			continue
-		}
-		command := toolchain.CommandIn(root, "go", edit...)
-		output, err := command.Output()
-		if err != nil {
-			return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
-		}
-		var file struct {
-			Replace []struct {
-				New struct{ Path, Version string }
+	for _, place := range places {
+		// Each file is named, so neither GOWORK nor GOFLAGS' -modfile can point the edit elsewhere.
+		for _, edit := range [][]string{{"mod", "edit", "-json", filepath.Join(place, "go.mod")}, {"work", "edit", "-json", filepath.Join(place, "go.work")}} {
+			if len(existing(place, filepath.Base(edit[3]))) == 0 {
+				continue
+			}
+			replaced, err := replacementsIn(root, place, edit)
+			if err != nil {
+				return nil, err
+			}
+			for _, directory := range replaced {
+				if !slices.Contains(directories, directory) {
+					directories = append(directories, directory)
+				}
 			}
 		}
-		if err := json.Unmarshal(output, &file); err != nil {
-			return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+	}
+	return directories, nil
+}
+
+// replacementsIn is one go.mod's or go.work's local replacements, each a directory relative to the file's place.
+func replacementsIn(root, place string, edit []string) ([]string, error) {
+	output, err := toolchain.CommandIn(root, "go", edit...).Output()
+	if err != nil {
+		return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+	}
+	var file struct {
+		Replace []struct {
+			New struct{ Path, Version string }
 		}
-		for _, replacement := range file.Replace {
-			if replacement.New.Version == "" {
-				directories = append(directories, filepath.Join(root, replacement.New.Path))
-			}
+	}
+	if err := json.Unmarshal(output, &file); err != nil {
+		return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+	}
+	var directories []string
+	for _, replacement := range file.Replace {
+		if replacement.New.Version == "" {
+			directories = append(directories, filepath.Join(place, replacement.New.Path))
 		}
 	}
 	return directories, nil

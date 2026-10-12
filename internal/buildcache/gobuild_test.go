@@ -38,6 +38,12 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 	if slices.Contains(inputs.Files, "internal/buildcache/testdata/hello/main.go") {
 		t.Fatalf("a package the build doesn't compile is in its key: %v", inputs.Files)
 	}
+	// A module the main module replaces with a directory of the tree is keyed by its go.mod, though the build compiles
+	// none of it (#c2chyab). Mutant: keyInputs without the replacements. Holds where the cohere submodule is checked out.
+	if root, err := repositoryRoot(); err == nil && len(existing(filepath.Join(root, "cohere/TypeScript-shim/ast"), "go.mod")) == 1 &&
+		!slices.Contains(inputs.Files, "cohere/TypeScript-shim/ast/go.mod") {
+		t.Fatalf("a locally replaced module's go.mod isn't in the key's files: %v", inputs.Files)
+	}
 	if !slices.ContainsFunc(inputs.Flags, func(flag string) bool { return strings.HasPrefix(flag, "CGO_CFLAGS=") }) ||
 		!slices.ContainsFunc(inputs.Toolchain, func(tool string) bool { return strings.HasPrefix(tool, "go version: ") }) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
