@@ -20,6 +20,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -173,7 +174,7 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 		flags = []string{applied.file, applied.from, applied.to}
 	}
 	flags = append(flags, "sanitize=true", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	files := []string{"internal", "bridge", "go.mod", "go.work", "cohere"}
+	files := compilerinputs.Lowering()
 	for _, f := range portFiles {
 		files = append(files, "stage1/cohere/gitignore/"+f)
 	}
