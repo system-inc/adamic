@@ -62,6 +62,24 @@ const mutantOracleAnchor = "add := func(label, source string) { cases = append(c
 // lookup (#4ycgm2n). The filter was a scratch copy of the side file, which no product can key.
 func mutantOracleBinary(t *testing.T, change mutation) string {
 	t.Helper()
+	arguments, filters := mutantOracleRequest(t, change)
+	return buildcache.GoTestMutated(t, "cohere", "oracle", "./internal/format/javascript", arguments, filters)
+}
+
+// mutantOracleInputs is mutantOracleBinary's key, computed without building it.
+func mutantOracleInputs(t *testing.T, change mutation) buildcache.Inputs {
+	t.Helper()
+	arguments, filters := mutantOracleRequest(t, change)
+	inputs, err := buildcache.GoTestInputs("cohere", "oracle", "./internal/format/javascript", arguments, filters)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return inputs
+}
+
+// mutantOracleRequest is how mutantOracleBinary builds change's oracle: the overlay argument and each planted filter.
+func mutantOracleRequest(t *testing.T, change mutation) ([]string, []buildcache.Mutation) {
+	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -94,5 +112,5 @@ func mutantOracleBinary(t *testing.T, change mutation) string {
 	if err := os.WriteFile(path, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return buildcache.GoTestMutated(t, "cohere", "oracle", "./internal/format/javascript", []string{"-overlay=" + path}, filters)
+	return []string{"-overlay=" + path}, filters
 }

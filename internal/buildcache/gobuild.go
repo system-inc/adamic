@@ -438,6 +438,14 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	return goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment}.inputs()
 }
 
+// GoTestInputs is GoTestMutated's key (GoTest's, with no mutations), computed without building: for a product made by
+// running the test binary, which can be keyed by the binary's key rather than its bytes, so a reader keys it without
+// holding the binary (#4ycgm2n: tsprinter's mutant oracle corpora). The arguments are made reproducible as the
+// product's own are, so the key is the product's.
+func GoTestInputs(module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) (Inputs, error) {
+	return goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: reproducible(arguments), mutations: mutations, environment: environment}.inputs()
+}
+
 // inputs is the request's key: from the planner's index when it holds the request (precomputed), else as this process
 // already computed it, else computed here under keying and remembered for the rest of the process, so a unit asking
 // for one product many times keys it once, its parallel tests included: they wait on the first one's go list rather
