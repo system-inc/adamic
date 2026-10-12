@@ -415,3 +415,51 @@ func TestASuppliedRuntimeIsAskedOncePerKey(t *testing.T) {
 		t.Fatalf("%v\n%s", err, output)
 	}
 }
+
+// A runtime's portable parts are one list however the compiler was reached: a runner's $ADAMIC_TOOLS/bin/clang and
+// Workshop's ~/.adamic-tools/bin/clang, a link to that directory, name its resource headers and a sysroot inside its
+// installation as <compiler>/..., and leave out the compiler and its version, which a product keys by its report. A
+// header outside the installation keeps its path. Mutant: portableKeyParts naming paths as reached.
+func TestARuntimesPortablePartsAreTheSameThroughEitherLink(t *testing.T) {
+	t.Parallel()
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	tools := filepath.Join(home, "adamic-tools")
+	for _, directory := range []string{"llvm/bin", "llvm/lib/clang/20/include", "bin"} {
+		if err := os.MkdirAll(filepath.Join(tools, directory), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for name, mode := range map[string]os.FileMode{"llvm/bin/clang-20": 0o755, "llvm/lib/clang/20/include/stddef.h": 0o644} {
+		if err := os.WriteFile(filepath.Join(tools, name), []byte("#!/bin/sh\n"), mode); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.Symlink(filepath.Join(tools, "llvm/bin/clang-20"), filepath.Join(tools, "bin/clang")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
+		t.Fatal(err)
+	}
+	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
+	parts := func(root string) []string {
+		compiler := filepath.Join(root, "bin/clang")
+		headers := filepath.Join(root, "llvm/lib/clang/20/include/stddef.h") + " 0a\n/usr/include/stdio.h 0b"
+		return portableKeyParts(files, append(Flags(Options{}), "--sysroot="+filepath.Join(root, "llvm/lib")), compiler, headers)
+	}
+	runner, workshop := parts(tools), parts(filepath.Join(home, ".adamic-tools"))
+	if strings.Join(runner, "\n") != strings.Join(workshop, "\n") {
+		t.Fatalf("one installation through two links gave\n%s\nand\n%s", strings.Join(runner, "\n"), strings.Join(workshop, "\n"))
+	}
+	joined := strings.Join(runner, "\n")
+	for _, want := range []string{"<compiler>/lib/clang/20/include/stddef.h 0a", "/usr/include/stdio.h 0b", "flag --sysroot=<compiler>/lib"} {
+		if !strings.Contains(joined, want) {
+			t.Errorf("the portable parts don't hold %q:\n%s", want, joined)
+		}
+	}
+	if strings.Contains(joined, home) || strings.Contains(joined, "compiler ") || strings.Contains(joined, "version ") {
+		t.Errorf("the portable parts name the compiler or where it was reached:\n%s", joined)
+	}
+}

@@ -40,22 +40,27 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 }
 
 // A RuntimeRequest is one archive of the embedded runtime a build links, as a supplier (SupplyRuntimes) is asked for
-// it. Parts are everything its key reads, as runtimeKey hashes them (runtimeKeyParts), so a key made of them moves
-// whenever the archive's does. Features and Options are what asked for it.
+// it. Parts are everything its key reads, as runtimeKey hashes them (runtimeKeyParts), spelled as this machine reaches
+// them. Portable are the same parts as every machine spells them, for a key that travels: Compiler and Archiver are
+// left for the caller to key by what they report, and every path inside the compiler's installation is named from
+// it, so a runner reaching clang through $ADAMIC_TOOLS/bin keys as Workshop does through ~/.adamic-tools/bin (#94aa17s's
+// class: typeaware's native keyed apart on the two). Features and Options are what asked for it.
 type RuntimeRequest struct {
 	Parts    []string
+	Portable []string
+	Compiler string
+	Archiver string
 	Features []string
 	Options  Options
 	files    []runtimeFile
 	flags    []string
-	compiler string
 }
 
 // Build compiles the archive into directory as the runtime cache holds one, runtime.a beside the runtime's files,
 // compiling up to workers of its translation units at once: one where a test waits on it, as the cache compiles, and
 // more where a product build is given the CPUs for it.
 func (request RuntimeRequest) Build(directory string, workers int) error {
-	return compileRuntime(request.files, request.flags, request.compiler, directory, workers)
+	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers)
 }
 
 // runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
@@ -243,19 +248,31 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	return partsKey(runtimeKeyParts(files, flags, compiler, version, headers))
 }
 
-// runtimeKeyParts is everything a compiled runtime's compile reads: the sources and headers, each by its name and what
-// it holds, the flags, the compiler and its version, the archiver beside it, the platform, and headers, the system headers the compile reads
-// (headersRead), so a runtime compiled against other C library or compiler headers is never taken for this one. A
-// supplied runtime's product is keyed by the same parts (RuntimeRequest), so the two keys can't move apart.
+// runtimeKeyParts is everything a compiled runtime's compile reads: the platform, the compiler and its version, the
+// archiver beside it, and its sources (runtimeSourceParts): the system headers the compile reads (headersRead), so a
+// runtime compiled against other C library or compiler headers is never taken for this one, the flags, and the
+// runtime's files by what they hold. A supplied runtime's product is keyed by the same parts as every machine spells
+// them (portableKeyParts), so the two keys can't move apart.
 func runtimeKeyParts(files []runtimeFile, flags []string, compiler string, version string, headers string) []string {
+	parts := append(runtimePlatformParts(), "compiler "+compiler, "version "+version, "archiver "+archiverName(compiler))
+	return append(parts, runtimeSourceParts(files, flags, headers)...)
+}
+
+// runtimePlatformParts open every runtime key: its version and the platform it is compiled for.
+func runtimePlatformParts() []string {
 	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
 	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
 	// v4: the archive's members carry no time (ZERO_AR_DATE), so a v3 archive Apple's ar stamped isn't reused.
 	// v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under whatever the
 	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
 	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
-	parts := []string{"adamic-runtime-v6", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH, "compiler " + compiler, "version " + version,
-		"archiver " + archiverName(compiler), "headers " + headers}
+	return []string{"adamic-runtime-v6", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+}
+
+// runtimeSourceParts are what a runtime key reads of what is compiled: the system headers the compile reads, every
+// flag, and every file of the runtime by what it holds.
+func runtimeSourceParts(files []runtimeFile, flags []string, headers string) []string {
+	parts := []string{"headers " + headers}
 	for _, flag := range flags {
 		parts = append(parts, "flag "+flag)
 	}
@@ -288,8 +305,58 @@ func runtimeRequest(files []runtimeFile, flags []string, compiler string, versio
 			features = append(features, feature)
 		}
 	}
-	return RuntimeRequest{Parts: runtimeKeyParts(files, flags, compiler, version, headers), Features: features, Options: options,
-		files: files, flags: flags, compiler: compiler}, nil
+	return RuntimeRequest{Parts: runtimeKeyParts(files, flags, compiler, version, headers), Portable: portableKeyParts(files, flags, compiler, headers),
+		Compiler: compiler, Archiver: archiverName(compiler), Features: features, Options: options, files: files, flags: flags}, nil
+}
+
+// portableKeyParts are runtimeKeyParts as every machine spells them: without the compiler, its version and the
+// archiver, which a caller keys by their reports, and with each header and flag that names a path inside the
+// compiler's installation (clang's resource headers, a WASI sysroot) naming it from there as <compiler>/..., however
+// this machine reached the compiler. A path outside it (the C library's headers) is the same path on every machine.
+func portableKeyParts(files []runtimeFile, flags []string, compiler string, headers string) []string {
+	installation := compilerInstallation(compiler)
+	relocate := func(path string) string {
+		if real, err := filepath.EvalSymlinks(path); err == nil {
+			path = real
+		}
+		if installation != "" {
+			if relative, err := filepath.Rel(installation, path); err == nil && relative != ".." && !strings.HasPrefix(relative, "../") {
+				return "<compiler>/" + filepath.ToSlash(relative)
+			}
+		}
+		return path
+	}
+	var lines []string
+	for _, line := range strings.Split(headers, "\n") {
+		if path, digest, found := strings.Cut(line, " "); found {
+			line = relocate(path) + " " + digest
+		}
+		lines = append(lines, line)
+	}
+	sort.Strings(lines)
+	var relocated []string
+	for _, flag := range flags {
+		if sysroot, found := strings.CutPrefix(flag, "--sysroot="); found && sysroot != "" {
+			flag = "--sysroot=" + relocate(sysroot)
+		}
+		relocated = append(relocated, flag)
+	}
+	return append(runtimePlatformParts(), runtimeSourceParts(files, relocated, strings.Join(lines, "\n"))...)
+}
+
+// compilerInstallation is the directory the compiler is installed in, as the system resolves it: the parent of the
+// bin directory its program sits in (<ADAMIC_TOOLS>/llvm for <ADAMIC_TOOLS>/bin/clang, a link to llvm/bin/clang-20).
+// "" when it can't be told, or is the root itself, which would name every path.
+func compilerInstallation(compiler string) string {
+	real, err := filepath.EvalSymlinks(compiler)
+	if err != nil {
+		return ""
+	}
+	installation := filepath.Dir(filepath.Dir(real))
+	if installation == filepath.Dir(installation) {
+		return ""
+	}
+	return installation
 }
 
 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {

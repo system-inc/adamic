@@ -3,6 +3,7 @@ package oracle
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Every program the oracle builds natively links an archive of the runtime compiled for its features (the leading
@@ -84,14 +86,18 @@ func runtimeDeclared(request native.RuntimeRequest) error {
 		"runtimeOptions (runtimes_test.go), so the tree build builds it ahead", request.Features, request.Options)
 }
 
-// runtimeInputs key an archive's product by everything its runtime cache key reads (native.RuntimeRequest's Parts:
-// the platform, the compiler and its version, the system headers its compile reads, every flag, which holds the
-// features and the options, and every file of the runtime by what it holds), so the two move together.
+// runtimeInputs key an archive's product by everything its runtime cache key reads, as every machine spells it: the
+// platform, the system headers its compile reads, every flag (which holds the features and the options) and every
+// file of the runtime by what it holds (native.RuntimeRequest's Portable), and the compiler and archiver by what they
+// report (buildcache.Tool), never by where this machine reached them. Workshop's tree build reaches clang through
+// ~/.adamic-tools/bin and a runner through $ADAMIC_TOOLS/bin, and a key that named either would never be found by the
+// other (#94aa17s's class).
 func runtimeInputs(request native.RuntimeRequest) buildcache.Inputs {
 	return buildcache.Inputs{
-		Name:  "native-runtime",
-		Files: []string{"internal/native/runtime", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"},
-		Flags: slices.Clone(request.Parts),
+		Name:      "native-runtime",
+		Files:     []string{"internal/native/runtime", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"},
+		Flags:     slices.Clone(request.Portable),
+		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
 	}
 }
 
@@ -173,9 +179,9 @@ func TestRuntimeSetsAreEachUsed(t *testing.T) {
 	}
 }
 
-// An archive's product key holds every part of its runtime cache key, and the features and options it was asked
-// with: each moves the key alone (native's TestRuntimeKeyIncludesEveryInput moves the parts with each input). Mutant:
-// a part dropped from runtimeInputs.
+// An archive's product key holds every part of its runtime cache key, as every machine spells it, and the features and
+// options it was asked with: each moves the key alone (native's TestRuntimeKeyIncludesEveryInput moves the parts with
+// each input), and the compiler and archiver are keyed by their reports. Mutant: a part dropped from runtimeInputs.
 func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs(repository)
@@ -187,13 +193,21 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 		t.Fatal(err)
 	}
 	key := buildcache.NameKey(root, runtimeInputs(request))
-	for index, part := range request.Parts {
+	for index, part := range request.Portable {
 		changed := request
-		changed.Parts = slices.Clone(request.Parts)
-		changed.Parts[index] += "!"
+		changed.Portable = slices.Clone(request.Portable)
+		changed.Portable[index] += "!"
 		if buildcache.NameKey(root, runtimeInputs(changed)) == key {
 			t.Errorf("changing the part %.60q kept the product key", part)
 		}
+	}
+	// The parts the portable ones leave out are keyed by their tools' reports.
+	inputs := runtimeInputs(request)
+	if !slices.Equal(inputs.Toolchain, []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")}) {
+		t.Errorf("the product isn't keyed by the compiler's and archiver's reports: %q", inputs.Toolchain)
+	}
+	if len(request.Portable) != len(request.Parts)-3 {
+		t.Errorf("the portable parts are %d of the key's %d, want all but the compiler, its version and the archiver", len(request.Portable), len(request.Parts))
 	}
 	// Each feature alone and each option apart from the release build's, against the plain release archive: a set's
 	// key is its features' flags, so these move every set's.
@@ -223,4 +237,94 @@ func plain(t *testing.T, options native.Options, features ...string) native.Runt
 		t.Fatal(err)
 	}
 	return request
+}
+
+// One archive's product key is one key however the machine reached its compiler: a runner's $ADAMIC_TOOLS/bin/clang
+// and Workshop's ~/.adamic-tools/bin/clang (a link to that directory, found on PATH) key the same, since the tree build
+// keys on one and a runner reads on the other. Each spelling is a child process of its own, as each machine is.
+// Mutant: runtimeInputs keyed by the raw parts, which name where clang was reached.
+func TestARuntimeProductKeyIsTheSameThroughEitherLink(t *testing.T) {
+	t.Parallel()
+	const variable = "ADAMIC_TEST_RUNTIME_PRODUCT_KEY"
+	if os.Getenv(variable) == "1" {
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, features := range [][]string{nil, {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}} {
+			request := plain(t, native.Options{Sanitize: true}, features...)
+			fmt.Printf("compiler %s\nkey %v %s\n", request.Compiler, features, buildcache.NameKey(root, runtimeInputs(request)))
+		}
+		return
+	}
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	real, err := filepath.EvalSymlinks(compiler)
+	if err != nil {
+		t.Fatal(err)
+	}
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	tools := filepath.Join(home, "adamic-tools")
+	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	links := map[string]string{"clang": real}
+	if archiver := filepath.Join(filepath.Dir(real), "llvm-ar"); fileExists(archiver) {
+		links["llvm-ar"] = archiver
+	}
+	for name, target := range links {
+		if err := os.Symlink(target, filepath.Join(tools, "bin", name)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
+		t.Fatal(err)
+	}
+	keys := func(environment ...string) (string, string) {
+		t.Helper()
+		command := exec.Command(os.Args[0], "-test.run=^TestARuntimeProductKeyIsTheSameThroughEitherLink$")
+		command.Dir = "."
+		for _, variable := range os.Environ() {
+			if !strings.HasPrefix(variable, "ADAMIC_TOOLS=") && !strings.HasPrefix(variable, "PATH=") {
+				command.Env = append(command.Env, variable)
+			}
+		}
+		command.Env = append(command.Env, append(environment, variable+"=1")...)
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("%v\n%s", err, output)
+		}
+		var compilers, keys []string
+		for _, line := range strings.Split(string(output), "\n") {
+			if reached, found := strings.CutPrefix(line, "compiler "); found {
+				compilers = append(compilers, reached)
+			}
+			if strings.HasPrefix(line, "key ") {
+				keys = append(keys, line)
+			}
+		}
+		if len(keys) != 2 {
+			t.Fatalf("the child gave %d keys, want 2:\n%s", len(keys), output)
+		}
+		return strings.Join(slices.Compact(compilers), " "), strings.Join(keys, "\n")
+	}
+	path := os.Getenv("PATH")
+	runnerCompiler, runner := keys("ADAMIC_TOOLS="+tools, "PATH="+path)
+	workshopCompiler, workshop := keys("PATH=" + filepath.Join(home, ".adamic-tools/bin") + string(os.PathListSeparator) + path)
+	if runnerCompiler != filepath.Join(tools, "bin/clang") || workshopCompiler != filepath.Join(home, ".adamic-tools/bin/clang") {
+		t.Fatalf("the children didn't reach clang through the two links: %s and %s", runnerCompiler, workshopCompiler)
+	}
+	if runner != workshop {
+		t.Fatalf("one archive through two links keyed\n%s\nand\n%s", runner, workshop)
+	}
+}
+
+func fileExists(path string) bool {
+	info, err := os.Stat(path)
+	return err == nil && info.Mode().IsRegular()
 }
