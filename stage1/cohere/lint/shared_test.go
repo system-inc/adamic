@@ -12,11 +12,14 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
+	"time"
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -129,20 +132,21 @@ func emitJavaScriptTo(directory, module string) error {
 	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
-// goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere
-// so the upstream rules stay unmodified.
-func goOracleIn(sourceRoot, directory string) (string, error) {
+// goOracleOverlay writes into directory the overlay that lays the Go oracle over cohere, so the upstream rules stay
+// unmodified: testdata/oracle.go, sourceRoot's generated registry and each of its rules' oracle.go, each as a virtual
+// file inside cohere. It returns the overlay's path and the virtual files, which go builds as one main package.
+func goOracleOverlay(sourceRoot, directory string) (string, []string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	descriptors, err := registry.Generate(sourceRoot)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	replacements := map[string]string{}
 	var virtualFiles []string
@@ -163,17 +167,31 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
 	}
 	if failure != nil {
-		return "", failure
+		return "", nil, failure
 	}
 	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	path := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		return "", nil, err
+	}
+	return path, virtualFiles, nil
+}
+
+// goOracleIn builds the Go oracle over sourceRoot's rules into directory, for a build no product keys. This package's
+// own rules are lintGoOracleProduct.
+func goOracleIn(sourceRoot, directory string) (string, error) {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
 		return "", err
 	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	path, virtualFiles, err := goOracleOverlay(sourceRoot, directory)
+	if err != nil {
+		return "", err
+	}
+	// The overlay names this checkout's paths: it builds the oracle and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
@@ -181,6 +199,32 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 		return "", err
 	}
 	return binary, nil
+}
+
+// lintCommand is a child for a test's own deadline: killed with its whole process group when ctx ends. A bare name is
+// a tool, the program internal/toolchain resolves under its environment, never PATH's with this process's; a path is
+// a program a test built, which runs as named with this process's environment. A tool toolchain can't resolve fails
+// as the command starts, with toolchain's error.
+func lintCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Env = toolchain.Env()
+		}
+	}
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
 }
 
 // captureUpstream runs cohere's own tests for sourceRoot's rules under a capture overlay and writes each
