@@ -205,18 +205,11 @@ func askedCases(t *testing.T) (string, string) {
 func selectorAnswers(t *testing.T, seed int64, generated int, root string, files []string, library string) string {
 	t.Helper()
 	oracle, _ := cohereSideOracle(t)
-	flags := []string{fmt.Sprintf("seed=%d", seed), fmt.Sprintf("generated=%d", generated), "oracle-content-sha256=" + contentDigest(t, oracle)}
-	toolchain := []string{runtime.Version()}
+	var libraryDigest, node string
 	if library != "" {
-		flags = append(flags, "library-content-sha256="+contentDigest(t, library))
-		toolchain = append(toolchain, buildcache.Tool("node", "--version"))
+		libraryDigest, node = contentDigest(t, library), buildcache.Tool("node", "--version")
 	}
-	inputs := buildcache.Inputs{
-		Name:      "selector Go oracle answers",
-		Files:     []string{"cohere/internal/format/css", "cohere/internal/lint/rules/tailwind", "stage1/cohere/selector/testdata", "stage1/cohere/selector/selector_test.go"},
-		Flags:     flags,
-		Toolchain: toolchain,
-	}
+	inputs := selectorAnswersInputs(seed, generated, contentDigest(t, oracle), libraryDigest, node)
 	return buildcache.Product(t, inputs, func(product string) error {
 		directory := t.TempDir()
 		corpus := filepath.Join(directory, "corpus.txt")
@@ -224,7 +217,10 @@ func selectorAnswers(t *testing.T, seed int64, generated int, root string, files
 		request := map[string]any{"seed": seed, "generated": generated, "cases": filepath.Join(product, "cases.txt"), "answers": filepath.Join(product, "answers.txt"), "corpus": corpus, "testTexts": testTexts}
 		cohereSide(t, request)
 		if library != "" {
-			script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+			script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+			if err != nil {
+				return err
+			}
 			fileList := filepath.Join(directory, "css-files.json")
 			encoded, err := json.Marshal(files)
 			if err != nil {
@@ -244,6 +240,57 @@ func selectorAnswers(t *testing.T, seed int64, generated int, root string, files
 		}
 		return nil
 	})
+}
+
+// selectorAnswersInputs keys the answers product: the request, the oracle's content digest, and, when the
+// library extracts the corpus, its content digest and node's report. libraryDigest is "" without the library.
+func selectorAnswersInputs(seed int64, generated int, oracleDigest, libraryDigest, node string) buildcache.Inputs {
+	flags := []string{fmt.Sprintf("seed=%d", seed), fmt.Sprintf("generated=%d", generated), "oracle-content-sha256=" + oracleDigest}
+	toolchain := []string{runtime.Version()}
+	if libraryDigest != "" {
+		flags = append(flags, "library-content-sha256="+libraryDigest)
+		toolchain = append(toolchain, node)
+	}
+	return buildcache.Inputs{
+		Name:      "selector Go oracle answers",
+		Files:     []string{"cohere/internal/format/css", "cohere/internal/lint/rules/tailwind", "stage1/cohere/selector/testdata", "stage1/cohere/selector/selector_test.go"},
+		Flags:     flags,
+		Toolchain: toolchain,
+	}
+}
+
+// The answers product's name key (what a runner finds it by) and declared key (what this machine alone builds it by)
+// each move with the library, the seed and the oracle, so no change to any serves stale answers. The digests are
+// placeholders: keying builds nothing.
+func TestSelectorAnswersRekey(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys := func(inputs buildcache.Inputs) (string, string) {
+		declared, err := buildcache.Key(root, inputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return buildcache.NameKey(root, inputs), declared
+	}
+	nameKey, declared := keys(selectorAnswersInputs(generatedSeed, 4000, "0", "1", "node"))
+	for _, change := range []struct {
+		name   string
+		inputs buildcache.Inputs
+	}{
+		{"no library", selectorAnswersInputs(generatedSeed, 4000, "0", "", "")},
+		{"another seed", selectorAnswersInputs(generatedSeed+1, 4000, "0", "1", "node")},
+		{"another oracle", selectorAnswersInputs(generatedSeed, 4000, "2", "1", "node")},
+	} {
+		changedNameKey, changedDeclared := keys(change.inputs)
+		if changedNameKey == nameKey || changedDeclared == declared {
+			t.Errorf("%s kept name key %s or key %s", change.name, nameKey[:12], declared[:12])
+			continue
+		}
+		t.Logf("%s: name key %s to %s, key %s to %s", change.name, nameKey[:12], changedNameKey[:12], declared[:12], changedDeclared[:12])
+	}
 }
 
 // contentDigest hashes a file, or every file under a directory by its relative name, so a key names what a path
