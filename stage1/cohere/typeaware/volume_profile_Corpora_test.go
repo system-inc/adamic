@@ -20,6 +20,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Repository cases use 32 stable hash buckets per mode, with room for growth.
@@ -31,6 +32,11 @@ const testVolumeProfileCorporaShards = 2 * (32 + 77)
 // running after a deadline. Setpgid and negative-PID Kill work on Linux and macOS.
 func volumeProfileCorporaCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
+	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	if !strings.ContainsRune(name, filepath.Separator) {
+		tool := toolchain.Command(name, args...)
+		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -250,7 +256,7 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 		}},
 		{"typeaware checker archive asan", "checker-asan.a", &asanArchive, []string{"go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}, func(directory string) *exec.Cmd {
 			command := volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-buildmode=c-archive", "-o", filepath.Join(directory, "checker-asan.a"), "./bridge/tsgo/archive")
-			command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 			return command
 		}},
 		{"typeaware volume oracle", "volume-oracle", &oracle, []string{"go build -buildvcs=false -overlay oracle_volume.go cohere/adamic_volume-oracle.go"}, func(directory string) *exec.Cmd {

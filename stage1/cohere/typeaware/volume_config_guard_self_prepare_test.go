@@ -659,6 +659,11 @@ func TestVolumeConfigGuardCorpus_031(t *testing.T) {
 func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
 	ctx, cancel := context.WithCancel(parent)
 	cmd := exec.CommandContext(ctx, name, args...)
+	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	if !strings.ContainsRune(name, filepath.Separator) {
+		tool := toolchain.Command(name, args...)
+		cmd.Path, cmd.Err, cmd.Env = tool.Path, tool.Err, tool.Env
+	}
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
 		if cmd.Process == nil {
