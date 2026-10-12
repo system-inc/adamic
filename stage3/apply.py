@@ -161,17 +161,54 @@ def publish_hook(store, key):
 def run(*args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
-def build_product(out, cache):
+def typescript_source(pin):
+    """The pinned upstream checkout is a gate input; apply never clones it from the network or keeps one in HOME."""
+    source = os.environ.get('ADAMIC_TYPESCRIPT_SOURCE')
+    if not source:
+        raise RuntimeError(f'set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs\' TypeScript {pin["tag"]} '
+                           f'checkout at {pin["commit"]}')
+    head = subprocess.run(['git', '-C', source, 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    if head != pin['commit']:
+        raise RuntimeError(f'ADAMIC_TYPESCRIPT_SOURCE {source} is at {head or "no commit"}, '
+                           f'not the pinned {pin["commit"]}')
+    return Path(source)
+
+
+def api_modules():
+    """stage3/api's packages, installed from its lockfile by the tree's build or the runner, never by apply.
+
+    npm's hidden lockfile records what was installed, in a prebuilt tree and in a runner's linked copy alike, so it
+    must name exactly the lockfile's packages, and each package must be the version the lockfile pins.
+    """
+    api = stage / 'api'
+    modules = api / 'node_modules'
+    lockfile = api / 'package-lock.json'
+    try:
+        installed = json.loads((modules / '.package-lock.json').read_text())['packages']
+        wanted = {name: entry for name, entry in json.loads(lockfile.read_text())['packages'].items() if name}
+        if installed != wanted:
+            raise ValueError('its hidden lockfile names other packages')
+        for name, entry in wanted.items():
+            if json.loads((api / name / 'package.json').read_text())['version'] != entry['version']:
+                raise ValueError(f'{name} is not version {entry["version"]}')
+    except (OSError, KeyError, ValueError) as error:
+        raise RuntimeError(f'{modules} is not an install of {lockfile} ({error}); apply never runs npm, '
+                           f'so the tree must provide them') from error
+    return modules
+
+
+def build_product(out):
     if any(os.environ.get(name) for name in ['CENSUS_TYPESCRIPT', 'TSC_ADAPT_TYPESCRIPT']):
         raise RuntimeError('keyed builds require the pinned stage3/api parser, without overrides')
     pin = json.loads((stage / 'source.json').read_text())
-    mirror = cache / 'typescript.git'
-    if not mirror.exists():
-        run('git', 'clone', '--bare', '--depth', '1', '--branch', pin['tag'], pin['repository'], str(mirror))
-    head = subprocess.check_output(['git', '--git-dir', str(mirror), 'rev-parse', pin['tag'] + '^{commit}'], text=True).strip()
-    if head != pin['commit']:
-        sys.exit(f'pin mismatch: {head}')
-    run('git', 'clone', '--no-hardlinks', str(mirror), str(out))
+    source = typescript_source(pin)
+    adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
+    adaptation_env = dict(os.environ)
+    if any(directory.name != '00-setup' for directory in adaptations):
+        adaptation_env['NODE_PATH'] = str(api_modules())
+    run('git', 'clone', '--no-hardlinks', str(source), str(out))
+    # The product names no path on the machine that built it.
+    run('git', '-C', str(out), 'remote', 'remove', 'origin')
     run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
     # The pristine measurement tree includes upstream's normal generated inputs.
     run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
@@ -195,15 +232,6 @@ def build_product(out, cache):
                 added += int(a)
                 removed += int(r)
             return len(changes), added, removed
-        adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
-        adaptation_env = dict(os.environ)
-        if any(directory.name != '00-setup' for directory in adaptations):
-            api = cache / 'api'
-            api.mkdir(exist_ok=True)
-            for manifest in ['package.json', 'package-lock.json']:
-                shutil.copyfile(stage / 'api' / manifest, api / manifest)
-            run('npm', 'ci', '--prefix', str(api), '--ignore-scripts', '--no-audit', '--no-fund')
-            adaptation_env['NODE_PATH'] = str(api / 'node_modules')
         for directory in adaptations:
             if not directory.is_dir():
                 continue
@@ -261,16 +289,14 @@ def main():
             store = os.environ.get('ADAMIC_BUILD_CACHE_URL', store)
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.build_product:
-        cache.mkdir(parents=True, exist_ok=True)
-        build_product(out, cache)
+        build_product(out)
         save_product(store, key, out)
     else:
         try:
             restore_product(store, key, out)
         except ProductMissing:
             print(f'stage3 product cache miss: {key}; building adapted tree locally', file=sys.stderr)
-            cache.mkdir(parents=True, exist_ok=True)
-            build_product(out, cache)
+            build_product(out)
             local_store = store if not store.startswith(('http://', 'https://', 'file://')) else str(cache / 'products')
             save_product(local_store, key, out)
     if args.write_table:

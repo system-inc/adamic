@@ -53,6 +53,9 @@ class ApplyCheckoutTests(unittest.TestCase):
             subprocess.run(['git', '-C', str(ROOT), 'worktree', 'add', '--detach', str(source), 'HEAD'],
                            check=True)
             try:
+                # A worktree holds no npm packages; it builds with a copy of this checkout's, which
+                # stage3/api/.gitignore ignores as a directory (a symlink would show as untracked).
+                shutil.copytree(APPLY.api_modules(), source / 'stage3/api/node_modules', symlinks=True)
                 table = source / 'stage3/patch-set.md'
                 table.write_text(table.read_text() + '\n<!-- Deliberately stale test table. -->\n')
                 # Exercise working changes too, before the delivery commit.
@@ -165,8 +168,64 @@ class ProductTests(unittest.TestCase):
             with mock.patch.dict(os.environ, CENSUS_TYPESCRIPT='unkeyed-parser'), mock.patch.object(
                     APPLY, 'run', side_effect=AssertionError('unkeyed build ran')):
                 with self.assertRaisesRegex(RuntimeError, 'without overrides'):
-                    APPLY.build_product(Path(scratch) / 'output', Path(scratch) / 'cache')
+                    APPLY.build_product(Path(scratch) / 'output')
             self.assertFalse((Path(scratch) / 'output').exists())
+
+    def test_api_packages_come_installed_from_the_lockfile(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            api = root / 'api'
+            packages = {'node_modules/typescript': dict(version='6.0.3', integrity='sha512-pinned')}
+            api.mkdir()
+            (api / 'package-lock.json').write_text(json.dumps(dict(packages={'': dict(name='api'), **packages})))
+            (api / 'node_modules/typescript').mkdir(parents=True)
+            (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.3')))
+            hidden = api / 'node_modules/.package-lock.json'
+            with mock.patch.object(APPLY, 'stage', root):
+                with self.assertRaisesRegex(RuntimeError, 'is not an install of .*never runs npm'):
+                    APPLY.api_modules()
+                hidden.write_text(json.dumps(dict(packages=packages)))
+                self.assertEqual(APPLY.api_modules(), api / 'node_modules')
+                hidden.write_text(json.dumps(dict(packages={'node_modules/typescript': dict(
+                    version='6.0.3', integrity='sha512-other')})))
+                with self.assertRaisesRegex(RuntimeError, 'hidden lockfile names other packages'):
+                    APPLY.api_modules()
+                hidden.write_text(json.dumps(dict(packages=packages)))
+                (api / 'node_modules/typescript/package.json').write_text(json.dumps(dict(version='6.0.2')))
+                with self.assertRaisesRegex(RuntimeError, 'typescript is not version 6.0.3'):
+                    APPLY.api_modules()
+
+    def test_build_without_api_packages_installs_nothing(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name in ['source.json', 'api/package-lock.json']:
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / 'stage3' / name, root / name)
+            (root / 'adapt/00-setup').mkdir(parents=True)
+            (root / 'adapt/10-adaptation').mkdir()
+            with (mock.patch.object(APPLY, 'stage', root),
+                    mock.patch.object(APPLY, 'typescript_source', return_value=root / 'typescript'),
+                    mock.patch.object(APPLY, 'run', side_effect=AssertionError('ran before the packages were checked'))):
+                with self.assertRaisesRegex(RuntimeError, 'node_modules is not an install'):
+                    APPLY.build_product(root / 'output')
+
+    def test_typescript_source_is_the_pinned_gate_input(self):
+        pin = json.loads((ROOT / 'stage3/source.json').read_text())
+        with tempfile.TemporaryDirectory() as scratch:
+            source = Path(scratch) / 'typescript'
+            with mock.patch.dict(os.environ, {'HOME': scratch}):
+                os.environ.pop('ADAMIC_TYPESCRIPT_SOURCE', None)
+                with self.assertRaisesRegex(RuntimeError, 'set ADAMIC_TYPESCRIPT_SOURCE'):
+                    APPLY.typescript_source(pin)
+                os.environ['ADAMIC_TYPESCRIPT_SOURCE'] = str(source)
+                with self.assertRaisesRegex(RuntimeError, 'is at no commit'):
+                    APPLY.typescript_source(pin)
+                subprocess.run(['git', 'init', '-q', str(source)], check=True)
+                subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test', '-c',
+                                'user.email=apply-test@example.invalid', 'commit', '-q', '--allow-empty', '-m',
+                                'not the pin'], check=True)
+                with self.assertRaisesRegex(RuntimeError, 'not the pinned ' + pin['commit']):
+                    APPLY.typescript_source(pin)
 
     def product(self, scratch):
         source = scratch / 'source'
@@ -228,7 +287,7 @@ class ProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)
             output = scratch / 'output'
-            def build(out, cache):
+            def build(out):
                 out.mkdir()
                 (out / 'patch-set.md').write_text('fallback table')
             message = io.StringIO()
@@ -237,7 +296,7 @@ class ProductTests(unittest.TestCase):
                     os.environ, STAGE3_PRODUCT_STORE=str(scratch / 'products'), STAGE3_CACHE=str(scratch / 'cache')),
                     mock.patch.object(sys, 'argv', ['apply.py', str(output)]), mock.patch.object(sys, 'stderr', message)):
                 APPLY.main()
-            builder.assert_called_once_with(output, scratch / 'cache')
+            builder.assert_called_once_with(output)
             self.assertIn('cache miss: missing; building adapted tree locally', message.getvalue())
             self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
             APPLY.restore_product(str(scratch / 'products'), 'missing', scratch / 'fetched')
@@ -247,7 +306,7 @@ class ProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)
             output = scratch / 'output'
-            def build(out, cache):
+            def build(out):
                 out.mkdir()
                 (out / 'patch-set.md').write_text('fallback table')
             original_fetch = APPLY.fetch
@@ -261,7 +320,7 @@ class ProductTests(unittest.TestCase):
                     mock.patch.object(sys, 'argv', ['apply.py', str(output)]),
                     mock.patch.object(sys, 'stderr', io.StringIO()) as message):
                 APPLY.main()
-            builder.assert_called_once_with(output, scratch / 'cache')
+            builder.assert_called_once_with(output)
             self.assertIn('cache miss: missing', message.getvalue())
             self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
 
