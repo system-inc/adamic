@@ -157,6 +157,14 @@ func TestProduct_CSSComposedMemoryLeakMutant(t *testing.T) {
 	composedMemoryProduct(t, 2)
 }
 
+// Every memory mutation has its product and its test: composedMemoryOnce and composedMemoryProducts hold three.
+func TestComposedMemoryChecksCanFailCoversEveryMutation(t *testing.T) {
+	t.Parallel()
+	if len(composedMemoryMutations) != len(composedMemoryProducts) {
+		t.Fatalf("%d memory mutations, %d products and tests: add a TestProduct_ and a TestComposedMemoryChecksCanFail_ per mutation", len(composedMemoryMutations), len(composedMemoryProducts))
+	}
+}
+
 func TestComposedMemoryChecksCanFail_AddressSanitizer(t *testing.T) {
 	t.Parallel()
 	composedMemoryCheck(t, 0)

@@ -41,7 +41,8 @@ func cssPrinterCorpusLines(t *testing.T) []string {
 }
 
 // The printer reads the parser's corpus product only because a live enumeration through the printer's own Go
-// oracle gives the same bytes. Mutant: drop the fixture root from the live enumeration; the corpora then differ.
+// oracle gives the same bytes. Mutant, run by hand with ADAMIC_CSS_FIXTURES set (without it there's no fixture root to
+// drop): drop the fixture root from the live enumeration; the corpora then differ.
 func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
 	t.Parallel()
 	live, err := os.ReadFile(cssPrinterCases(t, cssOracleProduct(t, false)))
@@ -128,6 +129,11 @@ func TestCSSPrinterSanitizedRunNamesEachFailure(t *testing.T) {
 		t.Fatalf("a printer that drops its releases read as %v, want a leak", err)
 	}
 	t.Logf("planted leak: %.120s", err)
+	err = cssPrinterSanitizedAgreement(t, composedMemoryProduct(t, 0).sanitized, expected, arguments...)
+	if err == nil || !strings.HasPrefix(err.Error(), "exit ") || !strings.Contains(err.Error(), "AddressSanitizer") {
+		t.Fatalf("a printer that reads freed memory read as %v, want a sanitizer's error", err)
+	}
+	t.Logf("planted use after free: %.120s", err)
 	changed := strings.Replace(expected, "red", "blue", 1)
 	if changed == expected {
 		t.Fatal("no answer to change")
