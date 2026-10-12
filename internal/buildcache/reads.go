@@ -360,12 +360,21 @@ var treeValuesRead atomic.Int64
 // productDigests holds each product directory's digest once a process has it: a key's bytes never change.
 var productDigests sync.Map
 
+// walked is where a walk over a product directory starts: what directory resolves to when it is a link. Loom's runner
+// links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir visits a
+// link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through another
+// was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text file
+// in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and stay.
+func walked(directory string) (string, error) {
+	if info, err := os.Lstat(directory); err != nil || info.Mode()&fs.ModeSymlink == 0 {
+		return directory, nil
+	}
+	return filepath.EvalSymlinks(directory)
+}
+
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
 // content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
-// directory reached through a link is valued by what it links to: Loom's runner links each product a unit fetched into
-// the unit's cache from the box's shared products, and walking the link itself valued every product as one link line
-// naming that box's path, so every product read through another missed on every runner (mega's run, Oct 12: css's
-// oracle answers and composition native, lint/helpers' mutants oracle, each "1 of N entries differ: product").
+// directory reached through a link is valued by what it links to (walked).
 func productDigest(directory string) (string, error) {
 	if value, ok := productDigests.Load(directory); ok {
 		return value.(string), nil
@@ -375,14 +384,12 @@ func productDigest(directory string) (string, error) {
 		productDigests.Store(directory, string(content))
 		return string(content), nil
 	}
-	root := directory
-	if info, err := os.Lstat(directory); err == nil && info.Mode()&fs.ModeSymlink != 0 {
-		if root, err = filepath.EvalSymlinks(directory); err != nil {
-			return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
-		}
+	root, err := walked(directory)
+	if err != nil {
+		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
 	}
 	hash := sha256.New()
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}

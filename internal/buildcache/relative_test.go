@@ -649,3 +649,30 @@ func TestRelativeMakesItsPlacesOncePerChange(t *testing.T) {
 		t.Fatalf("locations were looked for outside keying %d times", unkeyed)
 	}
 }
+
+// A product reached through a link, as a runner's unit cache links one from the box's shared products, is read where it
+// points: Resolved copies it with its names read back, and its digest is its bytes (mega's run 2, Oct 12: estree's
+// mutant port came back unresolved, and node read its <repository> imports raw). Mutant: a walk that starts at the link.
+// Not parallel: cached calls t.Setenv.
+func TestAProductReachedThroughALinkIsReadWhereItPoints(t *testing.T) {
+	cache, _ := cached(t)
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	shared := filepath.Join(t.TempDir(), "loom-products-1", "blob", strings.Repeat("ab", 32))
+	write(t, shared, "main.ts", "import '<repository>/go.mod';\n")
+	link := filepath.Join(cache, strings.Repeat("ab", 32))
+	if err := os.Symlink(shared, link); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { resolvedDirectories.Delete(link) })
+	directory, err := Resolved(link)
+	if err != nil {
+		t.Fatal(err)
+	}
+	content, err := os.ReadFile(filepath.Join(directory, "main.ts"))
+	if err != nil || directory == link || string(content) != "import '"+filepath.Join(root, "go.mod")+"';\n" {
+		t.Fatalf("Resolved gave %s holding %q, %v; want a copy naming this checkout", directory, content, err)
+	}
+}

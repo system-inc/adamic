@@ -456,11 +456,19 @@ func textFiles(directory string, each func(file string, content []byte, mode fs.
 // changes a string's length, which gob records beside it.
 var dataFormats = []string{".gob"}
 
-// readFiles is textFiles, and with data, every file in one of dataFormats too.
+// readFiles is textFiles, and with data, every file in one of dataFormats too. A directory reached through a link is
+// read where it points (walked), and each file is named under directory as given.
 func readFiles(directory string, data bool, each func(file string, content []byte, mode fs.FileMode) error) error {
-	return filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
+	root, err := walked(directory)
+	if err != nil {
+		return err
+	}
+	return filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
+		}
+		if relative, err := filepath.Rel(root, file); err == nil {
+			file = filepath.Join(directory, relative)
 		}
 		if entry.IsDir() {
 			if strings.HasSuffix(entry.Name(), ".dSYM") {
@@ -590,15 +598,19 @@ var productKey = regexp.MustCompile(`^[0-9a-f]{64}$`)
 // resolve copies directory to place whole, each text file through Absolute, by way of a scratch directory renamed into
 // place, so a copy on disk is always complete.
 func resolve(directory, place string) error {
+	root, err := walked(directory)
+	if err != nil {
+		return err
+	}
 	scratch, err := os.MkdirTemp(filepath.Dir(place), ".resolving-")
 	if err != nil {
 		return err
 	}
-	err = filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
+	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		relative, err := filepath.Rel(directory, file)
+		relative, err := filepath.Rel(root, file)
 		if err != nil {
 			return err
 		}
