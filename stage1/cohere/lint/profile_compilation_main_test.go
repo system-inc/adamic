@@ -26,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -112,8 +113,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.CommandContext(context.Background(), "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
-	command.Dir = root
+	command := toolchain.CommandIn(root, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
 	output, err := command.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -233,7 +233,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"=/adamic-lint-profile", "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
-				command := exec.CommandContext(context.Background(), "clang", flags...)
+				command := toolchain.Command("clang", flags...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("profile clang: %w\n%s", err, output)
 				}
