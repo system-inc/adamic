@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -179,7 +179,7 @@ console.log(written('copied'));
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
+	command := toolchain.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()
