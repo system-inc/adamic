@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const scannerShardCount = 16
@@ -77,7 +78,7 @@ func scannerOracleProduct(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
+		command := toolchain.Command("go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
 		command.Dir = root
 		output, err := command.CombinedOutput()
 		if err != nil {
