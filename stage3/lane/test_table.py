@@ -41,8 +41,10 @@ class LaneTableTests(unittest.TestCase):
             with patch.object(sys, 'argv', ['run.py', str(output)]), \
                  patch.object(runner.subprocess, 'check_output', side_effect=probe), \
                  patch.object(runner.subprocess, 'run', side_effect=command), \
+                 patch.object(runner, 'link_packages') as linked, \
                  patch.object(runner, 'check_results', return_value=dict(status='pass', errors=[])):
                 self.assertEqual(runner.main(), 0)
+            linked.assert_called_once_with(runner.ROOT, output / 'adapted-tree')
             self.assertEqual((output / 'patch-set.md').read_text(), 'Table for this apply\n')
             self.assertTrue((output / 'report.json').exists())
             self.assertEqual(len(calls), 2)
@@ -69,6 +71,7 @@ class LaneTableTests(unittest.TestCase):
                  patch.object(runner.tempfile, 'tempdir', scratch), \
                  patch.object(runner.subprocess, 'check_output', side_effect=probe), \
                  patch.object(runner.subprocess, 'run', side_effect=command), \
+                 patch.object(runner, 'link_packages'), \
                  patch.object(runner, 'check_results', return_value=dict(status='pass', errors=[])), \
                  redirect_stdout(stdout):
                 self.assertEqual(runner.main(), 0)
@@ -80,6 +83,32 @@ class LaneTableTests(unittest.TestCase):
             self.assertEqual((results / 'patch-set.md').read_text(), 'Default table\n')
             self.assertEqual(json.loads((results / 'report.json').read_text())['status'], 'pass')
             self.assertEqual(len(calls), 2)
+
+    def test_unlinked_packages_fail_before_the_oracle(self):
+        with tempfile.TemporaryDirectory(prefix='lane-link-') as scratch:
+            output = Path(scratch) / 'results'
+            calls = []
+
+            def command(arguments, **kwargs):
+                calls.append(arguments)
+                tree = Path(arguments[2])
+                tree.mkdir()
+                (tree / 'patch-set.md').write_text('Table\n')
+                return type('Result', (), {'returncode': 0})()
+
+            def probe(arguments, **kwargs):
+                return json.dumps(dict(os='linux', arch='x64', node='v24.19.0'))
+
+            missing = RuntimeError('stage3/typescript/node_modules is not an install of its package-lock.json')
+            with patch.object(sys, 'argv', ['run.py', str(output)]), \
+                 patch.object(runner.subprocess, 'check_output', side_effect=probe), \
+                 patch.object(runner.subprocess, 'run', side_effect=command), \
+                 patch.object(runner, 'link_packages', side_effect=missing), \
+                 redirect_stdout(io.StringIO()):
+                self.assertEqual(runner.main(), 1)
+            self.assertEqual(len(calls), 1, 'the oracle ran without the linked packages')
+            report = json.loads((output / 'report.json').read_text())
+            self.assertEqual(report['errors'], ["cannot link the adapted tree's packages: " + str(missing)])
 
 
     def test_shell_entry_point_with_no_arguments(self):
