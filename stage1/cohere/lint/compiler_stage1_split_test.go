@@ -204,15 +204,6 @@ func compilerAgreementProduct(t *testing.T, inputs buildcache.Inputs, build func
 	return prepared.path
 }
 
-func compilerAgreementGoOracle(t *testing.T) string {
-	t.Helper()
-	product := compilerAgreementProduct(t, compilerAgreementInputs(t, "compiler-agreement-go-oracle", []string{"registered rules", "overlay"}), func(directory string) error {
-		_, err := goOracleIn(packageDirectory, directory)
-		return err
-	})
-	return filepath.Join(product, "oracle")
-}
-
 func compilerAgreementLowered(t *testing.T) string {
 	t.Helper()
 	return compilerAgreementProduct(t, compilerAgreementInputs(t, "compiler-agreement-lowered", []string{"C and JavaScript", "registered rules"}), func(directory string) error {
@@ -284,11 +275,6 @@ func compilerAgreementMeasureProduct(t *testing.T, prepare func(*testing.T) stri
 	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
 }
 
-func TestProduct_CompilerAgreementGoOracle(t *testing.T) {
-	t.Parallel()
-	compilerAgreementMeasureProduct(t, compilerAgreementGoOracle)
-}
-
 func TestProduct_CompilerAgreementSanitizedNative(t *testing.T) {
 	t.Parallel()
 	compilerAgreementMeasureProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, true) })
@@ -319,7 +305,7 @@ func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
 	answer.mu.Lock()
 	defer answer.mu.Unlock()
 	if answer.output == nil {
-		run := execute(t, "", compilerAgreementGoOracle(t), "--manifest", path)
+		run := execute(t, "", lintGoOracleProduct(t), "--manifest", path)
 		answer.output, answer.duration = run.output, run.duration
 	}
 	return execution{output: answer.output, duration: answer.duration}
@@ -351,7 +337,7 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	}
 	path := manifest(t, rows)
 	setupStarted := time.Now()
-	_ = compilerAgreementGoOracle(t)
+	_ = lintGoOracleProduct(t)
 	var module, binary string
 	if side == 1 {
 		module = filepath.Join(compilerAgreementLowered(t), "lint.mjs")
