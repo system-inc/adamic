@@ -2,32 +2,31 @@
 """Create a fresh pinned tree and measure each successive adaptation."""
 import json
 import os
-import shutil
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 
 stage = Path(__file__).resolve().parents[2]
+# Importing apply.py must not leave stage3/__pycache__ in the checkout, which nothing ignores.
+sys.dont_write_bytecode = True
+sys.path.append(str(stage))
+from apply import pinned_packages, typescript_source
 pin = json.loads((stage / 'source.json').read_text())
 if len(sys.argv) != 2:
     sys.exit('usage: prepare.py <new-output-directory>')
 out = Path(sys.argv[1]).resolve()
 if out.exists():
     sys.exit(f'refusing to replace existing output: {out}')
-cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))).resolve()
-cache.mkdir(parents=True, exist_ok=True)
 
 def run(*args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
-mirror = cache / 'typescript.git'
-if not mirror.exists():
-    run('git', 'clone', '--bare', '--depth', '1', '--branch', pin['tag'], pin['repository'], str(mirror))
-head = subprocess.check_output(['git', '--git-dir', str(mirror), 'rev-parse', pin['tag'] + '^{commit}'], text=True).strip()
-if head != pin['commit']:
-    sys.exit(f'pin mismatch: {head}')
-run('git', 'clone', '--no-hardlinks', str(mirror), str(out))
+# As apply builds: the gate inputs' pinned checkout and the tree's pinned stage3/api packages, no npm, no network.
+source = typescript_source(pin)
+modules = pinned_packages(stage / 'api')
+run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
+run('git', '-C', str(out), 'remote', 'remove', 'origin')
 run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
 # The pristine measurement tree includes upstream's normal generated inputs.
 run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
@@ -54,12 +53,7 @@ with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
     adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir() and directory.name[:2] in {'00','10','20','30','40','45','46','70'})
     adaptation_env = dict(os.environ)
     if any(directory.name != '00-setup' for directory in adaptations):
-        api = cache / 'api'
-        api.mkdir(exist_ok=True)
-        for manifest in ['package.json', 'package-lock.json']:
-            shutil.copyfile(stage / 'api' / manifest, api / manifest)
-        run('npm', 'ci', '--prefix', str(api), '--ignore-scripts', '--no-audit', '--no-fund')
-        adaptation_env['NODE_PATH'] = str(api / 'node_modules')
+        adaptation_env['NODE_PATH'] = str(modules)
     for directory in adaptations:
         if not directory.is_dir():
             continue
