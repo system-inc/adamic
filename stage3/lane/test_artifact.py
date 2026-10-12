@@ -64,10 +64,38 @@ class ArtifactTests(unittest.TestCase):
             else:
                 self.input.write_text('changed while building')
             return type('Result', (), {'returncode': 0})()
-        with patch.object(artifact.subprocess, 'run', side_effect=command):
+        with (patch.object(artifact.subprocess, 'run', side_effect=command),
+                patch.object(artifact, 'link_packages') as linked):
             with self.assertRaisesRegex(ValueError, 'inputs changed'):
                 artifact.prepare(self.root / 'cache', self.root)
         self.assertFalse(any((self.root / 'cache').glob('*/ready.json')))
+        linked.assert_called_once()
+
+    def test_packages_are_linked_from_the_tree_never_installed(self):
+        project = self.root / 'stage3/typescript'
+        packages = {'node_modules/esbuild': dict(version='0.27.3', integrity='sha512-pinned')}
+        lockfile = json.dumps(dict(packages={'': dict(name='typescript'), **packages}))
+        (project / 'node_modules/esbuild').mkdir(parents=True)
+        (project / 'package-lock.json').write_text(lockfile)
+        (project / 'node_modules/.package-lock.json').write_text(json.dumps(dict(packages=packages)))
+        (project / 'node_modules/esbuild/package.json').write_text(json.dumps(dict(version='0.27.3')))
+        tree = self.root / 'adapted'
+        tree.mkdir()
+        (tree / 'package-lock.json').write_text(lockfile.replace('pinned', 'other'))
+        with self.assertRaisesRegex(ValueError, "adapted tree's package-lock.json is [0-9a-f]{64}, not"):
+            artifact.link_packages(self.root, tree)
+        self.assertFalse((tree / 'node_modules').exists())
+        (tree / 'package-lock.json').write_text(lockfile)
+        artifact.link_packages(self.root, tree)
+        linked = tree / 'node_modules/esbuild/package.json'
+        self.assertFalse((tree / 'node_modules').is_symlink())
+        self.assertTrue(linked.samefile(project / 'node_modules/esbuild/package.json'))
+        (project / 'node_modules/esbuild/package.json').write_text(json.dumps(dict(version='0.27.2')))
+        tree = self.root / 'second'
+        tree.mkdir()
+        (tree / 'package-lock.json').write_text(lockfile)
+        with self.assertRaisesRegex(RuntimeError, 'esbuild is not version 0.27.3'):
+            artifact.link_packages(self.root, tree)
 
     def test_file_boundaries_are_part_of_digest(self):
         first = self.root / 'first'
