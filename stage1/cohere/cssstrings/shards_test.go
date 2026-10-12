@@ -15,11 +15,11 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var stringsEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
@@ -203,7 +203,7 @@ func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay recipes also use buildcache.Product; products are immutable.
+// The Go oracle is a buildcache.GoBuildIn product; products are immutable.
 type stringsInputs struct {
 	Name      string
 	Files     []string
@@ -215,46 +215,6 @@ func stringsProduct(t *testing.T, inputs stringsInputs, build func(dir string) e
 	t.Helper()
 	keyed := stringsCacheInputs(t, inputs)
 	return buildcache.Product(t, keyed, build)
-}
-
-// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
-// toolchain.Env (stringsGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
-// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
-// didn't name could start to unseen.
-func stringsGoProduct(t *testing.T, name string, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, stringsGoProductInputs(name, stringsGoCompilers()), build)
-}
-
-func stringsGoProductInputs(name string, compilers stringsCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      "cssstrings " + name,
-		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssstrings/testdata", "stage1/cohere/cssstrings/port_test.go"},
-		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
-	}
-}
-
-// stringsCompilers are the C and C++ compilers go builds with, and the C compiler's report.
-type stringsCompilers struct{ c, cPlusPlus, report string }
-
-// stringsGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
-// names neither.
-func stringsGoCompilers() stringsCompilers {
-	var compilers stringsCompilers
-	for _, setting := range toolchain.Env() {
-		switch name, value, _ := strings.Cut(setting, "="); name {
-		case "CC":
-			compilers.c = value
-		case "CXX":
-			compilers.cPlusPlus = value
-		}
-	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
-	}
-	return compilers
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -292,21 +252,36 @@ func stringsCacheInputs(t *testing.T, inputs stringsInputs) buildcache.Inputs {
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
 	}
-	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
-	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
-	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
+	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources
+	// (compilerinputs.Lowering, the Go release) rather than by this binary's bytes, which differ wherever the test binary
+	// was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 
 	return keyed
 }
 
 type stringsProgram struct{ dir, main, c, javascript string }
 
+// stringsLowering is compilerinputs.Lowering as stringsInputs names a file, relative to this package's directory.
+func stringsLowering() []string {
+	var files []string
+	for _, entry := range compilerinputs.Lowering() {
+		files = append(files, repository+"/"+entry)
+	}
+	return files
+}
+
+// stringsProgramInputs keys the port lowered from main: the compiler that lowers it (compilerinputs.Lowering) and the
+// port's two .ts files, main and the strings.ts beside it.
+func stringsProgramInputs(name, main string) stringsInputs {
+	return stringsInputs{
+		Name: name + " lowering and backends", Files: append(stringsLowering(), main, filepath.Join(filepath.Dir(main), "strings.ts")),
+		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
+	}
+}
+
 func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
 	t.Helper()
-	dir := stringsProduct(t, stringsInputs{
-		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "strings.ts"), repository + "/internal", repository + "/go.mod", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
-		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
-	}, func(dir string) error {
+	dir := stringsProduct(t, stringsProgramInputs(name, main), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -332,18 +307,55 @@ func stringsClangToolchain(t *testing.T) string {
 	return buildcache.Tool("clang", "--version")
 }
 
+// stringsNativeInputs keys the native port built from programC: the compiler that builds it (compilerinputs.Lowering,
+// which holds internal/native) and the C itself.
+func stringsNativeInputs(t *testing.T, name, programC string, sanitize bool) stringsInputs {
+	t.Helper()
+	return stringsInputs{Name: name, Files: append(stringsLowering(), programC), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: stringsClangToolchain(t)}
+}
+
 func buildStringsNative(t *testing.T, name string, program stringsProgram, sanitize bool) string {
 	t.Helper()
-	options := native.Options{Sanitize: sanitize}
-	flags := native.Flags(options)
-	dir := stringsProduct(t, stringsInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: stringsClangToolchain(t)}, func(dir string) error {
+	dir := stringsProduct(t, stringsNativeInputs(t, name, program.c, sanitize), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "port"), options)
+		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(dir, "port")
+}
+
+// An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
+// baselines, which nothing links, must keep it.
+func TestCSSStringsCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
+	t.Parallel()
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	// A native product keys its C by content, so a stand-in C file keys it without lowering anything.
+	programC := filepath.Join(t.TempDir(), "program.c")
+	write(t, programC, nil)
+	products := []stringsInputs{stringsProgramInputs("port", main), stringsNativeInputs(t, "native-fast", programC, false), stringsNativeInputs(t, "sanitized", programC, true)}
+	for _, mutation := range stringsMutations {
+		products = append(products, stringsProgramInputs(mutation.name, prepareStringsMutant(t, mutation)), stringsNativeInputs(t, mutation.name+"-sanitized", programC, true))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		keyed := stringsCacheInputs(t, product)
+		linked, baselines := false, false
+		for _, entry := range keyed.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", keyed.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", keyed.Name)
+		}
+	}
 }
 
 func prepareStringsMutant(t *testing.T, mutation stringsMutation) string {

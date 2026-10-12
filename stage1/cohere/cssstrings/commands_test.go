@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,19 +25,6 @@ func stringsSetupCommand(t *testing.T, name string, arguments ...string) *exec.C
 	t.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
 	return stringsCommandContext(t, ctx, cancel, name, arguments...)
-}
-
-// stringsGoCommand is stringsSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env, the
-// environment whose compilers the Go oracle's key names.
-func stringsGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := stringsSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
 }
 
 func stringsCommandContext(t *testing.T, ctx context.Context, cancel context.CancelFunc, name string, arguments ...string) *exec.Cmd {
