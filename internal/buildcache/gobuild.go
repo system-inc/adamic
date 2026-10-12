@@ -648,6 +648,17 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			return Inputs{}, err
 		}
 	}
+	// A module the build's module or the workspace replaces with a directory of the tree selects versions through its
+	// go.mod whether or not the build compiles a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab).
+	replaced, err := localReplacements(root, root, directory)
+	if err != nil {
+		return Inputs{}, err
+	}
+	for _, module := range replaced {
+		if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
+			return Inputs{}, err
+		}
+	}
 	// The go env values a build reads beyond its sources (toolchain.GoSettings, each of which toolchain.Env passes), asked
 	// of go under the environment the build gets, so a default counts like a setting, keyed as goSetting says: GOFLAGS
 	// without its -p share (portable), the workspace by content, the release GOTOOLCHAIN selects.

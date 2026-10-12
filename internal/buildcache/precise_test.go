@@ -2013,7 +2013,7 @@ func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(t *testing.T) {
 	write(t, root, "go.mod", "module example.com/main\n\ngo 1.22\n\nreplace example.com/shim => ./shim\n\nreplace example.com/far => example.com/other v1.0.0\n")
 	write(t, root, "shim/go.mod", "module example.com/shim\n\ngo 1.22\n")
 	write(t, root, "go.work", "go 1.22\n\nuse .\n\nreplace example.com/tool => ./tool\n")
-	directories, err := localReplacements(root)
+	directories, err := localReplacements(root, root)
 	if err != nil {
 		t.Fatal(err)
 	}
