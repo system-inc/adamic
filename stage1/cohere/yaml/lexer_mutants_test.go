@@ -50,6 +50,15 @@ func run(t *testing.T, directory string, environment []string, name string, args
 	return out.Bytes()
 }
 
+// lexCorpus is the upstream YAML lexCases reads: in each checkout, the files under roots at the checkout's pin.
+var lexCorpus = []struct {
+	checkout, pin string
+	roots         []string
+}{
+	{"cohere", corpusfiles.CohereCommit, []string{".github/workflows"}},
+	{"cohere/TypeScript", corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}},
+}
+
 func lexCases(t *testing.T) (string, int, int) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
@@ -59,8 +68,10 @@ func lexCases(t *testing.T) (string, int, int) {
 	var texts []string
 	files := 0
 	patterns := []string{"*.yaml", "*.yml"}
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{".github/workflows"}, patterns)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}, patterns)...)
+	var paths []string
+	for _, corpus := range lexCorpus {
+		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, corpus.checkout), corpus.pin, corpus.roots, patterns)...)
+	}
 	sort.Strings(paths)
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
