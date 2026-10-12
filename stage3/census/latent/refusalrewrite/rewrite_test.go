@@ -187,13 +187,31 @@ func TestBehavior(t *testing.T){
 // behaviorProbe is the test binary of a module holding Rewrite's output for behaviorSource beside behaviorAST and
 // behaviorTest: a product built ahead (go test -c with GOWORK off, which vets it as go test did), so the unit runs it
 // without go. Rewrite runs in this process, so its source and this file key it.
+// probeToolchain is the probe's go, asked as its build runs go: toolchain's, under toolchain's environment with GOWORK
+// off, at the repository, whose go and toolchain directives the probe's module declares, so GOTOOLCHAIN selects the
+// same release for the key as for the build, and a go env file (which toolchain's GOENV=off never reads) reaches neither.
+func probeToolchain(t *testing.T) []string {
+	t.Helper()
+	var reports []string
+	for _, arguments := range [][]string{{"version"}, {"env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT"}} {
+		command := toolchain.CommandIn("../../../..", "go", arguments...)
+		command.Env = append(command.Env, "GOWORK=off")
+		output, err := command.Output()
+		if err != nil {
+			t.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+		}
+		reports = append(reports, strings.TrimSpace(string(output)))
+	}
+	return reports
+}
+
 func behaviorProbe(t *testing.T) string {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:      "refusalrewrite behavior probe",
 		Files:     []string{"go.mod", "stage3/census/latent/refusalrewrite/rewrite.go", "stage3/census/latent/refusalrewrite/rewrite_test.go"},
 		Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -buildvcs=false", "GOWORK=off"},
-		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT")},
+		Toolchain: probeToolchain(t),
 	}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		output, err := Rewrite([]byte(behaviorSource))
@@ -206,17 +224,17 @@ func behaviorProbe(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		version := ""
+		directives := ""
 		for _, line := range strings.Split(string(repository), "\n") {
-			if strings.HasPrefix(line, "go ") {
-				version = strings.TrimSpace(strings.TrimPrefix(line, "go "))
+			if strings.HasPrefix(line, "go ") || strings.HasPrefix(line, "toolchain ") {
+				directives += strings.TrimSpace(line) + "\n"
 			}
 		}
-		if version == "" {
+		if !strings.HasPrefix(directives, "go ") {
 			return fmt.Errorf("the repository's go.mod declares no go version")
 		}
 		module := filepath.Join(directory, "module")
-		for name, text := range map[string]string{"go.mod": "module probe\n\ngo " + version + "\n", "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
+		for name, text := range map[string]string{"go.mod": "module probe\n\n" + directives, "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
 			path := filepath.Join(module, name)
 			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 				return err
