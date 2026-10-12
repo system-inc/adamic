@@ -17,6 +17,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Product identity is the check the shared tier lands on (Kirk's ruling, Oct 9): a product built or fetched through
@@ -30,14 +32,15 @@ var freshFlags = []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 
 // freshGoBuild is 'go build' run directly at root with GoBuild's flags and nothing from buildcache, through goCache:
 // an empty Go build cache, or a copy of a template built from one (freshGoCache), so nothing cached anywhere can stand
-// in for the build.
+// in for the build. It runs toolchain's go under toolchain's environment, as GoBuild's own build does, so the two
+// builds it compares differ only in the cache.
 func freshGoBuild(t *testing.T, root, output, pkg, goCache string, arguments []string, environment ...string) ([]byte, float64) {
 	t.Helper()
 	started := time.Now()
 	path := filepath.Join(t.TempDir(), output)
-	command := exec.Command("go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
+	command := toolchain.Command("go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
 	command.Dir = root
-	command.Env = append(append(os.Environ(), environment...), "GOCACHE="+goCache)
+	command.Env = append(append(command.Env, environment...), "GOCACHE="+goCache)
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("go build %s: %v\n%s", pkg, err, combined)
 	}
@@ -189,9 +192,9 @@ func freshGoCache(t *testing.T) func() string {
 	module := t.TempDir()
 	write(t, module, "go.mod", "module example.com/template\n\ngo 1.21\n")
 	write(t, module, "main.go", "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n")
-	command := exec.Command("go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
+	command := toolchain.Command("go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
 	command.Dir = module
-	command.Env = append(os.Environ(), "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
+	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("the template Go build cache: %v\n%s", err, combined)
 	}
