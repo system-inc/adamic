@@ -204,19 +204,23 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 	return quoteLayoutBuildProduct(t, root, "")
 }
 
+// quoteLayoutLoweredInputs keys the lowered port by what lowering reads (whitespaceLayoutBuildFiles, the compiler's
+// compilerinputs.Lowering and the port's sources); the native builds keep the same Files.
+func quoteLayoutLoweredInputs() buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "markdown-quote-layout-lowered",
+		Files:     whitespaceLayoutBuildFiles(),
+		Flags:     []string{"C and JavaScript"},
+		Toolchain: []string{runtime.Version()},
+	}
+}
+
 func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProducts {
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{
-		Name: "markdown-quote-layout-lowered",
-		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
-		// complete); the native builds keep the same Files.
-		Files:     whitespaceLayoutBuildFiles(),
-		Flags:     []string{"C and JavaScript"},
-		Toolchain: []string{runtime.Version()},
-	}
+	inputs := quoteLayoutLoweredInputs()
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
@@ -239,53 +243,15 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 	if target == "lowered" {
 		return products
 	}
-	// GoBuild is not on this base; cache the unchanged overlay builds as products.
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []struct{ name, driver, command string }{
-		{"lists", "list_go.go", "adamic_markdown_lists"},
-		{"layout", "document_go.go", "adamic_markdown_doclayout"},
+	// The Go oracles are buildcache.GoBuildIn products (markdownLayoutGoOracle).
+	for _, mode := range []struct{ name, command string }{
+		{"lists", "adamic_markdown_lists"},
+		{"layout", "adamic_markdown_doclayout"},
 	} {
 		if target != "" && target != mode.name {
 			continue
 		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
-		replace := map[string]string{mainPath: driver}
-		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		goInputs := buildcache.Inputs{
-			Name:      "markdown-quote-layout-go-" + mode.name,
-			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
-			Flags:     []string{"go build", "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
-			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
-		}
-		dir := buildcache.Product(t, goInputs, func(dir string) error {
-			overlayPath := filepath.Join(dir, mode.name+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command := quoteLayoutSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
-			command.Dir = cohere
-			if output, err := combinedOutput(command); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(dir, mode.name)
+		binary := markdownLayoutGoOracle(t, mode.command)
 		if mode.name == "lists" {
 			products.goBinary = binary
 		} else {
@@ -550,14 +516,6 @@ func quoteLayoutFixture(t *testing.T, inputs []auditInput, products quoteLayoutP
 func quoteLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	t.Cleanup(cancel)
-	return quoteLayoutContextCommand(ctx, name, arguments...)
-}
-
-// Setup keeps process-group cancellation without a deadline of its own.
-func quoteLayoutSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
 	t.Cleanup(cancel)
 	return quoteLayoutContextCommand(ctx, name, arguments...)
 }
