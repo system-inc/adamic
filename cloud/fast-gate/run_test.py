@@ -845,6 +845,34 @@ class Coverage(FailClosed):
         gate.cover(["stage3/.gitignore"], ["stage3/.gitignore"], [])
         self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
 
+    def test_a_listed_reader_fires_for_its_list_and_the_paths_it_names(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/json lists/vouch.txt listed\ninert *\n")
+        os.makedirs(os.path.join(self.tree, "lists"), exist_ok=True)
+        with open(os.path.join(self.tree, "lists/vouch.txt"), "w") as handle:
+            handle.write("# vouching\nbench/listed.json\n\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree, tree=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        for path, fires in (("bench/listed.json", True), ("lists/vouch.txt", True), ("bench/unlisted.json", False), ("lists/other.txt", False)):
+            with self.subTest(path=path):
+                gate.cover([path], [path], [])
+                self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/json"] if fires else [])
+                self.assertEqual([row["paths"] for row in gate.result["reads"]], [[path]] if fires else [])
+        # The tree without the list: the list's own path still fires, nothing it named does.
+        os.remove(os.path.join(self.tree, "lists/vouch.txt"))
+        gate.cover(["lists/vouch.txt", "bench/listed.json"], ["lists/vouch.txt", "bench/listed.json"], [])
+        self.assertEqual(gate.result["reads"][0]["paths"], ["lists/vouch.txt"])
+
+    def test_a_reads_line_with_an_unknown_form_is_refused(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/json lists/vouch.txt globbed\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree, tree=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        with self.assertRaises(ValueError):
+            gate.cover([], [])
+
     def test_reads_do_not_cover_an_unowned_path(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("reads stage1/cohere/tsprinter **/*.ts\n")

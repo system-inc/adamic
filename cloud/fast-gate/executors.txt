@@ -618,12 +618,16 @@ reads stage1/cohere/graphql/printer stage1/cohere/json/width.ts
 # TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
 # TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
 reads stage1/cohere/graphql/printer stage1/cohere/json/widthTables.ts
-# json's repository corpus reads the pin's .json through Git, and from disk only the files its
-# testdata/corpus-vouching.txt names, which its pinned corpus product declares (#sgpawde, #gskb0x3): an edit to one
-# moves that product's key and so every json unit's, and an edit to any other .json reaches no json test. A pin bump
-# or a vouching edit is an edit to json's own testdata. What it still reads from disk beside them: the pinned cohere
-# paths (the cohere line below) and the provisioned stage3/api/node_modules, which npm ci builds from these two files.
+# json's repository corpus reads the pin's .json through Git, never the working tree's, and an edit to any .json
+# its vouching list doesn't name reaches no json test. A pin bump or a vouching edit is an edit to json's own testdata.
+# The pinned corpus product keys on the working-tree text of each file testdata/corpus-vouching.txt names, since its
+# relocation check passes a machine path only when one of them holds it (#sgpawde): an edit that takes the path out
+# fails the product, so the listed line keys every json unit on those files too (#gskb0x3; Loom's planner, run.py's
+# cover). What else it reads from disk: the pinned cohere paths (the cohere line below) and the provisioned
+# stage3/api/node_modules, which npm ci builds from the two stage3/api files.
 # corpusCases via pinnedCorpusFiles — stage1/cohere/json/audit_test.go:105, stage1/cohere/json/pinned_repository_corpus_test.go:463
+# jsonPinnedCorpusInputsAt — stage1/cohere/json/pinned_repository_corpus_test.go:61
+reads stage1/cohere/json stage1/cohere/json/testdata/corpus-vouching.txt listed
 reads stage1/cohere/json stage3/api/package.json
 reads stage1/cohere/json stage3/api/package-lock.json
 # TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via corpusCases — stage1/cohere/json/audit_test.go:100

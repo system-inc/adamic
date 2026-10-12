@@ -246,6 +246,19 @@ def catalogEntries(tree):
         return json.load(handle)
 
 
+def listedReads(tree, listPath):
+    """A listed reads line's paths: the list itself and each path the tree's copy of it names, one a line, a # line
+    a comment. A list the tree doesn't hold names only itself, so deleting it still selects its reader (Loom's
+    planner keys the same paths, planner/reads.go)."""
+    listed = {listPath}
+    try:
+        with open(os.path.join(tree, listPath)) as handle:
+            listed.update(line.strip() for line in handle if line.strip() and not line.strip().startswith("#"))
+    except FileNotFoundError:
+        pass
+    return listed
+
+
 def wasiCommands(names):
     return [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
              "-p", "1", "-parallel", "1", "-skip", "^TestProduct_", "-run",
@@ -853,9 +866,11 @@ class Gate:
                 elif fields and fields[0] == "reads":
                     # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
                     # (gitignore walks the whole tree), so only an added or deleted path changes its input.
-                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
+                    # "reads <package> <list> listed": the test reads the list and every path the candidate's
+                    # copy of it names, one a line (json's corpus vouching list, #gskb0x3).
+                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] not in ("paths", "listed")):
                         raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
-                    readers.append((number, fields[1], fields[2], len(fields) == 4))
+                    readers.append((number, fields[1], fields[2], fields[3] if len(fields) == 4 else ""))
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
         # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
@@ -865,9 +880,13 @@ class Gate:
         self.result["reads"] = []
         readerPackages = set()
         mapChanged = "cloud/fast-gate/executors.txt" in changed
-        for number, package, pattern, pathsOnly in readers:
-            # Without the added and deleted list (a caller that didn't compute it), every match fires.
-            paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern) and (not pathsOnly or pathSetChanged is None or path in pathSetChanged)]
+        for number, package, pattern, form in readers:
+            if form == "listed":
+                listed = listedReads(self.arguments.tree, pattern)
+                paths = [path for path in changed if path in listed]
+            else:
+                # Without the added and deleted list (a caller that didn't compute it), every match fires.
+                paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern) and (form != "paths" or pathSetChanged is None or path in pathSetChanged)]
             if paths or mapChanged:
                 readerPackages.add(module + "/" + package)
                 self.result["reads"].append({"line": number, "package": package, "glob": pattern,
