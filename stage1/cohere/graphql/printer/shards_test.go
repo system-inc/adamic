@@ -28,6 +28,12 @@ type printerBuildInputs struct {
 
 func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
+	return buildcache.Product(t, printerKey(t, inputs), build)
+}
+
+// printerKey is the buildcache inputs printerBuild keys a product by.
+func printerKey(t *testing.T, inputs printerBuildInputs) buildcache.Inputs {
+	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -47,7 +53,7 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 		}
 	}
 	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	return buildcache.Product(t, key, build)
+	return key
 }
 
 // printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
@@ -123,13 +129,64 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 	return files
 }
 
-// printerWalk is every regular file under absolute that the tree carries.
+// Two mutant source products reached through links, as a runner holds them, key distinct lowered products, and each
+// keys the same through its link as through its directory, so a real directory's key (Workshop's) doesn't move.
+func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	key := func(source string) string {
+		t.Helper()
+		return buildcache.NameKey(directory, printerKey(t, printerBuildInputs{Name: "lowered GraphQL printer", Files: printerInputFiles(t, source), Toolchain: runtime.Version()}))
+	}
+	keys := map[string]string{}
+	for _, mutant := range []string{"000", "001"} {
+		product := filepath.Join(directory, "products", mutant)
+		if err := os.MkdirAll(filepath.Join(product, "graphql/printer"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(product, "graphql/printer/main.ts"), []byte("mutant "+mutant), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		link := filepath.Join(directory, "links", mutant)
+		if err := os.MkdirAll(filepath.Dir(link), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Symlink(product, link); err != nil {
+			t.Fatal(err)
+		}
+		if files := printerInputFiles(t, link); len(files) != 1 || files[0] != filepath.Join(link, "graphql/printer/main.ts") {
+			t.Fatalf("mutant %s's source through its link lists %q, want its main.ts under the link", mutant, files)
+		}
+		keys[mutant] = key(link)
+		if direct := key(product); direct != keys[mutant] {
+			t.Fatalf("mutant %s keys %s through its link and %s through its directory", mutant, keys[mutant][:12], direct[:12])
+		}
+	}
+	if keys["000"] == keys["001"] {
+		t.Fatalf("mutants 000 and 001 key one lowered product %s through their links", keys["000"][:12])
+	}
+	t.Logf("through their links, mutant 000 keys %s and 001 keys %s", keys["000"][:12], keys["001"][:12])
+}
+
+// printerWalk is every regular file under absolute that the tree carries. A product reached through a link, as a
+// runner links each one it fetched, is walked where it points (buildcache.ProductRoot), and each file is named under
+// absolute as given: walked as the link itself it lists nothing, and mega's run 2 keyed all three mutants' lowered
+// products by the repository alone, so they ran one sanitized binary and escaped the oracle.
 func printerWalk(tree, absolute string) ([]string, error) {
+	start, err := buildcache.ProductRoot(absolute)
+	if err != nil {
+		return nil, err
+	}
 	var files []string
-	err := filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
+	err = filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
+		relative, err := filepath.Rel(start, path)
+		if err != nil {
+			return err
+		}
+		path = filepath.Join(absolute, relative)
 		// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
 		if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
 			if entry.IsDir() {
