@@ -800,14 +800,25 @@ func toolReport(output string) string {
 // clang -print-resource-dir says /opt/adamic-tools/llvm/lib/clang/20 on a cloud box and
 // /home/ahra/adamic-tools/llvm/lib/clang/20 on Workshop for one clang, and both read <clang>/lib/clang/20. path is the
 // program that ran, as toolchain.Path resolved it.
+//
+// The longer prefix is rewritten first. A runner runs $ADAMIC_TOOLS/bin/clang, a link to adamic-tools/llvm/bin/clang,
+// and its prefix /home/ahra/adamic-tools is the start of the one clang reports, so rewriting it first left
+// <clang>/llvm/bin where Workshop, running ~/.adamic-tools/bin/clang to the same clang, said <clang>/bin, and keyed
+// every product that names clang apart (#94aa17s: typeaware's volume-type-symbol-native, 9c677aae81cf on Home and
+// Cloud, 8b42c20f9b4a on Workshop).
 func installedAs(path, report string) string {
 	path, _ = filepath.Abs(path)
+	prefixes := []string{}
 	for _, executable := range []string{path, resolved(path)} {
 		bin := filepath.Dir(executable)
 		if executable == "" || filepath.Base(bin) != "bin" || filepath.Dir(bin) == string(filepath.Separator) {
 			continue
 		}
-		report = replacePath(report, filepath.Dir(bin), "<"+filepath.Base(path)+">")
+		prefixes = append(prefixes, filepath.Dir(bin))
+	}
+	sort.SliceStable(prefixes, func(i, j int) bool { return len(prefixes[i]) > len(prefixes[j]) })
+	for _, prefix := range prefixes {
+		report = replacePath(report, prefix, "<"+filepath.Base(path)+">")
 	}
 	return report
 }
