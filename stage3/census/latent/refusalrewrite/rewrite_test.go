@@ -210,8 +210,7 @@ func behaviorProbe(t *testing.T) string {
 				return err
 			}
 		}
-		command := toolchain.Command("go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
-		command.Dir = module
+		command := toolchain.CommandIn(module, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
 		command.Env = append(command.Env, "GOWORK=off")
 		if combined, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", err, combined)
