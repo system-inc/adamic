@@ -3,15 +3,14 @@ package lint
 import (
 	"context"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"io/fs"
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -19,32 +18,7 @@ import (
 
 func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 	t.Helper()
-	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "stage1/cohere/lint/owned_witness_products_test.go"}
-	for _, root := range []string{"internal", "stage1/typescript", "cohere/rule_runner", "cohere/schema", "cohere/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc"} {
-		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			ext := filepath.Ext(path)
-			if (ext == ".go" && !strings.HasSuffix(path, "_test.go")) || ext == ".c" || ext == ".h" || ext == ".ts" || ext == ".a" || entry.Name() == "go.mod" || entry.Name() == "go.sum" {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, filepath.ToSlash(relative))
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	files := append(compilerinputs.Lowering(), "stage1/typescript", "stage1/cohere/lint/owned_witness_products_test.go")
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
