@@ -283,6 +283,7 @@ func threePortOracleProduct(t *testing.T) string {
 		defer cancel()
 		command := threePortCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = filepath.Join(repo, "cohere")
+		command.Env = append(command.Env, "PWD="+command.Dir)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)

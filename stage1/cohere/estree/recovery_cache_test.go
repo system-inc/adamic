@@ -62,8 +62,7 @@ func recoveryDependencies(t *testing.T, repo string) recoverySources {
 	if sources, ok := recoveryDiscovered.sources[repo]; ok {
 		return sources
 	}
-	cmd := toolchain.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
-	cmd.Dir = repo
+	cmd := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
 	output, err := cmd.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -192,8 +191,7 @@ func recoveryStableNative(repo, directory, source string) error {
 	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
-	cmd := toolchain.Command("clang", args...)
-	cmd.Dir = work
+	cmd := toolchain.CommandIn(work, "clang", args...)
 	if output, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("sanitized native build: %w: %s", err, output)
 	}
