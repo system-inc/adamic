@@ -9,6 +9,8 @@ import (
 	"sync"
 	"testing"
 	"testing/fstest"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
@@ -111,7 +113,7 @@ func runLibrary(t *testing.T, library string, want string) {
 	}
 	binary := filepath.Join(directory, "main")
 	arguments := append([]string{"-o", binary, source}, RuntimeLinkFlags(library)...)
-	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link: %v\n%s", err, output)
 	}
 	if got := runWithInput(t, "", binary); got != want {
@@ -128,7 +130,7 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 		"answer.c": &fstest.MapFile{Data: []byte("#include \"answer.h\"\nint answer(void) { return ANSWER + 0; }\n")},
 		"answer.h": &fstest.MapFile{Data: []byte("#define ANSWER 1\n")},
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -153,7 +155,7 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -217,7 +219,7 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 		{"answer.c", []byte("#include \"answer.h\"\nint answer(void) { return ANSWER; }\n")},
 		{"answer.h", []byte("#define ANSWER 42\n")},
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -266,7 +268,7 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 // scanHeaders skipping what is outside the sources; headersRead's memo shared across flags.
 // Not parallel: it clears headerScans, the process's memo every runtime build reads.
 func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
