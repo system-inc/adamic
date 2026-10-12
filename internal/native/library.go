@@ -15,6 +15,7 @@ import (
 	"sync"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type runtimeFile struct {
@@ -88,11 +89,12 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 		}
 		files = kept
 	}
-	compiler, err := exec.LookPath(compilerName(options))
+	// The program toolchain resolves is the one the key names and every step of the build runs.
+	compiler, err := toolchain.Path(compilerName(options))
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
@@ -213,8 +215,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
 		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 		arguments := append(append(append([]string{}, flags...), prefixMaps(temporary, "/adamic-runtime")...), "-c", file.name, "-o", object)
-		command := exec.Command(compiler, arguments...)
-		command.Dir = temporary
+		command := toolchain.CommandIn(temporary, compiler, arguments...)
 		if output, err := command.CombinedOutput(); err != nil {
 			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
 		}
@@ -227,8 +228,8 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	// beside the member's name, so two builds of one program linked against runtimes archived a second apart differed
 	// (TestBuildIsTheSameFromAnyDirectory on a Mac, Oct 12). ZERO_AR_DATE has it write zero; llvm-ar writes zero anyway.
 	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
-	archive := exec.Command(archiverName(compiler), arguments...)
-	archive.Env = append(os.Environ(), "ZERO_AR_DATE=1")
+	archive := toolchain.Command(archiverName(compiler), arguments...)
+	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
 	if output, err := archive.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
@@ -292,8 +293,7 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 	if len(sources) == 0 {
 		return "", nil
 	}
-	command := exec.Command(compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	command.Dir = directory
+	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
 	rules, err := command.Output()
 	if err != nil {
 		var exit *exec.ExitError

@@ -3,7 +3,6 @@ package native
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"strings"
@@ -11,6 +10,7 @@ import (
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/bridge/tsgo/spec"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func UsesTSGo(program *ir.Program) bool {
@@ -126,8 +126,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), "-o", output)
 	arguments = append(arguments, units...)
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
-	command := exec.Command("clang", arguments...)
-	command.Dir = directory
+	command := toolchain.CommandIn(directory, "clang", arguments...)
 	combined, err := command.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
