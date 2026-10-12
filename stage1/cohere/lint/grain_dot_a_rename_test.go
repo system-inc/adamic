@@ -92,6 +92,21 @@ func dotARenameSource(t *testing.T) string {
 	return directory
 }
 
+// dotARenameRegistered is a private copy of the renamed source as Resolved reads it, with its registry generated. The
+// source carries the registry copyPort generated for rule.a, so generating it for rule.ts writes .generated/registry.ts
+// and registry.go: in place, that is into Resolved's copy, which every reader of the source on this box shares, or into
+// the product itself when Resolved answers with it, and a second reader would read the first one's registry (#0sqk6ce).
+// Each reader generates into its own copy instead, and the source stays as it was built.
+func dotARenameRegistered(t *testing.T, source string) string {
+	t.Helper()
+	directory := t.TempDir()
+	if err := os.CopyFS(directory, os.DirFS(source)); err != nil {
+		t.Fatal(err)
+	}
+	prepareRegistry(t, directory)
+	return directory
+}
+
 func dotARenameLowered(t *testing.T, renamed bool) string {
 	t.Helper()
 	name, directory, slot := "original", packageDirectory, 2
@@ -100,9 +115,14 @@ func dotARenameLowered(t *testing.T, renamed bool) string {
 	}
 	inputs := dotARenameInputs(t, name+"-lowered", []string{"native.C", "javascript.JavaScript", name})
 	return dotARenameProduct(t, slot, inputs, func(dir string) error {
-		prepareRegistry(t, directory)
+		port := directory
+		if renamed {
+			port = dotARenameRegistered(t, directory)
+		} else {
+			prepareRegistry(t, port)
+		}
 		phase := time.Now()
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		program, err := load.Load([]string{filepath.Join(port, "main.ts")})
 		if err != nil {
 			return err
 		}
@@ -174,6 +194,74 @@ func TestProduct_DotARenameRenamedNative(t *testing.T) {
 	dotARenameNative(t, true)
 }
 
+// dotARenameFiles is every file under directory by its slash path, as Absolute reads it back, so a product and the
+// copy Resolved made of it read alike.
+func dotARenameFiles(t *testing.T, directory string) map[string]string {
+	t.Helper()
+	root, err := buildcache.ProductRoot(directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := map[string]string{}
+	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+		if err != nil || entry.IsDir() {
+			return err
+		}
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(root, path)
+		files[filepath.ToSlash(relative)] = buildcache.Absolute(string(data))
+		return err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return files
+}
+
+// Two readers of the renamed source, one after the other, each generate the registry into a copy of their own: the
+// second copies the source with the registry it was built with, not the first reader's, and after both, the directory
+// Resolved answered still holds the product's bytes exactly (#0sqk6ce). Generating in place fails it on either
+// answer Resolved gives: a copy gains registry.go and differs from the product, and the product itself gains it too.
+func TestDotARenameReadersRegisterPrivately(t *testing.T) {
+	t.Parallel()
+	source := dotARenameSource(t)
+	built := dotARenameFiles(t, dotARenameProductDirectories[0])
+	const registryTypeScript, registryGo = ".generated/registry.ts", ".generated/registry.go"
+	if _, found := built[registryTypeScript]; !found {
+		t.Fatalf("the renamed source was built without %s", registryTypeScript)
+	}
+	if _, found := built[registryGo]; found {
+		t.Fatalf("the renamed source was built with %s", registryGo)
+	}
+	first := dotARenameFiles(t, dotARenameRegistered(t, source))
+	// Generating for rule.ts changes the registry the source carries, so a reader generating in place would show.
+	if first[registryTypeScript] == built[registryTypeScript] || first[registryGo] == "" {
+		t.Fatalf("the first reader's registry is the source's as built, so a shared registry can't show here")
+	}
+	if seen := dotARenameFiles(t, source)[registryTypeScript]; seen != built[registryTypeScript] {
+		t.Fatalf("after the first reader, the source's %s is not the one it was built with", registryTypeScript)
+	}
+	second := dotARenameFiles(t, dotARenameRegistered(t, source))
+	if second[registryTypeScript] != first[registryTypeScript] || second[registryGo] != first[registryGo] {
+		t.Fatal("the second reader generated a different registry from the same source")
+	}
+	resolved := dotARenameFiles(t, source)
+	for name, content := range built {
+		if resolved[name] != content {
+			t.Errorf("after both readers, %s in Resolved's %s differs from the product's", name, filepath.Base(source))
+		}
+	}
+	for name := range resolved {
+		if _, found := built[name]; !found {
+			t.Errorf("after both readers, Resolved's %s holds %s, which the product doesn't", filepath.Base(source), name)
+		}
+	}
+	t.Logf("two readers registered privately; Resolved's %s holds the product's %d files exactly", filepath.Base(source), len(built))
+}
+
 func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	t.Helper()
 	started := time.Now()
@@ -192,7 +280,8 @@ func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	}()
 	go func() {
 		defer workers.Done()
-		p.Changed = dotARenameSource(t)
+		// Node generates the port's registry before it runs it, so it reads a private copy, never the source's.
+		p.Changed = dotARenameRegistered(t, dotARenameSource(t))
 		p.Before, readErr = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
 		if readErr != nil {
 			return
