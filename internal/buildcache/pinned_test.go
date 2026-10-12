@@ -34,6 +34,7 @@ func pinnedRepository(t *testing.T) (string, string, string) {
 // what git answers is the commit's own: a replace ref standing another commit in under its id is ignored. A commit
 // that isn't a full id, or that the key's flags don't name, is refused, so the key moves
 // with the pin. Mutants: run outside keying; replace objects read; the flag check dropped; a short id taken.
+// Not parallel: it swaps the package-level pinnedKeying hook.
 func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(t *testing.T) {
 	root, pinned, later := pinnedRepository(t)
 	inputs := Inputs{Name: "pinned corpus", Flags: []string{"repository JSON at " + pinned}}
@@ -70,6 +71,7 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(t *testing.T) {
 
 // The caller's trace2 event target reaches PinnedGit's git, so a test can count the processes git ran (json's
 // never-fetches tests). Mutant: the variable not passed, and the trace never written.
+// Not parallel: it sets GIT_TRACE2_EVENT for the process.
 func TestPinnedGitWritesTheCallersTraceTwoEvents(t *testing.T) {
 	root, pinned, _ := pinnedRepository(t)
 	events := filepath.Join(t.TempDir(), "events.json")
