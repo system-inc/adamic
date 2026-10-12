@@ -17,8 +17,6 @@ import (
 	"sync/atomic"
 	"syscall"
 	"time"
-
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A product's key is its read set (#vt46geg): what its last traced build read, evaluated on the tree at hand. The
@@ -593,21 +591,16 @@ func caseSensitivity() string {
 	}
 }
 
-// toolsRoot is where Workshop's tools live: ADAMIC_TOOLS, or ~/adamic-tools. A tool entry names a path under it, so
-// the same tools under another home value the same. In a sandbox (ADAMIC_SANDBOX=1) it is ADAMIC_TOOLS or an error:
-// a tool entry never resolves under a home the sandbox didn't declare.
+// toolsRoot is where the machine's tools live: ADAMIC_TOOLS, which env.sh exports and the runner passes to every unit,
+// or an error. A tool entry names a path under it, so the same tools under another directory value the same. There is
+// no fallback to the home directory: the naughty list's run (#eehjrv6) gave each unit an empty home, so a fallback
+// named <that home>/adamic-tools while clang ran from the machine's ~/adamic-tools on PATH, and 263 products read
+// clang from a place no key could name.
 func toolsRoot() (string, error) {
 	if directory := os.Getenv("ADAMIC_TOOLS"); directory != "" {
 		return directory, nil
 	}
-	if toolchain.Sandboxed() {
-		return "", errors.New("ADAMIC_SANDBOX=1 finds tools only where ADAMIC_TOOLS says, and ADAMIC_TOOLS is unset")
-	}
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "/opt/adamic-tools", nil
-	}
-	return filepath.Join(home, "adamic-tools"), nil
+	return "", errors.New("ADAMIC_TOOLS is unset, so a tool's place has no name (env.sh exports it, and the runner passes it to every unit)")
 }
 
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key

@@ -147,9 +147,10 @@ func TestAGoProductIsTheSameWhateverElseTheEnvironmentHolds(t *testing.T) {
 	}
 }
 
-// Outside a sandbox the tools directory and the product cache default under the home, as before; in one
-// (ADAMIC_SANDBOX=1) each is its variable or an error naming it, so a tool entry fails to value rather than resolve
-// under the home, and no product is written there. Mutants: toolsRoot's home default in a sandbox; cacheLocation's.
+// The tools directory is ADAMIC_TOOLS or an error naming it, in a sandbox or not, so a tool entry fails to value rather
+// than resolve under the home (#eehjrv6: 263 products read clang from a home no key named). The product cache defaults
+// under the home outside a sandbox, as before, and in one (ADAMIC_SANDBOX=1) is its variable or an error naming it, so
+// no product is written there. Mutants: toolsRoot's home default, outside a sandbox or in one; cacheLocation's in one.
 // Not parallel: t.Setenv.
 func TestASandboxDeclaresWhereToolsAndProductsLive(t *testing.T) {
 	home := t.TempDir()
@@ -162,8 +163,11 @@ func TestASandboxDeclaresWhereToolsAndProductsLive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if tools, err := toolsRoot(); err != nil || tools != filepath.Join(home, "adamic-tools") {
-		t.Errorf("outside a sandbox, toolsRoot = %q, %v", tools, err)
+	if tools, err := toolsRoot(); err == nil || !strings.Contains(err.Error(), "ADAMIC_TOOLS is unset") {
+		t.Errorf("outside a sandbox with no ADAMIC_TOOLS, toolsRoot = %q, %v", tools, err)
+	}
+	if value, err := entryValue(t.TempDir(), t.TempDir(), readEntry{Kind: "tool", Path: "bin/adamic-fake-tool"}, 0, nil); err == nil {
+		t.Errorf("outside a sandbox with no ADAMIC_TOOLS, a tool entry valued %q", value)
 	}
 	if cache, err := cacheLocation(); err != nil || cache != filepath.Join(user, "adamic-build") {
 		t.Errorf("outside a sandbox, cacheLocation = %q, %v", cache, err)
