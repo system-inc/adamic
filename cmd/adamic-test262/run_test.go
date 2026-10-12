@@ -3,13 +3,14 @@ package main
 import (
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs in the saturated subtest.
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
 `), 0600); err != nil {
 		t.Fatal(err)
 	}
-	if output, err := exec.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
 		t.Fatalf("build CPU helper: %v\n%s", err, output)
 	}
 	t.Run("spin", func(t *testing.T) {
