@@ -3,18 +3,13 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const scalarsMatchGoShardCount = 8
@@ -48,74 +43,6 @@ func scalarsMatchGoWriteCases(t *testing.T, cases []string) string {
 	return path
 }
 
-type scalarsMatchGoProduct struct {
-	once      sync.Once
-	directory string
-}
-
-var scalarsMatchGoGo scalarsMatchGoProduct
-
-// Product remains the shared buildcache API until GoBuild is available on main.
-// Both the gate declaration and shards call this exact overlay recipe and key.
-func scalarsMatchGoGoProduct(t *testing.T) string {
-	t.Helper()
-	scalarsMatchGoGo.once.Do(func() {
-		inputs := yamlPortInputs(t, "yaml-scalars-go")
-		inputs.Files = append(inputs.Files, "stage1/cohere/yaml/scalars_match_go_shards_test.go", "stage1/cohere/yaml/testdata/scalar_go.go", "stage1/cohere/yaml/testdata/scalar_exports.txt")
-		inputs.Flags = append(inputs.Flags, "go build -overlay scalar_go.go+scalar_exports.txt ./command/formatter_comparison", "CGO_ENABLED="+os.Getenv("CGO_ENABLED"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
-		scalarsMatchGoGo.directory = buildcache.Product(t, inputs, func(directory string) error {
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				return err
-			}
-			adapter, err := filepath.Abs("testdata/scalar_go.go")
-			if err != nil {
-				return err
-			}
-			numbers := filepath.Join(root, "cohere/internal/format/yaml/compose/numbers.go")
-			original, err := os.ReadFile(numbers)
-			if err != nil {
-				return err
-			}
-			exports, err := os.ReadFile("testdata/scalar_exports.txt")
-			if err != nil {
-				return err
-			}
-			source := strings.Replace(string(original), "import (", "import (\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", 1) + string(exports)
-			replacement := filepath.Join(directory, "numbers.go")
-			if err := os.WriteFile(replacement, []byte(source), 0644); err != nil {
-				return err
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): adapter, numbers: replacement}})
-			if err != nil {
-				return err
-			}
-			path := filepath.Join(directory, "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(path)
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-			defer cancel()
-			command := exec.CommandContext(ctx, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-scalars"), "./command/formatter_comparison")
-			command.Dir = filepath.Join(root, "cohere")
-			output, err := command.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go scalar build: %w\n%s", err, output)
-			}
-			return nil
-		})
-	})
-	if scalarsMatchGoGo.directory == "" {
-		t.Fatal("Go scalar product did not complete")
-	}
-	return scalarsMatchGoGo.directory
-}
-
-func TestProduct_YamlScalarsGo(t *testing.T) { t.Parallel(); scalarsMatchGoGoProduct(t) }
-
 func scalarsMatchGoRun(t *testing.T, ctx context.Context, environment []string, name string, args ...string) []byte {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, args...)
@@ -140,7 +67,7 @@ func scalarsMatchGoRunShard(t *testing.T, shard int) {
 	t.Helper()
 	setup := time.Now()
 	// Every leaf fetches its own products, once per process, before its work clock.
-	oracle := scalarsMatchGoGoProduct(t)
+	oracle := goScalarsOracle(t)
 	emitted := yamlScalarsBuild.emitted(t, "scalar_main.ts")
 	compiled := yamlScalarsBuild.binary(t, "scalar_main.ts")
 	all, _ := scalarsMatchGoCases(t)
@@ -165,7 +92,7 @@ func scalarsMatchGoRunShard(t *testing.T, shard int) {
 	started := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(t, ctx, nil, filepath.Join(oracle, "go-scalars"), path)
+	expected := scalarsMatchGoRun(t, ctx, nil, oracle, path)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name    string
@@ -220,14 +147,14 @@ func TestScalarsMatchGoUnion(t *testing.T) {
 
 func TestScalarsMatchGoPlantedFailure(t *testing.T) {
 	t.Parallel()
-	oracle := scalarsMatchGoGoProduct(t)
+	oracle := goScalarsOracle(t)
 	compiled := yamlScalarsBuild.binary(t, "scalar_main.ts")
 	cases, _ := scalarsMatchGoCases(t)
 	// Execute a real case through both sides, then corrupt its actual stdout.
 	path := scalarsMatchGoWriteCases(t, cases[:1])
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(t, ctx, nil, filepath.Join(oracle, "go-scalars"), path)
+	expected := scalarsMatchGoRun(t, ctx, nil, oracle, path)
 	actual := scalarsMatchGoRun(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, path)
 	if scalarsMatchGoDisagrees(actual, expected) {
 		t.Fatal("native control disagrees before planting")
