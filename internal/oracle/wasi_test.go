@@ -148,7 +148,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 }
 
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking, as a family
-// (families_test.go): TestWASIEmission_000 and on each compile the fixtures their shard owns.
+// (families_test.go): TestWASIEmission_000 and on each compile the fixtures their shard owns, of those stage 0 lowers.
 func runWASIEmissionShard(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
@@ -160,8 +160,9 @@ func runWASIEmissionShard(t *testing.T, shard int) {
 	}
 	compiler := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	_, probing := familyProbe("TestWASIEmission")
-	for _, index := range familyCases(t, "TestWASIEmission", shard, fixturePaths()) {
-		fixture := fixtures[index]
+	lowering := loweringFixtures()
+	for _, index := range familyCases(t, "TestWASIEmission", shard, loweringFixturePaths()) {
+		fixture := fixtures[lowering[index]]
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
@@ -169,9 +170,6 @@ func runWASIEmissionShard(t *testing.T, shard int) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
-			if !fixture.lowers {
-				t.Skip("fixture does not lower")
-			}
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -190,5 +188,28 @@ func runWASIEmissionShard(t *testing.T, shard int) {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}
 		})
+	}
+}
+
+// TestWASIEmission's cases are only fixtures stage 0 lowers, so none is a subtest that skips for want of C: every one
+// of its keys lowers by the fixtures table, and every fixture that lowers is one of its keys. Mutant: the family keyed
+// by every fixture again.
+func TestWASIEmissionKeysEveryFixtureThatLowersAndNoOther(t *testing.T) {
+	t.Parallel()
+	keys := familyNamed(t, "TestWASIEmission").keys()
+	keyed := map[string]bool{}
+	for _, key := range keys {
+		keyed[key] = true
+	}
+	for _, fixture := range fixtures {
+		switch {
+		case fixture.lowers && !keyed[fixture.path]:
+			t.Errorf("%s lowers but isn't one of TestWASIEmission's cases", fixture.path)
+		case !fixture.lowers && keyed[fixture.path]:
+			t.Errorf("%s doesn't lower but is one of TestWASIEmission's cases, a subtest that would always skip", fixture.path)
+		}
+	}
+	if len(keys) != len(keyed) {
+		t.Errorf("TestWASIEmission keys %d paths, %d of them distinct", len(keys), len(keyed))
 	}
 }
