@@ -369,6 +369,7 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 			cmd, cancel := volumeGuardCommand(h.ctx, "go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
 			defer cancel()
 			cmd.Dir = h.repository
+			cmd.Env = append(cmd.Env, "PWD="+h.repository)
 			output, err := volumeGuardOutput(cmd)
 			if err != nil {
 				return fmt.Errorf("stage0: %w: %s", err, output)
@@ -387,8 +388,7 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 			overlay := builder.write("volume-oracle-overlay.json", string(data))
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlay)
-			cmd := toolchain.Command("go", "build", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
-			cmd.Dir = filepath.Join(h.repository, "cohere")
+			cmd := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
 			volumeGuardMust(builder, "volume-oracle-build", cmd)
 			return nil
 		})
@@ -686,6 +686,10 @@ func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) resu
 	h.next++
 	if cmd.Dir == "" {
 		cmd.Dir = h.repository
+	}
+	if cmd.Env != nil {
+		// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
+		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
 	}
 	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
 	out, err := os.Create(stem + ".stdout")
