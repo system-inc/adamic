@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"os/exec"
 	"runtime"
 	"sort"
 	"strconv"
@@ -1091,7 +1090,7 @@ func runNode(t *testing.T, script, input string, timeout time.Duration) string {
 func runNodeOutput(script, input string, timeout time.Duration) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--eval", script)
+	command := nodeEval(ctx, script)
 	command.Stdin = strings.NewReader(input)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
