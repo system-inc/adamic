@@ -63,9 +63,12 @@ func newRig(t *testing.T) *rig {
 	return &rig{root: root, cache: cache, trace: trace, pid: os.Getpid()}
 }
 
+// gitIn runs git in directory, never starting git's background auto-gc or maintenance: a detached one still writing
+// .git/objects when the test ends fails t.TempDir's cleanup (TestVouchingIsALookupAtTheCorpusSize, whose commit of a
+// corpus starts one: `.git/objects: directory not empty`).
 func gitIn(t *testing.T, directory string, arguments ...string) {
 	t.Helper()
-	command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"}, arguments...)...)
+	command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main", "-c", "gc.auto=0", "-c", "maintenance.auto=false"}, arguments...)...)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("git %v: %v\n%s", arguments, err, output)
 	}
