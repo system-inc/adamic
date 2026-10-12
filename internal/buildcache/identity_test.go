@@ -5,6 +5,9 @@ import (
 	"crypto/sha256"
 	"debug/macho"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	gotoken "go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -378,9 +381,38 @@ func everyInputPart(t *testing.T, steps []inputChange, test string) (int, int) {
 }
 
 // Every step of everyInputSteps runs in exactly one part, in order: the parts, one after another, are the whole
-// sequence. It builds nothing.
+// sequence, and each part's test is a top-level test of this file that runs its part, the only caller of
+// changeEveryInputPart. It builds nothing.
 func TestEveryInputStepRunsInExactlyOnePart(t *testing.T) {
 	t.Parallel()
+	file, err := parser.ParseFile(gotoken.NewFileSet(), "identity_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	callers := map[string]bool{}
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || function.Body == nil {
+			continue
+		}
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			if call, ok := node.(*ast.CallExpr); ok {
+				if name, ok := call.Fun.(*ast.Ident); ok && name.Name == "changeEveryInputPart" {
+					callers[function.Name.Name] = true
+				}
+			}
+			return true
+		})
+	}
+	for _, part := range everyInputParts {
+		if !callers[part.test] {
+			t.Errorf("%s runs no part: no test of that name calls changeEveryInputPart, so its steps would run nowhere", part.test)
+		}
+		delete(callers, part.test)
+	}
+	for caller := range callers {
+		t.Errorf("%s calls changeEveryInputPart but is no part of everyInputParts", caller)
+	}
 	var arguments, environment []string
 	steps := everyInputSteps(t, t.TempDir(), &arguments, &environment)
 	next := 0
