@@ -243,16 +243,22 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go overlay builds use the same content-addressed cache as the other products.
+// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
+// toolchain.Env (cssParserGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
+// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
+// didn't name could start to unseen.
 func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	inputs := buildcache.Inputs{
+	return buildcache.Product(t, cssParserGoProductInputs(name, cssGoCompilers()), build)
+}
+
+func cssParserGoProductInputs(name string, compilers cssCompilers) buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "css " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/css/testdata", "stage1/cohere/css/parser_shards_test.go"},
-		Flags:     []string{"go test -c", "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
+		Flags:     []string{"go test -c", "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
-	return buildcache.Product(t, inputs, build)
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -313,8 +319,7 @@ func cssParserOracle(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := cssParserSetupCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
-		command.Dir = cohere
+		command := cssParserGoCommand(t, cohere, "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
 		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
