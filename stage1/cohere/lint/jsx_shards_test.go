@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -16,7 +17,6 @@ import (
 	"go/ast"
 	goparser "go/parser"
 	"go/token"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -38,75 +38,25 @@ type jsxProductInputs struct {
 	Toolchain []string
 }
 
-// Include source dependencies as files, not just the entry point, so products
-// invalidate when an imported source or tool changes.
-func jsxInputFiles(t *testing.T, roots ...string) []string {
+// jsxGoOracle is side, a main laid over module (a directory of the repository with a go.mod of its own) as the package
+// directory virtual, built as a buildcache.GoBuildIn product: toolchain's go there under its environment, keyed by go's
+// own answer (the packages it reads, the overlay's map and the replacement's content, go's settings and release).
+func jsxGoOracle(t *testing.T, module, side, virtual string) string {
 	t.Helper()
-	files := map[string]bool{}
-	for _, root := range roots {
-		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			switch filepath.Ext(path) {
-			case ".go", ".ts", ".a", ".c", ".h", ".mod", ".sum", ".work", ".json":
-				if strings.HasSuffix(path, "_test.go") {
-					return nil
-				}
-				absolute, err := filepath.Abs(path)
-				if err != nil {
-					return err
-				}
-				files[absolute] = true
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
+	root, err := filepath.Abs(filepath.Join(repository, module))
+	if err != nil {
+		t.Fatal(err)
 	}
-	result := make([]string, 0, len(files))
-	for path := range files {
-		result = append(result, path)
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, virtual, "main.go"): side}})
+	if err != nil {
+		t.Fatal(err)
 	}
-	sort.Strings(result)
-	return result
-}
-
-func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
-	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
-	directory := jsxProduct(t, inputs, func(dir string) error {
-		virtual := filepath.Join(root, virtualName)
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		// toolchain's go, under its environment, in root with PWD set to it: the go and the settings the key reads.
-		command := toolchain.CommandIn(root, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
-		var stdout, stderr bytes.Buffer
-		command.Stdout, command.Stderr = &stdout, &stderr
-		if err := command.Run(); err != nil {
-			return fmt.Errorf("build %s: %w\n%s\n%s", name, err, &stdout, &stderr)
-		}
-		if diagnostics := commandDiagnostics("go", stderr.Bytes()); len(diagnostics) != 0 {
-			return fmt.Errorf("build %s: %s", name, diagnostics)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoBuildIn(t, module, "oracle", "./"+virtual, []string{"-overlay=" + overlayPath})
 }
 
 // The registry can grow without cohere's pin moving. Capture ordinals and
@@ -429,9 +379,16 @@ func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error)
 	}
 	return buildcache.Product(t, buildcache.Inputs{Name: inputs.Name, Files: files, Flags: inputs.Flags, Toolchain: inputs.Toolchain}, build)
 }
+
+// jsxTreeInputs are what lowering entry reads: the compiler, entry and the port it imports (the parser and its
+// scanner), and this recipe.
 func jsxTreeInputs(t *testing.T, entry string) jsxProductInputs {
 	t.Helper()
-	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: []string{runtime.Version()}}
+	var files []string
+	for _, file := range append(compilerinputs.Lowering(), "stage1/typescript") {
+		files = append(files, filepath.Join(repository, file))
+	}
+	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(files, entry, filepath.Join(packageDirectory, "jsx_shards_test.go")), Toolchain: []string{runtime.Version()}}
 }
 
 func jsxTreeLowered(t *testing.T, entry string) string {
@@ -454,7 +411,6 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	source := filepath.Join(jsxTreeLowered(t, entry), "program.c")
 	inputs := jsxTreeInputs(t, entry)
 	inputs.Name = "jsx-tree-native"
-	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = []string{buildcache.Tool("clang", "--version")}
@@ -479,16 +435,14 @@ func jsxParserEntry(t *testing.T) string {
 
 func jsxParserOracle(t *testing.T) string {
 	t.Helper()
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-	return jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
+	return jsxGoOracle(t, "cohere/TypeScript/tsc", side, "adamic_jsx_oracle")
 }
 
 func jsxMembershipOracle(t *testing.T) string {
 	t.Helper()
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
 	side, _ := filepath.Abs("testdata/jsx_inventory.go")
-	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
+	return jsxGoOracle(t, "cohere", side, "adamic_jsx_inventory")
 }
 
 // Every consumer prepares the immutable capture, build, and inventory product

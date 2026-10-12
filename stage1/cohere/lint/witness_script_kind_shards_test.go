@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -203,7 +204,7 @@ func TestWitnessScriptKindPlantedFailure(t *testing.T) {
 func witnessScriptKindInputs() buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "witness-script-kind-lowered-no-debugger-v1",
-		Files:     []string{"internal", "stage1", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/go.mod", "cohere/go.sum", "cohere/rule_runner", "cohere/policy", "cohere/schema", "go.mod", "go.work"},
+		Files:     append(compilerinputs.Lowering(), "stage1"),
 		Toolchain: []string{runtime.Version()},
 	}
 }
