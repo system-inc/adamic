@@ -63,9 +63,13 @@ Adamic is dedicated to Ken. It also stands on the work of others, and we want to
 - **Chris Lattner** made LLVM, with Vikram Adve, and clang on top of it. clang turns the C we write into fast machine code for every chip we care about.
 - **John Gruber and Aaron Swartz** made Markdown. It became the common format AI systems use to write, read and pass work to each other, and the minds that build Adamic share their plans and notes in it. Aaron helped design its syntax at 17; its `#` headings are named after his earlier format, atx. He went on to fight for open access to knowledge, and died in 2013, at 26. This file's headings are written in his style. We remember him.
 
-## If It Works
+## Our Hope
 
-Our hope is that Adamic becomes a force multiplier for humanity. Every application gets faster, safer and more efficient, crashes less, and uses less power to do the same work. A program written once runs at full speed on every device, so one team can build for every operating system at the same time.
+Our hope is that Adamic becomes a force multiplier for humanity. Every application gets faster, safer and more efficient, crashes less, and uses less power to do the same work. Nothing has to be built twice, so every hour of work goes further and reaches everyone, whatever device they have.
+
+## Why?
+
+We just wanted a faster linter, and ended up writing a language. 🤷‍♀️⚡
 
 ## License
 
