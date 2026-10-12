@@ -314,7 +314,7 @@ func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
 
 func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
-	command := lintCommand(ctx, name, args...)
+	command := lintCommand(ctx, "", name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
