@@ -157,10 +157,6 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition union exceeded 90s") })
 	defer timer.Stop()
 	lines := state.lines
-	cases := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
 	if len(compositionShardFunctions) != testCompositionMatchesGoShards {
 		t.Fatal("top-level shard enumeration differs from constant")
 	}
@@ -189,30 +185,64 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	if caught != 1 || offset != len(lines) {
 		t.Fatalf("planted failure caught by %d shards, union %d/%d", caught, offset, len(lines))
 	}
-	// Mutant-must-fail remains a whole-corpus condition, as before sharding.
+	t.Logf("union leaf: %.3fs cooked=false", time.Since(started).Seconds())
+}
+
+// Mutant-must-fail remains a whole-corpus condition, as before sharding: each parser mutant, composed and run on Node
+// over every live case, must differ from the unmutated composition's run. One test per mutant, each with its own
+// baseline: the union ran all four whole-corpus Node runs, 31.0 s alone on one core (Home).
+func compositionCatchesMutant(t *testing.T, index int) {
+	t.Helper()
+	state := compositionSetup(t)
+	started := time.Now()
+	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition mutant exceeded 90s") })
+	defer timer.Stop()
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
 	source, _ := filepath.Abs("compose_main.ts")
 	baseline := compositionNode(t, source, cases)
 	if baseline.exitCode != 0 || len(baseline.stderr) != 0 {
 		t.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
-	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" {
+	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" && index == 0 {
 		if err := os.WriteFile(keep, baseline.stdout, 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
-	for _, mutation := range mutants {
-		mutated := portDirectory(t, &mutation)
-		result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
-		if result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("composed mutant must terminate: %s", result.stderr)
-		}
-		if difference := firstDifference(string(result.stdout), string(baseline.stdout)); difference == "" {
-			t.Fatalf("composition comparison missed mutant %s", mutation.name)
-		} else {
-			t.Logf("Node composition caught %s: %s", mutation.name, difference)
-		}
+	mutation := mutants[index]
+	mutated := portDirectory(t, &mutation)
+	result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
+	if result.exitCode != 0 || len(result.stderr) != 0 {
+		t.Fatalf("composed mutant must terminate: %s", result.stderr)
 	}
-	t.Logf("union leaf: %.3fs cooked=false", time.Since(started).Seconds())
+	difference := firstDifference(string(result.stdout), string(baseline.stdout))
+	if difference == "" {
+		t.Fatalf("composition comparison missed mutant %s", mutation.name)
+	}
+	t.Logf("Node composition caught %s: %s (%.3fs cooked=false)", mutation.name, difference, time.Since(started).Seconds())
+}
+
+func TestCompositionMatchesGoCatchesMutant_0(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 0)
+}
+func TestCompositionMatchesGoCatchesMutant_1(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 1)
+}
+func TestCompositionMatchesGoCatchesMutant_2(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 2)
+}
+
+// Every parser mutant has its catching test.
+func TestCompositionMatchesGoCatchesEveryMutant(t *testing.T) {
+	t.Parallel()
+	if len(mutants) != 3 {
+		t.Fatalf("%d parser mutants, three TestCompositionMatchesGoCatchesMutant_ tests: add one per mutant", len(mutants))
+	}
 }
 
 // Enumerate the original live corpus without its unrelated raw-parser benchmark.
