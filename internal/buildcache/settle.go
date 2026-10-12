@@ -453,8 +453,20 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			return classed{}
 		}
 	}
+	// The Windows GPU driver's libraries, WSL's mount (#6eexfyv): a build that opens one depends on its box's Windows
+	// driver, which no key names, so it refuses; the loader's cache is valued without them for every other build.
+	if under(name, wslLibraries) && kinds&(readContent|readExec) != 0 {
+		return classed{refusal + "the Windows GPU driver", name}
+	}
 	for _, place := range facts.system {
 		if under(name, place) {
+			// A machine directory a build only stat'd or opened to search in is keyed by whether and as what it exists,
+			// never by its names: those are whatever the machine installed (Cloud's /usr/lib/x86_64-linux-gnu holds QEMU's
+			// 235 more), so a native product missed on every box but the one that built it (#vdha67a, measured Oct 12).
+			// What the build found or missed in it is keyed path by path; a directory it listed stays keyed by its names.
+			if kinds&readListing == 0 && isDirectory(name) {
+				return classed{"system directory", name}
+			}
 			return classed{"system", name}
 		}
 	}
