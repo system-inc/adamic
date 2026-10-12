@@ -3,8 +3,6 @@ package estree
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -16,11 +14,11 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testScalarEdgesShards = 4
@@ -37,8 +35,26 @@ func scalarEdgeRanges(count int) [testScalarEdgesShards][2]int {
 func scalarEdgeInputs() buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "scalar-edges-lowered",
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
+		Files:     estreeCompilerFiles(),
 		Toolchain: []string{runtime.Version()},
+	}
+}
+
+// estreeCompilerFiles are what a lowered or native estree port reads: the compiler that lowers and builds it
+// (compilerinputs.Lowering, never cohere or tsc whole, whose TypeScript submodule a populated tree hashed for every
+// lookup, #4ycgm2n), the port, and the TypeScript parser and scanner it imports.
+func estreeCompilerFiles() []string {
+	return append(compilerinputs.Lowering(), "stage1/cohere/estree", "stage1/typescript")
+}
+
+// Each lowered and native port's key names the compiler, never tsc whole: a tsc baseline's edit keeps it and a linked
+// tsc package's edit moves it (compilerinputs.CheckKey). Mutant: cohere whole back in estreeCompilerFiles.
+func TestEstreeKeysNameTheCompiler(t *testing.T) {
+	t.Parallel()
+	if err := compilerinputs.CheckKey([]string{"stage1/cohere/estree", "stage1/typescript"}, func(root string) (string, error) {
+		return buildcache.Key(root, buildcache.Inputs{Name: "estree port", Files: estreeCompilerFiles()})
+	}); err != nil {
+		t.Fatal(err)
 	}
 }
 
@@ -82,33 +98,11 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 	return scalarEdgeNative(t, lowered), filepath.Join(lowered, "port.mjs")
 }
 
+// scalarEdgeOracle is the estree Go oracle, goOracle's product: the same overlay build it made under a key of its own
+// that named cohere whole (#4ycgm2n).
 func scalarEdgeOracle(t *testing.T) string {
 	t.Helper()
-	repo := root(t)
-	source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name: "scalar-edges-go-oracle", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go"},
-		Flags: []string{"go build overlay oracle"}, Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(product, "oracle")
+	return goOracle(t)
 }
 
 type scalarEdgeReady struct{ Oracle, Binary, Script string }
