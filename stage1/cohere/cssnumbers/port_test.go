@@ -185,7 +185,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 				fast := numbersPreparedNative(t, -1, false)
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, numbersInput(corpus.texts[unit.lo:unit.hi]))
-				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
+				want := numbersBatchGoAnswers(t, goBinary, goIdentity, corpus, unit)
 				clean(t, "Go", want)
 				for _, side := range []struct {
 					name   string
@@ -200,7 +200,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 				}
 				numbersLeaks(t, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := numbersOracleAnswers(t, "Prettier", "node", []string{script, library}, numbersInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
+					answer := numbersBatchPrettierAnswers(t, library, libraryIdentity, corpus, unit)
 					clean(t, "Prettier", answer)
 					checkNumbersOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
@@ -218,7 +218,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+numbersEncode.Replace(text)+"\n"))
-					expected := numbersOracleAnswers(t, "Go", goBinary, nil, []byte(pref+numbersEncode.Replace(text)+"\n"), goIdentity)
+					expected := numbersRawGoAnswer(t, goBinary, goIdentity, corpus, unit.lo, pref)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{numbersExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), numbersOnNode(t, main, args...)} {
