@@ -7,10 +7,14 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -113,6 +117,57 @@ func TestPrinterAsGoCohere_008(t *testing.T)   { t.Parallel(); printerAsGoUnit(t
 func TestPrinterAsGoCohere_009(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 9) }
 func TestPrinterAsGoCohere_010(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 10) }
 func TestPrinterAsGoCohere_011(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 11) }
+
+// The gate runs each shard by its wrapper's name, so a wrapper deleted, renumbered or pointed at another shard would
+// drop that shard's cases with nothing red. This file must declare exactly testPrinterAsGoCohereShards wrappers,
+// TestPrinterAsGoCohere_000 on without a gap, each running its own shard.
+func TestPrinterAsGoCohereWrappers(t *testing.T) {
+	t.Parallel()
+	file, err := parser.ParseFile(token.NewFileSet(), "grain_asgo_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	wrapped := map[int]string{}
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestPrinterAsGoCohere_") || function.Name.Name == "TestPrinterAsGoCohere_Union" {
+			continue
+		}
+		suffix := strings.TrimPrefix(function.Name.Name, "TestPrinterAsGoCohere_")
+		number, err := strconv.Atoi(suffix)
+		if err != nil || fmt.Sprintf("%03d", number) != suffix {
+			t.Fatalf("%s: not a three-digit shard wrapper", function.Name.Name)
+		}
+		runs := -1
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
+			if !ok || len(call.Args) != 2 {
+				return true
+			}
+			if called, ok := call.Fun.(*ast.Ident); ok && called.Name == "printerAsGoUnit" {
+				if literal, ok := call.Args[1].(*ast.BasicLit); ok && literal.Kind == token.INT {
+					runs, _ = strconv.Atoi(literal.Value)
+				}
+			}
+			return true
+		})
+		if runs != number {
+			t.Fatalf("%s runs shard %d, not its own", function.Name.Name, runs)
+		}
+		if previous, exists := wrapped[number]; exists {
+			t.Fatalf("shard-%03d has two wrappers: %s and %s", number, previous, function.Name.Name)
+		}
+		wrapped[number] = function.Name.Name
+	}
+	for number := range testPrinterAsGoCohereShards {
+		if _, exists := wrapped[number]; !exists {
+			t.Errorf("shard-%03d has no TestPrinterAsGoCohere_%03d: its cases would never run", number, number)
+		}
+	}
+	if len(wrapped) != testPrinterAsGoCohereShards {
+		t.Errorf("%d shard wrappers, %d shards", len(wrapped), testPrinterAsGoCohereShards)
+	}
+}
 
 type printerAsGoJob struct {
 	name, command     string

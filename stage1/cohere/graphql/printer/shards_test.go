@@ -51,8 +51,14 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 }
 
 // printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
-// keys all four corpora, and a process hashes it once rather than once per corpus.
+// keys all four corpora, and a process hashes it once rather than once per corpus, the four at once included.
 var printerGeneratedSums sync.Map
+
+type printerGeneratedSumOnce struct {
+	once sync.Once
+	sum  string
+	err  error
+}
 
 func printerGeneratedSum(t *testing.T, file string) string {
 	t.Helper()
@@ -61,16 +67,18 @@ func printerGeneratedSum(t *testing.T, file string) string {
 		t.Fatal(err)
 	}
 	identity := fmt.Sprintf("%s\x00%d\x00%d", file, info.Size(), info.ModTime().UnixNano())
-	if sum, ok := printerGeneratedSums.Load(identity); ok {
-		return sum.(string)
+	value, _ := printerGeneratedSums.LoadOrStore(identity, &printerGeneratedSumOnce{})
+	entry := value.(*printerGeneratedSumOnce)
+	entry.once.Do(func() {
+		var data []byte
+		if data, entry.err = os.ReadFile(file); entry.err == nil {
+			entry.sum = fmt.Sprintf("%x", sha256.Sum256(data))
+		}
+	})
+	if entry.err != nil {
+		t.Fatal(entry.err)
 	}
-	data, err := os.ReadFile(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	sum := fmt.Sprintf("%x", sha256.Sum256(data))
-	printerGeneratedSums.Store(identity, sum)
-	return sum
+	return entry.sum
 }
 
 // printerRepositoryFiles is the walk of the whole repository (about 98k entries), which every lowered product lists:
