@@ -56,7 +56,7 @@ func toolchainPath() string {
 			return setting
 		}
 	}
-	return "PATH=" + os.Getenv("PATH")
+	panic("toolchain.Env sets no PATH")
 }
 
 func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
@@ -74,7 +74,10 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 	}
 	command.Dir = directory
 	// The PATH toolchain gives a tool, the declared tools directory's places first, so what a child runs by name
-	// itself (the hook scripts' go) is toolchain's too. environment, last, still wins.
+	// itself (the hook scripts' go) is toolchain's too. environment, last, still wins. The rest of this process's
+	// environment passes on purpose: the hooks read their ADAMIC_STAGE3_ settings from it, so a node fixture run
+	// also takes the caller's NODE_OPTIONS. python3 goes through toolchain.Path, and no box's setup puts it under
+	// ADAMIC_TOOLS, so a sandbox fails the python3 hooks, naming it, rather than run PATH's.
 	command.Env = append(append(os.Environ(), toolchainPath()), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
