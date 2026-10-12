@@ -73,8 +73,8 @@ func TestAKeyFromARunnersSourceIsTheCheckoutsKey(t *testing.T) {
 // one may read keys, and keys and values as the checkout does. A file changed after the listing was written is hashed,
 // never taken by the listing's id, which names the content it was unpacked with. A submodule's entry names a commit,
 // not a file's content, so a file where the listing has a gitlink is hashed. Mutants: a file changed after the listing
-// taken by the manifest's id (the listing's time taken as when it was read); the listing's submodule entries taken as
-// files.
+// taken by the manifest's id (the listing's time taken as when it was read); the change time not asked (a file edited
+// and its modification time set back takes the listing's id); the listing's submodule entries taken as files.
 func TestAnUnpackedSourceValuesACleanFileByItsManifest(t *testing.T) {
 	t.Parallel()
 	tree := checkout(t)
@@ -111,6 +111,12 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(t *testing.T) {
 		if _, err := os.ReadFile(unreadable); err == nil {
 			t.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
 		}
+		// The chmod set a.c's change time to now, and nothing sets one back: the listing is written after it, as Loom
+		// writes it after the files it lists, past the racy margin.
+		time.Sleep(1100 * time.Millisecond)
+		if err := os.Chtimes(filepath.Join(root, ".tracked/files"), time.Now(), time.Now()); err != nil {
+			t.Fatal(err)
+		}
 		got, err := Key(root, declared)
 		if err != nil {
 			t.Fatalf("keying a clean file of an unpacked source read it: %v", err)
@@ -132,8 +138,26 @@ func TestAnUnpackedSourceValuesACleanFileByItsManifest(t *testing.T) {
 		if err := os.Chtimes(filepath.Join(root, "source/a.c"), since, since); err != nil {
 			t.Fatal(err)
 		}
+		// Its change time is now; past the racy margin, it reads old to a lookup that took the listing's time as when
+		// it was read, as the mutant does.
+		time.Sleep(1100 * time.Millisecond)
 		if got, want := key(t, root, declared), key(t, unpacked(t, changed), declared); got != want || got == clean {
 			t.Fatalf("a file changed after the listing keys %s: its new content keys %s, the listing's id %s", got, want, clean)
+		}
+	})
+	t.Run("changed after the listing, its time set back", func(t *testing.T) {
+		t.Parallel()
+		root := runner(t, "")
+		changed := map[string]string{"source/a.c": "int Z;\n"}
+		write(t, root, "source/a.c", changed["source/a.c"])
+		// Edited, then its modification time set back an hour before the listing (Operations' scout): only its change
+		// time, now, says it moved.
+		old := written.Add(-time.Hour)
+		if err := os.Chtimes(filepath.Join(root, "source/a.c"), old, old); err != nil {
+			t.Fatal(err)
+		}
+		if got, want := key(t, root, declared), key(t, unpacked(t, changed), declared); got != want || got == clean {
+			t.Fatalf("a file changed after the listing, its time set back, keys %s: its new content keys %s, the listing's id %s", got, want, clean)
 		}
 	})
 	t.Run("a gitlink's path", func(t *testing.T) {
