@@ -2,17 +2,11 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func goWidth(t *testing.T, cases string) []byte {
@@ -32,8 +26,10 @@ func TestProduct_YAMLWidthGo(t *testing.T) {
 	goWidthOracle(t)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestWidthsMatchGo(t *testing.T) {
+	t.Parallel()
+	binary := yamlWidthBuild.binary(t, "width_main.ts")
+	emitted := yamlWidthBuild.emitted(t, "width_main.ts")
 	var input strings.Builder
 	count := 0
 	add := func(text string) {
@@ -72,23 +68,7 @@ func TestWidthsMatchGo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "width")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	runner := filepath.Join(root, "oracle/node.mjs")
-	emitted := filepath.Join(t.TempDir(), "width.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
 	for _, side := range []struct {
 		name string
 		out  []byte

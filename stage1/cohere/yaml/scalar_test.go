@@ -2,15 +2,10 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func scalarCases(t *testing.T) (string, int, int) {
@@ -44,6 +39,8 @@ func goScalars(t *testing.T, cases string) []byte {
 	binary := goScalarsOracle(t)
 	expected := run(t, "", nil, binary, cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
+		yamlArtifacts.Lock()
+		defer yamlArtifacts.Unlock()
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
 			t.Fatal(err)
 		}
@@ -80,52 +77,30 @@ func TestProduct_YAMLScalarsGo(t *testing.T) {
 	goScalarsOracle(t)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
+var scalarMutants = yamlMutants{family: "scalar", entry: "scalar_main.ts", files: []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "scalar.ts", "scalarText.ts", "scalarResolution.ts", "composeError.ts", "newlineFold.ts", "blockLine.ts", "scalar_main.ts"}, mutations: []yamlMutation{
+	{"escaped line feed becomes carriage return", "case 'n':\n            return '\\n';", "case 'n':\n            return '\\r';"},
+	{"strip becomes clip", "else if(chomp !== '-') result.value += '\\n';", "else if(chomp !== '?') result.value += '\\n';"},
+	{"flow line break stops folding", "let separator = ' ';\n    let position = first + 1;", "let separator = '\\n';\n    let position = first + 1;"},
+}}
+
+func TestProduct_YAMLScalarMutant000(t *testing.T) { t.Parallel(); scalarMutants.product(t, 0) }
+func TestProduct_YAMLScalarMutant001(t *testing.T) { t.Parallel(); scalarMutants.product(t, 1) }
+func TestProduct_YAMLScalarMutant002(t *testing.T) { t.Parallel(); scalarMutants.product(t, 2) }
+
 func TestScalarMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := scalarCases(t)
 	expected := goScalars(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"escaped line feed becomes carriage return", "case 'n':\n            return '\\n';", "case 'n':\n            return '\\r';"},
-		{"strip becomes clip", "else if(chomp !== '-') result.value += '\\n';", "else if(chomp !== '?') result.value += '\\n';"},
-		{"flow line break stops folding", "let separator = ' ';\n    let position = first + 1;", "let separator = '\\n';\n    let position = first + 1;"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range scalarMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "scalar.ts", "scalarText.ts", "scalarResolution.ts", "composeError.ts", "newlineFold.ts", "blockLine.ts", "scalar_main.ts"} {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if strings.Contains(string(source), mutant.from) {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			entry := filepath.Join(directory, "scalar_main.ts")
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			nativeOut := run(t, "", nil, binary, cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
+			product := scalarMutants.product(t, index)
+			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "scalar_main.ts"), cases)
 			for _, side := range []struct {
 				name string
 				out  []byte
