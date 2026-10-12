@@ -18,7 +18,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // Freeze repository JSON so selection need not rerun this package on every
@@ -42,42 +41,136 @@ const provisionedCorpusPrefix = "stage3/api/node_modules/"
 // source archive and the cohere submodule's tracked files. Git objects are content addressed, so the pin alone
 // names the repository bytes; the lockfile names the provisioned ones, and corpus.pin checks both byte for byte.
 //
-// The repository's tracked JSON is declared too. The corpus carries the pin's JSON text, whose reports name the
-// machines they ran on (/tmp/adamic-gate/..., /private/tmp/...), and buildcache's relocation check passes such a path
-// only when a tracked file the product declares holds it (#arw7837). Those reports are tracked and unchanged since the
-// pin, so the product's key also moves when one of them does.
+// Some repository JSON is declared too, and only the files corpus-vouching.txt names. The corpus carries the pin's
+// JSON text, whose reports name the machines they ran on (/tmp/adamic-gate/..., /private/tmp/...), and buildcache's
+// relocation check passes such a path only when a tracked file the product declares holds it (#arw7837). Those reports
+// are tracked and unchanged since the pin, so the product's key moves when one of them does, and when the list does.
+// A JSON file off the list never enters the key, so a rules file or a package.json elsewhere in the tree leaves the
+// corpus, and every json shard that reads it, where it was (#gskb0x3).
 func jsonPinnedCorpusInputs() (buildcache.Inputs, error) {
-	return jsonPinnedCorpusInputsAt(repositoryCorpusCommit)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		return buildcache.Inputs{}, err
+	}
+	return jsonPinnedCorpusInputsAt(root, repositoryCorpusCommit)
 }
 
-// jsonPinnedCorpusInputsAt is the corpus product's key with the repository JSON at pin: the whole commit id is a flag,
-// so a different pin, which any change to a corpus file at it makes, is a different key.
-func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
-	jsonTrackedSources.once.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			jsonTrackedSources.err = err
-			return
-		}
-		entries, err := tracked.Files(root)
-		if err != nil {
-			jsonTrackedSources.err = err
-			return
-		}
-		for _, entry := range entries {
-			if !entry.Submodule() && strings.HasSuffix(entry.Path, ".json") {
-				jsonTrackedSources.files = append(jsonTrackedSources.files, entry.Path)
-			}
-		}
-	})
-	if jsonTrackedSources.err != nil {
-		return buildcache.Inputs{}, jsonTrackedSources.err
+// jsonPinnedCorpusInputsAt is the corpus product's key with the repository JSON at pin, and root's vouching list as
+// its only repository JSON: the whole commit id is a flag, so a different pin, which any change to a corpus file at it
+// makes, is a different key.
+func jsonPinnedCorpusInputsAt(root, pin string) (buildcache.Inputs, error) {
+	vouching, err := corpusVouchingFiles(root)
+	if err != nil {
+		return buildcache.Inputs{}, err
 	}
 	return buildcache.Inputs{
 		Name:  "json pinned corpus",
-		Files: append([]string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"}, jsonTrackedSources.files...),
+		Files: append([]string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage1/cohere/json/testdata/corpus-vouching.txt", "stage3/api/package-lock.json"}, vouching...),
 		Flags: []string{"repository JSON at " + pin, "provisioned " + provisionedCorpusPrefix + " inputs named by corpus.pin"},
 	}, nil
+}
+
+// corpusVouchingFiles is corpus-vouching.txt's paths, read from the repository root: one a line, # for a comment.
+func corpusVouchingFiles(root string) ([]string, error) {
+	encoded, err := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/corpus-vouching.txt"))
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for _, line := range strings.Split(string(encoded), "\n") {
+		if line != "" && !strings.HasPrefix(line, "#") {
+			files = append(files, line)
+		}
+	}
+	return files, nil
+}
+
+// corpusMachinePath is a path some builder's machine places could be: an absolute path of two or more segments,
+// starting a whole token, by buildcache's own rules (a place has two segments, and a token starts after a byte that is
+// neither a path byte nor a separator). So the list is complete for any builder, Workshop's /home and /tmp and a cloud
+// box's /workspace alike, not only for the machines that built it so far. A file at the pin that holds one is on
+// corpus-vouching.txt.
+var corpusMachinePath = regexp.MustCompile(`(?:^|[^A-Za-z0-9._+@~/-])/[A-Za-z0-9._+@~-]+/[A-Za-z0-9._+@~-]`)
+
+// The vouching list is exactly the pin's repository JSON that holds a machine path, every such file and no other, and
+// every listed file is in this tree: too few and the product's relocation check refuses a path its reports carry,
+// too many and an edit to a file that vouches for nothing moves json's key for nothing.
+func TestJSONCorpusVouchingIsExact(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	listed, err := corpusVouchingFiles(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !sort.StringsAreSorted(listed) {
+		t.Fatal("corpus-vouching.txt is not sorted")
+	}
+	want := map[string]bool{}
+	pinned, _ := pinnedCorpusProduct(t)
+	for _, item := range pinned {
+		if corpusMachinePath.MatchString(item.Text) {
+			want[item.Name] = true
+		}
+	}
+	var extra []string
+	for _, name := range listed {
+		if !want[name] {
+			extra = append(extra, name)
+		}
+		delete(want, name)
+		if _, err := os.Stat(filepath.Join(root, filepath.FromSlash(name))); err != nil {
+			t.Errorf("corpus-vouching.txt names %s, which this tree lacks: %v", name, err)
+		}
+	}
+	var missing []string
+	for name := range want {
+		missing = append(missing, name)
+	}
+	sort.Strings(missing)
+	if len(missing) > 0 || len(extra) > 0 {
+		t.Fatalf("corpus-vouching.txt: missing %d (%v), extra %d (%v)", len(missing), missing, len(extra), extra)
+	}
+	t.Logf("%d of the pin's %d repository JSON files hold a machine path, all listed", len(listed), len(pinned))
+}
+
+// A JSON file off the vouching list, added or edited, keeps the corpus product's key; editing a listed one moves it.
+// The tree here is a temporary root holding the inputs' fixed files, a vouching list and two JSON files, one listed,
+// keyed by the same function the product keys with.
+func TestJSONPinnedCorpusKeyIgnoresUnlistedJSON(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	for _, name := range []string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"} {
+		fixtureWrite(t, root, name, "fixed "+name)
+	}
+	fixtureWrite(t, root, "stage1/cohere/json/testdata/corpus-vouching.txt", "# listed\nreports/listed.json\n")
+	fixtureWrite(t, root, "reports/listed.json", `{"ran":"/tmp/adamic-gate/x"}`)
+	key := func() string {
+		inputs, err := jsonPinnedCorpusInputsAt(root, repositoryCorpusCommit)
+		if err != nil {
+			t.Fatal(err)
+		}
+		key, err := buildcache.Key(root, inputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return key
+	}
+	base := key()
+	fixtureWrite(t, root, "loom/rules.json", `{"rules":[]}`)
+	if added := key(); added != base {
+		t.Fatalf("adding unlisted loom/rules.json moved the key %s to %s", base[:12], added[:12])
+	}
+	fixtureWrite(t, root, "loom/rules.json", `{"rules":[1]}`)
+	if edited := key(); edited != base {
+		t.Fatalf("editing unlisted loom/rules.json moved the key %s to %s", base[:12], edited[:12])
+	}
+	fixtureWrite(t, root, "reports/listed.json", `{"ran":"/tmp/adamic-gate/y"}`)
+	if moved := key(); moved == base {
+		t.Fatalf("editing listed reports/listed.json kept the key %s", base[:12])
+	}
 }
 
 // A different pin moves both the name key (what a runner finds the corpus by) and the declared key (what this machine
@@ -90,7 +183,7 @@ func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
 		t.Fatal(err)
 	}
 	keys := func(pin string) (string, string) {
-		inputs, err := jsonPinnedCorpusInputsAt(pin)
+		inputs, err := jsonPinnedCorpusInputsAt(root, pin)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -111,13 +204,6 @@ func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
 		t.Fatalf("pin %s kept name key %s or key %s", other, nameKey[:12], declared[:12])
 	}
 	t.Logf("pin %s to %s: name key %s to %s, key %s to %s", repositoryCorpusCommit, other, nameKey[:12], otherNameKey[:12], declared[:12], otherDeclared[:12])
-}
-
-// jsonTrackedSources is the repository's tracked JSON, listed once per process.
-var jsonTrackedSources struct {
-	once  sync.Once
-	files []string
-	err   error
 }
 
 // buildJSONPinnedCorpus is the build for the product inputs keys, and PinnedGit checks the pin against those same
