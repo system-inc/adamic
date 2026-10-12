@@ -88,8 +88,10 @@ func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (st
 func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{
-		Name:      "markdownblocks-malformed-events-lowered",
-		Files:     []string{"stage1/cohere/markdownblocks", "internal", "go.mod", "cohere"},
+		Name: "markdownblocks-malformed-events-lowered",
+		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
+		// complete), not the whole package and cohere; the native build below keeps the same Files.
+		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {

@@ -210,8 +210,10 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 		t.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
-		Name:      "markdown-quote-layout-lowered",
-		Files:     []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/load", "internal/lower", "internal/ir", "internal/native", "internal/javascript", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod"},
+		Name: "markdown-quote-layout-lowered",
+		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
+		// complete); the native builds keep the same Files.
+		Files:     whitespaceLayoutBuildFiles(),
 		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}

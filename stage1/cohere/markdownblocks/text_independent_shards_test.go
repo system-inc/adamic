@@ -299,7 +299,9 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	started := time.Now()
 	tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	goFlags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")}
-	files := []string{"go.mod", "cohere", "internal", "stage1/cohere/markdownblocks", "oracle"}
+	// The lowered port is keyed by what lowering reads (whitespaceLayoutBuildFiles, which
+	// TestLoweringInputsCoverCompilerDependencies keeps complete); the native builds by its C.
+	files := whitespaceLayoutBuildFiles()
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_probe.ts")
 	products := textProducts{main: main}
 	if target == "" || target == "lowered" || target == "sanitized" || target == "release" {
