@@ -1401,7 +1401,7 @@ func recipeOf(root string, process journalEntry) recipe {
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed struct {
-			Dir                                                                        string
+			ImportPath, Dir                                                            string
 			Standard                                                                   bool
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
@@ -1416,8 +1416,16 @@ func recipeOf(root string, process journalEntry) recipe {
 			continue
 		}
 		add("listing", listed.Dir)
-		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
-			listed.EmbedFiles, listed.IgnoredGoFiles, listed.TestGoFiles, listed.XTestGoFiles} {
+		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
+			listed.EmbedFiles, listed.IgnoredGoFiles}
+		// Only the package under test's test files are compiled into its binary (its own and its external test
+		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
+		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
+		// tests' read sets). A dependency's ignored files stay: a build-constraint edit can compile one in.
+		if name, _, _ := strings.Cut(listed.ImportPath, " "); test && (name == pkg || name == pkg+"_test") {
+			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
+		}
+		for _, names := range files {
 			for _, name := range names {
 				add("content", filepath.Join(listed.Dir, name))
 			}
@@ -1426,6 +1434,18 @@ func recipeOf(root string, process journalEntry) recipe {
 			for _, name := range existing(filepath.Dir(listed.Module.GoMod), "go.mod", "go.sum") {
 				add("content", filepath.Join(filepath.Dir(listed.Module.GoMod), name))
 			}
+		}
+	}
+	// A module the main module replaces with a directory of the tree selects versions through its go.mod, whether or not
+	// the binary links a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab): only the main module's and the
+	// workspace's replace directives apply, so those name every such go.mod.
+	replaced, err := localReplacements(root)
+	if err != nil {
+		return recipe{reason: err.Error()}
+	}
+	for _, directory := range replaced {
+		for _, name := range existing(directory, "go.mod", "go.sum") {
+			add("content", filepath.Join(directory, name))
 		}
 	}
 	for _, name := range existing(root, "go.work") {
@@ -1440,6 +1460,37 @@ func recipeOf(root string, process journalEntry) recipe {
 		result.entries = append(result.entries, entry)
 	}
 	return result
+}
+
+// localReplacements are the directories root's go.mod and go.work replace modules with, absolute: go mod edit and go
+// work edit read the files alone, never the module graph or the network.
+func localReplacements(root string) ([]string, error) {
+	var directories []string
+	// Each file is named, so neither GOWORK nor GOFLAGS' -modfile can point the edit elsewhere.
+	for _, edit := range [][]string{{"mod", "edit", "-json", filepath.Join(root, "go.mod")}, {"work", "edit", "-json", filepath.Join(root, "go.work")}} {
+		if edit[0] == "work" && len(existing(root, "go.work")) == 0 {
+			continue
+		}
+		command := toolchain.CommandIn(root, "go", edit...)
+		output, err := command.Output()
+		if err != nil {
+			return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+		}
+		var file struct {
+			Replace []struct {
+				New struct{ Path, Version string }
+			}
+		}
+		if err := json.Unmarshal(output, &file); err != nil {
+			return nil, fmt.Errorf("go %s %s: %v", edit[0], edit[1], err)
+		}
+		for _, replacement := range file.Replace {
+			if replacement.New.Version == "" {
+				directories = append(directories, filepath.Join(root, replacement.New.Path))
+			}
+		}
+	}
+	return directories, nil
 }
 
 // withRecipe adds the recipe to a build's entries, in the order every machine reads them: by path, then kind.

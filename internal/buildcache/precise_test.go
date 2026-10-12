@@ -721,8 +721,9 @@ func TestAnUntracedMachineBuildsOnlyForItself(t *testing.T) {
 	}
 }
 
-// The recipe is the binary's linked packages: this test binary's own package by its files and listing, its module's
-// go.mod and go.sum; a binary that names no package can't be keyed.
+// The recipe is the binary's linked packages: this test binary's own package by its files, test files included, and
+// listing, a dependency by the files compiled into the binary and never its test files (#c2chyab), its module's
+// go.mod and go.sum; a binary that names no package can't be keyed. Mutant: every package's test files taken.
 // Not parallel: go list runs in the repository.
 func TestTheRecipeIsTheBinarysLinkedPackages(t *testing.T) {
 	root := repositoryRootForTest(t)
@@ -731,10 +732,13 @@ func TestTheRecipeIsTheBinarysLinkedPackages(t *testing.T) {
 		t.Fatal(found.reason)
 	}
 	for _, want := range []readEntry{{Kind: "content", Path: "internal/buildcache/reads.go"}, {Kind: "content", Path: "internal/buildcache/precise_test.go"},
-		{Kind: "listing", Path: "internal/buildcache"}, {Kind: "content", Path: "go.mod"}} {
+		{Kind: "listing", Path: "internal/buildcache"}, {Kind: "content", Path: "go.mod"}, {Kind: "content", Path: "internal/toolchain/toolchain.go"}} {
 		if !slices.Contains(found.entries, want) {
 			t.Errorf("the recipe lacks %+v", want)
 		}
+	}
+	if test := (readEntry{Kind: "content", Path: "internal/toolchain/toolchain_test.go"}); slices.Contains(found.entries, test) {
+		t.Errorf("the recipe holds a dependency's test file, %s, which the binary never compiled", test.Path)
 	}
 	for _, unknown := range []string{"", "command-line-arguments"} {
 		if refused := recipeOf(root, journalEntry{Package: unknown}); refused.reason == "" {
@@ -1997,5 +2001,24 @@ func TestALookupInTheCacheThatMissedIsNoRead(t *testing.T) {
 	r.window(reader.Build, func() { r.open(r.pid, filepath.Join(r.cache, strings.Repeat("e4", 32), "product")) })
 	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "unknown product") {
 		t.Fatalf("a read of a product nobody built: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
+// The directories a module's go.mod and go.work replace modules with, as the recipe keys their go.mod and go.sum: a
+// replaced module selects versions through its go.mod whether or not the binary links a package of it (#c2chyab).
+// A versioned replacement names no directory. Mutant: the workspace's replacements left out.
+func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	write(t, root, "go.mod", "module example.com/main\n\ngo 1.22\n\nreplace example.com/shim => ./shim\n\nreplace example.com/far => example.com/other v1.0.0\n")
+	write(t, root, "shim/go.mod", "module example.com/shim\n\ngo 1.22\n")
+	write(t, root, "go.work", "go 1.22\n\nuse .\n\nreplace example.com/tool => ./tool\n")
+	directories, err := localReplacements(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := []string{filepath.Join(root, "shim"), filepath.Join(root, "tool")}
+	if !slices.Equal(directories, want) {
+		t.Fatalf("replacements %q, want %q", directories, want)
 	}
 }
