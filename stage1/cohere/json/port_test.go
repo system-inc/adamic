@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -69,6 +70,13 @@ func executeResult(environment []string, name string, arguments ...string) (run,
 	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
+	}
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, macOS's leaks) is a tool: the one internal/toolchain resolves, with a tool's environment
+		// plus the caller's settings, not PATH's. A program a test built (the Go oracle, a port) runs as named, with this
+		// process's environment.
+		command = toolchain.Command(name, arguments...)
+		command.Env = append(command.Env, environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr

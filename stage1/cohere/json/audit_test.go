@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type textCase struct {
@@ -305,6 +306,11 @@ func writeJSON(t *testing.T, path string, value any) {
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	command := exec.Command(name, arguments...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's. A
+		// program a test built (the Go oracle, a printer mutant) runs as named, with this process's environment.
+		command = toolchain.Command(name, arguments...)
+	}
 	return command
 }
 

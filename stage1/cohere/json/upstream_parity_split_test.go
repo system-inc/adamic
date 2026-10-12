@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testUpstreamRepositoryCorpusParitySplitShards = 16
@@ -56,6 +57,17 @@ func upstreamParityDeadline(t *testing.T) (context.Context, func()) {
 
 func upstreamParityCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, as
+		// toolchain.Command runs one under a context it has no form for. A program a test built (the Go oracle) runs as
+		// named, with this process's environment. Path's error fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Env = toolchain.Env()
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
