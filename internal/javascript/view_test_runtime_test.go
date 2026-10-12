@@ -5,6 +5,8 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const viewTestRuntime = `const panic = message => { process.stderr.write("adamic: panic: " + message + "\n"); process.exit(70); };
@@ -16,7 +18,7 @@ const adamicClassIdentities = new WeakMap();
 
 func runViewNode(t *testing.T, source, stdout, stderr string, exit int) {
 	t.Helper()
-	command := exec.Command("node", "--input-type=module")
+	command := toolchain.Command("node", "--input-type=module")
 	command.Stdin = strings.NewReader(source)
 	var out, errout bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errout
@@ -33,4 +35,3 @@ func runViewNode(t *testing.T, source, stdout, stderr string, exit int) {
 		t.Fatalf("exit %d, stdout %q, stderr %q; want %d, %q, %q", code, out.String(), errout.String(), exit, stdout, stderr)
 	}
 }
-
