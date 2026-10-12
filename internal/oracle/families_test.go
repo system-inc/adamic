@@ -42,7 +42,7 @@ var families = []family{
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 	}},
 	// 201 s: each fixture's C compiled for wasm32.
-	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "emitted C: ", requires: "ADAMIC_ORACLE_WASI"},
+	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "planted = ;", requires: "ADAMIC_ORACLE_WASI"},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
