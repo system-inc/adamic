@@ -39,8 +39,6 @@ var compilerSites = map[string]string{
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                                        "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"internal/oracle/wasi_test.go:runWASIEmissionShard":                                                "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"stage1/cohere/css/profile_test.go:TestCSSProfileArtifacts":                                        "a profiling build into a scratch directory, never a product",
-	"stage1/cohere/css/setup_products_test.go:TestCSSGoOraclesRekeyCompiler":                           "keys the Go oracles with named compilers and compares keys; compiles nothing",
-	"stage1/cohere/css/setup_products_test.go:TestCSSGoOraclesKeyTheCompilersEnvGivesGo":               "sets CC and CXX to check the key reads them from toolchain.Env; compiles nothing",
 	"stage1/cohere/cssnumbers/setup_products_test.go:TestCSSNumbersGoOracleRekeyCompiler":              "keys the Go oracle with named compilers and compares keys; compiles nothing",
 	"stage1/cohere/cssnumbers/setup_products_test.go:TestCSSNumbersGoOracleKeysTheCompilersEnvGivesGo": "sets CC and CXX to check the key reads them from toolchain.Env; compiles nothing",
 	"stage1/cohere/cssstrings/setup_products_test.go:TestCSSStringsGoOracleRekeyCompiler":              "keys the Go oracle with named compilers and compares keys; compiles nothing",

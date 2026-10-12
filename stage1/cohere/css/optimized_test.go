@@ -4,18 +4,24 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// cssLoweringFiles are what lowering a css program reads, the files cssPrinterProduct declares.
-var cssLoweringFiles = []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "bridge/tsgo", "cohere/policy", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"}
+// cssLoweringFiles are what a product the compiler makes here reads: the compiler that lowers and builds it
+// (compilerinputs.Lowering) and the port's six slices, this package (whose test files hold the recipes and mutants) and
+// the sibling packages it imports.
+func cssLoweringFiles() []string {
+	return append(compilerinputs.Lowering(), "stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers")
+}
 
 // cssOptimizedMains are the programs whose unsanitized natives the optimized tests run: the printer and the parser.
 var cssOptimizedMains = []string{"print_main.ts", "compose_main.ts"}
@@ -29,13 +35,7 @@ var cssOptimizedNatives [2]string
 func cssOptimizedNative(t *testing.T, index int) string {
 	t.Helper()
 	cssOptimizedOnce[index].Do(func() {
-		inputs := buildcache.Inputs{
-			Name:      "css-optimized-native-" + cssOptimizedMains[index],
-			Files:     cssLoweringFiles,
-			Flags:     append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
-		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
+		directory := buildcache.Product(t, cssOptimizedNativeInputs(index), func(dir string) error {
 			main, err := filepath.Abs(cssOptimizedMains[index])
 			if err != nil {
 				return err
@@ -56,6 +56,61 @@ func cssOptimizedNative(t *testing.T, index int) string {
 		t.Fatalf("css optimized native %s unavailable: its build failed earlier in this process (see that test's log)", cssOptimizedMains[index])
 	}
 	return cssOptimizedNatives[index]
+}
+
+func cssOptimizedNativeInputs(index int) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "css-optimized-native-" + cssOptimizedMains[index],
+		Files:     cssLoweringFiles(),
+		Flags:     append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+	}
+}
+
+// An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
+// baselines, which nothing links, must keep it.
+func TestCSSCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
+	t.Parallel()
+	products := []buildcache.Inputs{compositionInputs(), compositionNativeInputs()}
+	for variant := -1; variant <= 3; variant++ {
+		products = append(products, cssPrinterInputs(variant))
+	}
+	for index := range cssOptimizedMains {
+		products = append(products, cssOptimizedNativeInputs(index))
+	}
+	for index := range composedMemoryMutations {
+		products = append(products, composedMemoryInputs(index))
+	}
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	products = append(products, cssParserCacheInputs(t, cssParserProgramInputs(t, "parser", filepath.Dir(main))))
+	for index := range mutants {
+		products = append(products, cssParserCacheInputs(t, cssParserProgramInputs(t, "mutant-"+strconv.Itoa(index), portDirectory(t, &mutants[index]))))
+	}
+	// A native product keys its C by content, so a stand-in C file keys it without lowering anything.
+	programC := filepath.Join(t.TempDir(), "program.c")
+	if err := os.WriteFile(programC, nil, 0644); err != nil {
+		t.Fatal(err)
+	}
+	for _, options := range []native.Options{{Sanitize: true}, {}} {
+		products = append(products, cssParserCacheInputs(t, cssParserNativeInputs("parser native", programC, options)))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		linked, baselines := false, false
+		for _, entry := range product.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", product.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", product.Name)
+		}
+	}
 }
 
 func TestProduct_CSSPrinterOptimizedNative(t *testing.T) { t.Parallel(); cssOptimizedNative(t, 0) }

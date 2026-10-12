@@ -16,6 +16,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -230,7 +231,7 @@ func checkCSSParserPostCSS(t *testing.T, unit cssParserShard, inputs []string, w
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay recipes also use buildcache.Product; products are immutable.
+// The Go parser oracle is a buildcache.GoTest product; products are immutable.
 type cssParserInputs struct {
 	Name         string
 	Files, Flags []string
@@ -241,24 +242,6 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 	t.Helper()
 	keyed := cssParserCacheInputs(t, inputs)
 	return buildcache.Product(t, keyed, build)
-}
-
-// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
-// toolchain.Env (cssParserGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
-// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
-// didn't name could start to unseen.
-func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, cssParserGoProductInputs(name, cssGoCompilers()), build)
-}
-
-func cssParserGoProductInputs(name string, compilers cssCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      "css " + name,
-		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/css/testdata", "stage1/cohere/css/parser_shards_test.go"},
-		Flags:     []string{"go test -c", "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
-	}
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -296,43 +279,52 @@ func cssParserCacheInputs(t *testing.T, inputs cssParserInputs) buildcache.Input
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
 	}
-	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
-	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
-	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
+	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources
+	// (compilerinputs.Lowering, the Go release) rather than by this binary's bytes, which differ wherever the test binary
+	// was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 
 	return keyed
 }
 
+// cssParserOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's postcss
+// package, a product (buildcache.GoTest) built ahead. The overlay names this checkout's paths, so it sits in a temporary
+// directory and is never part of the product (#tqrqx60).
 func cssParserOracle(t *testing.T) string {
 	t.Helper()
-	repo, _ := filepath.Abs(repository)
-	cohere := filepath.Join(repo, "cohere")
-	side, _ := filepath.Abs("testdata/cohere_side_test.go")
-	dir := cssParserGoProduct(t, "Go parser oracle", func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/css/postcss/adamic_port_side_test.go"): side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		command := cssParserGoCommand(t, cohere, "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
-		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
+	repo, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/cohere_side_test.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css/postcss/adamic_port_side_test.go"): side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoTest(t, "cohere", "css-parser-go-oracle", "./internal/format/css/postcss", []string{"-overlay=" + overlayPath})
+}
+
+// cssParserLowering is compilerinputs.Lowering as cssParserInputs names a file, relative to this package's directory.
+func cssParserLowering() []string {
+	var files []string
+	for _, entry := range compilerinputs.Lowering() {
+		files = append(files, repository+"/"+entry)
+	}
+	return files
 }
 
 type cssParserProgram struct{ name, main, c, javascript string }
 
-func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgram {
+// cssParserProgramInputs keys the parser lowered from directory's main.ts: the compiler that lowers it
+// (compilerinputs.Lowering) and the .ts files of the six slices beside directory, a mutant's copies among them.
+func cssParserProgramInputs(t *testing.T, name, directory string) cssParserInputs {
 	t.Helper()
-	main := filepath.Join(directory, "main.ts")
 	var files []string
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
 		paths, err := filepath.Glob(filepath.Join(filepath.Dir(directory), slice, "*.ts"))
@@ -341,8 +333,20 @@ func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgra
 		}
 		files = append(files, paths...)
 	}
-	files = append(files, repository+"/internal", repository+"/go.mod", repository+"/cohere/TypeScript", repository+"/cohere/TypeScript-shim")
-	dir := cssParserProduct(t, cssParserInputs{Name: name + " lowering and backends", Files: files, Flags: []string{"lower", "C", "JavaScript"}, Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit}, func(dir string) error {
+	files = append(files, cssParserLowering()...)
+	return cssParserInputs{Name: name + " lowering and backends", Files: files, Flags: []string{"lower", "C", "JavaScript"}, Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit}
+}
+
+// cssParserNativeInputs keys a native built from programC with options: the compiler that builds it
+// (compilerinputs.Lowering, which holds internal/native) and the C itself.
+func cssParserNativeInputs(name, programC string, options native.Options) cssParserInputs {
+	return cssParserInputs{Name: name, Files: append(cssParserLowering(), programC), Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}
+}
+
+func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgram {
+	t.Helper()
+	main := filepath.Join(directory, "main.ts")
+	dir := cssParserProduct(t, cssParserProgramInputs(t, name, directory), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -363,7 +367,7 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 	options := native.Options{Sanitize: true}
 	var binaries []string
 	for _, program := range programs {
-		dir := cssParserProduct(t, cssParserInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+		dir := cssParserProduct(t, cssParserNativeInputs(program.name+" sanitized", program.c, options), func(dir string) error {
 			source, err := os.ReadFile(program.c)
 			if err != nil {
 				return err
@@ -378,7 +382,7 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 func buildCSSParserUnsanitized(t *testing.T, program cssParserProgram) string {
 	t.Helper()
 	options := native.Options{}
-	dir := cssParserProduct(t, cssParserInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+	dir := cssParserProduct(t, cssParserNativeInputs("parser unsanitized for leaks", program.c, options), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err

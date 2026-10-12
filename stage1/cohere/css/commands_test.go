@@ -4,13 +4,10 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -28,41 +25,6 @@ func cssParserSetupCommand(t *testing.T, name string, arguments ...string) *exec
 	t.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
 	return cssParserCommandContext(t, ctx, cancel, name, arguments...)
-}
-
-// cssParserGoCommand is cssParserSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env,
-// the environment whose compilers the Go oracle's key names.
-func cssParserGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := cssParserSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
-
-// cssCompilers are the C and C++ compilers go builds a Go oracle with, and the C compiler's report.
-type cssCompilers struct{ c, cPlusPlus, report string }
-
-// cssGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
-// names neither.
-func cssGoCompilers() cssCompilers {
-	var compilers cssCompilers
-	for _, setting := range toolchain.Env() {
-		switch name, value, _ := strings.Cut(setting, "="); name {
-		case "CC":
-			compilers.c = value
-		case "CXX":
-			compilers.cPlusPlus = value
-		}
-	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
-	}
-	return compilers
 }
 
 func cssParserCommandContext(t *testing.T, ctx context.Context, cancel context.CancelFunc, name string, arguments ...string) *exec.Cmd {
