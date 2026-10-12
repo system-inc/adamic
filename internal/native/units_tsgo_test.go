@@ -37,7 +37,8 @@ var splitTSGoOptions = Options{Sanitize: true, Jobs: 5}
 // splitTSGoSource is the C both units build: typeaware's main.ts loaded, lowered and emitted with TSGoC, a product
 // built ahead by TestProduct_SplitTSGoSource. Every unit used to load and lower it again, a few seconds each. Built
 // in process, so its declared inputs are every file go compiles into the packages that make it (load, lowering and
-// emission), the program's own sources and this recipe; under the tree builder's trace its key is what it read.
+// emission), the program's own sources with everything they import (typeaware's unary_minus.ts reaches lint's
+// finding.ts and its suggestions.a) and this recipe; under the tree builder's trace its key is what it read.
 func splitTSGoSource(t *testing.T) string {
 	t.Helper()
 	compiler, err := buildcache.GoInputs("main.c", "./internal/load ./internal/lower ./internal/native", nil, nil)
@@ -45,8 +46,9 @@ func splitTSGoSource(t *testing.T) string {
 		t.Fatal(err)
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "split-tsgo-source",
-		Files:     append([]string{"stage1/cohere/typeaware", "stage1/typescript", "internal/native/units_tsgo_test.go"}, compiler.Files...),
+		Name: "split-tsgo-source",
+		Files: append([]string{"stage1/cohere/typeaware", "stage1/cohere/lint/finding.ts", "stage1/cohere/lint/suggestions.a",
+			"stage1/typescript", "internal/native/units_tsgo_test.go"}, compiler.Files...),
 		Flags:     compiler.Flags,
 		Toolchain: compiler.Toolchain,
 	}, func(directory string) error {
