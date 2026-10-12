@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -208,6 +209,10 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 	})
 }
 
+// portBuildOracleProduct is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's
+// internal/gitignore: a buildcache.GoTest product, so go runs as toolchain resolves it in cohere, under its environment,
+// and the key is go's own answer there (cohere's go.mod, go.sum and go.work, the overlay's content, go's settings and
+// release), not the caller's GOFLAGS and a go version asked elsewhere.
 func portBuildOracleProduct(t *testing.T) string {
 	t.Helper()
 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
@@ -218,26 +223,16 @@ func portBuildOracleProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: "gitignore-go-oracle", Files: []string{"cohere", "stage1/cohere/gitignore/testdata/cohere_side_test.go", "go.work", "go.mod"}, Flags: []string{"go test -c -overlay", "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err = os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		cmd := portCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/gitignore")
-		cmd.Dir = cohere
-		output, err := combinedOutput(cmd)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The overlay names this checkout's paths: GoTest keys its map and the side file's content, never its own path.
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoTest(t, "cohere", "oracle", "./internal/gitignore", []string{"-overlay=" + path})
 }
 
 func portOracle(t *testing.T, binary string, request map[string]any) {
@@ -280,8 +275,13 @@ func portAsked(t *testing.T, binary, scratch string) cases {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The oracle makes its trees repositories with the git internal/toolchain resolves, under GitEnv, never its PATH's.
+	git, err := toolchain.Path("git")
+	if err != nil {
+		t.Fatal(err)
+	}
 	output := filepath.Join(scratch, "cases.json")
-	portOracle(t, binary, map[string]any{"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated, "gitSource": gitSource(), "realTrees": []string{root, filepath.Join(root, "cohere")}, "output": output, "largest": largest()})
+	portOracle(t, binary, map[string]any{"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated, "gitSource": gitSource(), "realTrees": []string{root, filepath.Join(root, "cohere")}, "output": output, "largest": largest(), "git": git, "gitEnvironment": toolchain.GitEnv()})
 	data, err := os.ReadFile(output)
 	if err != nil {
 		t.Fatal(err)
@@ -740,18 +740,16 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 		input.WriteString(query.Path)
 		input.WriteByte(0)
 	}
-	environment := []string{
-		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
-		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
-	}
+	// GitEnv keeps git's configuration out of reach; these add the scratch home and no optional locks.
+	environment := []string{"HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch, "GIT_OPTIONAL_LOCKS=0"}
 	arguments := []string{"-c", "core.excludesFile=" + emptyExclude, "-c", "core.ignorecase=false"}
 	if !tracked.Git(tree.Disk) {
 		// A Loom runner's source has no .git (#cyasrr4), and check-ignore needs a repository even with --no-index. An
 		// empty one, with the tree as its work tree and an empty info/exclude, reads only the tree's .gitignore files,
 		// as tracked does for its own ignore rules.
 		repository := filepath.Join(scratch, "repository")
-		initialize := exec.Command("git", "init", "-q", "--bare", repository)
-		initialize.Env = environment
+		initialize := toolchain.GitCommand("init", "-q", "--bare", repository)
+		initialize.Env = append(initialize.Env, environment...)
 		if output, err := initialize.CombinedOutput(); err != nil {
 			t.Fatalf("git init for %s: %v\n%s", tree.Disk, err, output)
 		}
@@ -760,9 +758,9 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 		}
 		arguments = append([]string{"--git-dir=" + repository, "--work-tree=" + tree.Disk, "-c", "core.bare=false"}, arguments...)
 	}
-	command := portCommand(t, "git", append(arguments, "check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")...)
-	command.Dir = tree.Disk
-	command.Env = environment
+	command := toolchain.GitCommandIn(tree.Disk, append(arguments, "check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")...)
+	command.Env = append(command.Env, environment...)
+	command.WaitDelay = time.Second
 	command.Stdin = &input
 	var standardOutput, standardError bytes.Buffer
 	command.Stdout = &standardOutput

@@ -39,6 +39,12 @@ type adamicRequest struct {
 	Largest   bool     `json:"largest"`
 	Cases     string   `json:"cases"`
 	Output    string   `json:"output"`
+
+	// Git is the git a generate request makes its trees repositories with, and GitEnvironment what it runs under:
+	// adamic's internal/toolchain's git and GitEnv, which this side of the module boundary can't import, so a tree is
+	// never made by whatever git is first on PATH.
+	Git            string   `json:"git"`
+	GitEnvironment []string `json:"gitEnvironment"`
 }
 
 // adamicCases is every tree and glob the port is asked about.
@@ -261,7 +267,7 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 		"docs/":                "",
 		"sub/inner/":           "",
 	})
-	adamicGitInit(t, semantics, "# a comment\nper-repo\nkept-by-gitignore\n")
+	adamicGitInit(t, request, semantics, "# a comment\nper-repo\nkept-by-gitignore\n")
 	semanticPaths := []adamicQuery{
 		{"app.log", false}, {"keep.log", false}, {"sub/app.log", false}, {"anchored", false}, {"sub/anchored", false},
 		{"build", true}, {"sub/build", true}, {"docs/generated", false}, {"sub/docs/generated", false},
@@ -279,19 +285,19 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	// cohere's TestAByteOrderMarkAndCarriageReturnsAreNotPatternText.
 	byteOrderMark := filepath.Join(scratch, "byte-order-mark")
 	writeTree(t, byteOrderMark, map[string]string{".gitignore": "\xEF\xBB\xBFfirst\r\nsecond\r\n", "first": "", "second": ""})
-	adamicGitInit(t, byteOrderMark, "")
+	adamicGitInit(t, request, byteOrderMark, "")
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "byte order mark", byteOrderMark, []adamicQuery{{"first", false}, {"second", false}}, "run"))
 
 	// Bytes, not characters: `?` is one byte, so `??` matches `é`, and a set holds bytes.
 	bytesTree := filepath.Join(scratch, "bytes")
 	writeTree(t, bytesTree, map[string]string{".gitignore": "/??\n!/[é][é]\n*.ü\n", "é": "", "ab": "", "x": "", "名前.ü": "", "ü": ""})
-	adamicGitInit(t, bytesTree, "")
+	adamicGitInit(t, request, bytesTree, "")
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "bytes", bytesTree, []adamicQuery{{"é", false}, {"ab", false}, {"x", false}, {"名前.ü", false}, {"ü", false}}, "run"))
 
 	// Only spaces end a pattern: a trailing tab is part of it, as gitignore(5) and cohere say.
 	tabs := filepath.Join(scratch, "trailing-tabs")
 	writeTree(t, tabs, map[string]string{".gitignore": "tabbed\t\nspaced  \nboth \t\n", "tabbed\t": "", "tabbed": "", "spaced": "", "both \t": "", "both": ""})
-	adamicGitInit(t, tabs, "")
+	adamicGitInit(t, request, tabs, "")
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "trailing tabs", tabs, []adamicQuery{{"tabbed\t", false}, {"tabbed", false}, {"spaced", false}, {"both \t", false}, {"both", false}}, "run"))
 
 	// Paths as a caller may write them, before cleaning: IgnoredPath cleans each, as cohere does.
@@ -329,7 +335,7 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	// one to a file beside it, and one to nothing, which is no exclude file at all.
 	linkedExclude := filepath.Join(scratch, "linked-exclude")
 	writeTree(t, linkedExclude, map[string]string{"a.tmp": "", "b.tmp": "", "keep.tmp": ""})
-	adamicGitInit(t, linkedExclude, "")
+	adamicGitInit(t, request, linkedExclude, "")
 	writeTree(t, linkedExclude, map[string]string{".git/exclude-patterns": "*.tmp\n!keep.tmp\n"})
 	if err := os.Remove(filepath.Join(linkedExclude, filepath.FromSlash(ExcludeFile))); err != nil {
 		t.Fatal(err)
@@ -340,7 +346,7 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	cases.Trees = append(cases.Trees, adamicDescribe(t, "a linked exclude file", linkedExclude, []adamicQuery{{"a.tmp", false}, {"b.tmp", false}, {"keep.tmp", false}}, "run"))
 	danglingExclude := filepath.Join(scratch, "dangling-exclude")
 	writeTree(t, danglingExclude, map[string]string{"a.tmp": "", ".gitignore": "b.*\n"})
-	adamicGitInit(t, danglingExclude, "")
+	adamicGitInit(t, request, danglingExclude, "")
 	if err := os.Remove(filepath.Join(danglingExclude, filepath.FromSlash(ExcludeFile))); err != nil {
 		t.Fatal(err)
 	}
@@ -358,7 +364,7 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 	for index := 0; index < request.Generated; index++ {
 		root := filepath.Join(scratch, fmt.Sprintf("generated-%d", index))
 		exclude := generateTree(t, random, root)
-		adamicGitInit(t, root, exclude)
+		adamicGitInit(t, request, root, exclude)
 		cases.Trees = append(cases.Trees, adamicDescribe(t, fmt.Sprintf("generated %d (seed %d)", index, request.Seed), root, adamicWalk(t, root), "run"))
 	}
 
@@ -450,11 +456,14 @@ func adamicGenerate(t *testing.T, request adamicRequest) adamicCases {
 
 // adamicGitInit makes root a repository, as cohere's differential does, and writes its info/exclude
 // when there is one to write. git init writes an exclude of comments of its own, which is kept, as it is
-// what a clone holds.
-func adamicGitInit(t *testing.T, root string, exclude string) {
+// what a clone holds. The git is the request's, under the request's environment and root as its home.
+func adamicGitInit(t *testing.T, request adamicRequest, root string, exclude string) {
 	t.Helper()
-	command := exec.Command("git", "init", "--quiet", root)
-	command.Env = []string{"PATH=/usr/bin:/bin", "HOME=" + root, "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null"}
+	if request.Git == "" {
+		t.Fatal("the request names no git to make repositories with")
+	}
+	command := exec.Command(request.Git, "init", "--quiet", root)
+	command.Env = append(append([]string(nil), request.GitEnvironment...), "HOME="+root)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("git init %s: %v\n%s", root, err, output)
 	}

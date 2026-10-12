@@ -372,60 +372,6 @@ func answersByTree(output string) map[string][]string {
 	return answers
 }
 
-// gitCheckIgnore is git's answer for every query of a tree, in main.ts's words, from git check-ignore
-// run on the tree as cohere's differential runs it: no index, no configuration but the repository's own,
-// no global excludes file, and case sensitive. cohere runs git under macOS's sandbox-exec, since it
-// points git at real trees; here git reads only trees this test made, and this repository.
-func gitCheckIgnore(t *testing.T, tree tree) []string {
-	t.Helper()
-	scratch := t.TempDir()
-	emptyExclude := filepath.Join(scratch, "empty-excludes")
-	if err := os.WriteFile(emptyExclude, nil, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	var input bytes.Buffer
-	for _, query := range tree.Queries {
-		input.WriteString(query.Path)
-		input.WriteByte(0)
-	}
-	command := bounded(t, "git", "-c", "core.excludesFile="+emptyExclude, "-c", "core.ignorecase=false",
-		"check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")
-	command.Dir = tree.Disk
-	command.Env = []string{
-		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
-		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
-	}
-	command.Stdin = &input
-	var standardOutput, standardError bytes.Buffer
-	command.Stdout = &standardOutput
-	command.Stderr = &standardError
-	err := childguard.Run(command, childguard.Options{})
-	output := standardOutput.Bytes()
-	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
-	var exitError *exec.ExitError
-	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
-		t.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError.String())
-	}
-	fields := bytes.Split(bytes.TrimSuffix(output, []byte{0}), []byte{0})
-	if len(output) > 0 && len(fields)%4 != 0 {
-		t.Fatalf("%s: git printed %d fields, not a multiple of four", tree.Name, len(fields))
-	}
-	var answers []string
-	for index := 0; index+3 < len(fields); index += 4 {
-		file, line, pattern, relative := string(fields[index]), string(fields[index+1]), string(fields[index+2]), string(fields[index+3])
-		if file == "" {
-			answers = append(answers, "0 ::\t"+relative)
-			continue
-		}
-		ignored := "1"
-		if strings.HasPrefix(pattern, "!") {
-			ignored = "0"
-		}
-		answers = append(answers, fmt.Sprintf("%s %s:%s:%s\t%s", ignored, file, line, pattern, relative))
-	}
-	return answers
-}
-
 // firstDifference says where two outputs first differ, line by line, or "" when they don't.
 func firstDifference(got string, want string) string {
 	if got == want {
