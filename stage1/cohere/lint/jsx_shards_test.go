@@ -38,12 +38,6 @@ type jsxProductInputs struct {
 	Toolchain []string
 }
 
-// jsxGoSettings is every go setting a go run under toolchain.Env builds with, as go reports it there: its CC is the
-// compiler a cgo build runs, which the caller's CC isn't when the caller sets none (toolchain names clang then).
-func jsxGoSettings() string {
-	return buildcache.Tool("go", append([]string{"env"}, toolchain.GoSettings...)...)
-}
-
 // Include source dependencies as files, not just the entry point, so products
 // invalidate when an imported source or tool changes.
 func jsxInputFiles(t *testing.T, roots ...string) []string {
@@ -87,7 +81,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 
 func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), jsxGoSettings()}}
+	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
 	directory := jsxProduct(t, inputs, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
@@ -514,7 +508,7 @@ func jsxSetupInputs() buildcache.Inputs {
 		Name:      "jsx-tree-setup-v1",
 		Files:     []string{"cohere", "stage1/cohere/lint", "stage1/typescript/parser", "internal", "oracle", "go.mod", "go.work"},
 		Flags:     []string{"whole", "jsx-recovery", "sanitize=address,undefined", "shards=16", "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), jsxGoSettings(), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings(), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
 	}
 }
 

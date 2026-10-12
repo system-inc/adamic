@@ -100,21 +100,6 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	return execution{data, duration}
 }
 
-func goOracle(t *testing.T) string {
-	return goOracleFrom(t, ".")
-}
-func goOracleFrom(t *testing.T, sourceRoot string) string {
-	t.Helper()
-	if isPackage(sourceRoot) {
-		return lintGoOracleProduct(t)
-	}
-	binary, err := goOracleIn(sourceRoot, t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	return binary
-}
-
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
 	if isPackage(directory) {
@@ -537,7 +522,7 @@ func copyPortImporting(t *testing.T, directory string, imports func(t *testing.T
 // Not parallel: shares the CPU with interleaved timing samples.
 func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
@@ -560,7 +545,7 @@ func TestLegacyMutants(t *testing.T) {
 func TestDecorationOptionMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
 	for _, side := range []struct {
 		name string
@@ -583,7 +568,7 @@ func TestCountGuardMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	path := manifest(t, []string{source})
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	answer := execute(t, "", oracle, "--manifest", path).output
 	count := execute(t, "", oracle, "--manifest", path, "--count").output
 	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
@@ -631,7 +616,7 @@ func TestThroughput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	binary := buildPort(t, directory, false)
 	machine := execute(t, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")

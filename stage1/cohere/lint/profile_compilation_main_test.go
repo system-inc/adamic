@@ -375,16 +375,7 @@ func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
 	prepareRegistry(t, directory)
 	products := compilationProducts(t)
 	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := compilationOracle(t)
+	oracle := lintGoOracleProduct(t)
 	want, countedWant := compilationOracleOutputs(t, oracle, path)
 	return directory, products, path, want, countedWant
-}
-
-func compilationOracle(t *testing.T) string {
-	t.Helper()
-	inputs := testShardsAgreeInputs(t, "profile-oracle")
-	inputs.Files = append(inputs.Files, "stage1/cohere/lint/profile_compilation_main_test.go")
-	inputs.Flags = append(inputs.Flags, "overlay=full-live-registry")
-	product := buildcache.Product(t, inputs, func(dir string) error { _, err := goOracleIn(packageDirectory, dir); return err })
-	return filepath.Join(product, "oracle")
 }

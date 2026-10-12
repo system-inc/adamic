@@ -8,11 +8,6 @@ import (
 // Build-phase units call the same recipes and keys as independently selected shards.
 // Full-port lowering and its dependent native products remain shard preparation
 // until their cold builds meet the build phase grain (#c5k975w, #3he8f8g).
-func TestProduct_EmittedMismatchOracle(t *testing.T) {
-	t.Parallel()
-	emittedMismatchOracle(t)
-}
-
 func TestProduct_FactoryHooksLowered(t *testing.T) {
 	t.Parallel()
 	factoryHooksLowered(t, context.Background(), 0)
