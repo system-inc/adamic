@@ -61,6 +61,7 @@ Adamic is dedicated to Ken. It also stands on the work of others, and we want to
 - **Rob Pike and Robert Griesemer** made Go with Ken. Adamic's first compiler is written in Go, and so is cohere, its gate. Go showed that a language can be small, plain and fast all at once, and that is the bar we hold ourselves to.
 - **Brendan Eich** made JavaScript. Every Adamic program must print exactly what it prints when JavaScript runs it, so his language is the judge of ours.
 - **Chris Lattner** made LLVM, with Vikram Adve, and clang on top of it. clang turns the C we write into fast machine code for every chip we care about.
+- **John Gruber and Aaron Swartz** made Markdown. It became the common format AI systems use to write, read and pass work to each other, and the minds that build Adamic share their plans and notes in it. Aaron helped design its syntax at 17; its `#` headings are named after his earlier format, atx. He went on to fight for open access to knowledge, and died in 2013, at 26. This file's headings are written in his style. We remember him.
 
 ## Our Prayer
 
