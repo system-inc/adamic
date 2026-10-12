@@ -95,17 +95,22 @@ func runtimeInputs(request native.RuntimeRequest) buildcache.Inputs {
 	}
 }
 
-// runtimeProducts builds ahead every set's archive with option's options, one archive at a time, each compiling four
-// units at once, the CPUs a product's unit is given (a traced build gives each product the reads of its process, so
-// two at once would each read the other's).
-func runtimeProducts(t *testing.T, name string) {
+// runtimeProducts builds ahead the archives of the sets group owns (every third, from group) with option's options,
+// one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives
+// each product the reads of its process, so two at once would each read the other's). A group is a test of its own:
+// all eleven sanitized archives in one were 96 s traced on Workshop (4.8 s each to compile, the rest keying and the
+// trace), past the 60 s every build is held to.
+func runtimeProducts(t *testing.T, name string, group int) {
 	t.Helper()
 	index := slices.IndexFunc(runtimeOptions, func(option runtimeOption) bool { return option.name == name })
 	option := runtimeOptions[index]
 	if option.requires != "" && os.Getenv(option.requires) != "1" {
 		t.Skipf("set %s=1", option.requires)
 	}
-	for _, set := range runtimeSets {
+	for index, set := range runtimeSets {
+		if index%runtimeProductGroups != group {
+			continue
+		}
 		request, err := native.RuntimeRequestFor(option.options, set.features...)
 		if err != nil {
 			t.Fatal(err)
@@ -114,29 +119,30 @@ func runtimeProducts(t *testing.T, name string) {
 	}
 }
 
-// TestProduct_NativeRuntimesSanitized builds every set's sanitized archive ahead.
-func TestProduct_NativeRuntimesSanitized(t *testing.T) {
-	t.Parallel()
-	runtimeProducts(t, "sanitized")
-}
+// runtimeProductGroups is how many product tests each option's archives are cut into.
+const runtimeProductGroups = 3
 
-// TestProduct_NativeRuntimesRelease builds every set's release archive ahead.
-func TestProduct_NativeRuntimesRelease(t *testing.T) {
+func TestProduct_NativeRuntimesSanitized0(t *testing.T) {
 	t.Parallel()
-	runtimeProducts(t, "release")
+	runtimeProducts(t, "sanitized", 0)
 }
-
-// TestProduct_NativeRuntimesCounted builds every set's counted archive ahead.
-func TestProduct_NativeRuntimesCounted(t *testing.T) {
+func TestProduct_NativeRuntimesSanitized1(t *testing.T) {
 	t.Parallel()
-	runtimeProducts(t, "counted")
+	runtimeProducts(t, "sanitized", 1)
 }
-
-// TestProduct_NativeRuntimesWASI builds every set's wasm archive ahead, where the WASI families run.
-func TestProduct_NativeRuntimesWASI(t *testing.T) {
+func TestProduct_NativeRuntimesSanitized2(t *testing.T) {
 	t.Parallel()
-	runtimeProducts(t, "wasm")
+	runtimeProducts(t, "sanitized", 2)
 }
+func TestProduct_NativeRuntimesRelease0(t *testing.T) { t.Parallel(); runtimeProducts(t, "release", 0) }
+func TestProduct_NativeRuntimesRelease1(t *testing.T) { t.Parallel(); runtimeProducts(t, "release", 1) }
+func TestProduct_NativeRuntimesRelease2(t *testing.T) { t.Parallel(); runtimeProducts(t, "release", 2) }
+func TestProduct_NativeRuntimesCounted0(t *testing.T) { t.Parallel(); runtimeProducts(t, "counted", 0) }
+func TestProduct_NativeRuntimesCounted1(t *testing.T) { t.Parallel(); runtimeProducts(t, "counted", 1) }
+func TestProduct_NativeRuntimesCounted2(t *testing.T) { t.Parallel(); runtimeProducts(t, "counted", 2) }
+func TestProduct_NativeRuntimesWASI0(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 0) }
+func TestProduct_NativeRuntimesWASI1(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 1) }
+func TestProduct_NativeRuntimesWASI2(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 2) }
 
 // Each set in the table is one some program needs: its witness turns on exactly its features, so a set no program
 // needs any more fails here rather than staying to be built ahead for nothing. A program needing a set the table lacks
