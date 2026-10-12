@@ -7,6 +7,10 @@ baseline verification. Commands come from v6.0.3 package.json, Herebyfile.mjs an
 CONTRIBUTING.md. The compiler, services and test harness are built from the
 supplied source. It never accepts or updates reference baselines.
 
+The install is checked by its hidden lockfile and each package's version, not
+pinned to the byte as `stage3/api`'s is: it carries other platforms' optional
+packages (esbuild's and dprint's binaries), so no one digest holds on every box.
+
 Default runners in src/testRunner/runner.ts are compiler regression, conformance,
 project, native fourslash, server fourslash, transpile and unit tests.
 Generated fourslash is commented out upstream. Lint is explicitly disabled;
