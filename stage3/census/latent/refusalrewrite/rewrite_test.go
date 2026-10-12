@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestCompiler41231d51Shape(t *testing.T) {
@@ -209,9 +210,9 @@ func behaviorProbe(t *testing.T) string {
 				return err
 			}
 		}
-		command := exec.Command("go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
+		command := toolchain.Command("go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
 		command.Dir = module
-		command.Env = append(os.Environ(), "GOWORK=off")
+		command.Env = append(command.Env, "GOWORK=off")
 		if combined, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", err, combined)
 		}
