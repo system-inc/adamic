@@ -63,7 +63,18 @@ var runtimeOptions = []runtimeOption{
 }
 
 func init() {
-	native.SupplyRuntimes(supplyRuntime)
+	if suppliesRuntimes(os.Getenv("ADAMIC_STAGE3_FIXTURE")) {
+		native.SupplyRuntimes(supplyRuntime)
+	}
+}
+
+// suppliesRuntimes says whether this process takes its runtime archives from the products, given its
+// ADAMIC_STAGE3_FIXTURE. A process that has one is stage3/fixtures' oracle hook, this package's test binary run as
+// stage3/fixtures' product, once per fixture in stage3/fixtures' unit, which fetches stage3/fixtures' products and not
+// this package's: there the supplier read every archive as not built (lap A.5, a086f7e7f7e4). The hook compiles them
+// into native's runtime cache under its unit's build cache instead, once per unit, as it did before they were products.
+func suppliesRuntimes(stage3Fixture string) bool {
+	return stage3Fixture == ""
 }
 
 // supplyRuntime gives native the archive a build asks for from its product: built here the first time on a machine
@@ -327,4 +338,17 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(t *testing.T) {
 func fileExists(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && info.Mode().IsRegular()
+}
+
+// The oracle's own tests take their runtime archives from the products, and stage3/fixtures' oracle hook (this
+// binary, run with ADAMIC_STAGE3_FIXTURE) doesn't, since its unit holds none of this package's products. Mutants: the
+// supplier installed in the hook; the supplier never installed.
+func TestTheStage3HookCompilesItsOwnRuntimes(t *testing.T) {
+	t.Parallel()
+	if !suppliesRuntimes("") {
+		t.Error("the oracle's own tests don't take their runtime archives from the products")
+	}
+	if suppliesRuntimes("stage3/fixtures/real/program.ts") {
+		t.Error("stage3/fixtures' oracle hook takes its runtime archives from products its unit doesn't hold")
+	}
 }
