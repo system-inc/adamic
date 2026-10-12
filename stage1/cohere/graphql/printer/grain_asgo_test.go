@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Only buildcache products survive a test's cleanup. Every selected shard
@@ -184,6 +185,21 @@ type printerAsGoResult struct {
 func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 	start := time.Now()
 	command := exec.CommandContext(ctx, job.command, job.args...)
+	if job.environment != nil {
+		command.Env = append(os.Environ(), job.environment...)
+	}
+	if !strings.ContainsRune(job.command, filepath.Separator) {
+		// A bare name (node, macOS's leaks) is a tool: the one internal/toolchain resolves, with a tool's environment
+		// plus the job's settings, not PATH's, as toolchain.Command runs one under a context it has no form for. A
+		// program a test built (a port) runs as named, with this process's environment. An error resolving it fails the
+		// command as it starts.
+		if path, err := toolchain.Path(job.command); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, job.args...)
+			command.Env = toolchain.Env(job.environment...)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -193,9 +209,6 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 		return err
 	}
 	command.WaitDelay = time.Second
-	if job.environment != nil {
-		command.Env = append(os.Environ(), job.environment...)
-	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
