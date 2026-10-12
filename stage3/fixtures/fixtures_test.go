@@ -25,6 +25,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var update = flag.Bool("update", false, "update stage0 only after native agrees with recorded and current Node")
@@ -48,13 +49,33 @@ type fixture struct {
 	Stage0   stage0   `json:"stage0"`
 }
 
+// toolchainPath is the PATH setting toolchain.Env gives every tool.
+func toolchainPath() string {
+	for _, setting := range toolchain.Env() {
+		if strings.HasPrefix(setting, "PATH=") {
+			return setting
+		}
+	}
+	return "PATH=" + os.Getenv("PATH")
+}
+
 func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	// A bare name is the program toolchain.Path finds; one it can't find fails as it starts, with its error.
+	path, unresolved := toolchain.Path(name)
+	if unresolved != nil {
+		path = name
+	}
+	command := exec.CommandContext(ctx, path, arguments...)
+	if unresolved != nil {
+		command.Err = unresolved
+	}
 	command.Dir = directory
-	command.Env = append(os.Environ(), environment...)
+	// The PATH toolchain gives a tool, the declared tools directory's places first, so what a child runs by name
+	// itself (the hook scripts' go) is toolchain's too. environment, last, still wins.
+	command.Env = append(append(os.Environ(), toolchainPath()), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = 5 * time.Second
