@@ -11,7 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: parallelMarkdown checks the markdownMemory configuration before it calls t.Parallel, so a bad setting fails by this test's name; existing helper controls parallel execution.
 func TestParserRepresentationProbes(t *testing.T) {
 	parallelMarkdown(t)
 	// The fifteen probes run one after another in this test's own slot, about 5 s of one core in all. As
