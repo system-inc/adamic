@@ -23,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type agreementTesting interface {
@@ -278,9 +279,15 @@ func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The node toolchain.Path finds, under toolchain's environment, as every other site of lower's runs it.
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", runner, path)
+	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err = command.Run()
@@ -461,7 +468,18 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
-			if !ok || function.Body == nil {
+			if !ok {
+				// Outside a function a name can only be held (var f = runAgreementNative), and a call through what holds
+				// it is one no check here follows.
+				ast.Inspect(declaration, func(node ast.Node) bool {
+					if identifier, ok := node.(*ast.Ident); ok && (rows[identifier.Name] || reaches[identifier.Name] != nil) {
+						t.Errorf("%s: %s is named outside a function, where no row check reaches it", fileSet.Position(identifier.Pos()), identifier.Name)
+					}
+					return true
+				})
+				continue
+			}
+			if function.Body == nil {
 				continue
 			}
 			called := map[*ast.Ident]bool{}
