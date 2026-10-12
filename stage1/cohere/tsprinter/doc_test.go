@@ -31,6 +31,22 @@ func documentCorpus(t *testing.T) (string, string, string) {
 // documentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
 func documentOracle(t *testing.T) string {
 	t.Helper()
+	return buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t))
+}
+
+// documentOracleInputs is documentOracle's key, computed without building it.
+func documentOracleInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	inputs, err := buildcache.GoTestInputs("cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return inputs
+}
+
+// documentOracleArguments lay the harness over cohere's doc package.
+func documentOracleArguments(t *testing.T) []string {
+	t.Helper()
 	cohere, _ := filepath.Abs(repository + "/cohere")
 	side, _ := filepath.Abs("testdata/doc_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
@@ -38,7 +54,7 @@ func documentOracle(t *testing.T) string {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	return buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", []string{"-overlay=" + path})
+	return []string{"-overlay=" + path}
 }
 
 func TestProduct_TSPrinterDocumentOracle(t *testing.T) {
