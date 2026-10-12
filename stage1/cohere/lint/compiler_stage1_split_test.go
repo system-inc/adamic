@@ -269,7 +269,7 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	}
 	compilerAgreementCheckUnits(t, cases)
 
-	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix cases (%d active sanitized, one pending #5ggwf8c); %d checker per-rule fix cases; %d shards", pairs, fixes, fixes-1, checkerFixes, testCompilerAndStage1AgreeShards+compilerAgreementSanitizedCheckerGroups)
+	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix cases (%d active sanitized, one pending #5ggwf8c); %d checker per-rule fix cases, each also its own sanitized test; %d numbered shards", pairs, fixes, fixes-1, checkerFixes, testCompilerAndStage1AgreeShards)
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
@@ -339,10 +339,6 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	}
 	cases := compilerAgreementCases(t)
 	owner, side := shard/compilerAgreementSides, shard%compilerAgreementSides
-	if shard >= testCompilerAndStage1AgreeShards {
-		owner = testCompilerAndStage1AgreeShards/compilerAgreementSides + shard - testCompilerAndStage1AgreeShards
-		side = 4
-	}
 	var rows []string
 	for _, c := range cases {
 		if compilerAgreementUnit(c, side) == shard {
