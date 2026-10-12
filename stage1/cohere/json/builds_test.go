@@ -3,10 +3,8 @@ package json
 import (
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -30,72 +28,6 @@ func jsonBuildEnvironment(names ...string) []string {
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", name, set, value))
 	}
 	return flags
-}
-
-func jsonGoToolchain() ([]string, error) {
-	command := exec.Command("go", "version")
-	directory, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return nil, err
-	}
-	command.Dir = directory
-	version, err := command.Output()
-	if err != nil {
-		return nil, err
-	}
-	configuration := exec.Command("go", "env", "-json")
-	configuration.Dir = directory
-	settings, err := configuration.Output()
-	if err != nil {
-		return nil, err
-	}
-	// Go generates a fresh scratch directory even for go env. It is mapped to
-	// /tmp/go-build in compiler output and cannot affect a product, so normalize
-	// only that generated prefix-map argument; retain every real compiler flag.
-	var resolved map[string]string
-	if err := json.Unmarshal(settings, &resolved); err != nil {
-		return nil, err
-	}
-	compilerFlags := strings.Fields(resolved["GOGCCFLAGS"])
-	for i, flag := range compilerFlags {
-		if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
-			compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
-		}
-	}
-	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
-	// Where go keeps things and the policy that picked its release say nothing about a product (the release is go
-	// version above), and differ between Workshop and a runner (#t37sw0f).
-	for _, name := range []string{"GOROOT", "GOTOOLDIR", "GOPATH", "GOENV", "GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOBIN", "GOCACHEPROG", "GOPROXY", "GOSUMDB", "GOPRIVATE", "GONOPROXY", "GONOSUMDB", "GOINSECURE", "GOAUTH", "GOVCS", "GOTOOLCHAIN", "GOTELEMETRY", "GOTELEMETRYDIR"} {
-		delete(resolved, name)
-	}
-	settings, err = json.Marshal(resolved)
-	if err != nil {
-		return nil, err
-	}
-	// Include resolved Go settings as well as explicit environment overrides.
-	return []string{"runtime.Version=" + runtime.Version(), string(version), "go env=" + string(settings), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
-}
-
-func jsonClangToolchain() ([]string, error) {
-	clang, err := exec.LookPath("clang")
-	if err != nil {
-		return nil, err
-	}
-	if _, err := exec.Command(clang, "--version").Output(); err != nil {
-		return nil, err
-	}
-	archiver := filepath.Join(filepath.Dir(clang), "llvm-ar")
-	if info, err := os.Stat(archiver); err != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0111 == 0 {
-		archiver, err = exec.LookPath("ar")
-		if err != nil {
-			return nil, err
-		}
-	}
-	if _, err := exec.Command(archiver, "--version").Output(); err != nil {
-		return nil, err
-	}
-	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
-	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
 }
 
 func jsonLoweredPortInputs() jsonBuildInputs {
@@ -220,27 +152,3 @@ func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
 }
 
 type jsonProducts struct{ oracle, entry, script, release, sanitized, c string }
-
-// A warm product must have the same key despite Go's fresh compiler scratch path.
-func TestJSONGoToolchainStable(t *testing.T) {
-	t.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var previous string
-	for i := 0; i < 2; i++ {
-		tools, err := jsonGoToolchain()
-		if err != nil {
-			t.Fatal(err)
-		}
-		key, err := buildcache.Key(root, buildcache.Inputs{Name: "json toolchain stability", Files: []string{"go.mod"}, Toolchain: tools})
-		if err != nil {
-			t.Fatal(err)
-		}
-		if i > 0 && key != previous {
-			t.Fatal("unchanged Go toolchain produced different product keys")
-		}
-		previous = key
-	}
-}

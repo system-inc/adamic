@@ -3,12 +3,10 @@ package json
 import (
 	"bufio"
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -20,6 +18,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -44,8 +43,13 @@ const provisionedCorpusPrefix = "stage3/api/node_modules/"
 // reaches the lazy fetch's own git process through GIT_CONFIG_PARAMETERS); GIT_NO_LAZY_FETCH (Git 2.44) stops that
 // fetch before it starts.
 func gitPinnedInput(root string, input []byte, arguments ...string) ([]byte, error) {
-	command := exec.CommandContext(context.Background(), "git", append([]string{"-C", root, "-c", "protocol.allow=never"}, arguments...)...)
-	command.Env = append(os.Environ(), "GIT_NO_LAZY_FETCH=1")
+	command := toolchain.GitCommand(append([]string{"-C", root, "-c", "protocol.allow=never"}, arguments...)...)
+	command.Env = append(command.Env, "GIT_NO_LAZY_FETCH=1")
+	// GitEnv passes nothing else of this process's, so the fetch tests' trace (gitFetchesTracing) is carried by name:
+	// it records which git processes start and changes no answer.
+	if trace, set := os.LookupEnv("GIT_TRACE2_EVENT"); set {
+		command.Env = append(command.Env, "GIT_TRACE2_EVENT="+trace)
+	}
 	command.Stdin = bytes.NewReader(input)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {

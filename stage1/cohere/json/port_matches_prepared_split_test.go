@@ -9,14 +9,11 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -46,17 +43,12 @@ func portMatchesPrepare(t *testing.T) {
 func portMatchesPrepareProducts(t *testing.T) {
 	started := time.Now()
 	defer func() { t.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
-	oracleDir := portMatchesProduct(t, "oracle")
 	loweredDir := portMatchesProduct(t, "lowered")
-	portMatchesShared.oracle = filepath.Join(oracleDir, "go-cohere")
+	portMatchesShared.oracle = portMatchesProduct(t, "oracle")
 	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
 	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
 	portMatchesShared.release = filepath.Join(portMatchesProduct(t, "release"), "port")
 	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(t, "sanitized"), "port")
-	goTools, err := portMatchesJsonGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
 	clangTools, err := portMatchesJsonClangToolchain()
 	if err != nil {
 		t.Fatal(err)
@@ -64,12 +56,8 @@ func portMatchesPrepareProducts(t *testing.T) {
 	// The four-digit port/upstream wrappers use the same immutable products.
 	// Publish the same products for either independently selected shard family.
 	jsonTopCorpus(t)
-	jsonTopState.goOnce.Do(func() { jsonTopState.goTools = goTools })
-	jsonTopState.clangOnce.Do(func() { jsonTopState.clangTools = clangTools })
-	jsonTopState.oracle.Do(func() {
-		jsonTopState.oracleDir = oracleDir
-		jsonTopState.oracleCached = true
-	})
+	jsonTopState.clangTools = clangTools
+	jsonTopState.oracle = portMatchesShared.oracle
 	for name, directory := range map[string]string{
 		"lowered":   loweredDir,
 		"release":   filepath.Dir(portMatchesShared.release),
@@ -94,50 +82,6 @@ func portMatchesJsonBuildEnvironment(names ...string) []string {
 	return flags
 }
 
-func portMatchesJsonGoToolchain() ([]string, error) {
-	command := exec.Command("go", "version")
-	directory, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return nil, err
-	}
-	command.Dir = directory
-	version, err := command.Output()
-	if err != nil {
-		return nil, err
-	}
-	configuration := exec.Command("go", "env", "-json")
-	configuration.Dir = directory
-	settings, err := configuration.Output()
-	if err != nil {
-		return nil, err
-	}
-	// Go generates a fresh scratch directory even for go env. It is mapped to
-	// /tmp/go-build in compiler output and cannot affect a product, so normalize
-	// only that generated prefix-map argument; retain every real compiler flag.
-	var resolved map[string]string
-	if err := json.Unmarshal(settings, &resolved); err != nil {
-		return nil, err
-	}
-	compilerFlags := strings.Fields(resolved["GOGCCFLAGS"])
-	for i, flag := range compilerFlags {
-		if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
-			compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
-		}
-	}
-	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
-	// Where go keeps things and the policy that picked its release say nothing about a product (the release is go
-	// version above), and differ between Workshop and a runner (#t37sw0f).
-	for _, name := range []string{"GOROOT", "GOTOOLDIR", "GOPATH", "GOENV", "GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOBIN", "GOCACHEPROG", "GOPROXY", "GOSUMDB", "GOPRIVATE", "GONOPROXY", "GONOSUMDB", "GOINSECURE", "GOAUTH", "GOVCS", "GOTOOLCHAIN", "GOTELEMETRY", "GOTELEMETRYDIR"} {
-		delete(resolved, name)
-	}
-	settings, err = json.Marshal(resolved)
-	if err != nil {
-		return nil, err
-	}
-	// Include resolved Go settings as well as explicit environment overrides.
-	return []string{"runtime.Version=" + runtime.Version(), string(version), "go env=" + string(settings), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
-}
-
 func portMatchesJsonClangToolchain() ([]string, error) {
 	clang, err := exec.LookPath("clang")
 	if err != nil {
@@ -158,45 +102,6 @@ func portMatchesJsonClangToolchain() ([]string, error) {
 	}
 	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
 	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
-}
-
-// portMatchesBuildJSONGoOracle writes the driver and overlay only into its product directory.
-// Go's usual module/action caches remain managed by the Go toolchain.
-func portMatchesBuildJSONGoOracle(dir string) error {
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return err
-	}
-	source, err := filepath.Abs("testdata/cohere_driver.go")
-	if err != nil {
-		return err
-	}
-	overlay := filepath.Join(dir, "overlay.json")
-	encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(overlay, encoded, 0644); err != nil {
-		return err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(overlay)
-	ctx := context.Background()
-	command := exec.CommandContext(ctx, "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-		return fmt.Errorf("Go driver: %w\n%s", err, output)
-	}
-	return nil
 }
 
 func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
@@ -272,23 +177,34 @@ func portMatchesDeadline(name string) *time.Timer {
 // The build phase and isolated shards use these exact recipes and keys.
 var portMatchesProducts sync.Map
 
+// portMatchesProduct returns the named product's directory, except the oracle's, which is its binary.
 func portMatchesProduct(t *testing.T, name string) string {
 	t.Helper()
 	value, _ := portMatchesProducts.LoadOrStore(name, &jsonTopBuild{})
 	product := value.(*jsonTopBuild)
 	product.once.Do(func() {
-		goTools, err := portMatchesJsonGoToolchain()
-		if err != nil {
-			t.Fatal(err)
-		}
 		switch name {
 		case "oracle":
-			product.dir = buildcache.Product(t, buildcache.Inputs{
-				Name:      "json split Go oracle",
-				Files:     []string{"go.mod", "go.work", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/port_matches_prepared_split_test.go"},
-				Flags:     append([]string{"go build -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("GOFLAGS")...),
-				Toolchain: goTools,
-			}, portMatchesBuildJSONGoOracle)
+			// cohere's command/formatter_comparison with testdata/cohere_driver.go laid over its main, keyed by what go
+			// says the build compiles (GoBuildIn). The overlay names this checkout's paths, so it sits in a temporary
+			// directory: it builds the product and is never part of it (#tqrqx60).
+			root, err := filepath.Abs(repository)
+			if err != nil {
+				t.Fatal(err)
+			}
+			source, err := filepath.Abs("testdata/cohere_driver.go")
+			if err != nil {
+				t.Fatal(err)
+			}
+			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+			if err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(t.TempDir(), "overlay.json")
+			if err := os.WriteFile(path, overlay, 0644); err != nil {
+				t.Fatal(err)
+			}
+			product.dir = buildcache.GoBuildIn(t, "cohere", "go-cohere", "./command/formatter_comparison", []string{"-overlay=" + path})
 		case "lowered":
 			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
 		case "release", "sanitized":

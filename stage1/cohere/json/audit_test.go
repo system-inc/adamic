@@ -176,7 +176,7 @@ func jsonUpstreamTopShard(t *testing.T, target int) {
 			t.Fatalf("known difference missing from corpus: %s", id)
 		}
 	}
-	oracle := filepath.Join(jsonTopOracle(t), "go-cohere")
+	oracle := jsonTopOracle(t)
 	reports := make([]string, len(shards))
 	for ordinal, shard := range shards {
 		if ordinal != target || ordinal%count != index {
