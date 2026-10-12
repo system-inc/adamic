@@ -15,6 +15,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -31,6 +32,13 @@ func run(t *testing.T, directory string, environment []string, name string, args
 	command := exec.Command(name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the caller's
+		// settings, not PATH's, run in directory with PWD to match. A program a test built (an oracle, a port) runs as
+		// named, with this process's environment.
+		command = toolchain.CommandIn(directory, name, args...)
+		command.Env = append(command.Env, environment...)
+	}
 	var out, errOut bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errOut
 	if err := childguard.Run(command, childguard.Options{}); err != nil {

@@ -11,6 +11,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testFileDriverShards = 8
@@ -206,6 +208,21 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the caller's
+		// settings, not PATH's, run in directory with PWD to match, as toolchain.CommandIn runs one under a context it
+		// has no form for. A program a test built (the Go oracle, the port) runs as named, with this process's
+		// environment. An error resolving it fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else if absolute, err := filepath.Abs(directory); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Dir = directory
+			command.Env = append(toolchain.Env(environment...), "PWD="+absolute)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = time.Second
