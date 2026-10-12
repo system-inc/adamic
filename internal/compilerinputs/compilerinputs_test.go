@@ -9,6 +9,13 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+
+	// The compiler's packages, linked so a change to anything they import selects this test wherever selection follows
+	// Go's import graph: a cohere bump that adds a package to the link set then fails here, not at the next full run.
+	_ "github.com/system-inc/adamic/internal/javascript"
+	_ "github.com/system-inc/adamic/internal/load"
+	_ "github.com/system-inc/adamic/internal/lower"
+	_ "github.com/system-inc/adamic/internal/native"
 )
 
 // The compiler's packages: the loader, lowering, the native build and the JavaScript emission a port is lowered and
@@ -26,13 +33,21 @@ func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	command := toolchain.CommandIn(root, "go", append([]string{"list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}"}, compiler...)...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	listing, err := command.Output()
-	if err != nil {
-		t.Fatalf("go list: %v\n%s", err, stderr.Bytes())
+	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there. Once
+	// for each system the gate builds on, cgo on as a native build has it, and the union taken: a package only one of
+	// them links (a build-constrained import) is still needed, wherever this test runs. On Oct 12 the two differ only
+	// outside the repository (linux links golang.org/x/sys/unix too), so the union guards a difference to come.
+	var listing []byte
+	for _, system := range []string{"linux", "darwin"} {
+		command := toolchain.CommandIn(root, "go", append([]string{"list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}"}, compiler...)...)
+		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		output, err := command.Output()
+		if err != nil {
+			t.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
+		}
+		listing = append(listing, output...)
 	}
 	inside := func(path string) (string, bool) {
 		relative, err := filepath.Rel(root, path)
