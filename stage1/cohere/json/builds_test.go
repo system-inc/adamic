@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -31,7 +32,7 @@ func jsonBuildEnvironment(names ...string) []string {
 }
 
 func jsonLoweredPortInputs() jsonBuildInputs {
-	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/builds_test.go"}
+	files := append(compilerinputs.Lowering(), "stage1/cohere/json/builds_test.go")
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
