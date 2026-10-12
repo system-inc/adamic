@@ -7,7 +7,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io/fs"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -19,6 +18,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -172,30 +172,9 @@ func TestDecodedOptionsAndMutantPlantedFailure(t *testing.T) {
 func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 	t.Helper()
 	prepareRegistry(t, ".")
-	files := []string{"go.mod", "go.work", "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "oracle/adamic.mjs", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"}
+	files := append(compilerinputs.Lowering(), "stage1/typescript", "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry")
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
-	}
-	// Hash implementation sources, excluding unrelated tests and evidence trees.
-	err := filepath.WalkDir(filepath.Join(repository, "internal"), func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.IsDir() && (entry.Name() == "testdata" || entry.Name() == "performance") {
-			return filepath.SkipDir
-		}
-		extension := filepath.Ext(path)
-		if !entry.IsDir() && (extension == ".go" || extension == ".c" || extension == ".h") && !strings.HasSuffix(path, "_test.go") {
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
-			}
-			files = append(files, filepath.ToSlash(relative))
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
 	}
 	sort.Strings(files)
 	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}

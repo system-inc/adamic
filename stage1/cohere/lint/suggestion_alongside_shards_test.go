@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -94,7 +95,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: []string{"stage1/cohere/lint", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work", "cohere/go.work", "cohere/go.work.sum"}, Flags: []string{"automatic-fix=semicolon", "serialization-fixture=v1"}, Toolchain: []string{runtime.Version()}}
+	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: append(compilerinputs.Lowering(), "stage1/cohere/lint", "stage1/typescript"), Flags: []string{"automatic-fix=semicolon", "serialization-fixture=v1"}, Toolchain: []string{runtime.Version()}}
 	lowered := buildcache.Product(t, inputs, func(out string) error {
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
@@ -122,7 +123,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	})
 	oracleInputs := inputs
 	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
-	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
+	oracleInputs.Files = append(lintFixtureOracleFiles(t, "testdata/oracle.go", "testdata/serialization/oracle.go"), "stage1/cohere/lint")
 	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
 	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
 	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
