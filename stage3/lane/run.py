@@ -9,6 +9,7 @@ import subprocess
 import time
 import tempfile
 
+from artifact import link_packages
 from check import check_results, write_verdict
 
 LANE = Path(__file__).resolve().parent
@@ -69,13 +70,18 @@ def main():
         execution['apply_exit'] = ready['phases']['apply']['exit']
         execution['producer_phases'] = ready['phases']
         shutil.copyfile(artifact / 'ready.json', results / 'artifact-ready.json')
-    table_error = None
+    setup_error = None
     if execution['apply_exit'] == 0:
         try:
             shutil.copyfile(tree / 'patch-set.md', results / 'patch-set.md')
         except OSError as error:
-            table_error = f'cannot preserve apply patch table: {error}'
-    if execution['apply_exit'] == 0 and table_error is None:
+            setup_error = f'cannot preserve apply patch table: {error}'
+    if execution['apply_exit'] == 0 and setup_error is None and args.artifact is None:
+        try:
+            link_packages(ROOT, tree)
+        except (OSError, RuntimeError, ValueError) as error:
+            setup_error = f'cannot link the adapted tree\'s packages: {error}'
+    if execution['apply_exit'] == 0 and setup_error is None:
         command = ['bash', str(ROOT / 'stage3/oracle/run.sh'), str(tree), str(results / 'oracle')]
         env = dict(os.environ)
         if args.artifact is not None:
@@ -88,8 +94,8 @@ def main():
     (results / 'execution.json').write_text(json.dumps(execution, indent=2) + '\n')
     if execution['apply_exit'] != 0:
         report = dict(status='fail', errors=[f"apply exit: expected 0, observed {execution['apply_exit']}; see apply.log"])
-    elif table_error is not None:
-        report = dict(status='fail', errors=[table_error])
+    elif setup_error is not None:
+        report = dict(status='fail', errors=[setup_error])
     else:
         if args.artifact is not None:
             os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
