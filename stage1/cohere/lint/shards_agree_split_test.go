@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -19,6 +20,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -246,12 +248,16 @@ func testShardsAgreeRows(t *testing.T, rows []string) []string {
 // artifact belongs to a shard's TempDir, so parallel leaves can safely reuse it.
 func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 	t.Helper()
-	files := []string{"internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/go.mod", "cohere/go.sum", "go.mod", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "stage1/cohere/lint/testdata/oracle.go"}
+	files := []string{"stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry"}
 	if name == "capture" {
 		files = append(files, "stage1/cohere/lint/shards_agree_split_test.go")
 	}
 	for _, path := range portFiles(t) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(path))
+	}
+	if name != "capture" {
+		// The scanner is the port, with the stage1/typescript it imports, lowered and built by the compiler.
+		files = append(append(files, compilerinputs.Lowering()...), "stage1/typescript")
 	}
 	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	if name == "capture" || strings.HasPrefix(name, "prepared") {
@@ -259,8 +265,10 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 		// are asked here, under the root's go.work; the capture runs in cohere, under cohere's, so both workspaces are
 		// inputs too.
 		tools = append(tools, lintGoSettings())
-		files = append(files, "go.work", "cohere/go.work", "cohere/go.work.sum")
+		files = append(append(files, "internal", "go.mod", "go.work", "cohere/go.work.sum", "stage1/cohere/lint/testdata/oracle.go"), upstreamCaptureFiles...)
 	}
+	// The prepared corpus holds both, so it names a path both name once.
+	files = slices.Compact(slices.Sorted(slices.Values(files)))
 	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
 }
 func testShardsAgreeUpstream(t *testing.T) []string {
