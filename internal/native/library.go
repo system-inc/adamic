@@ -141,7 +141,8 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
 	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
 	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
-	part("adamic-runtime-v3")
+	// v4: the archive's members carry no time (ZERO_AR_DATE), so a v3 archive Apple's ar stamped isn't reused.
+	part("adamic-runtime-v4")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
@@ -222,8 +223,13 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if len(objects) == 0 {
 		return "", fmt.Errorf("native: runtime has no C sources")
 	}
+	// Each member carries no time: Apple's ar stamps the time it ran into a member's header, which ld's debug map copies
+	// beside the member's name, so two builds of one program linked against runtimes archived a second apart differed
+	// (TestBuildIsTheSameFromAnyDirectory on a Mac, Oct 12). ZERO_AR_DATE has it write zero; llvm-ar writes zero anyway.
 	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
-	if output, err := exec.Command(archiverName(compiler), arguments...).CombinedOutput(); err != nil {
+	archive := exec.Command(archiverName(compiler), arguments...)
+	archive.Env = append(os.Environ(), "ZERO_AR_DATE=1")
+	if output, err := archive.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
 	// Publish everything together. A competing process may already have published this key; its
