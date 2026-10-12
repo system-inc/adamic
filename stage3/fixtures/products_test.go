@@ -3,7 +3,9 @@ package fixtures
 import (
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -105,7 +107,7 @@ var fixtureHookKeys struct {
 
 func fixtureHookInputsEnvironment(t testing.TB, repository string, environment []string) buildcache.Inputs {
 	t.Helper()
-	result := execute(t, repository, environment, "python3", "-c", fixtureHookInputsScript, repository)
+	result := hookPython(t, repository, environment, "-c", fixtureHookInputsScript, repository)
 	if result.Exit != 0 {
 		t.Fatalf("oracle product input discovery: %s%s", result.Stdout, result.Stderr)
 	}
@@ -116,12 +118,20 @@ func fixtureHookInputsEnvironment(t testing.TB, repository string, environment [
 	return inputs
 }
 
+// hookPython runs the oracle hook's python3 under -B, so it never writes bytecode into the tree whatever its caller
+// exports: build-hook.py imports stage3/caches.py, and without it python writes stage3/__pycache__ mid-build (lap 1's
+// traced fallback, a write into the tree), as stage3/verdict/run.py turns it off for its driver.
+func hookPython(t testing.TB, directory string, environment []string, arguments ...string) behavior {
+	t.Helper()
+	return execute(t, directory, environment, "python3", append([]string{"-B"}, arguments...)...)
+}
+
 // Both the declared product and every fixture use this one recipe. Preparation
 // is allowed on a cache miss, without order dependence or a building sync.Once.
 func fixtureOracleHook(t testing.TB, repository string) string {
 	t.Helper()
 	directory := buildcache.Product(t, fixtureHookInputs(t, repository), func(directory string) error {
-		result := execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare", "--store", directory)
+		result := hookPython(t, repository, nil, "stage3/fixtures/build-hook.py", "--prepare", "--store", directory)
 		if result.Exit != 0 {
 			return fmt.Errorf("oracle preparation: %s%s", result.Stdout, result.Stderr)
 		}
@@ -227,5 +237,39 @@ func TestFixtureOracleProductIgnoresGoCacheLocation(t *testing.T) {
 	}
 	if keys[0] != keys[1] {
 		t.Fatalf("Go cache location changed oracle product key: %s != %s", keys[0], keys[1])
+	}
+}
+
+// The hook's python writes no bytecode into the tree with PYTHONDONTWRITEBYTECODE unset: build-hook.py, run as the
+// preparation runs it, in a tree holding it and the stage3/caches.py it imports, leaves no __pycache__ beside either.
+// Mutant: hookPython without -B (stage3/__pycache__/caches.cpython-*.pyc).
+func TestTheFixtureOracleHookWritesNoBytecode(t *testing.T) {
+	t.Parallel()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	scratch := t.TempDir()
+	for _, name := range []string{"stage3/caches.py", "stage3/fixtures/build-hook.py"} {
+		data, err := os.ReadFile(filepath.Join(repository, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.MkdirAll(filepath.Dir(filepath.Join(scratch, name)), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(scratch, name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	// Empty is unset, as python reads it; --help stops once the imports have run.
+	environment := []string{"PYTHONDONTWRITEBYTECODE=", "STAGE3_CACHE=" + t.TempDir()}
+	if result := hookPython(t, scratch, environment, "stage3/fixtures/build-hook.py", "--help"); result.Exit != 0 {
+		t.Fatalf("build-hook.py --help: %s%s", result.Stdout, result.Stderr)
+	}
+	for _, directory := range []string{"stage3/__pycache__", "stage3/fixtures/__pycache__"} {
+		if _, err := os.Stat(filepath.Join(scratch, directory)); !errors.Is(err, fs.ErrNotExist) {
+			t.Errorf("the hook's python wrote %s (%v)", directory, err)
+		}
 	}
 }
