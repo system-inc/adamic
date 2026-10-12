@@ -425,8 +425,15 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 				return classed{}
 			}
 		}
+		// A lookup that climbs to home or past it lands where every machine answers alike wherever its tree sits, so it
+		// is keyed where it lands, below: home's, the machine's C stack (/lib, /usr) or an absolute path. Keyed relative
+		// to the tree, ../../../../lib is /lib at Workshop's depth and a path under ~/loom-serve at a runner's unit
+		// source, so every product whose build looked up the C stack missed on a runner (Builder's dry B2, Oct 12: 29 of
+		// 39 product packages moved in the key check). The tree's own parents, and what sits between home and the tree,
+		// stay relative.
+		landed := !aboveTree && facts.landsWhereMachinesAgree(filepath.Dir(name))
 		for _, root := range facts.roots {
-			if under(root, filepath.Dir(name)) {
+			if under(root, filepath.Dir(name)) && !landed {
 				relative, _ := filepath.Rel(root, name)
 				return classed{"above", filepath.ToSlash(relative)}
 			}
@@ -435,7 +442,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		// product it runs) is keyed as above keys the tree's, relative to the cache: each run's cache sits elsewhere,
 		// and what is beside it is the same.
 		for _, cache := range facts.caches {
-			if under(cache, filepath.Dir(name)) {
+			if under(cache, filepath.Dir(name)) && !landed {
 				relative, _ := filepath.Rel(cache, name)
 				return classed{"above cache", filepath.ToSlash(relative)}
 			}
@@ -484,6 +491,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{"absolute", name}
 	}
 	return classed{refusal + "other", name}
+}
+
+// landsWhereMachinesAgree says whether a directory a lookup looked in is the file system's root, the home directory or
+// one of home's parents: what is there is the machine's, not the tree's place on it.
+func (facts *traceFacts) landsWhereMachinesAgree(directory string) bool {
+	return directory == "/" || directory == facts.home || under(facts.home, directory)
 }
 
 // caseProbe says whether a lookup that missed was a program asking whether the file system is case-sensitive:
