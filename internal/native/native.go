@@ -12,8 +12,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"slices"
 	"strings"
+	"time"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -150,9 +152,29 @@ func buildOne(source string, output string, options Options, flags []string) err
 		return fmt.Errorf("native: %w", err)
 	}
 	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
-	arguments := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime", "-o", output)
+	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime")
+	// On macOS ld's debug map records every object it links that carries debug info (a sanitized build's do) by its path,
+	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
+	// random per build (Tests, from Compiler, Oct 12: a whole sanitized build's binary named it). There main.c is
+	// compiled to main.o in the build directory first and linked by that name, -oso_prefix taking the directory off, so
+	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
+	program := "main.c"
+	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
+		compile := exec.Command(compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		compile.Dir = directory
+		if combined, err := compile.CombinedOutput(); err != nil {
+			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+		}
+		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
+		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
+		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
+			return fmt.Errorf("native: %w", err)
+		}
+		program = "main.o"
+	}
+	arguments := append(compileFlags, "-o", output)
 	if !options.Request {
-		arguments = append(arguments, "main.c")
+		arguments = append(arguments, program)
 	}
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, "-Xlinker", "--whole-archive", runtimeArchive, "-Xlinker", "--no-whole-archive")
@@ -163,7 +185,10 @@ func buildOne(source string, output string, options Options, flags []string) err
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	if options.Request {
 		// Runtime constructors precede module initialization at the same default priority.
-		arguments = append(arguments, "main.c")
+		arguments = append(arguments, program)
+	}
+	if program == "main.o" {
+		arguments = append(arguments, objectPrefixFlags()...)
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
