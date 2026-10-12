@@ -14,8 +14,9 @@ import (
 // seeds and loops. Repository files cannot change their membership. Reuse the
 // independent Go oracle while avoiding parsing/formatting unrelated inputs:
 // mutantOracleBinary is that oracle with its add hook filtered to change's
-// witness families, run here on an empty request.
-func mutantOracle(t *testing.T, change mutation) (string, string) {
+// witness families, resolved once by the caller (binary) and run here on an
+// empty request.
+func mutantOracle(t *testing.T, change mutation, binary string) (string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	root, err := filepath.Abs(repository)
@@ -38,7 +39,7 @@ func mutantOracle(t *testing.T, change mutation) (string, string) {
 		kind = "Statement"
 	}
 	// The test binary runs in its package's directory, as go test runs it.
-	command := bounded(t, mutantOracleBinary(t, change), "-test.count=1", "-test.timeout=0", "-test.run=^TestAdamic"+kind+"Corpus$")
+	command := bounded(t, binary, "-test.count=1", "-test.timeout=0", "-test.run=^TestAdamic"+kind+"Corpus$")
 	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json", "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 	if output, err := combinedOutput(command); err != nil {

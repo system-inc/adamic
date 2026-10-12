@@ -80,8 +80,11 @@ func mutantOracleProduct(t *testing.T, index int) (string, string) {
 		// mutation), keyed by what go compiles, and stands in this key by its bytes, as expressionBuild keys a generated
 		// input. Then the gaps file, and the code that runs it and captures its output. Not cohere whole: its
 		// TypeScript submodule made a populated tree hash 67,000 files per lookup, up to 58 times a cold process (#4ycgm2n).
-		oracle := documentOracle(t)
-		if mutations[index].entry != "docMain.ts" {
+		// Only the doc mutation resolves the doc oracle, so the other mutations never key or fetch its 19 MB.
+		var oracle string
+		if mutations[index].entry == "docMain.ts" {
+			oracle = documentOracle(t)
+		} else {
 			oracle = mutantOracleBinary(t, mutations[index])
 		}
 		state.directory = expressionBuild(t, mutantOracleCorpusInputs(root, index, oracle), func(directory string) error {
@@ -89,7 +92,7 @@ func mutantOracleProduct(t *testing.T, index int) (string, string) {
 			if mutations[index].entry == "docMain.ts" {
 				cases, _, _ = documentCorpus(t)
 			} else {
-				cases, _ = mutantOracle(t, mutations[index])
+				cases, _ = mutantOracle(t, mutations[index], oracle)
 			}
 			// Requests and overlays contain private paths and are never published.
 			names := []string{filepath.Base(cases), "answers.txt", "cases.json"}
