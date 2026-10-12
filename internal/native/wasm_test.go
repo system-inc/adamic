@@ -3,12 +3,15 @@ package native
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"crypto/sha256"
 	"errors"
+	"fmt"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -65,8 +68,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := []string{"--target=wasm32-wasi", "--sysroot=" + sysroot, "-DADAMIC_TARGET_WASI=1",
-		"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
+	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
 	if output, err := exec.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
@@ -77,69 +79,18 @@ func runWASIUnit(t *testing.T, unit int) {
 		t.Skipf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
 	}
 	t.Logf("WASI toolchain probe phase %.3fs", time.Since(phase).Seconds())
-	phase = time.Now()
-	// Compile every translation unit without the generated-C unused warnings exemptions.
-	files, err := readRuntime(runtime, "runtime")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if alternate := os.Getenv("ADAMIC_WASI_RUNTIME"); alternate != "" {
-		files, err = readRuntime(os.DirFS(alternate), ".")
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0o644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	cache, err := newTestBuildCache(repository, "cmd/adamic")
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("WASI runtime inputs and cache identity phase %.3fs", time.Since(phase).Seconds())
-	runtimeBuild := func(count bool) (string, []string) {
+	// The runtime's objects come from the strict-wasi-runtime product, built ahead; the counted variant is the
+	// request benchmark's.
+	runtimeVariant := func(t *testing.T, variant string) (string, []string) {
+		t.Helper()
 		started := time.Now()
 		defer func() {
-			t.Logf("WASI runtime build/cache phase counted=%t %.3fs", count, time.Since(started).Seconds())
+			t.Logf("WASI runtime fetch phase %s %.3fs", variant, time.Since(started).Seconds())
 		}()
-		compileFlags := append([]string{}, flags...)
-		if count {
-			compileFlags = append(compileFlags, "-DADAMIC_COUNT")
-		}
-		inputs := [][]byte{}
-		encoded, _ := json.Marshal(compileFlags)
-		inputs = append(inputs, encoded)
-		for _, file := range files {
-			inputs = append(inputs, []byte(file.name), file.contents)
-		}
-		built, err := cache.Tree("strict-wasi-runtime", inputs, func(destination string) error {
-			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(destination, file.name), file.contents, 0644); err != nil {
-					return err
-				}
-			}
-			for _, file := range files {
-				if strings.HasSuffix(file.name, ".c") {
-					wasiCommand(t, repository, "clang", append(append([]string{}, compileFlags...), "-c", filepath.Join(destination, file.name), "-o", filepath.Join(destination, file.name+".o"))...)
-				}
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-		var objects []string
-		for _, file := range files {
-			if strings.HasSuffix(file.name, ".c") {
-				objects = append(objects, filepath.Join(built, file.name+".o"))
-			}
-		}
-		return built, objects
+		return strictWASIRuntimeVariant(t, strictWASIRuntime(t), variant)
 	}
 	var objects []string
-	directory, objects = runtimeBuild(false)
+	directory, objects = runtimeVariant(t, "plain")
 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
 	phase = time.Now()
 	// The shared stage 0 product, built ahead by TestProduct_WASICompiler: a runner never builds it (#5qykzj5).
@@ -154,7 +105,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	link := func(t *testing.T, source, output string, extra ...string) {
 		t.Helper()
 		started := time.Now()
-		defer func() { t.Logf("WASI link/cache phase %.3fs", time.Since(started).Seconds()) }()
+		defer func() { t.Logf("WASI link phase %.3fs", time.Since(started).Seconds()) }()
 		arguments := append(append([]string{}, flags...), "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign",
 			"-I", directory, "-Wl,-z,stack-size=131072", "-Wl,--export=__stack_low", "-o", output, source)
 		arguments = append(arguments, extra...)
@@ -162,19 +113,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		arguments = append(arguments, "-lm")
 		command := exec.Command("clang", arguments...)
 		command.Dir = repository
-		includes, err := filepath.Glob(filepath.Join(filepath.Dir(output), "*.c"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		var contents [][]byte
-		for _, path := range includes {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			contents = append(contents, []byte(filepath.Base(path)), data)
-		}
-		if data, err := cache.Command(command, filepath.Dir(output), contents...); err != nil {
+		if data, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("WASI link: %v\n%s", err, data)
 		}
 	}
@@ -220,7 +159,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	}
 	t.Run("requests", func(t *testing.T) {
 		// Counters are for the memory probe only; oracle command stderr stays untouched.
-		directory, objects = runtimeBuild(true)
+		directory, objects = runtimeVariant(t, "counted")
 		scratch := t.TempDir()
 		code := generate(t, "internal/native/wasm/request.a")
 		if !strings.Contains(code, "adamic_region_end(") {
@@ -297,6 +236,115 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 func TestProduct_WASICompiler(t *testing.T) {
 	t.Parallel()
 	buildcache.Adamic(t)
+}
+
+// wasiFlags are what the WASI units compile the runtime and link every module with, without the generated-C unused
+// warnings exemptions, which only a module's own C gets.
+func wasiFlags(sysroot string) []string {
+	return []string{"--target=wasm32-wasi", "--sysroot=" + sysroot, "-DADAMIC_TARGET_WASI=1",
+		"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
+}
+
+// strictWASIRuntimeVariants are the strict runtime's two builds: plain, which every fixture's module links, and
+// counted (-DADAMIC_COUNT), which only the request benchmark's memory probe links.
+var strictWASIRuntimeVariants = map[string][]string{"plain": nil, "counted": {"-DADAMIC_COUNT"}}
+
+// strictWASIRuntime is every translation unit of the runtime compiled with wasiFlags, plain and counted, a product
+// built ahead by TestProduct_StrictWASIRuntime: a directory per variant holding the runtime's files beside their
+// objects. Every unit used to compile it into a cache keyed by the test binary's hash, which no product declares, so a
+// runner that reads products never found it.
+func strictWASIRuntime(t *testing.T) string {
+	t.Helper()
+	sysroot := os.Getenv("WASI_SYSROOT")
+	if sysroot == "" {
+		t.Fatal("WASI_SYSROOT missing")
+	}
+	flags := wasiFlags(sysroot)
+	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
+	inputs := buildcache.Inputs{
+		Name:      "strict-wasi-runtime",
+		Files:     []string{"internal/native/runtime", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
+		Flags:     slices.Clone(flags),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}
+	for _, variant := range variants {
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))
+	}
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	// A planted runtime (ADAMIC_WASI_RUNTIME, for isolated mutants) lies outside the tree, so its content keys the
+	// product. It is built for this machine alone.
+	if alternate := os.Getenv("ADAMIC_WASI_RUNTIME"); alternate != "" {
+		if files, err = readRuntime(os.DirFS(alternate), "."); err != nil {
+			t.Fatal(err)
+		}
+		for _, file := range files {
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
+		}
+	}
+	return buildcache.Product(t, inputs, func(directory string) error {
+		for _, variant := range variants {
+			destination := filepath.Join(directory, variant)
+			if err := os.Mkdir(destination, 0o755); err != nil {
+				return err
+			}
+			var sources []string
+			for _, file := range files {
+				if err := os.WriteFile(filepath.Join(destination, file.name), file.contents, 0o644); err != nil {
+					return err
+				}
+				if strings.HasSuffix(file.name, ".c") {
+					sources = append(sources, file.name)
+				}
+			}
+			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
+			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), prefixMaps(destination, "/adamic-runtime")...)
+			if err := eachInParallel(len(sources), func(index int) error {
+				command := exec.Command("clang", append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
+				command.Dir = destination
+				if output, err := command.CombinedOutput(); err != nil {
+					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], err, output)
+				}
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+}
+
+// strictWASIRuntimeVariant is one variant of the strict runtime product: its directory, which holds the headers a
+// module includes, and its objects in the runtime's order.
+func strictWASIRuntimeVariant(t *testing.T, product, variant string) (string, []string) {
+	t.Helper()
+	if _, ok := strictWASIRuntimeVariants[variant]; !ok {
+		t.Fatalf("no strict WASI runtime variant %q", variant)
+	}
+	directory := filepath.Join(product, variant)
+	objects, err := filepath.Glob(filepath.Join(directory, "*.c.o"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(objects) == 0 {
+		t.Fatalf("strict WASI runtime %s holds no objects", variant)
+	}
+	return directory, objects
+}
+
+// TestProduct_StrictWASIRuntime builds the strict runtime the WASI units link, where they run, so the tree build
+// builds it ahead.
+func TestProduct_StrictWASIRuntime(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
+		t.Skip("set ADAMIC_TEST_WASI=1")
+	}
+	if os.Getenv("WASI_SYSROOT") == "" {
+		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
+	}
+	strictWASIRuntime(t)
 }
 
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
