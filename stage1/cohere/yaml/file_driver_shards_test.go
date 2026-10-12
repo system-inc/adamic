@@ -8,17 +8,12 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const testFileDriverShards = 8
@@ -113,37 +108,8 @@ func fileDriverSetup(t *testing.T) *fileDriverState {
 	if err != nil {
 		t.Fatal(err)
 	}
-	productInputs := buildcache.Inputs{
-		Name: "yaml-file-driver-lowered", Files: fileDriverBuildFiles(t),
-		Flags:     []string{"lower+native.C+javascript.JavaScript"},
-		Toolchain: []string{runtime.Version()},
-	}
-	loweredProduct := buildcache.Product(t, productInputs, func(directory string) error {
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
-		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(directory, "format.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "format.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
-	})
-	productInputs.Name = "yaml-file-driver-native"
-	productInputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	productInputs.Toolchain = append(productInputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeProduct := buildcache.Product(t, productInputs, func(directory string) error {
-		source, err := os.ReadFile(filepath.Join(loweredProduct, "format.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(source), filepath.Join(directory, "format"), native.Options{Sanitize: true})
-	})
-	binary := filepath.Join(nativeProduct, "format")
-	emitted := filepath.Join(loweredProduct, "format.mjs")
+	binary := yamlFormatBuild.binary(t, "main.ts")
+	emitted := yamlFormatBuild.emitted(t, "main.ts")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	if len(expected) != len(inputs) {
 		t.Fatalf("oracle returned %d answers for %d inputs", len(expected), len(inputs))

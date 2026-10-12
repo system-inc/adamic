@@ -2,16 +2,9 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func goUnist(t *testing.T, cases string) []byte {
@@ -31,45 +24,33 @@ func TestProduct_YAMLUnistGo(t *testing.T) {
 	goUnistOracle(t)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed /tmp/stage1-yaml-unist-* diagnostic files.
-func TestUnistMatchesGo(t *testing.T) {
-	cases, files, count := composeCases(t)
-	expected := goUnist(t, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	entry, err := filepath.Abs("unist_main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "unist")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
-	runner := filepath.Join(root, "oracle/node.mjs")
-	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
-	emitted := filepath.Join(t.TempDir(), "unist.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
+// unistMatchGo compares unist's port build (port_products_test.go) with Go over composeCases, in two shards.
+var unistMatchGo = yamlMatchGo{family: "unist", shards: 2, cases: composeCases, oracle: goUnistOracle, build: yamlUnistBuild, entry: "unist_main.ts"}
+
+func TestUnistMatchesGo_000(t *testing.T) { t.Parallel(); unistMatchesGoShard(t, 0) }
+func TestUnistMatchesGo_001(t *testing.T) { t.Parallel(); unistMatchesGoShard(t, 1) }
+
+func TestUnistMatchesGoUnion(t *testing.T) {
+	t.Parallel()
+	unistMatchGo.union(t)
+}
+
+func TestUnistMatchesGoPlantedFailure(t *testing.T) {
+	t.Parallel()
+	unistMatchGo.planted(t)
+}
+
+func unistMatchesGoShard(t *testing.T, shard int) {
+	t.Helper()
+	result := unistMatchGo.run(t, shard)
+	expected := result.expected
 	for _, side := range []struct {
 		name string
 		out  []byte
-	}{{"native ASan/UBSan/LSan", nativeOut}, {"Node", node}, {"emitted JavaScript", backend}} {
+	}{{"native ASan/UBSan/LSan", result.native}, {"Node", result.node}, {"emitted JavaScript", result.emitted}} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile("/tmp/stage1-yaml-unist-expected.txt", expected, 0644)
-			os.WriteFile("/tmp/stage1-yaml-unist-actual.txt", side.out, 0644)
+			os.WriteFile(unistMatchGo.diagnostic(shard, "expected"), expected, 0644)
+			os.WriteFile(unistMatchGo.diagnostic(shard, "actual"), side.out, 0644)
 			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
@@ -77,63 +58,37 @@ func TestUnistMatchesGo(t *testing.T) {
 	if library == "" {
 		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
-	external := run(t, "", nil, "node", "testdata/unist_library.mjs", library, cases)
+	external := run(t, "", nil, "node", "testdata/unist_library.mjs", library, result.path)
 	if !bytes.Equal(external, expected) {
 		t.Fatal(firstDifference(external, expected))
 	}
-	t.Logf("%d repository files, %d cases, %d unist answer bytes identical on all five sides", files, count, len(expected))
+	t.Logf("%d repository files, %d of %d cases, %d unist answer bytes identical on all five sides", result.files, len(result.indices), len(result.all), len(expected))
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+var unistMutants = yamlMutants{family: "unist", entry: "unist_main.ts", mutated: "unistContext.ts", mutations: []yamlMutation{
+	{"comment prefix lost", "this.node(result).value = token.source.slice(1);", "this.node(result).value = token.source.slice(2);"},
+	{"point column shifted", "new UnistPoint(line, column, offset)", "new UnistPoint(line, column + 1, offset)"},
+	{"document end marker lost", "this.node(result).documentEndMarker = data.end >= 0;", "this.node(result).documentEndMarker = false;"},
+}}
+
+func TestProduct_YAMLUnistMutant000(t *testing.T) { t.Parallel(); unistMutants.product(t, 0) }
+func TestProduct_YAMLUnistMutant001(t *testing.T) { t.Parallel(); unistMutants.product(t, 1) }
+func TestProduct_YAMLUnistMutant002(t *testing.T) { t.Parallel(); unistMutants.product(t, 2) }
+
 func TestUnistMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := composeCases(t)
 	expected := goUnist(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"comment prefix lost", "this.node(result).value = token.source.slice(1);", "this.node(result).value = token.source.slice(2);"},
-		{"point column shifted", "new UnistPoint(line, column, offset)", "new UnistPoint(line, column + 1, offset)"},
-		{"document end marker lost", "this.node(result).documentEndMarker = data.end >= 0;", "this.node(result).documentEndMarker = false;"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range unistMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			entries, err := filepath.Glob("*.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
-			for _, file := range entries {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "unistContext.ts" {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			entry := filepath.Join(directory, "unist_main.ts")
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			nativeOut := run(t, "", nil, binary, cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
+			product := unistMutants.product(t, index)
+			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "unist_main.ts"), cases)
 			for _, side := range []struct {
 				name string
 				out  []byte
