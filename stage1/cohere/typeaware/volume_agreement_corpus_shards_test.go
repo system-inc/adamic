@@ -13,7 +13,10 @@ import (
 	"time"
 )
 
-const volumeAgreementCompilerGroups = 16
+// volumeAgreementCompilerGroups is 32, not 16: at 16, checker.ts (3,077 KB) and types.ts (476 KB) shared ASan group 9,
+// 25.3 s of own work alone on one core (Home), while no other ASan group took 9 s. At 32 checker.ts keeps only
+// _namespaces/ts.ts (3 KB), in group 25 (shards _025 plain and _057 ASan); the union is parametric in the count.
+const volumeAgreementCompilerGroups = 32
 const volumeAgreementRepositoryGroups = 16
 
 type volumeAgreementCorpusFile struct{ key, path string }
@@ -287,6 +290,134 @@ func TestVolumeAgreementCompiler_030(t *testing.T) {
 func TestVolumeAgreementCompiler_031(t *testing.T) {
 	t.Parallel()
 	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 31)
+}
+func TestVolumeAgreementCompiler_032(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 32)
+}
+func TestVolumeAgreementCompiler_033(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 33)
+}
+func TestVolumeAgreementCompiler_034(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 34)
+}
+func TestVolumeAgreementCompiler_035(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 35)
+}
+func TestVolumeAgreementCompiler_036(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 36)
+}
+func TestVolumeAgreementCompiler_037(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 37)
+}
+func TestVolumeAgreementCompiler_038(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 38)
+}
+func TestVolumeAgreementCompiler_039(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 39)
+}
+func TestVolumeAgreementCompiler_040(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 40)
+}
+func TestVolumeAgreementCompiler_041(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 41)
+}
+func TestVolumeAgreementCompiler_042(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 42)
+}
+func TestVolumeAgreementCompiler_043(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 43)
+}
+func TestVolumeAgreementCompiler_044(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 44)
+}
+func TestVolumeAgreementCompiler_045(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 45)
+}
+func TestVolumeAgreementCompiler_046(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 46)
+}
+func TestVolumeAgreementCompiler_047(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 47)
+}
+func TestVolumeAgreementCompiler_048(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 48)
+}
+func TestVolumeAgreementCompiler_049(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 49)
+}
+func TestVolumeAgreementCompiler_050(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 50)
+}
+func TestVolumeAgreementCompiler_051(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 51)
+}
+func TestVolumeAgreementCompiler_052(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 52)
+}
+func TestVolumeAgreementCompiler_053(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 53)
+}
+func TestVolumeAgreementCompiler_054(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 54)
+}
+func TestVolumeAgreementCompiler_055(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 55)
+}
+func TestVolumeAgreementCompiler_056(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 56)
+}
+func TestVolumeAgreementCompiler_057(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 57)
+}
+func TestVolumeAgreementCompiler_058(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 58)
+}
+func TestVolumeAgreementCompiler_059(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 59)
+}
+func TestVolumeAgreementCompiler_060(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 60)
+}
+func TestVolumeAgreementCompiler_061(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 61)
+}
+func TestVolumeAgreementCompiler_062(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 62)
+}
+func TestVolumeAgreementCompiler_063(t *testing.T) {
+	t.Parallel()
+	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 63)
 }
 func TestVolumeAgreementRepository_000(t *testing.T) {
 	t.Parallel()
