@@ -324,6 +324,10 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
 	} {
 		command := exec.Command(side.name, side.args...)
+		if side.name == "node" {
+			// Node is a tool, the one internal/toolchain resolves, as execute runs it.
+			command = toolchain.Command(side.name, side.args...)
+		}
 		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
 		if err != nil {
 			t.Fatal(err)
