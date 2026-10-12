@@ -1574,6 +1574,22 @@ func TestABuildThatOpensWSLsDriverRefuses(t *testing.T) {
 	}
 }
 
+// A build that reads the machine's time zone refuses its product: /etc/localtime is whatever zone the box was set to,
+// which no key names (#cbw5jtf, Server against the house, Oct 12). A look at it is keyed as a system path. Mutant: the
+// zone file read keyed as a system file.
+// Not parallel: newRig.
+func TestABuildThatReadsTheMachinesTimeZoneRefuses(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.add(r.pid, `openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3`)
+	})
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the machine's time zone: /etc/localtime") {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
 // What the loader looked for and missed in its own directories (a soname its cache doesn't name, tried in each) is keyed
 // path by path, so a library later installed there moves the key, which lets the loader's cache leave those
 // directories out (#6eexfyv). A machine directory a build only stat'd or opened to search is keyed by whether and as
