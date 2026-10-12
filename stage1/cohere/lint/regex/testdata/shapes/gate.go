@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -40,6 +41,9 @@ type Fixture struct {
 func fail(format string, args ...any) { fmt.Fprintf(os.Stderr, format+"\n", args...); os.Exit(1) }
 func run(command string, args ...string) []byte {
 	c := exec.Command(command, args...)
+	if !strings.ContainsRune(command, filepath.Separator) { // node, through internal/toolchain; a built binary runs as named
+		c = toolchain.Command(command, args...)
+	}
 	var out, errors bytes.Buffer
 	c.Stdout = &out
 	c.Stderr = &errors
