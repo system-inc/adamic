@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -85,7 +87,13 @@ func publishing() bool {
 	return setting == "traced" || strings.HasPrefix(setting, "traced=")
 }
 
-var storeClient = &http.Client{Timeout: 5 * time.Minute, Transport: storeTransport()}
+// storeClient is the store's client, made at its first use: its transport is storeTransport's.
+var storeClient = sync.OnceValue(func() *http.Client {
+	return &http.Client{Timeout: 5 * time.Minute, Transport: storeTransport()}
+})
+
+// systemRoots loads the machine's certificate roots: a variable so a test can see where it runs.
+var systemRoots = x509.SystemCertPool
 
 // storeResolved is where the caller already resolved the store's hosts, ADAMIC_BUILD_STORE_RESOLVED: entries
 // "<host>=<address>,<address>…" separated by spaces. Workshop's tree builder resolves them outside the trace (build-tree)
@@ -97,7 +105,9 @@ const storeResolved = "ADAMIC_BUILD_STORE_RESOLVED"
 
 // storeTransport is http.DefaultTransport's, dialing a host storeResolved names at its addresses, each in turn, rather
 // than resolving it: an address that doesn't answer is a miss like any other, never a lookup. Any other host resolves
-// as usual.
+// as usual. Its certificate roots are the machine's, loaded once here as keying work: a handshake left to load them read
+// /etc/ssl/certs inside a product's trace, each box's own bundle, so the product missed on every other box (Loom and
+// Tests, Oct 12, the smoke's css and yaml reds). Roots that don't load leave the handshake to load them, as before.
 func storeTransport() http.RoundTripper {
 	resolved := map[string][]string{}
 	for _, entry := range strings.Fields(os.Getenv(storeResolved)) {
@@ -107,6 +117,11 @@ func storeTransport() http.RoundTripper {
 		}
 	}
 	transport := http.DefaultTransport.(*http.Transport).Clone()
+	var roots *x509.CertPool
+	keying(func() { roots, _ = systemRoots() })
+	if roots != nil {
+		transport.TLSClientConfig = &tls.Config{RootCAs: roots}
+	}
 	if len(resolved) == 0 {
 		return transport
 	}
@@ -135,7 +150,7 @@ func storeTransport() http.RoundTripper {
 
 // download reads one object, or errNotStored for a 404.
 func download(address string) ([]byte, error) {
-	response, err := storeClient.Get(address)
+	response, err := storeClient().Get(address)
 	if err != nil {
 		return nil, err
 	}
@@ -366,7 +381,7 @@ func upload(address, token string, content []byte) error {
 		return err
 	}
 	request.Header.Set("Authorization", "Bearer "+token)
-	response, err := storeClient.Do(request)
+	response, err := storeClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -605,7 +620,7 @@ func productHeld(key, name, directory string) bool {
 }
 
 func held(address string) bool {
-	response, err := storeClient.Head(address)
+	response, err := storeClient().Head(address)
 	if err != nil {
 		return false
 	}
