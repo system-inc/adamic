@@ -79,7 +79,9 @@ func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {
 // at any depth. Mutant: a landed lookup keyed relative to the tree (the two depths class it apart).
 // Not parallel: it sets ADAMIC_TRACE_REPORT.
 func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(t *testing.T) {
-	home := "/home/ahra"
+	// A home no machine has: on a box whose home is /home/ahra, ~/.adamic-tools is a real link to the tools directory,
+	// and classifyPath rightly resolves it there, so the test failed on Workshop every run while it passed on a Mac.
+	home := "/home/adamic-no-such-home"
 	classes := func(root string) []classed {
 		t.Helper()
 		cache := filepath.Join(home, "loom-builder", "trees", "e329", "cache")
@@ -97,7 +99,15 @@ func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(t *testing.T) {
 		return found
 	}
 	workshop, runner := classes(filepath.Join(home, "loom-trees", "adamic")), classes(filepath.Join(home, "loom-serve", "units", "u1", "source"))
-	want := []classed{{"system", "/lib"}, {"system", "/usr"}, {"absolute", "/include"}, {"absolute", "/package.json"}, {"home", "~/.adamic-tools"},
+	// A machine directory only looked at is keyed by whether it exists (#vdha67a), so /lib, a directory on Linux and
+	// absent on a Mac, is classed by what this machine holds; either way the two depths agree.
+	machine := func(name string) classed {
+		if isDirectory(name) {
+			return classed{"system directory", name}
+		}
+		return classed{"system", name}
+	}
+	want := []classed{machine("/lib"), machine("/usr"), {"absolute", "/include"}, {"absolute", "/package.json"}, {"home", "~/.adamic-tools"},
 		{"above", "../package.json"}, {"above", ".."}}
 	if !reflect.DeepEqual(workshop, want) || !reflect.DeepEqual(runner, want) {
 		t.Fatalf("classed\n%q at Workshop's depth and\n%q at a runner's, want\n%q", workshop, runner, want)
