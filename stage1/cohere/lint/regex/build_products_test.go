@@ -21,3 +21,13 @@ func TestProduct_RegexShapesGate(t *testing.T) {
 	t.Parallel()
 	shapesGate(t)
 }
+
+func TestProduct_RegexRunner(t *testing.T) {
+	t.Parallel()
+	runnerProduct(t, false)
+}
+
+func TestProduct_RegexRunnerMutant(t *testing.T) {
+	t.Parallel()
+	runnerProduct(t, true)
+}
