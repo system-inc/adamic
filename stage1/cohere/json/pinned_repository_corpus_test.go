@@ -120,27 +120,27 @@ var jsonTrackedSources struct {
 	err   error
 }
 
-func buildJSONPinnedCorpus(directory string) error {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		return err
+// buildJSONPinnedCorpus is the build for the product inputs keys, and PinnedGit checks the pin against those same
+// Inputs: the build never lists them again, so it never lists the tracked JSON, which reads .git, inside its trace.
+func buildJSONPinnedCorpus(inputs buildcache.Inputs) func(directory string) error {
+	return func(directory string) error {
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			return err
+		}
+		tracked, err := repositoryCasesAtPin(root, inputs, repositoryCorpusCommit)
+		if err != nil {
+			return err
+		}
+		provisioned, err := provisionedCorpusFiles(root)
+		if err != nil {
+			return err
+		}
+		if err := writeCorpusRecords(filepath.Join(directory, "repository"), tracked); err != nil {
+			return err
+		}
+		return writeCorpusRecords(filepath.Join(directory, "provisioned"), provisioned)
 	}
-	inputs, err := jsonPinnedCorpusInputs()
-	if err != nil {
-		return err
-	}
-	tracked, err := repositoryCasesAtPin(root, inputs, repositoryCorpusCommit)
-	if err != nil {
-		return err
-	}
-	provisioned, err := provisionedCorpusFiles(root)
-	if err != nil {
-		return err
-	}
-	if err := writeCorpusRecords(filepath.Join(directory, "repository"), tracked); err != nil {
-		return err
-	}
-	return writeCorpusRecords(filepath.Join(directory, "provisioned"), provisioned)
 }
 
 // The product test and every corpus reader share one recipe and key.
@@ -150,7 +150,7 @@ func TestProduct_JSONPinnedCorpus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	buildcache.Product(t, inputs, buildJSONPinnedCorpus)
+	buildcache.Product(t, inputs, buildJSONPinnedCorpus(inputs))
 }
 
 // Every test in a process reads the product once. Callers get slice copies because hash partitioning sorts its
@@ -169,7 +169,7 @@ func pinnedCorpusProduct(t testing.TB) (tracked, provisioned []textCase) {
 			pinnedCorpusRead.err = fmt.Errorf("json pinned corpus inputs: %w", err)
 			return
 		}
-		directory, err := buildcache.Get(inputs, buildJSONPinnedCorpus)
+		directory, err := buildcache.Get(inputs, buildJSONPinnedCorpus(inputs))
 		if err == nil {
 			pinnedCorpusRead.tracked, err = readCorpusRecords(filepath.Join(directory, "repository"))
 		}
