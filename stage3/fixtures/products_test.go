@@ -120,10 +120,14 @@ func fixtureHookInputsEnvironment(t testing.TB, repository string, environment [
 
 // hookPython runs the oracle hook's python3 under -B, so it never writes bytecode into the tree whatever its caller
 // exports: build-hook.py imports stage3/caches.py, and without it python writes stage3/__pycache__ mid-build (lap 1's
-// traced fallback, a write into the tree), as stage3/verdict/run.py turns it off for its driver.
+// traced fallback, a write into the tree), as stage3/verdict/run.py turns it off for its driver. -I and -S keep it off
+// the box's python setup: without -S python imports site, which lists the site directories, and that listing lands in
+// the product's reads, so its key turned on which packages a box has installed (lap A.3, a runner's miss on "system
+// /usr/lib/python3/dist-packages"); -I drops PYTHON* settings, the user site and the script's directory on sys.path. The
+// hook and its discovery need only the standard library, and build-hook.py puts stage3 on sys.path itself.
 func hookPython(t testing.TB, directory string, environment []string, arguments ...string) behavior {
 	t.Helper()
-	return execute(t, directory, environment, "python3", append([]string{"-B"}, arguments...)...)
+	return execute(t, directory, environment, "python3", append([]string{"-I", "-S", "-B"}, arguments...)...)
 }
 
 // Both the declared product and every fixture use this one recipe. Preparation
@@ -270,6 +274,41 @@ func TestTheFixtureOracleHookWritesNoBytecode(t *testing.T) {
 	for _, directory := range []string{"stage3/__pycache__", "stage3/fixtures/__pycache__"} {
 		if _, err := os.Stat(filepath.Join(scratch, directory)); !errors.Is(err, fs.ErrNotExist) {
 			t.Errorf("the hook's python wrote %s (%v)", directory, err)
+		}
+	}
+}
+
+// The hook's python reads no site directory and no PYTHON* setting: it never imports site, so sys.path holds the
+// standard library alone, no site-packages or dist-packages, no user site, no PYTHONPATH directory and no current
+// directory. Mutants: hookPython without -S (no_site 0, site imported, the box's site-packages on sys.path), without -I
+// (isolated 0, PYTHONPATH's directory and the current directory on sys.path).
+func TestTheFixtureOracleHooksPythonReadsNoSiteDirectory(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	path := t.TempDir()
+	probe := "import json, os, sys; print(json.dumps({'path': sys.path, 'isolated': sys.flags.isolated, " +
+		"'no_site': sys.flags.no_site, 'site': 'site' in sys.modules, 'directory': os.getcwd()}))"
+	result := hookPython(t, directory, []string{"PYTHONPATH=" + path}, "-c", probe)
+	if result.Exit != 0 {
+		t.Fatalf("python probe: %s%s", result.Stdout, result.Stderr)
+	}
+	var observed struct {
+		Path      []string `json:"path"`
+		Isolated  int      `json:"isolated"`
+		NoSite    int      `json:"no_site"`
+		Site      bool     `json:"site"`
+		Directory string   `json:"directory"`
+	}
+	if err := json.Unmarshal([]byte(result.Stdout), &observed); err != nil {
+		t.Fatal(err)
+	}
+	if observed.Isolated != 1 || observed.NoSite != 1 || observed.Site {
+		t.Errorf("the hook's python runs with isolated=%d no_site=%d and site imported %v, want isolated, no site", observed.Isolated, observed.NoSite, observed.Site)
+	}
+	for _, entry := range observed.Path {
+		if strings.Contains(entry, "site-packages") || strings.Contains(entry, "dist-packages") || entry == "" ||
+			entry == path || entry == observed.Directory {
+			t.Errorf("the hook's python has %q on sys.path %q", entry, observed.Path)
 		}
 	}
 }
