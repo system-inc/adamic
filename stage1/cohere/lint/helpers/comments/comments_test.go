@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -24,6 +25,12 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
 	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
+		// in dir with PWD to match. A program a test built (the Go oracle, the native helpers) runs as named, with this
+		// process's environment.
+		cmd = toolchain.CommandIn(dir, name, args...)
+	}
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
 		t.Fatal(err)
@@ -274,6 +281,9 @@ func matchesGapRefusal(err error, stderr string) bool {
 func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	t.Helper()
 	cmd := exec.Command(command[0], command[1:]...)
+	if !strings.ContainsRune(command[0], filepath.Separator) { // node, through internal/toolchain; a built binary runs as named
+		cmd = toolchain.Command(command[0], command[1:]...)
+	}
 	out, err := os.CreateTemp(t.TempDir(), "gap-output-")
 	if err != nil {
 		t.Fatal(err)
