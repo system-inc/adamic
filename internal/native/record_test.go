@@ -16,6 +16,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const recordFixtures = "testdata/records"
@@ -32,6 +33,15 @@ func recordHarness(t *testing.T) string {
 func recordRun(binary string, arguments ...string) (string, string, error) {
 	command := exec.Command(binary, arguments...)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "LSAN_OPTIONS=exitcode=23", "UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1")
+	return recordOutput(command)
+}
+
+// recordNodeRun is recordRun for the node toolchain resolves, under its environment.
+func recordNodeRun(arguments ...string) (string, string, error) {
+	return recordOutput(toolchain.Command("node", arguments...))
+}
+
+func recordOutput(command *exec.Cmd) (string, string, error) {
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
@@ -41,7 +51,7 @@ func recordRun(binary string, arguments ...string) (string, string, error) {
 func recordNode(t *testing.T, arguments ...string) string {
 	t.Helper()
 	arguments = append([]string{filepath.Join(recordFixtures, "oracle.js")}, arguments...)
-	stdout, stderr, err := recordRun("node", arguments...)
+	stdout, stderr, err := recordNodeRun(arguments...)
 	if err != nil || stderr != "" {
 		t.Fatalf("Node: %v\n%s", err, stderr)
 	}
@@ -113,7 +123,7 @@ func TestRecordsAgainstNode(t *testing.T) {
 
 func recordPrototypeNames(t *testing.T) []string {
 	t.Helper()
-	stdout, stderr, err := recordRun("node", "-e", `console.log(JSON.stringify({version:process.version,members:Object.getOwnPropertyNames(Object.prototype)}))`)
+	stdout, stderr, err := recordNodeRun("-e", `console.log(JSON.stringify({version:process.version,members:Object.getOwnPropertyNames(Object.prototype)}))`)
 	if err != nil || stderr != "" {
 		t.Fatalf("Node prototype names: %v\n%s", err, stderr)
 	}
@@ -226,8 +236,7 @@ func recordMutants(t *testing.T) string {
 		// scratch directory (cachedRuntime's way).
 		compile := func(within, source string) error {
 			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
-			command := exec.Command("clang", arguments...)
-			command.Dir = within
+			command := toolchain.CommandIn(within, "clang", arguments...)
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
 			}
@@ -294,8 +303,7 @@ func recordMutants(t *testing.T) string {
 				}
 			}
 			arguments = append(arguments, "-lm")
-			command := exec.Command("clang", arguments...)
-			command.Dir = scratch
+			command := toolchain.CommandIn(scratch, "clang", arguments...)
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
 			}
@@ -421,7 +429,7 @@ func TestRecordBenchmark(t *testing.T) {
 				if side == 0 {
 					results[side], stderr, err = recordRun(binary, "bench", strconv.Itoa(size))
 				} else {
-					results[side], stderr, err = recordRun("node", filepath.Join(recordFixtures, "oracle.js"), "bench", strconv.Itoa(size))
+					results[side], stderr, err = recordNodeRun(filepath.Join(recordFixtures, "oracle.js"), "bench", strconv.Itoa(size))
 				}
 				if err != nil || stderr != "" {
 					t.Fatalf("benchmark side %d: %v\n%s", side, err, stderr)
