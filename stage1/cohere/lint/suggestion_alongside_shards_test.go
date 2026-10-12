@@ -124,7 +124,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
 	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
 	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}
+	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
 	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
 		_, err := suggestionAlongsideGoOracle(t, directory, out)
 		return err
@@ -347,17 +347,7 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
-	command.Dir = root
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := lintCommand(ctx, root, "go", args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
