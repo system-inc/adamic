@@ -240,6 +240,55 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 
 	return path
 }
+
+// mutantNative is a mutant's native as a product, for a mutant whose compile would otherwise fill its shard's own time
+// (wrong-node's ASan link took 22.0 s of TestTypeAwareAgreementAndMutants_003's 24.4 s, and facts-length's 25.6 s of
+// TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is the emitted C's hash, as h.build's
+// cached natives are: emission names no path, so the same mutant lowered from two directories is the same C. Its
+// TestProduct_ makes it ahead; any other mutant still compiles inside its own check, as h.build does.
+func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
+	h.t.Helper()
+	source := h.lowered(entry, name)
+	key := fmt.Sprintf("mutant native %s %x %s sanitize=%t", name, sha256.Sum256([]byte(source)), archive, sanitize)
+	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
+		binary := filepath.Join(directory, "native")
+		started := time.Now()
+		err := typeAwareNativeBuild(source, binary, archive, sanitize)
+		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		return binary, err
+	})
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	return binary
+}
+
+// typeAwareWrongNodeEntry writes the wrong-node mutant into h's directory and returns its entry: main.ts asking the
+// unary expression's type rather than its operand's. It still compiles and finishes; the independent production-rule
+// findings must disagree. Both mutant sources sit next to one another, their relative dependencies made absolute.
+func typeAwareWrongNodeEntry(h *harness) string {
+	h.t.Helper()
+	text, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts"))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
+	if strings.Count(string(text), anchor) != 1 {
+		h.t.Fatal("wrong-node anchor changed")
+	}
+	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
+	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
+	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(h.repository, "stage1/cohere/lint"))
+	h.write("wrong-node.ts", mutant)
+	mainText, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
+	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
+	return h.write("wrong-main.ts", mainSource)
+}
+
 func firstDifference(a, b []byte) int {
 	for i := 0; i < len(a) && i < len(b); i++ {
 		if a[i] != b[i] {
@@ -415,32 +464,11 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
-	original := filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts")
-	text, err := os.ReadFile(original)
-	if err != nil {
-		t.Fatal(err)
-	}
-	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
-	if strings.Count(string(text), anchor) != 1 {
-		t.Fatal("wrong-node anchor changed")
-	}
-	// Preserve imports by making both mutant sources next to one another in scratch
-	// and replacing their relative dependencies with absolute source paths.
-	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
-	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(repository, "stage1/cohere/lint"))
-	h.write("wrong-node.ts", mutant)
-	mainText, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
-	mutantEntry := h.write("wrong-main.ts", mainSource)
+	mutantEntry := typeAwareWrongNodeEntry(h)
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
 		t := h.t
-		wrong := typeAwareBuild(h, stage0, "wrong-node", mutantEntry, normal(h), true)
+		wrong := typeAwareSetup(h, "wrong-node", func() string { return h.mutantNative("wrong-node", mutantEntry, normal(h), true) })
 		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			t.Fatal("wrong-node mutant was not caught by findings alone")
