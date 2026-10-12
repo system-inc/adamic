@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -219,7 +220,7 @@ func rulesAgreeCapture(t *testing.T) string {
 			Name:      "lint-rules-agree-capture",
 			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
 			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
-			Toolchain: []string{runtime.Version()},
+			Toolchain: []string{runtime.Version(), lintGoSettings()},
 		}
 		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
 			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
@@ -561,10 +562,14 @@ func TestRulesAgree_015(t *testing.T) {
 func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
+	// toolchain's go, under its environment plus the capture's own settings, with PWD set to directory.
+	path, err := toolchain.Path("go")
+	if err != nil {
+		return nil, err
+	}
+	command := exec.CommandContext(ctx, path, args...)
 	command.Dir = directory
-	command.Env = append(os.Environ(), environment...)
-	command.Env = append(command.Env, "PWD="+directory)
+	command.Env = append(toolchain.Env(environment...), "PWD="+directory)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
