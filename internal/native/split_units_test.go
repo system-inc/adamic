@@ -2,23 +2,17 @@ package native
 
 import (
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io"
 	"os"
-	"os/exec"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const decodePrefixes = 92014
@@ -148,142 +142,32 @@ func TestSplitUnitCoverage(t *testing.T) {
 	}
 }
 
-var testExecutable struct {
-	sync.Once
-	digest string
-	err    error
-}
-
-type testBuildCache struct {
-	inputs     buildcache.Inputs
-	repository string
-	get        func(buildcache.Inputs, func(string) error) (string, error)
-}
-
-func newTestBuildCache(repository string, directories ...string) (*testBuildCache, error) {
-	testExecutable.Do(func() {
-		path, err := os.Executable()
-		if err != nil {
-			testExecutable.err = err
-			return
-		}
-		file, err := os.Open(path)
-		if err != nil {
-			testExecutable.err = err
-			return
-		}
-		defer file.Close()
-		h := sha256.New()
-		_, testExecutable.err = io.Copy(h, file)
-		testExecutable.digest = fmt.Sprintf("%x", h.Sum(nil))
-	})
-	if testExecutable.err != nil {
-		return nil, testExecutable.err
-	}
-	in := buildcache.Inputs{Name: "native tests", Files: append([]string{"go.mod", "cmd/adamic"}, directories...), Flags: []string{"test=" + testExecutable.digest}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")}}
-	for _, name := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_LDFLAGS", "CC"} {
-		in.Flags = append(in.Flags, name+"="+os.Getenv(name))
-	}
-	return &testBuildCache{inputs: in, repository: repository}, nil
-}
-func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) error) (string, error) {
-	in := c.inputs
-	in.Name = label
-	in.Flags = append([]string(nil), c.inputs.Flags...)
-	for index, input := range inputs {
-		in.Flags = append(in.Flags, fmt.Sprintf("input[%d]=%x", index, sha256.Sum256(input)))
-	}
-	if c.get != nil {
-		return c.get(in, build)
-	}
-	return buildcache.Get(in, build)
-}
-
-// portable names the tree as $REPO in text the key hashes (and so Key can't rewrite).
-func (c *testBuildCache) portable(text string) string {
-	if c.repository == "" {
-		return text
-	}
-	return strings.ReplaceAll(text, c.repository, "$REPO")
-}
-
-// Command caches compiler output only. It refuses commands without a single -o.
-// Explicit input files and Go overlays contribute their bytes, not temporary paths.
-func (c *testBuildCache) Command(command *exec.Cmd, scratch string, extraInputs ...[]byte) ([]byte, error) {
-	outputIndex := -1
-	for i, arg := range command.Args {
-		if arg == "-o" && i+1 < len(command.Args) {
-			if outputIndex != -1 {
-				return nil, fmt.Errorf("multiple outputs")
+// eachInParallel runs job for every index below count on four workers, the CPUs a product's unit is given, and
+// returns the first failure in index order. A product's build compiles its translation units with it.
+func eachInParallel(count int, job func(index int) error) error {
+	failures := make([]error, count)
+	jobs := make(chan int)
+	var workers sync.WaitGroup
+	for worker := 0; worker < 4; worker++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for index := range jobs {
+				failures[index] = job(index)
 			}
-			outputIndex = i + 1
-		}
+		}()
 	}
-	if outputIndex < 0 {
-		return nil, fmt.Errorf("build command has no output")
+	for index := 0; index < count; index++ {
+		jobs <- index
 	}
-	output := command.Args[outputIndex]
-	inputs := append([][]byte(nil), extraInputs...)
-	for i, arg := range command.Args {
-		if i == outputIndex {
-			continue
-		}
-		// Hashed, an argument is out of Key's reach, so it names the tree the way Key would: never by its path.
-		normalized := c.portable(strings.ReplaceAll(arg, scratch, "$SCRATCH"))
-		inputs = append(inputs, []byte(normalized))
-		if data, err := os.ReadFile(arg); err == nil {
-			if strings.HasSuffix(arg, ".json") {
-				var overlay struct{ Replace map[string]string }
-				if json.Unmarshal(data, &overlay) == nil && len(overlay.Replace) > 0 {
-
-					data = nil
-					originals := make([]string, 0, len(overlay.Replace))
-					for original := range overlay.Replace {
-						originals = append(originals, original)
-					}
-					sort.Strings(originals)
-					for _, original := range originals {
-						contents, err := os.ReadFile(overlay.Replace[original])
-						if err != nil {
-							return nil, err
-						}
-						inputs = append(inputs, []byte(c.portable(original)), contents)
-					}
-				}
-			}
-			inputs = append(inputs, data)
-		}
-	}
-	// Command.Env only differs for the sanitized archive; do not persist environment values.
-	for _, variable := range command.Env {
-		for _, name := range []string{"CC=", "CGO_CFLAGS=", "CGO_LDFLAGS="} {
-			if strings.HasPrefix(variable, name) {
-				inputs = append(inputs, []byte(variable))
-			}
-		}
-	}
-	name := filepath.Base(output)
-	entry, err := c.Tree(name, inputs, func(directory string) error {
-		command.Args[outputIndex] = filepath.Join(directory, name)
-		defer func() { command.Args[outputIndex] = output }()
-		data, err := command.CombinedOutput()
-		os.WriteFile(filepath.Join(directory, "build.log"), data, 0644)
+	close(jobs)
+	workers.Wait()
+	for _, err := range failures {
 		if err != nil {
-			return fmt.Errorf("%s: %w\n%s", command.Args, err, data)
+			return err
 		}
-		return nil
-	})
-	if err != nil {
-		return nil, err
 	}
-	data, err := os.ReadFile(filepath.Join(entry, name))
-	if err != nil {
-		return nil, err
-	}
-	if err := os.WriteFile(output, data, 0755); err != nil {
-		return nil, err
-	}
-	return os.ReadFile(filepath.Join(entry, "build.log"))
+	return nil
 }
 
 // Unit timing is diagnostic unless the reference audit explicitly enables it.
