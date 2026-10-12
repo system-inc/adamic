@@ -250,9 +250,9 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	}
 	goPath := filepath.Join(scratch, "go.json")
 	// Cohere with the harness laid over it is a product built ahead, and this unit only runs it in the package's
-	// directory (#5qykzj5): unmutated, the "json upstream parity audit oracle"; with printer mutants, the same package's
-	// test binary with them planted (printerMutantOracle, #ebc67r2).
-	oracle := filepath.Join(upstreamParityOracleProduct(t), "oracle")
+	// directory (#5qykzj5): unmutated, upstreamParityOracleProduct's test binary; with printer mutants, the same
+	// package's test binary with them planted (printerMutantOracle, #ebc67r2).
+	oracle := upstreamParityOracleProduct(t)
 	if len(mutations) > 0 {
 		oracle = printerMutantOracle(t, mutations...)
 	}
