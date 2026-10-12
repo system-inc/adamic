@@ -317,6 +317,11 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 			return "", fmt.Errorf("a system entry %q isn't an absolute path", entry.Path)
 		}
 		return systemValue(entry.Path), nil
+	case "system directory":
+		if !filepath.IsAbs(entry.Path) {
+			return "", fmt.Errorf("a system directory entry %q isn't an absolute path", entry.Path)
+		}
+		return existence(entry.Path), nil
 	case "settings":
 		return binarySettings(), nil
 	case "filesystem":

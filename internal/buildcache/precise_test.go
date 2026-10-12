@@ -1558,6 +1558,56 @@ func TestAMachineFileThroughALinkIsKeyedAsItself(t *testing.T) {
 	}
 }
 
+// A build that opens one of the Windows GPU driver's libraries (WSL's mount) refuses its product: the driver is its
+// box's Windows version, which no key names (#6eexfyv). Only a look at it is keyed, as a system path. Mutant: the
+// library opened keyed as a system file.
+// Not parallel: newRig.
+func TestABuildThatOpensWSLsDriverRefuses(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.add(r.pid, `openat(AT_FDCWD, "/usr/lib/wsl/lib/libcuda.so.1", O_RDONLY|O_CLOEXEC) = 3`)
+	})
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the Windows GPU driver: /usr/lib/wsl/lib/libcuda.so.1") {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
+// What the loader looked for and missed in its own directories (a soname its cache doesn't name, tried in each) is keyed
+// path by path, so a library later installed there moves the key, which lets the loader's cache leave those
+// directories out (#6eexfyv). A machine directory a build only stat'd or opened to search is keyed by whether and as
+// what it exists, never by its names, which are whatever the machine installed; one it listed (getdents) is keyed by
+// its names (#vdha67a). Mutants: the loader's misses dropped; a stat'd directory keyed by its names; a listed one keyed
+// by existence.
+// Not parallel: newRig.
+func TestTheLoadersMissesAndALookedIntoMachineDirectoryAreKeyedHonestly(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.add(r.pid, `openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libadamic-absent.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)`)
+		r.add(r.pid, `newfstatat(AT_FDCWD, "/usr/bin", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0`)
+		r.add(r.pid, `openat(AT_FDCWD, "/usr/lib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3</usr/lib>`)
+		r.add(r.pid, `openat(AT_FDCWD, "/usr/share", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4</usr/share>`)
+		r.add(r.pid, `getdents64(4</usr/share>, 0x55d0 /* 40 entries */, 32768) = 1280`)
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"system /lib/x86_64-linux-gnu/libadamic-absent.so.1", "system directory /usr/bin", "system directory /usr/lib", "system /usr/share"} {
+		if !slices.Contains(got, want) {
+			t.Fatalf("the read set %q doesn't name %q", got, want)
+		}
+	}
+	for _, unwanted := range []string{"system /usr/bin", "system /usr/lib", "system directory /usr/share"} {
+		if slices.Contains(got, unwanted) {
+			t.Fatalf("the read set %q names %q", got, unwanted)
+		}
+	}
+}
+
 // Tracked looks for each directory's .git as keying, as it lists the repository: a traced build that asks Tracked of a
 // directory (tracked.PathsUnder's walk of the tree) never reads .git, which no key can name (home-5's dry run, Oct 11,
 // where tracked.Git's own look refused cssnumbers and cssstrings). Mutant: the look outside keying.

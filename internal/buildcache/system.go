@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime/debug"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -166,6 +167,79 @@ func packageVersion(name string) string {
 	return "not installed"
 }
 
+// ldCache is the dynamic loader's cache, which ldconfig builds from every library the machine holds.
+const ldCache = "/etc/ld.so.cache"
+
+// wslLibraries is where WSL mounts the Windows GPU driver's libraries, which ldconfig puts in ldCache: the driver is
+// Windows', each box's own version, and no build loads it (a build that opens one refuses its product, classifyPath).
+const wslLibraries = "/usr/lib/wsl"
+
+// loaderDirectories are the dynamic loader's own search directories, which it tries for a soname its cache doesn't name
+// (glibc's system directories on Debian and Ubuntu, with their glibc-hwcaps subdirectories): a library there is found
+// whether or not the cache names it.
+var loaderDirectories = []string{"/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux-gnu", "/lib", "/usr/lib", "/lib64", "/usr/lib64"}
+
+// ldCacheValue is the loader's cache as what only it can find: the soname map's entries outside loaderDirectories and
+// wslLibraries, each by flags, soname and path. A library in a loader directory is read by its own path when it's
+// loaded, and a soname the cache misses is looked for in each loader directory, each a read of its own, so neither
+// needs the cache's word; a library anywhere else (ld.so.conf.d's /usr/local/lib) is found through the cache alone, and
+// keyed by it. So two boxes that installed different libraries in the loader's directories, or run different Windows
+// GPU drivers, value it the same (#6eexfyv, measured Oct 12: Cloud's cache maps about 120 more libraries, QEMU's, and
+// Server's maps libnvidia-ngx). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte
+// entries whose string offsets are from the file's start; a cache in another format, or one that doesn't read, is
+// false, and it is then valued by its content.
+func ldCacheValue(content []byte) (string, bool) {
+	const magic, header, entrySize = "glibc-ld.so.cache1.1", 48, 24
+	if len(content) < header || string(content[:len(magic)]) != magic {
+		return "", false
+	}
+	word := func(at int) uint32 {
+		return uint32(content[at]) | uint32(content[at+1])<<8 | uint32(content[at+2])<<16 | uint32(content[at+3])<<24
+	}
+	text := func(at uint32) (string, bool) {
+		if int(at) >= len(content) {
+			return "", false
+		}
+		end := int(at)
+		for end < len(content) && content[end] != 0 {
+			end++
+		}
+		return string(content[at:end]), end < len(content)
+	}
+	count := int(word(len(magic)))
+	if count < 0 || header+count*entrySize > len(content) {
+		return "", false
+	}
+	lines := make([]string, 0, count)
+	for index := range count {
+		at := header + index*entrySize
+		soname, ok := text(word(at + 4))
+		if !ok {
+			return "", false
+		}
+		library, ok := text(word(at + 8))
+		if !ok {
+			return "", false
+		}
+		if library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
+			continue
+		}
+		lines = append(lines, fmt.Sprintf("%d %s %s", int32(word(at)), soname, library))
+	}
+	sort.Strings(lines)
+	sum := sha256.Sum256([]byte(strings.Join(lines, "\n")))
+	return "ld.so.cache " + hex.EncodeToString(sum[:]), true
+}
+
+// inLoaderDirectory says whether library sits directly in one of loaderDirectories or a glibc-hwcaps directory under one.
+func inLoaderDirectory(library string) bool {
+	directory := filepath.Dir(library)
+	if parent, hwcaps := filepath.Split(filepath.Dir(directory)); hwcaps == "glibc-hwcaps" {
+		directory = filepath.Clean(parent)
+	}
+	return slices.Contains(loaderDirectories, directory)
+}
+
 type contentStamp struct {
 	path, kind        string
 	inode, size, time int64
@@ -180,6 +254,12 @@ func systemValue(path string) string {
 	switch {
 	case err != nil:
 		return "absent"
+	case path == ldCache && info.Mode().IsRegular():
+		if content, err := os.ReadFile(path); err == nil {
+			if value, ok := ldCacheValue(content); ok {
+				return value
+			}
+		}
 	case info.Mode()&os.ModeSymlink != 0:
 		target, _ := os.Readlink(path)
 		return "link " + target
