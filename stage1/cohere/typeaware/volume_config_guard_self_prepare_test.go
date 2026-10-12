@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -126,8 +127,53 @@ func volumeGuardArchive(h *volumeGuardHarness, name, overlay string, sanitize bo
 	})
 	return filepath.Join(directory, "checker.a")
 }
+
+// typeAwareVolumeOracle is cohere's production rules with the volume oracle's main laid over them, which the guard and
+// the volume profile's corpora both run: a GoBuildIn product keyed by the packages go compiles, never cohere whole,
+// whose TypeScript submodule a populated tree hashed for every lookup (#4ycgm2n).
+func typeAwareVolumeOracle(t *testing.T, repository string) string {
+	t.Helper()
+	virtual, arguments := typeAwareVolumeOracleRequest(t, repository)
+	return buildcache.GoBuildIn(t, "cohere", "volume-oracle", virtual, arguments)
+}
+
+// typeAwareVolumeOracleKey is typeAwareVolumeOracle's key, computed without building it, for a product that records
+// the oracle.
+func typeAwareVolumeOracleKey(t *testing.T, repository string) string {
+	t.Helper()
+	virtual, arguments := typeAwareVolumeOracleRequest(t, repository)
+	inputs, err := buildcache.GoBuildInInputs("cohere", "volume-oracle", virtual, arguments, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	key, err := buildcache.Key(repository, inputs)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return key
+}
+
+// typeAwareVolumeOracleRequest is the oracle's virtual main and the overlay argument that lays testdata/oracle_volume.go
+// over it. The overlay names this checkout's paths: GoBuildIn keys its map and the side file, never its own path.
+func typeAwareVolumeOracleRequest(t *testing.T, repository string) (string, []string) {
+	t.Helper()
+	virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay := filepath.Join(t.TempDir(), "volume-oracle-overlay.json")
+	if err := os.WriteFile(overlay, data, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	return virtual, []string{"-overlay=" + overlay}
+}
+
+// volumeGuardInputs keys the guard's compiler products: stage 0, the checker archives (everything they link is under
+// compilerinputs.Lowering, cmd/adamic aside, on linux and darwin alike), the lowered C and the natives. Not cohere
+// whole: the oracle, the one build that compiles cohere's rules, is its own product (typeAwareVolumeOracle).
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize)}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
+	return buildcache.Inputs{Name: "volume-guard-" + name, Files: append(compilerinputs.Lowering(), "stage1", "bridge", "cmd"), Flags: append([]string{fmt.Sprint(sanitize)}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
 }
 func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)
@@ -378,21 +424,7 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 		})
 		return filepath.Join(directory, "adamic")
 	case "oracle":
-		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
-			builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
-			virtual := filepath.Join(h.repository, "cohere/adamic_volume-oracle.go")
-			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-			if err != nil {
-				return err
-			}
-			overlay := builder.write("volume-oracle-overlay.json", string(data))
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlay)
-			cmd := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
-			volumeGuardMust(builder, "volume-oracle-build", cmd)
-			return nil
-		})
-		return filepath.Join(directory, "volume-oracle")
+		return typeAwareVolumeOracle(h.t, h.repository)
 	case "archive-checker":
 		return volumeGuardArchive(h, "checker", "", false)
 	case "archive-checker-asan":
