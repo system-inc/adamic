@@ -10,6 +10,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Compile the probe in map.c's own translation unit so it measures the private hash, the real
@@ -59,7 +61,7 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 			files[index].contents = []byte(source[:start] + changed + source[end:])
 		}
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +73,7 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 	binary := filepath.Join(t.TempDir(), "probe")
 	arguments := append(append([]string{}, flags...), RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm", "-o", binary)
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link probe: %v\n%s", err, output)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)

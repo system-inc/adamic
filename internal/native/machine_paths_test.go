@@ -13,6 +13,7 @@ import (
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // splitProbe is the smallest program splitC takes: every declaration static but main's.
@@ -51,8 +52,11 @@ func TestNativeCachesWriteNothingUnderHome(t *testing.T) {
 	t.Cleanup(func() { os.Chmod(home, 0o700) })
 	command := exec.Command(os.Args[0], "-test.run=^TestNativeCachesWriteNothingUnderHome$")
 	command.Env = []string{variable + "=1", "HOME=" + home, "ADAMIC_BUILD_CACHE_DIR=" + cache, "PATH=" + os.Getenv("PATH")}
-	if temporary := os.Getenv("TMPDIR"); temporary != "" {
-		command.Env = append(command.Env, "TMPDIR="+temporary)
+	// The child's builds resolve their tools as this process's do: the same tools directory, sandbox and Xcode.
+	for _, name := range []string{"TMPDIR", "ADAMIC_TOOLS", "ADAMIC_SANDBOX", "DEVELOPER_DIR"} {
+		if value := os.Getenv(name); value != "" {
+			command.Env = append(command.Env, name+"="+value)
+		}
 	}
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("native builds under an empty read-only HOME: %v\n%s", err, output)
@@ -75,7 +79,7 @@ func TestNativeCachesWriteNothingUnderHome(t *testing.T) {
 // absolute path back on BuildTSGo's link line, or on buildUnitsWithLibrary's; objectPrefixFlags off.
 func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 	t.Parallel()
-	compiler, err := exec.LookPath(compilerName(Options{}))
+	compiler, err := toolchain.Path(compilerName(Options{}))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,13 +103,11 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 	}
 	// The stubs' own debug info names where they were compiled as /checker-stubs, as Go's names no place of this
 	// build's, so only the link can put the archive's directory in a binary.
-	compile := exec.Command(compiler, append(prefixMaps(place, "/checker-stubs"), "-g", "-c", "stubs.c", "-o", "stubs.o")...)
-	compile.Dir = place
+	compile := toolchain.CommandIn(place, compiler, append(prefixMaps(place, "/checker-stubs"), "-g", "-c", "stubs.c", "-o", "stubs.o")...)
 	if output, err := compile.CombinedOutput(); err != nil {
 		t.Fatalf("compiling the stubs: %v\n%s", err, output)
 	}
-	archiver := exec.Command(archiverName(compiler), "rcs", "tsgo.a", "stubs.o")
-	archiver.Dir = place
+	archiver := toolchain.CommandIn(place, archiverName(compiler), "rcs", "tsgo.a", "stubs.o")
 	if output, err := archiver.CombinedOutput(); err != nil {
 		t.Fatalf("archiving the stubs: %v\n%s", err, output)
 	}

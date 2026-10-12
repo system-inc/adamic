@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -41,8 +42,14 @@ func TestMeasureClangUnits(t *testing.T) {
 		t.Fatal(err)
 	}
 	metadata["commit"] = commit
-	for name, arguments := range map[string][]string{"nproc": {"nproc"}, "go": {"go", "version"}, "clang": {"clang", "--version"}, "node": {"node", "--version"}} {
-		data, err := exec.Command(arguments[0], arguments[1:]...).Output()
+	// nproc reads the machine; go, clang and node are the tools the builds run, as toolchain resolves them.
+	processors, err := exec.Command("nproc").Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	metadata["nproc"] = strings.TrimSpace(string(processors))
+	for name, arguments := range map[string][]string{"go": {"version"}, "clang": {"--version"}, "node": {"--version"}} {
+		data, err := toolchain.Command(name, arguments...).Output()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -86,7 +93,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			args = append(args, "-lm")
 			command = "clang " + strings.Join(args, " ")
 			started = time.Now()
-			if data, err := exec.Command("clang", args...).CombinedOutput(); err != nil {
+			if data, err := toolchain.Command("clang", args...).CombinedOutput(); err != nil {
 				t.Fatalf("clang: %v\n%s", err, data)
 			}
 		} else {

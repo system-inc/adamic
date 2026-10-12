@@ -8,6 +8,8 @@ import (
 	goruntime "runtime"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // fusedHarness computes what a fused multiply-add would get wrong. The operands come from volatile
@@ -71,7 +73,7 @@ func TestArithmeticIsNeverFused(t *testing.T) {
 	if cpu != "" {
 		arguments = append(arguments, "-march="+cpu)
 	}
-	if combined, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
+	if combined, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("clang %v: %v\n%s", arguments, err, combined)
 	}
 	if got := runWithInput(t, "", control); got == "0 0 0\n" {
