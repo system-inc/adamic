@@ -1,5 +1,6 @@
 """Check artifact input invalidation and rejection of corrupted cached bytes."""
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -15,6 +16,13 @@ class ArtifactTests(unittest.TestCase):
         (self.root / 'stage3/adapt/00-setup').mkdir(parents=True)
         self.input = self.root / 'stage3/adapt/00-setup/proof.json'
         self.input.write_text('{"proof": 1}\n')
+        # The runner's npm package, which npm_cli.npm names; check_output below stands in for every run of it.
+        cli = self.root / 'npm/package/bin/npm-cli.js'
+        cli.parent.mkdir(parents=True)
+        cli.write_text('')
+        environment = patch.dict(os.environ, {'ADAMIC_NPM': str(self.root / 'npm')})
+        environment.start()
+        self.addCleanup(environment.stop)
         self.probe = patch.object(artifact.subprocess, 'check_output', return_value='pinned version\n')
         probe = self.probe.start()
         probe.side_effect = lambda command, **kwargs: 'linux/x64\n' if '-p' in command else probe.return_value
