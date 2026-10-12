@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -56,9 +57,12 @@ func volumeProfileStage0(h *harness) string {
 }
 
 // typeAwareCompilerFiles are the sources a volume product's compilers are built from: stage 0 (./cmd/adamic) and the
-// checker archive (./bridge/tsgo/archive), each module file that pins what they import from outside the tree, and the
-// rule packages cohere's oracle reads.
-var typeAwareCompilerFiles = []string{"go.mod", "go.work", "cmd/adamic", "internal", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/internal", "cohere/policy", "cohere/rule_runner", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim"}
+// checker archive (./bridge/tsgo/archive), whose every in-repository package and pinning module file is under
+// compilerinputs.Lowering on linux and darwin alike, cmd/adamic aside. Not cohere's rules or tsc whole: the oracle, the
+// one build that compiles the rules, is its own product (typeAwareVolumeOracle).
+func typeAwareCompilerFiles() []string {
+	return append(compilerinputs.Lowering(), "cmd/adamic")
+}
 
 // typeAwareCompilerKey keys a volume product by its compilers' sources, the TypeScript it compiles, the Go release and
 // the C compiler the archive's cgo runs. It asks go nothing: go env and go list answer for the machine and checkout they
@@ -66,7 +70,7 @@ var typeAwareCompilerFiles = []string{"go.mod", "go.work", "cmd/adamic", "intern
 // stage 0, archives and oracle, on landable-6's tree a221706a).
 func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) {
 	h.t.Helper()
-	inputs.Files = append(inputs.Files, typeAwareCompilerFiles...)
+	inputs.Files = append(inputs.Files, typeAwareCompilerFiles()...)
 	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
 		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {

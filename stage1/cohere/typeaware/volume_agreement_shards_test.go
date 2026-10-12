@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -110,12 +109,10 @@ func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 }
 
 // The oracle retains every original program root while its walk visits only
-// the shard manifest. Its unchanged production rules still decide the findings.
+// the shard manifest. Its unchanged production rules still decide the findings. It is typeAwareVolumeOracle's request
+// with the adapter planted, a GoBuildInMutated product keyed by the packages go compiles and the planted change, never
+// cohere whole (#4ycgm2n).
 func volumeAgreementOracle(h *volumeGuardHarness) string {
-	data, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go"))
-	if err != nil {
-		h.t.Fatal(err)
-	}
 	from := "program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})"
 	to := `programRoots := roots
  if len(args)>3 {
@@ -125,39 +122,10 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
   for _,path:=range config.FileNames() { if strings.HasSuffix(path.AsString(),".d.ts") && !slices.Contains(programRoots,path) { programRoots=append(programRoots,path) } }
  }
  program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(programRoots), Host: host, SingleThreaded: core.TSTrue})`
-	text := string(data)
-	if strings.Count(text, from) != 1 {
-		h.t.Fatal("nonunique oracle program-root adapter")
-	}
-	text = strings.Replace(text, from, to, 1)
-	inputs := volumeAgreementInputs("oracle", false)
-	dir := buildcache.Product(h.t, inputs, func(dir string) error {
-		virtual := filepath.Join(h.repository, "cohere/adamic_volume_shard_oracle.go")
-		source := filepath.Join(dir, "oracle.go")
-		if err := os.WriteFile(source, []byte(text), 0444); err != nil {
-			return err
-		}
-		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		overlay := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlay, data, 0444); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlay)
-		cmd, cancel := volumeGuardCommand(context.Background(), "go", "build", "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)
-		defer cancel()
-		cmd.Dir = filepath.Join(h.repository, "cohere")
-		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
-		output, err := volumeGuardOutput(cmd)
-		if err != nil {
-			return fmt.Errorf("oracle: %w %s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
+	// GoBuildInMutated refuses an adapter whose anchor isn't in the side file exactly once.
+	virtual, arguments := typeAwareVolumeOracleRequest(h.t, h.repository)
+	adapter := buildcache.Mutation{File: "stage1/cohere/typeaware/testdata/oracle_volume.go", Before: from, After: to}
+	return buildcache.GoBuildInMutated(h.t, "cohere", "oracle", virtual, arguments, []buildcache.Mutation{adapter})
 }
 func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
