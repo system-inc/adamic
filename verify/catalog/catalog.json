@@ -8,14 +8,14 @@
     "fixtures": [
       "internal/oracle/testdata/shared_slice_append.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$"
+      "^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "01-shared-slice-append.patch",
@@ -125,9 +125,9 @@
       "detecting_fixture_count": 1,
       "only_fix_fixture_family_detects": true
     },
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a"
+      "TestNativeAgreesWithNode_083/internal/oracle/testdata/shared_slice_append.a"
     ],
     "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
   },
@@ -143,14 +143,14 @@
       "internal/oracle/testdata/throw_in_writes.a",
       "internal/oracle/testdata/throw_global_move.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$"
+      "^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "02-liveness-throw.patch",
@@ -267,9 +267,9 @@
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": true
     },
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a"
+      "TestNativeAgreesWithNode_087/internal/oracle/testdata/throw_keeps_old_value.a"
     ],
     "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
   },
@@ -283,14 +283,14 @@
       "internal/oracle/testdata/borrow_defined_lent.a",
       "internal/oracle/testdata/borrow_defined_lent_field.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$"
+      "^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "03-defined-lent.patch",
@@ -457,9 +457,9 @@
       "detecting_fixture_count": 27,
       "only_fix_fixture_family_detects": false
     },
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a"
+      "TestNativeAgreesWithNode_079/internal/oracle/testdata/borrow_defined_lent.a"
     ],
     "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
   },
@@ -473,23 +473,23 @@
       "internal/oracle/testdata/borrow_element_super_move.a",
       "internal/oracle/testdata/borrow_element_virtual_move.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$"
+      "^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "04-borrowed-array-move.patch",
     "status": "verified",
     "adaptation": "Remove only the array lending guard; retain expression-assigned and newer closure ownership checks.",
     "expected_failure_line": "oracle_test.go:613: exit codes differ",
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a"
+      "TestNativeAgreesWithNode_088/internal/oracle/testdata/borrow_element_super_move.a"
     ],
     "made_against": "d772b5c990de4304de990e723835f19ebb613641",
     "history": [
@@ -617,14 +617,14 @@
       "internal/oracle/testdata/reuse_spread_method_alias.a",
       "internal/oracle/testdata/reuse_spread_method.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$"
+      "^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "05-spread-method-reuse.patch",
@@ -741,9 +741,9 @@
       "detecting_fixture_count": 2,
       "only_fix_fixture_family_detects": true
     },
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a"
+      "TestNativeAgreesWithNode_003/internal/oracle/testdata/reuse_spread_method_alias.a"
     ],
     "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
   },
@@ -756,14 +756,14 @@
     "fixtures": [
       "internal/oracle/testdata/regions_constructor_capture.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$"
+      "^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "06-constructor-capture-region.patch",
@@ -872,9 +872,9 @@
       "detecting_fixture_count": 1,
       "only_fix_fixture_family_detects": true
     },
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a"
+      "TestNativeAgreesWithNode_113/internal/oracle/testdata/regions_constructor_capture.a"
     ],
     "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
   },
@@ -888,23 +888,23 @@
       "internal/oracle/testdata/borrow_element_virtual_store.a",
       "internal/oracle/testdata/borrow_element_throw.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$"
+      "^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$"
     ],
     "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
     "patch": "07-borrowed-element-reads.patch",
     "status": "verified",
     "adaptation": "Restore the pre-fix trust in only expression.Function instead of checking all CallTargets. Keep closure-target safety and MakeError borrowing unchanged.",
     "expected_failure_line": "oracle_test.go:618: exit codes differ",
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a"
+      "TestNativeAgreesWithNode_036/internal/oracle/testdata/borrow_element_virtual_store.a"
     ],
     "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
     "history": [
@@ -1130,23 +1130,23 @@
       "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
       "internal/oracle/testdata/e4eec87_f1_field_present.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$"
+      "^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "08-narrowed-number-field.patch",
     "status": "verified",
     "adaptation": "Remove only the declared maybe-field read/unwrap guard; retain the boxed-union and record-storage refusals and all field readiness and representation checks.",
     "expected_failure_line": "oracle_test.go:604: stdout differs",
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+      "TestNativeAgreesWithNode_013/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
     ],
     "made_against": "9272c54ea9c122cd49f6890066552953a949b4cd",
     "history": [
@@ -1307,23 +1307,23 @@
       "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
       "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
     ],
-    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
     "test_args": [
       "go",
       "test",
       "-count=1",
       "./internal/oracle",
       "-run",
-      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$"
+      "^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$"
     ],
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "09-literal-undefined-field.patch",
     "status": "verified",
     "adaptation": "Undo required literal slot fitting and declared union-member selection, plus required maybe-number reads. Preserve newer maybe-boolean fitting, readiness and optional-own-field handling.",
     "expected_failure_line": "oracle_test.go:613: stdout differs",
-    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
     "expected_tests": [
-      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
+      "TestNativeAgreesWithNode_065/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
     ],
     "made_against": "d772b5c990de4304de990e723835f19ebb613641",
     "history": [
