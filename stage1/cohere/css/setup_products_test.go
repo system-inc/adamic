@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sync"
 	"testing"
 
@@ -74,6 +75,32 @@ func TestCSSGoOraclesRekeyCompiler(t *testing.T) {
 		}
 		t.Logf("%s key %s moves with CC, CXX and the C compiler's report", oracle.name, key[:12])
 	}
+}
+
+// The compilers the Go oracles' keys name are read from toolchain.Env, the environment go runs under, not from the
+// caller's: with CC and CXX unset that is clang and clang++, which a reader of os.Getenv would key as empty while go ran
+// clang, and a CC the caller sets moves the key. Not parallel: it sets CC and CXX.
+func TestCSSGoOraclesKeyTheCompilersEnvGivesGo(t *testing.T) {
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CC", "")
+	t.Setenv("CXX", "")
+	defaults := cssGoCompilers()
+	inputs := cssParserGoProductInputs("Go parser oracle", defaults)
+	if !slices.Contains(inputs.Flags, "CC=clang") || !slices.Contains(inputs.Flags, "CXX=clang++") || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
+		t.Fatalf("with CC and CXX unset, the parser oracle's key names %+v, want clang, clang++ and clang's report", defaults)
+	}
+	t.Setenv("CC", "cc")
+	moved := cssGoCompilers()
+	if moved.c != "cc" || moved.report == defaults.report {
+		t.Fatalf("CC=cc read as %+v", moved)
+	}
+	if buildcache.NameKey(root, cssParserGoProductInputs("Go parser oracle", moved)) == buildcache.NameKey(root, inputs) {
+		t.Fatal("CC=cc kept the parser oracle's key")
+	}
+	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.c, defaults.cPlusPlus)
 }
 
 func TestProduct_CSSParserGoOracle(t *testing.T)      { t.Parallel(); cssParserOracle(t) }
