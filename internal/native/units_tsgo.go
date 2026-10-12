@@ -1,9 +1,8 @@
 package native
 
 import (
-	"os/exec"
-
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
@@ -29,11 +28,11 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 		return "", err
 	}
 	files = append(files, runtimeFile{"tsgo.h", bridge.Header})
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		return "", err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", err
 	}

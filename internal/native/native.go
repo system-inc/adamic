@@ -10,10 +10,11 @@ import (
 	"embed"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -169,8 +170,7 @@ func buildOne(source string, output string, options Options, flags []string) err
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := exec.Command(compilerName(options), arguments...)
-	command.Dir = directory
+	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

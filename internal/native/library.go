@@ -15,6 +15,7 @@ import (
 	"sync"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type runtimeFile struct {
@@ -88,11 +89,12 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 		}
 		files = kept
 	}
-	compiler, err := exec.LookPath(compilerName(options))
+	// The program toolchain resolves is the one the key names and every step of the build runs.
+	compiler, err := toolchain.Path(compilerName(options))
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
@@ -212,8 +214,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
 		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 		arguments := append(append(append([]string{}, flags...), prefixMaps(temporary, "/adamic-runtime")...), "-c", file.name, "-o", object)
-		command := exec.Command(compiler, arguments...)
-		command.Dir = temporary
+		command := toolchain.CommandIn(temporary, compiler, arguments...)
 		if output, err := command.CombinedOutput(); err != nil {
 			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
 		}
@@ -223,7 +224,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: runtime has no C sources")
 	}
 	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
-	if output, err := exec.Command(archiverName(compiler), arguments...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(archiverName(compiler), arguments...).CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
 	// Publish everything together. A competing process may already have published this key; its
@@ -286,8 +287,7 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 	if len(sources) == 0 {
 		return "", nil
 	}
-	command := exec.Command(compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	command.Dir = directory
+	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
 	rules, err := command.Output()
 	if err != nil {
 		var exit *exec.ExitError
