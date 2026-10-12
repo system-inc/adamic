@@ -268,7 +268,16 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		return output, os.WriteFile(output, data, 0o644)
 	}
 	destination := filepath.Join(directory, name)
-	command := func(tool string, arguments ...string) *exec.Cmd { return exec.CommandContext(ctx, tool, arguments...) }
+	// A tool named bare (go, clang) is toolchain's program, under toolchain's environment; stage 0, named by its
+	// path, runs as itself.
+	command := func(tool string, arguments ...string) *exec.Cmd {
+		cmd := exec.CommandContext(ctx, tool, arguments...)
+		if !strings.ContainsRune(tool, filepath.Separator) {
+			resolved := toolchain.Command(tool, arguments...)
+			cmd.Path, cmd.Err, cmd.Env = resolved.Path, resolved.Err, resolved.Env
+		}
+		return cmd
+	}
 	if strings.HasSuffix(name, ".a") {
 		arguments := []string{"build", "-trimpath", "-buildmode=c-archive", "-o", destination}
 		mutants := map[string][3]string{
@@ -288,7 +297,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		}
 		cmd := command("go", append(arguments, "./bridge/tsgo/archive")...)
 		if name == "tsgo-asan.a" {
-			cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			cmd.Env = append(cmd.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
 		return run(cmd)
 	}
