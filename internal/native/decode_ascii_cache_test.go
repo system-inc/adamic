@@ -5,13 +5,13 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // decodeASCIICorpus is Node's decoder corpus cut into the units' prefix ranges, one file per range, a product built
@@ -31,8 +31,7 @@ func decodeASCIICorpus(t *testing.T) string {
 		Toolchain: []string{buildcache.Tool("node", "--version")},
 	}, func(directory string) error {
 		corpus := filepath.Join(directory, "corpus.bin")
-		command := exec.Command("node", "internal/native/decode_ascii/corpus.mjs", corpus)
-		command.Dir = repository
+		command := toolchain.CommandIn(repository, "node", "internal/native/decode_ascii/corpus.mjs", corpus)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("node corpus.mjs: %w\n%s", err, output)
@@ -154,8 +153,7 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 				defer workers.Done()
 				for index := range jobs {
 					objects[index] = filepath.Join(objectDirectory, filepath.Base(files[index])+".o")
-					command := exec.Command(compiler, append(append([]string(nil), compileFlags...), "-c", files[index], "-o", objects[index])...)
-					command.Dir = repository
+					command := toolchain.CommandIn(repository, compiler, append(append([]string(nil), compileFlags...), "-c", files[index], "-o", objects[index])...)
 					if output, err := command.CombinedOutput(); err != nil {
 						failures[index] = fmt.Errorf("compile %s: %w\n%s", files[index], err, output)
 					}
@@ -174,8 +172,7 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 		}
 		arguments := append(append([]string(nil), flags...), objects...)
 		arguments = append(arguments, "-lm", "-o", filepath.Join(directory, "decode-"+target))
-		command := exec.Command(compiler, arguments...)
-		command.Dir = repository
+		command := toolchain.CommandIn(repository, compiler, arguments...)
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("decoder link: %w\n%s", err, output)
 		}

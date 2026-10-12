@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
@@ -58,7 +59,10 @@ func runWASIUnit(t *testing.T, unit int) {
 		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
 	for _, tool := range []string{"clang", "node", "go"} {
-		if _, err := exec.LookPath(tool); err != nil {
+		if _, err := toolchain.Path(tool); err != nil {
+			if toolchain.Sandboxed() {
+				t.Fatal(err)
+			}
 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
@@ -71,10 +75,10 @@ func runWASIUnit(t *testing.T, unit int) {
 	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := exec.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
-	if output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
+	if output, err := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
 		"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)").CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
 	}
@@ -111,8 +115,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		command := exec.Command("clang", arguments...)
-		command.Dir = repository
+		command := toolchain.CommandIn(repository, "clang", arguments...)
 		if data, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("WASI link: %v\n%s", err, data)
 		}
@@ -198,8 +201,7 @@ func wasiCommand(t *testing.T, directory, name string, arguments ...string) []by
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.Dir = directory
+	command := programCommand(ctx, directory, name, arguments...)
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, arguments, err, output)
@@ -216,8 +218,7 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.Dir = directory
+	command := programCommand(ctx, directory, name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
@@ -302,8 +303,7 @@ func strictWASIRuntime(t *testing.T) string {
 			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
 			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), prefixMaps(destination, "/adamic-runtime")...)
 			if err := eachInParallel(len(sources), func(index int) error {
-				command := exec.Command("clang", append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
-				command.Dir = destination
+				command := toolchain.CommandIn(destination, "clang", append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], err, output)
 				}
