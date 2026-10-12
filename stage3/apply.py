@@ -14,6 +14,9 @@ import subprocess
 import sys
 import tempfile
 
+# Apply runs from a source checkout it must leave clean (test_ordinary_apply_leaves_git_clean): importing caches, its
+# one module of this tree, would otherwise write stage3/__pycache__ into that checkout.
+sys.dont_write_bytecode = True
 from caches import stage3_cache
 
 stage = Path(__file__).resolve().parent
