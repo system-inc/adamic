@@ -348,8 +348,7 @@ func stringsPreparedOracle(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := stringsSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-		command.Dir = cohere
+		command := stringsGoCommand(t, cohere, "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
 		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 			return fmt.Errorf("Go bridge: %w\n%s", err, output)
 		}

@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var stringsEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
@@ -216,16 +217,44 @@ func stringsProduct(t *testing.T, inputs stringsInputs, build func(dir string) e
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go overlay builds use the same content-addressed cache as the other products.
+// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
+// toolchain.Env (stringsGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
+// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
+// didn't name could start to unseen.
 func stringsGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	inputs := buildcache.Inputs{
+	return buildcache.Product(t, stringsGoProductInputs(name, stringsGoCompilers()), build)
+}
+
+func stringsGoProductInputs(name string, compilers stringsCompilers) buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "cssstrings " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssstrings/testdata", "stage1/cohere/cssstrings/port_test.go"},
-		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
+		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
-	return buildcache.Product(t, inputs, build)
+}
+
+// stringsCompilers are the C and C++ compilers go builds with, and the C compiler's report.
+type stringsCompilers struct{ c, cPlusPlus, report string }
+
+// stringsGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
+// names neither.
+func stringsGoCompilers() stringsCompilers {
+	var compilers stringsCompilers
+	for _, setting := range toolchain.Env() {
+		switch name, value, _ := strings.Cut(setting, "="); name {
+		case "CC":
+			compilers.c = value
+		case "CXX":
+			compilers.cPlusPlus = value
+		}
+	}
+	compilers.report = "no C compiler"
+	if fields := strings.Fields(compilers.c); len(fields) > 0 {
+		compilers.report = buildcache.Tool(fields[0], "--version")
+	}
+	return compilers
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
