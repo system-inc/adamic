@@ -51,6 +51,10 @@
 //   - PATH, with ADAMIC_TOOLS's bin and go/bin directories put first when they exist, as env.sh puts them: go finds
 //     the C compiler a cgo build runs on PATH, and Path must find the same one, or the key's report of the compiler
 //     would name another than the build ran. PATH is a selector whose selection the key reads (the tool's report).
+//   - TZ: the time zone a tool keeps from its caller. Without it, a Go tool, glibc and node read the machine's zone file,
+//     /etc/localtime, and a traced build keys it, so a product built where the zone is Denver misses on a box set to Los
+//     Angeles (Server, Oct 12: 742 read sets held it). A unit's environment sets TZ=UTC, and carried here it reaches
+//     every tool, which then reads no zone file at all.
 //   - DEVELOPER_DIR: on macOS it selects the Xcode whose clang /usr/bin/clang runs. Like PATH it selects, and the
 //     compiler's report the key holds is the selected one's: dropping it would build with one clang and key another.
 //   - GOMAXPROCS, GOGC and GOMEMLIMIT: how hard the go command works (its -p and the compiler's -c), never what it
@@ -107,7 +111,7 @@ var goLocations = []string{"GOCACHE", "GOMODCACHE", "GOPATH", "GOTMPDIR", "GOCAC
 	"GONOSUMCHECK", "GONOPROXY", "GOPRIVATE", "GOINSECURE", "GOVCS", "GOAUTH"}
 
 // carried are the rest of what Env passes from the caller (the package doc says why for each). PATH is Env's own.
-var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "PWD", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
+var carried = []string{"HOME", "XDG_CACHE_HOME", "XDG_CONFIG_HOME", "TMPDIR", "PWD", "TZ", "DEVELOPER_DIR", "GOMAXPROCS", "GOGC", "GOMEMLIMIT",
 	"HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "no_proxy", "all_proxy", "SSL_CERT_FILE", "SSL_CERT_DIR"}
 
 // gocacheSettings is the prefix of the shared Go cache's own settings (cmd/adamic-gocacheprog), passed with GOCACHEPROG.
