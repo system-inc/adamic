@@ -105,7 +105,9 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	if target == "go" {
 		return p
 	}
-	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: []string{"go.mod", "internal", "stage1/cohere/markdownblocks"}, Toolchain: goTools}, func(dir string) error {
+	// Keyed by what lowering reads, the package's and markdowninline's TypeScript, the checker and the compiler, as
+	// the pilot families' lowering is; the whole package directory would rebuild every grain port on any test edit.
+	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: whitespaceLayoutBuildFiles(), Toolchain: goTools}, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
