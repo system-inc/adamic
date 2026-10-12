@@ -338,7 +338,7 @@ func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
 func forgetHeld(t *testing.T) {
 	t.Helper()
 	clear := func() {
-		productDirectories.Range(func(key, _ any) bool { productDirectories.Delete(key); return true })
+		productDirectories.Range(func(directory, nameKey any) bool { forgotten(nameKey.(string), directory.(string)); return true })
 		productKeys.Range(func(key, _ any) bool { productKeys.Delete(key); return true })
 		resolvedDirectories.Range(func(key, _ any) bool { resolvedDirectories.Delete(key); return true })
 	}
@@ -580,11 +580,11 @@ func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 			t.Fatal(err)
 		}
 		directories = append(directories, directory)
-		productDirectories.Store(directory, fmt.Sprintf("%064x", index))
+		located(fmt.Sprintf("%064x", index), directory)
 	}
 	t.Cleanup(func() {
-		for _, directory := range directories {
-			productDirectories.Delete(directory)
+		for index, directory := range directories {
+			forgotten(fmt.Sprintf("%064x", index), directory)
 			productResolutions.Delete(directory)
 		}
 	})
@@ -596,5 +596,56 @@ func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 	}
 	if len(first) != len(second) || len(first) < 50 {
 		t.Fatalf("places gave %d, then %d", len(first), len(second))
+	}
+}
+
+// Relative makes its places once, as keying, and again only when what they're made from changed: a product directory
+// located or forgotten, or the environment (lint's profile lowering called it about 8,400 times, 2.3 million stats, 637 s
+// traced against 9.7 s, Home, Oct 12). Mutants: places made on every call; a located or forgotten directory, or a changed
+// ADAMIC_ value, not making them again; the locations looked for outside keying.
+// Not parallel: t.Setenv, statLocation and productDirectories.
+func TestRelativeMakesItsPlacesOncePerChange(t *testing.T) {
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	first, second := t.TempDir(), t.TempDir()
+	t.Setenv("ADAMIC_RELATIVE_PLACES", first)
+	unkeyed := 0
+	saved := statLocation
+	statLocation = func(name string) (os.FileInfo, error) {
+		if keyingNow.Load() == 0 {
+			unkeyed++
+		}
+		return saved(name)
+	}
+	t.Cleanup(func() { statLocation = saved })
+	if got := Relative(filepath.Join(first, "a")); got != "<ADAMIC_RELATIVE_PLACES>/a" {
+		t.Fatalf("a located directory: %q", got)
+	}
+	before := resolutions.Load()
+	for range 100 {
+		Relative(filepath.Join(first, "a"))
+	}
+	if again := resolutions.Load() - before; again != 0 {
+		t.Fatalf("100 calls with nothing changed resolved %d paths again", again)
+	}
+	t.Setenv("ADAMIC_RELATIVE_PLACES", second)
+	if got := Relative(filepath.Join(second, "b")); got != "<ADAMIC_RELATIVE_PLACES>/b" {
+		t.Fatalf("after the variable moved: %q", got)
+	}
+	product, nameKey := t.TempDir(), strings.Repeat("e", 64)
+	located(nameKey, product)
+	if got := Relative(filepath.Join(product, "c")); got != "<build cache>/"+nameKey+"/c" {
+		t.Fatalf("a located product directory: %q", got)
+	}
+	forgotten(nameKey, product)
+	if got := Relative(filepath.Join(product, "c")); got != filepath.Join(product, "c") {
+		t.Fatalf("a forgotten product directory: %q", got)
+	}
+	// Absolute looks for locations itself, after a change only Relative hasn't seen.
+	t.Setenv("ADAMIC_RELATIVE_PLACES", first)
+	if got := Absolute("<ADAMIC_RELATIVE_PLACES>/d"); got != filepath.Join(first, "d") {
+		t.Fatalf("read back after the variable moved back: %q", got)
+	}
+	if unkeyed != 0 {
+		t.Fatalf("locations were looked for outside keying %d times", unkeyed)
 	}
 }

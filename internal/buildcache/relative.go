@@ -38,6 +38,33 @@ import (
 // ADAMIC_ variable locates <ADAMIC_NAME>. A path
 // outside them all stays as it is, and relocatable refuses a product that holds one of this machine's.
 func Relative(value string) string {
+	for _, place := range relativePlaces() {
+		value = replacePath(value, place.path, place.name)
+	}
+	return value
+}
+
+// madePlaces is what Relative's places were made from, the product directories this process held (productGeneration)
+// and its environment, and the places.
+type madePlaces struct {
+	generation  int64
+	environment string
+	places      []place
+}
+
+var relativeMade atomic.Pointer[madePlaces]
+
+// relativePlaces are Relative's places, longest first, made again only when a product directory was located or
+// forgotten or the environment changed, and made as keying. Making them stats every ADAMIC_ variable's value and
+// resolves every place, a stat per path element, each one a stop under a trace, and a loader calls Relative for every
+// path it displays: lint's profile lowering called it about 8,400 times, 2.3 million stats, 9.7 s untraced and 637 s
+// traced (Home, Oct 12), so lint's four ProfileCompilation product tests ran past go test's 14 minutes under the trace
+// and fell back untraced. Where this machine keeps things is never what a product read.
+func relativePlaces() []place {
+	generation, environment := productGeneration.Load(), strings.Join(os.Environ(), "\x00")
+	if made := relativeMade.Load(); made != nil && made.generation == generation && made.environment == environment {
+		return made.places
+	}
 	var found []place
 	add := func(path, name string) {
 		for _, candidate := range []string{filepath.Clean(path), resolved(path)} {
@@ -46,24 +73,24 @@ func Relative(value string) string {
 			}
 		}
 	}
-	productDirectories.Range(func(directory, key any) bool {
-		add(directory.(string), "<build cache>/"+key.(string))
-		return true
+	keying(func() {
+		productDirectories.Range(func(directory, key any) bool {
+			add(directory.(string), "<build cache>/"+key.(string))
+			return true
+		})
+		if cache, err := cacheLocation(); err == nil {
+			add(cache, "<build cache>")
+		}
+		if root, err := repositoryRoot(); err == nil {
+			add(root, "<repository>")
+		}
+		for name, directory := range locations() {
+			add(directory, "<"+name+">")
+		}
 	})
-	if cache, err := cacheLocation(); err == nil {
-		add(cache, "<build cache>")
-	}
-	if root, err := repositoryRoot(); err == nil {
-		add(root, "<repository>")
-	}
-	for name, directory := range locations() {
-		add(directory, "<"+name+">")
-	}
 	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
-	for _, place := range found {
-		value = replacePath(value, place.path, place.name)
-	}
-	return value
+	relativeMade.Store(&madePlaces{generation, environment, found})
+	return found
 }
 
 // Absolute is Relative read back on this machine: <build cache>/<name key> is that product's directory here
@@ -91,31 +118,64 @@ var productName = regexp.MustCompile(`<build cache>/[0-9a-f]{64}`)
 var locationName = regexp.MustCompile(`<ADAMIC_[A-Z0-9_]+>`)
 
 // locations are the directories this machine's ADAMIC_ variables name (ADAMIC_TYPESCRIPT_SOURCE, a library's npm
-// install), by variable, absolute. The build cache's own variable is <build cache>.
+// install), by variable, absolute. The build cache's own variable is <build cache>. They're looked for once per
+// environment, as keying (relativePlaces): Absolute runs once per name it reads back, too.
 func locations() map[string]string {
+	environment := os.Environ()
+	joined := strings.Join(environment, "\x00")
+	if made := locationsMade.Load(); made != nil && made.environment == joined {
+		return made.found
+	}
 	found := map[string]string{}
-	for _, variable := range os.Environ() {
-		name, value, _ := strings.Cut(variable, "=")
-		if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || value == "" {
-			continue
-		}
-		if info, err := os.Stat(value); err == nil && info.IsDir() {
-			if absolute, err := filepath.Abs(value); err == nil {
-				found[name] = absolute
+	keying(func() {
+		for _, variable := range environment {
+			name, value, _ := strings.Cut(variable, "=")
+			if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || value == "" {
+				continue
+			}
+			if info, err := statLocation(value); err == nil && info.IsDir() {
+				if absolute, err := filepath.Abs(value); err == nil {
+					found[name] = absolute
+				}
 			}
 		}
-	}
+	})
+	locationsMade.Store(&madeLocations{joined, found})
 	return found
 }
 
+// madeLocations is the environment locations were looked for in, and what they found. Nothing writes found once made.
+type madeLocations struct {
+	environment string
+	found       map[string]string
+}
+
+var locationsMade atomic.Pointer[madeLocations]
+
+// statLocation is os.Stat, for locations: a test asks whether it ran as keying.
+var statLocation = os.Stat
+
 // productDirectories maps each product directory this process holds (every one get returned, a build's scratch
 // directory while it builds, one productDirectory found) to its name key, and productKeys each name key to the latest
-// such directory.
+// such directory. Only located and forgotten change them, so productGeneration moves with every change.
 var productDirectories, productKeys sync.Map
 
+// productGeneration counts the changes to productDirectories, so relativePlaces knows its places are still whole.
+var productGeneration atomic.Int64
+
 func located(nameKey, directory string) {
-	productDirectories.Store(directory, nameKey)
+	if previous, held := productDirectories.Swap(directory, nameKey); !held || previous != nameKey {
+		productGeneration.Add(1)
+	}
 	productKeys.Store(nameKey, directory)
+}
+
+// forgotten drops directory from what this process holds.
+func forgotten(nameKey, directory string) {
+	if _, held := productDirectories.LoadAndDelete(directory); held {
+		productGeneration.Add(1)
+	}
+	productKeys.CompareAndDelete(nameKey, directory)
 }
 
 // holding is directory, a product get returns, recorded under its name key so Relative names it and Absolute finds it.
@@ -135,8 +195,7 @@ func relocating(inputs Inputs, nameKey string, build func(directory string) erro
 		if err == nil {
 			keying(func() { err = relocatable(inputs, directory) })
 		}
-		productDirectories.Delete(directory)
-		productKeys.CompareAndDelete(nameKey, directory)
+		forgotten(nameKey, directory)
 		return err
 	}
 }
