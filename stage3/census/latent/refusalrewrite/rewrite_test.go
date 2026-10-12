@@ -191,7 +191,7 @@ func behaviorProbe(t *testing.T) string {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:      "refusalrewrite behavior probe",
-		Files:     []string{"stage3/census/latent/refusalrewrite/rewrite.go", "stage3/census/latent/refusalrewrite/rewrite_test.go"},
+		Files:     []string{"go.mod", "stage3/census/latent/refusalrewrite/rewrite.go", "stage3/census/latent/refusalrewrite/rewrite_test.go"},
 		Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -buildvcs=false", "GOWORK=off"},
 		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT")},
 	}
@@ -200,8 +200,23 @@ func behaviorProbe(t *testing.T) string {
 		if err != nil {
 			return err
 		}
+		// The probe declares the repository's go version, so GOTOOLCHAIN selects for its build the release the key's
+		// go version, asked at the repository, names.
+		repository, err := os.ReadFile("../../../../go.mod")
+		if err != nil {
+			return err
+		}
+		version := ""
+		for _, line := range strings.Split(string(repository), "\n") {
+			if strings.HasPrefix(line, "go ") {
+				version = strings.TrimSpace(strings.TrimPrefix(line, "go "))
+			}
+		}
+		if version == "" {
+			return fmt.Errorf("the repository's go.mod declares no go version")
+		}
 		module := filepath.Join(directory, "module")
-		for name, text := range map[string]string{"go.mod": "module probe\n\ngo 1.21\n", "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
+		for name, text := range map[string]string{"go.mod": "module probe\n\ngo " + version + "\n", "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
 			path := filepath.Join(module, name)
 			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 				return err
