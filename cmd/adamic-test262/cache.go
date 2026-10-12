@@ -14,6 +14,8 @@ import (
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Cache observations, never verdicts: decide still compares both executions on every hit.
@@ -166,14 +168,33 @@ func childEnvironment(extra ...string) []string {
 	return append(environment, extra...)
 }
 
+// runnerTools are the programs the runner runs by name, each resolved once through toolchain.Path (a
+// declared tools directory's before PATH's, and only it in a sandbox), so the context hashes the very
+// program every observation runs.
+type runnerTools struct{ node, clang string }
+
+func resolveTools() (runnerTools, error) {
+	node, err := toolchain.Path("node")
+	if err != nil {
+		return runnerTools{}, err
+	}
+	clang, err := toolchain.Path("clang")
+	if err != nil {
+		return runnerTools{}, err
+	}
+	return runnerTools{node: node, clang: clang}, nil
+}
+
 // prepareCache derives the execution context every observation is keyed under. root is the checkout
-// under test, as prepareMode gets it.
-func prepareCache(root string) (*resultCache, string, string, error) {
+// under test, as prepareMode gets it, and tools are the programs its runs execute.
+func prepareCache(root string, tools runnerTools) (*resultCache, string, string, error) {
 	directory, err := os.UserCacheDir()
 	if err != nil {
 		return nil, "", "", err
 	}
-	version, err := exec.Command("node", "--version").CombinedOutput()
+	versionCommand := exec.Command(tools.node, "--version")
+	versionCommand.Env = childEnvironment()
+	version, err := versionCommand.CombinedOutput()
 	if err != nil {
 		return nil, "", "", fmt.Errorf("node --version: %w: %s", err, version)
 	}
@@ -212,26 +233,19 @@ func prepareCache(root string) (*resultCache, string, string, error) {
 	if err != nil {
 		return nil, "", "", err
 	}
-	for _, name := range []string{executable, "node", "clang"} {
-		path := name
-		if name != executable {
-			path, err = exec.LookPath(name)
-			if err != nil {
-				return nil, "", "", err
-			}
-		}
+	for _, path := range []string{executable, tools.node, tools.clang} {
 		contents, err := os.ReadFile(path)
 		if err != nil {
 			return nil, "", "", err
 		}
 		// The runner's location is not input to successful compilation or native execution.
 		// go run allocates a new executable path even for identical built bytes.
-		if name == executable {
+		if path == executable {
 			parts = append(parts, "runner", cacheKey(string(contents)))
 		} else {
 			parts = append(parts, path, cacheKey(string(contents)))
 		}
-		if name == "node" {
+		if path == tools.node {
 			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
 		}
 	}
