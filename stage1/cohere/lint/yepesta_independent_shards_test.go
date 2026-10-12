@@ -245,21 +245,10 @@ func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { t.Parallel(); jsx
 func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 14) }
 func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 15) }
 
-func yepestaOracle(t *testing.T) string {
-	t.Helper()
-	inputs := yepestaInputs()
-	inputs.Name = "yepesta-oracle-v1"
-	directory := buildcache.Product(t, inputs, func(out string) error {
-		_, err := goOracleIn(".", out)
-		return err
-	})
-	return filepath.Join(directory, "oracle")
-}
-
 func yepestaPrepare(t *testing.T) string {
 	t.Helper()
 	directory := buildcache.Product(t, yepestaInputs(), func(out string) error {
-		oracle := yepestaOracle(t)
+		oracle := lintGoOracleProduct(t)
 		rows := jsxTextnodesRows(t, oracle)
 		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
 		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle")}
@@ -319,7 +308,7 @@ type yepestaBundle struct {
 // yepestaInputs name what changes the bundle: the sources it reads and the Go that builds its oracle. Which shard
 // reads which rows is decided at run time, and the native build is jsx-textnodes-mutant-native's, so neither keys it.
 func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Toolchain: []string{buildcache.Tool("go", "version")}}
+	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()}}
 }
 
 // Preparation runs once per process, including when a single shard is selected.

@@ -46,7 +46,7 @@ func TestRegistrationMutant(t *testing.T) {
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
 	path := manifest(t, []string{source + "\tno-debugger"})
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	for _, side := range []struct {
 		name string
 		run  execution

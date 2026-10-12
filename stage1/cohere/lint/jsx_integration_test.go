@@ -93,7 +93,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	for _, path := range jsxSources(t) {
 		rows = append(rows, path+"\tall")
 	}
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	binary := buildPort(t, directory, false)
 	// Captured JSX includes parser-recovery witnesses, just like TestRulesAgree.
 	// Mark those rows before asking the oracle to compare or count their findings.

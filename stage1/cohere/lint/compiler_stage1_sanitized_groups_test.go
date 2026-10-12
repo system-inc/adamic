@@ -97,7 +97,7 @@ func compilerAgreementCheckerSanitized(t *testing.T, slug string) {
 	}
 	path := manifest(t, []string{owned[0].path + "\t" + owned[0].rule})
 	setupStarted := time.Now()
-	oracle := compilerAgreementGoOracle(t)
+	oracle := lintGoOracleProduct(t)
 	binary := compilerAgreementNative(t, true)
 	t.Logf("preparation: %.3fs", time.Since(setupStarted).Seconds())
 	// Own work is logged, not asserted, as in compilerAgreementShard: execute's testguard budget and ceiling bound a hang.

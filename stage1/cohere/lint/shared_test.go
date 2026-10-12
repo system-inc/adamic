@@ -15,6 +15,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -132,34 +133,35 @@ func emitJavaScriptTo(directory, module string) error {
 	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
+// goOraclePackage is the directory, inside cohere, of the main package goOracleOverlay adds: the Go oracle.
+const goOraclePackage = "adamic_lint_oracle"
+
 // goOracleOverlay writes into directory the overlay that lays the Go oracle over cohere, so the upstream rules stay
-// unmodified: testdata/oracle.go, sourceRoot's generated registry and each of its rules' oracle.go, each as a virtual
-// file inside cohere. It returns the overlay's path and the virtual files, which go builds as one main package.
-func goOracleOverlay(sourceRoot, directory string) (string, []string, error) {
+// unmodified: testdata/oracle.go, sourceRoot's generated registry and each of its rules' oracle.go, each a file of
+// goOraclePackage, a main package the overlay adds to cohere. It returns the overlay's path.
+func goOracleOverlay(sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
-		return "", nil, err
+		return "", err
 	}
 	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
 	if err != nil {
-		return "", nil, err
+		return "", err
 	}
 	descriptors, err := registry.Generate(sourceRoot)
 	if err != nil {
-		return "", nil, err
+		return "", err
 	}
 	replacements := map[string]string{}
-	var virtualFiles []string
 	var failure error
 	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		virtual := filepath.Join(root, goOraclePackage, "adamic_lint_"+name+".go")
 		absolute, err := filepath.Abs(source)
 		if err != nil {
 			failure = err
 			return
 		}
 		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
 	}
 	add("oracle", side)
 	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
@@ -167,38 +169,24 @@ func goOracleOverlay(sourceRoot, directory string) (string, []string, error) {
 		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
 	}
 	if failure != nil {
-		return "", nil, failure
+		return "", failure
 	}
 	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
-		return "", nil, err
+		return "", err
 	}
 	path := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", nil, err
+		return "", err
 	}
-	return path, virtualFiles, nil
+	return path, nil
 }
 
-// goOracleIn builds the Go oracle over sourceRoot's rules into directory, for a build no product keys. This package's
-// own rules are lintGoOracleProduct.
-func goOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	path, virtualFiles, err := goOracleOverlay(sourceRoot, directory)
-	if err != nil {
-		return "", err
-	}
-	// The overlay names this checkout's paths: it builds the oracle and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := run(root, nil, "go", args...); err != nil {
-		return "", err
-	}
-	return binary, nil
+// lintGoSettings is every go setting a go run under toolchain.Env builds with, as go reports it there: its CC is the
+// compiler a cgo build runs, which the caller's CC isn't when the caller sets none (toolchain names clang then). A
+// product that builds with toolchain's go keys it.
+func lintGoSettings() string {
+	return buildcache.Tool("go", append([]string{"env"}, toolchain.GoSettings...)...)
 }
 
 // lintCommand is a child for a test's own deadline: killed with its whole process group when ctx ends. A bare name is

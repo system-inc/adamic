@@ -26,11 +26,6 @@ func TestProduct_WitnessScriptKindNative(t *testing.T) {
 	witnessScriptKindNativeProduct(t)
 }
 
-func TestProduct_WitnessScriptKindGoOracle(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindOracleProduct(t)
-}
-
 func witnessScriptKindLoweredProduct(t *testing.T) string {
 	t.Helper()
 	inputs := witnessScriptKindInputs()
@@ -85,17 +80,5 @@ func witnessScriptKindNativeProduct(t *testing.T) string {
 			return err
 		}
 		return native.Build(string(data), filepath.Join(out, "scanner"), options)
-	})
-}
-
-func witnessScriptKindOracleProduct(t *testing.T) string {
-	t.Helper()
-	inputs := witnessScriptKindInputs()
-	inputs.Name = "witness-script-kind-go-oracle-v1"
-	inputs.Flags = []string{"go build", "overlay=full-rule-registry", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
-	return buildcache.Product(t, inputs, func(out string) error {
-		_, err := witnessScriptKindGoOracleIn(context.Background(), packageDirectory, out)
-		return err
 	})
 }
