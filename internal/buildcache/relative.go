@@ -457,9 +457,9 @@ func textFiles(directory string, each func(file string, content []byte, mode fs.
 var dataFormats = []string{".gob"}
 
 // readFiles is textFiles, and with data, every file in one of dataFormats too. A directory reached through a link is
-// read where it points (walked), and each file is named under directory as given.
+// read where it points (ProductRoot), and each file is named under directory as given.
 func readFiles(directory string, data bool, each func(file string, content []byte, mode fs.FileMode) error) error {
-	root, err := walked(directory)
+	root, err := ProductRoot(directory)
 	if err != nil {
 		return err
 	}
@@ -598,7 +598,7 @@ var productKey = regexp.MustCompile(`^[0-9a-f]{64}$`)
 // resolve copies directory to place whole, each text file through Absolute, by way of a scratch directory renamed into
 // place, so a copy on disk is always complete.
 func resolve(directory, place string) error {
-	root, err := walked(directory)
+	root, err := ProductRoot(directory)
 	if err != nil {
 		return err
 	}

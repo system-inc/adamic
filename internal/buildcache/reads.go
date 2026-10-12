@@ -360,12 +360,13 @@ var treeValuesRead atomic.Int64
 // productDigests holds each product directory's digest once a process has it: a key's bytes never change.
 var productDigests sync.Map
 
-// walked is where a walk over a product directory starts: what directory resolves to when it is a link. Loom's runner
+// ProductRoot is where a walk over a product directory starts: what directory resolves to when it is a link, and every
+// walk rooted at a product goes through it, a test's included (graphql/printer's printerWalk, mega's run 2). Loom's runner
 // links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir visits a
 // link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through another
 // was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text file
 // in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and stay.
-func walked(directory string) (string, error) {
+func ProductRoot(directory string) (string, error) {
 	if info, err := os.Lstat(directory); err != nil || info.Mode()&fs.ModeSymlink == 0 {
 		return directory, nil
 	}
@@ -374,7 +375,7 @@ func walked(directory string) (string, error) {
 
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
 // content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
-// directory reached through a link is valued by what it links to (walked).
+// directory reached through a link is valued by what it links to (ProductRoot).
 func productDigest(directory string) (string, error) {
 	if value, ok := productDigests.Load(directory); ok {
 		return value.(string), nil
@@ -384,7 +385,7 @@ func productDigest(directory string) (string, error) {
 		productDigests.Store(directory, string(content))
 		return string(content), nil
 	}
-	root, err := walked(directory)
+	root, err := ProductRoot(directory)
 	if err != nil {
 		return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
 	}

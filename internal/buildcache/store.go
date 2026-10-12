@@ -277,7 +277,7 @@ func named(err error, what string) error {
 // Anything else in a product (a symlink, a device) can't be stored, so it is an error.
 func describeProduct(key, name, directory string) (manifest, error) {
 	product := manifest{Version: 1, Key: key, Name: name}
-	root, err := walked(directory)
+	root, err := ProductRoot(directory)
 	if err != nil {
 		return product, err
 	}
