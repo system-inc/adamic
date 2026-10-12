@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.dont_write_bytecode = True
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from apply import installed_packages
-from npm_cli import npm
+from npm_cli import environment, npm
 
 
 def digest_files(root, files):
@@ -110,7 +110,7 @@ def prepare(cache, root=ROOT):
                     phases[name] = dict(exit=0, seconds=round(time.monotonic() - begin, 3))
                     continue
                 with (scratch / (name + '.log')).open('w') as log:
-                    result = subprocess.run(command, cwd=root if name == 'apply' else scratch / 'tree',
+                    result = subprocess.run(command, cwd=root if name == 'apply' else scratch / 'tree', env=environment(),
                                             stdout=log, stderr=subprocess.STDOUT)
                 phases[name] = dict(exit=result.returncode, seconds=round(time.monotonic() - begin, 3))
                 if result.returncode:
