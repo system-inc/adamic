@@ -277,7 +277,11 @@ func named(err error, what string) error {
 // Anything else in a product (a symlink, a device) can't be stored, so it is an error.
 func describeProduct(key, name, directory string) (manifest, error) {
 	product := manifest{Version: 1, Key: key, Name: name}
-	err := filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
+	root, err := walked(directory)
+	if err != nil {
+		return product, err
+	}
+	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil || entry.IsDir() {
 			return err
 		}
@@ -292,7 +296,7 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		if err != nil {
 			return err
 		}
-		relative, err := filepath.Rel(directory, file)
+		relative, err := filepath.Rel(root, file)
 		if err != nil {
 			return err
 		}
