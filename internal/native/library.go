@@ -143,7 +143,9 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
 	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
 	// v3: the map covers the directory's resolved spelling too, so a v2 archive a Mac built under /private/var isn't reused.
-	part("adamic-runtime-v3")
+	// v4: clang and ar run under toolchain.Env, not the caller's environment, so a v3 archive built under whatever the
+	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
+	part("adamic-runtime-v4")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
