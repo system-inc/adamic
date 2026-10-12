@@ -76,6 +76,13 @@ func forgetTracked() {
 	repositories.Range(func(key, _ any) bool { repositories.Delete(key); return true })
 }
 
+// forgetReadMode drops what a read-mode process holds for its life (readTree, readProducts), as a new runner process
+// starts with nothing.
+func forgetReadMode() {
+	readTree.Clear()
+	readProducts.Clear()
+}
+
 func (r *rig) add(pid int, format string, arguments ...any) {
 	r.lines = append(r.lines, fmt.Sprintf("%d ", pid)+fmt.Sprintf(format, arguments...))
 }
@@ -154,9 +161,11 @@ func building(content string) func(directory string) error {
 	}
 }
 
-// reading looks a product up as a runner does: from the read sets in the cache, never building.
+// reading looks a product up as a runner does: from the read sets in the cache, never building, in a process of its
+// own, holding nothing an earlier lookup read (a test changes the tree between them, which a runner's never does).
 func reading(t *testing.T, inputs Inputs) (string, error) {
 	t.Helper()
+	forgetReadMode()
 	t.Setenv("ADAMIC_BUILD_CACHE", "read")
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
 	defer t.Setenv("ADAMIC_BUILD_CACHE", "")

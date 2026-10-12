@@ -333,8 +333,21 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 // and the same directories valued each listing again in every pass (home-5's dry run, Oct 11: css's PostCSS answers,
 // up to 40 sibling products and 3,047 listings each, settled for over 20 minutes). The tree is the same from Settle's
 // start to its end, or every build is refused (TreeState), so a value read once holds for all of it. Nil outside
-// Settle: a runner, or a test that changes the tree between lookups, values afresh.
+// Settle and Find: a builder, or a test that changes the tree between lookups, values afresh.
 var settledTree atomic.Pointer[sync.Map]
+
+// readTree holds each tree entry's value for the life of a read-mode process (readMode), as settledTree does for
+// Settle's: a runner's source is unpacked read-only and never changes under the process, so a test that looks up
+// several products valued every entry of each one's read set again (#szswjtc: TypeScript's readproofs, 8 to 27 s a
+// hit on a loaded Workshop). It is its own map, so Settle and Find, which set settledTree and clear it as they end,
+// never drop what a read-mode process holds.
+var readTree sync.Map
+
+// readMode is ADAMIC_BUILD_CACHE=read, a runner's process: it reads products and never builds them, over a source
+// that never changes under it, so what it values of the tree, and each product it finds, holds for its life.
+func readMode() bool {
+	return os.Getenv("ADAMIC_BUILD_CACHE") == "read"
+}
 
 // treeValuesRead counts the tree values this process read rather than held: a test asks it.
 var treeValuesRead atomic.Int64
@@ -406,6 +419,9 @@ func productDigest(directory string) (string, error) {
 // everything) reads as absent, so a checkout's leftovers and an unpacked source of it value the same.
 func treeValue(root, kind, name string) string {
 	held := settledTree.Load()
+	if readMode() {
+		held = &readTree
+	}
 	if held == nil {
 		return readTreeValue(root, kind, name)
 	}
@@ -597,8 +613,19 @@ type found struct {
 
 // A productMemo holds each product one pass has looked up, by name key (Home's dry run, Oct 11: nine traces settled for
 // over two hours, each product read valuing every product it reads again, for every reader, ten deep). A pass is one
-// top-level productFor or evaluate, over one tree and one cache, so no answer outlives what it was given.
+// top-level productFor or evaluate, over one tree and one cache, so no answer outlives what it was given; a read-mode
+// process keeps what it found for its life besides (readProducts).
 type productMemo map[string]*productLookup
+
+// readProducts holds each product a read-mode process (readMode) has found, by root, cache and name key, so a test that
+// looks up several products, or one product many times, values each one's read set once (#szswjtc). Only a found
+// product is held: its tree never changes under the process, its directory is never taken away, and a read set joined
+// from the store later goes after the cache's own, so the set that found it still finds it first. A missing one is
+// looked up again, since a joined set can find what the cache's own didn't.
+var readProducts sync.Map
+
+// productsLookedUp counts the products this process looked up by their read sets rather than held: a test asks it.
+var productsLookedUp atomic.Int64
 
 // A productLookup is one product's answer in a pass; done is false while it is still being looked up, so meeting it
 // again then is a cycle.
@@ -612,6 +639,13 @@ type productLookup struct {
 // while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
 // than at depth 16 down every branch.
 func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
+	held := readMode()
+	heldKey := root + "\x00" + cache + "\x00" + nameKey
+	if held {
+		if result, ok := readProducts.Load(heldKey); ok {
+			return result.(found), nil
+		}
+	}
 	if known == nil {
 		known = productMemo{}
 	}
@@ -625,10 +659,14 @@ func productFor(root, cache, nameKey string, depth int, known productMemo) (foun
 	known[nameKey] = lookup
 	lookup.result, lookup.err = lookupProduct(root, cache, nameKey, depth, known)
 	lookup.done = true
+	if held && lookup.err == nil && lookup.result.directory != "" {
+		readProducts.Store(heldKey, lookup.result)
+	}
 	return lookup.result, lookup.err
 }
 
 func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (found, error) {
+	productsLookedUp.Add(1)
 	file, err := loadReads(cache, nameKey)
 	if err != nil {
 		return found{}, err

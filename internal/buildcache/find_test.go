@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -186,5 +187,110 @@ func TestFindJoinsTheStoresReadSetsAndLeavesFetchesToTheTest(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(r.cache, key)); err == nil {
 		t.Fatal("Find fetched a product, which only its test may")
+	}
+}
+
+// recordedProduct records a read set of entries for nameKey, valued on the tree as it is, and makes its product in the
+// cache when made: what a settled product leaves. It returns the key the set gives.
+func recordedProduct(t *testing.T, r *rig, nameKey string, entries []readEntry, made bool) string {
+	t.Helper()
+	set := readSet{Entries: sortedEntries(entries)}
+	evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	set.Key = evaluated.key
+	if err := recordReads(r.cache, nameKey, "product "+nameKey[:12], set); err != nil {
+		t.Fatal(err)
+	}
+	if made {
+		if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return evaluated.key
+}
+
+// A read-mode process (a runner's: its source never changes under it) values each tree entry once for its life and
+// each product it finds once (#szswjtc: TypeScript's readproofs re-valued a product's whole read set on every lookup,
+// 8 to 27 s a hit): a second lookup of a product reads no tree value and answers the same, and another product reading
+// what the first read reads none either, even after Find has held and dropped values of its own. A product it misses
+// is looked up again, so one that arrives later is found. Mutants: no product held (each lookup values its read set
+// again, over held tree values); read mode's held tree values kept in settledTree (Find's end drops them); a miss
+// held as found is.
+// Not parallel: newRig, and treeValuesRead counts the whole process's reads.
+func TestAReadModeProcessValuesEachProductOnce(t *testing.T) {
+	r := newRig(t)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetReadMode()
+	t.Cleanup(forgetReadMode)
+	first, second, late := fmt.Sprintf("%064x", 1), fmt.Sprintf("%064x", 2), fmt.Sprintf("%064x", 3)
+	recordedProduct(t, r, first, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "content", Path: "source/a.c"}, {Kind: "listing", Path: "source"}}, true)
+	recordedProduct(t, r, second, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "product", Path: first}}, true)
+	lateKey := recordedProduct(t, r, late, []readEntry{{Kind: "content", Path: "go.mod"}}, false)
+	want := lookedUpAlone(t, r, second)
+	if want.Outcome != FindingFound {
+		t.Fatalf("outside read mode: %+v", want)
+	}
+	t.Setenv("ADAMIC_BUILD_CACHE", "read")
+	var products int64
+	lookup := func(nameKey string) (found, int64) {
+		t.Helper()
+		before, productsBefore := treeValuesRead.Load(), productsLookedUp.Load()
+		looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		products = productsLookedUp.Load() - productsBefore
+		return looked, treeValuesRead.Load() - before
+	}
+	looked, read := lookup(second)
+	if looked.key != want.Key || read != 3 || products != 2 {
+		t.Fatalf("the first lookup found %q (want %q), reading %d tree values (want go.mod, a.c and source's listing) and %d products' read sets (want 2)", looked.key, want.Key, read, products)
+	}
+	again, read := lookup(second)
+	if !reflect.DeepEqual(again, looked) || read != 0 || products != 0 {
+		t.Fatalf("the second lookup answered %+v (the first %+v), reading %d tree values and %d products' read sets", again, looked, read, products)
+	}
+	if looked, read = lookup(first); looked.directory == "" || read != 0 || products != 0 {
+		t.Fatalf("a product the first lookup read was looked up again, reading %d tree values and %d read sets: %+v", read, products, looked)
+	}
+	if _, err := Find(nil); err != nil {
+		t.Fatal(err)
+	}
+	if looked, read = lookup(late); looked.directory != "" || read != 0 {
+		t.Fatalf("after Find, a product reading go.mod read %d tree values: %+v", read, looked)
+	}
+	if err := os.MkdirAll(filepath.Join(r.cache, lateKey), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if looked, _ = lookup(late); looked.key != lateKey {
+		t.Fatalf("a product that arrived after a lookup missed it isn't found: %+v", looked)
+	}
+}
+
+// Outside read mode a lookup values the tree afresh: a builder, or a test, changes it between lookups, and the second
+// answers for the tree as it is then. Mutant: read mode's per-process memo on in every mode.
+// Not parallel: newRig.
+func TestOutsideReadModeEveryLookupValuesTheTreeAfresh(t *testing.T) {
+	r := newRig(t)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetReadMode()
+	t.Cleanup(forgetReadMode)
+	nameKey := fmt.Sprintf("%064x", 4)
+	recordedProduct(t, r, nameKey, []readEntry{{Kind: "content", Path: "source/a.c"}}, true)
+	if before := lookedUpAlone(t, r, nameKey); before.Outcome != FindingFound {
+		t.Fatalf("before the change: %+v", before)
+	}
+	write(t, r.root, "source/a.c", "int a2;\n")
+	gitIn(t, r.root, "commit", "-qam", "a is a2")
+	forgetTracked()
+	read := treeValuesRead.Load()
+	after := lookedUpAlone(t, r, nameKey)
+	if after.Outcome != FindingMissing || !strings.Contains(after.Why, "content source/a.c") {
+		t.Fatalf("after source/a.c changed, the product is %+v", after)
+	}
+	if treeValuesRead.Load() == read {
+		t.Fatal("the second lookup read no tree value")
 	}
 }
