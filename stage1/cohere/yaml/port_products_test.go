@@ -1,11 +1,8 @@
 package yaml
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -15,12 +12,11 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Every program a test of this package lowers or compiles is a product, built ahead by its TestProduct_ twin, so a
@@ -28,114 +24,21 @@ import (
 // <stem>.c and <stem>.mjs, then compiled by clang into <stem> with its options; a mutant is its mutated sources, their
 // emitted JavaScript and their native binary in one product.
 
-var yamlPortFiles struct {
-	once  sync.Once
-	files []string
-}
-
-// yamlPortInputs are a build's declared inputs: the compiler's implementation, this package's TypeScript, and the Go of
-// cohere and bridge/tsgo that the loader links, with the files those embed (TestYamlPortKeyCoversEmbeds), without test
-// evidence. The walk runs once per process.
+// yamlPortInputs are a build's declared inputs: the compiler (compilerinputs.Lowering), this package's TypeScript and
+// gaps/ programs, and this file, which holds the recipe.
 func yamlPortInputs(t *testing.T, name string) buildcache.Inputs {
 	t.Helper()
-	yamlPortFiles.once.Do(func() {
-		files := []string{"go.mod", "go.work", "stage1/cohere/yaml/port_products_test.go"}
-		for _, directory := range []string{"internal", "stage1/cohere/yaml", "cohere", "bridge/tsgo"} {
-			err := filepath.WalkDir(filepath.Join(repository, directory), func(path string, entry os.DirEntry, err error) error {
-				if err != nil {
-					return err
-				}
-				if entry.IsDir() {
-					switch entry.Name() {
-					case ".git", "node_modules", "testdata", "audit", "performance", "evidence", "logs":
-						return filepath.SkipDir
-					}
-					return nil
-				}
-				if strings.HasSuffix(path, "_test.go") {
-					return nil
-				}
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
-				}
-				switch filepath.Ext(path) {
-				case ".go", ".ts", ".c", ".h", ".mod", ".sum", ".gz":
-				case ".json":
-					// cohere/policy embeds its rule messages and naming tables, which the lowering links through rule_runner.
-					if !strings.HasPrefix(relative, filepath.Join("cohere", "policy")+string(filepath.Separator)) {
-						return nil
-					}
-				default:
-					return nil
-				}
-				files = append(files, relative)
-				return nil
-			})
-			if err != nil {
-				t.Fatal(err)
-			}
-		}
-		yamlPortFiles.files = files
-	})
-	if len(yamlPortFiles.files) == 0 {
-		t.Fatal("build input listing failed earlier in this process")
-	}
-	return buildcache.Inputs{Name: name, Files: append([]string(nil), yamlPortFiles.files...), Toolchain: []string{runtime.Version()}, Flags: []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
-}
-
-// TestYamlPortKeyCoversEmbeds holds the walk to every file go list says the build's packages embed. Embedded text
-// reaches a build's output, so an embed the walk dropped would leave its products keyed as before after an edit, and a
-// stale product passes without checking anything.
-func TestYamlPortKeyCoversEmbeds(t *testing.T) {
-	t.Parallel()
-	walked := map[string]bool{}
-	for _, file := range yamlPortInputs(t, "yaml-embeds").Files {
-		walked[file] = true
-	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	var output, errorOutput bytes.Buffer
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/javascript", "./internal/native")
-	command.Stdout, command.Stderr = &output, &errorOutput
-	if err := childguard.Run(command, childguard.Options{}); err != nil {
-		t.Fatalf("go list: %v\n%s", err, errorOutput.Bytes())
-	}
-	decoder := json.NewDecoder(&output)
-	checked := 0
-	for {
-		var listed struct {
-			ImportPath string
-			Dir        string
-			EmbedFiles []string
-		}
-		if err := decoder.Decode(&listed); err == io.EOF {
-			break
-		} else if err != nil {
+	files := append(compilerinputs.Lowering(), "stage1/cohere/yaml/port_products_test.go")
+	for _, pattern := range []string{"*.ts", "gaps/*.ts"} {
+		sources, err := filepath.Glob(pattern)
+		if err != nil {
 			t.Fatal(err)
 		}
-		for _, name := range listed.EmbedFiles {
-			relative, err := filepath.Rel(root, filepath.Join(listed.Dir, name))
-			if err != nil {
-				t.Fatal(err)
-			}
-			// A module outside the repository is pinned by its go.sum line, which the walk holds.
-			if strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-				continue
-			}
-			checked++
-			if !walked[relative] {
-				t.Errorf("%s embeds %s, which the products' key doesn't read", listed.ImportPath, relative)
-			}
+		for _, source := range sources {
+			files = append(files, "stage1/cohere/yaml/"+source)
 		}
 	}
-	if checked == 0 {
-		t.Fatal("go list reported no embedded file inside the repository, so this check held nothing")
-	}
-	t.Logf("%d embedded files checked against the products' key", checked)
+	return buildcache.Inputs{Name: name, Files: files, Toolchain: []string{runtime.Version()}, Flags: []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
 }
 
 type yamlProductValue struct {

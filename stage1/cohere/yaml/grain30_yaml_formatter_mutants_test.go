@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -43,16 +44,23 @@ var formatterMutantsOracle struct {
 }
 
 // formatterMutantsSetupInputs keys the corpus and its expected answers by the Go oracle that answers them: goFormatOracle,
-// a product of its own keyed by go's answer, so this one reads its bytes rather than asking go again.
+// a product of its own keyed by go's answer, so this one reads its bytes rather than asking go again. Of cohere it reads
+// only lexCorpus's roots.
 func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs {
 	t.Helper()
 	binary, err := os.ReadFile(oracle)
 	if err != nil {
 		t.Fatal(err)
 	}
+	files := []string{"internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"}
+	for _, corpus := range lexCorpus {
+		for _, root := range corpus.roots {
+			files = append(files, corpus.checkout+"/"+root)
+		}
+	}
 	return buildcache.Inputs{
 		Name:  "yaml-formatter-mutants-oracle-and-corpus-v3",
-		Files: []string{"cohere", "internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"},
+		Files: files,
 		Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))},
 	}
 }
@@ -320,17 +328,20 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := []string{"internal", "cohere", "go.mod"}
+	// The sources product copies the .ts files and reads nothing else; the lowered and native products are the
+	// compiler's, so they name it too.
+	var copied []string
 	for _, file := range entries {
-		files = append(files, "stage1/cohere/yaml/"+file)
+		copied = append(copied, "stage1/cohere/yaml/"+file)
 	}
+	files := append(compilerinputs.Lowering(), copied...)
 	flags := []string{mutant.file, mutant.from, mutant.to, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
 	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
 	var sources string
 	if level > 0 {
 		sources, _ = formatterMutantsProduct(t, index, 0)
 	} else {
-		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: copied, Flags: flags, Toolchain: tools}, func(directory string) error {
 			for _, file := range entries {
 				source, err := os.ReadFile(file)
 				if err != nil {
