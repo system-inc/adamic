@@ -110,13 +110,12 @@ func (cache *resultCache) reuse(key string, execute func() (execution, bool)) ex
 	return result
 }
 
-// resultEnvironment names every inherited variable that can change an observation. The runner's
-// children (the compiler worker or adamic c, clang, the native program and Node) inherit the whole
-// environment, but only these reach what they print or how they exit. Keying anything else, HOME or a
-// shell's own variables, only keeps one machine's observations from serving another, and keying all
-// of it hid which variables matter. ASAN_OPTIONS and UBSAN_OPTIONS are absent on purpose: the engine
-// sets both for the native run, a set value replaces the inherited one, and nativeEnvironment is
-// already part of the native command's key.
+// resultEnvironment names every inherited variable that can change an observation, and the runner's
+// children (the compiler worker or adamic c, clang, the native program and Node) inherit these and
+// passedEnvironment's, nothing else (childEnvironment). So what a child can read is what the key names:
+// a variable not listed here never reaches one, and adding a variable a child should see means keying
+// it. ASAN_OPTIONS and UBSAN_OPTIONS are absent on purpose: the engine sets both for the native run,
+// and nativeEnvironment is already part of the native command's key.
 var resultEnvironment = []string{
 	// The compiler is a Go process, and GODEBUG switches runtime and standard library behavior.
 	"GODEBUG",
@@ -138,6 +137,35 @@ var resultEnvironment = []string{
 	"TZ", "LC_ALL", "LC_MESSAGES", "LANG", "NODE_ICU_DATA",
 }
 
+// passedEnvironment is what a child inherits beyond resultEnvironment, unkeyed: where clang and the
+// compiler write scratch files they remove, and where a coverage build of the runner, run as its own
+// compiler worker, writes its counters. Neither reaches what a child prints or how it exits.
+var passedEnvironment = []string{"TMPDIR", "GOCOVERDIR"}
+
+// keyedEnvironment is each resultEnvironment variable lookup finds set, with its name: unset and set to
+// empty are different to some readers, so only a set variable is keyed.
+func keyedEnvironment(lookup func(string) (string, bool)) []string {
+	var keyed []string
+	for _, name := range resultEnvironment {
+		if value, set := lookup(name); set {
+			keyed = append(keyed, name+"="+value)
+		}
+	}
+	return keyed
+}
+
+// childEnvironment is the environment every child runs with: the variables the key names, as the
+// runner has them, then passedEnvironment's, then extra, whose later values win.
+func childEnvironment(extra ...string) []string {
+	environment := keyedEnvironment(os.LookupEnv)
+	for _, name := range passedEnvironment {
+		if value, set := os.LookupEnv(name); set {
+			environment = append(environment, name+"="+value)
+		}
+	}
+	return append(environment, extra...)
+}
+
 // prepareCache derives the execution context every observation is keyed under. root is the checkout
 // under test, as prepareMode gets it.
 func prepareCache(root string) (*resultCache, string, string, error) {
@@ -152,8 +180,10 @@ func prepareCache(root string) (*resultCache, string, string, error) {
 	parts := []string{"test262-context-v2", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 	// Relative paths in the keyed commands (an explicit -root or -work, and the scratch compiler under
 	// it) resolve from the working directory, so where the runner stands in the checkout is part of
-	// what they name. Where the checkout sits on the machine is not: the same tree at another path,
-	// another user's or another machine's, reuses its observations.
+	// what they name. Where the checkout sits on the machine is not part of the context. The commands
+	// still name this machine's places (node's and clang's paths found on PATH, the runtime library
+	// and scratch compiler under the cache and work directories), so today observations are reused on
+	// the machine that made them, from any copy of the tree there.
 	place, err := checkoutPlace(root)
 	if err != nil {
 		return nil, "", "", err
@@ -164,12 +194,7 @@ func prepareCache(root string) (*resultCache, string, string, error) {
 		return nil, "", "", err
 	}
 	parts = append(parts, fmt.Sprint(stack.Cur, stack.Max))
-	// Unset and set to empty are different to some readers, so only a set variable is keyed, with its name.
-	for _, name := range resultEnvironment {
-		if value, set := os.LookupEnv(name); set {
-			parts = append(parts, name+"="+value)
-		}
-	}
+	parts = append(parts, keyedEnvironment(os.LookupEnv)...)
 	// Node's harness is embedded source plus Go build settings, not the linked compiler.
 	// Lowering and the embedded runtime can change without changing Node's execution.
 	nodeParts := append([]string{}, parts...)
