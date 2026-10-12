@@ -55,7 +55,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 
 func goOracle(t *testing.T) string {
 	t.Helper()
-	return filepath.Join(scannerOracleProduct(t), "oracle")
+	return scannerOracleProduct(t)
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
