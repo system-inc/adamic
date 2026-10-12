@@ -9,12 +9,41 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
-func printerCases(t *testing.T, mode string, oracle ...string) (string, string) {
+// printerCorpora holds each mode's corpus once per process: the as-Go, mutant, preflight and whitespace tests all read
+// the same Go oracle's answers, so a process runs the git checks, hashes the oracle and looks the product up once per
+// mode rather than once per caller (about 30 calls in a package run).
+var printerCorpora sync.Map
+
+type printerCorpus struct {
+	once       sync.Once
+	path, want string
+}
+
+var printerUpstream struct {
+	once    sync.Once
+	checked bool
+}
+
+// printerCases is one mode's corpus: the cases file and the Go oracle's answers to it.
+func printerCases(t *testing.T, mode string) (string, string) {
+	t.Helper()
+	value, _ := printerCorpora.LoadOrStore(mode, &printerCorpus{})
+	corpus := value.(*printerCorpus)
+	corpus.once.Do(func() { corpus.path, corpus.want = printerCorpusProduct(t, mode) })
+	// A preparation that failed inside the Once leaves the path empty for every later caller in this process.
+	if corpus.path == "" {
+		t.Fatalf("GraphQL %s corpus unavailable: its preparation failed earlier in this process (see that test's log)", mode)
+	}
+	return corpus.path, corpus.want
+}
+
+func printerCorpusProduct(t *testing.T, mode string) (string, string) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -24,18 +53,23 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 	// 7945d102a6c18dd36adf9114a758ce646e8b2359 plus generated controls
 	// from cohere_side_test.go, whose random seed is 20261006. Compare
 	// live case totals in the union; guard the pinned file count separately.
-	files := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
-		[]string{"internal/format/graphql"}, []string{"*_test.go"})
-	if len(files) != 3 {
-		t.Fatalf("pinned GraphQL corpus: %d files, want 3", len(files))
+	// The pin is the same for every mode, so a process checks it once.
+	printerUpstream.once.Do(func() {
+		files := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
+			[]string{"internal/format/graphql"}, []string{"*_test.go"})
+		if len(files) != 3 {
+			t.Fatalf("pinned GraphQL corpus: %d files, want 3", len(files))
+		}
+		t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
+		printerUpstream.checked = true
+	})
+	if !printerUpstream.checked {
+		t.Fatal("pinned GraphQL corpus: its check failed earlier in this process (see that test's log)")
 	}
-	t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
-	if len(oracle) == 0 {
-		oracle = []string{printerOracle(t)}
-	}
+	oracle := printerOracle(t)
 	directory := printerBuild(t, printerBuildInputs{
 		Name:  "GraphQL printer oracle outputs",
-		Files: []string{oracle[0], root + "/stage1/cohere/graphql/printer/printer_test.go", root + "/stage1/cohere/graphql/printer/shards_test.go"},
+		Files: []string{oracle, root + "/stage1/cohere/graphql/printer/printer_test.go", root + "/stage1/cohere/graphql/printer/shards_test.go"},
 		Flags: []string{"mode=" + mode, "test-run=TestAdamicPrinter"}, Toolchain: runtime.Version(),
 	}, func(directory string) error {
 		request, err := json.Marshal(map[string]any{"Sources": []string(nil), "Cases": directory + "/cases.txt", "Answers": directory + "/answers.txt", "Mode": mode, "Coverage": directory + "/coverage.json"})
@@ -46,7 +80,7 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 		if err := os.WriteFile(path, request, 0644); err != nil {
 			return err
 		}
-		command := exec.CommandContext(context.Background(), oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+		command := exec.CommandContext(context.Background(), oracle, "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
 		if output, err := command.CombinedOutput(); err != nil {
@@ -123,10 +157,9 @@ func TestPrinterFileDriver(t *testing.T) {
 	if err := os.WriteFile(source, []byte("query{hello(a:1,b:2)}"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	path, _ := filepath.Abs("main.ts")
-	products := preparePrinterProducts(t, path)
+	products := printerInTreeProducts(t)
 	want := "query {\n    hello(a: 1, b: 2)\n}\n"
-	for _, side := range []run{onNode(t, path, source), execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, source)} {
+	for _, side := range []run{onNode(t, products.source, source), execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, source)} {
 		if side.exitCode != 0 || string(side.stdout) != want {
 			t.Fatalf("driver: exit %d, stdout %q, stderr %q", side.exitCode, side.stdout, side.stderr)
 		}

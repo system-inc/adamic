@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -40,17 +41,44 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			// Generated inputs live in a read-only product outside the repository.
 			// Its bytes, rather than the machine-specific cache path, identify it.
-			data, err := os.ReadFile(file)
-			if err != nil {
-				t.Fatal(err)
-			}
-			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
+			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%s", filepath.Base(file), printerGeneratedSum(t, file)))
 		} else {
 			key.Files = append(key.Files, filepath.ToSlash(relative))
 		}
 	}
 	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	return buildcache.Product(t, key, build)
+}
+
+// printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
+// keys all four corpora, and a process hashes it once rather than once per corpus.
+var printerGeneratedSums sync.Map
+
+func printerGeneratedSum(t *testing.T, file string) string {
+	t.Helper()
+	info, err := os.Stat(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	identity := fmt.Sprintf("%s\x00%d\x00%d", file, info.Size(), info.ModTime().UnixNano())
+	if sum, ok := printerGeneratedSums.Load(identity); ok {
+		return sum.(string)
+	}
+	data, err := os.ReadFile(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sum := fmt.Sprintf("%x", sha256.Sum256(data))
+	printerGeneratedSums.Store(identity, sum)
+	return sum
+}
+
+// printerRepositoryFiles is the walk of the whole repository (about 98k entries), which every lowered product lists:
+// once per process, since what the tree tracks doesn't change while it runs.
+var printerRepositoryFiles struct {
+	once  sync.Once
+	files []string
+	err   error
 }
 
 func printerInputFiles(t *testing.T, roots ...string) []string {
@@ -65,24 +93,18 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		err = filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
-			if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
-				if entry.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if entry.Type().IsRegular() {
-				seen[path] = true
-			}
-			return nil
-		})
+		var files []string
+		if absolute == tree {
+			printerRepositoryFiles.once.Do(func() { printerRepositoryFiles.files, printerRepositoryFiles.err = printerWalk(tree, absolute) })
+			files, err = printerRepositoryFiles.files, printerRepositoryFiles.err
+		} else {
+			files, err = printerWalk(tree, absolute)
+		}
 		if err != nil {
 			t.Fatal(err)
+		}
+		for _, path := range files {
+			seen[path] = true
 		}
 	}
 	files := make([]string, 0, len(seen))
@@ -91,6 +113,28 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 	}
 	sort.Strings(files)
 	return files
+}
+
+// printerWalk is every regular file under absolute that the tree carries.
+func printerWalk(tree, absolute string) ([]string, error) {
+	var files []string
+	err := filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
+		if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if entry.Type().IsRegular() {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files, err
 }
 
 func printerLoweredProduct(t *testing.T, path string) string {
