@@ -1,8 +1,9 @@
 # Baseline oracle
 
-`run.sh <tree> <new-results-directory>` installs the tree's locked dependencies
-with npm ci, builds using npm run build, then runs npm test with full baseline
-verification. Commands come from v6.0.3 package.json, Herebyfile.mjs and
+`run.sh <tree> <new-results-directory>` checks that the tree holds its locked
+dependencies, linked in from the repository's `stage3/typescript` install (it
+never runs npm ci), builds using npm run build, then runs npm test with full
+baseline verification. Commands come from v6.0.3 package.json, Herebyfile.mjs and
 CONTRIBUTING.md. The compiler, services and test harness are built from the
 supplied source. It never accepts or updates reference baselines.
 

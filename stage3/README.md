@@ -35,7 +35,8 @@ with `stage3/apply.sh --packages-digest > stage3/api/node_modules.sha256`);
 adapters can require("typescript").
 Never weaken Adamic's checker options to improve the census.
 
-The oracle does npm ci, npm run build, and npm test with --light=false,
+The oracle checks the tree's linked packages (never npm ci), then runs npm run
+build and npm test with --light=false,
 --workers=4 and --lint=false. It writes phase logs, report.json and baseline.diff;
 nonzero exit means failure, including install/build failure or test timeout.
 Default tests cover compiler, conformance, project, fourslash, fourslash-server,

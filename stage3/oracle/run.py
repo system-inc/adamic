@@ -8,8 +8,13 @@ from pathlib import Path
 import re
 import signal
 import subprocess
+import sys
 import time
+# Imports must not leave __pycache__ in stage3 or stage3/oracle, which nothing ignores.
+sys.dont_write_bytecode = True
 from failure_details import read_failures, cause_counts, diff_previews, markdown
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from apply import installed_packages
 
 parser = argparse.ArgumentParser()
 parser.add_argument('tree', type=Path)
@@ -59,13 +64,27 @@ def phase(name, command, limit=None, env=None):
     report['phases'][name] = dict(command=command, exit=code, seconds=round(time.monotonic()-begin, 3))
     return code
 
+def packages():
+    """The adapted tree holds its devDependencies already, linked in from the tree's stage3/typescript install
+    (lane/artifact.py's link_packages); the oracle checks them and never runs npm ci."""
+    begin = time.monotonic()
+    try:
+        installed_packages(tree)
+        code = 0
+    except RuntimeError as error:
+        (out / 'install.log').write_text(str(error) + '\n')
+        code = 2
+    report['phases']['install'] = dict(command=['installed_packages', str(tree)], exit=code,
+                                       seconds=round(time.monotonic() - begin, 3))
+    return code
+
 try:
     if args.prepared:
         producer = json.loads((tree.parent / 'artifact-ready.json').read_text())
         for name in ('install', 'build'):
             report['phases'][name] = dict(producer['phases'][name], artifact=producer['key'])
         report['artifact'] = producer['key']
-    if args.prepared or phase('install', ['npm', 'ci', '--no-audit', '--no-fund']) == 0:
+    if args.prepared or packages() == 0:
         if args.prepared or phase('build', ['npm', 'run', 'build']) == 0:
             command = ['npm', 'test', '--', f'--workers={args.workers}', '--lint=false', '--no-colors']
             if args.prepared:
