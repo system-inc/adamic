@@ -3,7 +3,6 @@ package estree
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -170,7 +169,7 @@ func checkThreePortCase(pair threePortCase, want, source, native []byte) error {
 func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
 	t.Helper()
 	inputs := buildcache.Inputs{Name: "three-port-mutant-lowered-" + mutation.name,
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
+		Files:     estreeCompilerFiles(),
 		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
@@ -220,7 +219,7 @@ func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
 	t.Helper()
 	lowered := threePortLoweredProduct(t, mutation)
 	inputs := buildcache.Inputs{Name: "three-port-mutant-native-" + mutation.name,
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
+		Files:     estreeCompilerFiles(),
 		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	inputs.Flags = append(inputs.Flags, "split=true")
@@ -250,47 +249,15 @@ var threePortShared struct {
 	prepared *threePortPrepared
 }
 
-func threePortOracleInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
-}
-
 func threePortSetupContext() (context.Context, context.CancelFunc) {
 	return context.WithCancel(context.Background())
 }
 
+// threePortOracleProduct is the estree Go oracle, goOracle's product: the same overlay build it made under a key of its
+// own that named cohere/internal and tsc whole (#4ycgm2n).
 func threePortOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := threePortOracleInputs(t)
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		repo := root(t)
-		source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
-		virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		ctx, cancel := threePortSetupContext()
-		defer cancel()
-		command := threePortCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.Dir = filepath.Join(repo, "cohere")
-		command.Env = append(command.Env, "PWD="+command.Dir)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
+	return goOracle(t)
 }
 
 func threePortReady(t *testing.T) *threePortPrepared {
