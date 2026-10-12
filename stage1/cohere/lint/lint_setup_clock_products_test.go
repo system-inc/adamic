@@ -40,6 +40,13 @@ func TestProduct_ShardsAgreePrepared(t *testing.T) {
 	t.Logf("product wall=%s", time.Since(started))
 }
 
+func TestProduct_ShardsAgreeReferences(t *testing.T) {
+	t.Parallel()
+	started := time.Now()
+	testShardsAgreeReferences(t)
+	t.Logf("product wall=%s", time.Since(started))
+}
+
 func TestProduct_ProfileCompilationLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()

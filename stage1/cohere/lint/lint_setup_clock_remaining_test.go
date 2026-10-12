@@ -32,6 +32,7 @@ func lintBuildPhaseChild(t *testing.T, name string, args ...string) *exec.Cmd {
 func TestShardsAgree_Setup(t *testing.T) {
 	t.Parallel()
 	testShardsAgreePrepare(t)
+	testShardsAgreeReferencesReady(t)
 }
 
 func TestShardsAgree_SetupRequired(t *testing.T) {
@@ -41,7 +42,7 @@ func TestShardsAgree_SetupRequired(t *testing.T) {
 	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_SHARDS_AGREE_LEAF=0")
 	output, err := command.CombinedOutput()
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !productLookedUp(output, "shards-agree-prepared-v1") {
+	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !productLookedUp(output, "shards-agree-prepared-v1") || !productLookedUp(output, "shards-agree-references-v1") {
 		t.Fatalf("standalone shard must look up its corpus: %v\n%s", err, output)
 	}
 }

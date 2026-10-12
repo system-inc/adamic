@@ -8,6 +8,10 @@ import (
 	"testing"
 )
 
+// shardsAgreeHeavyWrapper is a heavy row's test as the file spells it: the name it carries, the pass it runs, and the
+// arguments it hands testShardsAgreeHeavyPass, which must say the same.
+var shardsAgreeHeavyWrapper = regexp.MustCompile(`(?m)^func TestShardsAgree([A-Z][A-Za-z]*)_([0-9A-Z]+)_(Output|Count)\(t \*testing\.T\) \{\n\tt\.Parallel\(\)\n\ttestShardsAgreeHeavyPass\(t, "([A-Za-z]*)", "([0-9A-Z]*)", (true|false)\)\n\}$`)
+
 func TestShardsAgree_Union(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("shards_agree_split_test.go")
@@ -23,27 +27,125 @@ func TestShardsAgree_Union(t *testing.T) {
 	if len(regexp.MustCompile(`(?m)^func TestShardsAgree_[0-9]{3}\(`).FindAll(data, -1)) != testShardsAgreeShards {
 		t.Fatal("shard enumeration differs from constant")
 	}
-	products := testShardsAgreeReady(t)
-	rows := products.Rows
-	buckets := testShardsAgreePartition(t, rows)
-	// Plant one output disagreement and use the same byte oracle as every leaf.
-	planted := rows[0]
-	caught := []int{}
-	for shard, bucket := range buckets {
-		for _, row := range bucket {
-			want := []byte(row)
-			got := append([]byte(nil), want...)
-			if row == planted {
-				got = append(got, '!')
-			}
-			if difference(got, want) != "" {
-				caught = append(caught, shard)
+	// Every heavy row has exactly one test per process count and mode, and each runs the pass its name says.
+	type pass struct{ name, label, mode string }
+	wrappers := map[pass]int{}
+	matches := shardsAgreeHeavyWrapper.FindAllSubmatch(data, -1)
+	for _, match := range matches {
+		mode := "Output"
+		if string(match[6]) == "true" {
+			mode = "Count"
+		}
+		if string(match[1]) != string(match[4]) || string(match[2]) != string(match[5]) || string(match[3]) != mode {
+			t.Fatalf("heavy wrapper runs another pass than its name: %s", match[0])
+		}
+		wrappers[pass{string(match[1]), string(match[2]), string(match[3])}]++
+	}
+	if len(regexp.MustCompile(`(?m)^func TestShardsAgree[A-Z]`).FindAll(data, -1)) != len(matches) {
+		t.Fatal("a heavy wrapper is not spelled as TestShardsAgree_Union reads it")
+	}
+	want := 0
+	for _, entry := range testShardsAgreeHeavy {
+		for _, each := range testShardsAgreePasses {
+			for _, mode := range []string{"Output", "Count"} {
+				want++
+				if wrappers[pass{entry.Name, each.Label, mode}] != 1 {
+					t.Fatalf("heavy row %s needs exactly one TestShardsAgree%s_%s_%s", entry.Key, entry.Name, each.Label, mode)
+				}
 			}
 		}
 	}
-	if len(caught) != 1 || caught[0] != testShardsAgreeOwner(t, planted) {
-		t.Fatalf("planted disagreement caught by %v", caught)
+	if len(wrappers) != want {
+		t.Fatalf("%d heavy wrappers, want %d", len(wrappers), want)
 	}
-	t.Logf("union %d cases across %d shards", len(rows), testShardsAgreeShards)
-	t.Logf("planted disagreement caught exactly once by TestShardsAgree_%03d", caught[0])
+	products := testShardsAgreeReady(t)
+	rows := products.Rows
+	buckets, heavy := testShardsAgreePartition(t, rows)
+	// Every row is in exactly one bucket or heavy entry, never both and never neither, and the product holds that split.
+	placed := map[string]int{}
+	for _, bucket := range buckets {
+		for _, row := range bucket {
+			placed[row]++
+		}
+	}
+	for _, entry := range heavy {
+		for _, row := range entry {
+			placed[row]++
+		}
+	}
+	for _, row := range rows {
+		if placed[row] != 1 {
+			t.Fatalf("row %q placed %d times", row, placed[row])
+		}
+	}
+	for shard := range buckets {
+		if len(buckets[shard]) != len(products.Buckets[shard]) {
+			t.Fatalf("bucket %03d: product holds %d rows, partition %d", shard, len(products.Buckets[shard]), len(buckets[shard]))
+		}
+	}
+	for index := range heavy {
+		if len(heavy[index]) != len(products.Heavy[index]) {
+			t.Fatalf("heavy %s: product holds %d rows, partition %d", testShardsAgreeHeavy[index].Name, len(products.Heavy[index]), len(heavy[index]))
+		}
+	}
+	// Plant one disagreement at a time, in one row's answer at one pass, and judge it with the same byte oracle as
+	// every leaf: a bucket's test compares its rows at every pass, a heavy test its entry's rows at its own pass. Each
+	// plant must be caught by exactly the test that owns that row at that pass.
+	type owner struct {
+		test   string
+		rows   []string
+		passes []pass
+	}
+	var owners []owner
+	var everyPass []pass
+	for _, each := range testShardsAgreePasses {
+		for _, mode := range []string{"Output", "Count"} {
+			everyPass = append(everyPass, pass{"", each.Label, mode})
+		}
+	}
+	for shard, bucket := range buckets {
+		owners = append(owners, owner{fmt.Sprintf("TestShardsAgree_%03d", shard), bucket, everyPass})
+	}
+	for index, entry := range testShardsAgreeHeavy {
+		for _, each := range everyPass {
+			owners = append(owners, owner{fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode), heavy[index], []pass{each}})
+		}
+	}
+	plant := func(planted string, at pass, expected string) {
+		var caught []string
+		for _, candidate := range owners {
+			for _, each := range candidate.passes {
+				for _, row := range candidate.rows {
+					want := []byte(row)
+					got := append([]byte(nil), want...)
+					if row == planted && each == at {
+						got = append(got, '!')
+					}
+					if difference(got, want) != "" {
+						caught = append(caught, candidate.test)
+					}
+				}
+			}
+		}
+		if len(caught) != 1 || caught[0] != expected {
+			t.Fatalf("disagreement planted in %q at %s %s caught by %v, want %s", planted, at.label, at.mode, caught, expected)
+		}
+	}
+	planted := ""
+	for _, row := range rows {
+		if testShardsAgreeHeavyOwner(row) < 0 {
+			planted = row
+			break
+		}
+	}
+	for _, each := range everyPass {
+		plant(planted, each, fmt.Sprintf("TestShardsAgree_%03d", testShardsAgreeOwner(t, planted)))
+	}
+	for index, entry := range testShardsAgreeHeavy {
+		for _, each := range everyPass {
+			plant(heavy[index][0], each, fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode))
+		}
+	}
+	t.Logf("union %d cases across %d shards and %d heavy rows", len(rows), testShardsAgreeShards, len(testShardsAgreeHeavy))
+	t.Logf("planted disagreements caught exactly once: at every pass by TestShardsAgree_%03d, and by each heavy pass's own test", testShardsAgreeOwner(t, planted))
 }

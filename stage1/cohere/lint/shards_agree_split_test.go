@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
 	"os"
@@ -29,57 +30,192 @@ import (
 // case, so the whole output is compared, and the count mode too.
 const testShardsAgreeShards = 32
 
+// testShardsAgreeHeavy are the rows too heavy for a hash bucket, by the key testShardsAgreeOwner hashes (the base
+// name, and the options when the row has any), each with the name its tests carry. checker.ts is one row that takes
+// about 24 s per output pass and 6 s per count pass alone on one core, so the bucket it hashed to ran about 118 s of
+// it (#wyt8ntk); here it has a test per process count and mode instead. A future heavy row joins by name.
+var testShardsAgreeHeavy = []struct{ Key, Name string }{
+	{"checker.ts", "Checker"},
+}
+
+// testShardsAgreePasses are the process counts every row is compared at, by the label a heavy row's tests carry. Zero
+// is the unit's CPUs, never the host's cores: on a runner's 64-core box this ran 64 shard processes in an 8-CPU share.
+var testShardsAgreePasses = []struct {
+	Label string
+	Count int
+}{{"1", 1}, {"2", 2}, {"N", 0}}
+
+func testShardsAgreeCount(count int) int {
+	if count == 0 {
+		return runtime.GOMAXPROCS(0)
+	}
+	return count
+}
+
 func testShardsAgree(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_SHARDS_AGREE_LEAF") != "1" {
 		products := testShardsAgreeReady(t)
-		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+products.Root)
+		leaf := testShardsAgreeLeafFor(t, products, products.Buckets[shard], fmt.Sprintf("bucket-%03d", shard))
+		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
 		return
 	}
-	products := testShardsAgreeRead(t, os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
-	// The parent fetched all shared products before launching this leaf.
-	rows := products.Buckets[shard]
-	if len(rows) == 0 {
+	// The parent resolved every product and wrote what this leaf reads, so the leaf looks nothing up.
+	leaf := testShardsAgreeLeafRead(t)
+	if leaf.Rows == 0 {
 		t.Log("empty shard")
 		return
 	}
-	path := manifest(t, rows)
-	binary := products.Binary
-	t.Logf("union %d cases, shard %03d: %d cases", len(products.Rows), shard, len(rows))
-	want := execute(t, "", binary, "--manifest", path)
-	wantCount := execute(t, "", binary, "--manifest", path, "--count")
-	// The unit's CPUs, never the host's cores: on a runner's 64-core box this ran 64 shard processes in an 8-CPU share.
-	counts := []int{1, 2, runtime.GOMAXPROCS(0)}
+	t.Logf("union %d cases, shard %03d: %d cases", leaf.Union, shard, leaf.Rows)
+	want, wantCount := testShardsAgreeLeafReferences(t, leaf)
 	type answer struct {
 		output, count []byte
 		err           error
 	}
-	answers := make([]answer, len(counts))
+	answers := make([]answer, len(testShardsAgreePasses))
+	// The counts are independent passes over the same manifest, so running them at most the parent's share at a time
+	// changes no comparison, only how many shard processes this test keeps running at once.
+	share := make(chan struct{}, max(1, leaf.Share))
 	var workers sync.WaitGroup
-	for i, count := range counts {
+	for i, pass := range testShardsAgreePasses {
 		workers.Add(1)
 		go func(i, count int) {
 			defer workers.Done()
-			answers[i].output, answers[i].err = shards.Run(binary, path, count, false)
+			share <- struct{}{}
+			defer func() { <-share }()
+			answers[i].output, answers[i].err = shards.Run(leaf.Binary, leaf.Manifest, count, false)
 			if answers[i].err == nil {
-				answers[i].count, answers[i].err = shards.Run(binary, path, count, true)
+				answers[i].count, answers[i].err = shards.Run(leaf.Binary, leaf.Manifest, count, true)
 			}
-		}(i, count)
+		}(i, testShardsAgreeCount(pass.Count))
 	}
 	workers.Wait()
-	for i, count := range counts {
+	for i, pass := range testShardsAgreePasses {
+		count := testShardsAgreeCount(pass.Count)
 		got := answers[i]
 		if got.err != nil {
 			t.Fatal(got.err)
 		}
-		if diff := difference(got.output, want.output); diff != "" {
+		if diff := difference(got.output, want); diff != "" {
 			t.Fatalf("%d shards: %s", count, diff)
 		}
-		if string(got.count) != string(wantCount.output) {
-			t.Fatalf("%d shards count %q, want %q", count, got.count, wantCount.output)
+		if string(got.count) != string(wantCount) {
+			t.Fatalf("%d shards count %q, want %q", count, got.count, wantCount)
 		}
 	}
-	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", len(rows), counts[2], len(want.output))
+	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", leaf.Rows, testShardsAgreeCount(0), len(want))
+}
+
+// testShardsAgreeHeavyPass compares one heavy row's answer at one process count, in one mode, with its reference.
+func testShardsAgreeHeavyPass(t *testing.T, name, label string, countOnly bool) {
+	t.Helper()
+	heavy := -1
+	for index, entry := range testShardsAgreeHeavy {
+		if entry.Name == name {
+			heavy = index
+		}
+	}
+	count := -1
+	for _, pass := range testShardsAgreePasses {
+		if pass.Label == label {
+			count = pass.Count
+		}
+	}
+	if heavy < 0 || count < 0 {
+		t.Fatalf("no heavy row %q or pass %q", name, label)
+	}
+	if os.Getenv("ADAMIC_SHARDS_AGREE_LEAF") != "1" {
+		products := testShardsAgreeReady(t)
+		leaf := testShardsAgreeLeafFor(t, products, products.Heavy[heavy], "heavy-"+name)
+		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
+		return
+	}
+	leaf := testShardsAgreeLeafRead(t)
+	count = testShardsAgreeCount(count)
+	t.Logf("union %d cases, heavy %s: %d cases", leaf.Union, name, leaf.Rows)
+	want, wantCount := testShardsAgreeLeafReferences(t, leaf)
+	got, err := shards.Run(leaf.Binary, leaf.Manifest, count, countOnly)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if countOnly {
+		if string(got) != string(wantCount) {
+			t.Fatalf("%d shards count %q, want %q", count, got, wantCount)
+		}
+		t.Logf("%d rows: count identical at %d shards, %s", leaf.Rows, count, got)
+		return
+	}
+	if diff := difference(got, want); diff != "" {
+		t.Fatalf("%d shards: %s", count, diff)
+	}
+	t.Logf("%d rows: output identical at %d shards, %d bytes", leaf.Rows, count, len(want))
+}
+
+// testShardsAgreeLeaf is what a leaf child reads, every path resolved by the parent that launched it.
+type testShardsAgreeLeaf struct {
+	Binary, Manifest, Output, Count string
+	Rows, Union, Share              int
+}
+
+// testShardsAgreeLeafFor writes rows' manifest and their references, read back on this machine, beside a leaf file
+// for the child, and returns the leaf file's path. The child would otherwise look up the prepared product and every
+// product its rows name again, about 8 s per leaf on one core (#wyt8ntk).
+func testShardsAgreeLeafFor(t *testing.T, products testShardsAgreeProducts, rows []string, label string) string {
+	t.Helper()
+	directory := t.TempDir()
+	leaf := testShardsAgreeLeaf{Binary: products.Binary, Rows: len(rows), Union: len(products.Rows), Share: testguard.Share()}
+	if len(rows) > 0 {
+		leaf.Manifest = manifest(t, rows)
+		references := testShardsAgreeReferencesReady(t)
+		for _, file := range []struct {
+			extension string
+			path      *string
+		}{{".output", &leaf.Output}, {".count", &leaf.Count}} {
+			data, err := os.ReadFile(filepath.Join(references, label+file.extension))
+			if err != nil {
+				t.Fatal(err)
+			}
+			*file.path = filepath.Join(directory, label+file.extension)
+			if err = os.WriteFile(*file.path, []byte(buildcache.Absolute(string(data))), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	data, err := json.Marshal(leaf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(directory, "leaf.json")
+	if err = os.WriteFile(path, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
+func testShardsAgreeLeafRead(t *testing.T) testShardsAgreeLeaf {
+	t.Helper()
+	data, err := os.ReadFile(os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var leaf testShardsAgreeLeaf
+	if err = json.Unmarshal(data, &leaf); err != nil {
+		t.Fatal(err)
+	}
+	return leaf
+}
+
+func testShardsAgreeLeafReferences(t *testing.T, leaf testShardsAgreeLeaf) ([]byte, []byte) {
+	t.Helper()
+	output, err := os.ReadFile(leaf.Output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	count, err := os.ReadFile(leaf.Count)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return output, count
 }
 
 func testShardsAgreeRows(t *testing.T, rows []string) []string {
@@ -170,27 +306,57 @@ func testShardsAgreeBinary(t *testing.T, directory string) string {
 	})
 	return filepath.Join(d, "scanner")
 }
-func testShardsAgreeOwner(t *testing.T, row string) int {
-	t.Helper()
+
+// testShardsAgreeKey names a row by its file's base name and its options: temporary capture/generated roots are
+// deliberately absent from this key.
+func testShardsAgreeKey(row string) string {
 	fields := strings.SplitN(row, "\t", 2)
-	// Temporary capture/generated roots are deliberately absent from this key.
 	key := filepath.Base(fields[0])
 	if len(fields) > 1 {
 		key += "\t" + fields[1]
 	}
-	data, err := os.ReadFile(fields[0])
+	return key
+}
+func testShardsAgreeOwner(t *testing.T, row string) int {
+	t.Helper()
+	data, err := os.ReadFile(strings.SplitN(row, "\t", 2)[0])
 	if err != nil {
 		t.Fatal(err)
 	}
-	sum := sha256.Sum256(append([]byte(key+"\x00"), data...))
+	sum := sha256.Sum256(append([]byte(testShardsAgreeKey(row)+"\x00"), data...))
 	return int(binary.LittleEndian.Uint64(sum[:8]) % testShardsAgreeShards)
 }
-func testShardsAgreePartition(t *testing.T, rows []string) [][]string {
-	buckets := make([][]string, testShardsAgreeShards)
+
+// testShardsAgreeHeavyOwner is the index in testShardsAgreeHeavy of the entry naming row, or -1 for a bucket's row.
+func testShardsAgreeHeavyOwner(row string) int {
+	for index, entry := range testShardsAgreeHeavy {
+		if testShardsAgreeKey(row) == entry.Key {
+			return index
+		}
+	}
+	return -1
+}
+
+// testShardsAgreePartition places every row exactly once: in the heavy entry naming it, else in its hash bucket.
+// A heavy entry naming no row fails, so the list never outlives the row it was made for.
+func testShardsAgreePartition(t *testing.T, rows []string) (buckets, heavy [][]string) {
+	buckets = make([][]string, testShardsAgreeShards)
+	heavy = make([][]string, len(testShardsAgreeHeavy))
 	visits := make([]int, len(rows))
+	for index, entry := range testShardsAgreeHeavy {
+		for i, row := range rows {
+			if testShardsAgreeHeavyOwner(row) == index {
+				heavy[index] = append(heavy[index], row)
+				visits[i]++
+			}
+		}
+		if len(heavy[index]) == 0 {
+			t.Fatalf("heavy row %q names no row of the corpus", entry.Key)
+		}
+	}
 	for shard := range buckets {
 		for i, row := range rows {
-			if testShardsAgreeOwner(t, row) == shard {
+			if testShardsAgreeHeavyOwner(row) < 0 && testShardsAgreeOwner(t, row) == shard {
 				buckets[shard] = append(buckets[shard], row)
 				visits[i]++
 			}
@@ -201,7 +367,7 @@ func testShardsAgreePartition(t *testing.T, rows []string) [][]string {
 			t.Fatalf("case %d visited %d times", i, n)
 		}
 	}
-	return buckets
+	return buckets, heavy
 }
 func TestShardsAgree_000(t *testing.T) { t.Parallel(); testShardsAgree(t, 0) }
 func TestShardsAgree_001(t *testing.T) { t.Parallel(); testShardsAgree(t, 1) }
@@ -262,11 +428,14 @@ func testShardsAgreePrepare(t *testing.T) string {
 				rows[i] = strings.Join(fields, "\t")
 			}
 		}
-		buckets := testShardsAgreePartition(t, rows)
+		buckets, heavy := testShardsAgreePartition(t, rows)
 		for i := range buckets {
 			buckets[i] = testShardsAgreeRecoveryRows(t, oracle, buckets[i])
 		}
-		products := testShardsAgreeProducts{Root: d, Binary: binary, Rows: rows, Buckets: buckets}
+		for i := range heavy {
+			heavy[i] = testShardsAgreeRecoveryRows(t, oracle, heavy[i])
+		}
+		products := testShardsAgreeProducts{Root: d, Binary: binary, Rows: rows, Buckets: buckets, Heavy: heavy}
 		data, err := json.Marshal(products)
 		if err != nil {
 			return err
@@ -279,11 +448,13 @@ func testShardsAgreePrepare(t *testing.T) string {
 	return d
 }
 
+// Heavy holds each testShardsAgreeHeavy entry's rows, in the list's order.
 type testShardsAgreeProducts struct {
 	Root    string
 	Binary  string
 	Rows    []string
 	Buckets [][]string
+	Heavy   [][]string
 }
 
 func testShardsAgreePreparedInputs(t *testing.T) buildcache.Inputs {
@@ -320,12 +491,102 @@ func testShardsAgreePreparedInputs(t *testing.T) buildcache.Inputs {
 
 var testShardsAgreePreparedOnce sync.Once
 var testShardsAgreePreparedRoot string
+var testShardsAgreePrepared *testShardsAgreeProducts
 
+// testShardsAgreeReady is the prepared product read back on this machine, looked up and read once per process.
 func testShardsAgreeReady(t *testing.T) testShardsAgreeProducts {
 	t.Helper()
-	testShardsAgreePreparedOnce.Do(func() { testShardsAgreePreparedRoot = testShardsAgreePrepare(t) })
-	d := testShardsAgreePreparedRoot
-	return testShardsAgreeRead(t, d)
+	testShardsAgreePreparedOnce.Do(func() {
+		testShardsAgreePreparedRoot = testShardsAgreePrepare(t)
+		products := testShardsAgreeRead(t, testShardsAgreePreparedRoot)
+		testShardsAgreePrepared = &products
+	})
+	if testShardsAgreePrepared == nil {
+		t.Fatal("the prepared product failed earlier in this process")
+	}
+	return *testShardsAgreePrepared
+}
+
+var testShardsAgreeReferencesOnce sync.Once
+var testShardsAgreeReferencesRoot string
+
+func testShardsAgreeReferencesReady(t *testing.T) string {
+	t.Helper()
+	testShardsAgreeReferencesOnce.Do(func() { testShardsAgreeReferencesRoot = testShardsAgreeReferences(t) })
+	if testShardsAgreeReferencesRoot == "" {
+		t.Fatal("the references product failed earlier in this process")
+	}
+	return testShardsAgreeReferencesRoot
+}
+
+// testShardsAgreeReferences is each bucket's and each heavy entry's answer from one process, output and count: the
+// same scanner over the same rows the leaves run, computed once when products are filled rather than in every unit
+// (#wyt8ntk). Every comparison with it still runs live in a leaf. Its declared inputs are the prepared product's,
+// which hold the scanner's and the capture's, and its build reads the prepared rows, the scanner and every row's file,
+// so a trace keys it on all three products.
+func testShardsAgreeReferences(t *testing.T) string {
+	t.Helper()
+	testShardsAgreeReady(t)
+	root := testShardsAgreePreparedRoot
+	inputs := testShardsAgreePreparedInputs(t)
+	inputs.Name = "shards-agree-references-v1"
+	inputs.Flags = append(inputs.Flags, "reads shards-agree-prepared-v1 shards-agree-native shards-agree-capture")
+	return buildcache.Product(t, inputs, func(d string) error {
+		products := testShardsAgreeRead(t, root)
+		type job struct {
+			label string
+			rows  []string
+		}
+		var jobs []job
+		for shard, rows := range products.Buckets {
+			if len(rows) > 0 {
+				jobs = append(jobs, job{fmt.Sprintf("bucket-%03d", shard), rows})
+			}
+		}
+		for index, entry := range testShardsAgreeHeavy {
+			jobs = append(jobs, job{"heavy-" + entry.Name, products.Heavy[index]})
+		}
+		// The build phase owns its CPUs: one scanner per CPU, the heaviest row first so it never runs last alone.
+		sort.SliceStable(jobs, func(i, j int) bool {
+			return strings.HasPrefix(jobs[i].label, "heavy-") && !strings.HasPrefix(jobs[j].label, "heavy-")
+		})
+		failures := make([]error, 2*len(jobs))
+		share := make(chan struct{}, runtime.GOMAXPROCS(0))
+		var workers sync.WaitGroup
+		for i, job := range jobs {
+			path := manifest(t, job.rows)
+			for m, mode := range []struct {
+				extension string
+				arguments []string
+			}{{".output", nil}, {".count", []string{"--count"}}} {
+				workers.Add(1)
+				go func() {
+					defer workers.Done()
+					share <- struct{}{}
+					defer func() { <-share }()
+					output, err := testShardsAgreeRun("", nil, products.Binary, append([]string{"--manifest", path}, mode.arguments...)...)
+					if err == nil {
+						// The answer names the rows' files, which this product names by the roots a reader supplies (#tqrqx60);
+						// a text Absolute would not read back as it was is refused rather than compared wrongly.
+						relative := buildcache.Relative(string(output))
+						if buildcache.Absolute(relative) != string(output) {
+							err = fmt.Errorf("%s%s does not read back through Absolute", job.label, mode.extension)
+						} else {
+							err = os.WriteFile(filepath.Join(d, job.label+mode.extension), []byte(relative), 0644)
+						}
+					}
+					failures[2*i+m] = err
+				}()
+			}
+		}
+		workers.Wait()
+		for _, err := range failures {
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 }
 func testShardsAgreeRead(t *testing.T, d string) testShardsAgreeProducts {
 	t.Helper()
@@ -372,6 +633,38 @@ func TestShardsAgree_029(t *testing.T) { t.Parallel(); testShardsAgree(t, 29) }
 func TestShardsAgree_030(t *testing.T) { t.Parallel(); testShardsAgree(t, 30) }
 
 func TestShardsAgree_031(t *testing.T) { t.Parallel(); testShardsAgree(t, 31) }
+
+// Each heavy row has a test per process count and mode, named for it; TestShardsAgree_Union reads these lines.
+
+func TestShardsAgreeChecker_1_Output(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "1", false)
+}
+
+func TestShardsAgreeChecker_1_Count(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "1", true)
+}
+
+func TestShardsAgreeChecker_2_Output(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "2", false)
+}
+
+func TestShardsAgreeChecker_2_Count(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "2", true)
+}
+
+func TestShardsAgreeChecker_N_Output(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "N", false)
+}
+
+func TestShardsAgreeChecker_N_Count(t *testing.T) {
+	t.Parallel()
+	testShardsAgreeHeavyPass(t, "Checker", "N", true)
+}
 
 // Product recipes run without a test-side deadline. The build phase owns their ceiling.
 func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
