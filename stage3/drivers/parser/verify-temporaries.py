@@ -7,6 +7,10 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from caches import stage3_cache
 
 p = argparse.ArgumentParser()
 p.add_argument('tree', type=Path, help='driver slice with adaptations 60-63 applied')
@@ -17,7 +21,7 @@ a = p.parse_args()
 a.output.mkdir(exist_ok=False)
 repo = Path(__file__).resolve().parents[3]
 env = dict(os.environ)
-env['CENSUS_TYPESCRIPT'] = env.get('CENSUS_TYPESCRIPT', str(Path.home() / '.cache/adamic-stage3/api/node_modules/typescript/lib/typescript.js'))
+env['CENSUS_TYPESCRIPT'] = env.get('CENSUS_TYPESCRIPT') or str(stage3_cache() / 'api/node_modules/typescript/lib/typescript.js')
 entry = a.tree.resolve() / 'parser-host-control.a'
 
 def probe(stem):

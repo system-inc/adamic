@@ -14,8 +14,10 @@ go build -o /tmp/tsc-census ./stage3/census/tool > /tmp/tsc-census-build.log 2>&
 Use a new output path for apply and for each oracle run. Apply refuses an existing
 output and builds from the gate inputs' TypeScript checkout, `ADAMIC_TYPESCRIPT_SOURCE`,
 whose HEAD must be source.json's commit; it fetches nothing and keeps no clone.
-Built products are kept under `~/.cache/adamic-stage3/products`
-(`STAGE3_CACHE` overrides that location).
+Built products are kept under `adamic-stage3/products` in `ADAMIC_BUILD_CACHE_DIR`, or in
+the user cache directory when that is unset (`STAGE3_CACHE` overrides the whole location;
+under `ADAMIC_SANDBOX=1` one of the two must be set), as stage3/caches.py decides, the
+same way Go's products find the build cache.
 It generates upstream diagnostics, runs `adapt/*/adapt.cjs` in numeric order,
 and writes `<out>/patch-set.md`, leaving the source checkout unchanged.
 To deliberately regenerate the checked-in table, run

@@ -8,6 +8,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from caches import stage3_cache
+
 here = Path(__file__).resolve().parent
 repository = here.parents[2]
 parser = argparse.ArgumentParser()
@@ -58,7 +61,7 @@ shutil.copyfile(here / 'main.a', out / 'main.a')
 inputs = args.inputs.resolve() if args.inputs else tree
 files = sorted(p.relative_to(inputs).as_posix() for p in (inputs / 'src/compiler').rglob('*') if p.is_file())
 (out / 'files.json').write_text(json.dumps(files, indent=2) + '\n')
-cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
+cache = stage3_cache()
 api = cache / 'api/node_modules/typescript/lib/typescript.js'
 if not api.exists():
     sys.exit(f'stock TypeScript API not found: {api}; run stage3/apply.sh with adaptations')

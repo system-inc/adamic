@@ -12,7 +12,11 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from caches import stage3_cache
 
 
 def records(text):
@@ -112,7 +116,7 @@ def fetch(repository, store, prepare):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--prepare', action='store_true')
-    parser.add_argument('--store', type=Path, default=Path(os.environ.get(
-        'ADAMIC_STAGE3_BUILD_STORE', str(Path.home() / '.cache/adamic-stage3/build-products'))))
+    parser.add_argument('--store', type=Path, default=Path(os.environ.get('ADAMIC_STAGE3_BUILD_STORE')
+                                                          or stage3_cache() / 'build-products'))
     args = parser.parse_args()
     print(fetch(Path(__file__).resolve().parents[2], args.store.resolve(), args.prepare))

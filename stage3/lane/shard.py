@@ -16,11 +16,13 @@ from shard_plan import LANE, digest, load_plan, names_digest, runtime_hash, titl
 from view import make_view
 sys.path.append(str(LANE.parent / 'oracle'))
 from failure_details import read_failures, markdown
+sys.path.append(str(LANE.parent))
+from caches import cache_root
 
 
 def shared_artifact(plan):
     supplied = os.environ.get('STAGE3_ARTIFACT')
-    artifact = Path(supplied) if supplied else Path.home() / '.cache/adamic-stage3-artifacts' / plan['artifact']
+    artifact = Path(supplied) if supplied else cache_root() / 'adamic-stage3-artifacts' / plan['artifact']
     if not (artifact / 'ready.json').is_file():
         raise ValueError('shared artifact missing; run prepare_shards.py before the gate and set STAGE3_ARTIFACT')
     ready = json.loads((artifact / 'ready.json').read_text())
