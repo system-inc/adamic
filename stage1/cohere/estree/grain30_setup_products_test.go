@@ -1,8 +1,10 @@
 package estree
 
 import (
+	"bytes"
 	"encoding/json"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -52,7 +54,13 @@ func estreeGoOracleBuild(t *testing.T, dir string) string {
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(dir, "oracle")
-	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
+	command := toolchain.Command("go", "build", "-overlay="+path, "-o", binary, virtual)
+	command.Dir = filepath.Join(repo, "cohere")
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	if err := command.Run(); err != nil || stderr.Len() != 0 {
+		t.Fatalf("go build %s: %v\n%s", virtual, err, &stderr)
+	}
 	return binary
 }
 
