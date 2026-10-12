@@ -73,9 +73,11 @@ func printerGateLowered(t *testing.T, family string) string {
 		if err != nil {
 			t.Fatal(err)
 		}
+		// Lowering reads the entry's imports, all in this package, and the compiler's own sources: never cohere, whose
+		// TypeScript submodule made a populated tree's first lookup a walk of 67,000 files (#4ycgm2n).
 		return buildcache.Product(t, buildcache.Inputs{
 			Name:  "tsprinter-lowered-" + family + "-v2",
-			Files: []string{"go.mod", "go.work", "cohere", "internal", "stage1/cohere/tsprinter", "stage1/typescript"},
+			Files: []string{"go.mod", "go.work", "internal", "stage1/cohere/tsprinter", "stage1/typescript"},
 			Flags: []string{"entry=" + entry}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			program := lowered(t, path)
