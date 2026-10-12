@@ -708,8 +708,10 @@ var tools sync.Map
 // selects rather than the policy that selected it, the workspace's content rather than its path, and no locations.
 //
 // A bare name is the program toolchain.Path resolves it to (under ADAMIC_TOOLS first, as a box's PATH has it), the one a
-// build asking toolchain runs. The tool runs with this process's own environment, as a test's own exec of it does; a
-// GoBuild product keys its go and its settings under toolchain.Env instead (goRelease, goSettings).
+// build asking toolchain runs, and it runs under toolchain.Env, the environment that build runs its tools with: run
+// under the caller's whole environment, the report could name another tool than the one that built (Tests, from
+// Lint's review of Compiler's rows, Oct 12: native's clang --version; refusalrewrite's go, whose GOTOOLCHAIN a go env
+// file set for the key and GOENV=off took from the build).
 func Tool(name string, arguments ...string) string {
 	command := strings.Join(append([]string{name}, arguments...), " ")
 	entry, _ := tools.LoadOrStore(command, &toolRun{})
@@ -717,18 +719,7 @@ func Tool(name string, arguments ...string) string {
 	// Parallel tests asking at once wait on the first one's run rather than each running the tool.
 	report.once.Do(func() {
 		label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
-		keying(func() { report.value = toolValue(name, label, arguments, nil) })
-	})
-	return report.value
-}
-
-// goRelease is Tool("go", "version") as a GoBuild product's go runs: toolchain's go under toolchain.Env, whose GOENV=off
-// keeps a configuration file's GOTOOLCHAIN from picking another release than the build's. Its report reads as Tool's.
-func goRelease() string {
-	entry, _ := tools.LoadOrStore("go version\x00toolchain.Env", &toolRun{})
-	report := entry.(*toolRun)
-	report.once.Do(func() {
-		keying(func() { report.value = toolValue("go", "go version", []string{"version"}, toolchain.Env()) })
+		keying(func() { report.value = toolValue(name, label, arguments, toolchain.Env()) })
 	})
 	return report.value
 }
@@ -746,13 +737,10 @@ type toolRun struct {
 }
 
 // toolValue runs a tool for Tool: what it reads is the key's, never a build's. environment is the whole environment it
-// runs with, this process's own when nil.
+// runs with.
 func toolValue(name, label string, arguments, environment []string) string {
 	var value string
 	if filepath.Base(name) == "go" && len(arguments) > 0 && arguments[0] == "env" {
-		if environment == nil {
-			environment = os.Environ()
-		}
 		settings, _, err := goSettings("", environment, arguments[1:])
 		value = label + ": " + strings.Join(settings, "\n")
 		if err != nil {

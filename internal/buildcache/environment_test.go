@@ -188,3 +188,25 @@ func TestASandboxDeclaresWhereToolsAndProductsLive(t *testing.T) {
 		t.Errorf("in a sandbox, cacheLocation = %q, %v; want %q", got, err, cache)
 	}
 }
+
+// A tool reports under toolchain.Env, the environment the build it keys runs it with, never the caller's whole one: a
+// variable the build doesn't see can't change the report (Tests, from Lint's review of Compiler's rows: native keyed
+// clang --version under the caller's environment, and refusalrewrite a go env file's GOTOOLCHAIN the build never saw).
+// Mutant: Tool under the caller's environment (the report names the caller's ADAMIC_FAKE_SETTING).
+// Not parallel: t.Setenv.
+func TestAToolReportsUnderTheEnvironmentItsBuildRunsIn(t *testing.T) {
+	bin := filepath.Join(t.TempDir(), "bin")
+	write(t, bin, "adamic-fake-tool", "#!/bin/sh\necho \"adamic-fake-tool, setting ${ADAMIC_FAKE_SETTING:-unset}\"\n")
+	if err := os.Chmod(filepath.Join(bin, "adamic-fake-tool"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_TOOLS", filepath.Dir(bin))
+	t.Setenv("ADAMIC_SANDBOX", "")
+	t.Setenv("ADAMIC_FAKE_SETTING", "the caller's")
+	forget := func() { tools.Range(func(name, _ any) bool { tools.Delete(name); return true }) }
+	forget()
+	t.Cleanup(forget)
+	if got, want := Tool("adamic-fake-tool", "--version"), "adamic-fake-tool --version: adamic-fake-tool, setting unset"; got != want {
+		t.Errorf("Tool = %q, want %q", got, want)
+	}
+}
