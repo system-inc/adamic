@@ -255,8 +255,11 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 	}
 	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	if name == "capture" || strings.HasPrefix(name, "prepared") {
-		// The capture runs cohere's go test with toolchain's go, and the prepared corpus holds its rows.
+		// The capture runs cohere's go test with toolchain's go, and the prepared corpus holds its rows. go's settings
+		// are asked here, under the root's go.work; the capture runs in cohere, under cohere's, so both workspaces are
+		// inputs too.
 		tools = append(tools, lintGoSettings())
+		files = append(files, "go.work", "cohere/go.work", "cohere/go.work.sum")
 	}
 	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
 }
@@ -462,6 +465,13 @@ type testShardsAgreeProducts struct {
 func testShardsAgreePreparedInputs(t *testing.T) buildcache.Inputs {
 	inputs := testShardsAgreeInputs(t, "prepared-v1")
 	inputs.Files = append(inputs.Files, "stage1/cohere/lint/lint_test.go", "stage1/cohere/lint/shards_agree_split_test.go")
+	// The rows hold the Go oracle's classifications, so the oracle's bytes key them: its build arguments live in
+	// oracle_product_test.go, which these files don't name.
+	oracle, err := os.ReadFile(lintGoOracleProduct(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Flags = append(inputs.Flags, fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(oracle)))
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout")
