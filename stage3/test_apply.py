@@ -258,6 +258,22 @@ class ProductTests(unittest.TestCase):
             (modules / 'typescript/empty').rmdir()
             self.assertEqual(APPLY.packages_digest(modules), pinned)
 
+    def test_symlinked_directory_digests_as_its_link(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            modules = self.fake_api(Path(scratch)) / 'node_modules'
+            outside = Path(scratch) / 'outside'
+            outside.mkdir()
+            (outside / 'index.js').write_text('one')
+            (modules / 'linked').symlink_to(outside, target_is_directory=True)
+            linked = APPLY.packages_digest(modules)
+            # The link's target text is recorded, never what it points at.
+            (outside / 'index.js').write_text('two')
+            (outside / 'added.js').write_text('three')
+            self.assertEqual(APPLY.packages_digest(modules), linked)
+            (modules / 'linked').unlink()
+            (modules / 'linked').symlink_to(Path(scratch) / 'elsewhere', target_is_directory=True)
+            self.assertNotEqual(APPLY.packages_digest(modules), linked)
+
     def test_build_with_pinned_packages_never_runs_npm(self):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
