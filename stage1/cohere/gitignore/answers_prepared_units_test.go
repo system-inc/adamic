@@ -691,6 +691,17 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
 func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	command := exec.CommandContext(context.Background(), name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, leaks) is a tool: the one internal/toolchain resolves, with a tool's environment, not
+		// PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built (the Go
+		// oracle, the port) runs as named, with this process's environment. Path's error fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(context.Background(), path, args...)
+			command.Env = toolchain.Env()
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -707,7 +718,8 @@ func portExecute(t *testing.T, environment []string, name string, args ...string
 	t.Helper()
 	command := portCommand(t, name, args...)
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
+		command.Env = append(command.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
