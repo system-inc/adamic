@@ -59,15 +59,18 @@ func toolchainPath() string {
 func toolchainSettings(names ...string) []string {
 	var settings []string
 	for _, name := range names {
-		found := false
+		// The last setting of a name is the one a child sees, as exec keeps the last of duplicates: toolchain.Env passes
+		// a caller's empty CC and then appends CC=clang.
+		last := ""
 		for _, setting := range toolchain.Env() {
 			if strings.HasPrefix(setting, name+"=") {
-				settings, found = append(settings, setting), true
+				last = setting
 			}
 		}
-		if !found {
+		if last == "" {
 			panic("toolchain.Env sets no " + name)
 		}
+		settings = append(settings, last)
 	}
 	return settings
 }
@@ -86,12 +89,12 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 		command.Err = unresolved
 	}
 	command.Dir = directory
-	// The PATH toolchain gives a tool, the declared tools directory's places first, so what a child runs by name
-	// itself (the hook scripts' go) is toolchain's too, and its CC and CXX, so the hook's cgo builds and the go env its
-	// key reads both name the compiler every other build uses (clang, not Linux's gcc). environment, last, still wins. The rest of this process's
-	// environment passes on purpose: the hooks read their ADAMIC_STAGE3_ settings from it, so a node fixture run
-	// also takes the caller's NODE_OPTIONS. python3 goes through toolchain.Path, and no box's setup puts it under
-	// ADAMIC_TOOLS, so a sandbox fails the python3 hooks, naming it, rather than run PATH's.
+	// The PATH toolchain gives a tool, the declared tools directory's places first, so what a child runs by name itself
+	// (the hook scripts' go) is toolchain's too, and its CC and CXX, so the hook's cgo builds and the go env its key
+	// reads both name the compiler every other build uses (clang, not Linux's gcc). environment, last, still wins. The
+	// rest of this process's environment passes on purpose: the hooks read their ADAMIC_STAGE3_ settings from it, so a
+	// node fixture run also takes the caller's NODE_OPTIONS. python3 goes through toolchain.Path, and no box's setup
+	// puts it under ADAMIC_TOOLS, so a sandbox fails the python3 hooks, naming it, rather than run PATH's.
 	command.Env = append(append(os.Environ(), toolchainSettings("PATH", "CC", "CXX")...), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
