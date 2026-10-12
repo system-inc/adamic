@@ -293,6 +293,24 @@ func TestCSSStringsAnswerProductsRekey(t *testing.T) {
 	}
 }
 
+// The Go oracle's key moves with the C or C++ compiler go builds it with, and with the C compiler's report, so a
+// changed compiler misses rather than reading a product another one built.
+func TestCSSStringsGoOracleRekeyCompiler(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	compilers := stringsCompilers{"clang", "clang++", "clang version 18.1.8"}
+	key := buildcache.NameKey(root, stringsGoProductInputs("Go oracle", compilers))
+	for _, other := range []stringsCompilers{{"gcc", "clang++", compilers.report}, {"clang", "g++", compilers.report}, {"clang", "clang++", "clang version 19.1.7"}} {
+		if otherKey := buildcache.NameKey(root, stringsGoProductInputs("Go oracle", other)); otherKey == key {
+			t.Fatalf("compilers %+v kept the Go oracle's key %s", other, key[:12])
+		}
+	}
+	t.Logf("Go oracle key %s moves with CC, CXX and the C compiler's report", key[:12])
+}
+
 func TestProduct_CSSStringsGoOracle(t *testing.T) { t.Parallel(); stringsPreparedOracle(t) }
 func TestProduct_CSSStringsGoAnswers(t *testing.T) {
 	t.Parallel()
