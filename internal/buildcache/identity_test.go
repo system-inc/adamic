@@ -38,8 +38,7 @@ func freshGoBuild(t *testing.T, root, output, pkg, goCache string, arguments []s
 	t.Helper()
 	started := time.Now()
 	path := filepath.Join(t.TempDir(), output)
-	command := toolchain.Command("go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
-	command.Dir = root
+	command := toolchain.CommandIn(root, "go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
 	command.Env = append(append(command.Env, environment...), "GOCACHE="+goCache)
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("go build %s: %v\n%s", pkg, err, combined)
@@ -192,8 +191,7 @@ func freshGoCache(t *testing.T) func() string {
 	module := t.TempDir()
 	write(t, module, "go.mod", "module example.com/template\n\ngo 1.21\n")
 	write(t, module, "main.go", "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n")
-	command := toolchain.Command("go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
-	command.Dir = module
+	command := toolchain.CommandIn(module, "go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
 	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("the template Go build cache: %v\n%s", err, combined)

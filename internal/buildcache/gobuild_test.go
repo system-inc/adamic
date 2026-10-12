@@ -240,8 +240,7 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 				t.Fatalf("git %v: %v\n%s", git, err, output)
 			}
 		}
-		command := toolchain.Command("go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
-		command.Dir = module
+		command := toolchain.CommandIn(module, "go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
 		command.Env = append(command.Env, "GOWORK=off", "GOFLAGS=")
 		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("%v\n%s", err, output)
