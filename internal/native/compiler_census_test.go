@@ -37,7 +37,7 @@ var compilerSites = map[string]string{
 	"internal/toolchain/toolchain_test.go:TestAToolsCompilersAreClangUnlessTheCallerNamesOne": "checks Env names clang and clang++ as CC and CXX; compiles nothing",
 	"internal/fuzz/run.go:TryFile":                                                            "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                               "the WASI SDK's clang, into a t.TempDir(), never a product",
-	"internal/oracle/wasi_test.go:TestWASIEmission":                                           "the WASI SDK's clang, into a t.TempDir(), never a product",
+	"internal/oracle/wasi_test.go:runWASIEmissionShard":                                       "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"stage1/cohere/css/profile_test.go:TestCSSProfileArtifacts":                               "a profiling build into a scratch directory, never a product",
 	"stage1/cohere/estree/misc_shards_test.go:miscArchiverTool":                               "finds the archiver beside clang to name it in a key; compiles nothing",
 	"stage1/cohere/estree/recovery_cache_test.go:recoveryStableNative":                        "compiles from its own work directory by relative names, with that directory's prefix maps",
