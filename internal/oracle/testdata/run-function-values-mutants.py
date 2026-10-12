@@ -1,5 +1,5 @@
 from pathlib import Path
-import os,subprocess
+import os,re,subprocess
 root=Path(__file__).resolve().parents[3]
 p=root/'internal/lower/expression.go'
 original=p.read_text()
@@ -16,11 +16,11 @@ for name,old,new,pattern in cases:
    result=subprocess.run(['go','test','./internal/oracle','-run','TestNativeAgreesWithNode/internal/oracle/testdata/function_values_'+pattern,'-count=1','-timeout','10m'],cwd=root,env={**os.environ,'ADAMIC_GATE_UNCACHED':'1'},stdout=output,stderr=subprocess.STDOUT)
   text=log.read_text()
   print(name,'exit',result.returncode,flush=True)
-  assert result.returncode!=0 and 'FAIL: TestNativeAgreesWithNode/' in text
+  assert result.returncode!=0 and re.search(r'FAIL: TestNativeAgreesWithNode_\w+/',text)
   assert 'clang:' not in text and 'Lower:' not in text and '[build failed]' not in text
   if name=='arguments':
    for fixture in ['options','signature','chain','diagnostic','array']:
-    assert 'FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_'+fixture+'.a' in text,fixture
+    assert re.search(r'FAIL: TestNativeAgreesWithNode_\w+/internal/oracle/testdata/function_values_'+fixture+r'\.a ',text),fixture
   print('caught by behavioral oracle:',log,flush=True)
  finally:
   p.write_text(original)

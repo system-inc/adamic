@@ -18,7 +18,7 @@ Path('/tmp/lint-split-mutants.json').write_text(json.dumps(results,indent=2)+'\n
 PY
 go test ./internal/native -count=1 -timeout 30m > /tmp/lint-native-package.log 2>&1
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestRuntimeLastIndexOfMatchesNode|TestWeakReadsUndefinedOnceFreed|TestNativeAgreesWithNode/internal/oracle/testdata/(runtime_last_index_of|search_halves|search_from_sweep|shared_slices|shared_slice_append|strings|lone_surrogates|long_chain|weak_parent|doubly_linked|exceptions|map_iteration|sort_releases|class_oct6_release)\.a$' -count=1 -timeout 30m > /tmp/lint-filtered-oracle.log 2>&1
-go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/lint-counts-update.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/lint-counts-update.log 2>&1
 go vet ./internal/native ./internal/oracle > /tmp/lint-vet.log 2>&1
 gofmt -l internal/native/runtime_profile_test.go internal/oracle/runtime_last_index_test.go internal/oracle/oracle_test.go > /tmp/lint-gofmt.log
 git diff --check > /tmp/lint-diff-check.log

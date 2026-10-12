@@ -18,7 +18,7 @@ mutation = '''\t\t\t// Census mutant: a memoized binary getter runs before its f
 \t\t\t}
 '''
 assert original.count(needle) == 1
-command = "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 timeout 90 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^getters_census_binary_inline\\.a$' -count=1 -timeout 90s -parallel 4 -v"
+command = "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 timeout 90 go test ./internal/oracle -run '^TestNativeAgreesWithNode_/^internal$/^oracle$/^testdata$/^getters_census_binary_inline\\.a$' -count=1 -timeout 90s -parallel 4 -v"
 try:
     source.write_text(original.replace(needle, mutation + needle))
     diff = subprocess.run(['git', 'diff', '--', 'internal/lower/class_accessors.go'], cwd=root, capture_output=True, text=True, check=True)
