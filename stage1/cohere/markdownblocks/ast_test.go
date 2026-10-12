@@ -117,7 +117,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 // The three-run timings of Go, the release port and the original preprocessing are their own test over the same
 // contexts, every timed run still checked against Go's bytes, so neither test carries both the comparisons and the
 // timings.
-// Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
+// Not parallel: parallelMarkdownMemory runs it in parallel under the shared markdownMemory budget, except while a KEEP export is requested; existing helper controls parallel execution.
 func TestMarkdownASTPreprocessingThroughput(t *testing.T) {
 	parallelMarkdownMemory(t, 3)
 	fixture := markdownASTPrepare(t)
