@@ -42,7 +42,7 @@ var families = []family{
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 	}},
 	// 201 s: each fixture's C compiled for wasm32.
-	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "planted = ;", requires: "ADAMIC_ORACLE_WASI"},
+	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: loweringFixturePaths, planted: "dedication/dedication.a", caught: "planted = ;", requires: "ADAMIC_ORACLE_WASI"},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
@@ -420,6 +420,28 @@ func fixturePaths() []string {
 	paths := make([]string, len(fixtures))
 	for index, fixture := range fixtures {
 		paths[index] = fixture.path
+	}
+	return paths
+}
+
+// loweringFixtures are the indices into fixtures of every fixture stage 0 lowers.
+func loweringFixtures() []int {
+	var lowering []int
+	for index, fixture := range fixtures {
+		if fixture.lowers {
+			lowering = append(lowering, index)
+		}
+	}
+	return lowering
+}
+
+// loweringFixturePaths are the paths of every fixture stage 0 lowers, the keys of TestWASIEmission's family: a fixture
+// that doesn't lower has no C to compile, so it is never a case of the family's, where it was a subtest that always
+// skipped (23 of them, which Loom's judge read as unknown in lap A.4).
+func loweringFixturePaths() []string {
+	var paths []string
+	for _, index := range loweringFixtures() {
+		paths = append(paths, fixtures[index].path)
 	}
 	return paths
 }
