@@ -85,16 +85,31 @@ func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (st
 	return malformedEventsBuildProduct(t, ctx, main, false)
 }
 
-func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
-	t.Helper()
-	inputs := buildcache.Inputs{
-		Name: "markdownblocks-malformed-events-lowered",
-		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
-		// complete), not the whole package and cohere; the native build below keeps the same Files.
+// malformedEventsLoweredInputs keys the lowered port by what lowering reads (whitespaceLayoutBuildFiles, the compiler's
+// compilerinputs.Lowering and the port's sources), not the whole package; malformedEventsNativeInputs keeps its Files.
+func malformedEventsLoweredInputs() buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "markdownblocks-malformed-events-lowered",
 		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: []string{runtime.Version()},
 	}
-	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
+}
+
+// malformedEventsNativeInputs keys the sanitized native port built from the lowered port's C.
+func malformedEventsNativeInputs(options native.Options) buildcache.Inputs {
+	inputs := malformedEventsLoweredInputs()
+	inputs.Name = "markdownblocks-malformed-events-native"
+	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
+	}
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	return inputs
+}
+
+func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
+	t.Helper()
+	loweredDir := buildcache.Product(t, malformedEventsLoweredInputs(), func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -108,13 +123,7 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 		return "", filepath.Join(loweredDir, "program.mjs")
 	}
 	options := native.Options{Sanitize: true}
-	inputs.Name = "markdownblocks-malformed-events-native"
-	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
-		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
-	}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeDir := buildcache.Product(t, inputs, func(dir string) error {
+	nativeDir := buildcache.Product(t, malformedEventsNativeInputs(options), func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 		if err != nil {
 			return err
@@ -251,8 +260,7 @@ func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
 			t.Fatal(e)
 		}
 		cohere := filepath.Join(root, "cohere")
-		goDir := malformedEventsGoProduct(t, ctx, root)
-		goBinary := filepath.Join(goDir, "go-errors")
+		goBinary := malformedEventsGoProduct(t, root)
 		fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 		if fork == "" {
 			fork = filepath.Join(cohere, "internal/format/prettier/bundles")
@@ -345,39 +353,26 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 	return nil
 }
 
-func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) string {
+// malformedEventsGoProduct is the Go side, cohere with testdata/mdast_go.go, mdast_bridge.go and events_transport.go
+// its overlay lays over it, a product (buildcache.GoBuildIn) built ahead, and returns the binary. The overlay names this
+// checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
+func malformedEventsGoProduct(t *testing.T, root string) string {
 	t.Helper()
 	cohere := filepath.Join(root, "cohere")
-	return buildcache.Product(t, buildcache.Inputs{
-		Name:      "markdownblocks-malformed-events-go-errors",
-		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
-		Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(dir string) error {
-		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
-		replace := map[string]string{}
-		for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
-			source, err := filepath.Abs(p.source)
-			if err != nil {
-				return err
-			}
-			replace[p.target] = source
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
+	replace := map[string]string{}
+	for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
+		source, err := filepath.Abs(p.source)
 		if err != nil {
-			return err
+			t.Fatal(err)
 		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
-		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("Go errors: %w\n%s", err, output)
-		}
-		return nil
-	})
+		replace[p.target] = source
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-errors", mainPath, []string{"-overlay=" + overlayPath})
 }
