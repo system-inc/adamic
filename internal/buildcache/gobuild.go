@@ -664,7 +664,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	if request.verb != "build" || request.module != "" {
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
-	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{goRelease()}}
+	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
