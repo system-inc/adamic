@@ -23,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var testFormatterMutants = []struct{ name, file, from, to string }{
@@ -70,6 +71,21 @@ func formatterMutantsDeadline(t *testing.T) func() {
 func formatterMutantsCommand(ctx context.Context, directory, name string, args ...string) ([]byte, error) {
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run in
+		// directory with PWD to match, as toolchain.CommandIn runs one under a context it has no form for. A program a
+		// test built (the Go oracle, a mutant) runs as named, with this process's environment. An error resolving it
+		// fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else if absolute, err := filepath.Abs(directory); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Dir = directory
+			command.Env = append(toolchain.Env(), "PWD="+absolute)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
