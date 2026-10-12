@@ -93,12 +93,14 @@ func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) 
 			h.t.Fatal(err)
 		}
 	}
-	// cgo's C compiler: cc where CC is unset, as on every Loom box, and clang for the sanitized archive.
-	compiler := "cc"
+	// cgo's C compiler: the CC toolchain.Env runs the archive's go build with (clang where the caller sets none, as on
+	// every Loom box), and clang for the sanitized archive, which sets CC itself. It reads no go: Env is this process's.
+	compiler := typeAwareBuildSetting("CC")
 	if sanitize {
 		compiler = "clang"
 	}
-	inputs.Toolchain = []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool(compiler, "--version")}
+	inputs.Flags = append(inputs.Flags, "CC="+compiler)
+	inputs.Toolchain = []string{runtime.Version(), buildcache.Tool("clang", "--version"), typeAwareCompilerReport(compiler)}
 }
 
 func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool, name string, variant ...string) buildcache.Inputs {
