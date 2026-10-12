@@ -24,10 +24,13 @@ const testCSSPrinterAgreesWithGoShards = 512
 var cssPrinterCorpusOnce sync.Once
 var cssPrinterCorpus []string
 
+// cssPrinterCorpusLines reads the printer's corpus from the parser's corpus product (TestProduct_CSSParserCorpus):
+// the same Go oracle request over the same roots, so the same cases, which TestCSSPrinterCorpusIsTheParserCorpus
+// holds byte for byte. Enumerating it live cost every printer shard's process about 3.7 s of its setup (Home).
 func cssPrinterCorpusLines(t *testing.T) []string {
 	t.Helper()
 	cssPrinterCorpusOnce.Do(func() {
-		path := cssPrinterCases(t, cssOracleProduct(t, false))
+		path, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
 		data, err := os.ReadFile(path)
 		if err != nil {
 			t.Fatal(err)
@@ -35,6 +38,25 @@ func cssPrinterCorpusLines(t *testing.T) []string {
 		cssPrinterCorpus = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	})
 	return cssPrinterCorpus
+}
+
+// The printer reads the parser's corpus product only because a live enumeration through the printer's own Go
+// oracle gives the same bytes. Mutant: drop the fixture root from the live enumeration; the corpora then differ.
+func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
+	t.Parallel()
+	live, err := os.ReadFile(cssPrinterCases(t, cssOracleProduct(t, false)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	product, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	declared, err := os.ReadFile(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if difference := firstDifference(string(live), string(declared)); difference != "" {
+		t.Fatalf("the printer's live corpus differs from the parser's corpus product: %s", difference)
+	}
+	t.Logf("one corpus, %d cases, %d bytes", strings.Count(string(live), "\n"), len(live))
 }
 
 func cssPrinterUnitHasWitness(unit cssModeShard, count, witness int) bool {
@@ -51,6 +73,73 @@ func cssPrinterOwnDeadline(t *testing.T) func() {
 	started := time.Now()
 	timer := time.AfterFunc(60*time.Second, func() { panic(fmt.Sprintf("%s: own work exceeded 60s", t.Name())) })
 	return func() { timer.Stop(); t.Logf("own work: %s", time.Since(started)) }
+}
+
+// cssPrinterSanitizedAgreement runs the sanitized printer once and holds it to Go's answers. On Linux leak detection is
+// on in that run, so one run checks the output, ASan/UBSan and LeakSanitizer, where a second run checked leaks before:
+// the slowest corpus case (a 30 KB Tailwind preflight, about 7 s sanitized, #z3p4j5q) ran twice in its shards.
+// macOS checks leaks with its own run (printerLeaks). The error says which check failed: a leak, LeakSanitizer
+// unable to run (a red, never a pass), a sanitizer's error, or an output that isn't Go's.
+func cssPrinterSanitizedAgreement(t *testing.T, binary, expected string, arguments ...string) error {
+	t.Helper()
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+	}
+	return cssPrinterSanitizedVerdict(execute(t, environment, binary, arguments...), expected)
+}
+
+// cssPrinterSanitizedVerdict is cssPrinterSanitizedAgreement's reading of one run.
+func cssPrinterSanitizedVerdict(result run, expected string) error {
+	stderr := string(result.stderr)
+	switch {
+	case strings.Contains(stderr, "LeakSanitizer has encountered a fatal error"):
+		return fmt.Errorf("LeakSanitizer could not run, so leaks went unchecked (exit %d): %s", result.exitCode, stderr)
+	case strings.Contains(stderr, "ERROR: LeakSanitizer: detected memory leaks"):
+		return fmt.Errorf("leak (exit %d): %s", result.exitCode, stderr)
+	case result.exitCode != 0 || len(stderr) != 0:
+		return fmt.Errorf("exit %d stderr %s", result.exitCode, stderr)
+	}
+	if difference := firstDifference(string(result.stdout), expected); difference != "" {
+		return fmt.Errorf("output differs from Go: %s", difference)
+	}
+	return nil
+}
+
+// The one sanitized run still names each failure. A printer whose releases are dropped (the composed memory leak
+// mutant) reads as a leak, a changed answer as an output that isn't Go's, and LeakSanitizer unable to run as a red;
+// the unmutated printer passes.
+func TestCSSPrinterSanitizedRunNamesEachFailure(t *testing.T) {
+	t.Parallel()
+	if runtime.GOOS != "linux" {
+		t.Skip("Linux runs leak detection inside the sanitized run")
+	}
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, []byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := cssPrinterAnswers(t, cssOracleProduct(t, true), cases, "default")
+	arguments := []string{cases, "output", "once", "default"}
+	if err := cssPrinterSanitizedAgreement(t, cssPrinterProduct(t, -1).binary, expected, arguments...); err != nil {
+		t.Fatalf("the unmutated printer: %v", err)
+	}
+	err := cssPrinterSanitizedAgreement(t, composedMemoryProduct(t, 2).sanitized, expected, arguments...)
+	if err == nil || !strings.HasPrefix(err.Error(), "leak ") {
+		t.Fatalf("a printer that drops its releases read as %v, want a leak", err)
+	}
+	t.Logf("planted leak: %.120s", err)
+	changed := strings.Replace(expected, "red", "blue", 1)
+	if changed == expected {
+		t.Fatal("no answer to change")
+	}
+	err = cssPrinterSanitizedAgreement(t, cssPrinterProduct(t, -1).binary, changed, arguments...)
+	if err == nil || !strings.HasPrefix(err.Error(), "output differs from Go") {
+		t.Fatalf("a changed answer read as %v, want an output that isn't Go's", err)
+	}
+	err = cssPrinterSanitizedVerdict(run{stdout: []byte(expected), stderr: []byte("==1==LeakSanitizer has encountered a fatal error.\n"), exitCode: 1}, expected)
+	if err == nil || !strings.HasPrefix(err.Error(), "LeakSanitizer could not run") {
+		t.Fatalf("LeakSanitizer unable to run read as %v, want a red", err)
+	}
 }
 
 func runCSSPrinterShard(t *testing.T, shard int) {
@@ -75,11 +164,13 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
 	if unit.mutant < 0 {
+		if err := cssPrinterSanitizedAgreement(t, product.binary, expected, arguments...); err != nil {
+			t.Fatalf("%s native ASan/UBSan: %v", unit.mode, err)
+		}
 		for _, side := range []struct {
 			name   string
 			result run
 		}{
-			{"native ASan/UBSan", execute(t, environment, product.binary, arguments...)},
 			{"Node", onNode(t, product.source, arguments...)},
 			{"JavaScript backend", onNode(t, product.javascript, arguments...)},
 		} {
@@ -87,8 +178,10 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 				t.Fatalf("%s %s: %v", unit.mode, side.name, err)
 			}
 		}
-		if report := printerLeaks(t, leakBinary, arguments...); report != "" {
-			t.Fatal(report)
+		if runtime.GOOS != "linux" {
+			if report := printerLeaks(t, leakBinary, arguments...); report != "" {
+				t.Fatal(report)
+			}
 		}
 		if library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY"); library != "" {
 			comparePrinterLibrary(t, path, expected, library, unit.mode, "npm")
