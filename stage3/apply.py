@@ -14,6 +14,8 @@ import subprocess
 import sys
 import tempfile
 
+from caches import stage3_cache
+
 stage = Path(__file__).resolve().parent
 FORMAT = 'adamic-stage3-tree-v1'
 
@@ -325,7 +327,7 @@ def main():
         print(key)
         return
     if args.publish_hook:
-        cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
+        cache = stage3_cache()
         store = os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products'))
         if store.startswith(('http://', 'https://', 'file://')):
             parser.error('--publish-hook requires the local product store')
@@ -336,7 +338,7 @@ def main():
     out = args.output.resolve()
     if out.exists():
         sys.exit(f'refusing to replace existing output: {out}')
-    cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))).resolve()
+    cache = stage3_cache().resolve()
     store = os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products'))
     if not args.build_product and 'STAGE3_PRODUCT_STORE' not in os.environ:
         if not (Path(store) / (key + '.manifest')).exists():

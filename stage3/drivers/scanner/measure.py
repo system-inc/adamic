@@ -9,6 +9,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from caches import stage3_cache
+
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('run', type=Path, help='green run.sh output directory')
 args = parser.parse_args()
@@ -17,7 +20,7 @@ report = json.loads((run / 'report.json').read_text())
 if report.get('native_diff_exit') != 0 or report.get('native_exit') != 0:
     sys.exit('measurement requires a green native comparison')
 repository = Path(__file__).resolve().parents[3]
-cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
+cache = stage3_cache()
 env = dict(os.environ, SCANNER_TYPESCRIPT=str(cache / 'api/node_modules/typescript/lib/typescript.js'),
            SCANNER_RUNTIME=str(repository / 'oracle/adamic.mjs'))
 inputs = Path(report['input_tree'])
