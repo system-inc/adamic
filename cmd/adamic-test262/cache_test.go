@@ -438,8 +438,63 @@ func TestContextEnvironment(t *testing.T) {
 	if plain != junk {
 		t.Fatalf("an unrelated variable and HOME changed the context: %s vs %s", plain, junk)
 	}
+	// Node's context alone: a time zone changes what Node's Date prints, so Node's observations must not be reused.
 	zoned := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir(), "TZ=Pacific/Kiritimati"))
-	if zoned == plain {
-		t.Fatal("a time zone, which changes Node's Date output, reused the context")
+	if strings.Fields(zoned)[1] == strings.Fields(plain)[1] {
+		t.Fatal("a time zone, which changes Node's Date output, reused Node's context")
+	}
+}
+
+// Every variable resultEnvironment names is keyed when it's set, even to nothing, and none when none is: the context
+// and childEnvironment both read through keyedEnvironment, so a name that went missing from what it keys would be a
+// variable children see and the key doesn't name.
+func TestEveryResultVariableIsKeyed(t *testing.T) {
+	t.Parallel()
+	if keyed := keyedEnvironment(func(string) (string, bool) { return "", false }); len(keyed) != 0 {
+		t.Fatalf("nothing set keyed %q", keyed)
+	}
+	seen := map[string]bool{}
+	for _, name := range append(append([]string{}, resultEnvironment...), passedEnvironment...) {
+		if seen[name] {
+			t.Errorf("%s is named twice", name)
+		}
+		seen[name] = true
+	}
+	for _, name := range resultEnvironment {
+		keyed := keyedEnvironment(func(wanted string) (string, bool) { return "", wanted == name })
+		if !reflect.DeepEqual(keyed, []string{name + "="}) {
+			t.Errorf("%s set to nothing keyed %q", name, keyed)
+		}
+	}
+}
+
+// A child runs with what the key names and passedEnvironment's, then the engine's own settings, and nothing else of
+// the runner's environment: a variable the key doesn't name can't change an observation a hit replays. The child here
+// is env itself, run as clang, the native program and Node are. Mutant: runCommandWithLimit back on os.Environ, and
+// ADAMIC_JUNK reaches the child.
+// Not parallel: sets the runner's environment through t.Setenv.
+func TestChildrenSeeOnlyWhatTheKeyNames(t *testing.T) {
+	t.Setenv("ADAMIC_JUNK", "1")
+	t.Setenv("TZ", "Pacific/Kiritimati")
+	allowed := map[string]bool{"ADAMIC_ENGINE_SETTING": true}
+	for _, name := range append(append([]string{}, resultEnvironment...), passedEnvironment...) {
+		allowed[name] = true
+	}
+	result := runCommand(time.Minute, []string{"ADAMIC_ENGINE_SETTING=1"}, "/usr/bin/env")
+	if result.Exit != 0 {
+		t.Fatalf("env: exit %d: %s", result.Exit, result.Stderr)
+	}
+	seen := map[string]bool{}
+	for _, line := range strings.Split(strings.TrimSpace(result.Stdout), "\n") {
+		name, _, _ := strings.Cut(line, "=")
+		seen[name] = true
+		if !allowed[name] {
+			t.Errorf("a child saw %s, which the key doesn't name", name)
+		}
+	}
+	for _, name := range []string{"TZ", "ADAMIC_ENGINE_SETTING"} {
+		if !seen[name] {
+			t.Errorf("a child didn't see %s", name)
+		}
 	}
 }
