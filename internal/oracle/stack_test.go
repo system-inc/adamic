@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The stack's limit counts from its top, and above the first frame sit the program's arguments and
@@ -112,8 +113,14 @@ func TestSmallStacksStillPanic(t *testing.T) {
 				}
 				limited := func(name string, arguments ...string) run {
 					t.Helper()
+					// sh execs what it's given: a bare name is the program toolchain.Path finds, as bounded runs
+					// one, never whichever sh would find on PATH.
+					resolved, err := toolchain.Path(name)
+					if err != nil {
+						t.Fatal(err)
+					}
 					script := fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, kibibytes)
-					arguments = append(append([]string{"-c", script, name}, arguments...), setting.arguments...)
+					arguments = append(append([]string{"-c", script, resolved}, arguments...), setting.arguments...)
 					return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", arguments...)
 				}
 				want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
