@@ -1535,6 +1535,29 @@ func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
 	}
 }
 
+// A machine file reached through a link is keyed as itself, never as what its descriptor decodes to: WSL makes
+// /etc/resolv.conf a link to /mnt/wsl/resolv.conf, and strace decodes the open's descriptor to the target, a place no
+// key can name (Workshop, Oct 12: every traced store lookup's DNS read refused its product, 866 of 866 in the smoke's
+// tree). Mutant: the decoded target recorded for a machine file too, refused as other.
+// Not parallel: newRig.
+func TestAMachineFileThroughALinkIsKeyedAsItself(t *testing.T) {
+	if _, err := os.Stat("/etc/resolv.conf"); err != nil {
+		t.Skip("no /etc/resolv.conf here")
+	}
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.add(r.pid, `openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 3</mnt/wsl/resolv.conf>`)
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if got := r.entries(t, build.NameKey); !slices.Contains(got, "system /etc/resolv.conf") || slices.ContainsFunc(got, func(entry string) bool { return strings.Contains(entry, "/mnt/wsl") }) {
+		t.Fatalf("the read set %q doesn't key /etc/resolv.conf as itself alone", got)
+	}
+}
+
 // Tracked looks for each directory's .git as keying, as it lists the repository: a traced build that asks Tracked of a
 // directory (tracked.PathsUnder's walk of the tree) never reads .git, which no key can name (home-5's dry run, Oct 11,
 // where tracked.Git's own look refused cssnumbers and cssstrings). Mutant: the look outside keying.
