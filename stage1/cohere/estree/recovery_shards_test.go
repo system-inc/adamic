@@ -168,7 +168,9 @@ func runRecoveryShards(t *testing.T, shards [][]recoveryCase, run func(*testing.
 		if i%total != selected {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) { t.Parallel(); run(t, i, cases) })
+		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and the
+		// parent's own time counts that wait (TestRecoveryLoweredRecipe, one shard: 105.6 s alone on one core, 4 s of work).
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) { run(t, i, cases) })
 	}
 }
 func recoveryComparison(want, got []byte, mutant bool) string {
