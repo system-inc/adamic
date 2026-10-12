@@ -2,6 +2,7 @@ package buildcache
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -10,6 +11,7 @@ import (
 	"io"
 	"io/fs"
 	"math/rand/v2"
+	"net"
 	"net/http"
 	"os"
 	"path"
@@ -83,7 +85,53 @@ func publishing() bool {
 	return setting == "traced" || strings.HasPrefix(setting, "traced=")
 }
 
-var storeClient = &http.Client{Timeout: 5 * time.Minute}
+var storeClient = &http.Client{Timeout: 5 * time.Minute, Transport: storeTransport()}
+
+// storeResolved is where the caller already resolved the store's hosts, ADAMIC_BUILD_STORE_RESOLVED: entries
+// "<host>=<address>,<address>…" separated by spaces. Workshop's tree builder resolves them outside the trace (build-tree)
+// so a traced product test's store lookups read no DNS configuration: /etc/resolv.conf, /etc/hosts and
+// /etc/nsswitch.conf were in every product a lookup's trace settled, each box's own (its nameserver), so no runner on
+// another box matched a native product Workshop built (Fabric on Cloud, Oct 12, #vdha67a). With it a lookup never asks
+// the resolver, so a DNS file in a read set is one the product's own build read, keyed as before.
+const storeResolved = "ADAMIC_BUILD_STORE_RESOLVED"
+
+// storeTransport is http.DefaultTransport's, dialing a host storeResolved names at its addresses, each in turn, rather
+// than resolving it: an address that doesn't answer is a miss like any other, never a lookup. Any other host resolves
+// as usual.
+func storeTransport() http.RoundTripper {
+	resolved := map[string][]string{}
+	for _, entry := range strings.Fields(os.Getenv(storeResolved)) {
+		host, addresses, ok := strings.Cut(entry, "=")
+		if ok && host != "" {
+			resolved[host] = strings.Split(addresses, ",")
+		}
+	}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	if len(resolved) == 0 {
+		return transport
+	}
+	dialer := &net.Dialer{Timeout: 30 * time.Second, KeepAlive: 30 * time.Second}
+	transport.DialContext = func(dialContext context.Context, network, address string) (net.Conn, error) {
+		host, port, err := net.SplitHostPort(address)
+		if err != nil || len(resolved[host]) == 0 {
+			return dialer.DialContext(dialContext, network, address)
+		}
+		var errs []error
+		for _, ip := range resolved[host] {
+			if net.ParseIP(ip) == nil {
+				errs = append(errs, fmt.Errorf("%s=%s isn't an address", host, ip))
+				continue
+			}
+			connection, err := dialer.DialContext(dialContext, network, net.JoinHostPort(ip, port))
+			if err == nil {
+				return connection, nil
+			}
+			errs = append(errs, err)
+		}
+		return nil, fmt.Errorf("%s at %s, as %s names it: %w", host, strings.Join(resolved[host], ","), storeResolved, errors.Join(errs...))
+	}
+	return transport
+}
 
 // download reads one object, or errNotStored for a 404.
 func download(address string) ([]byte, error) {
