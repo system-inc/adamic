@@ -97,9 +97,10 @@ func runtimeInputs(request native.RuntimeRequest) buildcache.Inputs {
 
 // runtimeProducts builds ahead the archives of the sets group owns (every third, from group) with option's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives
-// each product the reads of its process, so two at once would each read the other's). A group is a test of its own:
-// all eleven sanitized archives in one were 96 s traced on Workshop (4.8 s each to compile, the rest keying and the
-// trace), past the 60 s every build is held to.
+// each product the reads of its process, so two at once would each read the other's). A group is a test of its own, so
+// the tree build builds an option's archives as three units side by side: all eleven sanitized archives in one were 96
+// s traced on Workshop (4.8 s each to compile, the rest keying and the trace), well inside a product's 600 s ceiling
+// (Loom's KindCeilings) but one long unit on the tree build's path, where a group is about 25 s.
 func runtimeProducts(t *testing.T, name string, group int) {
 	t.Helper()
 	index := slices.IndexFunc(runtimeOptions, func(option runtimeOption) bool { return option.name == name })
