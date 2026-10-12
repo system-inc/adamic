@@ -208,9 +208,16 @@ runnerMarker = '.fast-gate-lockfile-sha256'
 
 def packages_digest(modules):
     """sha256 over an install's every entry in sorted order: a directory's name, a regular file's bytes and executable
-    bit, a symlink's target text. Only the runner's lockfile marker is left out."""
+    bit, a symlink's target text. Only the runner's lockfile marker is left out.
+
+    os.walk never descends a symlinked directory, which is recorded as a symlink like any other: whether rglob's **
+    follows one changed between Python releases, and the digest must be the same on every Python.
+    """
     digest = hashlib.sha256()
-    for path in sorted(modules.rglob('*'), key=lambda path: path.relative_to(modules).as_posix()):
+    paths = []
+    for directory, directories, files in os.walk(modules, followlinks=False):
+        paths += [Path(directory) / name for name in directories + files]
+    for path in sorted(paths, key=lambda path: path.relative_to(modules).as_posix()):
         name = path.relative_to(modules).as_posix()
         if name == runnerMarker:
             continue
