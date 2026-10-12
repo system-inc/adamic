@@ -85,8 +85,7 @@ func (h *harness) sixSourceInputs() []string {
 		{h.repository, []string{"./cmd/adamic", "./bridge/tsgo/archive", "./bridge/tsgo/cost", "./bridge/tsgo/checker"}},
 		{filepath.Join(h.repository, "cohere"), []string{"./internal/lint/rules/typescript"}},
 	} {
-		cmd := toolchain.Command("go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
-		cmd.Dir = request.dir
+		cmd := toolchain.CommandIn(request.dir, "go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
 		data, err := typeAwareCommandOutput(cmd)
 		if err != nil {
 			h.t.Fatalf("six build input inventory: %v", err)
@@ -169,6 +168,10 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	h.t.Helper()
 	if command.Dir == "" {
 		command.Dir = h.repository
+	}
+	if command.Env != nil {
+		// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
+		command.Env = append(command.Env, "PWD="+command.Dir)
 	}
 	unstamped(command)
 	canonical := func(text string) string {

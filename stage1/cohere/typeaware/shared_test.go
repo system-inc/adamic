@@ -85,8 +85,7 @@ func (h *harness) stage0() string {
 	h.t.Helper()
 	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
-		command := toolchain.Command("go", "build", "-o", binary, "./cmd/adamic")
-		command.Dir = h.repository
+		command := toolchain.CommandIn(h.repository, "go", "build", "-o", binary, "./cmd/adamic")
 		return binary, buildProduct(h.t, "stage0", command, directory)
 	})
 	if err != nil {
