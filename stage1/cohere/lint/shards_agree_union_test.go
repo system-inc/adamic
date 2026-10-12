@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -78,15 +79,26 @@ func TestShardsAgree_Union(t *testing.T) {
 			t.Fatalf("row %q placed %d times", row, placed[row])
 		}
 	}
-	for shard := range buckets {
-		if len(buckets[shard]) != len(products.Buckets[shard]) {
-			t.Fatalf("bucket %03d: product holds %d rows, partition %d", shard, len(products.Buckets[shard]), len(buckets[shard]))
+	// The product holds the same rows in the same places. Recovery only fills a row's seventh field, so each row's path
+	// (its first) must match at every index, not just each bucket's length.
+	if len(products.Buckets) != len(buckets) || len(products.Heavy) != len(heavy) {
+		t.Fatalf("product holds %d buckets and %d heavy entries, partition %d and %d", len(products.Buckets), len(products.Heavy), len(buckets), len(heavy))
+	}
+	samePlaces := func(label string, partition, product []string) {
+		if len(partition) != len(product) {
+			t.Fatalf("%s: product holds %d rows, partition %d", label, len(product), len(partition))
+		}
+		for index := range partition {
+			if path, held := strings.SplitN(partition[index], "\t", 2)[0], strings.SplitN(product[index], "\t", 2)[0]; path != held {
+				t.Fatalf("%s row %d: product holds %q, partition %q", label, index, held, path)
+			}
 		}
 	}
+	for shard := range buckets {
+		samePlaces(fmt.Sprintf("bucket %03d", shard), buckets[shard], products.Buckets[shard])
+	}
 	for index := range heavy {
-		if len(heavy[index]) != len(products.Heavy[index]) {
-			t.Fatalf("heavy %s: product holds %d rows, partition %d", testShardsAgreeHeavy[index].Name, len(products.Heavy[index]), len(heavy[index]))
-		}
+		samePlaces("heavy "+testShardsAgreeHeavy[index].Name, heavy[index], products.Heavy[index])
 	}
 	// Plant one disagreement at a time, in one row's answer at one pass, and judge it with the same byte oracle as
 	// every leaf: a bucket's test compares its rows at every pass, a heavy test its entry's rows at its own pass. Each
