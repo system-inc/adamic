@@ -33,14 +33,11 @@ func mutantNativeProduct(t *testing.T, index int) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		inputs := expressionInputFiles(t, root+"/internal", root+"/bridge/tsgo", root+"/cohere", root+"/stage1/typescript/parser")
-		inputs = append(inputs, root+"/go.mod", root+"/go.work", root+"/stage1/cohere/tsprinter/mutants_test.go", root+"/stage1/cohere/tsprinter/mutant_products_test.go", root+"/stage1/cohere/tsprinter/helpers_test.go", root+"/stage1/cohere/tsprinter/expressions_test.go", root+"/stage1/cohere/tsprinter/expression_units_test.go")
-		files, err := filepath.Glob("*.ts")
-		if err != nil {
-			t.Fatal(err)
-		}
-		for _, file := range files {
-			inputs = append(inputs, filepath.Join(root, "stage1/cohere/tsprinter", file))
+		// What lowering and the native build read (mutantNativeBuildFiles, which TestMutantNativeInputsCoverWhatItReads
+		// keeps complete): not cohere whole, and the scanner the parser imports included.
+		var inputs []string
+		for _, file := range mutantNativeBuildFiles(t) {
+			inputs = append(inputs, filepath.Join(root, file))
 		}
 		state.directory = expressionBuild(t, printerBuildInputs{
 			Name:      fmt.Sprintf("TS printer mutant %03d sanitized native", index),
