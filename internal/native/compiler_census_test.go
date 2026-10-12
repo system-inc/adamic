@@ -28,7 +28,7 @@ var compilerSites = map[string]string{
 	"bridge/tsgo/products_test.go:buildBridgeProduct":                                         "bridge's own C test driver, compiled from the repository by relative names with its compilation directory named \".\"",
 	"cloud/reports/decode-ascii/build.go:main":                                                "a report tool run by hand, never a product",
 	"cmd/adamic-gate/resume.go:executionIdentity":                                             "asks clang for its resource directory, to name the machine; compiles nothing",
-	"cmd/adamic-test262/cache.go:prepareCache":                                                "names the tools test262's own cache is keyed by; compiles nothing",
+	"cmd/adamic-test262/cache.go:resolveTools":                                                "resolves the clang test262's runner runs and its own cache is keyed by; compiles nothing",
 	"cmd/adamic-test262/corpus_test.go:TestMiniRunner":                                        "skips when clang is missing; compiles nothing",
 	"cmd/adamic-test262/run.go:attempt":                                                       "test262's runner links each case into its own run directory, never a product",
 	"cmd/adamic-test262/run_test.go:TestProgramCPUDeadline":                                   "compiles a fixture into a t.TempDir(), never a product",
