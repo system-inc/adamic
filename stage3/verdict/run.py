@@ -14,8 +14,6 @@ ROOT = Path(__file__).resolve().parent
 DRIVER = ROOT.parent / 'drivers/tsc'
 sys.path.insert(0, str(DRIVER))
 from corpus import PIN, materialize, baseline_output
-sys.path.insert(0, str(ROOT.parent))
-from caches import stage3_cache
 
 
 def write_json(path, value):
@@ -70,20 +68,18 @@ def driver_suite(binary, output, tiny):
             'excluded': 0, 'failures': failures, 'seconds': report['seconds']}
 
 
-def upstream_tree(output):
-    configured = os.environ.get('STAGE3_VERDICT_UPSTREAM')
-    if configured:
-        tree = Path(configured).resolve()
-    else:
-        tree = output / 'upstream'
-        mirror = stage3_cache() / 'typescript.git'
-        with (output / 'upstream.log').open('wb') as log:
-            source = str(mirror) if mirror.is_dir() else 'https://github.com/microsoft/TypeScript.git'
-            subprocess.run(['git', 'clone', '--depth', '1', '--branch', 'v6.0.3', source, str(tree)],
-                           stdout=log, stderr=log, check=True)
-    actual = subprocess.check_output(['git', '-C', str(tree), 'rev-parse', 'HEAD'], text=True).strip()
-    if actual != PIN:
-        raise RuntimeError(f'upstream pin mismatch: {actual}')
+def upstream_tree():
+    """The pinned upstream checkout, as apply finds it: STAGE3_VERDICT_UPSTREAM, else the gate inputs' TypeScript
+    checkout, ADAMIC_TYPESCRIPT_SOURCE. The verdict never clones one, from a mirror or the network, so a runner without
+    either refuses plainly. (cohere/TypeScript is Adamic's fork, not the pinned upstream: it holds no tests/.)"""
+    configured = os.environ.get('STAGE3_VERDICT_UPSTREAM') or os.environ.get('ADAMIC_TYPESCRIPT_SOURCE')
+    if not configured:
+        raise RuntimeError(f'set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs\' TypeScript v6.0.3 checkout at {PIN}, '
+                           'or STAGE3_VERDICT_UPSTREAM to another checkout at it; the verdict never clones one')
+    tree = Path(configured).resolve()
+    head = subprocess.run(['git', '-C', str(tree), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    if head != PIN:
+        raise RuntimeError(f'upstream checkout {tree} is at {head or "no commit"}, not the pinned {PIN}')
     return tree
 
 
@@ -184,7 +180,7 @@ def main():
     errors = []
     for name, task in [('acceptance', lambda: driver_suite(binary, output / 'acceptance', False)),
                        ('tiny', lambda: driver_suite(binary, output / 'tiny', True)),
-                       ('baselines', lambda: baseline_suite(binary, upstream_tree(output), output / 'baselines', args.baseline_limit))]:
+                       ('baselines', lambda: baseline_suite(binary, upstream_tree(), output / 'baselines', args.baseline_limit))]:
         print(f'running {name}', flush=True)
         try:
             suites[name] = task()

@@ -15,9 +15,11 @@ Exit 0 means every selected case passed, 1 means compiler differences, and 2
 means a harness/infrastructure error. All three suites are attempted even when
 an earlier suite fails. A harness error is never a pass.
 
-`STAGE3_VERDICT_UPSTREAM=/absolute/pinned-checkout` reuses a TypeScript checkout.
-Otherwise the command clones v6.0.3 into the output directory, from the existing
-`STAGE3_CACHE/typescript.git` mirror when available, or GitHub. HEAD must be
+The baselines read the pinned TypeScript checkout as apply does: the gate inputs'
+`ADAMIC_TYPESCRIPT_SOURCE`, or `STAGE3_VERDICT_UPSTREAM=/absolute/pinned-checkout`
+when set. The verdict never clones one, from a mirror or GitHub, so with neither set
+the baselines suite is a harness error naming both (exit 2). `cohere/TypeScript` is
+Adamic's fork, not the pinned upstream, and can't stand in. HEAD must be
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Source and reference hashes are checked
 against the committed census before each selected baseline case is run.
 
