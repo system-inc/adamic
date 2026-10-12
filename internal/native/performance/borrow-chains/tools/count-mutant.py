@@ -13,7 +13,7 @@ try:
  path.write_text(original.replace(before,after))
  log=Path('/tmp/borrow-chains-mutant-counts.log')
  with log.open('wb') as output:
-  result=subprocess.run(['go','test','./internal/oracle','-run','^TestCountsAreRecorded$/fixtures/internal/oracle/testdata/borrow_chain_walk','-count=1','-timeout','30m'],cwd=root,stdout=output,stderr=subprocess.STDOUT)
+  result=subprocess.run(['go','test','./internal/oracle','-run','^TestCountsAreRecorded_/internal/oracle/testdata/borrow_chain_walk','-count=1','-timeout','30m'],cwd=root,stdout=output,stderr=subprocess.STDOUT)
  text=log.read_text();print(text)
  assert result.returncode!=0 and 'recorded: '+after in text and 'measured: '+before in text
 finally:
