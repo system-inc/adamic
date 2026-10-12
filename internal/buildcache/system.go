@@ -174,6 +174,9 @@ const ldCache = "/etc/ld.so.cache"
 // Windows', each box's own version, and no build loads it (a build that opens one refuses its product, classifyPath).
 const wslLibraries = "/usr/lib/wsl"
 
+// machineZone are the files that hold the zone a box was set to (Settle refuses a build that reads one, #cbw5jtf).
+var machineZone = []string{"/etc/localtime", "/etc/timezone"}
+
 // loaderDirectories are the dynamic loader's own search directories, which it tries for a soname its cache doesn't name
 // (glibc's system directories on Debian and Ubuntu, with their glibc-hwcaps subdirectories): a library there is found
 // whether or not the cache names it.
