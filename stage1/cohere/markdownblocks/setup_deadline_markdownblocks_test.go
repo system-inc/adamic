@@ -2,11 +2,14 @@ package markdownblocks
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Shared preparation has no deadline; the unit runner still bounds the process.
@@ -21,6 +24,39 @@ func markdownLayoutProductRoot(t *testing.T) string {
 		t.Fatal(err)
 	}
 	return root
+}
+
+// markdownLayoutGoOracle is cohere's command (adamic_markdown_lists or adamic_markdown_doclayout) with the testdata
+// driver its overlay lays over the command's main, and for the lists testdata/list_bridge.go over adamic_lists.go: a
+// product (buildcache.GoBuildIn) the whitespace, quote, structure, table, leaf and list layout families share. The
+// overlay names this checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
+func markdownLayoutGoOracle(t *testing.T, command string) string {
+	t.Helper()
+	cohere := filepath.Join(markdownLayoutProductRoot(t), "cohere")
+	driverName := "document_go.go"
+	if command == "adamic_markdown_lists" {
+		driverName = "list_go.go"
+	}
+	driver, err := filepath.Abs(filepath.Join("testdata", driverName))
+	if err != nil {
+		t.Fatal(err)
+	}
+	mainPath := filepath.Join(cohere, "cmd", command, "main.go")
+	replace := map[string]string{mainPath: driver}
+	if command == "adamic_markdown_lists" {
+		bridge, err := filepath.Abs("testdata/list_bridge.go")
+		if err != nil {
+			t.Fatal(err)
+		}
+		replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", command, mainPath, []string{"-overlay=" + overlayPath})
 }
 
 func TestMarkdownLayoutSetupHasNoDeadline(t *testing.T) {

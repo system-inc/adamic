@@ -39,8 +39,7 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 		{"list marker", "list.go", `rawPrefix = "- "`, `rawPrefix = "+ "`},
 		{"fence length", "print.go", `max(3, getMaxContinuousCount(value, "` + "`" + `")+1)`, `max(4, getMaxContinuousCount(value, "` + "`" + `")+1)`},
 	}
-	alteredSources := make([][]byte, len(mutations))
-	for index, mutation := range mutations {
+	for _, mutation := range mutations {
 		content, err := os.ReadFile(filepath.Join(cohere, "internal/format/markdown", mutation.path))
 		if err != nil {
 			t.Fatal(err)
@@ -48,58 +47,24 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 		if strings.Count(string(content), mutation.from) != 1 {
 			t.Fatal("mutant must alter exactly one site")
 		}
-		alteredSources[index] = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 	}
-	buildFiles := []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata/go_driver.go", "stage1/cohere/markdownblocks/preflight_shards_test.go"}
-	for _, name := range []string{"go.sum", "go.work.sum"} {
-		if _, err := os.Stat(filepath.Join(root, name)); err == nil {
-			buildFiles = append(buildFiles, name)
-		} else if !os.IsNotExist(err) {
-			t.Fatal(err)
-		}
+	// The Go printer and each mutant are products (buildcache.GoBuildIn, GoBuildInMutated) of cohere with
+	// testdata/go_driver.go laid over the command's main; a mutant plants its one change through an overlay of its own.
+	// The overlay names this checkout's paths, so it sits in a temporary directory and is never part of a product
+	// (#tqrqx60).
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
+	if err != nil {
+		t.Fatal(err)
 	}
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name:      "markdownblocks-whole-document-preflight-go-products",
-		Files:     buildFiles,
-		Flags:     []string{"go build -overlay -o cmd/adamic_markdown_blocks/main.go"},
-		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS", "GOTOOLCHAIN", "GOWORK")},
-	}, func(dir string) error {
-		build := func(replacements map[string]string, binary string) error {
-			replacements[mainPath] = driver
-			overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-			if err != nil {
-				return err
-			}
-			path := binary + ".overlay.json"
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(path)
-			command := preflightCommand(t, budget, "go", "build", "-overlay="+path, "-o", binary, mainPath)
-			command.Dir = cohere
-			var output bytes.Buffer
-			command.Stdout, command.Stderr = &output, &output
-			if err := preflightRun(budget, command); err != nil {
-				return fmt.Errorf("build: %w\n%s", err, output.Bytes())
-			}
-			return nil
-		}
-		if err := build(map[string]string{}, filepath.Join(dir, "go-printer")); err != nil {
-			return err
-		}
-		for index, mutation := range mutations {
-			altered := filepath.Join(dir, mutation.path)
-			if err := os.WriteFile(altered, alteredSources[index], 0644); err != nil {
-				return err
-			}
-			source := filepath.Join(cohere, "internal/format/markdown", mutation.path)
-			if err := build(map[string]string{source: altered}, filepath.Join(dir, fmt.Sprintf("mutant-%d", index))); err != nil {
-				return err
-			}
-		}
-		return nil
-	})
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	arguments := []string{"-overlay=" + overlayPath}
+	binary := buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, arguments)
+	var mutants []string
+	for index, mutation := range mutations {
+		planted := []buildcache.Mutation{{File: "cohere/internal/format/markdown/" + mutation.path, Before: mutation.from, After: mutation.to}}
+		mutants = append(mutants, buildcache.GoBuildInMutated(t, "cohere", fmt.Sprintf("mutant-%d", index), mainPath, arguments, planted))
+	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
@@ -119,11 +84,7 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 	if err != nil {
 		t.Fatal(err)
 	}
-	products := &preflightProducts{binary: filepath.Join(product, "go-printer"), fork: fork, script: script}
-	for index := range mutations {
-		products.mutants = append(products.mutants, filepath.Join(product, fmt.Sprintf("mutant-%d", index)))
-	}
-	return products
+	return &preflightProducts{binary: binary, fork: fork, script: script, mutants: mutants}
 }
 
 func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root string, inputs []auditInput, files, shard int, products *preflightProducts) {
@@ -342,8 +303,8 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 }
 
 // TestProduct_WholeDocumentPreflightGoProducts builds the Go printer and its three mutants that every preflight unit
-// reads (markdownblocks-whole-document-preflight-go-products, 75 s measured inside a unit on Oct 10), so Workshop
-// builds them once and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
+// reads (GoBuildIn and GoBuildInMutated products, 75 s measured inside a unit on Oct 10), so Workshop builds them once
+// and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
 func TestProduct_WholeDocumentPreflightGoProducts(t *testing.T) {
 	t.Parallel()
 	budget := newPreflightBudgetOf(t, t.Name(), 590*time.Second)
