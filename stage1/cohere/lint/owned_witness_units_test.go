@@ -248,16 +248,7 @@ func ownedWitnessSetup(t *testing.T) {
 
 func ownedWitnessExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
 	t.Helper()
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := lintCommand(ctx, "", name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)

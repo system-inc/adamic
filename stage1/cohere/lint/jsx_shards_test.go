@@ -806,34 +806,20 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 	t.Logf("planted disagreement caught only by %s", expected)
 }
 
-// Cancel the entire child process group, including any spawned compilers.
-// This uses Go's context deadline and needs no external timeout executable.
-func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
-	t.Helper()
-	return jsxContextCommand(t, context.Background(), name, args...)
-}
-
-func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
+// jsxContextCommand is lintCommand under a case's own 90-second deadline: the entire child process group is
+// cancelled with it, including any spawned compilers, with no external timeout executable.
+func jsxContextCommand(t *testing.T, parent context.Context, directory, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
+	command := lintCommand(ctx, directory, name, args...)
 	command.WaitDelay = 2 * time.Second
 	return command
 }
 
 func jsxCaseExecute(t *testing.T, ctx context.Context, directory, name string, args ...string) execution {
 	t.Helper()
-	command := jsxContextCommand(t, ctx, name, args...)
-	command.Dir = directory
+	command := jsxContextCommand(t, ctx, directory, name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
