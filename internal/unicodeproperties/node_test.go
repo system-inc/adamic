@@ -186,7 +186,10 @@ func codePointExpressions() []string {
 // two workers below already use both cores.
 func TestNodeAgrees(t *testing.T) {
 	expressions := codePointExpressions()
-	const batchSize = 80
+	// Each Node process pays about 0.3 s on one core to build every code point and self-check before its first
+	// expression, so four batches instead of twenty-two do the same scans with that cost paid four times. A batch of
+	// 440 is a few seconds of Node, far inside runScanner's four-minute deadline.
+	const batchSize = 440
 	var batches [][]string
 	for start := 0; start < len(expressions); start += batchSize {
 		end := start + batchSize
