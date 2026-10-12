@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,43 +17,19 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// Build products are inputs. No package-local cache: Product addresses each
-// oracle, lowered program and sanitized executable by its complete inputs.
-func wholeMutantBuildFiles(t *testing.T) []string {
-	t.Helper()
-	files := []string{"go.mod", "go.work"}
-	for _, root := range []string{"internal", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			name := entry.Name()
-			if strings.HasSuffix(name, ".go") || strings.HasSuffix(name, ".c") || strings.HasSuffix(name, ".h") || strings.HasSuffix(name, ".d.ts") || strings.HasSuffix(name, ".json.gz") || name == "go.mod" || name == "go.sum" {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, filepath.ToSlash(relative))
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	return files
+// Build products are inputs. No package-local cache: Product addresses each lowered program and sanitized executable
+// by its complete inputs. wholeMutantBuildFiles are the compiler that lowers and builds a port
+// (compilerinputs.Lowering), never a walk of internal and cohere, whose TypeScript submodule made a populated tree's
+// walk 67,000 files long (#4ycgm2n).
+func wholeMutantBuildFiles() []string {
+	return compilerinputs.Lowering()
 }
 
 func wholeMutantBuildFlags() []string {
@@ -65,47 +40,34 @@ func wholeMutantBuildFlags() []string {
 	return flags
 }
 
+// wholeMutantBuildOracleProduct is typescript-go's parser with testdata/oracle.go laid over a virtual main in its
+// module, a buildcache.GoBuildIn product keyed by the packages go compiles, never a walk of cohere. It returns the
+// oracle binary. The overlay names this checkout's paths: GoBuildIn keys its map and the side file, never its own path.
 func wholeMutantBuildOracleProduct(t *testing.T) string {
 	t.Helper()
-	files := append(wholeMutantBuildFiles(t), "stage1/typescript/parser/testdata/oracle.go")
-	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: wholeMutantBuildFlags(), Toolchain: []string{buildcache.Tool("go", "version")}}
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-		if err != nil {
-			return err
-		}
-		side, err := filepath.Abs("testdata/oracle.go")
-		if err != nil {
-			return err
-		}
-		virtual := filepath.Join(root, "adamic_parser_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.Dir = root
-		command.Env = append(command.Env, "PWD="+root)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
+	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/oracle.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	virtual := filepath.Join(root, "adamic_parser_oracle.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoBuildIn(t, "cohere/TypeScript/tsc", "oracle", virtual, []string{"-overlay=" + path})
 }
 
 func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) {
 	t.Helper()
-	files := wholeMutantBuildFiles(t)
+	files := wholeMutantBuildFiles()
 	for _, name := range portFiles {
 		files = append(files, "stage1/typescript/parser/"+name)
 	}
