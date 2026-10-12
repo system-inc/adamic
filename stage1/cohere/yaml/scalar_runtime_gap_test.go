@@ -2,17 +2,14 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"path/filepath"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSharedSliceAppendMatchesNode(t *testing.T) {
+	t.Parallel()
+	binary := yamlSharedSliceBuild.binary(t, "gaps/sharedSliceAppend.ts")
+	sanitized := yamlSharedSliceSanitizedBuild.binary(t, "gaps/sharedSliceAppend.ts")
 	entry, err := filepath.Abs("gaps/sharedSliceAppend.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -25,25 +22,9 @@ func TestSharedSliceAppendMatchesNode(t *testing.T) {
 	if string(expected) != "a\nx\n" {
 		t.Fatalf("Node %q", expected)
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "shared")
-	if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	sanitized := filepath.Join(t.TempDir(), "shared-sanitized")
-	if err := native.Build(native.C(lowered), sanitized, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	for _, offset := range []string{"0", "48"} {
+		// Not parallel: a parallel subtest waits for a slot of its own, and the wait counts in its parent's time.
 		t.Run(offset, func(t *testing.T) {
-			t.Parallel()
 			expected := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, offset)
 			if string(expected) != "a\nx\n" {
 				t.Fatalf("Node %q", expected)

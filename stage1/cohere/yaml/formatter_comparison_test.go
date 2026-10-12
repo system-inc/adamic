@@ -2,6 +2,7 @@ package yaml
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,7 +14,13 @@ import (
 // formatterComparison is cohere's command/formatter_comparison with testdata/<adapter> laid over its main by an
 // overlay, and mutations planted in cohere's sources: every Go oracle of this package, a product built ahead under
 // output and keyed through the overlay's map, the adapter's content and each mutation (#5qykzj5).
+// A process looks each up once: a lookup in read mode values the product's whole read set again.
 func formatterComparison(t *testing.T, output, adapter string, mutations ...buildcache.Mutation) string {
+	t.Helper()
+	return yamlProduct(t, fmt.Sprintf("go %s %s %q", output, adapter, mutations), func() string { return formatterComparisonBuild(t, output, adapter, mutations) })
+}
+
+func formatterComparisonBuild(t *testing.T, output, adapter string, mutations []buildcache.Mutation) string {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {

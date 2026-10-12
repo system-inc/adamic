@@ -2,20 +2,14 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSpeedCostProbes(t *testing.T) {
+	t.Parallel()
 	input := filepath.Join(t.TempDir(), "units.txt")
 	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
 		t.Fatal(err)
@@ -30,26 +24,12 @@ func TestSpeedCostProbes(t *testing.T) {
 		{"arenaNodeRead.ts", "accessor", "direct", "57600000000\n"},
 		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+		// Not parallel: one probe at a time keeps this test to one child at a time, its share.
 		t.Run(probe.file, func(t *testing.T) {
+			binary := yamlSpeedProbesBuild.binary(t, "gaps/"+probe.file)
+			emitted := yamlSpeedProbesBuild.emitted(t, "gaps/"+probe.file)
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
 			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "probe")
-			if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			emitted := filepath.Join(t.TempDir(), "probe.mjs")
-			if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
 				t.Fatal(err)
 			}
 			argument := input

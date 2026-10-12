@@ -2,16 +2,9 @@ package yaml
 
 import (
 	"bytes"
-	"context"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func goCST(t *testing.T, cases string) []byte {
@@ -31,8 +24,10 @@ func TestProduct_YAMLCSTGo(t *testing.T) {
 	goCSTOracle(t)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestCSTMatchesGo(t *testing.T) {
+	t.Parallel()
+	binary := yamlCSTBuild.binary(t, "cst_main.ts")
+	emitted := yamlCSTBuild.emitted(t, "cst_main.ts")
 	cases, files, count := lexCases(t)
 	expected := goCST(t, cases)
 	root, err := filepath.Abs(repository)
@@ -43,25 +38,9 @@ func TestCSTMatchesGo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "cst")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
-	emitted := filepath.Join(t.TempDir(), "cst.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
 	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
 	for _, side := range []struct {
 		name string
@@ -82,52 +61,30 @@ func TestCSTMatchesGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d CST answer bytes identical on all five sides", files, count, len(expected))
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+var cstMutants = yamlMutants{family: "cst", entry: "cst_main.ts", files: []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "cst_main.ts"}, mutated: "cstParser.ts", mutations: []yamlMutation{
+	{"null key absent", "item.key = key;\n    item.keyPresent = true;", "item.key = key;\n    item.keyPresent = false;"},
+	{"source offset advanced", "return this.make(this.type, this.offset, this.indent, this.source, true);", "return this.make(this.type, this.offset + 1, this.indent, this.source, true);"},
+	{"line start shifted", "this.lineStarts.push(this.offset + source.length);", "this.lineStarts.push(this.offset + source.length - 1);"},
+}}
+
+func TestProduct_YAMLCSTMutant000(t *testing.T) { t.Parallel(); cstMutants.product(t, 0) }
+func TestProduct_YAMLCSTMutant001(t *testing.T) { t.Parallel(); cstMutants.product(t, 1) }
+func TestProduct_YAMLCSTMutant002(t *testing.T) { t.Parallel(); cstMutants.product(t, 2) }
+
 func TestCSTMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := lexCases(t)
 	expected := goCST(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"null key absent", "item.key = key;\n    item.keyPresent = true;", "item.key = key;\n    item.keyPresent = false;"},
-		{"source offset advanced", "return this.make(this.type, this.offset, this.indent, this.source, true);", "return this.make(this.type, this.offset + 1, this.indent, this.source, true);"},
-		{"line start shifted", "this.lineStarts.push(this.offset + source.length);", "this.lineStarts.push(this.offset + source.length - 1);"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range cstMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "cst_main.ts"} {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "cstParser.ts" {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			entry := filepath.Join(directory, "cst_main.ts")
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			nativeOut := run(t, "", nil, binary, cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
+			product := cstMutants.product(t, index)
+			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "cst_main.ts"), cases)
 			for _, side := range []struct {
 				name string
 				out  []byte
