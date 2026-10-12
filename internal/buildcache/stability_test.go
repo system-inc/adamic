@@ -71,3 +71,35 @@ func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {
 		t.Fatalf("a directory beside the cache: %q, %v", after, err)
 	}
 }
+
+// A tree at Workshop's checkout and the same tree at a runner's unit source, deeper, class a lookup that climbs to home
+// or past it alike, by where it lands (Builder's dry B2, Oct 12: ../../../../lib was /lib on Workshop and a path under
+// ~/loom-serve on a runner, so 29 of 39 product packages moved): the C stack as the machine's system, a path at the top
+// as absolute, a file in home as home's. The tree's own parents and what sits just above it stay relative, the same
+// at any depth. Mutant: a landed lookup keyed relative to the tree (the two depths class it apart).
+// Not parallel: it sets ADAMIC_TRACE_REPORT.
+func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(t *testing.T) {
+	home := "/home/ahra"
+	classes := func(root string) []classed {
+		t.Helper()
+		cache := filepath.Join(home, "loom-builder", "trees", "e329", "cache")
+		t.Setenv("ADAMIC_TRACE_REPORT", filepath.Join(home, "loom-builder", "trees", "e329", "logs", "product-1.trace.jsonl"))
+		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		facts.temporary, facts.home = nil, home
+		var found []classed
+		for _, name := range []string{"/lib", "/usr", "/include", "/package.json", filepath.Join(home, ".adamic-tools"),
+			filepath.Join(filepath.Dir(root), "package.json"), filepath.Dir(root)} {
+			found = append(found, facts.classifyPath(name, readStat|readAbsent))
+		}
+		return found
+	}
+	workshop, runner := classes(filepath.Join(home, "loom-trees", "adamic")), classes(filepath.Join(home, "loom-serve", "units", "u1", "source"))
+	want := []classed{{"system", "/lib"}, {"system", "/usr"}, {"absolute", "/include"}, {"absolute", "/package.json"}, {"home", "~/.adamic-tools"},
+		{"above", "../package.json"}, {"above", ".."}}
+	if !reflect.DeepEqual(workshop, want) || !reflect.DeepEqual(runner, want) {
+		t.Fatalf("classed\n%q at Workshop's depth and\n%q at a runner's, want\n%q", workshop, runner, want)
+	}
+}
