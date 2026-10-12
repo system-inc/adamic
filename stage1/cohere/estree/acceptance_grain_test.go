@@ -45,7 +45,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:  "estree-acceptance-mutant-lowered-" + item.name,
-		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
+		Files: estreeCompilerFiles(),
 		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
@@ -99,28 +99,13 @@ var acceptancePrepared [testAcceptanceMutantsShards]struct {
 	once                 sync.Once
 	main, binary, oracle string
 }
-var acceptanceOracleOnce sync.Once
-var acceptanceOraclePath string
 
+// acceptanceMutantsOracle is the estree Go oracle, goOracle's product, keyed by the packages it compiles. It was a copy
+// of that binary in a product of its own keyed by cohere whole, whose TypeScript submodule a populated tree hashed for
+// every lookup (#4ycgm2n).
 func acceptanceMutantsOracle(t *testing.T) string {
 	t.Helper()
-	acceptanceOracleOnce.Do(func() {
-		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
-			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
-			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
-			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
-		directory := buildcache.Product(t, inputs, func(directory string) error {
-			// GoBuild is absent on this base; preserve the existing overlay recipe.
-			binary := goOracle(t)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
-		})
-		acceptanceOraclePath = filepath.Join(directory, "oracle")
-	})
-	return acceptanceOraclePath
+	return goOracle(t)
 }
 
 func acceptanceMutantsPrepareShard(t *testing.T, shard int) (string, string, string) {
