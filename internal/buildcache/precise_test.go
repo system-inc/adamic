@@ -1883,7 +1883,8 @@ func TestAReaderOutlivesItsInputsKeyMoving(t *testing.T) {
 
 // A product's digest is its bytes wherever it sits: the same files in another directory digest the same, and a
 // file's content, its executable bit or a link's target each move it. A later process reads it from beside the
-// product. Mutants: the executable bit left out; the digest naming its directory.
+// product, and one reached through a link is its bytes too. Mutants: the executable bit left out; the digest naming its
+// directory.
 func TestAProductsDigestIsItsBytes(t *testing.T) {
 	t.Parallel()
 	product := func(executable bool, content, target string) string {
@@ -1926,6 +1927,15 @@ func TestAProductsDigestIsItsBytes(t *testing.T) {
 	}
 	if got := digest(kept); got != strings.Repeat("c", 64) {
 		t.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
+	}
+	// A product reached through a link, as a runner's unit cache links one from the box's shared products, digests as
+	// its bytes. Mutant: the link walked as itself.
+	linked := filepath.Join(t.TempDir(), strings.Repeat("ab", 32))
+	if err := os.Symlink(product(true, "tool", "bin/tool"), linked); err != nil {
+		t.Fatal(err)
+	}
+	if got := digest(linked); got != base {
+		t.Fatalf("a product reached through a link digests %s, its bytes %s", got, base)
 	}
 }
 

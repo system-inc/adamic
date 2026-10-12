@@ -361,7 +361,11 @@ var treeValuesRead atomic.Int64
 var productDigests sync.Map
 
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
-// content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once.
+// content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
+// directory reached through a link is valued by what it links to: Loom's runner links each product a unit fetched into
+// the unit's cache from the box's shared products, and walking the link itself valued every product as one link line
+// naming that box's path, so every product read through another missed on every runner (mega's run, Oct 12: css's
+// oracle answers and composition native, lint/helpers' mutants oracle, each "1 of N entries differ: product").
 func productDigest(directory string) (string, error) {
 	if value, ok := productDigests.Load(directory); ok {
 		return value.(string), nil
@@ -371,12 +375,18 @@ func productDigest(directory string) (string, error) {
 		productDigests.Store(directory, string(content))
 		return string(content), nil
 	}
+	root := directory
+	if info, err := os.Lstat(directory); err == nil && info.Mode()&fs.ModeSymlink != 0 {
+		if root, err = filepath.EvalSymlinks(directory); err != nil {
+			return "", fmt.Errorf("digest of product %s: %w", filepath.Base(directory), err)
+		}
+	}
 	hash := sha256.New()
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		relative, err := filepath.Rel(directory, path)
+		relative, err := filepath.Rel(root, path)
 		if err != nil {
 			return err
 		}
