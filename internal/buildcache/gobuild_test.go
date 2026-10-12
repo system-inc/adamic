@@ -11,6 +11,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // forgetInputs drops the requests this process keyed, for a test that changes the tree or go's environment under the
@@ -189,15 +191,20 @@ func TestGoBuildKeysTheSameTreeTheSameFromAnyMachine(t *testing.T) {
 		t.Fatalf("the source put back keyed %s, not %s", key, reference)
 	}
 	// Another release, as a go that reports go1.99.0 and otherwise is this one (the release keys twice: Tool's go
-	// version and GOTOOLCHAIN's selection, which is go env's GOVERSION).
-	real, err := exec.LookPath("go")
+	// version and GOTOOLCHAIN's selection, which is go env's GOVERSION). The key runs the go toolchain.Path finds, a
+	// tools directory's before PATH's, so the fake stands in a tools directory of the test's own.
+	real, err := toolchain.Path("go")
 	if err != nil {
 		t.Fatal(err)
 	}
-	fake := filepath.Join(t.TempDir(), "go")
+	standIn := filepath.Join(t.TempDir(), "bin")
+	if err := os.MkdirAll(standIn, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	fake := filepath.Join(standIn, "go")
 	os.WriteFile(fake, []byte("#!/bin/sh\ncase \"$1\" in\nversion) echo 'go version go1.99.0 fake/arch'; exit 0 ;;\n"+
 		"env) "+real+" \"$@\" | sed -E 's/\"GOVERSION\": \"[^\"]*\"/\"GOVERSION\": \"go1.99.0\"/'; exit 0 ;;\nesac\nexec "+real+" \"$@\"\n"), 0o755)
-	t.Setenv("PATH", filepath.Dir(fake)+string(os.PathListSeparator)+os.Getenv("PATH"))
+	t.Setenv("ADAMIC_TOOLS", filepath.Dir(standIn))
 	forget := func() { tools.Range(func(name, _ any) bool { tools.Delete(name); return true }) }
 	forget()
 	t.Cleanup(forget)
@@ -229,13 +236,13 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 		// Each checkout is its own repository at its own commit, as two gate trees are: Go stamps a binary built in a
 		// repository with the commit unless -buildvcs=false.
 		for _, git := range [][]string{{"init", "-q"}, {"add", "."}, {"-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "commit " + name}} {
-			if output, err := exec.Command("git", append([]string{"-C", module}, git...)...).CombinedOutput(); err != nil {
+			if output, err := toolchain.GitCommand(append([]string{"-C", module}, git...)...).CombinedOutput(); err != nil {
 				t.Fatalf("git %v: %v\n%s", git, err, output)
 			}
 		}
-		command := exec.Command("go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
+		command := toolchain.Command("go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
 		command.Dir = module
-		command.Env = append(os.Environ(), "GOWORK=off", "GOFLAGS=")
+		command.Env = append(command.Env, "GOWORK=off", "GOFLAGS=")
 		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("%v\n%s", err, output)
 		}
@@ -316,7 +323,7 @@ func TestGoTestKeysAModulesTestBinary(t *testing.T) {
 
 // A process keys a request once, and a planner's index keys it with no go at all (#pc0jvv4): what a tree build records
 // (ADAMIC_BUILD_INPUTS_RECORD) a unit reads (ADAMIC_BUILD_INPUTS), and with neither it keys with go as before.
-// Not parallel: points the build cache and the store at this test, and PATH, through t.Setenv.
+// Not parallel: points the build cache and the store at this test, and PATH and ADAMIC_TOOLS, through t.Setenv.
 func TestARequestIsKeyedOnceAndCanBeKeyedAhead(t *testing.T) {
 	cached(t)
 	forgetInputs()
@@ -334,6 +341,8 @@ func TestARequestIsKeyedOnceAndCanBeKeyedAhead(t *testing.T) {
 	}
 	t.Setenv("ADAMIC_BUILD_INPUTS_RECORD", "")
 	forgetInputs()
+	// No go anywhere toolchain.Path looks: no tools directory, and nothing on PATH.
+	t.Setenv("ADAMIC_TOOLS", "")
 	t.Setenv("PATH", t.TempDir())
 	if _, err := GoInputs("hello", "./internal/buildcache/testdata/hello", nil, nil); err == nil {
 		t.Fatal("keyed with no go and no index")
