@@ -239,7 +239,8 @@ func prepareStringsAnswerInputs(t *testing.T) {
 }
 
 // A one-byte edit to one batch's or one raw case's input re-keys the product holding its answer, by name key (what a
-// runner finds it by) and by declared key (what this machine alone builds it by).
+// runner finds it by) and by declared key (what this machine alone builds it by), and so does another oracle, so a
+// changed Go oracle or Prettier library never serves stale answers.
 func TestCSSStringsAnswerProductsRekey(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs(repository)
@@ -259,20 +260,24 @@ func TestCSSStringsAnswerProductsRekey(t *testing.T) {
 		{"Prettier batch oracle answers", []string{"testdata/library.mjs"}, stringsBatchCases},
 		{"Go raw oracle answers", nil, stringsRawCases},
 	} {
-		keys := func(corpus stringsCorpus) (string, string) {
-			inputs := stringsCacheInputs(t, stringsAnswerProductInputs(product.name, "oracle-content-sha256=0", "toolchain", product.files, product.cases(corpus)))
+		keys := func(corpus stringsCorpus, identity string) (string, string) {
+			inputs := stringsCacheInputs(t, stringsAnswerProductInputs(product.name, identity, "toolchain", product.files, product.cases(corpus)))
 			declared, err := buildcache.Key(root, inputs)
 			if err != nil {
 				t.Fatal(err)
 			}
 			return buildcache.NameKey(root, inputs), declared
 		}
-		nameKey, declared := keys(corpus)
-		editedNameKey, editedDeclared := keys(edited)
+		nameKey, declared := keys(corpus, "oracle-content-sha256=0")
+		editedNameKey, editedDeclared := keys(edited, "oracle-content-sha256=0")
 		if nameKey == editedNameKey || declared == editedDeclared {
 			t.Fatalf("%s: a one-byte input edit kept name key %s or key %s", product.name, nameKey[:12], declared[:12])
 		}
-		t.Logf("%s: name key %s to %s, key %s to %s", product.name, nameKey[:12], editedNameKey[:12], declared[:12], editedDeclared[:12])
+		oracleNameKey, oracleDeclared := keys(corpus, "oracle-content-sha256=1")
+		if nameKey == oracleNameKey || declared == oracleDeclared {
+			t.Fatalf("%s: another oracle kept name key %s or key %s", product.name, nameKey[:12], declared[:12])
+		}
+		t.Logf("%s: name key %s to %s (input) and %s (oracle), key %s to %s and %s", product.name, nameKey[:12], editedNameKey[:12], oracleNameKey[:12], declared[:12], editedDeclared[:12], oracleDeclared[:12])
 	}
 }
 
