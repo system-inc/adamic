@@ -95,7 +95,8 @@ func Find(nameKeys []string) ([]Finding, error) {
 	// What get does on a hit beyond finding it: the tree builder republishes a product the store has lost, and its read
 	// sets when they're old (refreshPublished, a no-op for everyone else). Network-bound, so many at once.
 	parallelMap(findings, func(_ int, finding Finding) bool {
-		if finding.Outcome == FindingFound {
+		// A test read set's marker is no product: never published (#sfqdxvy).
+		if finding.Outcome == FindingFound && finding.Name != TestReadSetName {
 			refreshPublished(cache, finding.NameKey, finding.Key, filepath.Join(cache, finding.Key), finding.Name)
 		}
 		return false
