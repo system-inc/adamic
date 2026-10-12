@@ -1,11 +1,14 @@
 package toolchain
 
 import (
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 )
 
 // executableAt writes a script that prints what it is at path.
@@ -171,5 +174,24 @@ func TestAToolsCompilersAreClangUnlessTheCallerNamesOne(t *testing.T) {
 	t.Setenv("CC", "/usr/bin/cc")
 	if environment := values(Env("CXX=g++")); environment["CC"] != "/usr/bin/cc" || environment["CXX"] != "g++" {
 		t.Fatalf("a caller's CC and a request's CXX: CC=%q, CXX=%q", environment["CC"], environment["CXX"])
+	}
+}
+
+// A tool keeps its caller's time zone, so a unit's TZ=UTC reaches every tool and none reads the machine's zone file
+// (Server's /etc/localtime differed from the house's, Oct 12, and 742 products' read sets held it). Go names its local
+// zone UTC when TZ=UTC reaches it and Local when it read the zone file, so the test runs itself as the tool with the
+// environment Command gives one (Env). Mutant: TZ left out of carried.
+// Not parallel: t.Setenv.
+func TestAToolKeepsItsCallersTimeZone(t *testing.T) {
+	if os.Getenv("ADAMIC_TOOLCHAIN_ZONE") == "print" {
+		fmt.Print(time.Local.String())
+		return
+	}
+	t.Setenv("TZ", "UTC")
+	command := exec.Command(os.Args[0], "-test.run=^TestAToolKeepsItsCallersTimeZone$")
+	command.Env = append(Env(), "ADAMIC_TOOLCHAIN_ZONE=print")
+	output, err := command.Output()
+	if err != nil || !strings.HasPrefix(string(output), "UTC") {
+		t.Fatalf("a tool under a caller's TZ=UTC named its zone %q (%v): it read the machine's zone file", output, err)
 	}
 }
