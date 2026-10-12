@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('output', type=Path, help='new scratch directory, outside the repository')
@@ -16,8 +17,13 @@ out = args.output.resolve()
 assert not out.exists(), 'refusing to replace an existing output'
 assert repository not in out.parents, 'TypeScript scratch source must stay outside the repository'
 out.mkdir(parents=True)
+# Importing apply.py and artifact.py must not leave __pycache__ in stage3, which nothing ignores.
+sys.dont_write_bytecode = True
+sys.path += [str(repository / 'stage3'), str(repository / 'stage3/lane')]
+from apply import pinned_packages
+from artifact import link_packages
 env = dict(os.environ)
-env.setdefault('NODE_PATH', str(Path.home() / '.cache/adamic-stage3/api/node_modules'))
+env['NODE_PATH'] = str(pinned_packages(repository / 'stage3/api'))
 
 def run(name, command, extra=None, cwd=repository):
     with (out / (name + '.log')).open('w') as log:
@@ -32,6 +38,8 @@ try:
     shutil.copyfile(scoreboard, out / 'patch-set.md')
 finally:
     scoreboard.write_bytes(original)
+# The oracle builds and tests with the tree's stage3/typescript packages, linked in; nothing runs npm ci.
+link_packages(repository, out / 'tree')
 run('instrument', ['node', str(unit / 'instrument.cjs'), 'instrument', str(out / 'tree'), str(unit / 'sites.json')])
 for name in ['upstream', 'driver', 'self']:
     (out / (name + '-counts')).mkdir()
