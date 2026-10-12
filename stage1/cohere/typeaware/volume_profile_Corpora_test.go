@@ -272,6 +272,7 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 			}
 			command := volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
 			command.Dir = filepath.Join(repository, "cohere")
+			command.Env = append(command.Env, "PWD="+command.Dir)
 			return command
 		}},
 	}

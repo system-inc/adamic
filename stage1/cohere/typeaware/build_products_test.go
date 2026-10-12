@@ -26,8 +26,7 @@ func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, so
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	command := toolchain.Command("go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
-	command.Dir = filepath.Join(h.repository, "cohere")
+	command := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
 	return h.sixBuildProduct(productName, command)
 }
 
