@@ -58,6 +58,15 @@
 //   - HTTP_PROXY, HTTPS_PROXY, NO_PROXY, ALL_PROXY (either case), SSL_CERT_FILE and SSL_CERT_DIR: how a box reaches
 //     the module proxy and the toolchain download, whose content go.sum and the release's own checksum fix.
 //
+// and sets these when the caller sets neither:
+//
+//   - CC=clang and CXX=clang++: the resolver's clang, by its name, which go finds on Env's PATH (the tools directory
+//     first, as Path finds it). Unset, go's default on Linux is gcc from PATH, and the naughty list's run (#eehjrv6)
+//     found cgo running the machine's gcc, as and ld in 66 units and products: a compiler no key named. By its name,
+//     a key reads CC=clang the same on every machine, and buildcache keys the compiler itself by its report, its
+//     install place dropped (Tool). A machine without clang fails a cgo build naming clang, and never falls back to
+//     gcc. (Loom, Oct 12: one re-key of every cgo product, the run after the gate being uncached anyway.)
+//
 // and sets these, whatever the caller had:
 //
 //   - GOENV=off: go's configuration file (~/Library/Application Support/go/env on a Mac, ~/.config/go/env on Linux)
@@ -106,6 +115,9 @@ const gocacheSettings = "ADAMIC_GOCACHE_"
 
 // fixed are the settings Env gives every tool, whatever the caller had.
 var fixed = []string{"GOENV=off", "ZERO_AR_DATE=1"}
+
+// compilers are the C and C++ compilers Env names when the caller names neither (the package doc says why).
+var compilers = []string{"CC=clang", "CXX=clang++"}
 
 // gitFixed are the settings GitEnv gives git, whatever the caller had: no configuration but the repository's own.
 var gitFixed = []string{"GIT_CONFIG_GLOBAL=" + os.DevNull, "GIT_CONFIG_NOSYSTEM=1",
@@ -212,6 +224,11 @@ func Env(extra ...string) []string {
 		name, _, _ := strings.Cut(setting, "=")
 		if slices.Contains(GoSettings, name) || slices.Contains(goLocations, name) || slices.Contains(carried, name) || strings.HasPrefix(name, gocacheSettings) {
 			environment = append(environment, setting)
+		}
+	}
+	for _, compiler := range compilers {
+		if name, _, _ := strings.Cut(compiler, "="); os.Getenv(name) == "" {
+			environment = append(environment, compiler)
 		}
 	}
 	environment = append(environment, fixed...)
