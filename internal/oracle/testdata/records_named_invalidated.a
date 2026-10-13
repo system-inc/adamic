@@ -1,0 +1,10 @@
+interface Options {
+    name: string;
+    [key: string]: number | string | undefined;
+}
+const options: Options = { name: "options", value: 1 };
+function replace(): void { options["value"] = "changed"; }
+if (typeof options["value"] === "number") {
+    replace();
+    console.log(`${options["value"] + 1}`);
+}
