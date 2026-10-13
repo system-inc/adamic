@@ -26,6 +26,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	case "groupBy":
 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
 	}
+	if value, handled, err := l.objectNamesCallArguments(node, name, written); handled {
+		return value, handled, err
+	}
 	count := 1
 	if name == "is" || name == "hasOwn" {
 		count = 2
@@ -88,13 +91,16 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
-			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
-			}
-			keyValue, err := l.expression(key)
+			keyValue, err := l.expression(written[1])
 			if err != nil {
 				return nil, true, err
+			}
+			switch keyValue.Type() {
+			case ir.String:
+			case ir.Number:
+				keyValue = ir.NumberToString{Value: keyValue}
+			default:
+				return nil, true, l.notYet(written[1], "Object.hasOwn with a key requiring unrepresented ToPropertyKey coercion")
 			}
 			call.Arguments = append(call.Arguments, keyValue)
 		case "freeze":
@@ -206,7 +212,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {
 				return false
 			}
-			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral {
+			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral && field.Name().Kind != ast.KindNumericLiteral {
 				return false
 			}
 			if strings.ContainsRune(field.Name().Text(), 0) || field.Name().Text() == "__proto__" || len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {
@@ -227,7 +233,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	variable := declaration.AsVariableDeclaration()
-	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+	if variable.Type != nil || variable.Initializer == nil || (declaration.Parent.Flags&ast.NodeFlagsConst == 0 && l.objectBindingAssigned(declaration, symbol)) {
 		return false
 	}
 	return l.exactObject(variable.Initializer, depth+1)

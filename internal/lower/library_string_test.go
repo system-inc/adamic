@@ -14,7 +14,7 @@ func TestLibraryStringRefusals(t *testing.T) {
 		{"null receiver", "String.prototype.trim.call(null);\n", "null or undefined"},
 		{"undefined receiver", "String.prototype.trim.call(undefined);\n", "null or undefined"},
 		{"String internal slot", "String.prototype.valueOf.call(42);\n", "requires a String internal slot"},
-		{"object conversion", "console.log(String({ value: 1 }));\n", "ToPrimitive is not lowered"},
+		{"object conversion", "function convert(value: { readonly value: number }): string { return String(value); }\n", "hidden by the object view"},
 		{"collation", "console.log(`${'Z'.localeCompare('a')}`);\n", "locale collation"},
 		{"loose inequality", "function different(left: string, right: string): boolean { return left != right; }\nconsole.log(`${different('a', 'b')}`);\n", "refuses !="},
 		{"first class constructor", "const convert = String;\nconsole.log(typeof convert);\n", "outside a const alias"},
