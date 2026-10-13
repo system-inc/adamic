@@ -434,6 +434,25 @@ adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_stri
 	result->slots[7].boolean = (program->flags & 4) != 0 && !(program->flags & 64);
 	return result;
 }
+// Dynamic programs retain their counted arena through the private final slot.
+// The ordinary matcher needs no reference to a compiler symbol.
+static adamic_array *regex_storage(const adamic_object *regex) {
+    return regex->shape->count == 13 && strcmp(regex->shape->names[12], "#compiler") == 0
+        ? regex->slots[12].reference : NULL;
+}
+static adamic_object *regex_copy_object(adamic_object *regex) {
+    adamic_object *copy = adamic_object_new(regex->shape);
+    memcpy(copy->slots, regex->slots, regex->shape->count * sizeof(*copy->slots));
+    copy->slots[1].number = 0;
+    copy->slots[2].reference = adamic_retain(regex->slots[2].reference);
+    copy->slots[3].reference = adamic_retain(regex->slots[3].reference);
+    if (regex_storage(regex) != NULL)
+        copy->slots[12].reference = adamic_retain(regex->slots[12].reference);
+    return copy;
+}
+#define REGEX_STORAGE_PARAMETER , adamic_array *storage
+#define REGEX_STORAGE_ARGUMENT(regex) , regex_storage(regex)
+#define REGEX_GROUP_STORAGE , storage
 static const adamic_regex_program *regex_program(adamic_object *regex) {
 	return regex->slots[0].reference;
 }
@@ -601,10 +620,11 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
 static const bool match_references[] = {false, true, true, true};
 static const adamic_shape match_shape = {4, match_names, match_references, NULL};
-static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures) {
+static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures REGEX_STORAGE_PARAMETER) {
 	if (p->group_count == 0)
 		return NULL;
 	adamic_object *groups = adamic_object_new(p->group_shape);
+    if (storage != NULL) groups->slots[p->group_count].reference = adamic_retain(storage);
 	for (size_t k = 0; k < p->group_count; k++) {
 		for (size_t j = 0; j < p->groups[k].count; j++) {
 			void *value = captures->elements[p->groups[k].captures[j]].reference;
@@ -620,7 +640,7 @@ static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[] = {false, false};
 static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL};
 static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *input,
-								  const ptrdiff_t *spans) {
+								  const ptrdiff_t *spans REGEX_STORAGE_PARAMETER) {
 	adamic_array *result = adamic_array_new(p->captures + 1, true);
 	for (size_t k = 0; k <= p->captures; k++) {
 		adamic_string *value =
@@ -632,7 +652,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 	result->properties = adamic_object_new(&match_shape);
 	result->properties->slots[0].number = (double)spans[0];
 	result->properties->slots[1].reference = adamic_retain(input);
-	result->properties->slots[2].reference = regex_groups(p, result);
+	result->properties->slots[2].reference = regex_groups(p, result REGEX_GROUP_STORAGE);
 	if (p->flags & 32) {
 		adamic_array *indices = adamic_array_new(p->captures + 1, true);
 		for (size_t k = 0; k <= p->captures; k++) {
@@ -645,7 +665,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 			adamic_array_push(indices, (adamic_value){.reference = pair});
 		}
 		indices->properties = adamic_object_new(&match_shape);
-		indices->properties->slots[2].reference = regex_groups(p, indices);
+		indices->properties->slots[2].reference = regex_groups(p, indices REGEX_GROUP_STORAGE);
 		result->properties->slots[3].reference = indices;
 	}
 	return result;
@@ -667,6 +687,8 @@ void *adamic_regex_group_lookup(adamic_object *object, const char *name, bool op
 		static const char message[] = "undefined named-group dictionary";
 		adamic_panic(message, sizeof message - 1);
 	}
+    // Capture identifiers cannot begin with #. Private ownership is not a group.
+    if (name[0] == '#') return NULL;
 	for (size_t k = 0; k < object->shape->count; k++)
 		if (strcmp(name, object->shape->names[k]) == 0)
 			return object->slots[k].reference;
@@ -692,7 +714,7 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
 	free(units);
 	if (spans == NULL)
 		return NULL;
-	adamic_array *result = regex_result(regex_program(regex), input, spans);
+	adamic_array *result = regex_result(regex_program(regex), input, spans REGEX_STORAGE_ARGUMENT(regex));
 	free(spans);
 	return result;
 }
@@ -798,7 +820,7 @@ adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex
 	const adamic_regex_program *p = regex_program(regex);
 	regex_require_global(
 		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
-	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+	    adamic_object *copy = regex_copy_object(regex);
 	copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);
 	adamic_object *iterator = adamic_object_new(&iterator_shape);
 	iterator->slots[0].reference = copy;
@@ -855,7 +877,7 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 	if (limit == 0)
 		return result;
 	const adamic_regex_program *p = regex_program(regex);
-	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+	    adamic_object *copy = regex_copy_object(regex);
 	size_t length;
 	uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;

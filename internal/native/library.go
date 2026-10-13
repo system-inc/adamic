@@ -141,7 +141,11 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	if err != nil {
 		return "", err
 	}
-	if supplier := runtimeSupplier.Load(); supplier != nil && directory == "" {
+	return runtimeLibraryFromInputs(files, flags, compiler, version, options, directory == "", "native-runtime")
+}
+
+func runtimeLibraryFromInputs(files []runtimeFile, flags []string, compiler, version string, options Options, supplied bool, namespace string) (string, error) {
+	if supplier := runtimeSupplier.Load(); supplier != nil && supplied {
 		request, err := runtimeRequest(files, flags, compiler, version, options)
 		if err != nil {
 			return "", err
@@ -161,7 +165,7 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 		})
 		return supplied.library, supplied.err
 	}
-	cache, err := cacheDirectory("native-runtime")
+	cache, err := cacheDirectory(namespace)
 	if err != nil {
 		return "", err
 	}
