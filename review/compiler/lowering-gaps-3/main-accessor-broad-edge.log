@@ -1,0 +1,9 @@
+=== RUN   TestObjectSpreadAccessorEffects
+=== PAUSE TestObjectSpreadAccessorEffects
+=== CONT  TestObjectSpreadAccessorEffects
+    accessor_spread_test.go:33: fresh data: throw edge true, want false
+    accessor_spread_test.go:33: saved data: throw edge true, want false
+--- FAIL: TestObjectSpreadAccessorEffects (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.016s
+FAIL

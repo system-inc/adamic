@@ -1,0 +1,4 @@
+function copy(source: { readonly label: string }): { readonly label: string } {
+	return { ...source };
+}
+console.log(copy({ label: `owned${7}` }).label);

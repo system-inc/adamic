@@ -1,0 +1,17 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -29,6 +29,14 @@
+ 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+ 		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+ 		if (adamic_thrown != NULL) {
++			for (size_t next = position + 1; next < shape->count; next++) {
++				size_t unvisited = adamic_public_index(shape, next);
++				if (shape->references[unvisited] && object->slots[unvisited].reference != NULL) {
++					adamic_panic("uncopied slot not zero", sizeof "uncopied slot not zero" - 1);
++				}
++			}
++			object->slots[index].reference = adamic_string_allocate(5);
++			adamic_release(object->slots[index].reference);
+ 			adamic_release(object);
+ 			return NULL;
+ 		}
