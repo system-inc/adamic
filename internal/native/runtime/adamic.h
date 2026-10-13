@@ -1084,3 +1084,6 @@ void *adamic_library_identity(size_t index);
 #endif
 
 #endif
+
+#include "node_path.h"
+#include "node_fs_directory.h"

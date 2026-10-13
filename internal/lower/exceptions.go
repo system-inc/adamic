@@ -184,6 +184,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.NodeHostCall:
+			found = found || node.Throws
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
 		case ir.Throw:
