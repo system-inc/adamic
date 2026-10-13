@@ -5,6 +5,45 @@
 #include <string.h>
 #include <unistd.h>
 
+static adamic_maybe_number exit_code;
+
+adamic_maybe_number adamic_process_exit_code(void) { return exit_code; }
+
+int adamic_process_status(void) { return exit_code.present ? (int)exit_code.number : 0; }
+
+// Node validates before changing its status, and keeps ToInt32(code), not the original number.
+static bool valid_code(adamic_maybe_number code) {
+	if (!code.present || (isfinite(code.number) && trunc(code.number) == code.number)) { return true; }
+	static adamic_string prefix = ADAMIC_STRING("The value of \"code\" is out of range. It must be an integer. Received ");
+	static adamic_string range_name = ADAMIC_STRING("RangeError");
+	adamic_string *number = adamic_string_from_number(code.number);
+	adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){&prefix, number});
+	static adamic_string range_code = ADAMIC_STRING("ERR_OUT_OF_RANGE");
+	static const char *const names[] = {"name", "message", "code"};
+	static const bool references[] = {true, true, true};
+	static const adamic_shape shape = {3, names, references, NULL};
+	adamic_thrown = adamic_object_new(&shape);
+	adamic_thrown->slots[0].reference = adamic_retain(&range_name);
+	adamic_thrown->slots[1].reference = adamic_retain(message);
+	adamic_thrown->slots[2].reference = adamic_retain(&range_code);
+	adamic_release(number);
+	adamic_release(message);
+	return false;
+}
+
+void adamic_process_set_exit_code(adamic_maybe_number code) {
+	if (!valid_code(code)) { return; }
+	exit_code = code;
+	if (code.present) { exit_code.number = adamic_bitwise_or(code.number, 0); }
+}
+
+void adamic_process_exit(adamic_maybe_number code) {
+	if (!valid_code(code)) { return; }
+	// Lowering supplies exitCode for an omitted argument. Node 24's explicit undefined means 0.
+	adamic_process_set_exit_code(code);
+	adamic_process_exit_now(adamic_process_status());
+}
+
 adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream) {
 	bool terminal = isatty(stream) != 0;
 	return (adamic_maybe_boolean){.present = terminal, .boolean = terminal};
