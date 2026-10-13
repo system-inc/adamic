@@ -1,0 +1,8 @@
+=== RUN   TestEveryMapAProgramHoldsIsSorted
+=== PAUSE TestEveryMapAProgramHoldsIsSorted
+=== CONT  TestEveryMapAProgramHoldsIsSorted
+    gob_map_test.go:92: Program.PlaceholderSources is a plain map[string]string: gob writes it in random order; make it a SortedMap
+--- FAIL: TestEveryMapAProgramHoldsIsSorted (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.008s
+FAIL

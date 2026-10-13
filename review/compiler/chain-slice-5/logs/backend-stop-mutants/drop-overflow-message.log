@@ -1,0 +1,11 @@
+=== RUN   TestNonOverflowRangeErrorCatch
+=== PAUSE TestNonOverflowRangeErrorCatch
+=== CONT  TestNonOverflowRangeErrorCatch
+    backend_stops_test.go:153: non-overflow RangeError was terminal: exit codes differ; exit 70 stdout "" stderr "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+--- FAIL: TestNonOverflowRangeErrorCatch (0.70s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.744s
+FAIL

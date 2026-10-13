@@ -1,0 +1,8 @@
+=== RUN   TestPlaceholderUseCheckSavedLeak
+=== PAUSE TestPlaceholderUseCheckSavedLeak
+=== CONT  TestPlaceholderUseCheckSavedLeak
+    placeholder_nonnull_test.go:36: checked use: oracle.run{stdout:[]uint8{0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestPlaceholderUseCheckSavedLeak (2.35s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	2.396s
+FAIL

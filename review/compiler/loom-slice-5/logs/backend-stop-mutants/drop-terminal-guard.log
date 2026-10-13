@@ -1,0 +1,8 @@
+=== RUN   TestTerminalStackStopJavaScript
+=== PAUSE TestTerminalStackStopJavaScript
+=== CONT  TestTerminalStackStopJavaScript
+    backend_stops_test.go:117: terminal stack stop: ruled JavaScript outcome: exit codes differ (@system_adamic, task #z1vjxxd, chain step 24)
+--- FAIL: TestTerminalStackStopJavaScript (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.159s
+FAIL

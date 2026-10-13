@@ -1,0 +1,4 @@
+let value: string = undefined!;
+let target: string = undefined!;
+function take(text: string): void { console.log(text === undefined ? "missing" : "present"); }
+take(target = value);

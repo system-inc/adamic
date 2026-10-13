@@ -1,0 +1,33 @@
+{
+  "./cmd/adamic": [
+    "TestExplainChecksOutput",
+    "TestExplainChecksDriver",
+    "TestPlaceholderExplainChecksOutputC",
+    "TestPlaceholderExplainChecksOutputJavaScript",
+    "TestPlaceholderExplainChecksOutputBuild"
+  ],
+  "./internal/native": [
+    "TestParserConstructionBackendOwnKeyOrder",
+    "TestParserConstructionBackendNodeArrayKeys",
+    "TestParserConstructionBackendNodeArrayJson",
+    "TestParserConstructionBackendNodeArrayLength",
+    "TestParserConstructionRuntimeMutantSynthesizedKey",
+    "TestParserConstructionRuntimeMutantDeclarationOrder",
+    "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+    "TestObjectMetadataCacheIsPerEmission"
+  ],
+  "./internal/oracle": [
+    "TestImpossibleNonNullFixturesAreRefused",
+    "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "TestLiteralDefaultPlaceholderAgreesWithNode",
+    "TestMigratedNonNullFixturesRemainCovered",
+    "TestTheOracleCatchesOneByte",
+    "TestParserProgramRegionLifetime",
+    "TestUninitializedIsNotNullishMutant",
+    "TestNonliteralInitializerCannotSkipCheck",
+    "TestLongArgumentsLeaveTheStackItsLimit",
+    "TestSmallStacksStillPanic",
+    "TestNarrowedFieldUsesSharedReadiness",
+    "TestViewFieldInheritedStaticReadiness"
+  ]
+}
