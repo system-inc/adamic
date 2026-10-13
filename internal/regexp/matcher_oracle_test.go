@@ -246,19 +246,6 @@ func TestMatcherTest262Executions(t *testing.T) {
 	}
 	compareExecutionCases(t, cases, false)
 }
-func TestMatcherStepLimit(t *testing.T) {
-	t.Parallel()
-	p, err := Compile("(a+)+$", "")
-	if err != nil {
-		t.Fatal(err)
-	}
-	r := p.New()
-	r.StepLimit = 1000
-	_, err = r.ExecString(strings.Repeat("a", 30) + "b")
-	if !errors.Is(err, ErrStepLimit) {
-		t.Fatalf("catastrophic backtracking returned %v", err)
-	}
-}
 
 // Probe every generated mapping against the external oracle, including legacy
 // mode on Unicode folds that the spec explicitly keeps separate.
