@@ -159,15 +159,9 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 }
 
 void adamic_start(int count, char **values) {
-#ifdef ADAMIC_TARGET_WASI
-    // Preview 1 has no initial cwd. The command host supplies one inside its
-    // preopens; without it wasi-libc's virtual cwd remains '/'.
-    const char *directory = getenv("ADAMIC_WASI_CWD");
-    if (directory != NULL && chdir(directory) != 0) {
-        adamic_panic("wasm32-wasi: cannot enter supplied working directory", sizeof "wasm32-wasi: cannot enter supplied working directory" - 1);
-    }
-#endif
+
 	adamic_arguments_save(count, values);
+	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
@@ -196,6 +190,19 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 		flush();
 	}
 }
+
+// sys.write does not add a newline. Share console's encoding, failure and output-order rules.
+bool adamic_write_raw(enum adamic_stream stream, const adamic_string *string) {
+    if (output_mode == 0) {
+        output_mode = isatty(adamic_stdout) ? 2 : 1;
+        atexit(finish);
+    }
+    flush();
+    write_text(stream, string->bytes, string->length);
+    flush();
+    return !broken[stream];
+}
+
 
 _Noreturn void adamic_panic(const char *message, size_t length) {
 	static const char prefix[] = "adamic: panic: ";
