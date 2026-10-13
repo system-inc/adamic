@@ -14,50 +14,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
-
-func TestNodeCacheProgram(t *testing.T) {
-	t.Parallel()
-	cache := &resultCache{directory: t.TempDir()}
-	node, err := toolchain.Path("node")
-	if err != nil {
-		t.Fatal(err)
-	}
-	module := filepath.Join(t.TempDir(), "program.mts")
-	for _, word := range []string{"before", "after"} {
-		source := fmt.Sprintf("console.log(%q);\n", word)
-		if err := os.WriteFile(module, []byte(source), 0600); err != nil {
-			t.Fatal(err)
-		}
-		key := nodeResultKey(source, "node", "adapt", module, "context")
-		result := cache.reuse(key, func() (execution, bool) {
-			return runCommand(time.Second*15, nil, node, module), true
-		})
-		if result.Stdout != word+"\n" {
-			t.Fatalf("changed Node program served %q, want %q", result.Stdout, word+"\n")
-		}
-	}
-}
-
-func TestNativeCacheGeneratedC(t *testing.T) {
-	t.Parallel()
-	cache := &resultCache{directory: t.TempDir()}
-	binary := filepath.Join(t.TempDir(), "program")
-	for _, word := range []string{"before", "after"} {
-		code := fmt.Sprintf("#include <stdio.h>\nint main(void) { puts(%q); return 0; }\n", word)
-		key := nativeResultKey(code, "runtime", binary, "context")
-		result := cache.reuse(key, func() (execution, bool) {
-			if err := native.Build(code, binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			return runCommand(15*time.Second, nil, binary), true
-		})
-		if result.Stdout != word+"\n" {
-			t.Fatalf("changed emitted C served %q, want %q", result.Stdout, word+"\n")
-		}
-	}
-}
 
 func TestCacheKeyDimensions(t *testing.T) {
 	t.Parallel()

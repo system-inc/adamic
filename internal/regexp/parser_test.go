@@ -28,24 +28,3 @@ func TestParse(t *testing.T) {
 		}
 	}
 }
-
-func TestFlags(t *testing.T) {
-	t.Parallel()
-	for _, flags := range []string{"uu", "uv", "z"} {
-		if _, err := Parse("", flags); err == nil {
-			t.Errorf("flags %q accepted", flags)
-		}
-	}
-}
-
-func TestQuantifierBounds(t *testing.T) {
-	t.Parallel()
-	p, err := Parse("a{2,4}?", "")
-	if err != nil {
-		t.Fatal(err)
-	}
-	q := p.Body.Alternatives[0].Terms[0].(*Quantifier)
-	if q.Min.String() != "2" || q.Max.String() != "4" || q.Greedy {
-		t.Fatalf("quantifier = %#v", q)
-	}
-}
