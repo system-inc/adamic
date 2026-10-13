@@ -1,0 +1,57 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:776: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-164918561/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-164918561/main.c:281:96 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:792: exit codes differ
+        node:   exit 0, stdout "get first\nget middle\nget last\nfailure2\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-164918561/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-164918561/main.c:281:96 \n"
+    oracle_test.go:805: leaks:
+        exit 1
+        /tmp/adamic-gate/adamic-build-164918561/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-164918561/main.c:281:96 
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:776: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-2576261719/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2576261719/main.c:281:96 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:792: exit codes differ
+        node:   exit 0, stdout "get first\nget middle\nfailure1\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-2576261719/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2576261719/main.c:281:96 \n"
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:776: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-132611133/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-132611133/main.c:281:96 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:792: exit codes differ
+        node:   exit 0, stdout "get first\nfailure0\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-132611133/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-132611133/main.c:281:96 \n"
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:805: leaks:
+        exit 1
+        /tmp/adamic-gate/adamic-build-2576261719/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2576261719/main.c:281:96 
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:805: leaks:
+        exit 1
+        /tmp/adamic-gate/adamic-build-132611133/main.c:281:96: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-132611133/main.c:281:96 
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (0.48s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (0.50s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (0.50s)
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.538s
+FAIL

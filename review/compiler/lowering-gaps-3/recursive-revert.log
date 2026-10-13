@@ -1,0 +1,19 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+    oracle_test.go:769: Lower: /workspace/adamic/internal/oracle/testdata/recursive_initializer_gap.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+    oracle_test.go:769: Lower: /workspace/adamic/internal/oracle/testdata/recursive_initializer_tdz.a:5:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.075s
+FAIL
