@@ -63,9 +63,10 @@ func volumeProfileCorporaNativeInputs(ctx context.Context, h *harness, sanitize 
 		archiveName += " asan"
 		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
 	}
+	reproducible := strings.Join(buildcache.ReproducibleGoFlags(), " ")
 	inputs := buildcache.Inputs{
 		Name:  name,
-		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build -buildvcs=false ./cmd/adamic", "archive=" + archiveName, "go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
+		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build " + reproducible + " ./cmd/adamic", "archive=" + archiveName, "go build " + reproducible + " -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
 	}
 	typeAwareCompilerKey(h, &inputs, sanitize)
 	return inputs
@@ -212,7 +213,7 @@ func volumeProfileCorporaProductInputs(ctx context.Context, h *harness) (buildca
 	bundle := plain
 	bundle.Name = "typeaware volume corpus products"
 	bundle.Files = append(slices.Clone(plain.Files), "cohere/internal", "cohere/policy", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/typeaware/testdata/oracle_volume.go")
-	bundle.Flags = append(slices.Clone(plain.Flags), "corpus products format v2 cached emission", "Go builds -buildvcs=false", "asan CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+	bundle.Flags = append(slices.Clone(plain.Flags), "corpus products format v2 cached emission", "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "), "asan CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 	return plain, sanitized, bundle
 }
 
@@ -241,6 +242,7 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 	h := &harness{t: t, repository: repository}
 	_, _, inputs := volumeProfileCorporaProductInputs(ctx, h)
 	deadline := ctx
+	reproducible := strings.Join(buildcache.ReproducibleGoFlags(), " ")
 	var stage0, archive, asanArchive, oracle string
 	jobs := []struct {
 		name, output string
@@ -248,18 +250,18 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 		flags        []string
 		command      func(string) *exec.Cmd
 	}{
-		{"typeaware stage0", "adamic", &stage0, []string{"go build -buildvcs=false ./cmd/adamic"}, func(directory string) *exec.Cmd {
-			return volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
+		{"typeaware stage0", "adamic", &stage0, []string{"go build " + reproducible + " ./cmd/adamic"}, func(directory string) *exec.Cmd {
+			return volumeProfileCorporaCommand(deadline, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")...)
 		}},
-		{"typeaware checker archive", "checker.a", &archive, []string{"go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive"}, func(directory string) *exec.Cmd {
-			return volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a"), "./bridge/tsgo/archive")
+		{"typeaware checker archive", "checker.a", &archive, []string{"go build " + reproducible + " -buildmode=c-archive ./bridge/tsgo/archive"}, func(directory string) *exec.Cmd {
+			return volumeProfileCorporaCommand(deadline, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a"), "./bridge/tsgo/archive")...)
 		}},
-		{"typeaware checker archive asan", "checker-asan.a", &asanArchive, []string{"go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}, func(directory string) *exec.Cmd {
-			command := volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-buildmode=c-archive", "-o", filepath.Join(directory, "checker-asan.a"), "./bridge/tsgo/archive")
+		{"typeaware checker archive asan", "checker-asan.a", &asanArchive, []string{"go build " + reproducible + " -buildmode=c-archive ./bridge/tsgo/archive", "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}, func(directory string) *exec.Cmd {
+			command := volumeProfileCorporaCommand(deadline, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", filepath.Join(directory, "checker-asan.a"), "./bridge/tsgo/archive")...)
 			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 			return command
 		}},
-		{"typeaware volume oracle", "volume-oracle", &oracle, []string{"go build -buildvcs=false -overlay oracle_volume.go cohere/adamic_volume-oracle.go"}, func(directory string) *exec.Cmd {
+		{"typeaware volume oracle", "volume-oracle", &oracle, []string{"go build " + reproducible + " -overlay oracle_volume.go cohere/adamic_volume-oracle.go"}, func(directory string) *exec.Cmd {
 			virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
 			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
 			if err != nil {
@@ -270,7 +272,7 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 			if err := os.WriteFile(overlay, data, 0600); err != nil {
 				t.Fatal(err)
 			}
-			command := volumeProfileCorporaCommand(deadline, "go", "build", "-buildvcs=false", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
+			command := volumeProfileCorporaCommand(deadline, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)...)
 			command.Dir = filepath.Join(repository, "cohere")
 			command.Env = append(command.Env, "PWD="+command.Dir)
 			return command
@@ -326,7 +328,7 @@ func volumeProfileCorporaBuildProducts(t *testing.T) volumeProfileCorporaProduct
 	h := &harness{t: t, repository: repository, directory: t.TempDir()}
 	plain, sanitized, inputs := volumeProfileCorporaProductInputs(deadline, h)
 	// Every build belongs to setup. Each Go product has a stable source recipe;
-	// -buildvcs=false avoids worker-specific Git metadata in cached executables.
+	// buildcache.ReproducibleGoFlags keeps the checkout's path and Git metadata out of cached executables.
 	var stage0, archive, asanArchive, oracle string
 	var builds sync.WaitGroup
 	for _, job := range []struct {
