@@ -118,6 +118,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 	}
 	l.resolveCountTypes(modules)
+	if err := l.nodeProcessStorageABI(modules); err != nil {
+		return err
+	}
 	if err := l.nodeFSDirectoryClosureABI(); err != nil {
 		return err
 	}
