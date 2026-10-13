@@ -303,6 +303,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	bool frozen;
 	bool tuple;
+	bool sealed;
+	bool nonextensible;
 	adamic_value slots[];
 } adamic_object;
 
@@ -453,6 +455,8 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	return adamic_object_data_field(object, name, cache);
 }
 
+#include "object_integrity.h"
+
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
 bool adamic_object_is_frozen(const adamic_heap *value);
@@ -560,6 +564,7 @@ typedef struct adamic_map {
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;
+	_Atomic bool nonextensible;
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets

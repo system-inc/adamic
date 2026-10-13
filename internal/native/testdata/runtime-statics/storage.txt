@@ -151,6 +151,8 @@
 `runtime-file:library_language.c`
 `runtime-file:library_math_number.c`
 `runtime-file:library_object.c`
+`runtime-file:library_object_descriptors.c`
+`runtime-file:library_object_descriptors.h`
 `runtime-file:map.c`
 `runtime-file:map_set.c`
 `runtime-file:math.c`
@@ -248,3 +250,6 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+`library_object_descriptors.c:type_error:1`
+`runtime-file:object_integrity.c`
+`runtime-file:object_integrity.h`

@@ -88,6 +88,9 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	default:
 		return nil, false, nil
 	}
+	if value, handled, err := l.objectDescriptorPrototypeCallArguments(node, receiver, name, written); handled {
+		return value, handled, err
+	}
 	if name == "isPrototypeOf" {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "isPrototypeOf", Fix: "Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant"}
 	}
