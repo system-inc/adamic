@@ -71,3 +71,16 @@ A test calls the same recipe function (`tsgoChecker(t)` above). After the build 
 - Test units run with `-test.skip '^TestProduct_'` and launch only after every product has passed.
 - A product over 60 s is grain like a slow test: split it into smaller products, or cache its inputs.
 - Locally, `go test ./pkg` runs the product test like any other; the shared recipe means order doesn't matter.
+
+## Native runtime shards
+
+`internal/oracle/runtimes_test.go` declares six shards per runtime option, with suffixes
+0 through 5. Each shard builds every sixth feature-set archive, starting at its suffix,
+so the eleven feature sets give each product at most two complete archives. Each archive
+still compiles all its translation units, four at a time. Splitting archives between
+products changes neither their inputs nor the keys consumers use to fetch them.
+
+`TestRuntimeProductShardsCoverEveryArchive` reads the actual product declarations and
+checks that each option has one product for every shard, each shard holds at most two
+archives, and their union holds every feature set exactly once. Adding feature sets must
+keep this bound by extending the shards, rather than dropping files or raising a budget.
