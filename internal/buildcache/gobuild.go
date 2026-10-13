@@ -70,6 +70,13 @@ func GoBuildInMutated(t testing.TB, module, output, pkg string, arguments []stri
 	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, mutations: mutations, environment: environment})
 }
 
+// GoBuildInInputs is GoBuildInMutated's key (GoBuildIn's when mutations is nil), computed without building: for a
+// product that records or runs the binary, which can be keyed by the binary's key rather than its bytes. The arguments
+// are made reproducible as the product's own are, so the key is the product's.
+func GoBuildInInputs(module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) (Inputs, error) {
+	return goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: reproducible(arguments), mutations: mutations, environment: environment}.inputs()
+}
+
 // Adamic is the stage 0 compiler, ./cmd/adamic, as one product every test that runs adamic shares.
 func Adamic(t testing.TB) string {
 	t.Helper()
