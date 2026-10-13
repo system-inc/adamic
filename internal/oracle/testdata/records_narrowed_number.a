@@ -1,0 +1,3 @@
+const r: Record<string, number> = {value: 1};
+function drop(): void {delete r['value'];}
+if(r['value'] !== undefined) {drop(); console.log(String(r['value'] + 1));}

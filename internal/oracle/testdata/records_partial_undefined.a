@@ -1,0 +1,19 @@
+interface MapLike<T> { [index: string]: T; }
+function keys<T>(map: MapLike<T>): string { return Object.keys(map).join(','); }
+function read<T>(map: MapLike<T>, key: string): T | undefined { return map[key]; }
+const cache: Partial<Record<'first' | 'second', number | undefined>> = {first: undefined};
+console.log(keys(cache));
+console.log(String(Object.hasOwn(cache, 'first')));
+console.log(String(Object.hasOwn(cache, 'second')));
+console.log(String(read(cache, 'first')));
+console.log(String(read(cache, 'second')));
+console.log(String(JSON.stringify(cache)));
+const words: Partial<Record<'a' | 'b', string>> = {b: 'kept'};
+console.log(keys(words));
+console.log(String(read(words, 'a')));
+console.log(String(read(words, 'b')));
+
+type Cache<V> = Partial<Record<'first' | 'second', V>>;
+const aliasCache: Cache<number> = {second: 42};
+console.log(keys(aliasCache));
+console.log(String(read(aliasCache, 'second')));
