@@ -1,0 +1,23 @@
+import type { Weak } from 'adamic';
+
+// A Weak of a union the checker narrowed to present, read after its target was released: weak/narrowed.a
+// says natively a panic, never a read of freed memory or a null one; on Node the target is still there.
+interface Named {
+	readonly kind: 'Named';
+	readonly name: string;
+}
+interface Counted {
+	readonly kind: 'Counted';
+	readonly count: number;
+}
+interface Holder {
+	kept: Weak<Named | Counted>;
+}
+let strong: Named | undefined = { kind: 'Named', name: 'n'.repeat(2) };
+const holder: Holder = { kept: strong };
+if (holder.kept !== undefined) {
+	console.log('before');
+	strong = undefined;
+	const seen = holder.kept;
+	console.log(`after: ${seen.kind === 'Named' ? seen.name : seen.count}`);
+}

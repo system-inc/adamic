@@ -1,0 +1,47 @@
+[
+  {
+    "member": "miscompile-fxspptb-2a",
+    "helper": "func lastFieldAssignment",
+    "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+    "file": "internal/lower/class.go",
+    "lines": [
+      716
+    ]
+  },
+  {
+    "member": "miscompile-fxspptb-2a",
+    "helper": "func (l *lowering) classBases",
+    "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+    "file": "internal/lower/class_inheritance.go",
+    "lines": [
+      917
+    ]
+  },
+  {
+    "member": "miscompile-fxspptb-2b",
+    "helper": "func (l *lowering) libraryMember",
+    "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+    "file": "internal/lower/prototype.go",
+    "lines": [
+      25
+    ]
+  },
+  {
+    "member": "callback-widening",
+    "helper": "func fit(",
+    "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+    "file": "internal/lower/expression.go",
+    "lines": [
+      676
+    ]
+  },
+  {
+    "member": "callback-widening",
+    "helper": "CallClosure struct",
+    "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+    "file": "internal/ir/ir.go",
+    "lines": [
+      727
+    ]
+  }
+]

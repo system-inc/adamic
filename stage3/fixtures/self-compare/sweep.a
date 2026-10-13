@@ -1,0 +1,23 @@
+// a-check: compile
+function compareNumber(label: string, value: number) {
+    console.log(label + ": " + String(value === value) + " " + String(value !== value));
+}
+function run() {
+    function f(): number { return 1; }
+    const object = { value: 1 };
+    const array: number[] = [1];
+    const text: string = String(array.length);
+    const boolean: boolean = array.length > 0;
+    console.log("closure: " + String(f === f) + " " + String(f !== f));
+    console.log("object: " + String(object === object) + " " + String(object !== object));
+    console.log("array: " + String(array === array) + " " + String(array !== array));
+    console.log("string: " + String(text === text) + " " + String(text !== text));
+    console.log("boolean: " + String(boolean === boolean) + " " + String(boolean !== boolean));
+    compareNumber("NaN", Number.parseFloat("not a number"));
+    compareNumber("-0", -0);
+    compareNumber("1", 1);
+    console.log("zero: " + String(-0 === 0));
+    console.log("string value: " + String(text === String(array.length)));
+    console.log("distinct: " + String(({ value: 1 }) === ({ value: 1 })));
+}
+run();
