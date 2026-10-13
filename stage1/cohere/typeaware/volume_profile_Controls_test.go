@@ -110,9 +110,10 @@ func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool
 		archiveName += " asan"
 		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
 	}
+	reproducible := strings.Join(buildcache.ReproducibleGoFlags(), " ")
 	inputs := buildcache.Inputs{
 		Name:  name,
-		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build ./cmd/adamic", "archive=" + archiveName, "go build -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
+		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build " + reproducible + " ./cmd/adamic", "archive=" + archiveName, "go build " + reproducible + " -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
 	}
 	typeAwareCompilerKey(h, &inputs, sanitize)
 	inputs.Flags = append(inputs.Flags, variant...)

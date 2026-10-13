@@ -57,7 +57,7 @@ func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) er
 
 func scannerOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := buildcache.Inputs{Name: "scanner-go-oracle", Files: []string{"cohere/TypeScript/tsc", "go.mod", "go.work", "stage1/typescript/scanner/testdata/oracle.go"}, Flags: []string{"go build", "-overlay", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{buildcache.Tool("go", "version")}}
+	inputs := buildcache.Inputs{Name: "scanner-go-oracle", Files: []string{"cohere/TypeScript/tsc", "go.mod", "go.work", "stage1/typescript/scanner/testdata/oracle.go"}, Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "-overlay", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{buildcache.Tool("go", "version")}}
 	return scannerFetch(t, inputs, func(directory string) error {
 		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 		if err != nil {
@@ -78,7 +78,7 @@ func scannerOracleProduct(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := toolchain.CommandIn(root, "go", "build", "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)
+		command := toolchain.CommandIn(root, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(directory, "oracle"), virtual)...)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)

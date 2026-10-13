@@ -123,7 +123,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	oracleInputs := inputs
 	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
 	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
-	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
+	oracleInputs.Flags = []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
 	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
 	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
 		_, err := suggestionAlongsideGoOracle(t, directory, out)
@@ -344,7 +344,7 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	args := append(append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary), virtualFiles...)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := lintCommand(ctx, root, "go", args...)
