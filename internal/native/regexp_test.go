@@ -265,7 +265,7 @@ static bool pair_equal(adamic_object *pair,const ptrdiff_t *expected) {
  return pair==NULL?expected[0]<0:expected[0]>=0 && pair->slots[0].number==(double)expected[0] && pair->slots[1].number==(double)expected[1];
 }
 int main(int argc,char **argv) {
- adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
+ adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);adamic_regex_set_regular_mode(argc==2?2:argc>2?0:1);size_t disagreements=0;
  for(size_t index=0;index<sizeof probes/sizeof probes[0];index++) {
   const probe *p=&probes[index];double *codes=malloc((p->length+1)*sizeof *codes);if(codes==NULL) abort();
   for(size_t k=0;k<p->length;k++) codes[k]=input_units[p->input+k];
@@ -302,7 +302,7 @@ int main(int argc,char **argv) {
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
-		for _, arguments := range [][]string{nil, {"unlimited"}} {
+		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 			command := exec.CommandContext(ctx, binary, arguments...)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
 			output, err := command.CombinedOutput()
@@ -320,7 +320,7 @@ int main(int argc,char **argv) {
 		if err := Build(source.String(), wasm, Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
-		for _, arguments := range [][]string{nil, {"unlimited"}} {
+		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			args := append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", wasm}, arguments...)
 			output, err := exec.CommandContext(ctx, "node", args...).CombinedOutput()
