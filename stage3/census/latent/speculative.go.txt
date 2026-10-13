@@ -337,6 +337,20 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			latentProgressUnitDone()
 		}
 		l.latentSpecWalk(file.AsNode())
+        // Traversal does not supply a concrete generic instantiation witness.
+        // Catalogue deferred bodies separately, including declarations nested under one.
+        for _, candidate := range latentCandidates(program, file) {
+            node := candidate.node
+            deferred := node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0
+            for ancestor := range candidate.ancestors { deferred = deferred || len(ancestor.TypeParameters()) > 0 }
+            if !deferred { continue }
+            unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "deferred_generic_instantiation", CheckerDiagnostics: []string{}, Parent: candidate.parent, Top: candidate.top, Depth: candidate.depth}
+            if node.Name() != nil { unit.Name = node.Name().Text() }
+            if node.Body() != nil { unit.BodyStart, unit.BodyEnd = node.Body().Pos(), node.Body().End(); unit.CheckerDiagnostics = program.LatentOwnDiagnosticsIn(node.Body()); if unit.CheckerDiagnostics == nil { unit.CheckerDiagnostics = []string{} } }
+            replaced := false
+            for index := range record.Units { if record.Units[index].Where == unit.Where { record.Units[index] = unit; replaced = true; break } }
+            if !replaced { record.Units = append(record.Units, unit) }
+        }
 		record.Findings = append([]LatentFinding{}, latentFindings...)
 		record.SpeculativeCoverage = &LatentSpeculativeCoverage{SourceBytes: len(file.Text()), VisitedNodes: len(latentSpec.visited), AttemptedNodes: len(latentSpec.attempted)}
 		var verify ast.Visitor

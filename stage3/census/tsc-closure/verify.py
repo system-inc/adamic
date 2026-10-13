@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Recount saved raw reason sites and check all source and outside-file coverage."""
-import collections,gzip,json
+import collections,gzip,json,sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "latent"))
+from unit_status import audit_deferred
 from pathlib import Path
 here=Path(__file__).resolve().parent;e=here/'evidence';r=json.loads((here/'RESULT.json').read_text());m=r['closure'];expected={f['file'] for f in m['files']};root=Path(m['root'])
 assert len(expected)==81 and sorted(expected)==m['independent']
@@ -17,7 +19,17 @@ for mode in ['latent','full']:
  assert dict(sorted(collections.Counter(k[0]+': '+k[2] for k in outside).items()))==r[mode]['outside_compiler']['per_reason']
  for group in ['all','compiler','outside_compiler']:
   assert sum(r[mode][group]['counts'].values())==sum(r[mode][group]['per_reason'].values())
-h=r['hidden'];assert sum(f['hidden_bytes'] for f in h['files'].values())==h['hidden_bytes']==5430761
+h=r['hidden']
+audit_deferred(h, [u for row in rows[1:] for u in row['units']])
+for row in rows[1:]:
+ name=Path(row['file']).relative_to(root).as_posix();mask=bytearray(stock[name]['bytes'])
+ for unit in row['units']:
+  if unit['status']=='deferred_generic_instantiation':
+   left,right=unit.get('body_start',0),unit.get('body_end',0);mask[left:right]=b'\x01'*(right-left)
+ assert h['files'][name].get('deferred_body_bytes',0)==sum(mask),'deferred body bytes'
+ for left,right in h['files'][name]['hidden_ranges']:assert not any(mask[left:right]),'deferred bytes blocked'
+assert h.get('deferred_body_bytes',0)==sum(f.get('deferred_body_bytes',0) for f in h['files'].values()),'deferred total'
+assert sum(f['hidden_bytes'] for f in h['files'].values())==h['hidden_bytes']==5430761
 assert h['groups']['outside_compiler']['hidden_bytes']==564 and h['groups']['outside_compiler']['bytes']==712
 for group in h['groups'].values():assert group['hidden_bytes']==group['blocked_union_bytes']-group['independently_examined_bytes']
 p=json.loads((e/'provenance.json').read_text());assert not p['compiler_changes'] and not p['topic_only']

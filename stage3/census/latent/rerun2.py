@@ -1,4 +1,5 @@
 """Recount the second census and compare it with the immutable previous cumulative run."""
+from unit_status import attempted, deferred_summary
 import collections, gzip, hashlib, json, pathlib, shutil, sys
 ROOT=pathlib.Path(__file__).resolve().parent
 LABEL='measured on a checker-rejected program'
@@ -60,9 +61,9 @@ def summarize(raw,manifest,denominator=78):
  per_file={}
  for row in raw[1:]:
   file=row['file'];own={s for s in keys if s[1].rsplit(':',2)[0]==file}
-  per_file[file]=dict(measurement=LABEL,checker=sum(d['file']==file for d in header['diagnostic_sites']),**counts(own),per_reason=reasons(own),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in row['units']),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in row['units']))
+  per_file[file]=dict(**deferred_summary(row["units"]),measurement=LABEL,checker=sum(d['file']==file for d in header['diagnostic_sites']),**counts(own),per_reason=reasons(own),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and attempted(u) for u in row['units']),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in row['units']))
  clean=sorted(f for f,v in per_file.items() if v['checker']==0)
- return dict(measurement=LABEL,checker_rejected=True,checker_total=len(header['diagnostics']),checker_per_reason=dict(sorted(collections.Counter(d.split('error ')[1].split(':')[0] for d in header['diagnostics']).items())),checker_clean_files=clean,checker_clean_ratio=dict(measurement=LABEL,numerator=len(clean),denominator=denominator,fraction=f'{len(clean)}/{denominator}',percent=100*len(clean)/denominator),lowering_counts=counts(keys),per_reason=reasons(keys),per_file=per_file,top_level_units=len(units),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in units),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in units),recorded_events=sum(len(r['findings']) for r in raw[1:]),findings=[dict(measurement=LABEL,kind=k[0],where=k[1],reason=k[2],text=k[3]) for k in sorted(keys)])
+ return dict(**deferred_summary(units),measurement=LABEL,checker_rejected=True,checker_total=len(header['diagnostics']),checker_per_reason=dict(sorted(collections.Counter(d.split('error ')[1].split(':')[0] for d in header['diagnostics']).items())),checker_clean_files=clean,checker_clean_ratio=dict(measurement=LABEL,numerator=len(clean),denominator=denominator,fraction=f'{len(clean)}/{denominator}',percent=100*len(clean)/denominator),lowering_counts=counts(keys),per_reason=reasons(keys),per_file=per_file,top_level_units=len(units),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and attempted(u) for u in units),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in units),recorded_events=sum(len(r['findings']) for r in raw[1:]),findings=[dict(measurement=LABEL,kind=k[0],where=k[1],reason=k[2],text=k[3]) for k in sorted(keys)])
 
 def delta(current,previous):
  files=current['per_file'];pr=previous['per_reason'];cr=current['per_reason']

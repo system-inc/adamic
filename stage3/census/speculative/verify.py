@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'latent'))
+from unit_status import audit_deferred
+
 raw, result_path, root = map(Path, sys.argv[1:4])
 rows = [json.loads(line) for line in raw.read_text().splitlines()]
 result = json.loads(result_path.read_text())
@@ -40,7 +43,17 @@ def verify(artifact):
         assert {item['file'] for item in stream['inputs']['files']} == expected_sources
     assert set(actual)==set(observed)==covered
     assert all(f['unvisited_nodes']==0 and f['visited_nodes']>=f['total_nodes'] for f in actual.values())
-    examined = sum((root/name).stat().st_size for name in covered)
+    deferred_bytes = 0
+    for row in rows[1:]:
+        mask = bytearray(Path(row['file']).stat().st_size)
+        for unit in row['units']:
+            if unit['status'] == 'deferred_generic_instantiation':
+                left, right = unit.get('body_start', 0), unit.get('body_end', 0)
+                mask[left:right] = b'\x01' * (right-left)
+        deferred_bytes += sum(mask)
+    assert artifact.get('deferred_body_bytes', 0) == deferred_bytes, 'deferred byte coverage'
+    audit_deferred(artifact, [u for row in rows[1:] for u in row['units']])
+    examined = sum((root/name).stat().st_size for name in covered) - deferred_bytes
     typescript = sum((root/name).stat().st_size for name in expected_sources)
     total = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
     assert artifact['examined_bytes']==examined and artifact['source_bytes']==total
@@ -56,6 +69,9 @@ mutants = [
     ('omit-source-file',lambda x:x['files'].pop()),
     ('byte-share',lambda x:x.__setitem__('examined_bytes',x['examined_bytes']+1)),
 ]
+if result.get('deferred_body_bytes'):
+    mutants += [('omit-never-reached', lambda x:x.pop('never_reached')),
+                ('deferred-as-examined', lambda x:x.__setitem__('examined_bytes', x['examined_bytes'] + x['deferred_body_bytes']))]
 if not result['top20']:
     mutants = [(name, mutate) for name, mutate in mutants if name != 'top20-depth-count']
     print('top20-depth-count: no ranked sites in this input; not applicable')
