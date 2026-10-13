@@ -51,6 +51,8 @@ var families = []family{
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
 	// 22.7 s: 20 mutants of library_method_values.a, each built and run.
 	{name: "TestLibraryMethodValueMutants", shards: 4, runner: "runLibraryMethodValueMutantsShard", keys: libraryMethodValueMutants, planted: "trim", caught: "mutant changed nothing"},
+	// Each fixture's C emitted twice by stage 0, in two processes, and compared byte for byte (determinism_test.go).
+	{name: "TestStage0EmitsDeterministically", shards: 32, runner: "runDeterministicEmissionShard", keys: determinismKeys, planted: determinismWitness, caught: "stage 0 emitted different C"},
 }
 
 // A family is one test over many cases, run as shards. runner is the function each wrapper calls with its shard, keys
