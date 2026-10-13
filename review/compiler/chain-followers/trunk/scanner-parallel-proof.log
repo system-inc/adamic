@@ -1,0 +1,48 @@
+=== RUN   TestScannerPrimitiveConcatenationMutants
+=== PAUSE TestScannerPrimitiveConcatenationMutants
+=== CONT  TestScannerPrimitiveConcatenationMutants
+=== RUN   TestScannerPrimitiveConcatenationMutants/boolean
+=== PAUSE TestScannerPrimitiveConcatenationMutants/boolean
+=== RUN   TestScannerPrimitiveConcatenationMutants/undefined
+=== PAUSE TestScannerPrimitiveConcatenationMutants/undefined
+=== RUN   TestScannerPrimitiveConcatenationMutants/null
+=== PAUSE TestScannerPrimitiveConcatenationMutants/null
+=== CONT  TestScannerPrimitiveConcatenationMutants/boolean
+=== CONT  TestScannerPrimitiveConcatenationMutants/undefined
+=== CONT  TestScannerPrimitiveConcatenationMutants/null
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    scanner_expressions_test.go:97: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    scanner_expressions_test.go:97: gate cache node hit
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    scanner_expressions_test.go:97: gate cache node hit
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:108: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:108: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:108: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    scanner_expressions_test.go:111: undefined spelling mutant caught only by stdout in both backends
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    scanner_expressions_test.go:111: boolean spelling mutant caught only by stdout in both backends
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    scanner_expressions_test.go:111: null spelling mutant caught only by stdout in both backends
+--- PASS: TestScannerPrimitiveConcatenationMutants (0.00s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/undefined (0.41s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/boolean (0.42s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/null (0.44s)
+PASS
+gate cache: native hits=3 misses=3
+gate cache: node hits=2 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.451s

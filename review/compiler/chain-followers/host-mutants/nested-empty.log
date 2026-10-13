@@ -1,0 +1,35 @@
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== CONT  TestNestedEmptyArrayElementKinds
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+=== CONT  TestNestedEmptyArrayElementKinds/last
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== CONT  TestNestedEmptyArrayElementKinds/union
+=== NAME  TestNestedEmptyArrayElementKinds/strings
+    empty_literal_test.go:35: empty element kind 1, want 3
+=== NAME  TestNestedEmptyArrayElementKinds/objects
+    empty_literal_test.go:35: empty element kind 1, want 4
+--- FAIL: TestNestedEmptyArrayElementKinds (0.00s)
+    --- PASS: TestNestedEmptyArrayElementKinds/last (0.07s)
+    --- PASS: TestNestedEmptyArrayElementKinds/first (0.08s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/strings (0.08s)
+    --- PASS: TestNestedEmptyArrayElementKinds/typed (0.09s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/objects (0.09s)
+    --- PASS: TestNestedEmptyArrayElementKinds/union (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.125s
+FAIL

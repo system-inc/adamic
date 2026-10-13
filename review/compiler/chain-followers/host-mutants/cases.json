@@ -1,0 +1,110 @@
+[
+  {
+    "topic": "non-null-check",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/non-null-check.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/undefined$"
+  },
+  {
+    "topic": "non-null-narrowing",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/non-null-narrowing.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/narrowed$"
+  },
+  {
+    "topic": "nested-empty",
+    "file": "internal/lower/empty_literal.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/nested-empty.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestNestedEmptyArrayElementKinds$"
+  },
+  {
+    "topic": "string-concatenation",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/string-concatenation.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$"
+  },
+  {
+    "topic": "phantom-primitive",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/phantom-primitive.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestPhantomCastsAreErased$"
+  },
+  {
+    "topic": "proven-predicates",
+    "file": "internal/lower/proven_relations.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/proven-predicates.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestCensusComputedRelation$"
+  },
+  {
+    "topic": "generic-empty",
+    "file": "internal/lower/invariance.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-empty.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a$"
+  },
+  {
+    "topic": "debugger",
+    "file": "internal/lower/statements.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/debugger.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestDebuggerNativeEmitsNothing$"
+  },
+  {
+    "topic": "generic-values",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-values.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValuesHaveSeparateInstances$"
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "file": "internal/lower/generic_function_value.go",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-namespace-interaction.json"
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "file": "internal/lower/phantom_brands.go",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/phantom-overload-interaction.json"
+  },
+  {
+    "topic": "proven-cleanup",
+    "file": "internal/lower/generic.go",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestCensusGenericRefusalInsideClosure$",
+    "overlay": "/workspace/adamic/review/compiler/chain-followers/host-mutants/proven-cleanup.json"
+  }
+]
