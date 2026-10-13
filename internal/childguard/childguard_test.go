@@ -1,12 +1,16 @@
 package childguard
 
 import (
+	"bufio"
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -18,6 +22,29 @@ func TestChild(t *testing.T) {
 		return
 	}
 	switch mode {
+	case "descriptors":
+		for _, file := range []*os.File{os.Stdout, os.Stderr} {
+			info, err := file.Stat()
+			if err != nil {
+				os.Exit(2)
+			}
+			if info.Mode().IsRegular() {
+				fmt.Fprintln(file, "regular")
+			} else {
+				fmt.Fprintln(file, "pipe")
+			}
+		}
+	case "started":
+		scanner := bufio.NewScanner(os.Stdin)
+		if !scanner.Scan() || scanner.Text() != "started" {
+			os.Exit(3)
+		}
+		fmt.Fprintln(os.Stdout, scanner.Text())
+	case "external":
+		for i := 0; i < 6; i++ {
+			fmt.Fprintln(os.Stdout, "progress")
+			time.Sleep(100 * time.Millisecond)
+		}
 	case "silent":
 		time.Sleep(time.Hour)
 	case "progress":
@@ -133,6 +160,29 @@ func TestNoFirstOutput(t *testing.T) {
 	}
 }
 
+// File descriptor type is part of the oracle observation. Wrapping this output
+// in a pipe would make the otherwise valid child print the wrong answer.
+func TestKeepFilesReportsRealOutput(t *testing.T) {
+	t.Parallel()
+	file, err := os.CreateTemp(t.TempDir(), "stdout")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer file.Close()
+	command := exec.Command("sh", "-c", `if [ -f /dev/stdout ]; then printf 'regular\n'; else printf 'pipe\n'; fi; sleep 3600`)
+	command.Stdout = file
+	started := false
+	err = Run(command, Options{KeepFiles: true, Started: func() { started = true }, FirstOutput: 5 * time.Second, Stall: 300 * time.Millisecond})
+	var stopped *Error
+	if !errors.As(err, &stopped) || stopped.FirstOutput || stopped.Reason != "stalled" || !started {
+		t.Fatalf("file output escaped stall guard: %v", err)
+	}
+	data, err := os.ReadFile(file.Name())
+	if err != nil || string(data) != "regular\n" {
+		t.Fatalf("descriptor semantics changed: %q %v", data, err)
+	}
+}
+
 // Leave Stall unset to exercise the default window after the first output.
 func TestChildFinishesWithinDefaultStallWindow(t *testing.T) {
 	t.Parallel()
@@ -194,4 +244,121 @@ func TestStalledReportsSystemLoad(t *testing.T) {
 		return
 	}
 	t.Fatal("system load changed during every guard run")
+}
+
+// Node observes the same real descriptors independently of the guard. A wrapping
+// mutant exits cleanly and changes only the bytes compared with Node.
+func TestPreservedDescriptorsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	files := func() (*os.File, *os.File) {
+		t.Helper()
+		out, err := os.CreateTemp(t.TempDir(), "stdout")
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Cleanup(func() { out.Close() })
+		stderr, err := os.CreateTemp(t.TempDir(), "stderr")
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Cleanup(func() { stderr.Close() })
+		return out, stderr
+	}
+	expectedOut, expectedErr := files()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	node := exec.CommandContext(ctx, "node", "-e", "const fs = require('node:fs'); console.log(fs.fstatSync(1).isFile() ? 'regular' : 'pipe'); console.error(fs.fstatSync(2).isFile() ? 'regular' : 'pipe');")
+	node.Stdout, node.Stderr = expectedOut, expectedErr
+	if err := node.Run(); err != nil {
+		t.Fatal(err)
+	}
+	actualOut, actualErr := files()
+	command := child("descriptors")
+	command.Stdout, command.Stderr = actualOut, actualErr
+	if err := Run(command, Options{KeepFiles: true, Ceiling: 5 * time.Second}); err != nil {
+		t.Fatalf("descriptor child must exit cleanly: %v", err)
+	}
+	for i, pair := range [][2]*os.File{{actualOut, expectedOut}, {actualErr, expectedErr}} {
+		actual, err := os.ReadFile(pair[0].Name())
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected, err := os.ReadFile(pair[1].Name())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(actual, expected) {
+			t.Fatalf("descriptor %d differs from Node: got %q want %q", i, actual, expected)
+		}
+	}
+}
+
+func TestStartedCallbackRunsAfterStart(t *testing.T) {
+	t.Parallel()
+	command := child("started")
+	input, err := command.StdinPipe()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer input.Close()
+	var output bytes.Buffer
+	command.Stdout = &output
+	started := false
+	err = Run(command, Options{FirstOutput: time.Second, Ceiling: 2 * time.Second, Started: func() {
+		if command.Process == nil {
+			t.Error("callback ran before Start")
+		}
+		started = true
+		if _, err := io.WriteString(input, "started\n"); err != nil {
+			t.Error(err)
+		}
+		input.Close()
+	}})
+	if err != nil || !started || output.String() != "started\n" {
+		t.Fatalf("startup callback: started=%t output=%q err=%v", started, output.String(), err)
+	}
+}
+
+func TestExternalProgressKeepsOutputAlive(t *testing.T) {
+	t.Parallel()
+	reader, writer, err := os.Pipe()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer reader.Close()
+	defer writer.Close()
+	var count atomic.Uint64
+	output := make(chan []byte, 1)
+	go func() {
+		var all []byte
+		buffer := make([]byte, 1024)
+		for {
+			n, err := reader.Read(buffer)
+			if n > 0 {
+				all = append(all, buffer[:n]...)
+				count.Add(uint64(n))
+			}
+			if err != nil {
+				break
+			}
+		}
+		output <- all
+	}()
+	command := child("external")
+	command.Stdout = writer
+	err = Run(command, Options{KeepFiles: true, Progress: count.Load, FirstOutput: 250 * time.Millisecond, Stall: 250 * time.Millisecond, Ceiling: 2 * time.Second})
+	writer.Close()
+	data := <-output
+	if err != nil || string(data) != strings.Repeat("progress\n", 6) {
+		t.Fatalf("external output lost or killed: %q %v", data, err)
+	}
+}
+
+func TestUnchangedExternalProgressStillStalls(t *testing.T) {
+	t.Parallel()
+	err := Run(child("silent"), Options{Progress: func() uint64 { return 1 }, FirstOutput: time.Second, Stall: 200 * time.Millisecond, Ceiling: 2 * time.Second})
+	var stopped *Error
+	if !errors.As(err, &stopped) || stopped.Reason != "stalled" || stopped.FirstOutput {
+		t.Fatalf("unchanged external count kept a child alive: %v", err)
+	}
 }
