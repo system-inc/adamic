@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"regexp"
 )
 
 //go:embed rules.json
@@ -22,6 +23,9 @@ type Rules struct {
 	Blocks *BlocksRule `json:"blocks"`
 	// Restack: with it on, a change whose base main moved past is merged onto main's tip and tested there, not parked.
 	Restack *RestackRule `json:"restack"`
+	// First: changes the queue puts at the head of the next block to open, ahead of the line, as it does a change to these
+	// rules. Optional; each a change id, once (Loom 0.8.15).
+	First []string `json:"first"`
 }
 
 type BlocksRule struct {
@@ -60,5 +64,15 @@ func ParseRules(data []byte) (Rules, error) {
 	if rules.Restack == nil || rules.Restack.On == nil {
 		return Rules{}, errors.New("rules.json: restack needs on")
 	}
+	seen := map[string]bool{}
+	for _, change := range rules.First {
+		if !changeIDPattern.MatchString(change) || seen[change] {
+			return Rules{}, fmt.Errorf("rules.json: first names change ids (chg_ and 26 base32 characters), each once, not %q", change)
+		}
+		seen[change] = true
+	}
 	return rules, nil
 }
+
+// changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
+var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
