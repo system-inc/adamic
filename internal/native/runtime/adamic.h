@@ -72,6 +72,9 @@ void adamic_release_slow(void *value);
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates.
+#if __has_feature(address_sanitizer)
+__attribute__((noinline))
+#endif
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
@@ -82,6 +85,9 @@ static inline void *adamic_retain(void *value) {
 	return adamic_retain_slow(value);
 }
 
+#if __has_feature(address_sanitizer)
+__attribute__((noinline))
+#endif
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
