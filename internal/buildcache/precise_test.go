@@ -2043,3 +2043,37 @@ func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(t *testing.T) {
 		t.Fatalf("replacements %q, want %q", directories, want)
 	}
 }
+
+// A miss counts every differing entry by kind, the ones past the eighth it names included (Judge, #m5z9d6q): Loom's
+// judge voids a miss as the box's only when every differing entry is a system file, so a tree file past the eighth
+// must still show in the counts. Here eighteen system files differ, a tree file's content past the eighth, and a
+// product last; one system file is unchanged.
+func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
+	t.Parallel()
+	var set readSet
+	var values []string
+	for index := range 21 {
+		entry := readEntry{Kind: "system", Path: fmt.Sprintf("/usr/include/h%02d.h", index), Value: shortValue("recorded")}
+		switch index {
+		case 15:
+			entry.Kind, entry.Path = "content", "source/a.c"
+		case 20:
+			entry.Kind, entry.Path = "product", "0123abcd"
+		}
+		set.Entries = append(set.Entries, entry)
+		values = append(values, "now")
+	}
+	values[3] = "recorded"
+	got := changed(set, evaluation{key: "k", values: values})
+	want := "20 of 21 entries it read differ from its newest traced build (by kind: content 1, product 1, system 18): " +
+		"system /usr/include/h00.h, system /usr/include/h01.h, system /usr/include/h02.h, system /usr/include/h04.h, " +
+		"system /usr/include/h05.h, system /usr/include/h06.h, system /usr/include/h07.h, system /usr/include/h08.h, and 12 more"
+	if got != want {
+		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+	}
+	// Eight or fewer are all named, with their counts still ahead of them.
+	got = changed(readSet{Entries: set.Entries[14:17]}, evaluation{key: "k", values: values[14:17]})
+	if want := "3 of 3 entries it read differ from its newest traced build (by kind: content 1, system 2): system /usr/include/h14.h, content source/a.c, system /usr/include/h16.h"; got != want {
+		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+	}
+}
