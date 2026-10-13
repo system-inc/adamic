@@ -39,6 +39,18 @@ func cssParserPreparedNative(t *testing.T, mutation int) string {
 	return buildCSSParserBinaries(t, []cssParserProgram{cssParserPreparedProgram(t, mutation)})[0]
 }
 
+// prepareCSSParserCompilerProducts needs no oracle, even on a cold tree. The
+// runtime comparison setup fetches the corpus independently after these products.
+func prepareCSSParserCompilerProducts(t *testing.T) {
+	t.Helper()
+	for mutation := -1; mutation < len(mutants); mutation++ {
+		cssParserPreparedNative(t, mutation)
+	}
+	if runtime.GOOS == "darwin" {
+		cssParserPreparedLeaks(t)
+	}
+}
+
 func cssParserPreparedLeaks(t *testing.T) string {
 	t.Helper()
 	return buildCSSParserUnsanitized(t, cssParserPreparedProgram(t, -1))
