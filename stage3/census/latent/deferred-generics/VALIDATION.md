@@ -4,6 +4,7 @@ Added census-only concrete body-entry witnesses, never-reached coverage gaps, an
 Caught missing-gap, attempted-count and byte-credit mutants with report and independent byte-mask audits; controls and Go tests pass.
 Not covered: a whole-compiler census, new corpus numbers, all concrete specializations, backend semantics, or the whole-repository gate.
 
+Implementation commit: `671d83f357ac46510440563480d74da5540be065`.
 Task: #kaxjrp9. Branch: `typescript/stage3-census-deferred-generics`.
 Compiler oracle and review files are unchanged after the two requested cherry-picks.
 
@@ -72,9 +73,9 @@ timeout 180s bash cloud/setup.sh
   clang 0.124s, shared cache 15.476s, build 73.637s,
   cache warm 73.709s, done 73.733s; nproc 5, CPU quota 4
 
-python3 stage3/census/latent/make_overlay.py /workspace/adamic /tmp/kaxjrp9-overlay
+timeout 60s python3 stage3/census/latent/make_overlay.py /workspace/adamic /tmp/kaxjrp9-overlay
 gofmt -w /tmp/kaxjrp9-overlay/*.go
-go build -buildvcs=false -overlay=/tmp/kaxjrp9-overlay/overlay.json -o /tmp/kaxjrp9-census ./stage3/census/latent/tool
+timeout 90s go build -buildvcs=false -overlay=/tmp/kaxjrp9-overlay/overlay.json -o /tmp/kaxjrp9-census ./stage3/census/latent/tool
   final generation and build pass; cold first build had hit its 180s limit
 
 timeout 90s python3 stage3/census/latent/audit_deferred.py /tmp/kaxjrp9-census /tmp/kaxjrp9-deferred
@@ -94,12 +95,12 @@ timeout 120s go test -count=1 -timeout 90s ./stage3/census/...
   final exit 0; all census packages pass
   the first cold invocation hit its outer 120s build limit, not a test timeout
 
-node stage3/census/speculative/stock.cjs /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/stock.json
-python3 stage3/census/speculative/report.py /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/stock.json /tmp/kaxjrp9-deferred/report
-python3 stage3/census/speculative/verify.py /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/report/RESULT.json /tmp/kaxjrp9-deferred/source
+timeout 30s node stage3/census/speculative/stock.cjs /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/stock.json
+timeout 30s python3 stage3/census/speculative/report.py /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/stock.json /tmp/kaxjrp9-deferred/report
+timeout 30s python3 stage3/census/speculative/verify.py /tmp/kaxjrp9-deferred/speculative.jsonl /tmp/kaxjrp9-deferred/report/RESULT.json /tmp/kaxjrp9-deferred/source
   PASS stock ancestry, denominator, gap inventory and all six artifact mutants
 
-node stage3/census/latent/stock_units.cjs /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/manifest.json /tmp/kaxjrp9-deferred/stock-units.json
+timeout 30s node stage3/census/latent/stock_units.cjs /tmp/kaxjrp9-deferred/source /tmp/kaxjrp9-deferred/manifest.json /tmp/kaxjrp9-deferred/stock-units.json
   PASS stock TypeScript 6.0.3, 2 files, 7 function declarations
 Python fixture control calls full_report.audit_units, audit_counts and rerun2.summarize
   PASS spans, diagnostic ownership, explicit deferred eligibility, counts and gap audit
@@ -112,7 +113,23 @@ git diff --check
 
 The last two Python controls are recorded in stock-full-report.log.txt and
 map-mutant.log.txt. Individual scratch logs remain under `/tmp/kaxjrp9-*`.
-Lane checks and final branch delivery are reported with the delivered commit.
+Lane checks passed on implementation commit 671d83f3 after explicitly fetching
+`devtools/fast-gate` and `cloud/merge-tree` into their missing remote-tracking refs
+and sourcing the toolchain environment. The exact requested pipeline then ran:
+
+```text
+git fetch -q origin main devtools/fast-gate cloud/merge-tree
+git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+  lane checks 17.0 s: gofmt and tools on 1 Go files,
+  t.Parallel on 1 test packages; a-check 2 .a files;
+  vet skipped, over 10 s
+```
+
+The lane suite returned exit 0, but its vet step exceeded its own 10-second
+budget and was skipped. This is not a claim that complete repository vet ran.
+The first two lane attempts failed at setup (missing remote ref, then missing
+gofmt on PATH), before the corrected final run. Final branch delivery is recorded
+in the task response.
 
 ## Mutants and catchers
 
