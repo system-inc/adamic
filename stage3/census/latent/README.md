@@ -132,8 +132,8 @@ non-nil-IR and permissive-production-loader mutants and requires both guards to 
 `LATENT_MUTANT_BODY_SCOPE` deliberately includes signatures in the body eligibility
 range; the synthetic audit catches the incorrectly skipped function.
 
-Legacy mode still returns its first error within each unit. Generic declarations
-are attempted without invented specializations. Symbol registration is best effort;
+Legacy mode still returns its first error within each unit. Generic function declarations
+are deferred until a concrete call instantiates them. Symbol registration is best effort;
 isolated context can differ from successful whole-program lowering. Final module
 order, ownership, and backend passes are omitted. This is an observation ledger,
 not proof of exhaustive blockers, successful compilation, or JavaScript semantics.
@@ -247,3 +247,26 @@ coverage inventory, reproduction commands and mutants.
 [Method and limits](../speculative/method.md) explain opaque checked placeholders
 and how speculative examination differs from successful lowering.
 `LATENT_MUTANT_NO_STUBS=1 LATENT_FULL=1` restores the existing full census exactly.
+
+## Deferred generic coverage
+
+Only generic function declarations, and declaration units nested under one,
+receive `deferred_generic_instantiation`. Generic methods, arrow functions and
+class type parameters do not trigger this deferral. Checker diagnostics remain
+on deferred units and do not turn them into checker-body skips.
+
+The overlay records `instantiated` for each deferred unit after all files have
+been processed. It means a body entry was reached through a concrete generic
+call with all binders mapped; it does not mean successful lowering or exhaustive
+instantiation coverage. A nested unit needs its own body entry witness. Witnesses
+survive recovery rollback and callers in later files. Never-reached units are
+unexamined coverage gaps, never clean code. Deferred body bytes form their own
+union bucket, neither examined nor blocked, even when a call witness exists;
+that witness alone cannot prove byte coverage. The speculative traversal is
+reported separately from concrete generic lowering coverage.
+
+`audit_deferred.py BINARY OUTPUT` exercises unused, called, diagnosed and nested
+generics and cross-file callers in legacy, full and speculative modes. It kills
+missing-gap-list, deferred-as-attempted and deferred-bytes-as-examined mutants.
+`prove_identity.py REPOSITORY OUTPUT BASE` compares overlay-off C and JavaScript
+bytes against the given compiler base and proves both comparisons can fail.

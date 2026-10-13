@@ -26,6 +26,7 @@ def location(where):
 
 blocked = {name: bytearray(entry['bytes']) for name, entry in stock.items()}
 covered = {name: bytearray(entry['bytes']) for name, entry in stock.items()}
+deferred = {name: bytearray(entry['bytes']) for name, entry in stock.items()}
 failures, skips = {}, {}
 for row in rows[1:]:
     for finding in row['findings']:
@@ -43,15 +44,16 @@ for row in rows[1:]:
             skips.setdefault(name, []).append((start, end))
         blocked[name][start:end] = b'\x01' * (end - start)
     for unit in row['units']:
-        if unit['status'] in ('split_checker_body', 'skipped_checker_body'):
+        if unit['status'] in ('split_checker_body', 'skipped_checker_body', 'deferred_generic_instantiation'):
             name, _ = location(unit['where'])
             if name in stock:
                 start, end = unit['body_start'], unit['body_end']
-                blocked[name][start:end] = b'\x01' * (end - start)
+                target = deferred if unit['status'] == 'deferred_generic_instantiation' else blocked
+                target[name][start:end] = b'\x01' * (end - start)
                 skips.setdefault(name, []).append((start, end))
 for row in rows[1:]:
     for unit in row['units']:
-        if unit['status'] in ('split_checker_body', 'skipped_checker_body'):
+        if unit['status'] in ('split_checker_body', 'skipped_checker_body', 'deferred_generic_instantiation'):
             continue
         name, where = location(unit['where'])
         if name not in stock:
@@ -72,9 +74,13 @@ hidden_total = blocked_total = removed_total = 0
 regions = []
 assert set(result['files']) == set(stock), 'file coverage'
 for name in stock:
+    for index, value in enumerate(deferred[name]):
+        if value:
+            blocked[name][index] = covered[name][index] = 0
     hidden_mask = bytearray(a and not b for a, b in zip(blocked[name], covered[name]))
     count = sum(hidden_mask)
     reported = result['files'][name]
+    assert reported.get('deferred_body_bytes', 0) == sum(deferred[name]), f'file deferred bytes: {name}'
     assert reported['hidden_bytes'] == count, f'file hidden bytes: {name}'
     assert reported['blocked_union_bytes'] == sum(blocked[name]), f'file union: {name}'
     assert reported['independently_examined_bytes'] == sum(blocked[name]) - count, f'file subtraction: {name}'
@@ -89,6 +95,7 @@ for name in stock:
     hidden_total += count
     blocked_total += sum(blocked[name])
     removed_total += sum(blocked[name]) - count
+assert result.get('deferred_body_bytes', 0) == sum(sum(mask) for mask in deferred.values()), 'deferred body bytes'
 assert result['total_bytes'] == sum(entry['bytes'] for entry in stock.values()), 'denominator'
 assert result['hidden_bytes'] == hidden_total, 'headline hidden total'
 assert result['blocked_union_bytes'] == blocked_total, 'headline union'

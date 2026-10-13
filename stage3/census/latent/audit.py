@@ -46,7 +46,7 @@ with tempfile.TemporaryDirectory(prefix='latent-audit-') as temporary:
     findings = baseline['one.a']['findings']
     # Continuation witnesses must survive newly supported compiler features.
     assert all(next(u for u in units if f':{line}:1' in u['where'])['status'] == 'attempted' for line in (2, 4)), units
-    assert sum(f['kind'] == 'Refused' and f['reason'] == 'debugger' for f in findings) == 2, findings
+    assert sum(f['kind'] == 'Refused' and f['reason'] == 'the non-null assertion !' for f in findings) == 2, findings
     assert len(mutant['one.a']['findings']) == len(findings) + 1
     added = [f for f in mutant['one.a']['findings'] if f not in findings]
     assert len(added) == 1 and added[0]['kind'] == 'NotYet' and added[0]['reason'] == 'latent planted extra NotYet', added
