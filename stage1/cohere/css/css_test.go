@@ -23,23 +23,9 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-const repository = "../../.."
-
-const testThePortParsesAsGoCohereDoesShards = 388
-
-// Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
-const childStall = 4 * time.Minute
-
 type run struct {
 	stdout, stderr []byte
 	exitCode       int
-}
-type mutant struct{ name, file, from, to string }
-
-var mutants = []mutant{
-	{"custom properties lose their block values", "parser.ts", "const custom = start.value.startsWith('--');", "const custom = false;"},
-	{"comments always disappear from values", "parser.ts", "else {\n                        value += current.value;\n                    }", "else {\n                        value += '';\n                    }"},
-	{"closing braces no longer include the closing byte", "parser.ts", "this.finish(node, token.start);\n            this.current = node.parent;", "this.finish(node, token.start, 0);\n            this.current = node.parent;"},
 }
 
 func portDirectory(t *testing.T, applied *mutant) string {
