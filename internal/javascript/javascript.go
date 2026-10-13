@@ -222,6 +222,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	builder.WriteString(emitter.out.String())
 	code := builder.String()
+	if strings.Contains(code, "adamicNodeFS.") {
+		code = "import * as adamicNodeFS from 'node:fs';\n" + code
+	}
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}
@@ -700,6 +703,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+	case ir.NodeHostCall:
+		return e.nodeHostCall(expression)
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
