@@ -1,0 +1,41 @@
+{
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "proof": "All parser/checker/load/lower/IR inputs and Go dependencies are identical to main. Native emission only runs after admission. Thus no frontend/lowering admission or refusal can change for any input. Differential runtime behavior is checked separately. This does not claim all native C compile outcomes are unchanged: portability repairs those outcomes.",
+  "inputs": [
+    {
+      "path": "internal/load",
+      "base_tree_entry": "040000 tree 289ec892a57be23f2a1494db4f0356300fee27db\tinternal/load",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "internal/lower",
+      "base_tree_entry": "040000 tree 96039efde7f45738a59c67f4998e42827d16ae37\tinternal/lower",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "internal/ir",
+      "base_tree_entry": "040000 tree 523e0b9c5a5c5e5828f4a571b9c56158b394d929\tinternal/ir",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "internal/javascript",
+      "base_tree_entry": "040000 tree c1706476df46414d32a6c24e8312b08daf7b34f3\tinternal/javascript",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "cohere",
+      "base_tree_entry": "160000 commit 7945d102a6c18dd36adf9114a758ce646e8b2359\tcohere",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "go.mod",
+      "base_tree_entry": "100644 blob 3d2caa9fbe0e8239701e6043dab6f40a05918897\tgo.mod",
+      "worktree_equals_base": true
+    },
+    {
+      "path": "go.sum",
+      "base_tree_entry": "",
+      "worktree_equals_base": true
+    }
+  ]
+}
