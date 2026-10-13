@@ -1,0 +1,8 @@
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== CONT  TestStringBrandRealRefused
+    string_brand_test.go:58: want named refusal for actual, got <nil>
+--- FAIL: TestStringBrandRealRefused (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.241s
+FAIL

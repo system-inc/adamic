@@ -1,0 +1,6 @@
+# github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]
+internal/oracle/string_brand_test.go:70:75: not enough arguments in call to stringBrandOracle
+	have (*testing.T)
+	want (*testing.T, string)
+FAIL	github.com/system-inc/adamic/internal/oracle [build failed]
+FAIL
