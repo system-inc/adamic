@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -79,6 +79,8 @@
+ 		switch held {
+ 		case ir.Number, ir.String, ir.Boolean:
+ 			return held, true
++		case ir.Array:
++			return ir.Array, true
+ 		case ir.Object:
+ 			return ir.Union, true
+ 		}

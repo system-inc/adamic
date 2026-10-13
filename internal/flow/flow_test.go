@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedHiddenBoundaryFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -315,20 +315,11 @@ func refusedConstructorFixture(path string) bool {
 	return false
 }
 
-// These accessor census witnesses pin where lowering stops (internal/oracle/getters_census_test.go
-// asserts each one's refusal), so they never lower and have no graph. The census's three that lower,
-// class_map, throwing_object and binary_inline, stay in the corpus.
-func refusedGettersCensusFixture(path string) bool {
+// These controls are checked by TestHiddenBoundary04AliasCastRefused and
+// TestHiddenBoundary04MutationRefused. They have no lowered graph to trace.
+func refusedHiddenBoundaryFixture(path string) bool {
 	switch filepath.Base(path) {
-	case "getters_census_binary_function.a", "getters_census_callback_pair_methods.a",
-		"getters_census_closure_number_methods.a", "getters_census_closure_number_next.a",
-		"getters_census_closure_union_next.a", "getters_census_higher_callback_pair_methods.a",
-		"getters_census_lazy_object.a", "getters_census_optional_boolean_function.a",
-		"getters_census_optional_comment_function.a", "getters_census_optional_type_function.a",
-		"getters_census_overloaded_function.a", "getters_census_primary_function.a",
-		"getters_census_snapshot_next.a", "getters_census_unary_function.a",
-		"getters_census_unary_node_function.a", "getters_census_update_comment_function.a",
-		"getters_census_update_node_function.a", "getters_census_update_type_function.a":
+	case "hidden_boundary_alias_cast_refused.a", "hidden_boundary_optional_array_mutation_refused.a":
 		return true
 	}
 	return false

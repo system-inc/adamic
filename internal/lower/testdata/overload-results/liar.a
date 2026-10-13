@@ -1,0 +1,7 @@
+function lie(value: 'text'): string;
+function lie(value: string): string | number {
+ console.log('called ' + value);
+ return 42;
+}
+const result = lie('text');
+console.log(`${typeof result}`);

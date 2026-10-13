@@ -1,0 +1,27 @@
+{
+  "label": "internal-ir",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/ir",
+    "-run",
+    "^(TestCallTargetReaders)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 56.779,
+  "tests": [
+    {
+      "name": "TestCallTargetReaders",
+      "action": "pass",
+      "seconds": 23.02
+    }
+  ]
+}

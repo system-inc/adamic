@@ -1,0 +1,13 @@
+--- internal/lower/generic_constraint_storage.go
++++ internal/lower/generic_constraint_storage.go
+@@ -22,7 +22,9 @@
+ 	switch held {
+ 	case ir.Number, ir.String, ir.Boolean:
+ 		return held, true
+-	case ir.Object:
++	case ir.Array:
++ return ir.Array, true
++ case ir.Object:
+ 		return ir.Union, true
+ 	}
+ 	return 0, false

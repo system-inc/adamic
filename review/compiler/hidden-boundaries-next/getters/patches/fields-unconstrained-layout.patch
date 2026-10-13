@@ -1,0 +1,5 @@
+--- internal/lower/generic_constraint_storage.go
++++ internal/lower/generic_constraint_storage.go
+@@ -16 +16 @@
+-		return 0, false
++		return ir.Number, true

@@ -1,0 +1,4 @@
+interface Node { readonly name: string; }
+function visit<TNode extends Node>(node: TNode): TNode { return node; }
+const copy: (node: Node) => Node = visit;
+console.log(copy({ name: 'node' }).name);

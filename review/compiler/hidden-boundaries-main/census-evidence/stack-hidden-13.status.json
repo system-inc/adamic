@@ -1,0 +1,22 @@
+{
+  "side": "stack",
+  "query": {
+    "label": "hidden-13",
+    "file": "transformers/es2017.ts",
+    "start": 30237,
+    "end": 37526
+  },
+  "command": [
+    "/tmp/hidden-census-stack",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts",
+    "-region-start",
+    "30237",
+    "-region-end",
+    "37526"
+  ],
+  "exit": 0,
+  "seconds": 42.608
+}
