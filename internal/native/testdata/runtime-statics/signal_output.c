@@ -4,6 +4,7 @@
 static pthread_t caller;
 static int stop_signal;
 static bool on_worker;
+static _Thread_local bool exercised;
 static atomic_flag stop_selected = ATOMIC_FLAG_INIT;
 static adamic_string line = ADAMIC_STRING("signal worker line");
 static void prepare(void) {
@@ -14,6 +15,9 @@ static void prepare(void) {
 static void cleanup(void) {}
 static double exercise(size_t index) {
  (void)index;
+ // Exit joins in-flight callbacks, not millions of unrelated later writes.
+ if (stop_signal == 0 && exercised) { return 1; }
+ exercised = true;
  // Explicitly unblock on a pool worker too: safety must not depend on pool masks.
  sigset_t signals;
  sigemptyset(&signals);
@@ -25,7 +29,7 @@ static double exercise(size_t index) {
  // reporting the first handler's race. Relaxed selection does not order writes.
  bool sender = is_caller != on_worker &&
   !atomic_flag_test_and_set_explicit(&stop_selected, memory_order_relaxed);
- for (size_t repeat = 0; repeat < 10000; repeat++) {
+ for (size_t repeat = 0; repeat < (stop_signal == 0 ? 512u : 10000u); repeat++) {
   adamic_write_line(adamic_stdout, &line);
   if (repeat == 128 && sender) {
    if (stop_signal == 0) { exit(0); }
