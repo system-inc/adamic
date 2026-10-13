@@ -92,6 +92,10 @@ def landingProblems(sha, parts):
 
 
 class FakeProcess:
+    # What a fake smoke run passes, as smoke.txt's fixture under a member of its lane's family (75a273db37's layout);
+    # a test sets it to name what the run passed instead.
+    smokePasses = ["TestNativeAgreesWithNode_000/internal/oracle/testdata/a.a"]
+
     def __init__(self, command, stdout):
         self.pid = 0
         self.returncode = 0
@@ -107,6 +111,8 @@ class FakeProcess:
                 name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
             package = command[command.index("-p") + 1] if "test2json" in command and "-p" in command else "p"
             lines = [json.dumps({"Action": "pass", "Package": package, "Test": name}) + "\n"]
+            if stage(command) == "smoke":
+                lines = [json.dumps({"Action": "pass", "Package": package, "Test": test}) + "\n" for test in self.smokePasses]
         self.lines = lines
         self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
 
@@ -458,7 +464,7 @@ class FailClosed(unittest.TestCase):
         with open(os.path.join(gate.arguments.out, "test.jsonl")) as handle:
             log = handle.read()
         self.assertIn("TestPool", log)
-        self.assertIn("TestOne", log)  # smoke appended, rather than overwriting the pool's log
+        self.assertIn(FakeProcess.smokePasses[0], log)  # smoke appended, rather than overwriting the pool's log
 
     def test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record(self):
         gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
@@ -934,6 +940,79 @@ class SmokeShards(unittest.TestCase):
         # A shard alone isn't a fixture, and only a shard level is dropped.
         self.assertEqual(run.smokeFixture("shard-003-0"), "shard-003-0")
         self.assertEqual(run.smokeFixture("part-003/internal/oracle/testdata/bitwise"), "part-003/internal/oracle/testdata/bitwise")
+
+
+class SmokeTruth(unittest.TestCase):
+    """From 75a273db37 oracle's lanes are families (TestNativeAgreesWithNode_000 and on), smoke's pattern named only
+    the bare lanes, and every smoke selected nothing and passed: a lane that didn't run was only listed as absent
+    (Tests, Oct 13, #rmp2hdj). Smoke now takes a family's members as its lane, and an entry that didn't pass is red."""
+    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise.a"),
+               ("TestInputAgreesWithNode", "internal/oracle/testdata/walk.a")]
+
+    def test_a_family_member_is_its_lane_and_nothing_else_is(self):
+        lanes = sorted({lane for lane, _ in self.entries})
+        for name, lane in (("TestNativeAgreesWithNode", "TestNativeAgreesWithNode"),
+                           ("TestNativeAgreesWithNode_000", "TestNativeAgreesWithNode"),
+                           ("TestNativeAgreesWithNode_127", "TestNativeAgreesWithNode"),
+                           ("TestNativeAgreesWithNode_user_iterators", "TestNativeAgreesWithNode"),
+                           ("TestInputAgreesWithNode", "TestInputAgreesWithNode"),
+                           ("TestNativeAgreesWithNodeAgain", None),
+                           ("TestNativeAgreesWithNode_", None),
+                           ("TestWASIAgreesWithNode_000", None)):
+            self.assertEqual(run.smokeLane(name, lanes), lane, name)
+        # The longest lane owns a name both could claim.
+        self.assertEqual(run.smokeLane("TestA_b_000", ["TestA", "TestA_b"]), "TestA_b")
+
+    def test_the_pattern_selects_a_fixture_under_a_family_member(self):
+        levels = run.smokePattern(self.entries).split("/")
+
+        def selects(name):
+            return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
+        for name in ("TestNativeAgreesWithNode_000/internal/oracle/testdata/bitwise.a",
+                     "TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/bitwise.a",
+                     "TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a",
+                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"):
+            self.assertTrue(selects(name), name)
+        for name in ("TestNativeAgreesWithNodeAgain/internal/oracle/testdata/bitwise.a",
+                     "TestNativeAgreesWithNode_000/internal/oracle/testdata/other.a",
+                     "TestWASIAgreesWithNode_000/internal/oracle/testdata/bitwise.a"):
+            self.assertFalse(selects(name), name)
+
+    def smoke(self, passes):
+        with mock.patch.object(FakeProcess, "smokePasses", passes):
+            gate, status, result = FailClosed.gate(self.closed)
+        return status, result
+
+    def setUp(self):
+        self.closed = FailClosed()
+        self.closed.setUp()
+        with open(os.path.join(self.closed.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
+            handle.write("internal/oracle/testdata/a.a\nTestInputAgreesWithNode internal/oracle/testdata/walk.a\n")
+
+    def test_every_entry_passing_in_its_lane_or_a_family_member_is_green(self):
+        status, result = self.smoke(["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a",
+                                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"])
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual((result["smoke_passed"], result["smoke_absent_lanes"]), (2, []))
+
+    def test_a_smoke_that_ran_no_fixture_is_red(self):
+        # The hole itself: nothing selected, every lane absent. Before #rmp2hdj this was green.
+        status, result = self.smoke([])
+        self.assertTrue(status.startswith("red:"), status)
+        self.assertIn("first failure at smoke", status)
+        self.assertEqual(result["smoke_passed"], 0)
+        self.assertIn("smoke passed 0 of its 2 entries", json.dumps(result["failure"]))
+        self.assertIn("no test of lane TestInputAgreesWithNode, TestNativeAgreesWithNode ran", json.dumps(result["failure"]))
+
+    def test_one_entry_short_is_red_naming_it(self):
+        for passes, missing in ((["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a"], "TestInputAgreesWithNode internal/oracle/testdata/walk.a"),
+                                (["TestNativeAgreesWithNode_031/internal/oracle/testdata/b.a",
+                                  "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"], "TestNativeAgreesWithNode internal/oracle/testdata/a.a")):
+            with self.subTest(missing=missing):
+                status, result = self.smoke(passes)
+                self.assertTrue(status.startswith("red:"), status)
+                self.assertEqual(result["smoke_passed"], 1)
+                self.assertIn(missing, json.dumps(result["failure"]))
 
 
 class GateRuns(unittest.TestCase):

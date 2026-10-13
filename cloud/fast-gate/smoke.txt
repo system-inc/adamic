@@ -7,8 +7,10 @@
 #
 # The set also grows from what actually broke (@system_adamic, Oct 7): an unchanged fixture that a
 # whole gate caught red joins in the lane that caught it, written "Lane fixture", while the set stays
-# under 30 s. A lane the gated tree doesn't have yet is listed in fast.json as absent, never run as
-# a silent pass.
+# under 30 s. Every entry must pass in its lane, or in a member of its lane's family (lane_000 and
+# on): an entry that didn't run is red, its lane missing from the tree included, so smoke is never green
+# on fewer fixtures than this list (Tests, Oct 13, #rmp2hdj: from 75a273db37 the pattern selected
+# nothing and every smoke passed on zero fixtures).
 internal/oracle/testdata/array_from_length.a
 internal/oracle/testdata/bitwise.a
 internal/oracle/testdata/borrow_chain_reassigned.a
@@ -54,5 +56,7 @@ internal/oracle/testdata/weak_narrowed.a
 internal/oracle/testdata/writes.a
 internal/oracle/testdata/devirtualize_modules/main.a
 internal/oracle/testdata/modules/main.a
-# Red in the whole gate of df2de6f1 (r3), Oct 7: an unchanged fixture broken by compiler changes.
-TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a
+# Red in the whole gate of df2de6f1 (r3), Oct 7: an unchanged fixture broken by compiler changes. It was
+# caught in TestWASIInputAgreesWithNode, a lane of a stack that never reached main (internal/native's
+# TestWASIUnitNN run WASI now, in another package); here it runs in internal/oracle's input lane.
+TestInputAgreesWithNode internal/oracle/testdata/walk.a

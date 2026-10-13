@@ -2013,10 +2013,13 @@ class Gate:
 
     @declaresInputs("smoke", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
     def smoke(self, smoke, log):
-        """The pinned smoke set in one process, then a check that every entry passed: an entry whose
-        lane exists but whose fixture didn't run is red, never a silent pass. An entry whose lane the
-        gated tree doesn't have yet (it grew from a red on a stack that hasn't landed) is listed as
-        absent."""
+        """The pinned smoke set in one process, then a check that every entry passed in its lane: an entry
+        that didn't run is red, whether its fixture was missing from a lane that ran or its lane didn't run at
+        all, so a smoke can never be green on fewer fixtures than its list. A lane split into a family
+        (TestNativeAgreesWithNode_000 and on, 75a273db37) runs each fixture under one of its members, and
+        that member's pass is the lane's. Until Oct 13 a lane that didn't run was only listed as absent,
+        and from 75a273db37 on every smoke selected nothing and passed: 130 s of compiling and no fixture
+        (Tests, #rmp2hdj)."""
         lanes = sorted({lane for lane, _ in smoke})
         passed, seen = set(), set()
 
@@ -2026,8 +2029,8 @@ class Gate:
             except ValueError:
                 return
             test = event.get("Test") or ""
-            lane = test.split("/", 1)[0]
-            if lane in lanes:
+            lane = smokeLane(test.split("/", 1)[0], lanes)
+            if lane:
                 seen.add(lane)
                 if event.get("Action") == "pass" and "/" in test:
                     passed.add((lane, smokeFixture(test.split("/", 1)[1])))
@@ -2037,11 +2040,14 @@ class Gate:
         if self.exits.get("smoke") != 0:
             return
         absent = sorted("%s %s" % entry for entry in smoke if entry[0] not in seen)
-        missing = sorted("%s %s" % entry for entry in smoke if entry[0] in seen and entry not in passed)
+        missing = sorted("%s %s" % entry for entry in smoke if entry not in passed)
         self.result["smoke_absent_lanes"] = absent
+        self.result["smoke_passed"] = len([entry for entry in smoke if entry in passed])
         if missing:
             self.exits["smoke"] = 1
-            self.fail("smoke", "smoke entries that didn't run: %s" % ", ".join(missing))
+            self.fail("smoke", "smoke passed %d of its %d entries; these didn't run: %s%s" % (
+                self.result["smoke_passed"], len(smoke), ", ".join(missing),
+                " (no test of lane %s ran)" % ", ".join(sorted({entry.split(" ", 1)[0] for entry in absent})) if absent else ""))
 
     def test(self, name, command, log, environment=None):
         started = time.monotonic()
@@ -2852,6 +2858,16 @@ def fixturePattern(prefix, fixtures):
 
 # A lane split into shards (#v5fgqc4: TestNativeAgreesWithNode/shard-003-0/<fixture>) runs each fixture one level down.
 smokeShard = re.compile(r"shard-[0-9]+(-[0-9]+)?$")
+# A lane split into a family of top-level tests (75a273db37: TestNativeAgreesWithNode_000, _001, ... and named solos such
+# as TestNativeAgreesWithNode_user_iterators) runs each fixture under one member: the suffix after the lane's name.
+smokeFamily = re.compile(r"_[0-9A-Za-z_]+")
+
+
+def smokeLane(name, lanes):
+    """The smoke lane a top-level test belongs to: the lane itself, or a member of its family. The longest lane wins,
+    so a lane whose name extends another's (TestInputAgreesWithNode_x) is never read as the shorter's member."""
+    owners = [lane for lane in lanes if name == lane or (name.startswith(lane) and smokeFamily.fullmatch(name[len(lane):]))]
+    return max(owners, key=len) if owners else None
 
 
 def smokeFixture(name):
@@ -2866,11 +2882,13 @@ def smokePattern(entries):
     its own alternation, and a name shorter than the pattern ignores the levels past its end. A lane
     may also run another lane's fixture that it has; the check after the run reads only its own.
     A sharded lane holds its fixtures one level down (lane/shard-003-0/<fixture>), so the first level
-    also takes a shard name and every later level also takes the part one level up. What the wider
-    pattern selects beyond the entries is only ever read by the exact check after the run."""
+    also takes a shard name and every later level also takes the part one level up. A lane split into
+    a family of top-level tests (lane_000/<fixture>) is taken at the first level by its members' names.
+    What the wider pattern selects beyond the entries is only ever read by the exact check after the run."""
     parts = [fixture.split("/") for _, fixture in entries]
     depth = max((len(fixture) for fixture in parts), default=0)
-    levels = [sorted({lane for lane, _ in entries})]
+    # A lane's family members run its fixtures too: lane_000 and on, and a named solo such as lane_user_iterators.
+    levels = [["%s(%s)?" % (lane, smokeFamily.pattern) for lane in sorted({lane for lane, _ in entries})]]
     for level in range(1, depth + 2):
         names = []
         for fixture in parts:
