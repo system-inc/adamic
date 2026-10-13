@@ -1,0 +1,3 @@
+package main
+import("encoding/json";"os";"path/filepath";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func main(){paths:=[]string{};err:=filepath.WalkDir(os.Args[1],func(p string,e os.DirEntry,err error)error{if err!=nil{return err};if !e.IsDir() && filepath.Ext(p)==".ts" {paths=append(paths,p)};return nil});if err!=nil{panic(err)};p,err:=load.LatentLoad(paths);if err!=nil{panic(err)};result:=lower.RecordRulingCensus(p);result["measurement"]="checker-rejected AST only; no IR or backend output";result["roots"]=len(paths);if err:=json.NewEncoder(os.Stdout).Encode(result);err!=nil{panic(err)}}
