@@ -302,8 +302,8 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	preprocess := toolchain.CommandIn(temporary, compiler, append(append([]string{}, flags...), "-E", unit.name)...)
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
-	preprocessed, err := preprocess.Output()
-	if err != nil {
+	var preprocessed []byte
+	if err := withCompilerToken(func() (err error) { preprocessed, err = preprocess.Output(); return err }); err != nil {
 		return "", fmt.Errorf("native: preprocessing unit %s: %w\n%s", unit.name, err, &diagnostic)
 	}
 	key := unitKey([]runtimeFile{{unit.name, preprocessed}}, flags, compiler, version)
@@ -333,7 +333,8 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	// keep all other pedantic diagnostics, including extensions outside system headers.
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
 	command := toolchain.CommandIn(temporary, compiler, arguments...)
-	if output, err := command.CombinedOutput(); err != nil {
+	var output []byte
+	if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
 	if uncached {
@@ -483,8 +484,9 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
 	link := toolchain.CommandIn(directory, compiler, arguments...)
-	if output, err := link.CombinedOutput(); err != nil {
-		return fmt.Errorf("native: linking units: %w\n%s", err, output)
+	var linked []byte
+	if err := withCompilerToken(func() (err error) { linked, err = link.CombinedOutput(); return err }); err != nil {
+		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
 	}
 	return nil
 }
