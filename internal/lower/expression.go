@@ -483,6 +483,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}
+	if observed, known := l.libraryObjectObservation(node); known {
+		return observed, nil
+	}
 	if value, known, err := l.libraryMethodValue(node); known {
 		return value, err
 	}
@@ -649,6 +652,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, handled, err := l.objectIntrinsicBuiltin(node); handled {
+			return value, err
+		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
@@ -772,6 +778,11 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.Unary{Operator: operator, Operand: operand}, nil
 	}
+	if prefix.Operator == ast.KindExclamationToken {
+		if value, known := l.libraryObjectObservation(prefix.Operand); known {
+			return ir.Unary{Operator: ir.Not, Operand: censusCondition(value)}, nil
+		}
+	}
 	operand, err := l.expression(prefix.Operand)
 	if err != nil {
 		return nil, err
@@ -810,6 +821,9 @@ var comparisons = map[ast.Kind]ir.Operator{
 
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) {
+		return l.objectStringAddition(node, left, right)
+	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {
@@ -954,6 +968,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			value = ir.BooleanToString{Value: value}
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
+		case ir.Object:
+			value, err = l.stringObjectConversion(span.AsTemplateSpan().Expression, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.Union:
 			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")

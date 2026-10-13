@@ -121,6 +121,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if l.visitObjectIntrinsicObservation(node, visit) {
+			return false
+		}
 		checkedCast := false
 		if node.Kind == ast.KindAsExpression {
 			proof, err := l.castProof(node)

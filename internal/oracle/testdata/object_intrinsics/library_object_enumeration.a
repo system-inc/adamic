@@ -1,0 +1,18 @@
+const fields = { beta: 8, 10: 10, 2: 2, 0: 0, 1.5: 15, 0x10: 16, 1e2: 100, 4294967294: 14, 4294967295: 15, '01': 1, '-0': 9, alpha: 7 };
+console.log(Object.keys(fields).join('|'));
+console.log(Object.getOwnPropertyNames(fields).join('|'));
+console.log(Object.values(fields).join('|'));
+for (const [key, value] of Object.entries(fields)) {
+ console.log(`${key}=${value} ${Object.hasOwn(fields, key)}`);
+}
+for (const key of ['missing', 'toString', 'constructor', '0', '-0', '01', '4294967294', '4294967295']) {
+ console.log(`${key}: ${Object.hasOwn(fields, key)}`);
+}
+console.log(`${Object.hasOwn(fields, -0)} ${Object.hasOwn(fields, 2)} ${Object.hasOwn(fields, NaN)} ${Object.hasOwn(fields, Infinity)}`);
+let order = '';
+function key(): number { order += 'key '; return 2; }
+console.log(`${Object.hasOwn(fields, key())} ${order}`);
+
+let listed = '';
+for (const key in fields) { listed += `${key}|`; }
+console.log(listed);

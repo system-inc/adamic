@@ -1,0 +1,5 @@
+// A replaced binding enumerates its runtime fields through the compiler's scalar check.
+let value = { n: 1 };
+const hidden = { n: 2, extra: 'built' + '-wrong' };
+value = hidden;
+console.log(Object.values(value).join('|'));
