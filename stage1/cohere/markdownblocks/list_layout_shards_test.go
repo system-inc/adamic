@@ -80,7 +80,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -326,7 +326,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		binary := filepath.Join(dir, name)
-		command := listLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
+		command := listLayoutCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", binary, main)...)
 		command.Dir = cohere
 		if output, err := combinedOutput(command); err != nil {
 			t.Fatalf("Go bridge: %v\n%s", err, output)
