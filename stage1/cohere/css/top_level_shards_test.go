@@ -54,10 +54,11 @@ func cssParserTopPortDirectory(t *testing.T, applied *mutant) string {
 	return filepath.Join(destination, "css")
 }
 
-// Shared setup has no deadline; Loom bounds the whole unit.
+// Compiler products only: this unit can settle before the oracle package.
+// The comparison leaves prepare their corpus and expected answers at run time.
 func TestThePortParsesAsGoCohereDoes_Setup(t *testing.T) {
 	t.Parallel()
-	prepareThePortParsesAsGoCohereDoesSetup(t)
+	prepareCSSParserCompilerProducts(t)
 }
 
 func TestThePortParsesAsGoCohereDoes_000(t *testing.T) {
