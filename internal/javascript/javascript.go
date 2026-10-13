@@ -695,6 +695,9 @@ var operators = map[ir.Operator]string{
 // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
+	if value, handled := objectPrototypeValue(expression); handled {
+		return value
+	}
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
@@ -1164,7 +1167,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+		return "Object.prototype.hasOwnProperty.call(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ParallelMap:
 		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:

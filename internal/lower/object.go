@@ -687,6 +687,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.libraryEmptyMap(node); known {
 		return value, true, err
 	}
+	if value, handled, err := l.borrowedOwnCall(node); handled {
+		return value, handled, err
+	}
 	if value, known, err := l.libraryMethodCall(node); known {
 		return value, true, err
 	}

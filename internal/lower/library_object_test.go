@@ -27,6 +27,9 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
+			if admittedPrototypeProbe(t, probe.source, err) {
+				return
+			}
 			var refusal *Refused
 			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("got %v, want refusal with %q", err, probe.reason)

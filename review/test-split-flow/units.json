@@ -2,6 +2,102 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_cached_intrinsic_a_bb08c75d64e1",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "sha256": "a713001e31e4e9aae57573986fb672dc9ff54fdcf400498239ea377f2999d887"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_cached_intrinsic_a_bb08c75d64e1",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "sha256": "a713001e31e4e9aae57573986fb672dc9ff54fdcf400498239ea377f2999d887"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_cached_intrinsic_a_bb08c75d64e1",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "sha256": "a713001e31e4e9aae57573986fb672dc9ff54fdcf400498239ea377f2999d887"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_cached_intrinsic_a_bb08c75d64e1",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "sha256": "a713001e31e4e9aae57573986fb672dc9ff54fdcf400498239ea377f2999d887"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_prototype_create_a_a1ceaefa413e",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "sha256": "4c5ca2397a94519ce8702b2d92f5c4dffb48046fcaac093d5a66fe2c3b228af5"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_prototype_create_a_a1ceaefa413e",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "sha256": "4c5ca2397a94519ce8702b2d92f5c4dffb48046fcaac093d5a66fe2c3b228af5"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_prototype_create_a_a1ceaefa413e",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "sha256": "4c5ca2397a94519ce8702b2d92f5c4dffb48046fcaac093d5a66fe2c3b228af5"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout22_prototype_create_a_a1ceaefa413e",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "sha256": "4c5ca2397a94519ce8702b2d92f5c4dffb48046fcaac093d5a66fe2c3b228af5"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout_22_tsc_own_keys_a_0fb1dcfd8d84",
+    "program": "internal/oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "path": "../oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "sha256": "7e3d44731b506b06cfe0adc594dbe10afac86f1c1e3e68a9ea5533382aefb26b"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout_22_tsc_own_keys_a_0fb1dcfd8d84",
+    "program": "internal/oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "path": "../oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "sha256": "7e3d44731b506b06cfe0adc594dbe10afac86f1c1e3e68a9ea5533382aefb26b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout_22_tsc_own_keys_a_0fb1dcfd8d84",
+    "program": "internal/oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "path": "../oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "sha256": "7e3d44731b506b06cfe0adc594dbe10afac86f1c1e3e68a9ea5533382aefb26b"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_lifetime_scout_22_tsc_own_keys_a_0fb1dcfd8d84",
+    "program": "internal/oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "path": "../oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "sha256": "7e3d44731b506b06cfe0adc594dbe10afac86f1c1e3e68a9ea5533382aefb26b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f",
     "program": "dedication/dedication.a",
     "path": "../../dedication/dedication.a",
@@ -26782,6 +26878,30 @@
     "program": "internal/flow/testdata/mutations.a",
     "path": "testdata/mutations.a",
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_lifetime_scout22_cached_intrinsic_a_bb08c75d64e1",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_cached_intrinsic.a",
+    "sha256": "a713001e31e4e9aae57573986fb672dc9ff54fdcf400498239ea377f2999d887"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_lifetime_scout22_prototype_create_a_a1ceaefa413e",
+    "program": "internal/oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "path": "../oracle/testdata/object_lifetime/scout22_prototype_create.a",
+    "sha256": "4c5ca2397a94519ce8702b2d92f5c4dffb48046fcaac093d5a66fe2c3b228af5"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_lifetime_scout_22_tsc_own_keys_a_0fb1dcfd8d84",
+    "program": "internal/oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "path": "../oracle/testdata/object_lifetime/scout_22_tsc_own_keys.a",
+    "sha256": "7e3d44731b506b06cfe0adc594dbe10afac86f1c1e3e68a9ea5533382aefb26b"
   },
   {
     "package": "fresh",
