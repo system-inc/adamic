@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const double edges[] = {300, -1, 255, 256, NAN, INFINITY, -INFINITY, -0.0,
+static const double edges[] = {0, 65535, 65536, 1.5, 4294967297.0, 300, -1, 255, 256, NAN, INFINITY, -INFINITY, -0.0,
 	2147483648.0, 4294967296.0, -2147483649.0, 1.9, -1.9, 255.9, -256.9,
 	4294967295.9, -4294967296.9, 1e100, -1e100, 0x1p53, 0x1p-1074};
 
@@ -115,16 +115,17 @@ static void suite(enum adamic_typed_array_kind kind) {
 }
 int main(int argc, char **argv) {
 	if (argc > 1) {
-		adamic_typed_array *array = adamic_typed_array_new(adamic_typed_array_uint8, 3);
+		enum adamic_typed_array_kind kind = strstr(argv[1], "16") != NULL ? adamic_typed_array_uint16 : adamic_typed_array_uint8;
+		adamic_typed_array *array = adamic_typed_array_new(kind, 3);
 		double value = argc > 2 ? strtod(argv[2], NULL) : 3;
-		if (strcmp(argv[1], "write") == 0) { adamic_typed_array_set(array, value, 1); }
-		if (strcmp(argv[1], "check") == 0) { adamic_typed_array_check_write(array, value); }
+		if (strncmp(argv[1], "write", 5) == 0) { adamic_typed_array_set(array, value, 1); }
+		if (strncmp(argv[1], "check", 5) == 0) { adamic_typed_array_check_write(array, value); }
 		if (strcmp(argv[1], "length") == 0) { adamic_typed_array *other = adamic_typed_array_new(adamic_typed_array_uint8, value); adamic_release(other); }
 		if (strcmp(argv[1], "offset") == 0) { adamic_typed_array_set_from(array, array, value, true); }
 		if (strcmp(argv[1], "kind") == 0) { adamic_typed_array *other = adamic_typed_array_new(adamic_typed_array_int32, 0); adamic_typed_array_set_from(array, other, 0, false); adamic_release(other); }
 		adamic_release(array); return 0;
 	}
-	for (int kind = adamic_typed_array_uint8; kind <= adamic_typed_array_float64; kind++) { suite((enum adamic_typed_array_kind)kind); }
+	for (int kind = adamic_typed_array_uint8; kind <= adamic_typed_array_uint16; kind++) { suite((enum adamic_typed_array_kind)kind); }
 	assert(adamic_counted.allocations == adamic_counted.frees);
 	puts("balanced");
 	return 0;
