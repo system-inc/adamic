@@ -3,7 +3,6 @@ package regexp
 import (
 	"bytes"
 	"compress/gzip"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,10 +13,9 @@ import (
 	"reflect"
 	"strings"
 	"testing"
-	"time"
 	"unicode/utf16"
 
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type executionCase struct {
@@ -64,30 +62,27 @@ func nodeResults(t *testing.T, cases []executionCase) []executionResult {
 	if err != nil {
 		t.Fatal(err)
 	}
-	node, err := toolchain.Path("node")
-	if err != nil {
-		t.Fatalf("Node execution oracle: %v", err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, node, "-e", `
+	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.'))throw Error('Node 24 required');
-const results=cases.map(c=>{
+const fs=require('fs');fs.writeSync(2,'regex progress: start\n');
+const results=cases.map((c,index)=>{
  const pattern=c.patternUnits?String.fromCharCode(...c.patternUnits):c.pattern;
  const r=new RegExp(pattern,c.flags.includes('d')?c.flags:c.flags+'d');
  r.lastIndex=c.lastIndex;const input=String.fromCharCode(...c.input);
- const m=r.exec(input);return {captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
+ const m=r.exec(input);
+ if((index+1)%128===0) fs.writeSync(2,'regex progress: '+(index+1)+'/'+cases.length+'\n');
+ return {captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
 });process.stdout.write(JSON.stringify(results));`)
-	command.Env = toolchain.Env()
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Node execution oracle: %v\n%s", err, output)
+	var output, progress bytes.Buffer
+	command.Stdout, command.Stderr = &output, &progress
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
+		t.Fatalf("Node execution oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
 	}
 	var results []executionResult
-	if err = json.Unmarshal(output, &results); err != nil {
-		t.Fatalf("Node decode: %v\n%s", err, output)
+	if err = json.Unmarshal(output.Bytes(), &results); err != nil {
+		t.Fatalf("Node decode: %v\n%s", err, output.Bytes())
 	}
 	if len(results) != len(cases) {
 		t.Fatal("Node result count")
@@ -102,7 +97,7 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 	}
 	programs := map[string]*Program{}
 	unavailablePrograms := map[string]error{}
-	compared, unavailable := 0, 0
+	compared, unavailable, regularCases := 0, 0, 0
 	for i, c := range cases {
 		key := c.Pattern + "\x00" + c.Flags + fmt.Sprint(c.PatternUnits)
 		if _, missing := unavailablePrograms[key]; missing {
@@ -130,24 +125,35 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 			}
 			programs[key] = p
 		}
-		r := p.New()
-		r.LastIndex = c.LastIndex
-		r.StepLimit = 10_000_000
-		got, err := matcherResult(r, c.Input)
-		want := c.Expected
-		if external {
-			want = results[i]
+		if p.regular != nil {
+			regularCases++
 		}
-		if err != nil {
-			t.Errorf("execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, err)
-			continue
-		}
-		compared++
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, got, want)
+		for mode := 0; mode < 3; mode++ {
+			r := p.New()
+			r.LastIndex = c.LastIndex
+			if mode == 0 {
+				r.StepLimit = 10_000_000
+			}
+			r.DisableRegular = mode == 2
+			got, err := matcherResult(r, c.Input)
+			want := c.Expected
+			if external {
+				want = results[i]
+			}
+			if err != nil {
+				t.Errorf("execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, err)
+				continue
+			}
+			if mode == 0 {
+				compared++
+			}
+			if !reflect.DeepEqual(got, want) {
+				t.Errorf("DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, got, want)
+			}
 		}
 	}
 	t.Logf("execution totals: %d cases, %d compared, %d property stand-in unavailable", len(cases), compared, unavailable)
+	t.Logf("three modes: budgeted VM, regular with recovery, unlimited VM; %d eligible executions", regularCases)
 }
 func TestMatcherNodeControls(t *testing.T) {
 	t.Parallel()
@@ -187,8 +193,8 @@ func TestMatcherNodeControls(t *testing.T) {
 	}
 	compareExecutionCases(t, cases, true)
 }
-func TestMatcherRandomNode(t *testing.T) {
-	t.Parallel()
+func runMatcherRandomNode(t *testing.T, shard int) {
+	t.Helper()
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
 	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}
@@ -223,10 +229,10 @@ func TestMatcherRandomNode(t *testing.T) {
 		}
 		cases = append(cases, executionCase{Pattern: pattern, Flags: flag, Input: utf16.Encode(input), LastIndex: uint64(random.Intn(5)), Source: "seed 0x875"})
 	}
-	compareExecutionCases(t, cases, true)
+	compareExecutionCases(t, matcherExecutionShard(cases, shard), true)
 }
-func TestMatcherTest262Executions(t *testing.T) {
-	t.Parallel()
+func runMatcherTest262Executions(t *testing.T, shard int) {
+	t.Helper()
 	data, err := os.ReadFile("testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -244,7 +250,7 @@ func TestMatcherTest262Executions(t *testing.T) {
 	if err = json.Unmarshal(data, &cases); err != nil {
 		t.Fatal(err)
 	}
-	compareExecutionCases(t, cases, false)
+	compareExecutionCases(t, matcherExecutionShard(cases, shard), false)
 }
 func TestMatcherStepLimit(t *testing.T) {
 	t.Parallel()
@@ -361,4 +367,55 @@ func TestMatcherProviderSnapshot(t *testing.T) {
 	if err != nil || !reflect.DeepEqual(got, expected) {
 		t.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, err)
 	}
+}
+
+// Corpus rows retain their source order and belong to exactly one of four units.
+func matcherExecutionShard(cases []executionCase, shard int) []executionCase {
+	var selected []executionCase
+	for index, c := range cases {
+		if index%4 == shard {
+			selected = append(selected, c)
+		}
+	}
+	return selected
+}
+
+func TestMatcherRandomNodeShard0(t *testing.T) {
+	t.Parallel()
+	runMatcherRandomNode(t, 0)
+}
+
+func TestMatcherRandomNodeShard1(t *testing.T) {
+	t.Parallel()
+	runMatcherRandomNode(t, 1)
+}
+
+func TestMatcherRandomNodeShard2(t *testing.T) {
+	t.Parallel()
+	runMatcherRandomNode(t, 2)
+}
+
+func TestMatcherRandomNodeShard3(t *testing.T) {
+	t.Parallel()
+	runMatcherRandomNode(t, 3)
+}
+
+func TestMatcherTest262ExecutionsShard0(t *testing.T) {
+	t.Parallel()
+	runMatcherTest262Executions(t, 0)
+}
+
+func TestMatcherTest262ExecutionsShard1(t *testing.T) {
+	t.Parallel()
+	runMatcherTest262Executions(t, 1)
+}
+
+func TestMatcherTest262ExecutionsShard2(t *testing.T) {
+	t.Parallel()
+	runMatcherTest262Executions(t, 2)
+}
+
+func TestMatcherTest262ExecutionsShard3(t *testing.T) {
+	t.Parallel()
+	runMatcherTest262Executions(t, 3)
 }

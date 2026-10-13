@@ -40,30 +40,102 @@ type regexCase struct {
 // pattern, flags, input and lastIndex is b modulo n. Each bucket is its own executable and its own
 // top-level test below, and TestRegExpTest262BucketsEachHaveOneTest holds the buckets to their tests.
 var regExpTest262Buckets = map[string]int{
-	"bucket 0 of 4": 0,
-	"bucket 1 of 4": 1,
-	"bucket 2 of 4": 2,
-	"bucket 3 of 4": 3,
+	"bucket 0 of 16":  0,
+	"bucket 1 of 16":  1,
+	"bucket 2 of 16":  2,
+	"bucket 3 of 16":  3,
+	"bucket 4 of 16":  4,
+	"bucket 5 of 16":  5,
+	"bucket 6 of 16":  6,
+	"bucket 7 of 16":  7,
+	"bucket 8 of 16":  8,
+	"bucket 9 of 16":  9,
+	"bucket 10 of 16": 10,
+	"bucket 11 of 16": 11,
+	"bucket 12 of 16": 12,
+	"bucket 13 of 16": 13,
+	"bucket 14 of 16": 14,
+	"bucket 15 of 16": 15,
 }
 
-func TestRegExpBytecodeTest262Bucket0Of4(t *testing.T) {
+func TestRegExpBytecodeTest262Bucket0Of16(t *testing.T) {
 	t.Parallel()
-	runRegExpTest262Bucket(t, "bucket 0 of 4")
+	runRegExpTest262Bucket(t, "bucket 0 of 16")
 }
 
-func TestRegExpBytecodeTest262Bucket1Of4(t *testing.T) {
+func TestRegExpBytecodeTest262Bucket1Of16(t *testing.T) {
 	t.Parallel()
-	runRegExpTest262Bucket(t, "bucket 1 of 4")
+	runRegExpTest262Bucket(t, "bucket 1 of 16")
 }
 
-func TestRegExpBytecodeTest262Bucket2Of4(t *testing.T) {
+func TestRegExpBytecodeTest262Bucket2Of16(t *testing.T) {
 	t.Parallel()
-	runRegExpTest262Bucket(t, "bucket 2 of 4")
+	runRegExpTest262Bucket(t, "bucket 2 of 16")
 }
 
-func TestRegExpBytecodeTest262Bucket3Of4(t *testing.T) {
+func TestRegExpBytecodeTest262Bucket3Of16(t *testing.T) {
 	t.Parallel()
-	runRegExpTest262Bucket(t, "bucket 3 of 4")
+	runRegExpTest262Bucket(t, "bucket 3 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket4Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 4 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket5Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 5 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket6Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 6 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket7Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 7 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket8Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 8 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket9Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 9 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket10Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 10 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket11Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 11 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket12Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 12 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket13Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 13 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket14Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 14 of 16")
+}
+
+func TestRegExpBytecodeTest262Bucket15Of16(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 15 of 16")
 }
 
 // Every call lands in exactly one bucket when the buckets are 0 to n-1 of the same n, so a bucket
@@ -118,6 +190,11 @@ func runRegExpTest262Bucket(t *testing.T, name string) {
 }
 func runRegexCases(t *testing.T, cases []regexCase) {
 	t.Helper()
+	runRegexCasesForTarget(t, cases, false)
+}
+func runRegexCasesForTarget(t *testing.T, cases []regexCase, wasmOnly bool) {
+	t.Helper()
+	cases = regexCompatibleCases(t, cases)
 	var source, rows, units, spans strings.Builder
 	source.WriteString("#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n")
 	programs := map[string]int{}
@@ -217,26 +294,43 @@ int main(int argc,char **argv) {
  printf("native execution totals: %zu cases, %zu disagreements\n",sizeof probes/sizeof probes[0],disagreements);return disagreements==0?0:1;
 }
 `)
-	binary := filepath.Join(t.TempDir(), "regex-probes")
-	t.Logf("compiling %d patterns, %d executions, %d C bytes", len(programs), len(cases), source.Len())
-	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
-	for _, arguments := range [][]string{nil, {"unlimited"}} {
-		command := exec.CommandContext(ctx, binary, arguments...)
-		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
-		output, err := command.CombinedOutput()
-		if err != nil {
-			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
+	if !wasmOnly {
+		binary := filepath.Join(t.TempDir(), "regex-probes")
+		t.Logf("compiling %d patterns, %d executions, %d C bytes", len(programs), len(cases), source.Len())
+		if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
 		}
-		if !bytes.Contains(output, []byte("0 disagreements")) {
-			t.Fatalf("native regex oracle missing totals: %s", output)
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		defer cancel()
+		for _, arguments := range [][]string{nil, {"unlimited"}} {
+			command := exec.CommandContext(ctx, binary, arguments...)
+			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
+			output, err := command.CombinedOutput()
+			if err != nil {
+				t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
+			}
+			if !bytes.Contains(output, []byte("0 disagreements")) {
+				t.Fatalf("native regex oracle missing totals: %s", output)
+			}
+			t.Logf("mode=%v %s", arguments, output)
 		}
-		t.Logf("mode=%v %s", arguments, output)
 	}
-
+	if wasmOnly {
+		wasm := filepath.Join(t.TempDir(), "regex-probes.wasm")
+		if err := Build(source.String(), wasm, Options{Target: "wasm32-wasi"}); err != nil {
+			t.Fatal(err)
+		}
+		for _, arguments := range [][]string{nil, {"unlimited"}} {
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			args := append([]string{"--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", wasm}, arguments...)
+			output, err := exec.CommandContext(ctx, "node", args...).CombinedOutput()
+			cancel()
+			if err != nil || !bytes.Contains(output, []byte("0 disagreements")) {
+				t.Fatalf("wasm32 regex oracle (%v): %v\n%s", arguments, err, output)
+			}
+			t.Logf("wasm32 mode=%v %s", arguments, output)
+		}
+	}
 }
 
 func runRegExpBytecodeRandomNodeUnit(t *testing.T, unit int) {
