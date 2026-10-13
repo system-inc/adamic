@@ -143,9 +143,11 @@ func compositionRunShard(t *testing.T, index int) {
 	t.Logf("shard-%03d: %.3fs cooked=false cases=%d (excludes shared setup)", index, time.Since(started).Seconds(), len(shard))
 }
 
+// Compiler products only: corpus enumeration and the Go oracle belong to the
+// runtime comparison setup, so this unit needs no oracle-package ordering.
 func TestCompositionMatchesGo_Setup(t *testing.T) {
 	t.Parallel()
-	compositionSetup(t)
+	compositionNativeProduct(t)
 }
 
 func TestCompositionMatchesGoUnion(t *testing.T) {
