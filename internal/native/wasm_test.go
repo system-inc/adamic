@@ -66,6 +66,11 @@ func runWASIUnit(t *testing.T, unit int) {
 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
+	// The toolchain is pinned: a clang other than wasi-sdk's fails here, by name, rather than skipping.
+	clang, err := WASIClang()
+	if err != nil {
+		t.Fatal(err)
+	}
 	phase := time.Now()
 	directory := t.TempDir()
 	repository, err := filepath.Abs("../..")
@@ -75,7 +80,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := toolchain.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(clang, append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
@@ -115,7 +120,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		command := toolchain.CommandIn(repository, "clang", arguments...)
+		command := toolchain.CommandIn(repository, clang, arguments...)
 		if data, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("WASI link: %v\n%s", err, data)
 		}
@@ -260,13 +265,18 @@ func strictWASIRuntime(t *testing.T) string {
 	if sysroot == "" {
 		t.Fatal("WASI_SYSROOT missing")
 	}
+	// The runtime compiles with wasi-sdk's pinned clang, and its version keys the product.
+	clang, err := WASIClang()
+	if err != nil {
+		t.Fatal(err)
+	}
 	flags := wasiFlags(sysroot)
 	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
 	inputs := buildcache.Inputs{
 		Name:      "strict-wasi-runtime",
 		Files:     []string{"internal/native/runtime", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.Tool(clang, "--version")},
 	}
 	for _, variant := range variants {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))
@@ -303,7 +313,7 @@ func strictWASIRuntime(t *testing.T) string {
 			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
 			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), prefixMaps(destination, "/adamic-runtime")...)
 			if err := eachInParallel(len(sources), func(index int) error {
-				command := toolchain.CommandIn(destination, "clang", append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
+				command := toolchain.CommandIn(destination, clang, append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], err, output)
 				}
