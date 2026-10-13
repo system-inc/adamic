@@ -1475,6 +1475,11 @@ func TestWASIEmission_031(t *testing.T) {
 	runWASIEmissionShard(t, 31)
 }
 
+func TestWASIEmission_objects(t *testing.T) {
+	t.Parallel()
+	runWASIEmissionShard(t, -1)
+}
+
 func TestReviewProgramsAgreeWithNode_000(t *testing.T) {
 	t.Parallel()
 	runReviewAgreeShard(t, 0)
@@ -1693,6 +1698,11 @@ func TestCountsAreRecorded_030(t *testing.T) {
 func TestCountsAreRecorded_031(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, 31)
+}
+
+func TestCountsAreRecorded_objects(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -1)
 }
 
 func TestLoopCountersAgreeWithNode_000(t *testing.T) {

@@ -42,7 +42,8 @@ func init() {
 
 func usesParallelMap(program *ir.Program) bool {
 	// The native emitter declares this ABI only when it emits a parallelMap expression.
-	return strings.Contains(native.C(program), "adamic_parallel_map(")
+	code := native.C(program)
+	return strings.Contains(code, "adamic_parallel_map(") || strings.Contains(code, "adamic_parallel_map_move(")
 }
 
 // Each variant runs sequentially and with the pool's default size. Do not cache race proofs.
@@ -51,6 +52,11 @@ func checkParallelVariants(t *testing.T, program *ir.Program, oracle run) {
 }
 
 func checkParallelVariantUnit(t *testing.T, program *ir.Program, oracle run, selectedBuild, selectedThreads string, selectedAttempt int) {
+	checkParallelCodeUnit(t, native.C(program), oracle, selectedBuild, selectedThreads, selectedAttempt)
+}
+
+// Move units can consume their independently generated C product.
+func checkParallelCodeUnit(t *testing.T, code string, oracle run, selectedBuild, selectedThreads string, selectedAttempt int) {
 	t.Helper()
 	builds := []struct {
 		name    string
@@ -84,9 +90,9 @@ func checkParallelVariantUnit(t *testing.T, program *ir.Program, oracle run, sel
 			} else if build.name == "malloc" {
 				allocator = "ADAMIC_MALLOC"
 			}
-			buildParallelProgram(t, native.C(program), binary, build.options, allocator)
+			buildParallelProgram(t, code, binary, build.options, allocator)
 			for _, threads := range []string{"1", ""} {
-				if selectedBuild != "" && threads != selectedThreads {
+				if selectedBuild != "" && selectedThreads != "all" && threads != selectedThreads {
 					continue
 				}
 				name := threads
