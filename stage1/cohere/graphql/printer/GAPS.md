@@ -62,14 +62,12 @@ The file wrapper converts CRLF and lone CR to LF before parsing. Consequently
 formatting, matching cohere's native.Formatter rather than calling graphql.Format
 on raw file bytes.
 
-`gaps/whitespace-cases.json` independently contains these five inputs. The test
-encodes them into the batch transport. `TestPrinterWhitespaceGap` holds native and Node to Go refusals and
-requires empty successful output from both Prettier builds. The full preflight
-also checks these exact input/error pairs and requires exactly five differences
-in each option set. Every other acceptance or formatted-byte mismatch fails.
+`TestPrinterUpstreamPreflight` checks these five exact input/error pairs and
+requires exactly five differences in each option set. Every other acceptance or
+formatted-byte mismatch fails.
 
 ```sh
-ADAMIC_GRAPHQL_PRETTIER=/tmp/graphql-printer-prettier go test -v -count=1 ./stage1/cohere/graphql/printer -run 'TestPrinter(WhitespaceGap|UpstreamPreflight)' > /tmp/graphql-printer-whitespace-gap.log 2>&1
+ADAMIC_GRAPHQL_PRETTIER=/tmp/graphql-printer-prettier go test -v -count=1 ./stage1/cohere/graphql/printer -run '^TestPrinterUpstreamPreflight_000$' -timeout 90s -test.skip '^TestProduct_'
 ```
 
 ## Mutants

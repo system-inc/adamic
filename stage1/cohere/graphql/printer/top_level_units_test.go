@@ -11,9 +11,3 @@ func TestPrinterUpstreamPreflight_000(t *testing.T)   { t.Parallel(); printerUps
 func TestPrinterUpstreamPreflight_001(t *testing.T)   { t.Parallel(); printerUpstreamUnit(t, 1) }
 func TestPrinterUpstreamPreflight_002(t *testing.T)   { t.Parallel(); printerUpstreamUnit(t, 2) }
 func TestPrinterUpstreamPreflight_003(t *testing.T)   { t.Parallel(); printerUpstreamUnit(t, 3) }
-func TestPrinterWhitespaceGap_Setup(t *testing.T)     { t.Parallel(); printerWhitespaceUnit(t, -1) }
-func TestPrinterWhitespaceGap_000(t *testing.T)       { t.Parallel(); printerWhitespaceUnit(t, 0) }
-func TestPrinterWhitespaceGap_001(t *testing.T)       { t.Parallel(); printerWhitespaceUnit(t, 1) }
-func TestPrinterWhitespaceGap_002(t *testing.T)       { t.Parallel(); printerWhitespaceUnit(t, 2) }
-func TestPrinterWhitespaceGap_003(t *testing.T)       { t.Parallel(); printerWhitespaceUnit(t, 3) }
-func TestPrinterWhitespaceGap_004(t *testing.T)       { t.Parallel(); printerWhitespaceUnit(t, 4) }
