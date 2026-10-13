@@ -1,0 +1,25 @@
+import gzip,hashlib,json
+from pathlib import Path
+from copy import deepcopy
+root=Path('/workspace/adamic/stage3/census/speculative/evidence/continuation')
+index=json.loads((root/'SHA256.json').read_text())
+def verify(values):
+    for name,digest in values.items():
+        p=root/name
+        assert hashlib.sha256(p.read_bytes()).hexdigest()==digest, 'archive checksum: '+name
+verify(index)
+for name in index:
+    if name.endswith('.gz'):gzip.decompress((root/name).read_bytes())
+for name in ('speculative.jsonl','stock.json','shifted-depth-mutant.jsonl'):
+    assert gzip.decompress((root/'final-result'/(name+'.gz')).read_bytes())==(Path('/workspace/pqjagjf-storage/final-result')/name).read_bytes()
+for p in Path('/tmp/b17vtn1/whole/records').glob('*.jsonl'):
+    assert p.read_bytes()==gzip.decompress((root/'retry-priority/records'/(p.name+'.gz')).read_bytes())
+mutant=deepcopy(index);mutant[next(iter(mutant))]='0'*64
+try:verify(mutant)
+except AssertionError:print('archive hash mutant caught')
+else:raise AssertionError('archive hash mutant survived')
+raw=bytearray((root/'final-result/speculative.jsonl.gz').read_bytes());raw[-8]^=1
+try:gzip.decompress(raw)
+except (OSError,EOFError):print('archive gzip CRC mutant caught')
+else:raise AssertionError('archive CRC mutant survived')
+print('PASS:',len(index),'archive checksums; all gzip streams valid; exact finalized bytes; all 29 original complete records preserved')

@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/template_nullish.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/template_nullish.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/template_nullish.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node miss
+    oracle_test.go:597: gate cache native miss
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:775: stdout differs
+        node:   exit 0, stdout "effect\nabsent\nnull:null, undefined:undefined, void:undefined, call:undefined\nnumber:7, boolean:true, string:kept\n", stderr ""
+        native: exit 0, stdout "effect\nabsent\nnull:undefined, undefined:undefined, void:undefined, call:undefined\nnumber:7, boolean:true, string:kept\n", stderr ""
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "effect\nabsent\nnull:null, undefined:undefined, void:undefined, call:undefined\nnumber:7, boolean:true, string:kept\n", stderr ""
+        backend: exit 0, stdout "effect\nabsent\nnull:undefined, undefined:undefined, void:undefined, call:undefined\nnumber:7, boolean:true, string:kept\n", stderr ""
+    oracle_test.go:604: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/template_nullish.a (0.31s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.342s
+FAIL

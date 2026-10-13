@@ -3,6 +3,7 @@ package selector
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -16,6 +17,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
@@ -46,89 +48,78 @@ type run struct {
 // tree, field for field and offset for offset, every own property, or the same syntax error, natively,
 // on Node and through the JavaScript backend, byte for byte; and the native port leaks nothing, on the
 // texts it parses and on those it throws out of.
+//
+// The comparison with the library and each mutant are tests of their own, beside this one, so no test
+// carries another's lowering and builds; the cases and Go cohere's answers are a product they all read.
 func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	t.Parallel()
 	casesPath, goAnswers := askedCases(t)
 	portSource := portDirectory(t, nil)
 	program := lowered(t, filepath.Join(portSource, "main.ts"))
-
-	t.Run("natively and on Node, as Go cohere", func(t *testing.T) {
-		t.Parallel()
-		nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
-		nativeRun, sanitized := natively(t, program, casesPath)
-		backendRun := onJavaScriptBackend(t, program, casesPath)
-		for _, side := range []struct {
-			name string
-			run  run
-		}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
-			if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
-				t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
-			}
-			if difference := firstDifference(string(side.run.stdout), goAnswers); difference != "" {
-				t.Errorf("%s and Go cohere differ: %s", side.name, difference)
-			}
+	nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
+	nativeRun, sanitized := natively(t, program, casesPath)
+	backendRun := onJavaScriptBackend(t, program, casesPath)
+	for _, side := range []struct {
+		name string
+		run  run
+	}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
+		if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
+			t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
 		}
-		agreed := !t.Failed()
-		if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
-			t.Errorf("leaks:\n%s", leaked)
+		if difference := firstDifference(string(side.run.stdout), goAnswers); difference != "" {
+			t.Errorf("%s and Go cohere differ: %s", side.name, difference)
 		}
-
-		if agreed {
-			t.Logf("%d selectors: every answer agrees on Node, native, and the JavaScript backend", strings.Count(goAnswers, "case "))
-		}
-
-	})
-
-	// postcss-selector-parser 2.2.3 itself, except its explicitly reported nonterminating inputs.
-	t.Run("as postcss-selector-parser", func(t *testing.T) {
-		t.Parallel()
-		library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
-		if library == "" {
-			t.Skip("set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself")
-		}
-		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		answersPath := filepath.Join(t.TempDir(), "go-answers.txt")
-		if err := os.WriteFile(answersPath, []byte(goAnswers), 0644); err != nil {
-			t.Fatal(err)
-		}
-		libraryRun := execute(t, nil, "node", script, library, casesPath, answersPath)
-		if libraryRun.exitCode != 0 {
-			t.Fatalf("the library: exit %d, stderr %q", libraryRun.exitCode, libraryRun.stderr)
-		}
-		t.Logf("%s", libraryRun.stderr)
-		if difference := firstDifference(string(libraryRun.stdout), goAnswers); difference != "" {
-			t.Errorf("postcss-selector-parser and Go cohere differ: %s", strings.Replace(difference, "line", "postcss-selector-parser's line", 1))
-		}
-	})
-
-	// The comparison has to be able to fail. Each mutant changes the port where only its answers can
-	// show it, and the port must then disagree with Go cohere: natively, since that is the program this
-	// test holds, and on Node, which shows the fault is the port's and not stage 0's.
-	for _, mutant := range mutants {
-		t.Run("catches "+mutant.name, func(t *testing.T) {
-			t.Parallel()
-			mutated := portDirectory(t, &mutant)
-			mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
-			for _, side := range []struct {
-				name string
-				run  run
-			}{{"natively", nativelyRun(t, mutatedProgram, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
-				if side.run.exitCode != 0 {
-					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
-					continue
-				}
-				difference := firstDifference(string(side.run.stdout), goAnswers)
-				if difference == "" {
-					t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
-					continue
-				}
-				t.Logf("%s, caught: %s", side.name, difference)
-			}
-		})
 	}
+	agreed := !t.Failed()
+	if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
+		t.Errorf("leaks:\n%s", leaked)
+	}
+
+	if agreed {
+		t.Logf("%d selectors: every answer agrees on Node, native, and the JavaScript backend", strings.Count(goAnswers, "case "))
+	}
+}
+
+// postcss-selector-parser 2.2.3 itself parses the port's cases as Go cohere does, except its explicitly
+// reported nonterminating inputs.
+func TestPostcssSelectorParserParsesAsGoCohereDoes(t *testing.T) {
+	t.Parallel()
+	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
+	if library == "" {
+		t.Skip("set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself")
+	}
+	casesPath, goAnswers := askedCases(t)
+	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	answersPath := filepath.Join(t.TempDir(), "go-answers.txt")
+	if err := os.WriteFile(answersPath, []byte(goAnswers), 0644); err != nil {
+		t.Fatal(err)
+	}
+	libraryRun := execute(t, nil, "node", script, library, casesPath, answersPath)
+	if libraryRun.exitCode != 0 {
+		t.Fatalf("the library: exit %d, stderr %q", libraryRun.exitCode, libraryRun.stderr)
+	}
+	t.Logf("%s", libraryRun.stderr)
+	if difference := firstDifference(string(libraryRun.stdout), goAnswers); difference != "" {
+		t.Errorf("postcss-selector-parser and Go cohere differ: %s", strings.Replace(difference, "line", "postcss-selector-parser's line", 1))
+	}
+}
+
+func TestTheComparisonCatchesTheSuffixOperatorLosingItsBar(t *testing.T) {
+	t.Parallel()
+	catches(t, mutant{name: "the suffix operator loses |=", file: "parser.ts", from: "/([*~^$|]?=)([\\s\\S]*)/", to: "/([*~^$]?=)([\\s\\S]*)/"})
+}
+
+func TestTheComparisonCatchesAQuoteIgnoringEscapeParity(t *testing.T) {
+	t.Parallel()
+	catches(t, mutant{name: "a quote ignores escape parity", file: "tokenize.ts", from: "if(!escaped) {", to: "if(true) {"})
+}
+
+func TestTheComparisonCatchesAMergedWordUsingItsFirstTokenPosition(t *testing.T) {
+	t.Parallel()
+	catches(t, mutant{name: "a merged word uses its first token position", file: "parser.ts", from: "const token = this.curr();\n            if(partIndex === 0", to: "const token = starting;\n            if(partIndex === 0"})
 }
 
 // mutant is one change to one port file.
@@ -136,14 +127,34 @@ type mutant struct {
 	name, file, from, to string
 }
 
-var mutants = []mutant{
-	{name: "the suffix operator loses |=", file: "parser.ts", from: "/([*~^$|]?=)([\\s\\S]*)/", to: "/([*~^$]?=)([\\s\\S]*)/"},
-	{name: "a quote ignores escape parity", file: "tokenize.ts", from: "if(!escaped) {", to: "if(true) {"},
-	{name: "a merged word uses its first token position", file: "parser.ts", from: "const token = this.curr();\n            if(partIndex === 0", to: "const token = starting;\n            if(partIndex === 0"},
+// catches shows the comparison can fail. Each mutant changes the port where only its answers can show it,
+// and the port must then disagree with Go cohere: natively, since that is the program the agreement test
+// holds, and on Node, which shows the fault is the port's and not stage 0's. Each mutant is written out in
+// the one test that owns it, so none can go unchecked or be checked twice.
+func catches(t *testing.T, applied mutant) {
+	t.Helper()
+	casesPath, goAnswers := askedCases(t)
+	mutated := portDirectory(t, &applied)
+	mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
+	for _, side := range []struct {
+		name string
+		run  run
+	}{{"natively", nativelyRun(t, mutatedProgram, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
+		if side.run.exitCode != 0 {
+			t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
+			continue
+		}
+		difference := firstDifference(string(side.run.stdout), goAnswers)
+		if difference == "" {
+			t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
+			continue
+		}
+		t.Logf("%s, caught: %s", side.name, difference)
+	}
 }
 
-// askedCases has cohere's side write every case, and Go cohere's answer to each, returning the cases
-// file's path and the answers.
+// askedCases returns the cases file's path and Go cohere's answer to each, from the product
+// selectorAnswers builds, after checking the cohere checkout they come from.
 func askedCases(t *testing.T) (string, string) {
 	t.Helper()
 	seed := int64(generatedSeed)
@@ -159,12 +170,6 @@ func askedCases(t *testing.T) (string, string) {
 			t.Fatal(err)
 		}
 	}
-	directory := t.TempDir()
-	casesPath := filepath.Join(directory, "cases.txt")
-	answersPath := filepath.Join(directory, "answers.txt")
-	corpus := filepath.Join(directory, "corpus.txt")
-	testTexts := filepath.Join(directory, "test-texts.json")
-	request := map[string]any{"seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath, "corpus": corpus, "testTexts": testTexts}
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)
@@ -173,28 +178,9 @@ func askedCases(t *testing.T) (string, string) {
 	// Validate it before running that generator, even without the npm oracle.
 	files := corpusfiles.Upstream(t, root, corpusfiles.CohereCommit,
 		[]string{"internal/format/css", "internal/lint/rules/tailwind"}, []string{"*.css"})
-	cohereSide(t, request)
-	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
-	if library != "" {
-		script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-		fileList := filepath.Join(directory, "css-files.json")
-		encoded, err := json.Marshal(files)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(fileList, encoded, 0644); err != nil {
-			t.Fatal(err)
-		}
-		result := execute(t, nil, "node", script, library, "corpus", root, corpus, testTexts, fileList)
-		if result.exitCode != 0 {
-			t.Fatalf("corpus: %s", result.stderr)
-		}
-		t.Logf("%s", result.stdout)
-		cohereSide(t, request)
-	} else {
-		t.Log("CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY")
-	}
-	answers, err := os.ReadFile(answersPath)
+	directory := selectorAnswers(t, seed, generated, root, files, os.Getenv("ADAMIC_SELECTOR_LIBRARY"))
+	casesPath := filepath.Join(directory, "cases.txt")
+	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,6 +197,128 @@ func askedCases(t *testing.T) (string, string) {
 	return casesPath, string(answers)
 }
 
+// selectorAnswers is the directory holding cases.txt, every case cohere's side writes, and answers.txt, Go
+// cohere's answer to each: a product built ahead by TestProduct_SelectorGoAnswers, since asking takes two
+// oracle runs and a corpus extraction every test reading them would otherwise pay. It is keyed by the
+// request, the oracle and the library by content, the cohere directories the oracle and the extraction read,
+// and this file and testdata, which hold the recipe.
+func selectorAnswers(t *testing.T, seed int64, generated int, root string, files []string, library string) string {
+	t.Helper()
+	oracle, _ := cohereSideOracle(t)
+	var libraryDigest, node string
+	if library != "" {
+		libraryDigest, node = contentDigest(t, library), buildcache.Tool("node", "--version")
+	}
+	inputs := selectorAnswersInputs(seed, generated, contentDigest(t, oracle), libraryDigest, node)
+	return buildcache.Product(t, inputs, func(product string) error {
+		directory := t.TempDir()
+		corpus := filepath.Join(directory, "corpus.txt")
+		testTexts := filepath.Join(directory, "test-texts.json")
+		request := map[string]any{"seed": seed, "generated": generated, "cases": filepath.Join(product, "cases.txt"), "answers": filepath.Join(product, "answers.txt"), "corpus": corpus, "testTexts": testTexts}
+		cohereSide(t, request)
+		if library != "" {
+			script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+			if err != nil {
+				return err
+			}
+			fileList := filepath.Join(directory, "css-files.json")
+			encoded, err := json.Marshal(files)
+			if err != nil {
+				return err
+			}
+			if err := os.WriteFile(fileList, encoded, 0644); err != nil {
+				return err
+			}
+			result := execute(t, nil, "node", script, library, "corpus", root, corpus, testTexts, fileList)
+			if result.exitCode != 0 {
+				return fmt.Errorf("corpus: %s", result.stderr)
+			}
+			t.Logf("%s", result.stdout)
+			cohereSide(t, request)
+		} else {
+			t.Log("CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY")
+		}
+		return nil
+	})
+}
+
+// selectorAnswersInputs keys the answers product: the request, the oracle's content digest, and, when the
+// library extracts the corpus, its content digest and node's report. libraryDigest is "" without the library.
+func selectorAnswersInputs(seed int64, generated int, oracleDigest, libraryDigest, node string) buildcache.Inputs {
+	flags := []string{fmt.Sprintf("seed=%d", seed), fmt.Sprintf("generated=%d", generated), "oracle-content-sha256=" + oracleDigest}
+	toolchain := []string{runtime.Version()}
+	if libraryDigest != "" {
+		flags = append(flags, "library-content-sha256="+libraryDigest)
+		toolchain = append(toolchain, node)
+	}
+	return buildcache.Inputs{
+		Name:      "selector Go oracle answers",
+		Files:     []string{"cohere/internal/format/css", "cohere/internal/lint/rules/tailwind", "stage1/cohere/selector/testdata", "stage1/cohere/selector/selector_test.go"},
+		Flags:     flags,
+		Toolchain: toolchain,
+	}
+}
+
+// The answers product's name key (what a runner finds it by) and declared key (what this machine alone builds it by)
+// each move with the library, the seed and the oracle, so no change to any serves stale answers. The digests are
+// placeholders: keying builds nothing.
+func TestSelectorAnswersRekey(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys := func(inputs buildcache.Inputs) (string, string) {
+		declared, err := buildcache.Key(root, inputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return buildcache.NameKey(root, inputs), declared
+	}
+	nameKey, declared := keys(selectorAnswersInputs(generatedSeed, 4000, "0", "1", "node"))
+	for _, change := range []struct {
+		name   string
+		inputs buildcache.Inputs
+	}{
+		{"no library", selectorAnswersInputs(generatedSeed, 4000, "0", "", "")},
+		{"another seed", selectorAnswersInputs(generatedSeed+1, 4000, "0", "1", "node")},
+		{"another oracle", selectorAnswersInputs(generatedSeed, 4000, "2", "1", "node")},
+	} {
+		changedNameKey, changedDeclared := keys(change.inputs)
+		if changedNameKey == nameKey || changedDeclared == declared {
+			t.Errorf("%s kept name key %s or key %s", change.name, nameKey[:12], declared[:12])
+			continue
+		}
+		t.Logf("%s: name key %s to %s, key %s to %s", change.name, nameKey[:12], changedNameKey[:12], declared[:12], changedDeclared[:12])
+	}
+}
+
+// contentDigest hashes a file, or every file under a directory by its relative name, so a key names what a path
+// holds and never where it is.
+func contentDigest(t *testing.T, path string) string {
+	t.Helper()
+	hash := sha256.New()
+	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
+		if err != nil || entry.IsDir() {
+			return err
+		}
+		content, err := os.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(path, name)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf("%x", hash.Sum(nil))
+}
+
 // cohereSide runs testdata/cohere_side_test.go inside cohere's selector package, by overlay, with a
 // request.
 func cohereSide(t *testing.T, request map[string]any) {
@@ -224,26 +332,11 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/selector")
-	command.Dir = cohere
+	// The package's test binary with the harness laid over it is a product built ahead (cohereSideOracle), run here in
+	// the package's directory, where go test would run it; the child guard owns hang detection.
+	binary, packageDirectory := cohereSideOracle(t)
+	command := bounded(t, binary, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
@@ -615,4 +708,41 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 			t.Log("entered parser, no return within 1s of entering, killed")
 		})
 	}
+}
+
+// cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
+// product (buildcache.GoTest) built ahead, and the directory go test would run it in.
+func cohereSideOracle(t testing.TB) (string, string) {
+	t.Helper()
+	directory := t.TempDir()
+	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
+	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := buildcache.GoTest(t, "cohere", "selector.test", "./internal/format/css/selector", []string{"-overlay=" + overlayPath})
+	return binary, packageDirectory
+}
+
+func TestProduct_SelectorGoOracle(t *testing.T) {
+	t.Parallel()
+	cohereSideOracle(t)
+}
+
+func TestProduct_SelectorGoAnswers(t *testing.T) {
+	t.Parallel()
+	askedCases(t)
 }

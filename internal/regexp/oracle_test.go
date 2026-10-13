@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type oracleCase struct {
@@ -44,7 +45,7 @@ func TestNodeAgreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("node", "-e", `
+	command := toolchain.Command("node", "-e", `
 const input = require("fs").readFileSync(0, "utf8");
 const cases = JSON.parse(input);
 process.stdout.write(JSON.stringify(cases.map(x => {

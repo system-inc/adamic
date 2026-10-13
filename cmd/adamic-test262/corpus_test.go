@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // TestClassifyCorpus locks the skip rules, including negative parse and early error. A runner that
@@ -191,14 +192,17 @@ assert(true);
 // Counting that refusal as a pass fails this.
 func TestMiniRunner(t *testing.T) {
 	t.Parallel()
-	if _, err := exec.LookPath("clang"); err != nil {
-		t.Skip("clang not on PATH")
-	}
-	if _, err := exec.LookPath("node"); err != nil {
-		t.Skip("node not on PATH")
+	// A sandbox declares its tools, so one missing there is a failure, never a skip that passes having run nothing.
+	for _, tool := range []string{"clang", "node"} {
+		if _, err := toolchain.Path(tool); err != nil {
+			if toolchain.Sandboxed() {
+				t.Fatal(err)
+			}
+			t.Skip(tool, "not found:", err)
+		}
 	}
 	work := t.TempDir()
-	engine, err := prepare("../..", "testdata/mini", work)
+	engine, err := prepare(t, "testdata/mini", work)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -235,11 +239,13 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
 		t.Fatal(err)
 	}
-	source := strings.Repeat("assert.sameValue(1, 1);\n", 1800)
+	// Each line is about 442 bytes of C, so 1000 lines are about 455 KB, 1.7 times the old limit: room for a
+	// leaner emitter, without the 800 KB main of 1800 lines, which made this test 23 s alone on one core.
+	source := strings.Repeat("assert.sameValue(1, 1);\n", 1000)
 	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	engine, err := prepare("../..", root, t.TempDir())
+	engine, err := prepare(t, root, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -1,0 +1,58 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:597: gate cache native miss
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30 \n"
+        release:   exit 0, stdout "get first\nget middle\nfailure1\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "get first\nget middle\nfailure1\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30 \n"
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30 \n"
+        release:   exit 0, stdout "get first\nfailure0\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "get first\nfailure0\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-423854475/class_inheritance.c:27:30 \n"
+    oracle_test.go:604: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (52.46s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (52.48s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (52.51s)
+FAIL
+gate cache: native hits=3 misses=6
+gate cache: node hits=6 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	52.646s
+FAIL

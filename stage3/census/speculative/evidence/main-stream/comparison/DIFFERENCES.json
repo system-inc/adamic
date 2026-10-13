@@ -1,0 +1,2203 @@
+[
+  {
+    "scope": "_namespaces",
+    "completed_files": [
+      "ts.moduleSpecifiers.ts",
+      "ts.performance.ts",
+      "ts.ts"
+    ],
+    "historical_files": 3,
+    "coverage_differences": [],
+    "old_common_counts": {
+      "NotYet": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "new_common_counts": {
+      "NotYet": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "removed": [],
+    "added": [],
+    "attribution": {},
+    "historical_complete_counts": {
+      "NotYet": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "new_published_counts": {
+      "NotYet": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "old_top20": [],
+    "new_top20": []
+  },
+  {
+    "scope": "factory",
+    "completed_files": [
+      "baseNodeFactory.ts",
+      "emitNode.ts",
+      "nodeChildren.ts",
+      "nodeConverters.ts",
+      "nodeTests.ts",
+      "parenthesizerRules.ts",
+      "utilitiesPublic.ts"
+    ],
+    "historical_files": 10,
+    "coverage_differences": [
+      {
+        "file": "nodeChildren.ts",
+        "field": "attempted_nodes",
+        "old": 176,
+        "main": 177
+      },
+      {
+        "file": "parenthesizerRules.ts",
+        "field": "attempted_nodes",
+        "old": 1340,
+        "main": 1341
+      }
+    ],
+    "old_common_counts": {
+      "NotYet": [
+        530,
+        89,
+        8,
+        0,
+        0
+      ],
+      "Refused": [
+        329,
+        8,
+        4,
+        1,
+        0
+      ]
+    },
+    "new_common_counts": {
+      "NotYet": [
+        524,
+        80,
+        8,
+        0,
+        0
+      ],
+      "Refused": [
+        327,
+        8,
+        4,
+        1,
+        0
+      ]
+    },
+    "removed": [
+      {
+        "site": [
+          "NotYet",
+          "ROOT/emitNode.ts:148:12",
+          "?.[] on a value",
+          "ROOT/emitNode.ts:148:12: stage 0 can't lower ?.[] on a value yet",
+          "ROOT/emitNode.ts:148:12",
+          "KindElementAccessExpression",
+          "4809",
+          "4854"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/nodeChildren.ts:20:17",
+          "checked view field _children of type readonly Node[]",
+          "ROOT/nodeChildren.ts:20:17: stage 0 can't lower checked view field _children of type readonly Node[] yet",
+          "ROOT/nodeChildren.ts:20:16",
+          "KindParenthesizedExpression",
+          "555",
+          "576"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/nodeChildren.ts:20:17",
+          "checked view field _children of type readonly Node[]",
+          "ROOT/nodeChildren.ts:20:17: stage 0 can't lower checked view field _children of type readonly Node[] yet",
+          "ROOT/nodeChildren.ts:20:17",
+          "KindAsExpression",
+          "557",
+          "575"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:272:59",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:272:59: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:272:58",
+          "KindParenthesizedExpression",
+          "12528",
+          "12555"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:272:59",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:272:59: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:272:59",
+          "KindAsExpression",
+          "12530",
+          "12554"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:273:18",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:273:18: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:273:17",
+          "KindParenthesizedExpression",
+          "12620",
+          "12650"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:273:18",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:273:18: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:273:18",
+          "KindAsExpression",
+          "12621",
+          "12649"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:274:25",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:274:25: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:274:24",
+          "KindParenthesizedExpression",
+          "12709",
+          "12740"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:274:25",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:274:25: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:274:25",
+          "KindAsExpression",
+          "12711",
+          "12739"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:277:65",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:277:65: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:277:64",
+          "KindParenthesizedExpression",
+          "12841",
+          "12867"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:277:65",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:277:65: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:277:65",
+          "KindAsExpression",
+          "12842",
+          "12866"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:279:72",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:279:72: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:279:71",
+          "KindParenthesizedExpression",
+          "13003",
+          "13029"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:279:72",
+          "checked view field left of type Expression",
+          "ROOT/parenthesizerRules.ts:279:72: stage 0 can't lower checked view field left of type Expression yet",
+          "ROOT/parenthesizerRules.ts:279:72",
+          "KindAsExpression",
+          "13004",
+          "13028"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:283:14",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:283:14: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:283:13",
+          "KindParenthesizedExpression",
+          "13103",
+          "13149"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:283:14",
+          "checked view field id of type number | undefined",
+          "ROOT/parenthesizerRules.ts:283:14: stage 0 can't lower checked view field id of type number | undefined yet",
+          "ROOT/parenthesizerRules.ts:283:14",
+          "KindAsExpression",
+          "13120",
+          "13148"
+        ],
+        "depth": 2
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:379:26",
+          "checked view field expression of type LeftHandSideExpression",
+          "ROOT/parenthesizerRules.ts:379:26: stage 0 can't lower checked view field expression of type LeftHandSideExpression yet",
+          "ROOT/parenthesizerRules.ts:379:25",
+          "KindParenthesizedExpression",
+          "17923",
+          "17954"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:379:26",
+          "checked view field expression of type LeftHandSideExpression",
+          "ROOT/parenthesizerRules.ts:379:26: stage 0 can't lower checked view field expression of type LeftHandSideExpression yet",
+          "ROOT/parenthesizerRules.ts:379:26",
+          "KindAsExpression",
+          "17924",
+          "17953"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:401:73",
+          "checked view field expression of type LeftHandSideExpression",
+          "ROOT/parenthesizerRules.ts:401:73: stage 0 can't lower checked view field expression of type LeftHandSideExpression yet",
+          "ROOT/parenthesizerRules.ts:401:72",
+          "KindParenthesizedExpression",
+          "19009",
+          "19046"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/parenthesizerRules.ts:401:73",
+          "checked view field expression of type LeftHandSideExpression",
+          "ROOT/parenthesizerRules.ts:401:73: stage 0 can't lower checked view field expression of type LeftHandSideExpression yet",
+          "ROOT/parenthesizerRules.ts:401:73",
+          "KindAsExpression",
+          "19011",
+          "19045"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "Refused",
+          "ROOT/parenthesizerRules.ts:381:23",
+          "a cast the runtime can't check",
+          "ROOT/parenthesizerRules.ts:381:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "ROOT/parenthesizerRules.ts:381:23",
+          "KindAsExpression",
+          "18060",
+          "18097"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "Refused",
+          "ROOT/parenthesizerRules.ts:405:20",
+          "a cast the runtime can't check",
+          "ROOT/parenthesizerRules.ts:405:20: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "ROOT/parenthesizerRules.ts:405:20",
+          "KindAsExpression",
+          "19230",
+          "19267"
+        ],
+        "depth": 0
+      }
+    ],
+    "added": [
+      {
+        "site": [
+          "NotYet",
+          "ROOT/emitNode.ts:167:12",
+          "a union or optional field read in a program with record storage",
+          "ROOT/emitNode.ts:167:12: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "ROOT/emitNode.ts:167:12",
+          "KindPropertyAccessExpression",
+          "5453",
+          "5484"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/emitNode.ts:234:12",
+          "a union or optional field read in a program with record storage",
+          "ROOT/emitNode.ts:234:12: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "ROOT/emitNode.ts:234:12",
+          "KindPropertyAccessExpression",
+          "8158",
+          "8187"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/emitNode.ts:242:5",
+          "a union or optional field read in a program with record storage",
+          "ROOT/emitNode.ts:242:5: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "ROOT/emitNode.ts:242:5",
+          "KindPropertyAccessExpression",
+          "8409",
+          "8437"
+        ],
+        "depth": 2
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/nodeChildren.ts:20:16",
+          "checked view union arm awaits views-v3: array element kind",
+          "ROOT/nodeChildren.ts:20:16: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet",
+          "ROOT/nodeChildren.ts:20:16",
+          "KindPropertyAccessExpression",
+          "555",
+          "586"
+        ],
+        "depth": 0
+      }
+    ],
+    "attribution": {
+      "?.[] on a value": {
+        "origin": "main cfa29460 optional indexing",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "a cast the runtime can't check": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "a union or optional field read in a program with record storage": {
+        "origin": "main 8c962b67 contextual contracts and record aliases",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view field _children of type readonly Node[]": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view field expression of type LeftHandSideExpression": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view field id of type number | undefined": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view field left of type Expression": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view union arm awaits views-v3: array element kind": {
+        "origin": "main 4556d540 checked union dispatch",
+        "confidence": "source-history inference; no individual compiler replay"
+      }
+    },
+    "historical_complete_counts": {
+      "NotYet": [
+        3182,
+        880,
+        126,
+        22,
+        5
+      ],
+      "Refused": [
+        642,
+        270,
+        18,
+        4,
+        11
+      ]
+    },
+    "new_published_counts": {
+      "NotYet": [
+        524,
+        80,
+        8,
+        0,
+        0
+      ],
+      "Refused": [
+        327,
+        8,
+        4,
+        1,
+        0
+      ]
+    },
+    "old_top20": [
+      {
+        "kind": "NotYet",
+        "root_kind": "an assignment value to a member",
+        "counts": [
+          953,
+          56,
+          16,
+          1,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          787,
+          34,
+          33,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a generic function as a value",
+        "counts": [
+          501,
+          192,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          141,
+          209,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading TransformFlags",
+        "counts": [
+          33,
+          228,
+          9,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "counts": [
+          244,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a union of differently held members variable a function value captures",
+        "counts": [
+          84,
+          55,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a BinaryExpression with a value and a value",
+        "counts": [
+          87,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          55,
+          9,
+          3,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          55,
+          9,
+          1,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "a cast the runtime can't check",
+        "counts": [
+          27,
+          15,
+          6,
+          2,
+          6
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a boolean | undefined variable a function value captures",
+        "counts": [
+          38,
+          15,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a value of type T",
+        "counts": [
+          8,
+          38,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a function returning T",
+        "counts": [
+          40,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "inherited library member push read as an own field",
+        "counts": [
+          36,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading ModifierFlags",
+        "counts": [
+          25,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading NodeFlags",
+        "counts": [
+          10,
+          16,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading EmitFlags",
+        "counts": [
+          19,
+          4,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a value of type T[\"kind\"]",
+        "counts": [
+          17,
+          6,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading GeneratedIdentifierFlags",
+        "counts": [
+          23,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "new_top20": [
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          316,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "counts": [
+          228,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          59,
+          4,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a generic function as a value",
+        "counts": [
+          29,
+          5,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "an assignment value to a member",
+        "counts": [
+          5,
+          27,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a value of type T",
+        "counts": [
+          1,
+          23,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a function returning T",
+        "counts": [
+          23,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading identity",
+        "counts": [
+          19,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading cast",
+        "counts": [
+          14,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading skipPartiallyEmittedExpressions",
+        "counts": [
+          10,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading notImplemented",
+        "counts": [
+          9,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "inherited library member get read as an own field",
+        "counts": [
+          4,
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a call through ?. (an optional call)",
+        "counts": [
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "new a ParenthesizedExpression",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isLeftHandSideExpression",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isNodeArray",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading objectAllocator",
+        "counts": [
+          0,
+          5,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading sameMap",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "scope": "transformers/declarations",
+    "completed_files": [
+      "diagnostics.ts"
+    ],
+    "historical_files": 1,
+    "coverage_differences": [],
+    "old_common_counts": {
+      "NotYet": [
+        346,
+        13,
+        58,
+        0,
+        0
+      ],
+      "Refused": [
+        23,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    "new_common_counts": {
+      "NotYet": [
+        327,
+        11,
+        58,
+        0,
+        0
+      ],
+      "Refused": [
+        23,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    "removed": [
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:413:35",
+          "a BinaryExpression with a string and a number",
+          "ROOT/diagnostics.ts:413:35: stage 0 can't lower a BinaryExpression with a string and a number yet",
+          "ROOT/diagnostics.ts:413:35",
+          "KindBinaryExpression",
+          "21856",
+          "21906"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:554:35",
+          "a BinaryExpression with a string and a number",
+          "ROOT/diagnostics.ts:554:35: stage 0 can't lower a BinaryExpression with a string and a number yet",
+          "ROOT/diagnostics.ts:554:35",
+          "KindBinaryExpression",
+          "30769",
+          "30833"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:599:92",
+          "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+          "ROOT/diagnostics.ts:599:92: stage 0 can't lower checked view field modifiers of type NodeArray<ModifierLike> | undefined yet",
+          "ROOT/diagnostics.ts:599:91",
+          "KindParenthesizedExpression",
+          "32958",
+          "32989"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:599:92",
+          "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+          "ROOT/diagnostics.ts:599:92: stage 0 can't lower checked view field modifiers of type NodeArray<ModifierLike> | undefined yet",
+          "ROOT/diagnostics.ts:599:92",
+          "KindAsExpression",
+          "32960",
+          "32988"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:600:78",
+          "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+          "ROOT/diagnostics.ts:600:78: stage 0 can't lower checked view field modifiers of type NodeArray<ModifierLike> | undefined yet",
+          "ROOT/diagnostics.ts:600:77",
+          "KindParenthesizedExpression",
+          "33072",
+          "33103"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:600:78",
+          "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+          "ROOT/diagnostics.ts:600:78: stage 0 can't lower checked view field modifiers of type NodeArray<ModifierLike> | undefined yet",
+          "ROOT/diagnostics.ts:600:78",
+          "KindAsExpression",
+          "33074",
+          "33102"
+        ],
+        "depth": 1
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:722:51",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:722:51: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:722:51",
+          "KindElementAccessExpression",
+          "40613",
+          "40632"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:723:58",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:723:58: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:723:58",
+          "KindElementAccessExpression",
+          "40707",
+          "40741"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:726:71",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:726:71: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:726:71",
+          "KindElementAccessExpression",
+          "40844",
+          "40897"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:729:71",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:729:71: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:729:71",
+          "KindElementAccessExpression",
+          "41010",
+          "41063"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:737:77",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:737:77: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:737:77",
+          "KindElementAccessExpression",
+          "41539",
+          "41598"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:742:52",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:742:52: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:742:52",
+          "KindElementAccessExpression",
+          "41822",
+          "41856"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:747:52",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:747:52: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:747:52",
+          "KindElementAccessExpression",
+          "42079",
+          "42113"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:752:52",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:752:52: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:752:52",
+          "KindElementAccessExpression",
+          "42404",
+          "42438"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:754:60",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:754:60: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:754:60",
+          "KindElementAccessExpression",
+          "42554",
+          "42600"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:761:52",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:761:52: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:761:52",
+          "KindElementAccessExpression",
+          "42980",
+          "43014"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:763:60",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:763:60: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:763:60",
+          "KindElementAccessExpression",
+          "43154",
+          "43200"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:776:13",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:776:13: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:776:13",
+          "KindElementAccessExpression",
+          "43833",
+          "43880"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:779:60",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:779:60: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:779:60",
+          "KindElementAccessExpression",
+          "44081",
+          "44127"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:798:75",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:798:75: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:798:75",
+          "KindElementAccessExpression",
+          "45451",
+          "45498"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:799:81",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:799:81: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:799:81",
+          "KindElementAccessExpression",
+          "45581",
+          "45640"
+        ],
+        "depth": 0
+      },
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:803:81",
+          "an ElementAccessExpression",
+          "ROOT/diagnostics.ts:803:81: stage 0 can't lower an ElementAccessExpression yet",
+          "ROOT/diagnostics.ts:803:81",
+          "KindElementAccessExpression",
+          "45919",
+          "45978"
+        ],
+        "depth": 0
+      }
+    ],
+    "added": [
+      {
+        "site": [
+          "NotYet",
+          "ROOT/diagnostics.ts:722:51",
+          "a computed key without an own data field",
+          "ROOT/diagnostics.ts:722:51: stage 0 can't lower a computed key without an own data field yet",
+          "ROOT/diagnostics.ts:722:51",
+          "KindElementAccessExpression",
+          "40613",
+          "40632"
+        ],
+        "depth": 0
+      }
+    ],
+    "attribution": {
+      "a BinaryExpression with a string and a number": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "a computed key without an own data field": {
+        "origin": "main 735347bb computed field read guard",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "an ElementAccessExpression": {
+        "origin": "main 735347bb finite field indexing",
+        "confidence": "source-history inference; no individual compiler replay"
+      },
+      "checked view field modifiers of type NodeArray<ModifierLike> | undefined": {
+        "origin": "main lowering changed; individual change not isolated",
+        "confidence": "source-history inference; no individual compiler replay"
+      }
+    },
+    "historical_complete_counts": {
+      "NotYet": [
+        346,
+        13,
+        58,
+        0,
+        0
+      ],
+      "Refused": [
+        23,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    "new_published_counts": {
+      "NotYet": [
+        327,
+        11,
+        58,
+        0,
+        0
+      ],
+      "Refused": [
+        23,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    "old_top20": [
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Diagnostics",
+        "counts": [
+          103,
+          0,
+          29,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          64,
+          0,
+          29,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading createDiagnosticForNode",
+        "counts": [
+          21,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SymbolAccessibility",
+        "counts": [
+          17,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "a cast the runtime can't check",
+        "counts": [
+          9,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "an ElementAccessExpression",
+        "counts": [
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading addRelatedInfo",
+        "counts": [
+          9,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isStatic",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading getTextOfNode",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isExportAssignment",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isSetAccessor",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+        "counts": [
+          2,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading findAncestor",
+        "counts": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isJSDocTypeAlias",
+        "counts": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isConstructorDeclaration",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isGetAccessor",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isMethodDeclaration",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "new_top20": [
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Diagnostics",
+        "counts": [
+          103,
+          0,
+          29,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          64,
+          0,
+          29,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading createDiagnosticForNode",
+        "counts": [
+          21,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SymbolAccessibility",
+        "counts": [
+          17,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "a cast the runtime can't check",
+        "counts": [
+          9,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading addRelatedInfo",
+        "counts": [
+          9,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isStatic",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          8,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading getTextOfNode",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isExportAssignment",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isSetAccessor",
+        "counts": [
+          5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading findAncestor",
+        "counts": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isJSDocTypeAlias",
+        "counts": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isConstructorDeclaration",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isGetAccessor",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isMethodDeclaration",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isMethodSignature",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isParameter",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "scope": "transformers/module",
+    "completed_files": [
+      "impliedNodeFormatDependent.ts"
+    ],
+    "historical_files": 4,
+    "coverage_differences": [],
+    "old_common_counts": {
+      "NotYet": [
+        15,
+        1,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "new_common_counts": {
+      "NotYet": [
+        15,
+        1,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "removed": [],
+    "added": [],
+    "attribution": {},
+    "historical_complete_counts": {
+      "NotYet": [
+        1020,
+        98,
+        2,
+        0,
+        0
+      ],
+      "Refused": [
+        294,
+        44,
+        1,
+        0,
+        0
+      ]
+    },
+    "new_published_counts": {
+      "NotYet": [
+        15,
+        1,
+        0,
+        0,
+        0
+      ],
+      "Refused": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "old_top20": [
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          119,
+          33,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          120,
+          8,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading visitNode",
+        "counts": [
+          64,
+          3,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading setTextRange",
+        "counts": [
+          49,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isExpression",
+        "counts": [
+          40,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an unproven predicate argument for parameter test (argument \"isExpression\")",
+        "counts": [
+          40,
+          2,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading append",
+        "counts": [
+          30,
+          7,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "inherited library member push read as an own field",
+        "counts": [
+          34,
+          3,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "an assignment value to a member",
+        "counts": [
+          20,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading visitNodes",
+        "counts": [
+          20,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading EmitFlags",
+        "counts": [
+          20,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading ModuleKind",
+        "counts": [
+          17,
+          3,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading visitEachChild",
+        "counts": [
+          20,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isStatement",
+        "counts": [
+          19,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an unproven predicate argument for parameter test (argument \"isStatement\")",
+        "counts": [
+          19,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          16,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          16,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading setOriginalNode",
+        "counts": [
+          16,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a SpreadElement",
+        "counts": [
+          11,
+          5,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "checked view field expression of type Expression",
+        "counts": [
+          16,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "new_top20": [
+      {
+        "kind": "NotYet",
+        "root_kind": "an assignment value to a member",
+        "counts": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading ModuleKind",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading SyntaxKind",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading isSourceFile",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "Refused",
+        "root_kind": "an object refinement using an open numeric enum as a literal tag",
+        "counts": [
+          3,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "a namespace member without a lowered binding",
+        "counts": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading Debug",
+        "counts": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "NotYet",
+        "root_kind": "reading map",
+        "counts": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

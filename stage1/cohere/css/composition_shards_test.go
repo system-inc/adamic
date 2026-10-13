@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testCompositionMatchesGoShards = 16
@@ -156,10 +157,6 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition union exceeded 90s") })
 	defer timer.Stop()
 	lines := state.lines
-	cases := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
 	if len(compositionShardFunctions) != testCompositionMatchesGoShards {
 		t.Fatal("top-level shard enumeration differs from constant")
 	}
@@ -188,30 +185,64 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	if caught != 1 || offset != len(lines) {
 		t.Fatalf("planted failure caught by %d shards, union %d/%d", caught, offset, len(lines))
 	}
-	// Mutant-must-fail remains a whole-corpus condition, as before sharding.
+	t.Logf("union leaf: %.3fs cooked=false", time.Since(started).Seconds())
+}
+
+// Mutant-must-fail remains a whole-corpus condition, as before sharding: each parser mutant, composed and run on Node
+// over every live case, must differ from the unmutated composition's run. One test per mutant, each with its own
+// baseline: the union ran all four whole-corpus Node runs, 31.0 s alone on one core (Home).
+func compositionCatchesMutant(t *testing.T, index int) {
+	t.Helper()
+	state := compositionSetup(t)
+	started := time.Now()
+	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition mutant exceeded 90s") })
+	defer timer.Stop()
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, []byte(strings.Join(state.lines, "\n")+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
 	source, _ := filepath.Abs("compose_main.ts")
 	baseline := compositionNode(t, source, cases)
 	if baseline.exitCode != 0 || len(baseline.stderr) != 0 {
 		t.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
-	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" {
+	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" && index == 0 {
 		if err := os.WriteFile(keep, baseline.stdout, 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
-	for _, mutation := range mutants {
-		mutated := portDirectory(t, &mutation)
-		result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
-		if result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("composed mutant must terminate: %s", result.stderr)
-		}
-		if difference := firstDifference(string(result.stdout), string(baseline.stdout)); difference == "" {
-			t.Fatalf("composition comparison missed mutant %s", mutation.name)
-		} else {
-			t.Logf("Node composition caught %s: %s", mutation.name, difference)
-		}
+	mutation := mutants[index]
+	mutated := portDirectory(t, &mutation)
+	result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
+	if result.exitCode != 0 || len(result.stderr) != 0 {
+		t.Fatalf("composed mutant must terminate: %s", result.stderr)
 	}
-	t.Logf("union leaf: %.3fs cooked=false", time.Since(started).Seconds())
+	difference := firstDifference(string(result.stdout), string(baseline.stdout))
+	if difference == "" {
+		t.Fatalf("composition comparison missed mutant %s", mutation.name)
+	}
+	t.Logf("Node composition caught %s: %s (%.3fs cooked=false)", mutation.name, difference, time.Since(started).Seconds())
+}
+
+func TestCompositionMatchesGoCatchesMutant_0(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 0)
+}
+func TestCompositionMatchesGoCatchesMutant_1(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 1)
+}
+func TestCompositionMatchesGoCatchesMutant_2(t *testing.T) {
+	t.Parallel()
+	compositionCatchesMutant(t, 2)
+}
+
+// Every parser mutant has its catching test.
+func TestCompositionMatchesGoCatchesEveryMutant(t *testing.T) {
+	t.Parallel()
+	if len(mutants) != 3 {
+		t.Fatalf("%d parser mutants, three TestCompositionMatchesGoCatchesMutant_ tests: add one per mutant", len(mutants))
+	}
 }
 
 // Enumerate the original live corpus without its unrelated raw-parser benchmark.
@@ -353,6 +384,20 @@ func compositionSetupCommand(t *testing.T, name string, arguments ...string) *ex
 	return compositionCommandContext(ctx, name, arguments...)
 }
 
+// compositionGoCommand is compositionSetupCommand for go as toolchain resolves it,
+// run in directory under toolchain.Env, the environment whose compilers the
+// oracle's key names.
+func compositionGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	resolved := toolchain.CommandIn(directory, "go", arguments...)
+	if resolved.Err != nil {
+		return resolved
+	}
+	command := compositionSetupCommand(t, resolved.Path, arguments...)
+	command.Dir, command.Env = resolved.Dir, resolved.Env
+	return command
+}
+
 func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, name, arguments...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -424,7 +469,9 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 }
 
 // The overlay source and the complete Go module trees address each oracle by
-// content. Corpus enumeration stays live: only its binary is cached.
+// content. Corpus enumeration stays live: only its binary is cached. The build
+// runs go under toolchain.Env (compositionGoCommand), so the key names the C and
+// C++ compilers that environment gives go, and the C compiler by its report.
 func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
@@ -433,12 +480,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{
-		Name:      name,
-		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
-	}
+	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
 	directory := buildcache.Product(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
 		if err != nil {
@@ -448,8 +490,9 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		command := compositionSetupCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
-		command.Dir = filepath.Join(repo, "cohere")
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
+		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -457,6 +500,15 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		return nil
 	})
 	return filepath.Join(directory, "oracle")
+}
+
+func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers cssCompilers) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      name,
+		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
+		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
+	}
 }
 
 func compositionInputs() buildcache.Inputs {

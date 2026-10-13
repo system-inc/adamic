@@ -1,0 +1,28 @@
+{
+  "raw_error_reasons": {
+    "expression panic: Unhandled case in Node.Text: *ast.BindingPattern": 15,
+    "signature panic: runtime error: invalid memory address or nil pointer dereference": 2,
+    "expression panic: runtime error: invalid memory address or nil pointer dereference": 5,
+    "body panic: runtime error: invalid memory address or nil pointer dereference": 3,
+    "refusal scan panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 1,
+    "expression panic: Unhandled case in Node.Text: *ast.ComputedPropertyName": 2,
+    "statement panic: runtime error: index out of range [-1]": 1,
+    "expression panic: runtime error: index out of range [-1]": 1
+  },
+  "without_compiler_source_ast_identity": [
+    {
+      "file": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "finding": {
+        "root_kind": "refusal scan panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/declarations/diagnostics.ts:111:1",
+        "phase": "refusal_scan",
+        "kind": "error",
+        "where": "",
+        "reason": "refusal scan panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+        "text": "refusal scan panic: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+      }
+    }
+  ]
+}

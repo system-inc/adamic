@@ -50,7 +50,7 @@ func emittedMismatchSetup(t *testing.T) {
 			}
 			return
 		}
-		emittedMismatchProducts.oracle = emittedMismatchOracle(t)
+		emittedMismatchProducts.oracle = lintGoOracleProduct(t)
 		lowered := emittedMismatchLowered(t)
 		emittedMismatchProducts.binary = emittedMismatchNative(t)
 		emittedMismatchProducts.module = filepath.Join(lowered, "lint.mjs")
@@ -236,27 +236,6 @@ func emittedMismatchInputs(t *testing.T) []string {
 	}
 	files = production
 	return files
-}
-
-func emittedMismatchOracle(t *testing.T) string {
-	t.Helper()
-	value := shared("emitted-mismatch-oracle", func(value *sharedValue) {
-		files := emittedMismatchInputs(t)
-		oracleFiles := append(append([]string(nil), files...), "stage1/cohere/lint/testdata/oracle.go", "cohere/internal", "cohere/go.mod", "cohere/go.sum")
-		oracleProduct := buildcache.Product(t, buildcache.Inputs{
-			Name: "emitted-mismatch-oracle", Files: oracleFiles,
-			Flags:     []string{"overlay", "package=" + packageDirectory},
-			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")},
-		}, func(out string) error {
-			_, err := goOracleIn(packageDirectory, out)
-			return err
-		})
-		value.path = filepath.Join(oracleProduct, "oracle")
-	})
-	if value.path == "" {
-		t.Fatal("emitted mismatch oracle preparation failed")
-	}
-	return value.path
 }
 
 func emittedMismatchLowered(t *testing.T) string {

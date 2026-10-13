@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../../.."
@@ -68,6 +69,11 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	}
 	// childguard starts and kills the entire process group.
 	command := exec.Command(name, arguments...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, macOS's leaks) is a tool: the one internal/toolchain resolves, with a tool's environment,
+		// not PATH's. A program a test built (a port) runs as named, with this process's environment.
+		command = toolchain.Command(name, arguments...)
+	}
 	return command
 }
 
@@ -79,7 +85,8 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	t.Helper()
 	command := bounded(t, name, arguments...)
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
+		command.Env = append(command.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

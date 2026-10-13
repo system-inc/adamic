@@ -1,0 +1,857 @@
+package buildcache
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"maps"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"sync"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
+)
+
+// GoBuild is the product of 'go build <arguments> -o <output> <pkg>' run at the repository root with environment
+// added: the stage 0 compiler, the checker archive, an oracle binary. It returns the built file's path. Its key is
+// every file of every package in this repository the build compiles (from go list -deps under the same arguments
+// and environment), each module's go.mod and go.sum (which pin every module outside it), the arguments, the build
+// environment as go itself resolves it, and the Go and C toolchains. An -overlay build is keyed too when every file
+// its overlay reads is inside the repository (@system_adamic, Oct 9 04:57Z): the key adds the overlay's map and each
+// replacement file's content, and leaves out the overlay file's own path, which is a temporary name. One that reads a
+// file outside the repository is refused: such a build stays the caller's own.
+func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// GoTest is GoBuild for a test binary: the product of 'go test -c <arguments> -o <output> <pkg>' run in module, a
+// directory of the repository with a go.mod of its own (cohere, cohere/TypeScript/tsc), or the root when empty. It is
+// how a port's test builds its Go oracle: a package of the module with a harness laid over it by -overlay, then run.
+// Its key is GoBuild's, with the test files go list -test names, and the module's own go.mod, go.sum and go.work. An
+// overlay file that adds a path the module doesn't have (a harness, a synthesized main) is keyed through the overlay,
+// never as a file on disk.
+func GoTest(t testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// GoBuildIn is GoBuild run in module, a directory of the repository with a go.mod of its own (cohere): how a port
+// builds a Go oracle from a main its overlay synthesizes. pkg may name several files, separated by spaces, as go
+// build takes them.
+func GoBuildIn(t testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// A Mutation is one planted change a product is built with: File, a file of the repository the build reads (a
+// package's source or an overlay's replacement), relative to the repository, with Before, which must occur in it exactly
+// once, replaced by After. It is how a test proves a check can fail, built ahead like any other product.
+type Mutation struct{ File, Before, After string }
+
+// GoTestMutated is GoTest with mutations planted. Each mutated copy is written inside the product while it builds and
+// laid over the original by an overlay of its own, so the product names no machine. The key is GoTest's with each
+// mutation's file, before and after: a changed after-string is another product.
+func GoTestMutated(t testing.TB, module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: arguments, mutations: mutations, environment: environment})
+}
+
+// GoBuildInMutated is GoBuildIn with mutations planted, as GoTestMutated plants them.
+func GoBuildInMutated(t testing.TB, module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, mutations: mutations, environment: environment})
+}
+
+// GoBuildInInputs is GoBuildInMutated's key (GoBuildIn's when mutations is nil), computed without building: for a
+// product that records or runs the binary, which can be keyed by the binary's key rather than its bytes. The arguments
+// are made reproducible as the product's own are, so the key is the product's.
+func GoBuildInInputs(module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) (Inputs, error) {
+	return goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: reproducible(arguments), mutations: mutations, environment: environment}.inputs()
+}
+
+// Adamic is the stage 0 compiler, ./cmd/adamic, as one product every test that runs adamic shares.
+func Adamic(t testing.TB) string {
+	t.Helper()
+	return GoBuild(t, "adamic", "./cmd/adamic", nil)
+}
+
+// GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
+// type-checks against the compiler's export data (go/importer) without running go: listing.json holds one
+// ListedPackage per package go list reported, in its order, each Export a file the product holds and each Dir
+// relative to the repository. Its key is GoTest's for the same packages: every file they compile, their tests
+// included.
+func GoExports(t testing.TB, packages ...string) string {
+	t.Helper()
+	request := goRequest{verb: "list -export", output: "listing.json", pkg: strings.Join(packages, " ")}
+	// -buildvcs=false: a test main is package main, and go stamps the commit into every one it compiles, so without it
+	// the export data of each test main differs at every commit under the same key (landable-8: internal/ir's product).
+	request.arguments = []string{"-trimpath", "-buildvcs=false"}
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go list -export %s: %v", request.pkg, err)
+	}
+	root, _ := repositoryRoot()
+	return Product(t, inputs, func(directory string) error {
+		command := toolchain.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
+		command.Dir = root
+		output, err := command.Output()
+		if err != nil {
+			var exit *exec.ExitError
+			if errors.As(err, &exit) {
+				return fmt.Errorf("go list -export: %v\n%s", err, exit.Stderr)
+			}
+			return err
+		}
+		if err := os.Mkdir(filepath.Join(directory, "exports"), 0o755); err != nil {
+			return err
+		}
+		real := resolved(root)
+		var listing []ListedPackage
+		decoder := json.NewDecoder(strings.NewReader(string(output)))
+		for {
+			var listed ListedPackage
+			if err := decoder.Decode(&listed); err == io.EOF {
+				break
+			} else if err != nil {
+				return err
+			}
+			// A product holds no absolute path: a directory outside the repository (the standard library's, go's module
+			// cache) is left out, since only its export data is read.
+			relative := ""
+			for _, spelling := range []string{root, real} {
+				if spelling != "" && inside(spelling, listed.Dir) {
+					relative = filepath.ToSlash(mustRelative(spelling, listed.Dir))
+					break
+				}
+			}
+			listed.Dir = relative
+			// Likewise a file go generated in its own cache (a test main) is named absolutely and left out.
+			for _, names := range []*[]string{&listed.GoFiles, &listed.TestGoFiles, &listed.XTestGoFiles} {
+				*names = slices.DeleteFunc(*names, filepath.IsAbs)
+			}
+			if listed.Export != "" {
+				content, err := os.ReadFile(listed.Export)
+				if err != nil {
+					return err
+				}
+				listed.Export = fmt.Sprintf("exports/%d.a", len(listing))
+				if err := os.WriteFile(filepath.Join(directory, listed.Export), content, 0o644); err != nil {
+					return err
+				}
+			}
+			listing = append(listing, listed)
+		}
+		encoded, err := json.MarshalIndent(listing, "", "\t")
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, request.output), encoded, 0o644)
+	})
+}
+
+// A ListedPackage is one package of a GoExports listing, as go list reports it, except that Dir is relative to the
+// repository (empty for a package outside it), a file go generated in its own cache is left out, and Export names a
+// file in the product.
+type ListedPackage struct {
+	ImportPath, Dir, Export, ForTest   string
+	Standard                           bool
+	GoFiles, TestGoFiles, XTestGoFiles []string
+}
+
+// A goRequest is one go invocation a product is built by: 'go build', or 'go test -c', of pkg in module (a directory
+// of the repository, its root when empty), with arguments and environment added.
+type goRequest struct {
+	verb, module, output, pkg string
+	arguments, environment    []string
+	mutations                 []Mutation
+}
+
+func goProduct(t testing.TB, request goRequest) string {
+	t.Helper()
+	request.arguments = reproducible(request.arguments)
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
+	}
+	root, _ := repositoryRoot()
+	arguments := request.arguments
+	if slices.Contains(inputs.Flags, rebuildEverything) {
+		arguments = append([]string{"-a"}, arguments...)
+	}
+	directory := Product(t, inputs, func(directory string) error {
+		arguments := arguments
+		if len(request.mutations) > 0 {
+			planted, cleanup, err := request.plant(root, directory, arguments)
+			if err != nil {
+				return err
+			}
+			defer cleanup()
+			arguments = planted
+		}
+		command := toolchain.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
+		command.Dir = filepath.Join(root, request.module)
+		command.Env = toolchain.Env(request.environment...)
+		if combined, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("go %s %s: %v\n%s", request.verb, request.pkg, err, combined)
+		}
+		return nil
+	})
+	return filepath.Join(directory, request.output)
+}
+
+// plant writes each mutated file inside directory, the product, under mutations/<its path in the repository>, and
+// returns arguments whose overlay lays the copies over what they mutate: the request's own overlay with every
+// replacement that is a mutated file pointed at its copy, and a mutated package source replaced by its copy. The
+// overlay names this checkout's paths, so it sits in a temporary directory and leaves with the build (#tqrqx60).
+func (request goRequest) plant(root, directory string, arguments []string) ([]string, func(), error) {
+	replace := map[string]string{}
+	var kept []string
+	for index := 0; index < len(arguments); index++ {
+		path := ""
+		switch argument := arguments[index]; {
+		case argument == "-overlay" && index+1 < len(arguments):
+			path = arguments[index+1]
+			index++
+		case strings.HasPrefix(argument, "-overlay="):
+			path = strings.TrimPrefix(argument, "-overlay=")
+		default:
+			kept = append(kept, argument)
+			continue
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil, nil, err
+		}
+		var declared struct{ Replace map[string]string }
+		if err := json.Unmarshal(content, &declared); err != nil {
+			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		maps.Copy(replace, declared.Replace)
+	}
+	texts, err := request.mutated(root)
+	if err != nil {
+		return nil, nil, err
+	}
+	for file, text := range texts {
+		original := filepath.Join(root, file)
+		copied := filepath.Join(directory, "mutations", filepath.FromSlash(file))
+		if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
+			return nil, nil, err
+		}
+		if err := os.WriteFile(copied, []byte(text), 0o644); err != nil {
+			return nil, nil, err
+		}
+		pointed := false
+		for from, to := range replace {
+			if !filepath.IsAbs(to) {
+				to = filepath.Join(root, request.module, to)
+			}
+			if filepath.Clean(to) == original {
+				replace[from], pointed = copied, true
+			}
+		}
+		if !pointed {
+			replace[original] = copied
+		}
+	}
+	scratch, err := os.MkdirTemp("", "buildcache-mutations-")
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanup := func() { os.RemoveAll(scratch) }
+	encoded, err := json.Marshal(map[string]any{"Replace": replace})
+	if err == nil {
+		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
+	}
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	return append(kept, "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
+}
+
+// mutated is each file the request's mutations change, by its path in the repository, with every mutation of it
+// applied in order. A mutation whose Before isn't in its file exactly once is refused, since it would plant nothing
+// or plant it in the wrong place.
+func (request goRequest) mutated(root string) (map[string]string, error) {
+	texts := map[string]string{}
+	for _, mutation := range request.mutations {
+		text, ok := texts[mutation.File]
+		if !ok {
+			content, err := os.ReadFile(filepath.Join(root, mutation.File))
+			if err != nil {
+				return nil, fmt.Errorf("mutation of %s: %v", mutation.File, err)
+			}
+			text = string(content)
+		}
+		if count := strings.Count(text, mutation.Before); count != 1 {
+			return nil, fmt.Errorf("mutation of %s: %q occurs %d times, not once", mutation.File, mutation.Before, count)
+		}
+		texts[mutation.File] = strings.Replace(text, mutation.Before, mutation.After, 1)
+	}
+	return texts, nil
+}
+
+// mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after
+// quoted, so a changed after-string is another product.
+func (request goRequest) mutationKeys() []string {
+	var keys []string
+	for _, mutation := range request.mutations {
+		keys = append(keys, "mutation "+mutation.File+" "+strconv.Quote(mutation.Before)+" -> "+strconv.Quote(mutation.After))
+	}
+	return keys
+}
+
+// reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
+// without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
+// (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
+// hex), which the key leaves out on purpose, so two commits with the same inputs shared a key and differed in those
+// bytes: floor1's audit rebuild of bridge/tsgo/oracle called it poisoning (Oct 9 04:52Z, same size, other bytes).
+func reproducible(arguments []string) []string {
+	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
+	for _, argument := range arguments {
+		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
+			panic("buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")
+		}
+	}
+	return append(kept, arguments...)
+}
+
+// rebuildEverything is the flag a key carries when the build reads a header through '#cgo CFLAGS: -I' outside the
+// package's own directory. Go's build cache keys a package by its own directory's files, so after such a header
+// changes, go build alone links the object compiled from the old one (measured Oct 9 by
+// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild builds such a
+// product with -a, which compiles every package again, and the flag in the key retires a product built without it.
+const rebuildEverything = "go build -a: a header outside its package"
+
+// goSettings runs go env for names in directory (the working directory when empty) with environment, the whole
+// environment go runs with (toolchain.Env for a product, this process's own for Tool), and returns each variable as
+// goSetting keys it, in the order asked, with the values go reported. -json among names is ignored: the report is the
+// same either way.
+func goSettings(directory string, environment, names []string) (settings []string, values map[string]string, err error) {
+	keying(func() { settings, values, err = goSettingsKeyed(directory, environment, names) })
+	return settings, values, err
+}
+
+func goSettingsKeyed(directory string, environment, names []string) ([]string, map[string]string, error) {
+	var asked []string
+	for _, name := range names {
+		if name != "-json" {
+			asked = append(asked, name)
+		}
+	}
+	command := toolchain.Command("go", append([]string{"env", "-json", "GOVERSION"}, asked...)...)
+	command.Dir = directory
+	command.Env = environment
+	output, err := command.Output()
+	if err != nil {
+		var exit *exec.ExitError
+		if errors.As(err, &exit) {
+			return nil, nil, fmt.Errorf("go env: %v\n%s", err, exit.Stderr)
+		}
+		return nil, nil, err
+	}
+	values := map[string]string{}
+	if err := json.Unmarshal(output, &values); err != nil {
+		return nil, nil, fmt.Errorf("go env: %v", err)
+	}
+	settings := make([]string, 0, len(asked))
+	for _, name := range asked {
+		settings = append(settings, goSetting(name, values[name], values["GOVERSION"]))
+	}
+	return settings, values, nil
+}
+
+// goLocations say where go keeps or fetches things, not what it builds: the release is keyed by GOVERSION, modules by
+// go.sum, so two machines with their caches, module downloads and configuration files in different homes build the
+// same bytes.
+var goLocations = []string{"GOPATH", "GOENV", "GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOBIN", "GOCACHEPROG", "GOPROXY", "GOSUMDB",
+	"GOPRIVATE", "GONOPROXY", "GONOSUMDB", "GOINSECURE", "GOAUTH", "GOVCS"}
+
+// goSetting is one go env variable as a key names it (#t37sw0f). GOTOOLCHAIN is a policy (auto on the cloud boxes,
+// local elsewhere) and GOROOT and GOTOOLDIR are where a release sits; what changes a product is the release itself, so
+// all three name it. The workspace is goWorkspace's. A location is named as one and never valued. Everything else is
+// its value, which Key makes portable.
+func goSetting(name, value, release string) string {
+	switch {
+	case name == "GOTOOLCHAIN":
+		return "GOTOOLCHAIN selects " + release
+	case name == "GOROOT" || name == "GOTOOLDIR":
+		return name + " holds " + release
+	case name == "GOWORK":
+		return goWorkspace(value)
+	case slices.Contains(goLocations, name):
+		return name + " is a location, not keyed"
+	}
+	return name + "=" + value
+}
+
+// goWorkspace keys the workspace a build reads by what it says, never by which file said it (#t37sw0f): none
+// (GOWORK=off and no go.work found are the same build), or the file as go reads it (go work edit -json), with each
+// local path in it (a use, a replacement's directory) resolved against the file's own directory and made portable.
+// So the tree's own go.work, found from two checkouts, and a go.work outside the tree that uses the same directories
+// are one workspace; another go line, toolchain, use or replacement is another.
+func goWorkspace(path string) string {
+	if path == "" || path == "off" {
+		return "GOWORK=off"
+	}
+	output, err := toolchain.Command("go", "work", "edit", "-json", path).Output()
+	if err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	var workspace struct {
+		Go, Toolchain string
+		Godebug       []struct{ Key, Value string }
+		Use           []struct{ DiskPath, ModulePath string }
+		Replace       []struct {
+			Old, New struct{ Path, Version string }
+		}
+	}
+	if err := json.Unmarshal(output, &workspace); err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	root, _ := repositoryRoot()
+	local := func(name string) string {
+		if !filepath.IsAbs(name) {
+			name = filepath.Join(filepath.Dir(path), name)
+		}
+		return portable(root, filepath.Clean(name))
+	}
+	for index := range workspace.Use {
+		workspace.Use[index].DiskPath = local(workspace.Use[index].DiskPath)
+	}
+	for index := range workspace.Replace {
+		if workspace.Replace[index].New.Version == "" {
+			workspace.Replace[index].New.Path = local(workspace.Replace[index].New.Path)
+		}
+	}
+	canonical, err := json.Marshal(workspace)
+	if err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	return "GOWORK " + string(canonical)
+}
+
+// GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
+func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
+	return goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment}.inputs()
+}
+
+// GoTestInputs is GoTestMutated's key (GoTest's, with no mutations), computed without building: for a product made by
+// running the test binary, which can be keyed by the binary's key rather than its bytes, so a reader keys it without
+// holding the binary (#4ycgm2n: tsprinter's mutant oracle corpora). The arguments are made reproducible as the
+// product's own are, so the key is the product's.
+func GoTestInputs(module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) (Inputs, error) {
+	return goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: reproducible(arguments), mutations: mutations, environment: environment}.inputs()
+}
+
+// inputs is the request's key: from the planner's index when it holds the request (precomputed), else as this process
+// already computed it, else computed here under keying and remembered for the rest of the process, so a unit asking
+// for one product many times keys it once, its parallel tests included: they wait on the first one's go list rather
+// than each running their own. A failure isn't remembered, so the next ask tries again.
+func (request goRequest) inputs() (Inputs, error) {
+	root, err := repositoryRoot()
+	if err != nil {
+		return Inputs{}, err
+	}
+	identity, overlay, err := request.identity(root)
+	if err != nil {
+		return Inputs{}, err
+	}
+	if inputs, ok := precomputed()[identity]; ok {
+		return inputs, nil
+	}
+	entry, _ := computedInputs.LoadOrStore(identity, &keyedRequest{})
+	keyed := entry.(*keyedRequest)
+	keyed.once.Do(func() {
+		keying(func() { keyed.inputs, keyed.err = request.keyInputs(root, overlay) })
+		if keyed.err != nil {
+			computedInputs.CompareAndDelete(identity, keyed)
+			return
+		}
+		recordInputs(identity, keyed.inputs)
+	})
+	return keyed.inputs, keyed.err
+}
+
+// computedInputs holds each request this process keyed, by identity, as a keyedRequest.
+var computedInputs sync.Map
+
+// A keyedRequest is one request's key, computed once however many tests ask for it at the same time.
+type keyedRequest struct {
+	once   sync.Once
+	inputs Inputs
+	err    error
+}
+
+// identity spells the request the same from every checkout of the tree: the verb, module, package and output, each
+// argument, an -overlay as the map it declares (overlayKey's flags, never the overlay file's temporary path), and each
+// environment value, made portable. It names the request in the planner's index and in this process's memo.
+func (request goRequest) identity(root string) (string, overlayKey, error) {
+	if request.module != "" && (filepath.IsAbs(request.module) || !inside(root, filepath.Join(root, request.module))) {
+		return "", overlayKey{}, fmt.Errorf("module %s isn't a directory of the repository", request.module)
+	}
+	overlayPath, keyed := "", []string{}
+	for index := 0; index < len(request.arguments); index++ {
+		switch argument := request.arguments[index]; {
+		case argument == "-overlay" && index+1 < len(request.arguments):
+			overlayPath = request.arguments[index+1]
+			index++
+		case strings.HasPrefix(argument, "-overlay="):
+			overlayPath = strings.TrimPrefix(argument, "-overlay=")
+		case argument == "-overlay":
+			return "", overlayKey{}, errors.New("-overlay names no file")
+		default:
+			keyed = append(keyed, argument)
+		}
+	}
+	overlay, err := overlayInputs(root, overlayPath)
+	if err != nil {
+		return "", overlayKey{}, err
+	}
+	overlay.path, overlay.arguments = overlayPath, keyed
+	parts := []string{"go " + request.verb, "module " + request.module, "package " + portable(root, request.pkg), "output " + request.output}
+	for _, argument := range keyed {
+		parts = append(parts, "argument "+portable(root, argument))
+	}
+	parts = append(parts, overlay.flags...)
+	parts = append(parts, request.mutationKeys()...)
+	for _, setting := range request.environment {
+		parts = append(parts, "environment "+portable(root, setting))
+	}
+	return strings.Join(parts, "\n"), overlay, nil
+}
+
+// keyInputs computes the request's key with go list and go env, run where the build runs.
+func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, error) {
+	directory := filepath.Join(root, request.module)
+	run := func(arguments ...string) ([]byte, error) {
+		command := toolchain.Command("go", arguments...)
+		command.Dir = directory
+		command.Env = toolchain.Env(request.environment...)
+		output, err := command.Output()
+		if err != nil {
+			var exit *exec.ExitError
+			if errors.As(err, &exit) {
+				return nil, fmt.Errorf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
+			}
+			return nil, err
+		}
+		return output, nil
+	}
+	listed := listArguments(request.arguments)
+	if overlay.path != "" {
+		listed = append(listed, "-overlay="+overlay.path)
+	}
+	asked := []string{"list", "-deps", "-json"}
+	if request.verb == "test -c" || request.verb == "list -export" {
+		// The test variant of each package, so its _test.go files are keyed too.
+		asked = append(asked, "-test")
+	}
+	listing, err := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
+	if err != nil {
+		return Inputs{}, err
+	}
+	// go reports paths as the system resolves them, and the repository's root may be spelled through a symbolic link
+	// (macOS's /var is /private/var): a path under either spelling is the repository's, respelled under root, so no
+	// file of the tree drops out of the key unseen.
+	real := resolved(root)
+	respell := func(path string) string {
+		if real != "" && real != root && inside(real, path) {
+			return filepath.Join(root, mustRelative(real, path))
+		}
+		return path
+	}
+	files := map[string]bool{}
+	outsideHeaders := false
+	add := func(directory string, names []string) error {
+		for _, name := range names {
+			// go list -test names some files absolutely, in go's own cache (a test variant's generated sources): not the
+			// repository's, so not keyed.
+			path := name
+			if !filepath.IsAbs(path) {
+				path = filepath.Join(directory, name)
+			}
+			path = respell(path)
+			if !inside(root, path) {
+				continue
+			}
+			relative, err := filepath.Rel(root, path)
+			if err != nil {
+				return err
+			}
+			relative = filepath.ToSlash(relative)
+			// A path the overlay replaces or adds is keyed by the overlay's map and the replacement's content; one the
+			// overlay adds isn't on disk to be hashed at all.
+			if !slices.Contains(overlay.originals, relative) {
+				files[relative] = true
+			}
+		}
+		return nil
+	}
+	decoder := json.NewDecoder(strings.NewReader(string(listing)))
+	for {
+		var listed struct {
+			Dir                                                                        string
+			Standard                                                                   bool
+			Module                                                                     *struct{ GoMod string }
+			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
+		}
+		if err := decoder.Decode(&listed); err == io.EOF {
+			break
+		} else if err != nil {
+			return Inputs{}, err
+		}
+		listed.Dir = respell(listed.Dir)
+		if listed.Standard || !inside(root, listed.Dir) {
+			continue
+		}
+		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles} {
+			if err := add(listed.Dir, names); err != nil {
+				return Inputs{}, err
+			}
+		}
+		// A header reached through '#cgo CFLAGS: -I<dir>' is an input too: every file of a directory inside the repository.
+		for _, flags := range [][]string{listed.CgoCFLAGS, listed.CgoCPPFLAGS, listed.CgoCXXFLAGS} {
+			for index, flag := range flags {
+				include := strings.TrimPrefix(flag, "-I")
+				if flag == "-I" && index+1 < len(flags) {
+					include = flags[index+1]
+				} else if include == flag {
+					continue
+				}
+				if !filepath.IsAbs(include) {
+					include = filepath.Join(listed.Dir, include)
+				}
+				include = respell(include)
+				if inside(root, include) {
+					if err := add(root, []string{mustRelative(root, include)}); err != nil {
+						return Inputs{}, err
+					}
+					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
+						outsideHeaders = true
+					}
+				}
+			}
+		}
+		if listed.Module != nil && inside(root, respell(listed.Module.GoMod)) {
+			module := filepath.Dir(respell(listed.Module.GoMod))
+			if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
+				return Inputs{}, err
+			}
+		}
+	}
+	for _, place := range []string{root, directory} {
+		if err := add(place, existing(place, "go.work")); err != nil {
+			return Inputs{}, err
+		}
+	}
+	// A module the build's module or the workspace replaces with a directory of the tree selects versions through its
+	// go.mod whether or not the build compiles a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab).
+	replaced, err := localReplacements(root, root, directory)
+	if err != nil {
+		return Inputs{}, err
+	}
+	for _, module := range replaced {
+		if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
+			return Inputs{}, err
+		}
+	}
+	// The go env values a build reads beyond its sources (toolchain.GoSettings, each of which toolchain.Env passes), asked
+	// of go under the environment the build gets, so a default counts like a setting, keyed as goSetting says: GOFLAGS
+	// without its -p share (portable), the workspace by content, the release GOTOOLCHAIN selects.
+	settings, values, err := goSettings(directory, toolchain.Env(request.environment...), toolchain.GoSettings)
+	if err != nil {
+		return Inputs{}, err
+	}
+	for _, target := range overlay.files {
+		files[target] = true
+	}
+	// A mutation plants into a file the build reads, as a package's source or an overlay's replacement, with a Before
+	// that occurs once: anything else would build the unmutated product under a mutant's key.
+	for _, mutation := range request.mutations {
+		if !files[mutation.File] {
+			return Inputs{}, fmt.Errorf("mutation of %s: the build doesn't read it (a package's source the overlay doesn't replace, or an overlay's replacement)", mutation.File)
+		}
+	}
+	if _, err := request.mutated(root); err != nil {
+		return Inputs{}, err
+	}
+	name := "go build " + request.pkg + " " + request.output
+	if request.verb != "build" || request.module != "" {
+		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
+	}
+	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
+	if outsideHeaders {
+		inputs.Flags = append(inputs.Flags, rebuildEverything)
+	}
+	inputs.Flags = append(inputs.Flags, settings...)
+	if compiler := strings.Fields(values["CC"]); len(compiler) > 0 {
+		inputs.Toolchain = append(inputs.Toolchain, Tool(compiler[0], "--version"))
+	}
+	for name := range files {
+		inputs.Files = append(inputs.Files, name)
+	}
+	sort.Strings(inputs.Files)
+	return inputs, nil
+}
+
+// The planner's index of go requests' keys (#pc0jvv4): ADAMIC_BUILD_INPUTS names a file of JSON lines, each a request's
+// identity and its Inputs, so a unit reading products runs no go to key them. A tree build writes those lines as it
+// keys (ADAMIC_BUILD_INPUTS_RECORD, appended one line per request), and a planner hands the file on. A request the
+// index doesn't hold is keyed here, as before.
+type indexedInputs struct {
+	Request string `json:"request"`
+	Inputs  Inputs `json:"inputs"`
+}
+
+// precomputed is the index ADAMIC_BUILD_INPUTS names, read once per file.
+func precomputed() map[string]Inputs {
+	path := os.Getenv("ADAMIC_BUILD_INPUTS")
+	if path == "" {
+		return nil
+	}
+	if index, ok := indexes.Load(path); ok {
+		return index.(map[string]Inputs)
+	}
+	index := map[string]Inputs{}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		note("build inputs index %s: %v", path, err)
+		return index
+	}
+	decoder := json.NewDecoder(strings.NewReader(string(content)))
+	for {
+		var line indexedInputs
+		if err := decoder.Decode(&line); err == io.EOF {
+			break
+		} else if err != nil {
+			note("build inputs index %s: %v", path, err)
+			return map[string]Inputs{}
+		}
+		index[line.Request] = line.Inputs
+	}
+	indexes.Store(path, index)
+	return index
+}
+
+var indexes sync.Map
+
+func recordInputs(identity string, inputs Inputs) {
+	path := os.Getenv("ADAMIC_BUILD_INPUTS_RECORD")
+	if path == "" {
+		return
+	}
+	line, err := json.Marshal(indexedInputs{Request: identity, Inputs: inputs})
+	if err != nil {
+		return
+	}
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if err != nil {
+		note("build inputs record %s: %v", path, err)
+		return
+	}
+	file.Write(append(line, '\n'))
+	file.Close()
+}
+
+// overlayKey is what an -overlay adds to a key: one flag per replaced path (the map, as go reads it, made relative to
+// the repository) and the replacement files, whose content the key hashes like any other input file.
+type overlayKey struct {
+	flags, files []string
+	// originals are the paths the overlay replaces or adds, relative to the repository; path is the overlay file the
+	// request names and arguments the request's other arguments.
+	originals, arguments []string
+	path                 string
+}
+
+func overlayInputs(root, path string) (overlayKey, error) {
+	if path == "" {
+		return overlayKey{}, nil
+	}
+	if !filepath.IsAbs(path) {
+		path = filepath.Join(root, path)
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	}
+	var declared struct{ Replace map[string]string }
+	if err := json.Unmarshal(content, &declared); err != nil {
+		return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+	}
+	relative := func(name string) string {
+		if !filepath.IsAbs(name) {
+			name = filepath.Join(root, name)
+		}
+		if inside(root, name) {
+			return filepath.ToSlash(mustRelative(root, name))
+		}
+		return name
+	}
+	var key overlayKey
+	for original, replacement := range declared.Replace {
+		key.originals = append(key.originals, relative(original))
+		if replacement == "" {
+			key.flags = append(key.flags, "overlay "+relative(original)+" deleted")
+			continue
+		}
+		absolute := replacement
+		if !filepath.IsAbs(absolute) {
+			absolute = filepath.Join(root, absolute)
+		}
+		if !inside(root, absolute) {
+			return overlayKey{}, fmt.Errorf("overlay %s replaces %s with %s, outside the repository, so it can't be keyed", path, original, replacement)
+		}
+		if _, err := os.Stat(absolute); err != nil {
+			return overlayKey{}, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		key.flags = append(key.flags, "overlay "+relative(original)+" = "+relative(absolute))
+		key.files = append(key.files, relative(absolute))
+	}
+	sort.Strings(key.flags)
+	return key, nil
+}
+
+// listArguments are the build arguments that change which files go list reports: tags and build modes.
+func listArguments(arguments []string) []string {
+	var kept []string
+	for index, argument := range arguments {
+		switch {
+		case strings.HasPrefix(argument, "-tags=") || strings.HasPrefix(argument, "-buildmode=") || strings.HasPrefix(argument, "-mod="):
+			kept = append(kept, argument)
+		case (argument == "-tags" || argument == "-mod") && index+1 < len(arguments):
+			kept = append(kept, argument, arguments[index+1])
+		}
+	}
+	return kept
+}
+
+func inside(root, path string) bool {
+	relative, err := filepath.Rel(root, path)
+	return err == nil && relative != ".." && !strings.HasPrefix(relative, "../") && !filepath.IsAbs(relative)
+}
+
+func mustRelative(root, path string) string {
+	relative, _ := filepath.Rel(root, path)
+	return relative
+}
+
+func existing(directory string, names ...string) []string {
+	var found []string
+	for _, name := range names {
+		if _, err := os.Stat(filepath.Join(directory, name)); err == nil {
+			found = append(found, name)
+		}
+	}
+	return found
+}

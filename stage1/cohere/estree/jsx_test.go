@@ -108,13 +108,19 @@ const testJSXMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
+// jsxMutantPath is the port with JSX's optional flag inverted.
+func jsxMutantPath(t *testing.T) string {
+	t.Helper()
+	return miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+}
+
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestJSXMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
 	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
 	oracle := miscOracle(t)
-	path := miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+	path := jsxMutantPath(t)
 	binary, _ := miscBuild(t, path)
 	answers := miscTextAnswers(t, oracle, cases, ".tsx")
 	finishSetup()

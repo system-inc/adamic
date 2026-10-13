@@ -11,9 +11,12 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: parallelMarkdown checks the markdownMemory configuration before it calls t.Parallel, so a bad setting fails by this test's name; existing helper controls parallel execution.
 func TestParserRepresentationProbes(t *testing.T) {
 	parallelMarkdown(t)
+	// The fifteen probes run one after another in this test's own slot, about 5 s of one core in all. As
+	// parallel subtests they queued behind the whole package for slots, and the parent ended only when
+	// the last one did (346 s on the house at 8 CPUs).
 	for _, gap := range []struct{ path, stdout, notYet, refused, refusedExact string }{
 		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n"},
 		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
@@ -32,7 +35,6 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
-			t.Parallel()
 			path, err := filepath.Abs(gap.path)
 			if err != nil {
 				t.Fatal(err)

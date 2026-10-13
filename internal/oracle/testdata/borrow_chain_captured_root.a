@@ -1,0 +1,12 @@
+interface Leaf { readonly text: string; }
+interface Root { readonly child: Leaf; }
+function make(n: number): Root { return { child: { text: `first${n}` } }; }
+function run(): void {
+ let root: Root = make(1);
+ const swap = (): void => { root = { child: { text: `second${2}` } }; };
+ const text = root.child.text;
+ swap();
+ console.log(text);
+ console.log(root.child.text);
+}
+run();

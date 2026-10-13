@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -16,6 +18,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: this subprocess entry point owns stdin/stdout and exits the process.
@@ -66,8 +70,14 @@ func fakeStore(t *testing.T) (*store, *httptest.Server) {
 	return s, server
 }
 
+// helperSettings are what the helper process reads, pointed at a test's own store and directory.
+func helperSettings(dir, url, trust, token string) map[string]string {
+	return map[string]string{"ADAMIC_CACHE_HELPER": "1", "ADAMIC_GOCACHE_DIR": dir, "ADAMIC_GOCACHE_STORE": url, "ADAMIC_GOCACHE_WRITE": url, "ADAMIC_GOCACHE_TRUST": trust, "ADAMIC_GOCACHE_TOKEN": token, "GOWORK": "off", "GOCACHEPROG": ""}
+}
+
+// helperEnv is this process's environment with helperSettings over it, for the helper, a copy of this test binary.
 func helperEnv(dir, url, trust, token string) []string {
-	overrides := map[string]string{"ADAMIC_CACHE_HELPER": "1", "ADAMIC_GOCACHE_DIR": dir, "ADAMIC_GOCACHE_STORE": url, "ADAMIC_GOCACHE_WRITE": url, "ADAMIC_GOCACHE_TRUST": trust, "ADAMIC_GOCACHE_TOKEN": token, "GOWORK": "off", "GOCACHEPROG": ""}
+	overrides := helperSettings(dir, url, trust, token)
 	result := []string{}
 	for _, v := range os.Environ() {
 		key, _, _ := strings.Cut(v, "=")
@@ -256,14 +266,19 @@ func runGo(t *testing.T, dir, url, token string, args ...string) (string, time.D
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
-	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command comes from PATH.
-	goCommand, err := exec.LookPath("go")
+	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
+	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
+	goCommand, err := toolchain.Path("go")
 	if err != nil {
-		t.Skipf("no go command on PATH: %v", err)
+		t.Skipf("no go command: %v", err)
 	}
 	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
-	cmd.Env = append(helperEnv(t.TempDir(), url, "main", token), "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")
+	var settings []string
+	for key, value := range helperSettings(t.TempDir(), url, "main", token) {
+		settings = append(settings, key+"="+value)
+	}
+	cmd.Env = toolchain.Env(append(settings, "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")...)
 	start := time.Now()
 	b, err := cmd.CombinedOutput()
 	elapsed := time.Since(start)
@@ -404,5 +419,112 @@ func TestPoisoningStopsFallback(t *testing.T) {
 	out, log := transact(t, t.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		t.Fatalf("response %+v; log %q", out, log)
+	}
+}
+
+// writeLikeGo frames a request the way cmd/go's writeToChild does: JSON, a
+// blank line, then for a put the base64 body as a quoted line.
+func writeLikeGo(b *bytes.Buffer, req request, body []byte) {
+	j, _ := json.Marshal(req)
+	b.Write(j)
+	b.WriteString("\n\n")
+	if req.Command == "put" && req.BodySize > 0 {
+		b.WriteString(`"` + base64.StdEncoding.EncodeToString(body) + "\"\n")
+	}
+}
+
+func serveStream(t *testing.T, c *cache, input []byte) (map[int64]response, error) {
+	t.Helper()
+	var output bytes.Buffer
+	err := serve(c, bytes.NewReader(input), &output)
+	responses := map[int64]response{}
+	dec := json.NewDecoder(&output)
+	for {
+		var r response
+		if dec.Decode(&r) != nil {
+			break
+		}
+		if _, ok := responses[r.ID]; ok {
+			t.Fatalf("duplicate response for ID %d", r.ID)
+		}
+		responses[r.ID] = r
+	}
+	return responses, err
+}
+
+func localCache(t *testing.T) (*cache, *bytes.Buffer) {
+	var log bytes.Buffer
+	return &cache{dir: t.TempDir(), namespace: "gocache", stderr: &log, client: http.DefaultClient}, &log
+}
+
+// Go abandons a put whose body changed size mid-copy and writes the next
+// request straight after the truncated base64, on the same line.
+func TestAbandonedPutResyncs(t *testing.T) {
+	t.Parallel()
+	c, log := localCache(t)
+	body := []byte("compiled output")
+	var input bytes.Buffer
+	writeLikeGo(&input, putRequest(body), body)
+	a := sha256.Sum256([]byte("abandoned"))
+	o := sha256.Sum256([]byte("changed"))
+	abandoned := request{ID: 2, Command: "put", ActionID: a[:], OutputID: o[:], BodySize: 4096}
+	j, _ := json.Marshal(abandoned)
+	input.Write(j)
+	input.WriteString("\n\n\"" + base64.StdEncoding.EncodeToString(bytes.Repeat([]byte("x"), 300))[:100])
+	writeLikeGo(&input, request{ID: 3, Command: "get", ActionID: a[:]}, nil)
+	get := getRequest()
+	get.ID = 4
+	writeLikeGo(&input, get, nil)
+	writeLikeGo(&input, request{ID: 5, Command: "close"}, nil)
+	responses, err := serveStream(t, c, input.Bytes())
+	if err != nil {
+		t.Fatalf("serve: %v", err)
+	}
+	if r, ok := responses[2]; ok {
+		t.Fatalf("answered the abandoned put: %+v", r)
+	}
+	if r, ok := responses[1]; !ok || r.Err != "" || r.DiskPath == "" {
+		t.Fatalf("valid put: %+v", r)
+	}
+	if r, ok := responses[3]; !ok || !r.Miss {
+		t.Fatalf("get after the abandoned body: %+v", r)
+	}
+	if _, ok := responses[4]; !ok {
+		t.Fatal("following get unanswered")
+	}
+	if _, ok := responses[5]; !ok || len(responses) != 5 {
+		t.Fatalf("responses: %+v", responses)
+	}
+	want := fmt.Sprintf("put 2 abandoned mid-body by go: action %s, BodySize 4096, 100 base64 bytes arrived", hex.EncodeToString(a[:]))
+	if !strings.Contains(log.String(), want) {
+		t.Fatalf("log %q", log.String())
+	}
+	input.Reset()
+	writeLikeGo(&input, getRequest(), nil)
+	writeLikeGo(&input, request{ID: 3, Command: "close"}, nil)
+	responses, err = serveStream(t, c, input.Bytes())
+	got, _ := os.ReadFile(responses[2].DiskPath)
+	if err != nil || responses[2].Miss || !bytes.Equal(got, body) {
+		t.Fatalf("valid put not served: %+v %q %v", responses[2], got, err)
+	}
+}
+
+func TestAbandonedPutAtEOF(t *testing.T) {
+	t.Parallel()
+	for _, tail := range []string{"", "\"QUJD", "\"QUJD\n"} {
+		t.Run(fmt.Sprintf("%q", tail), func(t *testing.T) {
+			c, log := localCache(t)
+			j, _ := json.Marshal(putRequest([]byte("never arrives")))
+			responses, err := serveStream(t, c, append(j, "\n\n"+tail...))
+			if err != nil {
+				t.Fatalf("serve: %v", err)
+			}
+			if _, ok := responses[1]; ok || len(responses) != 1 {
+				t.Fatalf("responses: %+v", responses)
+			}
+			if !strings.Contains(log.String(), "put 1 abandoned mid-body") {
+				t.Fatalf("log %q", log.String())
+			}
+		})
 	}
 }

@@ -1,0 +1,49 @@
+diff --git a/internal/lower/locals.go b/internal/lower/locals.go
+index ce144cef..fe36a06f 100644
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -67,13 +67,18 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+ 			continue
+ 		}
+ 
++		preallocated := l.result.Locals[local].Preallocated
+ 		var value ir.Expression
+ 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
+ 			if l.initializing == nil {
+ 				l.initializing = map[int]*ast.Node{}
+ 			}
+ 			l.initializing[local] = name
+-			value, err = l.expression(initializer)
++			if list.Flags&ast.NodeFlagsConst != 0 && !l.result.Locals[local].Global && ast.SkipParentheses(initializer).Kind == ast.KindArrowFunction {
++				value, err = l.constantInitializerClosure(local, ast.SkipParentheses(initializer))
++			} else {
++				value, err = l.expression(initializer)
++			}
+ 			delete(l.initializing, local)
+ 			if err != nil {
+ 				return nil, err
+@@ -84,6 +89,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+ 			// var was initialized when hoisted; a later declaration must not reset it.
+ 			value = ir.Undefined{Of: ir.Object}
+ 		}
++		if !preallocated && l.result.Locals[local].Preallocated {
++			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
++		}
+ 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+ 			l.result.Locals[local].ConstantClosure = closure.Function + 1
+ 		}
+@@ -215,10 +223,10 @@ func (l *lowering) touch(local int) {
+ 		return
+ 	}
+ 	l.result.Locals[local].Captured = true
+-	if name, isInitializing := l.initializing[local]; isInitializing && l.unlowerable == nil {
+-		// const f = () => f(): the function value is made before the variable's cell is, so it has
+-		// nothing to capture yet.
+-		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
++	if _, isInitializing := l.initializing[local]; isInitializing {
++		// The cell exists before evaluating the initializer, but stays unready
++		// until its value has been stored. Initializer-time calls see the dead zone.
++		l.result.Locals[local].Preallocated = true
+ 	}
+ 	start := 0
+ 	for position, closure := range l.closures {

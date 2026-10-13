@@ -46,11 +46,8 @@ class LandingLaneTests(unittest.TestCase):
         adapted = Path(cls.base_scratch.name) / 'adapted.d.ts'
         original.write_text(cls.original)
         adapted.write_text(cls.adapted)
-        env = dict(os.environ)
-        cache = Path(env.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
-        env['NODE_PATH'] = str(cache / 'api/node_modules') + os.pathsep + env.get('NODE_PATH', '')
         changes = json.loads(subprocess.check_output(['node', str(LANE / 'normalize-api.cjs'),
-                                                      str(original), str(adapted)], text=True, env=env))
+                                                      str(original), str(adapted)], text=True))
         cls.fixture_sanction = dict(source_commit=pin, normalized_changes=changes)
 
     def setUp(self):

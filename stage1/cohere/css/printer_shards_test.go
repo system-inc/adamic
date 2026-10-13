@@ -63,6 +63,8 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(overlayPath)
 			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
 			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
 			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)

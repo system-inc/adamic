@@ -1,0 +1,92 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "Refused": 4,
+    "NotYet": 4
+  },
+  "counts": {
+    "NotYet": [
+      2,
+      1,
+      1,
+      0,
+      0
+    ],
+    "Refused": [
+      2,
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "a DebuggerStatement",
+      "counts": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a WithStatement",
+      "counts": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "debugger",
+      "counts": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "with",
+      "counts": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 123,
+  "examined_bytes": 123,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 123,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 8,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "nested.a",
+      "sha256": "672386a9f4c017050bb23126244b4c641ac7a89c9a1d78535b5daeb5ae01919c",
+      "source_bytes": 123,
+      "total_nodes": 15,
+      "visited_nodes": 15,
+      "attempted_nodes": 9,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

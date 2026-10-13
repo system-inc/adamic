@@ -50,8 +50,11 @@ func typeAwareSetup(h *harness, name string, build func() string) string {
 func typeAwareStage0(h *harness) string {
 	return typeAwareSetup(h, "stage0", h.stage0)
 }
-func typeAwareArchive(h *harness, name, overlay string, sanitize bool) string {
-	return typeAwareSetup(h, name, func() string { return h.archive(name, overlay, sanitize) })
+func typeAwareArchive(h *harness, name string, sanitize bool) string {
+	return typeAwareSetup(h, name, func() string { return h.archive(name, sanitize) })
+}
+func typeAwareMutantArchive(h *harness, name string) string {
+	return typeAwareSetup(h, name+"-checker", func() string { return checkerMutantArchive(h.t, name) })
 }
 func typeAwareBuild(h *harness, stage0, name, entry, archive string, sanitize bool) string {
 	return typeAwareSetup(h, name, func() string { return h.build(stage0, name, entry, archive, sanitize) })

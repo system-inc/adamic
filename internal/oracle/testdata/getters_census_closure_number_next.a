@@ -1,0 +1,10 @@
+// Reduced from TypeScript 050880ce src/compiler/sourcemap.ts:474.
+interface Decoder { readonly pos: number; readonly next: () => void; }
+function decodeMappings(): Decoder {
+    let pos = 0;
+    return { get pos() { return pos; }, next() { pos++; } };
+}
+const decoder = decodeMappings();
+console.log(`${decoder.pos}`);
+decoder.next();
+console.log(`${decoder.pos}`);

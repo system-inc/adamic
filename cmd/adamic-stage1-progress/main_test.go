@@ -2,10 +2,11 @@ package main
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestPhysicalInventoryBoundaries(t *testing.T) {
@@ -65,7 +66,7 @@ func TestGitSnapshotAndEvidenceBoundary(t *testing.T) {
 	}
 	command := func(directory string, args ...string) string {
 		t.Helper()
-		c := exec.Command("git", append([]string{"-C", directory}, args...)...)
+		c := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
 		out, err := c.CombinedOutput()
 		if err != nil {
 			t.Fatalf("git %v: %v %s", args, err, out)

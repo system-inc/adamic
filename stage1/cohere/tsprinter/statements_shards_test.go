@@ -120,7 +120,9 @@ type statementShard struct {
 
 // Keys use a file's relative path, node mode and ordinal within that file/mode.
 // Repository growth cannot change another file's assignment. Generated cases
-// use their generator file and mode, with an ordinal local to that mode.
+// use their generator file and mode, with an ordinal local to that mode. A label
+// names its file under root or upstream, or as the stored product does (#tqrqx60),
+// repo/ or typescript/ and the path inside it, and both spellings key alike.
 func statementCaseKeys(items []printerCase, root, upstream string) ([]string, error) {
 	keys := make([]string, len(items))
 	counts := map[string]int{}
@@ -132,7 +134,7 @@ func statementCaseKeys(items []printerCase, root, upstream string) ([]string, er
 			if start < 0 {
 				return nil, fmt.Errorf("invalid statement label %q", item.Label)
 			}
-			path, err := filepath.Abs(item.Label[:start])
+			path, err := filepath.Abs(tsPrinterOutputLabel(item.Label[:start], root, upstream, false))
 			if err != nil {
 				return nil, err
 			}
@@ -212,6 +214,42 @@ func TestStatementsShardAssignmentStable(t *testing.T) {
 		if key != after[i+1] {
 			t.Fatalf("added file moved case key: %q -> %q", key, after[i+1])
 		}
+	}
+	// Workshop builds the oracle's outputs with its checkout and TypeScript source; a runner reads that product with
+	// both somewhere else, and Workshop's paths are gone (#tqrqx60). Every case keys as it did on Workshop.
+	product := t.TempDir()
+	data, err := json.Marshal(items)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(filepath.Join(product, "cases.json"), data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(filepath.Join(product, "coverage.json"), []byte(`{"file_refusals":{"`+root+`/stage1/bad.ts":"`+root+`/stage1/bad.ts: refused"}}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err = tsPrinterRewriteMetadata(product, root, upstream, true); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"cases.json", "coverage.json"} {
+		if stored, _ := os.ReadFile(filepath.Join(product, name)); bytes.Contains(stored, []byte(root+"/")) || bytes.Contains(stored, []byte(upstream+"/")) {
+			t.Fatalf("the product's %s names Workshop's paths: %s", name, stored)
+		}
+	}
+	data, err = os.ReadFile(filepath.Join(product, "cases.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var stored []printerCase
+	if err = json.Unmarshal(data, &stored); err != nil {
+		t.Fatal(err)
+	}
+	runner, err := statementCaseKeys(stored, "/srv/runner/adamic", "/opt/adamic-tools/typescript")
+	if err != nil {
+		t.Fatalf("a runner reading Workshop's product: %v", err)
+	}
+	if strings.Join(runner, "\n") != strings.Join(before, "\n") {
+		t.Fatalf("a runner keys Workshop's product %q, Workshop %q", runner, before)
 	}
 	// Exercise actual modulo assignment and its union, with enough cases for all shards.
 	keys := statementProofKeys(256)

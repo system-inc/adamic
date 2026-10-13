@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -162,7 +161,7 @@ func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, director
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: "complete-suggestion-go-oracle", Files: completeSuggestionProductFiles(t),
 		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1"},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
 	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
 }
 
@@ -310,23 +309,9 @@ func completeSuggestionReady(t *testing.T) *completeSuggestionProducts {
 	}
 	return &completeSuggestionProductsValue
 }
-func completeSuggestionCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
-}
 func completeSuggestionExecute(ctx context.Context, t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	command := completeSuggestionCommand(ctx, name, args...)
-	command.Dir = directory
+	command := lintCommand(ctx, directory, name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "complete-stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -399,10 +384,11 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		return err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	command := completeSuggestionCommand(ctx, "go", args...)
-	command.Dir = root
+	command := lintCommand(ctx, root, "go", args...)
 	var output, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &output, &stderr
 	err = command.Run()

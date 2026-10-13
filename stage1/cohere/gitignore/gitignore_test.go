@@ -6,14 +6,12 @@ package gitignore
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 	"testing"
 	"unicode/utf8"
@@ -24,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -265,108 +264,6 @@ func gitSource() string {
 	return os.Getenv("COHERE_GIT_SOURCE")
 }
 
-// askedCases has cohere's side generate every case, with the trees laid out under the test's scratch
-// directory.
-func askedCases(t *testing.T) cases {
-	t.Helper()
-	scratch, err := filepath.EvalSymlinks(t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	seed := int64(generatedSeed)
-	if value := os.Getenv("COHERE_GITIGNORE_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
-		}
-	}
-	generated := 40
-	if value := os.Getenv("COHERE_GITIGNORE_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
-		}
-	}
-	repositoryRoot, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	realTrees := []string{repositoryRoot, filepath.Join(repositoryRoot, "cohere")}
-	output := filepath.Join(scratch, "cases.json")
-	cohereSide(t, map[string]any{
-		"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated,
-		"gitSource": gitSource(), "realTrees": realTrees, "output": output, "largest": largest(),
-	})
-	contents, err := os.ReadFile(output)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var asked cases
-	if err := json.Unmarshal(contents, &asked); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("seed %d, %d generated trees", seed, generated)
-	return asked
-}
-
-// goCohere is Go cohere's answer to every case.
-func goCohere(t *testing.T, asked cases) string {
-	t.Helper()
-	directory := t.TempDir()
-	casesPath := filepath.Join(directory, "cases.json")
-	encoded, err := json.Marshal(asked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(casesPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	output := filepath.Join(directory, "answers.txt")
-	cohereSide(t, map[string]any{"mode": "answer", "cases": casesPath, "output": output})
-	answers, err := os.ReadFile(output)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return string(answers)
-}
-
-// cohereSide runs testdata/cohere_side_test.go inside cohere's gitignore package, by overlay, with a
-// request.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
-	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-		filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side,
-	}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/gitignore")
-	command.Dir = cohere
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side, %s: %v\n%s", request["mode"], err, output)
-	}
-}
-
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
 func portDirectory(t *testing.T, applied *mutant) string {
 	t.Helper()
@@ -390,9 +287,9 @@ func portDirectory(t *testing.T, applied *mutant) string {
 	return directory
 }
 
-// casesFile writes asked as the cases file main.ts reads (case.ts says the format), and returns its
-// path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
-func casesFile(t *testing.T, asked cases) string {
+// casesFile writes asked into directory as the cases file main.ts reads (case.ts says the format), and
+// returns its path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
+func casesFile(t *testing.T, directory string, asked cases) string {
 	t.Helper()
 	escape := strings.NewReplacer("\\", "\\\\", "\t", "\\t", "\n", "\\n", "\r", "\\r")
 	var text strings.Builder
@@ -444,7 +341,7 @@ func casesFile(t *testing.T, asked cases) string {
 	for _, glob := range asked.Globs {
 		record("glob", glob.Pattern, glob.Text, bit(glob.Path))
 	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(directory, "cases.txt")
 	if err := os.WriteFile(path, []byte(text.String()), 0o644); err != nil {
 		t.Fatal(err)
 	}
@@ -472,60 +369,6 @@ func answersByTree(output string) map[string][]string {
 		default:
 			answers[current] = append(answers[current], line)
 		}
-	}
-	return answers
-}
-
-// gitCheckIgnore is git's answer for every query of a tree, in main.ts's words, from git check-ignore
-// run on the tree as cohere's differential runs it: no index, no configuration but the repository's own,
-// no global excludes file, and case sensitive. cohere runs git under macOS's sandbox-exec, since it
-// points git at real trees; here git reads only trees this test made, and this repository.
-func gitCheckIgnore(t *testing.T, tree tree) []string {
-	t.Helper()
-	scratch := t.TempDir()
-	emptyExclude := filepath.Join(scratch, "empty-excludes")
-	if err := os.WriteFile(emptyExclude, nil, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	var input bytes.Buffer
-	for _, query := range tree.Queries {
-		input.WriteString(query.Path)
-		input.WriteByte(0)
-	}
-	command := bounded(t, "git", "-c", "core.excludesFile="+emptyExclude, "-c", "core.ignorecase=false",
-		"check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")
-	command.Dir = tree.Disk
-	command.Env = []string{
-		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
-		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
-	}
-	command.Stdin = &input
-	var standardOutput, standardError bytes.Buffer
-	command.Stdout = &standardOutput
-	command.Stderr = &standardError
-	err := childguard.Run(command, childguard.Options{})
-	output := standardOutput.Bytes()
-	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
-	var exitError *exec.ExitError
-	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
-		t.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError.String())
-	}
-	fields := bytes.Split(bytes.TrimSuffix(output, []byte{0}), []byte{0})
-	if len(output) > 0 && len(fields)%4 != 0 {
-		t.Fatalf("%s: git printed %d fields, not a multiple of four", tree.Name, len(fields))
-	}
-	var answers []string
-	for index := 0; index+3 < len(fields); index += 4 {
-		file, line, pattern, relative := string(fields[index]), string(fields[index+1]), string(fields[index+2]), string(fields[index+3])
-		if file == "" {
-			answers = append(answers, "0 ::\t"+relative)
-			continue
-		}
-		ignored := "1"
-		if strings.HasPrefix(pattern, "!") {
-			ignored = "0"
-		}
-		answers = append(answers, fmt.Sprintf("%s %s:%s:%s\t%s", ignored, file, line, pattern, relative))
 	}
 	return answers
 }
@@ -572,6 +415,11 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
 	}
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, leaks) is a tool: the one internal/toolchain resolves, with a tool's environment, not
+		// PATH's. A program a test built (the port) runs as named, with this process's environment.
+		return toolchain.Command(name, arguments...)
+	}
 	return exec.Command(name, arguments...)
 }
 
@@ -583,7 +431,8 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	t.Helper()
 	command := bounded(t, name, arguments...)
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
+		command.Env = append(command.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

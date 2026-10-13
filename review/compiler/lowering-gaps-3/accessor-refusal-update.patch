@@ -1,0 +1,24 @@
+diff --git a/internal/lower/class_features_test.go b/internal/lower/class_features_test.go
+index cc7461233..2a1134f55 100644
+--- a/internal/lower/class_features_test.go
++++ b/internal/lower/class_features_test.go
+@@ -64,10 +64,6 @@ func TestClassFeaturesAccessorRefusals(t *testing.T) {
+ 			t.Fatalf("want unsafe accessor override refused, got %v", err)
+ 		}
+ 	}
+-	_, err := lowerSource(t, `const source = { get text(): string { throw new Error('fail'); } }; const copied = { ...source }; console.log(copied.text);`)
+-	if err == nil || !strings.Contains(err.Error(), "getter may throw") {
+-		t.Fatalf("want throwing spread diagnosed, got %v", err)
+-	}
+ }
+ 
+ func TestClassFeaturesStaticDeclarationsExecute(t *testing.T) {
+@@ -137,3 +133,8 @@ func TestClassFeaturesStaticInterfaceCycle(t *testing.T) {
+ 		t.Fatalf("constructor interface cycle accepted: %v", err)
+ 	}
+ }
++
++func TestClassFeaturesThrowingAccessorSpread(t *testing.T) {
++	t.Parallel()
++	lowersAndAgreesWithNode(t, `const source = { get text(): string { throw new Error('fail'); } }; try { const copied = { ...source }; console.log(copied.text); } catch (error) { if (error instanceof Error) console.log(error.message); else throw error; }`)
++}

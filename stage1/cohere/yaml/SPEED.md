@@ -342,7 +342,7 @@ To rebuild the before/after snapshots without changing the working branch:
 ```sh
 source /workspace/adamic-tools/env.sh
 mkdir -p /tmp/stage1-yaml-speed
-ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-format-artifacts ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run '^TestFormatterMatchesGo$' > /tmp/stage1-yaml-speed/rebuild-corpus.log 2>&1
+ADAMIC_YAML_ARTIFACTS=/tmp/stage1-yaml-format-artifacts ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run '^TestFormatterMatchesGoUnion$' > /tmp/stage1-yaml-speed/rebuild-corpus.log 2>&1
 for pair in '77327e3 baseline' '26c379e shared-schema' '6385e9e fast-path-maps'; do
     set -- $pair
     mkdir -p /tmp/stage1-yaml-speed/$2-source

@@ -157,8 +157,8 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, sharedSetup: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
-	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
-	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
+	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
+	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
@@ -236,8 +236,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 
 	add("mutant/declaration-source", sixIDs("mutant/declaration-source", globalPaths), func(h *harness) {
 		t := h.t
-		globalOverlay := h.overlay("declaration-source", "bridge/tsgo/checker/facts.go", "scanner.GetTokenPosOfNode(name, source, false)", "scanner.GetTokenPosOfNode(name, f, false)")
-		globalArchive := typeAwareArchive(h, "declaration-source-checker", globalOverlay, false)
+		globalArchive := typeAwareMutantArchive(h, "declaration-source")
 		globalMutant := typeAwareBuild(h, stage0, "declaration-source-suite", entry, globalArchive, false)
 		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
 		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
@@ -309,22 +308,16 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		t.Logf("union-members: production cohere oracle catches byte %d", firstDifference(unionGot.stdout, truth.stdout))
 	})
 
-	for _, change := range []struct{ name, from, to string }{
-		{"type-name", "out.text(c.TypeToString(p.typesByID[id-1]))", "out.text(c.TypeToString(p.typesByID[0]))"},
-		{"raw-shape-constraint", `if mode != "raw-type" && mode != "raw-shape"`, `if mode != "raw-type"`},
-		{"assignability-direction", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))"},
-		{"resolved-signature", "signature := c.GetResolvedSignature(node)", `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`},
-	} {
-		add("mutant/"+change.name, sixIDs("mutant/"+change.name, paths), func(h *harness) {
+	for _, name := range []string{"type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature"} {
+		add("mutant/"+name, sixIDs("mutant/"+name, paths), func(h *harness) {
 			t := h.t
-			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-			archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
-			mutant := typeAwareBuild(h, stage0, change.name+"-suite", entry, archive, false)
-			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
+			archive := typeAwareMutantArchive(h, name)
+			mutant := typeAwareBuild(h, stage0, name+"-suite", entry, archive, false)
+			got := h.must(name+"-run", exec.Command(mutant, config, manifest))
 			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-				t.Fatalf("%s not caught by oracle alone", change.name)
+				t.Fatalf("%s not caught by oracle alone", name)
 			}
-			t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+			t.Logf("%s: production cohere oracle catches byte %d; %s", name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
 		})
 	}
 	probe := h.write("probe.ts", "-1;\n")
@@ -340,8 +333,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 
 	add("mutant/retained-handle", []string{"mutant/retained-handle"}, func(h *harness) {
 		t := h.t
-		staleOverlay := h.overlay("retained-handle", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-		staleArchive := typeAwareArchive(h, "retained-handle-checker", staleOverlay, false)
+		staleArchive := typeAwareMutantArchive(h, "retained-handle")
 		stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
 		h.must("retained-handle-run", exec.Command(stale, config, probe))
 		t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
@@ -350,9 +342,8 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	// Explicit C allocation length, not the native path's extra terminator.
 	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
 		t := h.t
-		lengthOverlay := h.overlay("facts-length", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "*facts = buffer(answer); facts.length++")
-		lengthArchive := typeAwareArchive(h, "facts-length-checker", lengthOverlay, true)
-		length := typeAwareBuild(h, stage0, "facts-length", entry, lengthArchive, true)
+		lengthArchive := typeAwareMutantArchive(h, "facts-length")
+		length := typeAwareSetup(h, "facts-length", func() string { return h.mutantNative("facts-length", entry, lengthArchive, true) })
 		got := h.run("facts-length-run", exec.Command(length, config, manifest))
 		if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
 			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
@@ -360,16 +351,16 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		t.Log("facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow")
 	})
 
-	for _, change := range []struct{ name, value, message string }{
-		{"facts-empty", "", "invalid checker facts frame"},
-		{"facts-integer", "1\nx", "invalid checker facts integer"},
-		{"facts-length", "-1\n", "invalid checker facts length"},
-		{"facts-version", "1\n2", "unsupported checker facts schema"},
+	// Each frame's value is planted by its checker mutant (checker_mutants_test.go).
+	for _, change := range []struct{ name, message string }{
+		{"facts-empty", "invalid checker facts frame"},
+		{"facts-integer", "invalid checker facts integer"},
+		{"facts-length", "invalid checker facts length"},
+		{"facts-version", "unsupported checker facts schema"},
 	} {
 		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(h *harness) {
 			t := h.t
-			overlay := h.overlay(change.name+"-bad", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "_ = answer; *facts = buffer("+strconv.Quote(change.value)+")")
-			archive := typeAwareArchive(h, change.name+"-bad-checker", overlay, false)
+			archive := typeAwareMutantArchive(h, change.name+"-bad")
 			malformed := typeAwareBuild(h, stage0, change.name+"-bad", entry, archive, false)
 			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, manifest))
 			if code, ok := r.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(r.stderr, []byte(change.message)) {
@@ -529,8 +520,8 @@ func TestFactsDecoderGuards(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	// The stage 0 compiler is the package's shared product, built ahead by TestProduct_stage0.
+	stage0 := h.stage0()
 	binary := filepath.Join(directory, "decoder")
 	h.must("decoder-build", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/testdata/facts_decode.ts"), "-o", binary, "--sanitize"))
 	// Complete schema, one number type. Each record owns no other record.

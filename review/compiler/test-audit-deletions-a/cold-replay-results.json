@@ -1,0 +1,21 @@
+[
+  {
+    "mutant": "fuzz-S1",
+    "command": [
+      "timeout",
+      "89",
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "85s",
+      "-run",
+      "^(TestOctoberFeaturesAppear|TestUndefinedNumbersShapes)$"
+    ],
+    "exit": 124,
+    "wall_seconds": 89.015,
+    "caught_by": []
+  }
+]

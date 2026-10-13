@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Checkout is a compiler under test: a checkout of the repository, with its own adamic command built
@@ -35,6 +36,22 @@ var flags = native.Flags(native.Options{Sanitize: true})
 // Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		return nil, err
+	}
+	adamic := filepath.Join(directory, "adamic")
+	// CommandIn sets PWD with Dir: go builds root's spelling from PWD into the binary (no -trimpath here).
+	build := toolchain.CommandIn(root, "go", "build", "-o", adamic, "./cmd/adamic")
+	if output, err := build.CombinedOutput(); err != nil {
+		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
+	}
+	return PrepareBuilt(root, adamic, directory)
+}
+
+// PrepareBuilt is Prepare for a checkout whose adamic command is already built, at adamic: how a test
+// drives this tree through the shared compiler product (buildcache.Adamic) rather than a go build of
+// its own.
+func PrepareBuilt(root string, adamic string, directory string) (*Checkout, error) {
 	root, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err
@@ -42,12 +59,7 @@ func Prepare(root string, directory string) (*Checkout, error) {
 	if err := os.MkdirAll(directory, 0o755); err != nil {
 		return nil, err
 	}
-	checkout := &Checkout{Root: root, directory: directory, adamic: filepath.Join(directory, "adamic")}
-	build := exec.Command("go", "build", "-o", checkout.adamic, "./cmd/adamic")
-	build.Dir = root
-	if output, err := build.CombinedOutput(); err != nil {
-		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
-	}
+	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
 	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
 	if err != nil {
 		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
@@ -129,7 +141,7 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
 	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
 		if warning := clangWarning.FindSubmatch(output); warning != nil {
 			key += ": " + string(warning[1])
@@ -279,8 +291,15 @@ func difference(expected Run, actual Run) string {
 
 // execute limits child CPU time, with a wall backstop for blocked children.
 // Cancellation kills the whole process group so descendants are not orphaned.
+// A bare name (node) is the program toolchain.Path resolves, and every child, node and the built
+// program alike, runs with toolchain.Env plus environment, so a verdict doesn't rest on what the
+// caller's environment held (NODE_OPTIONS, ASAN_OPTIONS).
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	path, err := exec.LookPath(name)
+	path, err := toolchain.Path(name)
+	if err != nil {
+		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+	}
+	working, err := filepath.Abs(directory)
 	if err != nil {
 		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
 	}
@@ -307,9 +326,8 @@ func execute(directory string, environment []string, limit time.Duration, name s
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
 	command.WaitDelay = 5 * time.Second
-	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
-	}
+	// With Env set, exec no longer sets PWD from Dir: the child sees its directory spelled as given, as before.
+	command.Env = append(toolchain.Env(environment...), "PWD="+working)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr

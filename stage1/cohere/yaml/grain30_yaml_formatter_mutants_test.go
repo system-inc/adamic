@@ -3,7 +3,7 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"crypto/sha256"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -20,9 +20,11 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var testFormatterMutants = []struct{ name, file, from, to string }{
@@ -41,12 +43,25 @@ var formatterMutantsOracle struct {
 	product string
 }
 
-func formatterMutantsSetupInputs() buildcache.Inputs {
+// formatterMutantsSetupInputs keys the corpus and its expected answers by the Go oracle that answers them: goFormatOracle,
+// a product of its own keyed by go's answer, so this one reads its bytes rather than asking go again. Of cohere it reads
+// only lexCorpus's roots.
+func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs {
+	t.Helper()
+	binary, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := []string{"internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"}
+	for _, corpus := range lexCorpus {
+		for _, root := range corpus.roots {
+			files = append(files, corpus.checkout+"/"+root)
+		}
+	}
 	return buildcache.Inputs{
-		Name:      "yaml-formatter-mutants-oracle-and-corpus-v2",
-		Files:     []string{"cohere", "internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"},
-		Flags:     []string{"go build -overlay ./command/formatter_comparison", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
-		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED")},
+		Name:  "yaml-formatter-mutants-oracle-and-corpus-v3",
+		Files: files,
+		Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))},
 	}
 }
 
@@ -59,11 +74,26 @@ func formatterMutantsDeadline(t *testing.T) func() {
 	return func() { timer.Stop() }
 }
 
-// Commands share their unit's deadline. Kill the entire process group, including
-// compilers spawned by go build, rather than leaving children behind.
+// Commands share their unit's deadline. Kill the entire process group rather than
+// leaving children behind.
 func formatterMutantsCommand(ctx context.Context, directory, name string, args ...string) ([]byte, error) {
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run in
+		// directory with PWD to match, as toolchain.CommandIn runs one under a context it has no form for. A program a
+		// test built (the Go oracle, a mutant) runs as named, with this process's environment. An error resolving it
+		// fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else if absolute, err := filepath.Abs(directory); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Dir = directory
+			command.Env = append(toolchain.Env(), "PWD="+absolute)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -77,7 +107,7 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	if err := command.Run(); err != nil {
 		return nil, fmt.Errorf("%s: %w\n%s", name, err, errOut.Bytes())
 	}
-	if errOut.Len() != 0 && name != "go" {
+	if errOut.Len() != 0 {
 		return nil, fmt.Errorf("%s stderr: %s", name, errOut.Bytes())
 	}
 	return out.Bytes(), nil
@@ -89,7 +119,8 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 		// Shared setup is bounded by the product unit, before shard own work starts.
 		ctx := context.Background()
 		started := time.Now()
-		product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
+		oracle := goFormatOracle(t)
+		product := buildcache.Product(t, formatterMutantsSetupInputs(t, oracle), func(directory string) error {
 			cases, _, count := formatCases(t)
 			data, err := os.ReadFile(cases)
 			if err != nil {
@@ -98,27 +129,7 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
 				return fmt.Errorf("corpus count disagrees with live enumeration")
 			}
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				return err
-			}
-			source, err := filepath.Abs("testdata/format_go.go")
-			if err != nil {
-				return err
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-			if err != nil {
-				return err
-			}
-			path := filepath.Join(directory, "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			binary := filepath.Join(directory, "go-format")
-			if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
-				return err
-			}
-			expected, err := formatterMutantsCommand(ctx, "", binary, "--cases", cases)
+			expected, err := formatterMutantsCommand(ctx, "", oracle, "--cases", cases)
 			if err != nil {
 				return err
 			}
@@ -317,17 +328,20 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := []string{"internal", "cohere", "go.mod"}
+	// The sources product copies the .ts files and reads nothing else; the lowered and native products are the
+	// compiler's, so they name it too.
+	var copied []string
 	for _, file := range entries {
-		files = append(files, "stage1/cohere/yaml/"+file)
+		copied = append(copied, "stage1/cohere/yaml/"+file)
 	}
+	files := append(compilerinputs.Lowering(), copied...)
 	flags := []string{mutant.file, mutant.from, mutant.to, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
 	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
 	var sources string
 	if level > 0 {
 		sources, _ = formatterMutantsProduct(t, index, 0)
 	} else {
-		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: copied, Flags: flags, Toolchain: tools}, func(directory string) error {
 			for _, file := range entries {
 				source, err := os.ReadFile(file)
 				if err != nil {

@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -45,8 +46,16 @@ func root(t *testing.T) string {
 	}
 	return path
 }
+
+// build is the port at path built natively, and its emitted JavaScript. A sanitized build is miscBuild's product, made
+// ahead by a TestProduct_ for every path a test builds, so path must be a file of this checkout or of a product (a
+// temporary copy would key a product no TestProduct_ makes). Only the unsanitized build, which TestThroughput alone
+// asks for, is still made here.
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
+	if sanitize {
+		return miscBuild(t, path)
+	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
@@ -152,7 +161,7 @@ func firstDifference(want, got []byte) string {
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestGeneratedAgreement(t *testing.T) {
 	path, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -199,6 +208,17 @@ func mutantPort(t *testing.T, file, from, to string) string {
 		}
 	}
 	return filepath.Join(directory, "main.ts")
+}
+
+// resolvedPort is name inside a product holding a mutant port, in the copy whose imports name this checkout, which
+// node and the loader read; the product itself names it <repository> (#tqrqx60).
+func resolvedPort(t *testing.T, product, name string) string {
+	t.Helper()
+	directory, err := buildcache.Resolved(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return filepath.Join(directory, name)
 }
 
 func TestOriginalLibraries(t *testing.T) {

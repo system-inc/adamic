@@ -10,19 +10,28 @@ import (
 )
 
 func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
+	if latentSpeculativeEnabled() {
+		return nil
+	}
 	if latentFullEnabled() {
 		return l.program.LatentOwnDiagnosticsIn(body)
 	}
 	return l.program.LatentDiagnosticsIn(body)
 }
 
-func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" }
+func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" || latentSpeculativeEnabled() }
 
 // IR fields are exported. Compiler/checker identities remain shared; all mutable
 // lowering-owned state is copied by the generated typed state copier.
 func latentCopyIR[T any](value T, seen map[any]any) T {
+	speculative := latentSpeculativeEnabled()
+	shareScalarSlice := os.Getenv("LATENT_MUTANT_SHARE_SCALAR_SLICE") == "1"
+	functionSlice := reflect.TypeFor[[]ir.Function]()
 	var copyValue func(reflect.Value) reflect.Value
 	copyValue = func(v reflect.Value) reflect.Value {
+		if speculative && latentSpecImmutable(v.Type()) {
+			return v
+		}
 		switch v.Kind() {
 		case reflect.Pointer:
 			if v.IsNil() {
@@ -48,7 +57,19 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 			return result
 		case reflect.Struct:
 			result := reflect.New(v.Type()).Elem()
+			if speculative {
+				result.Set(v)
+				for _, index := range latentSpecMutableFields(v.Type()) {
+					if latentEmptyArgumentCache(v, index) { continue }
+					if !result.Field(index).CanSet() {
+						panic("latent state copy: unexported IR field " + v.Type().Field(index).Name)
+					}
+					result.Field(index).Set(copyValue(v.Field(index)))
+				}
+				return result
+			}
 			for i := 0; i < v.NumField(); i++ {
+				if latentEmptyArgumentCache(v, i) { continue }
 				if !result.Field(i).CanSet() {
 					panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
 				}
@@ -65,7 +86,29 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 			if v.IsNil() {
 				return reflect.Zero(v.Type())
 			}
+			if speculative && v.Type() == functionSlice {
+				latentSpecFunctionSchema(reflect.TypeFor[ir.Function]())
+				original := v.Interface().([]ir.Function)
+				cloned := make([]ir.Function, len(original))
+				copy(cloned, original)
+				for i, function := range original {
+					if function.Parameters != nil { cloned[i].Parameters = copyValue(reflect.ValueOf(function.Parameters)).Interface().([]int) }
+					if function.OptionalParameters != nil { cloned[i].OptionalParameters = copyValue(reflect.ValueOf(function.OptionalParameters)).Interface().(map[int]bool) }
+					if function.Body != nil { cloned[i].Body = copyValue(reflect.ValueOf(function.Body)).Interface().([]ir.Statement) }
+					if function.Environment != nil { cloned[i].Environment = copyValue(reflect.ValueOf(function.Environment)).Interface().([]int) }
+					if function.FrameEnvironment != nil { cloned[i].FrameEnvironment = copyValue(reflect.ValueOf(function.FrameEnvironment)).Interface().([]int) }
+					if function.ReferenceParents != nil { cloned[i].ReferenceParents = copyValue(reflect.ValueOf(function.ReferenceParents)).Interface().([]int) }
+				}
+				return reflect.ValueOf(cloned)
+			}
 			result := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
+			if speculative && latentSpecImmutable(v.Type().Elem()) {
+				if shareScalarSlice {
+					return v
+				}
+				reflect.Copy(result, v)
+				return result
+			}
 			for i := 0; i < v.Len(); i++ {
 				result.Index(i).Set(copyValue(v.Index(i)))
 			}
@@ -104,6 +147,9 @@ func (l *lowering) latentSnapshot() *lowering {
 }
 
 func (l *lowering) latentStatement(node *ast.Node) (result []ir.Statement, failure error) {
+	if latentSpeculativeEnabled() && latentSpec != nil {
+		return l.latentSpecStatement(node)
+	}
 	if !latentFullEnabled() {
 		return l.latentStatementRaw(node)
 	}
@@ -155,4 +201,10 @@ func latentNestedDeclarations(body *ast.Node, visit ast.Visitor) {
 		return false
 	}
 	body.ForEachChild(walk)
+}
+
+// Main added a private backend derivation cache. A census has not run the
+// backend derivation; accept its nil state only, and reject a populated cache.
+func latentEmptyArgumentCache(v reflect.Value, index int) bool {
+    return v.Type() == reflect.TypeFor[ir.Program]() && v.Type().Field(index).Name == "argumentFacts" && v.Field(index).IsNil()
 }

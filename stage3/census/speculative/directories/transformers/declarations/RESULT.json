@@ -1,0 +1,269 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "Refused": 31,
+    "NotYet": 417,
+    "error": 3
+  },
+  "counts": {
+    "NotYet": [
+      346,
+      13,
+      58,
+      0,
+      0
+    ],
+    "Refused": [
+      23,
+      8,
+      0,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Diagnostics",
+      "counts": [
+        103,
+        0,
+        29,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SyntaxKind",
+      "counts": [
+        64,
+        0,
+        29,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading createDiagnosticForNode",
+      "counts": [
+        21,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SymbolAccessibility",
+      "counts": [
+        17,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "a cast the runtime can't check",
+      "counts": [
+        9,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "an ElementAccessExpression",
+      "counts": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading addRelatedInfo",
+      "counts": [
+        9,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a namespace member without a lowered binding",
+      "counts": [
+        8,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Debug",
+      "counts": [
+        0,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isStatic",
+      "counts": [
+        8,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an object refinement using an open numeric enum as a literal tag",
+      "counts": [
+        8,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading getTextOfNode",
+      "counts": [
+        5,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isExportAssignment",
+      "counts": [
+        5,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isSetAccessor",
+      "counts": [
+        5,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+      "counts": [
+        2,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading findAncestor",
+      "counts": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isJSDocTypeAlias",
+      "counts": [
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isConstructorDeclaration",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isGetAccessor",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isMethodDeclaration",
+      "counts": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 46404,
+  "examined_bytes": 46404,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 46404,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 450,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 1,
+  "files": [
+    {
+      "file": "diagnostics.ts",
+      "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d",
+      "source_bytes": 46404,
+      "total_nodes": 3513,
+      "visited_nodes": 3513,
+      "attempted_nodes": 2020,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

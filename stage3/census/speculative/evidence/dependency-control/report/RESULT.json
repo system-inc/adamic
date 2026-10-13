@@ -1,0 +1,134 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 7,
+    "Refused": 2
+  },
+  "counts": {
+    "NotYet": [
+      2,
+      2,
+      1,
+      0,
+      0
+    ],
+    "Refused": [
+      0,
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "a DebuggerStatement",
+      "counts": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a WithStatement",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a generic function as a value",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "debugger",
+      "counts": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "with",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 179,
+  "examined_bytes": 179,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 179,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 9,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "main.a",
+      "sha256": "9882117f531071cc6a355c0e8d16e2fd828afb47b0e366ea5cfe997789b6ab3a",
+      "source_bytes": 90,
+      "total_nodes": 17,
+      "visited_nodes": 20,
+      "attempted_nodes": 14,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "target.a",
+      "sha256": "145b41d053c2ecd3a3ea5dba76454f0114f13307ae8a71bcd9e3e5c5e96fc4bc",
+      "source_bytes": 89,
+      "total_nodes": 20,
+      "visited_nodes": 20,
+      "attempted_nodes": 8,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

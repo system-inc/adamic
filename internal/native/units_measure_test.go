@@ -3,11 +3,15 @@ package native
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // Not parallel: paired compiler timings must not compete with other tests in this process.
@@ -17,7 +21,8 @@ func TestMeasureClangUnits(t *testing.T) {
 		t.Skip("set ADAMIC_CLANG_MEASURE to emitted C evidence directory")
 	}
 	cache := filepath.Join(directory, "cache")
-	t.Setenv("XDG_CACHE_HOME", cache)
+	// The native caches live under the build cache, so this benchmark's scratch cache is one.
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	t.Setenv("ADAMIC_NATIVE_SPLIT", "0")
 	selected := os.Getenv("ADAMIC_CLANG_PROGRAM")
@@ -32,8 +37,18 @@ func TestMeasureClangUnits(t *testing.T) {
 	defer output.Close()
 	encoder := json.NewEncoder(output)
 	metadata := map[string]string{}
-	for name, arguments := range map[string][]string{"commit": {"git", "rev-parse", "HEAD"}, "nproc": {"nproc"}, "go": {"go", "version"}, "clang": {"clang", "--version"}, "node": {"node", "--version"}} {
-		data, err := exec.Command(arguments[0], arguments[1:]...).Output()
+	// The tree's commit: git where it has .git, else the manifest a Loom runner's unpacked source carries.
+	commit, err := tracked.Head("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	metadata["commit"] = commit
+	// The processors this process may run on, as nproc reports them (both read the scheduler's affinity mask), without
+	// a process the gate's tools would have to declare; go, clang and node are the tools the builds run, as toolchain
+	// resolves them.
+	metadata["nproc"] = strconv.Itoa(goruntime.NumCPU())
+	for name, arguments := range map[string][]string{"go": {"version"}, "clang": {"--version"}, "node": {"--version"}} {
+		data, err := toolchain.Command(name, arguments...).Output()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -77,7 +92,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			args = append(args, "-lm")
 			command = "clang " + strings.Join(args, " ")
 			started = time.Now()
-			if data, err := exec.Command("clang", args...).CombinedOutput(); err != nil {
+			if data, err := toolchain.Command("clang", args...).CombinedOutput(); err != nil {
 				t.Fatalf("clang: %v\n%s", err, data)
 			}
 		} else {
@@ -160,7 +175,7 @@ func TestMeasureClangUnits(t *testing.T) {
 				run(program, mode.name+"-whole", round, mode.options, source, false)
 				for _, jobs := range []int{1, 5} {
 					// Only remove the named object-cache directory in this benchmark's scratch cache.
-					if err := os.RemoveAll(filepath.Join(cache, "adamic", "units")); err != nil {
+					if err := os.RemoveAll(filepath.Join(cache, "native-units")); err != nil {
 						t.Fatal(err)
 					}
 					options := mode.options

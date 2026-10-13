@@ -1,29 +1,22 @@
 package native
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
-	"path/filepath"
-
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
 // its owner can decide whether to dispatch here when Options.Split is requested.
 func BuildSplitTSGo(source, output, archive string, options Options) error {
-	archive, err := filepath.Abs(archive)
+	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
-	}
-	if _, err := os.Stat(archive); err != nil {
-		return fmt.Errorf("native: checker archive: %w", err)
 	}
 	library, err := splitTSGoRuntime(source, options)
 	if err != nil {
 		return err
 	}
-	return buildUnitsWithLibrary(source, output, options, library, []string{archive, "-lpthread", "-ldl"})
+	return buildUnitsWithLibrary(source, output, options, library, archive)
 }
 
 // Reuse the existing runtime cache with the checker ABI header in its snapshot, and ADAMIC_TSGO
@@ -35,18 +28,18 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 		return "", err
 	}
 	files = append(files, runtimeFile{"tsgo.h", bridge.Header})
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		return "", err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", err
 	}
-	cache, err := os.UserCacheDir()
+	cache, err := cacheDirectory("native-runtime")
 	if err != nil {
 		return "", err
 	}
 	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
-	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	return cachedRuntime(files, flags, compiler, string(version), cache)
 }

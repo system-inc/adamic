@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
@@ -20,6 +19,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -69,6 +70,13 @@ func executeResult(environment []string, name string, arguments ...string) (run,
 	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
+	}
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, macOS's leaks) is a tool: the one internal/toolchain resolves, with a tool's environment
+		// plus the caller's settings, not PATH's. A program a test built (the Go oracle, a port) runs as named, with this
+		// process's environment.
+		command = toolchain.Command(name, arguments...)
+		command.Env = append(command.Env, environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
@@ -222,7 +230,16 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	}
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
-func jsonPortTopShard(t *testing.T, target int) {
+
+// jsonPortTopShard is a top shard's agreement: the Go oracle, Node, release, ASan/UBSan and the JavaScript backend.
+func jsonPortTopShard(t *testing.T, target int) { jsonPortTopRun(t, target, false) }
+
+// jsonPortTopLeakShard is the same shard's leak pass, its own test: the Go oracle, release and LeakSanitizer (macOS's
+// leaks --atExit off Linux). A shard can be one heavy case, so no test runs both sanitizer passes over it: with both,
+// _1345 was 43.4 s alone on one core (ASan 13.6 s, LeakSanitizer 17.8 s; Workshop, Oct 11).
+func jsonPortTopLeakShard(t *testing.T, target int) { jsonPortTopRun(t, target, true) }
+
+func jsonPortTopRun(t *testing.T, target int, leak bool) {
 	portMatchesPrepare(t)
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
@@ -245,25 +262,17 @@ func jsonPortTopShard(t *testing.T, target int) {
 		t.Fatal(err)
 	}
 	setup := time.Now()
-	goTools, err := jsonTopGoToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	clangTools, err := jsonTopClangToolchain()
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracleDir := jsonTopOracle(t)
-	loweredDir := jsonTopProduct(t, "lowered", jsonLoweredPortInputs(goTools), buildJSONLoweredPort)
+	oracle := jsonTopOracle(t)
+	loweredDir := jsonTopProduct(t, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
 	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	c := string(cBytes)
-	releaseDir := jsonTopProduct(t, "release", jsonNativePortInputs(c, false, clangTools), buildJSONReleasePort(c))
-	sanitizedDir := jsonTopProduct(t, "sanitized", jsonNativePortInputs(c, true, clangTools), buildJSONSanitizedPort(c))
+	releaseDir := jsonTopProduct(t, "release", jsonNativePortInputs(c, false, jsonTopState.clangTools), buildJSONReleasePort(c))
+	sanitizedDir := jsonTopProduct(t, "sanitized", jsonNativePortInputs(c, true, jsonTopState.clangTools), buildJSONSanitizedPort(c))
 	entry, script := filepath.Join(loweredDir, "main.ts"), filepath.Join(loweredDir, "program.mjs")
-	release, sanitized, oracle := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port"), filepath.Join(oracleDir, "go-cohere")
+	release, sanitized := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port")
 	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
 			t.Fatal(err)
@@ -300,57 +309,70 @@ func jsonPortTopShard(t *testing.T, target int) {
 			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 				t.Fatal(err)
 			}
-			sides := []struct {
+			// Sides 0 to 2 are the Go oracle, Node (agreement only) and release; side 3 on is checked against release too.
+			// The agreement test runs ASan/UBSan and the JavaScript backend, the leak test LeakSanitizer.
+			type side struct {
 				name, binary           string
 				arguments, environment []string
-			}{
+			}
+			sides := []side{
 				{"Go", oracle, []string{"--cases", path}, nil},
 				{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", path}, nil},
 				{"release", release, []string{"--cases", path}, nil},
 				{"ASan/UBSan", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}},
 				{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", runner, script, "--cases", path}, nil},
 			}
-			if runtime.GOOS == "linux" {
-				sides = append(sides, struct {
-					name, binary           string
-					arguments, environment []string
-				}{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
+			waves := [][]int{{0, 1, 2, 4}, {3}}
+			if leak {
+				sides = sides[:3]
+				sides[1] = side{}
+				waves = [][]int{{0, 2}}
+				if runtime.GOOS == "linux" {
+					sides = append(sides, side{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
+					waves = append(waves, []int{3})
+				}
 			}
 			results := make([]chunkResult, len(sides))
 			timings := make([]time.Duration, len(sides))
 			// The sanitizer processes retain substantially more memory than the
 			// other sides. Run them together after the first wave has exited,
 			// so an isolated four-CPU unit does not compete with Node/Go heaps.
-			for _, wave := range [][]int{{0, 1, 2, 4}, {3, 5}} {
-				var workers sync.WaitGroup
+			// Within a wave, at most the test's share at once (testguard.Each).
+			for _, wave := range waves {
+				var present []int
 				for _, side := range wave {
-					if side >= len(sides) {
-						continue
+					if side < len(sides) {
+						present = append(present, side)
 					}
-					workers.Add(1)
-					go func(side int) {
-						defer workers.Done()
-						s := sides[side]
-						began := time.Now()
-						results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
-						timings[side] = time.Since(began)
-					}(side)
 				}
-				workers.Wait()
+				testguard.Each(len(present), func(index int) {
+					side := present[index]
+					s := sides[side]
+					began := time.Now()
+					results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
+					timings[side] = time.Since(began)
+				})
 			}
 			for side, timing := range timings {
-				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+				if sides[side].name != "" {
+					t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+				}
 			}
 			reference := results[0]
 			if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
 				t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
 			}
 			expected := string(reference.result.stdout)
-			references[ordinal] = expected
+			if !leak {
+				references[ordinal] = expected
+			}
 			if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
 				t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
 			}
 			for side := 1; side < len(sides); side++ {
+				if sides[side].name == "" {
+					continue
+				}
 				if results[side].err != nil {
 					t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
 				}
@@ -359,13 +381,13 @@ func jsonPortTopShard(t *testing.T, target int) {
 					compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
 				}
 			}
-			if runtime.GOOS != "linux" {
+			if leak && runtime.GOOS != "linux" {
 				report := execute(t, nil, "leaks", "--atExit", "--", release, "--cases", path)
 				if report.exitCode != 0 {
 					t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
 				}
 			}
-			if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+			if !leak && os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
 				// Calibration uses the same per-case Go answers as mandatory comparisons.
 				answers, err := jsonPortAnswers(expected, len(items))
 				if err != nil {
@@ -373,7 +395,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 				}
 				calibrateNativeCases(t, sanitized, items, answers)
 			}
-			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && !leak {
 				directory := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", ordinal))
 				if err := os.MkdirAll(directory, 0755); err != nil {
 					t.Fatal(err)
@@ -418,7 +440,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 	})
 	// Opt-in measurements reuse the explicitly selected agreement bucket.
 	// Benchmark rounds are never independent gate units.
-	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
+	if !leak && os.Getenv("ADAMIC_JSON_BENCH") == "1" {
 		for ordinal, shard := range allShards {
 			for round := 0; round < 3; round++ {
 				unit := ordinal
@@ -568,28 +590,6 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 	if report := leaks(t, program, binary, "--cases", path); report != "" {
 		t.Fatal(report)
 	}
-}
-
-func buildGoDriver(t *testing.T) string {
-	t.Helper()
-	directory := t.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/cohere_driver.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay := filepath.Join(directory, "overlay.json")
-	writeJSON(t, overlay, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "command/formatter_comparison/main.go"): source}})
-	binary := filepath.Join(directory, "go-cohere")
-	command := bounded(t, "go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
-	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
-		t.Fatalf("Go driver: %v\n%s", err, output)
-	}
-	return binary
 }
 
 func TestSingleFileStdoutDriver(t *testing.T) {

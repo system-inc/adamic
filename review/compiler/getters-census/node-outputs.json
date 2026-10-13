@@ -1,0 +1,107 @@
+{
+  "BinaryInline": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n",
+    "stderr": ""
+  },
+  "OverloadedFunction": {
+    "exit": 0,
+    "stdout": "10\n",
+    "stderr": ""
+  },
+  "SnapshotNext": {
+    "exit": 0,
+    "stdout": "0/1\n",
+    "stderr": ""
+  },
+  "ClosureNumberMethods": {
+    "exit": 0,
+    "stdout": "0\n1\n",
+    "stderr": ""
+  },
+  "HigherCallbackPairMethods": {
+    "exit": 0,
+    "stdout": "3\n13\ndone\ninitialized\n",
+    "stderr": ""
+  },
+  "CallbackPairMethods": {
+    "exit": 0,
+    "stdout": "3\n13\ndone\ninitialized\n",
+    "stderr": ""
+  },
+  "ClassMap": {
+    "exit": 0,
+    "stdout": "0/0/0\n1/1/1\n9\n",
+    "stderr": ""
+  },
+  "ClosureNumberNext": {
+    "exit": 0,
+    "stdout": "0\n1\n",
+    "stderr": ""
+  },
+  "ClosureUnionNext": {
+    "exit": 0,
+    "stdout": "undefined\nbad mapping\n",
+    "stderr": ""
+  },
+  "OptionalTypeFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n",
+    "stderr": ""
+  },
+  "ThrowingObject": {
+    "exit": 0,
+    "stdout": "constructed\nNot supported\n",
+    "stderr": ""
+  },
+  "BinaryFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n",
+    "stderr": ""
+  },
+  "UpdateCommentFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n",
+    "stderr": ""
+  },
+  "OptionalCommentFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n",
+    "stderr": ""
+  },
+  "UpdateTypeFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n",
+    "stderr": ""
+  },
+  "OptionalBooleanFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n",
+    "stderr": ""
+  },
+  "UnaryNodeFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n",
+    "stderr": ""
+  },
+  "UnaryFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n",
+    "stderr": ""
+  },
+  "UpdateNodeFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n",
+    "stderr": ""
+  },
+  "PrimaryFunction": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n",
+    "stderr": ""
+  },
+  "LazyObject": {
+    "exit": 0,
+    "stdout": "constructed\ninitialize\n9\n10\n",
+    "stderr": ""
+  }
+}

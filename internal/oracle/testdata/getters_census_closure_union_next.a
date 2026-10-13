@@ -1,0 +1,10 @@
+// Reduced from TypeScript 050880ce src/compiler/sourcemap.ts:477.
+interface Decoder { readonly error: string | undefined; readonly next: () => void; }
+function decodeMappings(): Decoder {
+    let error: string | undefined;
+    return { get error() { return error; }, next() { error = 'bad mapping'; } };
+}
+const decoder = decodeMappings();
+console.log(`${decoder.error}`);
+decoder.next();
+console.log(`${decoder.error}`);

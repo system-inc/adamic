@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-c",
+    "value=bytearray(80*1024*1024)"
+  ],
+  "wall_seconds": 0.1141350739999325,
+  "peak_rss_kib": 6400,
+  "exit": 1,
+  "time_limit_seconds": 3.0,
+  "rss_limit_mib": 32,
+  "address_space_limit_mib": 64,
+  "rss_limit_killed": false
+}

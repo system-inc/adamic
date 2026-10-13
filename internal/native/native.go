@@ -10,9 +10,13 @@ import (
 	"embed"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
+	"slices"
 	"strings"
+	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -114,6 +118,19 @@ func Build(source string, output string, options Options) error {
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
+	return buildOne(source, output, options, Flags(options))
+}
+
+// BuildFlags is Build with the compiler flags the caller gives in place of Flags(options), in one translation unit
+// (markdownblocks' mutant canary, at -O0): the binary names no build directory, as Build's doesn't.
+func BuildFlags(source string, output string, options Options, flags []string) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
+	return buildOne(source, output, options, flags)
+}
+
+func buildOne(source string, output string, options Options, flags []string) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -127,26 +144,57 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	// Neither the build directory nor this machine's runtime cache may reach the binary, so its bytes are a
+	// function of its inputs wherever it's built (see cachedRuntime). clang is never given an absolute path to read: it
+	// compiles main.c from inside the build directory, and finds the runtime's headers and archive through runtime, a link
+	// there to the cache. The prefix maps cover debug info and __FILE__, but ASan's metadata for globals keeps each source
+	// file as clang was given it (Workshop, Oct 11: <tmp>/adamic-build-<random>/main.c and <cache>/.../adamic.h in .rodata).
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
+	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime")
+	// On macOS ld's debug map records every object it links that carries debug info (a sanitized build's do) by its path,
+	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
+	// random per build (Tests, from Compiler, Oct 12: a whole sanitized build's binary named it). There main.c is
+	// compiled to main.o in the build directory first and linked by that name, -oso_prefix taking the directory off, so
+	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
+	program := "main.c"
+	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
+		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		if combined, err := compile.CombinedOutput(); err != nil {
+			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+		}
+		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
+		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
+		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
+			return fmt.Errorf("native: %w", err)
+		}
+		program = "main.o"
+	}
+	arguments := append(compileFlags, "-o", output)
 	if !options.Request {
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, program)
 	}
 	if options.Target == "wasm32-wasi" {
-		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
+		arguments = append(arguments, "-Xlinker", "--whole-archive", runtimeArchive, "-Xlinker", "--no-whole-archive")
 	} else {
-		arguments = append(arguments, RuntimeLinkFlags(library)...)
+		arguments = append(arguments, RuntimeLinkFlags(runtimeArchive)...)
 	}
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	if options.Request {
 		// Runtime constructors precede module initialization at the same default priority.
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, program)
+	}
+	if program == "main.o" {
+		arguments = append(arguments, objectPrefixFlags()...)
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := exec.Command(compilerName(options), arguments...)
+	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

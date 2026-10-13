@@ -15,8 +15,9 @@ func TestCompilerGaps(t *testing.T) {
 	for _, item := range []struct{ name, reason, output string }{
 		{"defaultSort", "Adamic 0.1 refuses sort without a comparator", "im\n"},
 	} {
+		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that wait
+		// counts as the parent's own time (259 s at share 8, landable-16c, for one Node run, a load and a lower).
 		t.Run(item.name, func(t *testing.T) {
-			t.Parallel()
 			path, err := filepath.Abs("gaps/" + item.name + ".ts")
 			if err != nil {
 				t.Fatal(err)

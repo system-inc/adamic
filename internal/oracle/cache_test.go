@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -22,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/oracletest"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A result is evidence, not a saved verdict: ordinary fixture comparisons and counts still run.
@@ -179,7 +179,7 @@ func identity(t *testing.T) gateIdentity {
 			return
 		}
 		gate.cache = &resultCache{directory: filepath.Join(directory, "adamic", "gate")}
-		version, err := exec.Command("node", "--version").CombinedOutput()
+		version, err := toolchain.Command("node", "--version").CombinedOutput()
 		if err != nil {
 			gateError = fmt.Errorf("node --version: %w: %s", err, version)
 			return
@@ -452,6 +452,14 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 func TestMain(main *testing.M) {
 	os.Exit(oracletest.Run(func() int {
 		status := main.Run()
+		// -update-counts' writer: the counts family's shards and TestCountsAreRecordedTable measured, and the table is
+		// written once, here, after every one of them has run (counts_test.go).
+		if *updateCounts && status == 0 {
+			if err := writeCounts(); err != nil {
+				fmt.Println(err)
+				status = 1
+			}
+		}
 		if gate.cache != nil {
 			for index, kind := range resultKinds {
 				fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())

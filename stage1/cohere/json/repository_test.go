@@ -4,14 +4,16 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 type repositoryJSON struct {
@@ -22,7 +24,12 @@ type repositoryJSON struct {
 var repositoryJSONPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclude,glob)**/.git/**"}
 
 func gitCorpus(root string, arguments ...string) ([]byte, error) {
-	command := exec.Command("git", append([]string{"-C", root}, arguments...)...)
+	return gitCorpusInput(root, nil, arguments...)
+}
+
+func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, error) {
+	command := toolchain.GitCommand(append([]string{"-C", root}, arguments...)...)
+	command.Stdin = bytes.NewReader(input)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
 		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
@@ -31,6 +38,9 @@ func gitCorpus(root string, arguments ...string) ([]byte, error) {
 }
 
 func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
+	if !tracked.Git(root) {
+		return repositoryJSONInManifest(root)
+	}
 	state := repositoryJSON{paths: map[string]bool{}}
 	top, err := gitCorpus(root, "rev-parse", "--show-toplevel")
 	if err != nil {
@@ -85,6 +95,36 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 	return state, nil
 }
 
+// repositoryJSONInManifest is repositoryJSONAtHEAD for a source with no .git, as a Loom runner unpacks it: the tree's
+// manifest (internal/tracked) must record root as the tree's own repository, its *.json entries outside cohere/ are
+// the tracked paths, and each one missing or not as recorded is dirty. The manifest is HEAD and index at once.
+func repositoryJSONInManifest(root string) (repositoryJSON, error) {
+	state := repositoryJSON{paths: map[string]bool{}}
+	if _, err := tracked.Head(root); err != nil {
+		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", err)
+	}
+	entries, err := tracked.Files(root)
+	if err != nil {
+		return state, fmt.Errorf("JSON corpus requires usable Git metadata or the tree's manifest: %w", err)
+	}
+	var selected []tracked.Entry
+	for _, entry := range entries {
+		// The pathspecs repositoryJSONPatterns names: *.json at any depth, never under cohere/ or a .git directory.
+		if entry.Submodule() || !strings.HasSuffix(entry.Path, ".json") || strings.HasPrefix(entry.Path, "cohere/") || strings.HasPrefix(entry.Path, ".git/") || strings.Contains(entry.Path, "/.git/") {
+			continue
+		}
+		selected = append(selected, entry)
+		state.paths[entry.Path] = true
+	}
+	missing, changed, err := tracked.Changed(root, selected)
+	if err != nil {
+		return state, err
+	}
+	state.dirty = append(missing, changed...)
+	sort.Strings(state.dirty)
+	return state, nil
+}
+
 // Tracked repository inputs follow Git HEAD. Only externally provisioned or
 // generated inputs retain identity pins; arbitrary untracked files are refused.
 func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
@@ -92,6 +132,10 @@ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPi
 	if err != nil {
 		return corpusPin{}, 0, err
 	}
+	return validateCorpusState(state, cases, expected)
+}
+
+func validateCorpusState(state repositoryJSON, cases []textCase, expected corpusPin) (corpusPin, int, error) {
 	if len(state.dirty) > 0 {
 		return corpusPin{}, 0, fmt.Errorf("repository dirty JSON: %s", strings.Join(state.dirty, ", "))
 	}
@@ -242,17 +286,69 @@ func TestRepositoryCorpusMutants(t *testing.T) {
 			return f.cases(t)
 		}},
 	} {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
-			fixture := newRepositoryFixture(t)
-			cases := mutant.apply(t, fixture)
-			_, _, err := validateCorpus(fixture.root, cases, fixture.pin)
-			if err == nil || !strings.Contains(err.Error(), mutant.message) || !strings.Contains(err.Error(), mutant.path) {
-				t.Fatalf("mutant survived or lost its name: %v", err)
+		for _, manifest := range []bool{false, true} {
+			name := mutant.name
+			if manifest {
+				// The manifest is HEAD and index at once, so a staged change has nowhere to hide.
+				if mutant.name == "staged change with restored worktree" {
+					continue
+				}
+				name += " without .git"
 			}
-			t.Logf("caught %s: %v", mutant.path, err)
-		})
+			t.Run(name, func(t *testing.T) {
+				t.Parallel()
+				fixture := newRepositoryFixture(t)
+				if manifest {
+					fixture = unpackRepositoryFixture(t, fixture)
+				}
+				cases := mutant.apply(t, fixture)
+				_, _, err := validateCorpus(fixture.root, cases, fixture.pin)
+				if err == nil || !strings.Contains(err.Error(), mutant.message) || !strings.Contains(err.Error(), mutant.path) {
+					t.Fatalf("mutant survived or lost its name: %v", err)
+				}
+				t.Logf("caught %s: %v", mutant.path, err)
+			})
+		}
 	}
+}
+
+// unpackRepositoryFixture is the fixture as a Loom runner holds a source: every file but .git, and the manifest
+// build-tree writes (internal/tracked). It validates as the checkout does, with the same count.
+func unpackRepositoryFixture(t *testing.T, fixture repositoryFixture) repositoryFixture {
+	t.Helper()
+	root := t.TempDir()
+	err := filepath.WalkDir(fixture.root, func(name string, entry fs.DirEntry, err error) error {
+		if err != nil || name == fixture.root {
+			return err
+		}
+		relative, err := filepath.Rel(fixture.root, name)
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			if relative == ".git" {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		data, err := os.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		fixtureWrite(t, root, filepath.ToSlash(relative), string(data))
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := tracked.Write(fixture.root, root); err != nil {
+		t.Fatal(err)
+	}
+	unpacked := repositoryFixture{root: root, pin: fixture.pin}
+	if _, count, err := validateCorpus(root, unpacked.cases(t), unpacked.pin); err != nil || count != 2 {
+		t.Fatalf("unpacked fixture baseline: count %d: %v", count, err)
+	}
+	return unpacked
 }
 
 func TestRepositoryLandingWithoutPinEdit(t *testing.T) {

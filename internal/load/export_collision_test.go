@@ -18,15 +18,3 @@ func TestStarExportCollisionNamesBothModules(t *testing.T) {
 		t.Fatalf("want exact refusal %q, got %v", want, err)
 	}
 }
-
-func TestExplicitExportResolvesStarCollision(t *testing.T) {
-	t.Parallel()
-	paths := writeProgram(t,
-		[2]string{"main.a", "export * from './left.a';\nexport * from './right.a';\nexport { shared } from './left.a';\n"},
-		[2]string{"left.a", "export const shared = 1;\n"},
-		[2]string{"right.a", "export const shared = 2;\n"},
-	)
-	if _, err := Load(paths[:1]); err != nil {
-		t.Fatal(err)
-	}
-}

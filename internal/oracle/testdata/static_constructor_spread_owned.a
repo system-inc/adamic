@@ -1,0 +1,11 @@
+class Entry {
+	readonly label: string;
+	private constructor(label: string) { this.label = label; }
+	static make(value: number): Entry { return new Entry(`entry${value}`); }
+}
+function copy(value: number): { readonly label: string } {
+	const entry = Entry.make(value);
+	return { ...{ label: entry.label } };
+}
+const result = copy(7);
+console.log(result.label);

@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -63,7 +63,7 @@
+ 		VerbatimModuleSyntax:       core.TSTrue,
+ 		AllowImportingTsExtensions: core.TSTrue,
+ 		NoEmit:                     core.TSTrue,
+-		Module:                     core.ModuleKindESNext,
++		Module:                     core.ModuleKindCommonJS,
+ 		// Every Adamic file is a module, imports or not, as the oracle runs it. Without this, a file with
+ 		// no import is a script to the checker, and its top-level names collide with the prelude's.
+ 		ModuleDetection:  core.ModuleDetectionKindForce,

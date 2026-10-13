@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -68,23 +69,7 @@ func TestFrontMatterStage(t *testing.T) {
 	cases := filepath.Join(dir, "cases.txt")
 	write(t, cases, []byte(batch.String()))
 	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_frontmatter/main.go")
-	driver, err := filepath.Abs("testdata/frontmatter_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-parser")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	command.Dir = cohere
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go build: %v\n%s", err, output)
-	}
+	goBinary := frontMatterGoOracle(t)
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "Go front matter", want)
 	main, err := filepath.Abs("testdata/frontmatter_probe.ts")
@@ -194,4 +179,32 @@ func TestFrontMatterStage(t *testing.T) {
 		t.Logf("parser-stage throughput %s %.1f texts/s, 3 runs %.6fs; startup/protocol/I/O included, no Markdown layout measured", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
 	t.Logf("front-matter stage %d physical Markdown files and %d generated cases, %d total: Go/native/source Node/backend/pinned library byte parity, ASan/UBSan/leaks", files, len(inputs)-files, len(inputs))
+}
+
+// frontMatterGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
+func frontMatterGoOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	cohere := filepath.Join(root, "cohere")
+	mainPath := filepath.Join(cohere, "cmd/adamic_frontmatter/main.go")
+	driver, err := filepath.Abs("testdata/frontmatter_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(dir, "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-parser", mainPath, []string{"-overlay=" + overlayPath})
+}
+
+func TestProduct_MarkdownFrontMatterGo(t *testing.T) {
+	t.Parallel()
+	frontMatterGoOracle(t)
 }

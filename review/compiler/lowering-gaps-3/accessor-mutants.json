@@ -1,0 +1,32 @@
+[
+  {
+    "name": "accessor-revert",
+    "exit": 1,
+    "caught": true,
+    "expected": "stage 0 can't lower spreading an accessor literal whose getter may throw"
+  },
+  {
+    "name": "accessor-release",
+    "exit": 1,
+    "caught": true,
+    "expected": "LeakSanitizer"
+  },
+  {
+    "name": "accessor-edge",
+    "exit": 1,
+    "caught": true,
+    "expected": "UndefinedBehaviorSanitizer"
+  },
+  {
+    "name": "accessor-broad-edge",
+    "exit": 1,
+    "caught": true,
+    "expected": "throw edge true, want false"
+  },
+  {
+    "name": "accessor-getter-retain",
+    "exit": 1,
+    "caught": true,
+    "expected": "LeakSanitizer"
+  }
+]

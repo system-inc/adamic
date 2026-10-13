@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -189,9 +190,7 @@ func rulesAgreeNative(t *testing.T) string {
 		inputs.Name = "lint-rules-agree-native-sanitized"
 		inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
 			"Split=true", "Jobs=4",
-			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
-			"ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"),
-			"ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		rulesAgreeBinaryDirectory = buildcache.Product(t, inputs, func(output string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
@@ -210,32 +209,8 @@ func rulesAgreeNative(t *testing.T) string {
 	return rulesAgreeBinaryDirectory
 }
 
-var rulesAgreeOracleOnce, rulesAgreeCaptureOnce sync.Once
-var rulesAgreeOracleDirectory, rulesAgreeCaptureDirectory string
-
-func rulesAgreeOracle(t *testing.T) string {
-	t.Helper()
-	rulesAgreeOracleOnce.Do(func() {
-		directory := packageDirectory
-		// GoBuild is not present on this main. Cache the original overlay build
-		// as a Product so a filtered shard never recompiles everyone's oracle.
-		oracleInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-go-oracle",
-			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
-			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
-			Toolchain: []string{runtime.Version()},
-		}
-		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
-			_, err := rulesAgreeGoOracleIn(directory, output)
-			return err
-		})
-
-	})
-	if rulesAgreeOracleDirectory == "" {
-		t.Fatal("oracle preparation failed")
-	}
-	return rulesAgreeOracleDirectory
-}
+var rulesAgreeCaptureOnce sync.Once
+var rulesAgreeCaptureDirectory string
 
 func rulesAgreeCapture(t *testing.T) string {
 	t.Helper()
@@ -245,7 +220,7 @@ func rulesAgreeCapture(t *testing.T) string {
 			Name:      "lint-rules-agree-capture",
 			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
 			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
-			Toolchain: []string{runtime.Version()},
+			Toolchain: []string{runtime.Version(), lintGoSettings()},
 		}
 		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
 			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
@@ -278,8 +253,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
 	rulesAgreeOnce.Do(func() {
 		directory := packageDirectory
-		oracleDirectory := rulesAgreeOracle(t)
-		oracle := filepath.Join(oracleDirectory, "oracle")
+		oracle := lintGoOracleProduct(t)
 		corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
 		if err != nil {
 			t.Fatal(err)
@@ -583,65 +557,19 @@ func TestRulesAgree_015(t *testing.T) {
 	rulesAgreeRunShard(t, 15)
 }
 
-func rulesAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := rulesAgreeCaptureRun(root, nil, args...); err != nil {
-		return "", err
-	}
-	return binary, nil
-}
-
 // Shared Go compilation and capture have no setup deadline.
 // Preserve the child CPU guard and kill the entire compiler process group.
 func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
+	// toolchain's go, under its environment plus the capture's own settings, with PWD set to directory.
+	path, err := toolchain.Path("go")
+	if err != nil {
+		return nil, err
+	}
+	command := exec.CommandContext(ctx, path, args...)
 	command.Dir = directory
-	command.Env = append(os.Environ(), environment...)
-	command.Env = append(command.Env, "PWD="+directory)
+	command.Env = append(toolchain.Env(environment...), "PWD="+directory)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -694,6 +622,8 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(overlayPath)
 	capture := filepath.Join(directory, "capture")
 	descriptors, err := registry.Generate(sourceRoot)
 	if err != nil {
@@ -753,6 +683,10 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
+	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
+	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
+	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
+	defer os.RemoveAll(capture)
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {

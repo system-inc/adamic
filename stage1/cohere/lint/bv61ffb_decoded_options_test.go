@@ -3,21 +3,18 @@ package lint
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -26,7 +23,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testDecodedOptionsAndMutantShards = 6
@@ -213,21 +209,6 @@ type decodedOptionsProducts struct {
 var decodedOptionsReady *decodedOptionsProducts
 var decodedOptionsOnce sync.Once
 
-func decodedOptionsCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
-	command.Dir = directory
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
-}
-
 // Retained for TestMain compatibility. Each selected leaf owns preparation.
 func decodedOptionsBeforeTests() error { return nil }
 
@@ -249,7 +230,11 @@ func decodedOptionsSetupTest(t *testing.T) {
 	// Both original and mutant source copies live in the content-addressed
 	// product, rather than in a setup test's TempDir.
 	lowered := decodedOptionsSetupLowered(t, false)
-	changed := decodedOptionsSetupLowered(t, true)
+	// Node runs the changed port, so it reads the copy whose imports name this checkout.
+	changed, err := buildcache.Resolved(decodedOptionsSetupLowered(t, true))
+	if err != nil {
+		t.Fatal(err)
+	}
 	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
 	nativeProduct := buildcache.Product(t, inputs, func(output string) error {
@@ -258,13 +243,6 @@ func decodedOptionsSetupTest(t *testing.T) {
 			return err
 		}
 		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
-	})
-	inputs.Name = "lint-decoded-options-go-oracle-setup-v2"
-	inputs.Files = append(inputs.Files, "cohere/go.mod", "cohere/internal", "stage1/cohere/lint/testdata/oracle.go")
-	inputs.Flags = append(inputs.Flags, "Go oracle=full live registry", "GOTOOLCHAIN="+os.Getenv("GOTOOLCHAIN"))
-	oracleProduct := buildcache.Product(t, inputs, func(output string) error {
-		_, err := decodedOptionsGoOracle(ctx, output)
-		return err
 	})
 	// The fixture and manifest belong to TestMain's directory and remain valid
 	// after the shard that prepares them finishes, until the process exits.
@@ -280,58 +258,11 @@ func decodedOptionsSetupTest(t *testing.T) {
 	ready := decodedOptionsProducts{
 		Directory: packageDirectory, Changed: filepath.Join(changed, "port"),
 		Module: filepath.Join(lowered, "lint.mjs"), ChangedModule: filepath.Join(changed, "lint.mjs"),
-		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: filepath.Join(oracleProduct, "oracle"), Manifest: manifestPath,
+		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: lintGoOracleProduct(t), Manifest: manifestPath,
 	}
 	ready.Want = decodedOptionsExecute(t, ctx, ready.Oracle, "--manifest", manifestPath)
 	decodedOptionsReady = &ready
 	t.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
-}
-
-// This is the same overlay and full live-rule oracle as goOracleIn, with
-// a context deadline and process-group cancellation instead of a lazy shared build.
-func decodedOptionsGoOracle(ctx context.Context, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(packageDirectory)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		replacements[virtual] = source
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", filepath.Join(packageDirectory, "testdata/oracle.go"))
-	add("registry", filepath.Join(packageDirectory, ".generated/registry.go"))
-	for _, descriptor := range descriptors {
-		add(strings.ReplaceAll(descriptor.Slug, "-", "_"), filepath.Join(packageDirectory, "rules", descriptor.Slug, "oracle.go"))
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		return "", err
-	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + overlayPath, "-o", binary}, virtualFiles...)
-	command := decodedOptionsCommand(ctx, root, "go", args...)
-	output, err := command.CombinedOutput()
-	if ctx.Err() != nil {
-		return "", fmt.Errorf("cooked: oracle setup: %w", ctx.Err())
-	}
-	if err != nil {
-		return "", fmt.Errorf("Go oracle: %w\n%s", err, output)
-	}
-	if len(commandDiagnostics("go", output)) != 0 {
-		return "", fmt.Errorf("Go oracle diagnostics: %s", output)
-	}
-	return binary, nil
 }
 
 func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
@@ -373,13 +304,17 @@ func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
 		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		if err := os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			return err
+		}
+		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(output)
 	})
 }
 
 func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
-	command := decodedOptionsCommand(ctx, "", name, args...)
+	command := lintCommand(ctx, "", name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)

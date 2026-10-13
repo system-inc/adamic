@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/b17vtn1/stream-census",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/tmp/pqjagjf/retry-priority/records/transformers__es2017.ts.pending"
+  ],
+  "wall_seconds": 94.40222467700005,
+  "peak_rss_kib": 1036160,
+  "exit": 0,
+  "time_limit_seconds": 600.0,
+  "rss_limit_mib": 3072,
+  "address_space_limit_mib": 6144,
+  "rss_limit_killed": false,
+  "unit_deadline_limited": false,
+  "go_env": {
+    "GOMEMLIMIT": "1GiB",
+    "GOGC": "200",
+    "GOMAXPROCS": "1"
+  }
+}

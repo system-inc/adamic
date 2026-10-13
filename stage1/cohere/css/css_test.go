@@ -86,7 +86,6 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/cohere_side_test.go")
 	packageDirectory := filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
 	encoded, _ := json.Marshal(request)
@@ -94,17 +93,13 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	if err := os.WriteFile(requestPath, encoded, 0644); err != nil {
 		t.Fatal(err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
+	// The Go oracle is css-printer-oracle-0, cohere's postcss with testdata/cohere_side_test.go laid over it, built
+	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
+	if oracle == "" {
+		oracle = cssOracleProduct(t, false)
 	}
-	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
-	cmd.Dir = filepath.Join(repo, "cohere")
-	if oracle != "" {
-		cmd = bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
-		cmd.Dir = packageDirectory
-	}
+	cmd := bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+	cmd.Dir = packageDirectory
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {

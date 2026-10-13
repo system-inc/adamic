@@ -103,7 +103,7 @@ func TestVolumeAgreementAndMutantsUnion(t *testing.T) {
 // has no test-side deadline; the build phase owns cache misses.
 func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 	inputs := volumeGuardInputs(context.Background(), "agreement-"+name, sanitize)
-	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "GOOS", "GOARCH", "CGO_ENABLED", "GOTOOLCHAIN"} {
+	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "GOOS", "GOARCH", "CGO_ENABLED"} {
 		inputs.Flags = append(inputs.Flags, key+"="+os.Getenv(key))
 	}
 	return inputs
@@ -145,9 +145,12 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
 		if err := os.WriteFile(overlay, data, 0444); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlay)
 		cmd, cancel := volumeGuardCommand(context.Background(), "go", "build", "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)
 		defer cancel()
 		cmd.Dir = filepath.Join(h.repository, "cohere")
+		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
 		output, err := volumeGuardOutput(cmd)
 		if err != nil {
 			return fmt.Errorf("oracle: %w %s", err, output)
@@ -267,6 +270,7 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 			command, cancel := volumeGuardCommand(context.Background(), "go", "build", "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")
 			defer cancel()
 			command.Dir = h.repository
+			command.Env = append(command.Env, "PWD="+h.repository)
 			output, err := volumeGuardOutput(command)
 			if err != nil {
 				return fmt.Errorf("archive %s: %w %s", archiveName, err, output)

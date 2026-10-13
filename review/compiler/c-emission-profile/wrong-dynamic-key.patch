@@ -1,0 +1,11 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -453,7 +453,7 @@
+ // Programs without reflection keep their original layouts and allocation code.
+ func (e *emitter) dynamicProperties() bool {
+ 	e.prepareObjectMetadata()
+-	return e.objectMetadata.dynamic
++	return e.objectMetadata.fieldTypes
+ }
+ 
+ func (e *emitter) methodEntryType() string {

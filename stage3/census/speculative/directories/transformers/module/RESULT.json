@@ -1,0 +1,295 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "Refused": 339,
+    "NotYet": 1120
+  },
+  "counts": {
+    "NotYet": [
+      1020,
+      98,
+      2,
+      0,
+      0
+    ],
+    "Refused": [
+      294,
+      44,
+      1,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "Refused",
+      "root_kind": "an object refinement using an open numeric enum as a literal tag",
+      "counts": [
+        119,
+        33,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SyntaxKind",
+      "counts": [
+        120,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading visitNode",
+      "counts": [
+        64,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading setTextRange",
+      "counts": [
+        49,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isExpression",
+      "counts": [
+        40,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an unproven predicate argument for parameter test (argument \"isExpression\")",
+      "counts": [
+        40,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading append",
+      "counts": [
+        30,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member push read as an own field",
+      "counts": [
+        34,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "an assignment value to a member",
+      "counts": [
+        20,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading visitNodes",
+      "counts": [
+        20,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading EmitFlags",
+      "counts": [
+        20,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading ModuleKind",
+      "counts": [
+        17,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading visitEachChild",
+      "counts": [
+        20,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading isStatement",
+      "counts": [
+        19,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an unproven predicate argument for parameter test (argument \"isStatement\")",
+      "counts": [
+        19,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a namespace member without a lowered binding",
+      "counts": [
+        16,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading Debug",
+      "counts": [
+        0,
+        16,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading setOriginalNode",
+      "counts": [
+        16,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a SpreadElement",
+      "counts": [
+        11,
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "checked view field expression of type Expression",
+      "counts": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 219710,
+  "examined_bytes": 219710,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 219710,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 1459,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "esnextAnd2015.ts",
+      "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+      "source_bytes": 18686,
+      "total_nodes": 1687,
+      "visited_nodes": 1687,
+      "attempted_nodes": 1081,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "source_bytes": 3750,
+      "total_nodes": 411,
+      "visited_nodes": 411,
+      "attempted_nodes": 255,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "module.ts",
+      "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c",
+      "source_bytes": 111793,
+      "total_nodes": 8194,
+      "visited_nodes": 8194,
+      "attempted_nodes": 5549,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "system.ts",
+      "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6",
+      "source_bytes": 85481,
+      "total_nodes": 6050,
+      "visited_nodes": 6050,
+      "attempted_nodes": 3938,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

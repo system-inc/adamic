@@ -3,22 +3,16 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"hash/fnv"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testFileDriverShards = 8
@@ -55,39 +49,6 @@ func fileDriverCheckUnion(t *testing.T, shards [][]int, count int) {
 	}
 }
 
-func fileDriverBuildFiles(t *testing.T) []string {
-	t.Helper()
-	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"}
-	// Include the transitive implementation inputs without hashing test evidence.
-	for _, directory := range []string{"stage1/cohere/yaml", "internal", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(repository, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "testdata" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if strings.HasSuffix(path, "_test.go") || (extension != ".go" && extension != ".ts" && extension != ".c" && extension != ".h") {
-				return nil
-			}
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
-			}
-			files = append(files, relative)
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	return files
-}
-
 func fileDriverSetup(t *testing.T) *fileDriverState {
 	started := time.Now()
 	cases, files, _ := formatCases(t)
@@ -113,37 +74,8 @@ func fileDriverSetup(t *testing.T) *fileDriverState {
 	if err != nil {
 		t.Fatal(err)
 	}
-	productInputs := buildcache.Inputs{
-		Name: "yaml-file-driver-lowered", Files: fileDriverBuildFiles(t),
-		Flags:     []string{"lower+native.C+javascript.JavaScript"},
-		Toolchain: []string{runtime.Version()},
-	}
-	loweredProduct := buildcache.Product(t, productInputs, func(directory string) error {
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
-		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(directory, "format.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "format.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
-	})
-	productInputs.Name = "yaml-file-driver-native"
-	productInputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	productInputs.Toolchain = append(productInputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeProduct := buildcache.Product(t, productInputs, func(directory string) error {
-		source, err := os.ReadFile(filepath.Join(loweredProduct, "format.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(source), filepath.Join(directory, "format"), native.Options{Sanitize: true})
-	})
-	binary := filepath.Join(nativeProduct, "format")
-	emitted := filepath.Join(loweredProduct, "format.mjs")
+	binary := yamlFormatBuild.binary(t, "main.ts")
+	emitted := yamlFormatBuild.emitted(t, "main.ts")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	if len(expected) != len(inputs) {
 		t.Fatalf("oracle returned %d answers for %d inputs", len(expected), len(inputs))
@@ -276,6 +208,21 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the caller's
+		// settings, not PATH's, run in directory with PWD to match, as toolchain.CommandIn runs one under a context it
+		// has no form for. A program a test built (the Go oracle, the port) runs as named, with this process's
+		// environment. An error resolving it fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else if absolute, err := filepath.Abs(directory); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Dir = directory
+			command.Env = append(toolchain.Env(environment...), "PWD="+absolute)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = time.Second
@@ -292,32 +239,7 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 
 func fileDriverGoFormat(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/format_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	files := append(fileDriverBuildFiles(t), "stage1/cohere/yaml/testdata/format_go.go")
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name: "yaml-file-driver-go-format", Files: files,
-		Flags:     []string{"build", "overlay=format_go.go", "./command/formatter_comparison", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")},
-		Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(directory string) error {
-		fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-format"), "./command/formatter_comparison")
-		return nil
-	})
-	goBinary := filepath.Join(product, "go-format")
+	goBinary := goFormatOracle(t)
 	expected := fileDriverRun(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {

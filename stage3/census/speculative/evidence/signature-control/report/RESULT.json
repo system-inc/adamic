@@ -1,0 +1,91 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 5
+  },
+  "counts": {
+    "NotYet": [
+      1,
+      2,
+      1,
+      1,
+      0
+    ],
+    "Refused": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T",
+      "counts": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a call returning T",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a union of differently held members variable a function value captures",
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 71,
+  "examined_bytes": 71,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 71,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 5,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "probe.a",
+      "sha256": "271b9e7c62511757db7d5e74dc40ad9fb0d4d53dd7bd9f0839b14469c5d7be9b",
+      "source_bytes": 71,
+      "total_nodes": 20,
+      "visited_nodes": 20,
+      "attempted_nodes": 7,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

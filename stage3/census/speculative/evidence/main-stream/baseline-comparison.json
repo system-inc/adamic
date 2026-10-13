@@ -1,0 +1,32 @@
+{
+  "full_completed": 21,
+  "no_stubs_completed": 21,
+  "input_files": 79,
+  "common_completed": 21,
+  "byte_identical": [
+    "_namespaces__ts.moduleSpecifiers.ts.jsonl",
+    "_namespaces__ts.performance.ts.jsonl",
+    "_namespaces__ts.ts.jsonl",
+    "builderPublic.ts.jsonl",
+    "builderStatePublic.ts.jsonl",
+    "corePublic.ts.jsonl",
+    "diagnosticInformationMap.generated.ts.jsonl",
+    "factory__baseNodeFactory.ts.jsonl",
+    "factory__nodeChildren.ts.jsonl",
+    "factory__utilitiesPublic.ts.jsonl",
+    "hostErrors.ts.jsonl",
+    "performance.ts.jsonl",
+    "performanceCore.ts.jsonl",
+    "tracing.ts.jsonl",
+    "transformers__classThis.ts.jsonl",
+    "transformers__es2016.ts.jsonl",
+    "transformers__es2019.ts.jsonl",
+    "transformers__es2021.ts.jsonl",
+    "transformers__module__impliedNodeFormatDependent.ts.jsonl",
+    "transformers__namedEvaluation.ts.jsonl",
+    "tsbuild.ts.jsonl"
+  ],
+  "full_only": [],
+  "no_stubs_only": [],
+  "byte_mutant": "caught"
+}

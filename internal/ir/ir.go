@@ -12,18 +12,18 @@ import "fmt"
 type Program struct {
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
-	ViewContractTypes map[int]ViewContractID
+	ViewContractTypes SortedMap[int, ViewContractID]
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
-	UninitializedFields map[string]bool
+	UninitializedFields SortedMap[string, bool]
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
-	CheckedFields map[string]bool
+	CheckedFields SortedMap[string, bool]
 	NonNullChecks NonNullCheckCounts
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
@@ -46,17 +46,17 @@ type Program struct {
 
 	// Classes carry nominal identity, prefix field layouts and method slots. IDs are one-based.
 	Classes       []Class
-	MethodTargets map[int][]int
+	MethodTargets SortedMap[int, []int]
 
 	// StructuralMethodThunks records methods reachable through a source interface receiver.
 	// Nil keeps conservative admission for hand-built IR. Count candidates remain independent.
-	StructuralMethodThunks map[int]bool
+	StructuralMethodThunks SortedMap[int, bool]
 
 	// FunctionTypeTargets is the closed-world set for each checker function type.
-	FunctionTypeTargets map[int][]int
+	FunctionTypeTargets SortedMap[int, []int]
 	// Packed calls reserve fixed words and separate rest tails, never a count word.
 	FixedArgumentSlots int
-	RestArgumentSlots  map[RestArguments]int
+	RestArgumentSlots  SortedMap[RestArguments, int]
 
 	// Main is what the program does, in order.
 	Main []Statement
@@ -140,7 +140,7 @@ type Function struct {
 	// Receiver excludes the leading implementation-only this from that count.
 	Receiver bool
 	// OptionalParameters records source presence independently of reference representation.
-	OptionalParameters map[int]bool
+	OptionalParameters SortedMap[int, bool]
 	// RestElement identifies the final parameter as a rest array.
 	RestElement Type
 

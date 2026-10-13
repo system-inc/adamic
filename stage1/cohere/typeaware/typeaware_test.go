@@ -15,14 +15,17 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The upstream commit fixes the compiler population; this is a lost-corpus
@@ -146,34 +149,21 @@ func (h *harness) overlay(name, path, from, to string) string {
 	}
 	return h.write(name+".json", string(data))
 }
-func (h *harness) archive(name, overlay string, sanitize bool) string {
+
+// archive is the unchanged checker archive. A check that plants a change in it reads checkerMutantArchive.
+func (h *harness) archive(name string, sanitize bool) string {
 	h.t.Helper()
-	if overlay == "" {
-		path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
-			archive := filepath.Join(directory, "checker.a")
-			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
-			command.Dir = h.repository
-			if sanitize {
-				command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-			}
-			return archive, buildProduct(h.t, name, command, directory)
-		})
-		if err != nil {
-			h.t.Fatal(err)
+	path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+		archive := filepath.Join(directory, "checker.a")
+		command := toolchain.CommandIn(h.repository, "go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+		if sanitize {
+			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
-		return path
+		return archive, buildProduct(h.t, name, command, directory)
+	})
+	if err != nil {
+		h.t.Fatal(err)
 	}
-	path := filepath.Join(h.directory, name+".a")
-	args := []string{"build", "-p=1", "-buildmode=c-archive", "-o", path}
-	if overlay != "" {
-		args = append(args, "-overlay", overlay)
-	}
-	args = append(args, "./bridge/tsgo/archive")
-	cmd := exec.Command("go", args...)
-	if sanitize {
-		cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-	}
-	h.must(name, cmd)
 	return path
 }
 
@@ -201,7 +191,11 @@ func (h *harness) lowered(entry, name string) string {
 	var source string
 	var err error
 	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
-		source, err = cachedTypeAwareProduct("C "+entry, build)
+		key, keyErr := typeAwareLoweredKey(h.repository, entry)
+		if keyErr != nil {
+			h.t.Fatal(keyErr)
+		}
+		source, err = cachedTypeAwareProduct(key, build)
 	} else {
 		// Generated mutants belong to their check; scratch paths cannot be gate products.
 		source, err = build("")
@@ -233,7 +227,10 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 		}
 		return path
 	}
-	key := fmt.Sprintf("binary %x %s sanitize=%t", sha256.Sum256([]byte(source)), archive, sanitize)
+	key, err := typeAwareNativeKey("binary", source, archive, sanitize)
+	if err != nil {
+		h.t.Fatal(err)
+	}
 	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		return binary, compile(binary)
@@ -252,6 +249,149 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 
 	return path
 }
+
+// mutantNative is a mutant's native as a product, for a mutant whose compile would otherwise fill its shard's own time
+// (wrong-node's ASan link took 22.0 s of TestTypeAwareAgreementAndMutants_003's 24.4 s, and facts-length's 25.6 s of
+// TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is typeAwareNativeKey's, as h.build's
+// cached natives' is: the emitted C's hash (emission names no path, so the same mutant lowered from two directories is
+// the same C) and the archive's. Its TestProduct_ makes it ahead; any other mutant still compiles inside its own check,
+// as h.build does.
+func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
+	h.t.Helper()
+	source := h.lowered(entry, name)
+	key, err := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
+		binary := filepath.Join(directory, "native")
+		started := time.Now()
+		err := typeAwareNativeBuild(source, binary, archive, sanitize)
+		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		return binary, err
+	})
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	return binary
+}
+
+// typeAwareLoweredKey keys an entry's emitted C by the entry's path in the repository, never where the checkout sits:
+// a key carries no machine path, or a runner's checkout reads none of the builder's products.
+func typeAwareLoweredKey(repository, entry string) (string, error) {
+	relative, err := filepath.Rel(repository, entry)
+	if err != nil {
+		return "", err
+	}
+	return "C " + filepath.ToSlash(relative), nil
+}
+
+// typeAwareNativeKey keys a native by kind, the emitted C's hash, the archive's bytes' hash and sanitize. The archive
+// is a product whose path names the cache directory, and so the machine, it sits in: by its bytes, the same archive
+// keys the same native wherever it is cached (tsgo's archive rebuilds byte for byte, Builder's Linux proof, Oct 12).
+func typeAwareNativeKey(kind, source, archive string, sanitize bool) (string, error) {
+	digest, err := typeAwareArchiveDigest(archive)
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%s %x archive=%s sanitize=%t", kind, sha256.Sum256([]byte(source)), digest, sanitize), nil
+}
+
+// typeAwareArchiveDigests are the archives' SHA256s, read once per process each: a product never changes in place.
+var typeAwareArchiveDigests sync.Map
+
+func typeAwareArchiveDigest(archive string) (string, error) {
+	if digest, ok := typeAwareArchiveDigests.Load(archive); ok {
+		return digest.(string), nil
+	}
+	data, err := os.ReadFile(archive)
+	if err != nil {
+		return "", err
+	}
+	digest := fmt.Sprintf("%x", sha256.Sum256(data))
+	typeAwareArchiveDigests.Store(archive, digest)
+	return digest, nil
+}
+
+// The keys of a native and of an emitted C carry no machine path: one product keys alike from two checkouts and two
+// cache directories, by name key and by declared key. Mutants: the archive's path back in the native's key; the
+// entry's absolute path back in the C's.
+func TestTypeAwareKeysCarryNoMachinePath(t *testing.T) {
+	t.Parallel()
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var natives, lowered []string
+	for _, machine := range []string{t.TempDir(), t.TempDir()} {
+		// Where the archive product sits under this machine's ADAMIC_BUILD_CACHE_DIR, and where its checkout is.
+		archive := filepath.Join(machine, "cache", "local", "d91f8adc3a72", "checker.a")
+		if err := os.MkdirAll(filepath.Dir(archive), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(archive, []byte("the same archive bytes on both machines"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		native, err := typeAwareNativeKey("binary", "int main(void) { return 0; }\n", archive, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		checkout := filepath.Join(machine, "checkout")
+		c, err := typeAwareLoweredKey(checkout, filepath.Join(checkout, "stage1/cohere/typeaware/main.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		natives, lowered = append(natives, native), append(lowered, c)
+	}
+	for _, keys := range []struct {
+		name string
+		keys []string
+	}{{"native", natives}, {"emitted C", lowered}} {
+		first, second := typeAwareSharedInputs(keys.keys[0]), typeAwareSharedInputs(keys.keys[1])
+		if a, b := buildcache.NameKey(repository, first), buildcache.NameKey(repository, second); a != b {
+			t.Fatalf("%s: name key %s on one machine, %s on the other (%q, %q)", keys.name, a[:12], b[:12], keys.keys[0], keys.keys[1])
+		}
+		a, err := buildcache.Key(repository, first)
+		if err != nil {
+			t.Fatal(err)
+		}
+		b, err := buildcache.Key(repository, second)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if a != b {
+			t.Fatalf("%s: declared key %s on one machine, %s on the other", keys.name, a[:12], b[:12])
+		}
+		t.Logf("%s: one name key and one declared key (%s) from two machines", keys.name, a[:12])
+	}
+}
+
+// typeAwareWrongNodeEntry writes the wrong-node mutant into h's directory and returns its entry: main.ts asking the
+// unary expression's type rather than its operand's. It still compiles and finishes; the independent production-rule
+// findings must disagree. Both mutant sources sit next to one another, their relative dependencies made absolute.
+func typeAwareWrongNodeEntry(h *harness) string {
+	h.t.Helper()
+	text, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts"))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
+	if strings.Count(string(text), anchor) != 1 {
+		h.t.Fatal("wrong-node anchor changed")
+	}
+	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
+	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
+	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(h.repository, "stage1/cohere/lint"))
+	h.write("wrong-node.ts", mutant)
+	mainText, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
+	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
+	return h.write("wrong-main.ts", mainSource)
+}
+
 func firstDifference(a, b []byte) int {
 	for i := 0; i < len(a) && i < len(b); i++ {
 		if a[i] != b[i] {
@@ -306,8 +446,8 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
-	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
-	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
+	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
+	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "native-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "native", entry, normal(h), false) }
@@ -427,32 +567,11 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
-	original := filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts")
-	text, err := os.ReadFile(original)
-	if err != nil {
-		t.Fatal(err)
-	}
-	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
-	if strings.Count(string(text), anchor) != 1 {
-		t.Fatal("wrong-node anchor changed")
-	}
-	// Preserve imports by making both mutant sources next to one another in scratch
-	// and replacing their relative dependencies with absolute source paths.
-	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
-	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(repository, "stage1/cohere/lint"))
-	h.write("wrong-node.ts", mutant)
-	mainText, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
-	mutantEntry := h.write("wrong-main.ts", mainSource)
+	mutantEntry := typeAwareWrongNodeEntry(h)
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
 		t := h.t
-		wrong := typeAwareBuild(h, stage0, "wrong-node", mutantEntry, normal(h), true)
+		wrong := typeAwareSetup(h, "wrong-node", func() string { return h.mutantNative("wrong-node", mutantEntry, normal(h), true) })
 		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			t.Fatal("wrong-node mutant was not caught by findings alone")
@@ -475,8 +594,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/stale"}...)
 	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
 		t := h.t
-		staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-		staleArchive := typeAwareArchive(h, "stale-checker", staleOverlay, false)
+		staleArchive := typeAwareMutantArchive(h, "retained-handle")
 		staleBinary := typeAwareBuild(h, stage0, "stale-native", releasedEntry, staleArchive, false)
 		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
 		if len(stale.stderr) != 0 {
@@ -486,17 +604,16 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	})
 
 	// Bad frame mutants must fail explicitly before any finding can be invented.
-	for _, change := range []struct{ name, value, message string }{
-		{"empty-frame", "", "checker returned no type parts"},
-		{"missing-header", "x", "invalid checker type frame"},
-		{"bad-length", "1\n-1\n", "invalid checker type length or flags"},
+	// Each frame's value is planted by its checker mutant (checker_mutants_test.go).
+	for _, change := range []struct{ name, message string }{
+		{"empty-frame", "checker returned no type parts"},
+		{"missing-header", "invalid checker type frame"},
+		{"bad-length", "invalid checker type length or flags"},
 	} {
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
 			t := h.t
-			quoted := strconv.Quote(change.value)
-			overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
-			archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
+			archive := typeAwareMutantArchive(h, change.name)
 			malformed := typeAwareBuild(h, stage0, change.name+"-native", entry, archive, false)
 			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
@@ -529,8 +646,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
 		t := h.t
-		ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
-		ignoredArchive := typeAwareArchive(h, "ignored-kind-checker", ignoredKind, false)
+		ignoredArchive := typeAwareMutantArchive(h, "ignored-kind")
 		ignoredBinary := typeAwareBuild(h, stage0, "ignored-kind-native", badSource, ignoredArchive, false)
 		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
 		if len(ignored.stderr) != 0 {

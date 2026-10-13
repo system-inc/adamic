@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	regex "github.com/system-inc/adamic/internal/regexp"
+	"hash/fnv"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -32,10 +33,61 @@ type regexCase struct {
 	} `json:"expected"`
 }
 
-// One executable runs all the observed test262 calls through the C interpreter,
-// including captures, named groups, indices and lastIndex, under both sanitizers.
-func TestRegExpBytecodeTest262(t *testing.T) {
+// The observed test262 calls run through the C interpreter, including captures, named groups,
+// indices and lastIndex, under both sanitizers. Building every call into one executable is more than
+// one test should carry alone, and nearly all of them are one pattern's, so they're cut by each
+// call's content, not by pattern: a call belongs to bucket b of n when the FNV-1a hash of its
+// pattern, flags, input and lastIndex is b modulo n. Each bucket is its own executable and its own
+// top-level test below, and TestRegExpTest262BucketsEachHaveOneTest holds the buckets to their tests.
+var regExpTest262Buckets = map[string]int{
+	"bucket 0 of 4": 0,
+	"bucket 1 of 4": 1,
+	"bucket 2 of 4": 2,
+	"bucket 3 of 4": 3,
+}
+
+func TestRegExpBytecodeTest262Bucket0Of4(t *testing.T) {
 	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 0 of 4")
+}
+
+func TestRegExpBytecodeTest262Bucket1Of4(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 1 of 4")
+}
+
+func TestRegExpBytecodeTest262Bucket2Of4(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 2 of 4")
+}
+
+func TestRegExpBytecodeTest262Bucket3Of4(t *testing.T) {
+	t.Parallel()
+	runRegExpTest262Bucket(t, "bucket 3 of 4")
+}
+
+// Every call lands in exactly one bucket when the buckets are 0 to n-1 of the same n, so a bucket
+// missing, a bucket named for another n, a bucket without its test, or a test naming a bucket that
+// isn't there fails here without building anything.
+func TestRegExpTest262BucketsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	seen := make([]bool, len(regExpTest262Buckets))
+	for name, bucket := range regExpTest262Buckets {
+		if want := fmt.Sprintf("bucket %d of %d", bucket, len(regExpTest262Buckets)); name != want || bucket < 0 || bucket >= len(seen) || seen[bucket] {
+			t.Errorf("bucket %q must be named %q, one of 0 to %d, and the only one", name, want, len(seen)-1)
+			continue
+		}
+		seen[bucket] = true
+	}
+	checkNamedWrappers(t, "regexp_test.go", "TestRegExpBytecodeTest262", "runRegExpTest262Bucket", regExpTest262Buckets)
+}
+
+func runRegExpTest262Bucket(t *testing.T, name string) {
+	t.Helper()
+	bucket, ok := regExpTest262Buckets[name]
+	if !ok {
+		t.Fatalf("no test262 bucket %q", name)
+	}
 	file, err := os.Open("../regexp/testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -50,7 +102,19 @@ func TestRegExpBytecodeTest262(t *testing.T) {
 	if err = json.NewDecoder(compressed).Decode(&cases); err != nil {
 		t.Fatal(err)
 	}
-	runRegexCases(t, cases)
+	var owned []regexCase
+	for _, c := range cases {
+		content := fnv.New32a()
+		fmt.Fprintf(content, "%q %v %q %v %d", c.Pattern, c.PatternUnits, c.Flags, c.Input, c.LastIndex)
+		if int(content.Sum32()%uint32(len(regExpTest262Buckets))) == bucket {
+			owned = append(owned, c)
+		}
+	}
+	if len(owned) == 0 {
+		t.Fatalf("%s holds none of the %d calls", name, len(cases))
+	}
+	t.Logf("%s holds %d of the %d calls", name, len(owned), len(cases))
+	runRegexCases(t, owned)
 }
 func runRegexCases(t *testing.T, cases []regexCase) {
 	t.Helper()
@@ -217,7 +281,7 @@ func runRegExpBytecodeRandomNodeUnit(t *testing.T, unit int) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := programCommand(ctx, "", "node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
 for(const c of cases) {

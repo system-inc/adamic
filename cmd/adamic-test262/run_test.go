@@ -3,13 +3,14 @@ package main
 import (
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs in the saturated subtest.
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
 `), 0600); err != nil {
 		t.Fatal(err)
 	}
-	if output, err := exec.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
 		t.Fatalf("build CPU helper: %v\n%s", err, output)
 	}
 	t.Run("spin", func(t *testing.T) {
@@ -49,13 +50,15 @@ int main(int argc, char **argv) {
 			t.Fatal("spinning child reached the wall backstop instead of the CPU limit")
 		}
 	})
-	// Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs.
+	// Not parallel: changes runtime.GOMAXPROCS and saturates all the unit's CPUs (GOMAXPROCS, never the host's cores, so a
+	// runner's unit saturates its own share and not 128 threads' worth of a 64-core box).
 	t.Run("saturated", func(t *testing.T) {
-		previous := runtime.GOMAXPROCS(2 * runtime.NumCPU())
+		processors := runtime.GOMAXPROCS(0)
+		previous := runtime.GOMAXPROCS(2 * processors)
 		defer runtime.GOMAXPROCS(previous)
 		var stop atomic.Bool
 		var ready, workers sync.WaitGroup
-		for range 2 * runtime.NumCPU() {
+		for range 2 * processors {
 			ready.Add(1)
 			workers.Go(func() {
 				ready.Done()
@@ -81,7 +84,7 @@ int main(int argc, char **argv) {
 
 func TestRunFilterAttemptLimit(t *testing.T) {
 	t.Parallel()
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if err != nil {
 		t.Fatal(err)
 	}

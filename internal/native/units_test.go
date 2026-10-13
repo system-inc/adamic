@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: t.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED.
@@ -47,11 +49,11 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 // release object and loses UBSan's check, while linking and executing normally. No warning kills it.
 func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	t.Parallel()
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -75,7 +77,7 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	}
 	binary := filepath.Join(directory, "probe")
 	args := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
-	if output, err := exec.Command(compiler, args...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(compiler, args...).CombinedOutput(); err != nil {
 		t.Fatalf("link: %v\n%s", err, output)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
@@ -102,11 +104,11 @@ func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
 
 // Not parallel: this check deliberately mutates a header between cache lookups.
 func TestUnitSystemHeaderProvenance(t *testing.T) {
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +135,7 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 			t.Fatal(err)
 		}
 		binary := filepath.Join(directory, "probe")
-		if output, err := exec.Command(compiler, append(append([]string{}, flags...), main, object, "-o", binary)...).CombinedOutput(); err != nil {
+		if output, err := toolchain.Command(compiler, append(append([]string{}, flags...), main, object, "-o", binary)...).CombinedOutput(); err != nil {
 			t.Fatalf("link: %v\n%s", err, output)
 		}
 		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != expected {

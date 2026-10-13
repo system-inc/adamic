@@ -221,7 +221,7 @@ func outcome(t *testing.T, name string, arguments ...string) ran {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := programCommand(ctx, "", name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr

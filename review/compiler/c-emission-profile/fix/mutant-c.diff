@@ -1,0 +1,51 @@
+diff -ru '--exclude=port-*' /tmp/c-emission-validation/after/oracle-0163.c /tmp/c-emission-validation/mutant/oracle-0163.c
+--- /tmp/c-emission-validation/after/oracle-0163.c	2026-10-09 07:15:17.261180240 +0000
++++ /tmp/c-emission-validation/mutant/oracle-0163.c	2026-10-09 07:17:06.824133179 +0000
+@@ -40,14 +40,10 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_object * adamic_temporary_1 = adamic_object_new(&adamic_shape_0);
+-	adamic_object_field_types(adamic_temporary_1)[0] = 3;
+ 	adamic_temporary_1->slots[0].reference = adamic_retain(&adamic_string_0);
+-	adamic_object_field_types(adamic_temporary_1)[1] = 1;
+ 	adamic_temporary_1->slots[1].number = (0x1p+01);
+ 	adamic_object * adamic_temporary_2 = adamic_object_new(&adamic_shape_1);
+-	adamic_object_field_types(adamic_temporary_2)[0] = 3;
+ 	adamic_temporary_2->slots[0].reference = adamic_retain(&adamic_string_1);
+-	adamic_object_field_types(adamic_temporary_2)[1] = 1;
+ 	adamic_temporary_2->slots[1].number = (0x1.8p+01);
+ 	adamic_array * adamic_temporary_3 = adamic_array_new(2, true);
+ 	adamic_array_push(adamic_temporary_3, (adamic_value){.reference = adamic_retain(adamic_temporary_1)});
+@@ -119,9 +115,7 @@
+ 		adamic_release(adamic_temporary_22);
+ 	}
+ 	adamic_object * adamic_temporary_36 = adamic_object_new(&adamic_shape_2);
+-	adamic_object_field_types(adamic_temporary_36)[0] = 1;
+ 	adamic_temporary_36->slots[0].number = (0x1p+00);
+-	adamic_object_field_types(adamic_temporary_36)[1] = 1;
+ 	adamic_temporary_36->slots[1].number = (0x1p+01);
+ 	adamic_object * adamic_temporary_37 = adamic_global_2_point;
+ 	adamic_global_2_point = adamic_temporary_36;
+@@ -139,9 +133,7 @@
+ 	adamic_release(adamic_temporary_45);
+ 	adamic_release(adamic_temporary_44);
+ 	adamic_object * adamic_temporary_46 = adamic_object_new(&adamic_shape_3);
+-	adamic_object_field_types(adamic_temporary_46)[0] = 3;
+ 	adamic_temporary_46->slots[0].reference = adamic_retain(&adamic_string_2);
+-	adamic_object_field_types(adamic_temporary_46)[1] = 1;
+ 	adamic_temporary_46->slots[1].number = (0x1.4cp+06);
+ 	adamic_object * adamic_temporary_47 = adamic_global_3_named;
+ 	adamic_global_3_named = adamic_temporary_46;
+diff -ru '--exclude=port-*' /tmp/c-emission-validation/after/oracle-0164.c /tmp/c-emission-validation/mutant/oracle-0164.c
+--- /tmp/c-emission-validation/after/oracle-0164.c	2026-10-09 07:15:17.289180001 +0000
++++ /tmp/c-emission-validation/mutant/oracle-0164.c	2026-10-09 07:17:06.852132909 +0000
+@@ -22,9 +22,7 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_object * adamic_temporary_1 = adamic_object_new(&adamic_shape_0);
+-	adamic_object_field_types(adamic_temporary_1)[0] = 3;
+ 	adamic_temporary_1->slots[0].reference = adamic_retain(&adamic_string_0);
+-	adamic_object_field_types(adamic_temporary_1)[1] = 1;
+ 	adamic_temporary_1->slots[1].number = (0x1p+00);
+ 	adamic_array * adamic_temporary_2 = adamic_array_new(1, true);
+ 	adamic_array_push(adamic_temporary_2, (adamic_value){.reference = adamic_retain(adamic_temporary_1)});

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"go/ast"
 	goparser "go/parser"
@@ -34,7 +35,7 @@ type jsxProductInputs struct {
 	Name      string
 	Files     []string
 	Flags     []string
-	Toolchain string
+	Toolchain []string
 }
 
 // Include source dependencies as files, not just the entry point, so products
@@ -80,7 +81,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 
 func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: runtime.Version()}
+	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
 	directory := jsxProduct(t, inputs, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
@@ -91,8 +92,10 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.Dir = root
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
+		// toolchain's go, under its environment, in root with PWD set to it: the go and the settings the key reads.
+		command := toolchain.CommandIn(root, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
 		if err := command.Run(); err != nil {
@@ -424,11 +427,11 @@ func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error)
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Product(t, buildcache.Inputs{Name: inputs.Name, Files: files, Flags: inputs.Flags, Toolchain: []string{inputs.Toolchain}}, build)
+	return buildcache.Product(t, buildcache.Inputs{Name: inputs.Name, Files: files, Flags: inputs.Flags, Toolchain: inputs.Toolchain}, build)
 }
 func jsxTreeInputs(t *testing.T, entry string) jsxProductInputs {
 	t.Helper()
-	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: runtime.Version()}
+	return jsxProductInputs{Name: "jsx-tree-lowered", Files: append(jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), filepath.Join(packageDirectory, "jsx_shards_test.go"), filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work")), Toolchain: []string{runtime.Version()}}
 }
 
 func jsxTreeLowered(t *testing.T, entry string) string {
@@ -452,8 +455,9 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	inputs := jsxTreeInputs(t, entry)
 	inputs.Name = "jsx-tree-native"
 	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
-	inputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
-	inputs.Toolchain = string(execute(t, "", "clang", "--version").output)
+	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Toolchain = []string{buildcache.Tool("clang", "--version")}
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {
@@ -498,11 +502,57 @@ var jsxReadyDirectory string
 var jsxPrepareOnce sync.Once
 
 func jsxSetupInputs() buildcache.Inputs {
+	// The capture's go test and the oracles' go builds run toolchain's go under toolchain.Env, so the key reads go's
+	// settings there (TestJsxSetupKeyNamesTheBuildsCompiler), never the caller's CC, CGO_* or GOFLAGS.
 	return buildcache.Inputs{
 		Name:      "jsx-tree-setup-v1",
 		Files:     []string{"cohere", "stage1/cohere/lint", "stage1/typescript/parser", "internal", "oracle", "go.mod", "go.work"},
-		Flags:     []string{"whole", "jsx-recovery", "sanitize=address,undefined", "shards=16", "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CC=" + os.Getenv("CC"), "CGO_CFLAGS=" + os.Getenv("CGO_CFLAGS"), "CGO_LDFLAGS=" + os.Getenv("CGO_LDFLAGS")},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
+		Flags:     []string{"whole", "jsx-recovery", "sanitize=address,undefined", "shards=16", "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings(), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
+	}
+}
+
+// TestJsxSetupKeyNamesTheBuildsCompiler holds the setup key to the compiler its go runs build with. With no CC, toolchain
+// names clang, so the key must be the one an explicit CC=clang gives; another compiler must move it. Each answer comes
+// from a child of this binary, since Tool reads a tool once per process.
+func TestJsxSetupKeyNamesTheBuildsCompiler(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_JSX_SETUP_KEY_CHILD") == "1" {
+		inputs := jsxSetupInputs()
+		fmt.Printf("jsx-setup-key\t%x\n", sha256.Sum256([]byte(strings.Join(append(inputs.Flags, inputs.Toolchain...), "\x00"))))
+		return
+	}
+	key := func(compiler string) string {
+		var environment []string
+		for _, setting := range os.Environ() {
+			if !strings.HasPrefix(setting, "CC=") {
+				environment = append(environment, setting)
+			}
+		}
+		environment = append(environment, "ADAMIC_JSX_SETUP_KEY_CHILD=1")
+		if compiler != "" {
+			environment = append(environment, "CC="+compiler)
+		}
+		command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestJsxSetupKeyNamesTheBuildsCompiler$", "-test.timeout=120s")
+		command.Env = environment
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("CC=%s: %v\n%s", compiler, err, output)
+		}
+		for _, line := range strings.Split(string(output), "\n") {
+			if value, found := strings.CutPrefix(line, "jsx-setup-key\t"); found {
+				return value
+			}
+		}
+		t.Fatalf("CC=%s: the child printed no key:\n%s", compiler, output)
+		return ""
+	}
+	unset, clang, gcc := key(""), key("clang"), key("gcc")
+	if unset != clang {
+		t.Errorf("with no CC the build runs clang, but the key (%s) isn't CC=clang's (%s)", unset, clang)
+	}
+	if gcc == clang {
+		t.Errorf("CC=gcc keys as clang does (%s)", gcc)
 	}
 }
 
@@ -756,34 +806,20 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 	t.Logf("planted disagreement caught only by %s", expected)
 }
 
-// Cancel the entire child process group, including any spawned compilers.
-// This uses Go's context deadline and needs no external timeout executable.
-func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
-	t.Helper()
-	return jsxContextCommand(t, context.Background(), name, args...)
-}
-
-func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
+// jsxContextCommand is lintCommand under a case's own 90-second deadline: the entire child process group is
+// cancelled with it, including any spawned compilers, with no external timeout executable.
+func jsxContextCommand(t *testing.T, parent context.Context, directory, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
+	command := lintCommand(ctx, directory, name, args...)
 	command.WaitDelay = 2 * time.Second
 	return command
 }
 
 func jsxCaseExecute(t *testing.T, ctx context.Context, directory, name string, args ...string) execution {
 	t.Helper()
-	command := jsxContextCommand(t, ctx, name, args...)
-	command.Dir = directory
+	command := jsxContextCommand(t, ctx, directory, name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -824,11 +860,16 @@ func jsxUpstream(t *testing.T) []string {
 }
 
 func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
+	// toolchain's program for name, under its environment plus the capture's own settings, as the setup key reads it.
+	path, err := toolchain.Path(name)
+	if err != nil {
+		return nil, err
+	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(ctx, path, args...)
 	command.Dir = directory
-	command.Env = append(os.Environ(), environment...)
+	command.Env = toolchain.Env(environment...)
 	if directory != "" {
 		command.Env = append(command.Env, "PWD="+directory)
 	}
@@ -913,6 +954,10 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
+	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
+	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
+	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
+	defer os.RemoveAll(capture)
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {

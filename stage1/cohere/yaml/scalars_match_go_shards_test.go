@@ -3,24 +3,15 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
-	"hash/fnv"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const scalarsMatchGoShardCount = 8
@@ -28,14 +19,7 @@ const scalarsMatchGoShardCount = 8
 // Hash the complete encoded case, including its streaming chunk size. Repeated
 // cases keep their multiplicity, and inserting a case cannot move another owner.
 func scalarsMatchGoPartition(cases []string) [][]int {
-	shards := make([][]int, scalarsMatchGoShardCount)
-	for index, input := range cases {
-		hash := fnv.New64a()
-		_, _ = hash.Write([]byte(input))
-		owner := int(hash.Sum64() % scalarsMatchGoShardCount)
-		shards[owner] = append(shards[owner], index)
-	}
-	return shards
+	return yamlShards(cases, scalarsMatchGoShardCount)
 }
 
 func scalarsMatchGoCases(t *testing.T) ([]string, int) {
@@ -61,173 +45,22 @@ func scalarsMatchGoWriteCases(t *testing.T, cases []string) string {
 	return path
 }
 
-// Include compiler implementations, imported TS, Go replacements and embedded
-// runtime/checker data. Test evidence is not a build input.
-func scalarsMatchGoInputs(t *testing.T, name string) buildcache.Inputs {
-	t.Helper()
-	files := []string{"go.mod", "go.work", "stage1/cohere/yaml/scalars_match_go_shards_test.go"}
-	for _, directory := range []string{"internal", "stage1/cohere/yaml", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(repository, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				switch entry.Name() {
-				case ".git", "node_modules", "testdata", "audit", "performance", "evidence", "logs":
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if strings.HasSuffix(path, "_test.go") {
-				return nil
-			}
-			switch filepath.Ext(path) {
-			case ".go", ".ts", ".c", ".h", ".mod", ".sum", ".gz":
-			default:
-				return nil
-			}
-			relative, err := filepath.Rel(repository, path)
-			if err != nil {
-				return err
-			}
-			files = append(files, relative)
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	return buildcache.Inputs{Name: name, Files: files, Toolchain: []string{runtime.Version()}, Flags: []string{"GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
-}
-
-type scalarsMatchGoProduct struct {
-	once      sync.Once
-	directory string
-}
-
-var scalarsMatchGoLowered, scalarsMatchGoNative, scalarsMatchGoGo scalarsMatchGoProduct
-
-func scalarsMatchGoLoweredProduct(t *testing.T) string {
-	t.Helper()
-	scalarsMatchGoLowered.once.Do(func() {
-		inputs := scalarsMatchGoInputs(t, "yaml-scalars-lowered")
-		inputs.Flags = append(inputs.Flags, "scalar_main.ts: lower+native.C+javascript.JavaScript")
-		scalarsMatchGoLowered.directory = buildcache.Product(t, inputs, func(directory string) error {
-			entry, err := filepath.Abs("scalar_main.ts")
-			if err != nil {
-				return err
-			}
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				return err
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-			defer cancel()
-			lowered, err := lower.Lower(ctx, program)
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(filepath.Join(directory, "scalars.c"), []byte(native.C(lowered)), 0644); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "scalars.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
-		})
-	})
-	if scalarsMatchGoLowered.directory == "" {
-		t.Fatal("scalar lowering did not complete")
-	}
-	return scalarsMatchGoLowered.directory
-}
-
-func scalarsMatchGoNativeProduct(t *testing.T) string {
-	t.Helper()
-	scalarsMatchGoNative.once.Do(func() {
-		lowered := scalarsMatchGoLoweredProduct(t)
-		options := native.Options{Sanitize: true}
-		inputs := scalarsMatchGoInputs(t, "yaml-scalars-native")
-		inputs.Flags = append(inputs.Flags, "scalar_main.ts: lower+native.C+javascript.JavaScript")
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
-		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		scalarsMatchGoNative.directory = buildcache.Product(t, inputs, func(directory string) error {
-			source, err := os.ReadFile(filepath.Join(lowered, "scalars.c"))
-			if err != nil {
-				return err
-			}
-			return native.Build(string(source), filepath.Join(directory, "scalars"), options)
-		})
-	})
-	if scalarsMatchGoNative.directory == "" {
-		t.Fatal("scalar native product did not complete")
-	}
-	return scalarsMatchGoNative.directory
-}
-
-// Product remains the shared buildcache API until GoBuild is available on main.
-// Both the gate declaration and shards call this exact overlay recipe and key.
-func scalarsMatchGoGoProduct(t *testing.T) string {
-	t.Helper()
-	scalarsMatchGoGo.once.Do(func() {
-		inputs := scalarsMatchGoInputs(t, "yaml-scalars-go")
-		inputs.Files = append(inputs.Files, "stage1/cohere/yaml/testdata/scalar_go.go", "stage1/cohere/yaml/testdata/scalar_exports.txt")
-		inputs.Flags = append(inputs.Flags, "go build -overlay scalar_go.go+scalar_exports.txt ./command/formatter_comparison", "CGO_ENABLED="+os.Getenv("CGO_ENABLED"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
-		scalarsMatchGoGo.directory = buildcache.Product(t, inputs, func(directory string) error {
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				return err
-			}
-			adapter, err := filepath.Abs("testdata/scalar_go.go")
-			if err != nil {
-				return err
-			}
-			numbers := filepath.Join(root, "cohere/internal/format/yaml/compose/numbers.go")
-			original, err := os.ReadFile(numbers)
-			if err != nil {
-				return err
-			}
-			exports, err := os.ReadFile("testdata/scalar_exports.txt")
-			if err != nil {
-				return err
-			}
-			source := strings.Replace(string(original), "import (", "import (\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", 1) + string(exports)
-			replacement := filepath.Join(directory, "numbers.go")
-			if err := os.WriteFile(replacement, []byte(source), 0644); err != nil {
-				return err
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): adapter, numbers: replacement}})
-			if err != nil {
-				return err
-			}
-			path := filepath.Join(directory, "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-			defer cancel()
-			command := exec.CommandContext(ctx, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-scalars"), "./command/formatter_comparison")
-			command.Dir = filepath.Join(root, "cohere")
-			output, err := command.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go scalar build: %w\n%s", err, output)
-			}
-			return nil
-		})
-	})
-	if scalarsMatchGoGo.directory == "" {
-		t.Fatal("Go scalar product did not complete")
-	}
-	return scalarsMatchGoGo.directory
-}
-
-func TestProduct_YamlScalarsLowered(t *testing.T) { t.Parallel(); scalarsMatchGoLoweredProduct(t) }
-func TestProduct_YamlScalarsNative(t *testing.T)  { t.Parallel(); scalarsMatchGoNativeProduct(t) }
-func TestProduct_YamlScalarsGo(t *testing.T)      { t.Parallel(); scalarsMatchGoGoProduct(t) }
-
 func scalarsMatchGoRun(t *testing.T, ctx context.Context, environment []string, name string, args ...string) []byte {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Env = append(os.Environ(), environment...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the caller's
+		// settings, not PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built
+		// (the Go oracle, the port) runs as named, with this process's environment. Path's error fails the command as it
+		// starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Env = toolchain.Env(environment...)
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = time.Second
@@ -248,9 +81,9 @@ func scalarsMatchGoRunShard(t *testing.T, shard int) {
 	t.Helper()
 	setup := time.Now()
 	// Every leaf fetches its own products, once per process, before its work clock.
-	oracle := scalarsMatchGoGoProduct(t)
-	lowered := scalarsMatchGoLoweredProduct(t)
-	compiled := scalarsMatchGoNativeProduct(t)
+	oracle := goScalarsOracle(t)
+	emitted := yamlScalarsBuild.emitted(t, "scalar_main.ts")
+	compiled := yamlScalarsBuild.binary(t, "scalar_main.ts")
 	all, _ := scalarsMatchGoCases(t)
 	indices := scalarsMatchGoPartition(all)[shard]
 	cases := make([]string, len(indices))
@@ -273,7 +106,7 @@ func scalarsMatchGoRunShard(t *testing.T, shard int) {
 	started := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(t, ctx, nil, filepath.Join(oracle, "go-scalars"), path)
+	expected := scalarsMatchGoRun(t, ctx, nil, oracle, path)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name    string
@@ -281,9 +114,9 @@ func scalarsMatchGoRunShard(t *testing.T, shard int) {
 		command string
 		args    []string
 	}{
-		{"native ASan/UBSan/LSan", []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(compiled, "scalars"), []string{path}},
+		{"native ASan/UBSan/LSan", []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, []string{path}},
 		{"Node", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, path}},
-		{"emitted JavaScript", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(lowered, "scalars.mjs"), path}},
+		{"emitted JavaScript", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, emitted, path}},
 	} {
 		actual := scalarsMatchGoRun(t, ctx, side.env, side.command, side.args...)
 		if side.name == "native ASan/UBSan/LSan" && os.Getenv("ADAMIC_YAML_SCALARS_PLANT") == "1" {
@@ -328,15 +161,15 @@ func TestScalarsMatchGoUnion(t *testing.T) {
 
 func TestScalarsMatchGoPlantedFailure(t *testing.T) {
 	t.Parallel()
-	oracle := scalarsMatchGoGoProduct(t)
-	compiled := scalarsMatchGoNativeProduct(t)
+	oracle := goScalarsOracle(t)
+	compiled := yamlScalarsBuild.binary(t, "scalar_main.ts")
 	cases, _ := scalarsMatchGoCases(t)
 	// Execute a real case through both sides, then corrupt its actual stdout.
 	path := scalarsMatchGoWriteCases(t, cases[:1])
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(t, ctx, nil, filepath.Join(oracle, "go-scalars"), path)
-	actual := scalarsMatchGoRun(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(compiled, "scalars"), path)
+	expected := scalarsMatchGoRun(t, ctx, nil, oracle, path)
+	actual := scalarsMatchGoRun(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, path)
 	if scalarsMatchGoDisagrees(actual, expected) {
 		t.Fatal("native control disagrees before planting")
 	}

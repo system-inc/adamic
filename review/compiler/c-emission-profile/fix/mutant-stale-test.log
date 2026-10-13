@@ -1,0 +1,8 @@
+=== RUN   TestObjectMetadataCacheIsPerEmission
+=== PAUSE TestObjectMetadataCacheIsPerEmission
+=== CONT  TestObjectMetadataCacheIsPerEmission
+    object_metadata_test.go:30: new emission reused metadata after the field contract was removed
+--- FAIL: TestObjectMetadataCacheIsPerEmission (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.007s
+FAIL

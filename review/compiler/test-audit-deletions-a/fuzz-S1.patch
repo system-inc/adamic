@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..b9f4d1c6 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -24,7 +24,7 @@ import (
+ // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
+ // an expression is under test everywhere.
+ func Generate(seed uint64) *Program {
+-	return GenerateWithout(seed, nil)
++	return GenerateWithout(1, nil)
+ }
+ 
+ // Features are the parts of the language the generator can leave out by name, so it can stay inside

@@ -1,0 +1,6 @@
+// One replacement for testdata/hello/main.go that GoBuild's overlay tests build.
+package main
+
+import "fmt"
+
+func main() { fmt.Println("hello from overlay one") }

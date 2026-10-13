@@ -5,15 +5,12 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -317,26 +314,12 @@ func TestFactoryHooks_NativeBuildWorker(t *testing.T) {
 	}
 }
 
-func factoryHooksCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
-}
-
 func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 	executable, err := os.Executable()
 	if err != nil {
 		return err
 	}
-	command := factoryHooksCommand(ctx, executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
+	command := lintCommand(ctx, "", executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source, "ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output)
 	data, err := command.CombinedOutput()
 	if err != nil {
@@ -347,7 +330,7 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 
 func factoryHooksExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
 	t.Helper()
-	command := factoryHooksCommand(ctx, name, args...)
+	command := lintCommand(ctx, "", name, args...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)

@@ -7,10 +7,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
+	"hash/fnv"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -38,6 +41,9 @@ type Fixture struct {
 func fail(format string, args ...any) { fmt.Fprintf(os.Stderr, format+"\n", args...); os.Exit(1) }
 func run(command string, args ...string) []byte {
 	c := exec.Command(command, args...)
+	if !strings.ContainsRune(command, filepath.Separator) { // node, through internal/toolchain; a built binary runs as named
+		c = toolchain.Command(command, args...)
+	}
 	var out, errors bytes.Buffer
 	c.Stdout = &out
 	c.Stderr = &errors
@@ -80,11 +86,43 @@ func equal(f Fixture, backend string, want, actual []byte) {
 		fail("%s: %s fixture mismatch: expected %q got %q", f.ID, backend, want, actual)
 	}
 }
+
+// owner is the shard of count that compares a row: its ID hashed, never its place in the table.
+func owner(id string, count int) int {
+	hash := fnv.New64a()
+	hash.Write([]byte(id))
+	return int(hash.Sum64() % uint64(count))
+}
+
+// runtimeLowering loads and lowers a row's runtime entry. A refusal is returned only when it is the named gap the
+// runtime compiler closes; any other fails the gate.
+func runtimeLowering(f Fixture, entry string) (*ir.Program, error) {
+	p, e := load.Load([]string{entry})
+	if e != nil {
+		fail("%s: %v", f.ID, e)
+	}
+	program, e := lower.Lower(context.Background(), p)
+	if e != nil && !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
+		fail("%s: unexpected native refusal: %v", f.ID, e)
+	}
+	return program, e
+}
 func main() {
 	external := flag.String("runtime-js-compiler", "", "optional approved library compiler binary for runtime-string JS")
 	force := flag.Bool("force-native", false, "require the first runtime fixture to pass native even before compiler landing")
 	mutant := flag.Bool("mutant", false, "change one translation character in the first fixture and require comparison failure")
+	shard := flag.String("shard", "0/1", "i/n: compare only the rows whose ID hashes (FNV-1a, 64 bits) to i mod n; every row is still checked for coverage")
+	dry := flag.Bool("dry", false, "run only the Go side of the owned rows, the Go oracle and the stored spans, and name each row")
+	plant := flag.String("plant", "", "add one Go span to the named row's first sample, so its Go oracle check must fail")
+	pendingOnly := flag.Bool("pending", false, "only load and lower each owned row's runtime entry, no Node, and count the rows awaiting the runtime compiler")
 	flag.Parse()
+	var index, count int
+	if n, e := fmt.Sscanf(*shard, "%d/%d", &index, &count); e != nil || n != 2 || count < 1 || index < 0 || index >= count || fmt.Sprintf("%d/%d", index, count) != *shard {
+		fail("bad -shard %q", *shard)
+	}
+	if (*dry || *pendingOnly) && (*force || *mutant || *external != "") || *pendingOnly && (*dry || *plant != "") {
+		fail("-dry and -pending run no backend: no -force-native, -mutant or -runtime-js-compiler, and -pending plants nothing")
+	}
 	root, e := filepath.Abs("stage1/cohere/lint/regex/testdata/shapes")
 	if e != nil {
 		fail("%v", e)
@@ -123,16 +161,39 @@ func main() {
 	nodeRunner := filepath.Join(repo, "oracle/node.mjs")
 	counts := map[string]int{}
 	pending, nativePass, externalPass := 0, 0, 0
+	ran, outside, planted := 0, 0, false
 	for i, f := range fixtures {
 		if f.ID != ids[i].ID {
 			fail("table row %d coverage drift", i)
 		}
 		counts[f.Shape]++
+		if f.ID == *plant {
+			if len(f.Samples) == 0 {
+				fail("%s: no sample to plant in", f.ID)
+			}
+			f.Samples[0].Go = append(f.Samples[0].Go, Match{0, 0, "planted"})
+			planted = true
+		}
+		if owner(f.ID, count) != index {
+			continue
+		}
+		ran++
 		if f.Outside != "" {
 			fmt.Printf("outside the port's shapes: %s: %s\n", f.ID, f.Outside)
+			outside++
+			continue
+		}
+		if *pendingOnly {
+			if _, e := runtimeLowering(f, filepath.Join(root, f.Runtime)); e != nil {
+				pending++
+			}
 			continue
 		}
 		want := expected(f)
+		if *dry {
+			fmt.Printf("owns %s\n", f.ID)
+			continue
+		}
 		entry := filepath.Join(root, f.File)
 		if *mutant && i == 0 {
 			content, e := os.ReadFile(entry)
@@ -166,15 +227,8 @@ func main() {
 		equal(f, "area emitted JavaScript", want, run("node", "--disable-warning=ExperimentalWarning", nodeRunner, js))
 		runtimeEntry := filepath.Join(root, f.Runtime)
 		equal(f, "runtime source Node", want, run("node", "--disable-warning=ExperimentalWarning", nodeRunner, runtimeEntry, f.Pattern, f.Flags))
-		p, e = load.Load([]string{runtimeEntry})
+		ir, e = runtimeLowering(f, runtimeEntry)
 		if e != nil {
-			fail("%s: %v", f.ID, e)
-		}
-		ir, e = lower.Lower(context.Background(), p)
-		if e != nil {
-			if !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-				fail("%s: unexpected native refusal: %v", f.ID, e)
-			}
 			pending++
 			if *force && i == 0 {
 				fail("%s: awaits codex/regex-runtime-compiler: forced native requirement caught refusal: %v", f.ID, e)
@@ -200,5 +254,15 @@ func main() {
 			externalPass++
 		}
 	}
-	fmt.Printf("PASS fixtures=%d shapes=%v source Node and area constant-string JS; runtime Node=%d library runtime JS=%d native=%d awaits codex/regex-runtime-compiler=%d\n", len(fixtures), counts, len(fixtures), externalPass, nativePass, pending)
+	if *plant != "" && !planted {
+		fail("plant %s is not a table row", *plant)
+	}
+	switch {
+	case *dry:
+		fmt.Printf("DRY fixtures=%d shard=%s ran=%d Go oracle and stored spans only\n", len(fixtures), *shard, ran)
+	case *pendingOnly:
+		fmt.Printf("PENDING fixtures=%d shard=%s ran=%d awaits codex/regex-runtime-compiler=%d\n", len(fixtures), *shard, ran, pending)
+	default:
+		fmt.Printf("PASS fixtures=%d shard=%s ran=%d shapes=%v source Node and area constant-string JS; runtime Node=%d library runtime JS=%d native=%d awaits codex/regex-runtime-compiler=%d\n", len(fixtures), *shard, ran, counts, ran-outside, externalPass, nativePass, pending)
+	}
 }

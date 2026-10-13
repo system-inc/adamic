@@ -1,0 +1,11 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -465,7 +465,7 @@
+ 
+ func (e *emitter) fieldTypesNeeded() bool {
+ 	e.prepareObjectMetadata()
+-	return e.objectMetadata.fieldTypes
++	return e.objectMetadata.dynamic
+ }
+ 
+ // Hand-built IR can carry field contracts without the lowerer's summary maps.

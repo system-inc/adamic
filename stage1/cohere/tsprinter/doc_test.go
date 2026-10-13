@@ -5,20 +5,17 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func documentCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	cohere, _ := filepath.Abs(repository + "/cohere")
-	side, _ := filepath.Abs("testdata/doc_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
-	path := directory + "/overlay.json"
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+path, "-run=^TestAdamicDocuments$", "./internal/format/doc")
-	command.Dir = cohere
+	// The unit only runs the oracle, in the package's directory.
+	command := bounded(t, documentOracle(t), "-test.run=^TestAdamicDocuments$")
+	command.Dir = cohere + "/internal/format/doc"
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go doc corpus %v\n%s", err, output)
@@ -30,6 +27,41 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	planCorpus(t, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
+
+// documentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
+func documentOracle(t *testing.T) string {
+	t.Helper()
+	return buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t))
+}
+
+// documentOracleInputs is documentOracle's key, computed without building it.
+func documentOracleInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	inputs, err := buildcache.GoTestInputs("cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return inputs
+}
+
+// documentOracleArguments lay the harness over cohere's doc package.
+func documentOracleArguments(t *testing.T) []string {
+	t.Helper()
+	cohere, _ := filepath.Abs(repository + "/cohere")
+	side, _ := filepath.Abs("testdata/doc_side_test.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
+	path := t.TempDir() + "/overlay.json"
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return []string{"-overlay=" + path}
+}
+
+func TestProduct_TSPrinterDocumentOracle(t *testing.T) {
+	t.Parallel()
+	documentOracle(t)
+}
+
 func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	t.Parallel()
 	cases, want, specs := documentCorpus(t)

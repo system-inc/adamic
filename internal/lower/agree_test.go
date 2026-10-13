@@ -4,11 +4,16 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -18,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type agreementTesting interface {
@@ -45,39 +51,120 @@ func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Prog
 }
 
 // lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
-// source and JavaScript agreement. Each opting-in row names what only native shows.
-func lowersAndAgreesWithNodeNative(t *testing.T, source string) *ir.Program {
+// source and JavaScript agreement. Each opting-in row names what only native shows,
+// and runs a program from nativeAgreementPrograms by its name.
+func lowersAndAgreesWithNodeNative(t *testing.T, name string) *ir.Program {
 	t.Helper()
-	return agreeSourceNative(t, source, nil)
+	entry := nativeAgreement(t, name)
+	return agreeSourceNative(t, entry.source, entry.planted(t))
+}
+
+// nativeAgreementProgram is a program a native agreement row builds: its source and,
+// for a row that plants a wrong native answer, the change it makes to the C, which
+// fails rather than plants when the C has no site for it.
+type nativeAgreementProgram struct {
+	source string
+	mutate func(code string) (string, error)
+}
+
+// nativeAgreementPrograms are every program the native agreement rows build, named
+// for the row that runs it. A row reaches its program by name, and
+// TestProduct_LowerAgreementNative builds each one ahead under the key the row
+// fetches, so a runner that reads products and never builds them
+// (ADAMIC_BUILD_CACHE=read) finds every binary. A program not here has no product.
+var nativeAgreementPrograms = map[string]nativeAgreementProgram{
+	"RegExpUnicodeClassSource": {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpSlashClassSource":   {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpEscapedSlashSource": {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
+	"TypedArrayFromArray": {source: `const values = new Uint8Array([1, 2]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`},
+	"TypedArrayFromEmptyArray": {source: `const values = new Uint8Array([]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`},
+	"PlantedWrongOutput": {source: "console.log('computed');", mutate: func(code string) (string, error) {
+		return strings.ReplaceAll(code, "computed", "wrong"), nil
+	}},
+	"PlantedWrongExit": {source: "console.log('computed');", mutate: func(code string) (string, error) {
+		index := strings.LastIndex(code, "return 0;")
+		if index < 0 {
+			return "", errors.New("native main has no successful exit to mutate")
+		}
+		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1), nil
+	}},
+}
+
+func nativeAgreement(t agreementTesting, name string) nativeAgreementProgram {
+	t.Helper()
+	entry, ok := nativeAgreementPrograms[name]
+	if !ok {
+		t.Fatalf("native agreement program %q is not in nativeAgreementPrograms, so no product builds it", name)
+	}
+	return entry
+}
+
+// planted is the entry's change to C as agreeSourceNative's seam takes it, failing t
+// when the C has no site for it; nil for an entry that plants nothing.
+func (entry nativeAgreementProgram) planted(t agreementTesting) func(string) string {
+	if entry.mutate == nil {
+		return nil
+	}
+	return func(code string) string {
+		mutated, err := entry.mutate(code)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return mutated
+	}
+}
+
+// TestProduct_LowerAgreementNative builds every program in nativeAgreementPrograms,
+// lowered and planted as its row lowers and plants it, under the key its row's
+// runAgreementNative fetches.
+func TestProduct_LowerAgreementNative(t *testing.T) {
+	t.Parallel()
+	for _, entry := range nativeAgreementPrograms {
+		program := lowerAgreementEntry(t, writeAgreementSource(t, entry.source))
+		if _, err := buildAgreementNative(agreementNativeCode(program, entry.planted(t))); err != nil {
+			t.Fatalf("Native build: %v", err)
+		}
+	}
 }
 
 // The mutation seam changes only C, after JavaScript agreement, so planted native
 // answers prove this leg independently of the JavaScript comparison.
 func agreeSourceNative(t agreementTesting, source string, mutate func(string) string) *ir.Program {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	program := agreeEntry(t, path, nil, 0, nil, nil)
+	path := writeAgreementSource(t, source)
+	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
 	want := runAgreementNode(t, path)
-	code := native.C(program)
-	if mutate != nil {
-		code = mutate(code)
-	}
-	got := runAgreementNative(t, code)
+	got := runAgreementNative(t, agreementNativeCode(program, mutate))
 	compareNativeAgreement(t, got, want)
 	return program
 }
 
-func runAgreementNative(t agreementTesting, code string) nodeObservation {
-	t.Helper()
+// agreementNativeCode is the C a native agreement row builds: the program's, with
+// the row's planted change.
+func agreementNativeCode(program *ir.Program, mutate func(string) string) string {
+	code := native.C(program)
+	if mutate != nil {
+		code = mutate(code)
+	}
+	return code
+}
+
+// buildAgreementNative is the one recipe for a native agreement binary: the product
+// test builds it ahead and runAgreementNative fetches it, so the key can't drift
+// between them. It returns the product's directory, which holds the binary as native.
+func buildAgreementNative(code string) (string, error) {
 	options := native.Options{}
 	flags := append(native.Flags(options), fmt.Sprintf("C=%x", sha256.Sum256([]byte(code))),
 		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	// The shared build-product cache hashes C contents, runtime and build code,
 	// native flags and toolchain. A hit runs the binary without invoking clang.
-	directory, err := buildcache.Get(buildcache.Inputs{
+	return buildcache.Get(buildcache.Inputs{
 		Name:      "lower agreement native",
 		Files:     []string{"internal/native"},
 		Flags:     flags,
@@ -85,6 +172,11 @@ func runAgreementNative(t agreementTesting, code string) nodeObservation {
 	}, func(directory string) error {
 		return native.Build(code, filepath.Join(directory, "native"), options)
 	})
+}
+
+func runAgreementNative(t agreementTesting, code string) nodeObservation {
+	t.Helper()
+	directory, err := buildAgreementNative(code)
 	if err != nil {
 		t.Fatalf("Native build: %v", err)
 	}
@@ -123,11 +215,29 @@ func compareNativeAgreement(t agreementTesting, got, want nodeObservation) {
 // changing global state, so acceptance rows remain safe under t.Parallel.
 func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Program)) *ir.Program {
 	t.Helper()
+	return agreeEntry(t, writeAgreementSource(t, source), nil, exit, nil, mutate)
+}
+
+func writeAgreementSource(t agreementTesting, source string) string {
+	t.Helper()
 	path := filepath.Join(t.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return agreeEntry(t, path, nil, exit, nil, mutate)
+	return path
+}
+
+func lowerAgreementEntry(t agreementTesting, path string) *ir.Program {
+	t.Helper()
+	checked, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	program, err := Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatalf("Lower refused acceptance row: %v", err)
+	}
+	return program
 }
 
 // checkedFailure is only for existing soundness probes whose inserted check
@@ -135,14 +245,7 @@ func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Pr
 func agreeEntry(t agreementTesting, path string, program *ir.Program, exit int, checkedFailure *nodeObservation, mutate func(*ir.Program)) *ir.Program {
 	t.Helper()
 	if program == nil {
-		checked, err := load.Load([]string{path})
-		if err != nil {
-			t.Fatalf("Load: %v", err)
-		}
-		program, err = Lower(context.Background(), checked)
-		if err != nil {
-			t.Fatalf("Lower refused acceptance row: %v", err)
-		}
+		program = lowerAgreementEntry(t, path)
 	}
 	if mutate != nil {
 		mutate(program)
@@ -176,9 +279,15 @@ func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The node toolchain.Path finds, under toolchain's environment, as every other site of lower's runs it.
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", runner, path)
+	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err = command.Run()
@@ -295,8 +404,11 @@ func TestAgreementParseIntRadixWitness(t *testing.T) {
 	lowersAndAgreesWithNode(t, "console.log(['10', '10', '10'].map(Number.parseInt).join(','));")
 }
 
-func recordNativeAgreementFailure(t *testing.T, source string, mutate func(string) string) string {
+// recordNativeAgreementFailure runs a program from nativeAgreementPrograms by its
+// name. Its planted change fails t itself, not the recorder, when the C has no site.
+func recordNativeAgreementFailure(t *testing.T, name string) string {
 	t.Helper()
+	entry := nativeAgreement(t, name)
 	recorder := &agreementRecorder{T: t}
 	func() {
 		defer func() {
@@ -306,7 +418,7 @@ func recordNativeAgreementFailure(t *testing.T, source string, mutate func(strin
 				}
 			}
 		}()
-		agreeSourceNative(recorder, source, mutate)
+		agreeSourceNative(recorder, entry.source, entry.planted(t))
 	}()
 	return recorder.message
 }
@@ -314,9 +426,7 @@ func recordNativeAgreementFailure(t *testing.T, source string, mutate func(strin
 func TestNativeAgreementRejectsWrongOutput(t *testing.T) {
 	t.Parallel()
 	// Only native shows the planted C string; JavaScript still prints computed.
-	message := recordNativeAgreementFailure(t, "console.log('computed');", func(code string) string {
-		return strings.ReplaceAll(code, "computed", "wrong")
-	})
+	message := recordNativeAgreementFailure(t, "PlantedWrongOutput")
 	if !strings.Contains(message, "Native backend stdout") {
 		t.Fatalf("planted native output was not caught by stdout comparison: %q", message)
 	}
@@ -325,14 +435,94 @@ func TestNativeAgreementRejectsWrongOutput(t *testing.T) {
 func TestNativeAgreementRejectsWrongExit(t *testing.T) {
 	t.Parallel()
 	// Only native shows the planted exit status after printing the correct answer.
-	message := recordNativeAgreementFailure(t, "console.log('computed');", func(code string) string {
-		index := strings.LastIndex(code, "return 0;")
-		if index < 0 {
-			t.Fatal("native main has no successful exit to mutate")
-		}
-		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1)
-	})
+	message := recordNativeAgreementFailure(t, "PlantedWrongExit")
 	if !strings.Contains(message, "Native backend exit = 7, source Node = 0") {
 		t.Fatalf("planted native exit was not caught by exit comparison: %q", message)
+	}
+}
+
+// TestNativeAgreementRowsNameRegisteredPrograms reads this package's tests, building
+// nothing: every native agreement row names a program in nativeAgreementPrograms by
+// a literal, only the registry's own plumbing reaches the native build, and every
+// program the registry holds is run by some row, so the product test builds exactly
+// what the rows fetch.
+func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
+	t.Parallel()
+	// The functions below the registry, and the only functions that may call each.
+	reaches := map[string]map[string]bool{
+		"agreeSourceNative":    {"lowersAndAgreesWithNodeNative": true, "recordNativeAgreementFailure": true},
+		"runAgreementNative":   {"agreeSourceNative": true},
+		"buildAgreementNative": {"runAgreementNative": true, "TestProduct_LowerAgreementNative": true},
+	}
+	rows := map[string]bool{"lowersAndAgreesWithNodeNative": true, "recordNativeAgreementFailure": true}
+	files, err := filepath.Glob("*_test.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fileSet := token.NewFileSet()
+	used := map[string]bool{}
+	for _, name := range files {
+		file, err := parser.ParseFile(fileSet, name, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok {
+				// Outside a function a name can only be held (var f = runAgreementNative), and a call through what holds
+				// it is one no check here follows.
+				ast.Inspect(declaration, func(node ast.Node) bool {
+					if identifier, ok := node.(*ast.Ident); ok && (rows[identifier.Name] || reaches[identifier.Name] != nil) {
+						t.Errorf("%s: %s is named outside a function, where no row check reaches it", fileSet.Position(identifier.Pos()), identifier.Name)
+					}
+					return true
+				})
+				continue
+			}
+			if function.Body == nil {
+				continue
+			}
+			called := map[*ast.Ident]bool{}
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				callee, ok := call.Fun.(*ast.Ident)
+				if !ok || !rows[callee.Name] {
+					return true
+				}
+				called[callee] = true
+				program := ""
+				if len(call.Args) == 2 {
+					if literal, ok := call.Args[1].(*ast.BasicLit); ok && literal.Kind == token.STRING {
+						program, _ = strconv.Unquote(literal.Value)
+					}
+				}
+				if _, registered := nativeAgreementPrograms[program]; !registered {
+					t.Errorf("%s: %s must name a program in nativeAgreementPrograms by a literal, so TestProduct_LowerAgreementNative builds it", fileSet.Position(call.Pos()), callee.Name)
+				}
+				used[program] = true
+				return true
+			})
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				identifier, ok := node.(*ast.Ident)
+				if !ok {
+					return true
+				}
+				if rows[identifier.Name] && !called[identifier] {
+					t.Errorf("%s: %s is used other than called with a program's name", fileSet.Position(identifier.Pos()), identifier.Name)
+				}
+				if callers, guarded := reaches[identifier.Name]; guarded && !callers[function.Name.Name] {
+					t.Errorf("%s: %s reaches %s, which builds a program no product builds; name one in nativeAgreementPrograms instead", fileSet.Position(identifier.Pos()), function.Name.Name, identifier.Name)
+				}
+				return true
+			})
+		}
+	}
+	for name := range nativeAgreementPrograms {
+		if !used[name] {
+			t.Errorf("nativeAgreementPrograms holds %s, which no row runs, so its product is built for nothing", name)
+		}
 	}
 }

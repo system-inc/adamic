@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var numbersEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
@@ -216,16 +217,44 @@ func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) e
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go overlay builds use the same content-addressed cache as the other products.
+// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
+// toolchain.Env (numbersGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
+// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
+// didn't name could start to unseen.
 func numbersGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	inputs := buildcache.Inputs{
+	return buildcache.Product(t, numbersGoProductInputs(name, numbersGoCompilers()), build)
+}
+
+func numbersGoProductInputs(name string, compilers numbersCompilers) buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "cssnumbers " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssnumbers/testdata", "stage1/cohere/cssnumbers/port_test.go"},
-		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
+		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
-	return buildcache.Product(t, inputs, build)
+}
+
+// numbersCompilers are the C and C++ compilers go builds with, and the C compiler's report.
+type numbersCompilers struct{ c, cPlusPlus, report string }
+
+// numbersGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
+// names neither.
+func numbersGoCompilers() numbersCompilers {
+	var compilers numbersCompilers
+	for _, setting := range toolchain.Env() {
+		switch name, value, _ := strings.Cut(setting, "="); name {
+		case "CC":
+			compilers.c = value
+		case "CXX":
+			compilers.cPlusPlus = value
+		}
+	}
+	compilers.report = "no C compiler"
+	if fields := strings.Fields(compilers.c); len(fields) > 0 {
+		compilers.report = buildcache.Tool(fields[0], "--version")
+	}
+	return compilers
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -263,16 +292,9 @@ func numbersCacheInputs(t *testing.T, inputs numbersInputs) buildcache.Inputs {
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
 	}
-	if strings.Contains(inputs.Name, "lowering and backends") {
-		// This non-Go build executes the compiler already linked into this test
-		// binary. Its content hash covers every compiled Go dependency and toolchain;
-		// the source-program files above cover the remaining lowering inputs.
-		binary, err := os.Executable()
-		if err != nil {
-			t.Fatal(err)
-		}
-		keyed.Flags = append(keyed.Flags, "lowering-compiler-"+numbersOracleIdentity(t, binary))
-	}
+	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
+	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
+	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 
 	return keyed
 }
@@ -301,13 +323,13 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 	return numbersProgram{dir: dir, main: main, c: filepath.Join(dir, "program.c"), javascript: filepath.Join(dir, "program.mjs")}
 }
 
+// numbersClangToolchain is clang by its report, without where this machine installed it (#t37sw0f).
 func numbersClangToolchain(t *testing.T) string {
 	t.Helper()
-	output, err := numbersSetupCommand(t, "clang", "--version").Output()
-	if err != nil {
+	if _, err := numbersSetupCommand(t, "clang", "--version").Output(); err != nil {
 		t.Fatal(err)
 	}
-	return strings.TrimSpace(string(output))
+	return buildcache.Tool("clang", "--version")
 }
 
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {

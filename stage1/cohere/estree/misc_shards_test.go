@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Fixed shard counts have headroom for corpus growth, including empty shards.
@@ -180,14 +181,16 @@ func miscBuild(t *testing.T, path string) (string, string) {
 	}
 	start := time.Now()
 	flags := append([]string{"main=" + path}, native.Flags(native.Options{Sanitize: true})...)
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT"} {
+	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "estree-misc-sanitized-emitted",
-		Files:     []string{"internal", "bridge", "go.mod", "stage1/typescript", "stage1/cohere/estree"},
-		Flags:     flags,
-		Toolchain: []string{runtime.Version(), miscDigest(t, os.Args[0]), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
+		Name:  "estree-misc-sanitized-emitted",
+		Files: []string{"internal", "bridge", "go.mod", "stage1/typescript", "stage1/cohere/estree"},
+		Flags: flags,
+		// The compiler this build runs is keyed by its sources (Files) and the Go release, never by this test binary's bytes,
+		// which differ wherever it was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
 	}, product)
 	t.Logf("build lowered/sanitized/emitted products: %.6fs", time.Since(start).Seconds())
 	return filepath.Join(directory, "port"), filepath.Join(directory, "port.mjs")
@@ -265,9 +268,10 @@ func miscMutant(t *testing.T, file, from, to string) string {
 		if !found {
 			return fmt.Errorf("missing mutant source %s", file)
 		}
-		return nil
+		// The imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(directory)
 	})
-	return filepath.Join(directory, "main.ts")
+	return resolvedPort(t, directory, "main.ts")
 }
 
 type miscAnswer struct {
@@ -371,7 +375,7 @@ func miscReferenceCommand(oracle string, args ...string) ([]byte, error) {
 
 // Match native's archiver selection, including its GNU ar fallback.
 func miscArchiverTool() string {
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err == nil {
 		candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
 		if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {

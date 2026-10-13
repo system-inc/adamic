@@ -44,6 +44,8 @@ func main() {
 	if err := json.Unmarshal(data, &corpus); err != nil {
 		panic(err)
 	}
+	// Each schema is compiled once and validated many times, as optionschema.For holds a rule's schema in cohere.
+	compiled := map[string]*optionschema.Schema{}
 	for _, c := range corpus.Cases {
 		if c.Schema != "" {
 			c.Schema = corpus.Definitions[c.Schema]
@@ -62,9 +64,13 @@ func main() {
 				result = "invalid"
 			}
 		case "schema":
-			schema, err := optionschema.Compile([]byte(c.Schema))
-			if err != nil {
-				panic(err)
+			schema := compiled[c.Schema]
+			if schema == nil {
+				var err error
+				if schema, err = optionschema.Compile([]byte(c.Schema)); err != nil {
+					panic(err)
+				}
+				compiled[c.Schema] = schema
 			}
 			var elements []json.RawMessage
 			if json.Unmarshal([]byte(c.Input), &elements) != nil || string(c.Input) == "null" {

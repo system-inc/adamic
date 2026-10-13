@@ -124,7 +124,7 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
 	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
 	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}
+	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
 	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
 		_, err := suggestionAlongsideGoOracle(t, directory, out)
 		return err
@@ -285,14 +285,15 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	t.Log("planted mismatch caught only by shard 002")
 }
 
-// A filtered leaf prepares its own inputs in a fresh process.
+// A filtered leaf looks up its own inputs in a fresh process, inheriting this run's products (a runner's are
+// Workshop's, read and never built; TestProduct_ proves each builds alone).
 func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	t.Parallel()
 	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
+	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
 	output, err := command.CombinedOutput()
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte(" miss ")) {
-		t.Fatalf("standalone cold shard: %v\n%s", err, output)
+	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !productLookedUp(output, `suggestion-alongside-\S+`) {
+		t.Fatalf("standalone shard: %v\n%s", err, output)
 	}
 }
 
@@ -340,21 +341,13 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		return "", err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
-	command.Dir = root
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := lintCommand(ctx, root, "go", args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {

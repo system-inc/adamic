@@ -111,7 +111,9 @@ func deepMutantsSnapshot(t *testing.T, mutation deepMutantsMutation) (map[string
 		}
 		name := filepath.Base(file)
 		snapshot[name] = data
-		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%s=%x", name, sha256.Sum256(data)))
+		// mutantPort writes this checkout's path into the imports; the key hashes them as the tree spells them.
+		portable := strings.ReplaceAll(string(data), filepath.ToSlash(filepath.Join(root(t), "stage1/typescript")), "../../typescript")
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%s=%x", name, sha256.Sum256([]byte(portable))))
 	}
 	return snapshot, inputs
 }
@@ -119,7 +121,8 @@ func deepMutantsSnapshot(t *testing.T, mutation deepMutantsMutation) (map[string
 func deepMutantsIRProduct(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
 	t.Helper()
 	snapshot, inputs := deepMutantsSnapshot(t, mutation)
-	inputs.Name = "deep-mutants-ir-v1"
+	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
+	inputs.Name = "deep-mutants-ir-v2"
 	checkpoint := buildcache.Product(t, inputs, func(dir string) error {
 		return estreeFamilyLowerCheckpoint(dir, snapshot)
 	})
@@ -155,7 +158,7 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 		t.Fatal(err)
 	}
 	inputs.Name = "deep-mutants-native-v3"
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
 	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
@@ -180,7 +183,7 @@ func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutants
 	ready := value.(*deepMutantsReady)
 	ready.once.Do(func() {
 		lowered, _ := deepMutantsLowered(t, mutation)
-		ready.source = filepath.Join(lowered, "source/main.ts")
+		ready.source = resolvedPort(t, lowered, "source/main.ts")
 		ready.native = deepMutantsNative(t, mutation)
 	})
 	if ready.native == "" {

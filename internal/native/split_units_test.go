@@ -2,23 +2,17 @@ package native
 
 import (
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io"
 	"os"
-	"os/exec"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const decodePrefixes = 92014
@@ -75,7 +69,6 @@ func TestSplitUnitCoverage(t *testing.T) {
 		{"decode_ascii_test.go", "TestDecodeASCIIUnit", "runDecodeASCIIUnit", "native", 45},
 		{"decode_ascii_test.go", "TestDecodeASCIIWASIUnit", "runDecodeASCIIUnit", "wasi", 45},
 		{"normalize_test.go", "TestNormalizeMatchesNodePoints", "runNormalizeUnit", "", 17},
-		{"normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeUnit", "", 1},
 	} {
 		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
 		if err != nil {
@@ -87,12 +80,9 @@ func TestSplitUnitCoverage(t *testing.T) {
 			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
 				continue
 			}
-			index := 0
-			if plan.units != 1 {
-				index, err = strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
-				if err != nil || index < 0 || index >= plan.units || function.Name.Name != fmt.Sprintf("%s%02d", plan.prefix, index) {
-					t.Fatalf("unexpected unit %s", function.Name.Name)
-				}
+			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if err != nil || index < 0 || index >= plan.units || function.Name.Name != fmt.Sprintf("%s%02d", plan.prefix, index) {
+				t.Fatalf("unexpected unit %s", function.Name.Name)
 			}
 			if seen[index] || len(function.Body.List) != 2 {
 				t.Fatalf("invalid wrapper %s", function.Name.Name)
@@ -126,10 +116,6 @@ func TestSplitUnitCoverage(t *testing.T) {
 			if !ok || helper.Name != plan.helper {
 				t.Fatalf("wrong helper in %s", function.Name.Name)
 			}
-			wantIndex := index
-			if plan.units == 1 {
-				wantIndex = 17
-			}
 			wantArguments := 2
 			if plan.target != "" {
 				wantArguments = 3
@@ -138,7 +124,7 @@ func TestSplitUnitCoverage(t *testing.T) {
 				t.Fatalf("wrong arguments in %s", function.Name.Name)
 			}
 			actual, ok := call.Args[len(call.Args)-1].(*ast.BasicLit)
-			if !ok || actual.Value != strconv.Itoa(wantIndex) {
+			if !ok || actual.Value != strconv.Itoa(index) {
 				t.Fatalf("wrong range in %s", function.Name.Name)
 			}
 			if plan.target != "" {
@@ -156,132 +142,32 @@ func TestSplitUnitCoverage(t *testing.T) {
 	}
 }
 
-var testExecutable struct {
-	sync.Once
-	digest string
-	err    error
-}
-
-type testBuildCache struct {
-	inputs buildcache.Inputs
-	get    func(buildcache.Inputs, func(string) error) (string, error)
-}
-
-func newTestBuildCache(repository string, directories ...string) (*testBuildCache, error) {
-	testExecutable.Do(func() {
-		path, err := os.Executable()
-		if err != nil {
-			testExecutable.err = err
-			return
-		}
-		file, err := os.Open(path)
-		if err != nil {
-			testExecutable.err = err
-			return
-		}
-		defer file.Close()
-		h := sha256.New()
-		_, testExecutable.err = io.Copy(h, file)
-		testExecutable.digest = fmt.Sprintf("%x", h.Sum(nil))
-	})
-	if testExecutable.err != nil {
-		return nil, testExecutable.err
-	}
-	in := buildcache.Inputs{Name: "native tests", Files: append([]string{"go.mod", "cmd/adamic"}, directories...), Flags: []string{"test=" + testExecutable.digest}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")}}
-	for _, name := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_LDFLAGS", "CC", "GOTOOLCHAIN"} {
-		in.Flags = append(in.Flags, name+"="+os.Getenv(name))
-	}
-	return &testBuildCache{inputs: in}, nil
-}
-func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) error) (string, error) {
-	in := c.inputs
-	in.Name = label
-	in.Flags = append([]string(nil), c.inputs.Flags...)
-	for index, input := range inputs {
-		in.Flags = append(in.Flags, fmt.Sprintf("input[%d]=%x", index, sha256.Sum256(input)))
-	}
-	if c.get != nil {
-		return c.get(in, build)
-	}
-	return buildcache.Get(in, build)
-}
-
-// Command caches compiler output only. It refuses commands without a single -o.
-// Explicit input files and Go overlays contribute their bytes, not temporary paths.
-func (c *testBuildCache) Command(command *exec.Cmd, scratch string, extraInputs ...[]byte) ([]byte, error) {
-	outputIndex := -1
-	for i, arg := range command.Args {
-		if arg == "-o" && i+1 < len(command.Args) {
-			if outputIndex != -1 {
-				return nil, fmt.Errorf("multiple outputs")
+// eachInParallel runs job for every index below count on four workers, the CPUs a product's unit is given, and
+// returns the first failure in index order. A product's build compiles its translation units with it.
+func eachInParallel(count int, job func(index int) error) error {
+	failures := make([]error, count)
+	jobs := make(chan int)
+	var workers sync.WaitGroup
+	for worker := 0; worker < 4; worker++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for index := range jobs {
+				failures[index] = job(index)
 			}
-			outputIndex = i + 1
-		}
+		}()
 	}
-	if outputIndex < 0 {
-		return nil, fmt.Errorf("build command has no output")
+	for index := 0; index < count; index++ {
+		jobs <- index
 	}
-	output := command.Args[outputIndex]
-	inputs := append([][]byte(nil), extraInputs...)
-	for i, arg := range command.Args {
-		if i == outputIndex {
-			continue
-		}
-		normalized := strings.ReplaceAll(arg, scratch, "$SCRATCH")
-		inputs = append(inputs, []byte(normalized))
-		if data, err := os.ReadFile(arg); err == nil {
-			if strings.HasSuffix(arg, ".json") {
-				var overlay struct{ Replace map[string]string }
-				if json.Unmarshal(data, &overlay) == nil && len(overlay.Replace) > 0 {
-
-					data = nil
-					originals := make([]string, 0, len(overlay.Replace))
-					for original := range overlay.Replace {
-						originals = append(originals, original)
-					}
-					sort.Strings(originals)
-					for _, original := range originals {
-						contents, err := os.ReadFile(overlay.Replace[original])
-						if err != nil {
-							return nil, err
-						}
-						inputs = append(inputs, []byte(original), contents)
-					}
-				}
-			}
-			inputs = append(inputs, data)
-		}
-	}
-	// Command.Env only differs for the sanitized archive; do not persist environment values.
-	for _, variable := range command.Env {
-		for _, name := range []string{"CC=", "CGO_CFLAGS=", "CGO_LDFLAGS="} {
-			if strings.HasPrefix(variable, name) {
-				inputs = append(inputs, []byte(variable))
-			}
-		}
-	}
-	name := filepath.Base(output)
-	entry, err := c.Tree(name, inputs, func(directory string) error {
-		command.Args[outputIndex] = filepath.Join(directory, name)
-		defer func() { command.Args[outputIndex] = output }()
-		data, err := command.CombinedOutput()
-		os.WriteFile(filepath.Join(directory, "build.log"), data, 0644)
+	close(jobs)
+	workers.Wait()
+	for _, err := range failures {
 		if err != nil {
-			return fmt.Errorf("%s: %w\n%s", command.Args, err, data)
+			return err
 		}
-		return nil
-	})
-	if err != nil {
-		return nil, err
 	}
-	data, err := os.ReadFile(filepath.Join(entry, name))
-	if err != nil {
-		return nil, err
-	}
-	if err := os.WriteFile(output, data, 0755); err != nil {
-		return nil, err
-	}
-	return os.ReadFile(filepath.Join(entry, "build.log"))
+	return nil
 }
 
 // Unit timing is diagnostic unless the reference audit explicitly enables it.
@@ -469,6 +355,123 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 			if !present {
 				t.Errorf("missing %s%02d", plan.prefix, index)
 			}
+		}
+	}
+}
+
+// checkRangesTile holds a table of ranges, each its own top-level test, to cases 0 to total: every
+// case in exactly one range, none left out, none swept twice, none past the end. A row is named by
+// its bounds, first and last both included, in format ("%X to %X"), so a name can't drift from what
+// its test sweeps.
+func checkRangesTile(t *testing.T, format string, total int, rows map[string]testUnitRange) {
+	t.Helper()
+	pieces := make([]testUnitRange, 0, len(rows))
+	for name, piece := range rows {
+		if piece.last <= piece.first {
+			t.Errorf("range %q is empty: %d to %d", name, piece.first, piece.last)
+		}
+		if want := fmt.Sprintf(format, piece.first, piece.last-1); name != want {
+			t.Errorf("range %q sweeps %s", name, want)
+		}
+		pieces = append(pieces, piece)
+	}
+	sort.Slice(pieces, func(left, right int) bool { return pieces[left].first < pieces[right].first })
+	next := 0
+	for _, piece := range pieces {
+		if piece.first != next {
+			t.Errorf("range %#x to %#x leaves a gap or overlaps: the ranges before it end at %#x", piece.first, piece.last, next)
+		}
+		next = max(next, piece.last)
+	}
+	if next != total {
+		t.Errorf("ranges end at %#x, want %#x", next, total)
+	}
+}
+
+// checkNamedWrappers holds a table whose rows are each their own top-level test to those tests. The
+// row's name, not its place, picks its test: "BMP low halves" is prefix+"BMPLowHalves", whose body
+// is t.Parallel() and then helper(t, "BMP low halves"). Every function in file whose name starts
+// with prefix must be one of those, so a row without its test, a test for a row that isn't there,
+// or one that runs another row's case fails here, before anything is built.
+func checkNamedWrappers[Row any](t *testing.T, file, prefix, helper string, rows map[string]Row) {
+	t.Helper()
+	if len(rows) == 0 {
+		t.Fatalf("%s has no rows", prefix)
+	}
+	want := make(map[string]string, len(rows))
+	for row := range rows {
+		name := prefix
+		for _, word := range strings.Fields(row) {
+			name += strings.ToUpper(word[:1]) + word[1:]
+		}
+		if earlier, ok := want[name]; ok {
+			t.Fatalf("rows %q and %q both name %s", earlier, row, name)
+		}
+		want[name] = row
+	}
+	tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := make(map[string]bool, len(rows))
+	for _, declaration := range tree.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, prefix) {
+			continue
+		}
+		row, ok := want[function.Name.Name]
+		if !ok {
+			t.Errorf("%s names no row of its table", function.Name.Name)
+			continue
+		}
+		found[function.Name.Name] = true
+		if len(function.Body.List) != 2 {
+			t.Errorf("%s must be t.Parallel() then %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		parallel, ok := function.Body.List[0].(*ast.ExprStmt)
+		if !ok {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		parallelCall, ok := parallel.X.(*ast.CallExpr)
+		if !ok {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		selector, ok := parallelCall.Fun.(*ast.SelectorExpr)
+		if !ok || selector.Sel.Name != "Parallel" || len(parallelCall.Args) != 0 {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		if receiver, ok := selector.X.(*ast.Ident); !ok || receiver.Name != "t" {
+			t.Errorf("%s must call t.Parallel() first", function.Name.Name)
+			continue
+		}
+		statement, ok := function.Body.List[1].(*ast.ExprStmt)
+		if !ok {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		call, ok := statement.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 2 {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+			continue
+		}
+		called, isHelper := call.Fun.(*ast.Ident)
+		argument, isT := call.Args[0].(*ast.Ident)
+		label, isLiteral := call.Args[1].(*ast.BasicLit)
+		named := ""
+		if isLiteral && label.Kind == token.STRING {
+			named, _ = strconv.Unquote(label.Value)
+		}
+		if !isHelper || called.Name != helper || !isT || argument.Name != "t" || named != row {
+			t.Errorf("%s must then call %s(t, %q)", function.Name.Name, helper, row)
+		}
+	}
+	for name, row := range want {
+		if !found[name] {
+			t.Errorf("row %q has no top-level test %s", row, name)
 		}
 	}
 }

@@ -2,17 +2,10 @@ package yaml
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func schemaCases(t *testing.T) (string, int, int) {
@@ -41,29 +34,25 @@ func schemaCases(t *testing.T) (string, int, int) {
 
 func goSchema(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/schema_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	goBinary := filepath.Join(t.TempDir(), "go-schema")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	goBinary := goSchemaOracle(t)
 	return run(t, "", nil, goBinary, cases)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+// goSchemaOracle is formatter_comparison over testdata/schema_go.go, a product built ahead (#5qykzj5).
+func goSchemaOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-schema", "schema_go.go")
+}
+
+func TestProduct_YAMLSchemaGo(t *testing.T) {
+	t.Parallel()
+	goSchemaOracle(t)
+}
+
 func TestSchemaMatchesGo(t *testing.T) {
+	t.Parallel()
+	binary := yamlSchemaBuild.binary(t, "schema_main.ts")
+	emitted := yamlSchemaBuild.emitted(t, "schema_main.ts")
 	cases, files, count := schemaCases(t)
 	expected := goSchema(t, cases)
 	root, err := filepath.Abs(repository)
@@ -74,25 +63,9 @@ func TestSchemaMatchesGo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "schema")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
-	emitted := filepath.Join(t.TempDir(), "schema.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
 	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
 	for _, side := range []struct {
 		name string
@@ -113,53 +86,32 @@ func TestSchemaMatchesGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d Schema answer bytes identical on all five sides", files, count, len(expected))
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+var schemaMutants = yamlMutants{family: "schema", entry: "schema_main.ts", files: []string{"patternNode.ts", "schemaPattern.ts", "schemaTag.ts", "schemaTags.ts", "schema_main.ts"}, mutated: "schemaPattern.ts", mutations: []yamlMutation{
+	{"class range loses last character", "code <= last.charCodeAt(0)", "code < last.charCodeAt(0)"},
+	{"plus accepts empty", "minimum = quantifier === '+' ? 1 : 0;", "minimum = quantifier === '+' ? 0 : 0;"},
+	{"optional accepts twice", "maximum = quantifier === '?' ? 1 : -1;", "maximum = quantifier === '?' ? 2 : -1;"},
+	{"nullable prefix loses successors", "node.kind === 'concat' && !this.match(child, '', 0).includes(0)", "node.kind === 'concat'"},
+}}
+
+func TestProduct_YAMLSchemaMutant000(t *testing.T) { t.Parallel(); schemaMutants.product(t, 0) }
+func TestProduct_YAMLSchemaMutant001(t *testing.T) { t.Parallel(); schemaMutants.product(t, 1) }
+func TestProduct_YAMLSchemaMutant002(t *testing.T) { t.Parallel(); schemaMutants.product(t, 2) }
+func TestProduct_YAMLSchemaMutant003(t *testing.T) { t.Parallel(); schemaMutants.product(t, 3) }
+
 func TestSchemaMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := schemaCases(t)
 	expected := goSchema(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"class range loses last character", "code <= last.charCodeAt(0)", "code < last.charCodeAt(0)"},
-		{"plus accepts empty", "minimum = quantifier === '+' ? 1 : 0;", "minimum = quantifier === '+' ? 0 : 0;"},
-		{"optional accepts twice", "maximum = quantifier === '?' ? 1 : -1;", "maximum = quantifier === '?' ? 2 : -1;"},
-		{"nullable prefix loses successors", "node.kind === 'concat' && !this.match(child, '', 0).includes(0)", "node.kind === 'concat'"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range schemaMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"patternNode.ts", "schemaPattern.ts", "schemaTag.ts", "schemaTags.ts", "schema_main.ts"} {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "schemaPattern.ts" {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			entry := filepath.Join(directory, "schema_main.ts")
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			nativeOut := run(t, "", nil, binary, cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
+			product := schemaMutants.product(t, index)
+			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "schema_main.ts"), cases)
 			for _, side := range []struct {
 				name string
 				out  []byte

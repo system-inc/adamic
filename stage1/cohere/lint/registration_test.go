@@ -5,19 +5,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
 // Not parallel: TestMain owns the shared temporary directory and registry initialization.
 func TestMain(m *testing.M) {
-	if _, err := registry.Generate("."); err != nil {
+	// The committed registry is checked, never rewritten: the tests don't write the tree (#k01pgng).
+	if _, err := registry.Stale("."); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
@@ -45,7 +46,7 @@ func TestRegistrationMutant(t *testing.T) {
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
 	path := manifest(t, []string{source + "\tno-debugger"})
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -178,7 +179,7 @@ console.log(written('copied'));
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
+	command := toolchain.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()

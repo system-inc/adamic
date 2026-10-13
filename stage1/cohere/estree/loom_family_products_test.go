@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -17,10 +16,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Four workers use the gate's four CPUs; source, sanitizer flags and cases stay fixed.
@@ -65,7 +66,8 @@ var unattachedDecoratorPrepared struct {
 func unattachedDecoratorReady(t *testing.T) (string, string, string) {
 	t.Helper()
 	unattachedDecoratorPrepared.once.Do(func() {
-		unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary = syntaxMutantProducts(t, unattachedDecoratorMutation())
+		main, binary := syntaxMutantProducts(t, unattachedDecoratorMutation())
+		unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary = resolvedPort(t, filepath.Dir(main), filepath.Base(main)), binary
 		unattachedDecoratorPrepared.oracle = filepath.Join(syntaxMutantOracleProduct(t), "oracle")
 	})
 	if unattachedDecoratorPrepared.oracle == "" {
@@ -257,7 +259,8 @@ func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 			return err
 		}
 	}
-	program, err := load.Load([]string{filepath.Join(source, "main.ts")})
+	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
+	program, err := load.LoadDisplayed([]string{filepath.Join(source, "main.ts")}, buildcache.Relative)
 	if err != nil {
 		return err
 	}
@@ -275,7 +278,11 @@ func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 	if err != nil {
 		return fmt.Errorf("encode checked IR: %w", err)
 	}
-	return closeErr
+	if closeErr != nil {
+		return closeErr
+	}
+	// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
+	return buildcache.RelativeFiles(source)
 }
 func estreeFamilyReadCheckpoint(dir string) (*ir.Program, error) {
 	estreeFamilyRegisterIR()
@@ -335,8 +342,7 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 	t.Helper()
 	estreeFamilyDependencies.once.Do(func() {
 		repo := root(t)
-		command := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
-		command.Dir = repo
+		command := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
 		output, err := command.Output()
 		if err != nil {
 			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", err)
@@ -344,7 +350,11 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 		}
 		decoder := json.NewDecoder(bytes.NewReader(output))
 		files := map[string]bool{"go.mod": true, "go.work": true, "stage1/typescript": true, "stage1/cohere/estree": true}
-		add := func(path string) error {
+		// add keys a file the build reads: by its repository path inside the tree, and outside it (go's module cache) by
+		// module, version and its path from the module's directory, never by where this machine keeps the cache. A Loom
+		// runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed the Go oracle apart from Workshop's
+		// (landable-10's run).
+		add := func(path string, module *estreeModule) error {
 			relative, err := filepath.Rel(repo, path)
 			if err != nil {
 				return err
@@ -354,7 +364,15 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 				if err != nil {
 					return err
 				}
-				estreeFamilyDependencies.external = append(estreeFamilyDependencies.external, fmt.Sprintf("external=%s:%x", path, sha256.Sum256(data)))
+				name := path
+				if module != nil && module.Dir != "" {
+					inside, err := filepath.Rel(module.Dir, path)
+					if err != nil {
+						return err
+					}
+					name = module.Path + "@" + module.Version + "/" + filepath.ToSlash(inside)
+				}
+				estreeFamilyDependencies.external = append(estreeFamilyDependencies.external, fmt.Sprintf("external=%s:%x", name, sha256.Sum256(data)))
 				return nil
 			}
 			files[filepath.ToSlash(relative)] = true
@@ -365,7 +383,7 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 				Standard                                                                   bool
 				Dir                                                                        string
 				GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-				Module                                                                     *struct{ GoMod string }
+				Module                                                                     *estreeModule
 				Error                                                                      *struct{ Err string }
 			}
 			if err := decoder.Decode(&item); err == io.EOF {
@@ -383,20 +401,20 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 			}
 			for _, group := range [][]string{item.GoFiles, item.CgoFiles, item.CFiles, item.CXXFiles, item.HFiles, item.SFiles, item.SysoFiles, item.EmbedFiles} {
 				for _, name := range group {
-					if err := add(filepath.Join(item.Dir, name)); err != nil {
+					if err := add(filepath.Join(item.Dir, name), item.Module); err != nil {
 						estreeFamilyDependencies.err = err
 						return
 					}
 				}
 			}
 			if item.Module != nil && item.Module.GoMod != "" {
-				if err := add(item.Module.GoMod); err != nil {
+				if err := add(item.Module.GoMod, item.Module); err != nil {
 					estreeFamilyDependencies.err = err
 					return
 				}
 				sum := filepath.Join(filepath.Dir(item.Module.GoMod), "go.sum")
 				if _, err := os.Stat(sum); err == nil {
-					if err := add(sum); err != nil {
+					if err := add(sum, item.Module); err != nil {
 						estreeFamilyDependencies.err = err
 						return
 					}
@@ -431,6 +449,9 @@ func TestProduct_UnattachedDecoratorIR(t *testing.T) {
 	t.Parallel()
 	syntaxMutantIRProduct(t, unattachedDecoratorMutation())
 }
+
+// estreeModule is the module go list reports a dependency in.
+type estreeModule struct{ Path, Version, GoMod, Dir string }
 
 func estreeFamilyDependencyFlags(t *testing.T) []string {
 	t.Helper()

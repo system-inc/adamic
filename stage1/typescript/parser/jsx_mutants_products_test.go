@@ -3,100 +3,18 @@ package parser
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
-
-func jsxMutantsOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(root, "adamic_parser_oracle.go")
-	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS"), os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{buildcache.Tool("go", "version")}}
-	directory := jsxMutantsFetch(t, inputs, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-		cmd := jsxMutantsCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		cmd.Dir = root
-		out, err := cmd.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, out)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
-}
-
-func jsxMutantsLower(t *testing.T, source string) string {
-	t.Helper()
-	flags := []string{"load main.ts; lower; native.C", os.Getenv("ADAMIC_NATIVE_SPLIT")}
-	// Mutant copies live outside the repository. Their complete contents are inputs,
-	// with only the temporary copy's location normalized out of the address.
-	for _, name := range portFiles {
-		data, err := os.ReadFile(filepath.Join(source, name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		flags = append(flags, name+":"+strings.ReplaceAll(string(data), source, "$PORT"))
-	}
-	inputs := buildcache.Inputs{Name: "jsx-mutants-lowered", Files: []string{"internal/load", "internal/lower", "internal/native", "internal/ir", "internal/flow", "internal/fresh", "internal/regexp", "internal/unicodeproperties", "bridge/tsgo", "stage1/typescript/scanner/characters.ts", "stage1/typescript/scanner/tokens.ts", "stage1/typescript/scanner/scanner.ts", "cohere", "go.mod"}, Flags: flags, Toolchain: []string{runtime.Version()}}
-	lowered := jsxMutantsFetch(t, inputs, func(dir string) error {
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-		if err != nil {
-			return err
-		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644)
-	})
-	return lowered
-}
-
-func jsxMutantsNative(t *testing.T, lowered string) string {
-	t.Helper()
-	data, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	hash := sha256.Sum256(data)
-	options := native.Options{Sanitize: true}
-	inputs := buildcache.Inputs{Name: "jsx-mutants-sanitized", Files: []string{"internal/native", "bridge/tsgo", "cohere"}, Flags: append(native.Flags(options), fmt.Sprintf("C=%x", hash), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "CC="+os.Getenv("CC")), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-	product := jsxMutantsFetch(t, inputs, func(dir string) error { return native.Build(string(data), filepath.Join(dir, "parser"), options) })
-	return filepath.Join(product, "parser")
-}
 
 func jsxMutantsRows(t *testing.T, manifest string, count int) []string {
 	t.Helper()
@@ -174,12 +92,9 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	setupStarted := time.Now()
 	manifest, count := jsxManifest(t)
 	jsxMutantsRows(t, manifest, count)
-	oracle := jsxMutantsOracle(t)
-	directory, _ := filepath.Abs(".")
 	change := changes[shard]
-	mutant := copyPort(t, "jsx.ts", change.from, change.to)
-	controlBinary := jsxMutantsNative(t, jsxMutantsLower(t, directory))
-	binary := jsxMutantsNative(t, jsxMutantsLower(t, mutant))
+	prepared := jsxMutantsPrepare(t, shard)
+	oracle, controlBinary, binary, mutant := prepared.Oracle, prepared.Control, prepared.Binary, prepared.Mutant
 	t.Logf("setup %.2fs", time.Since(setupStarted).Seconds())
 	ownStarted := time.Now()
 	deadline := time.AfterFunc(60*time.Second, func() { panic("JSX mutant own work exceeded 60 seconds") })
@@ -206,9 +121,34 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	}
 	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
 	if os.Getenv("ADAMIC_JSX_MUTANTS_PROOF_CHILD") == "" {
-		jsxMutantsPlantedProof(t, shard)
+		jsxMutantsPlantedProof(t, shard, prepared)
 	}
 }
+
+// jsxMutantsPrepared is what a shard runs: the oracle, the control and mutant binaries, and the mutant's source.
+type jsxMutantsPrepared struct{ Oracle, Control, Binary, Mutant string }
+
+// jsxMutantsPrepare fetches a shard's products. The planted-proof child is handed its parent's instead, so the child's
+// fetch never runs on the parent's own-work clock.
+func jsxMutantsPrepare(t *testing.T, shard int) jsxMutantsPrepared {
+	t.Helper()
+	if descriptor := os.Getenv(jsxMutantsPreparedEnv); descriptor != "" {
+		data, err := os.ReadFile(descriptor)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var prepared jsxMutantsPrepared
+		if err := json.Unmarshal(data, &prepared); err != nil {
+			t.Fatal(err)
+		}
+		return prepared
+	}
+	directory, _ := filepath.Abs(".")
+	mutant := jsxMutantsSource(t, shard)
+	return jsxMutantsPrepared{Oracle: goOracle(t), Control: buildPort(t, directory, true), Binary: buildPort(t, mutant, true), Mutant: mutant}
+}
+
+const jsxMutantsPreparedEnv = "ADAMIC_JSX_MUTANTS_PREPARED"
 
 func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
 func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }
@@ -241,10 +181,18 @@ func TestJsxMutantsUnion(t *testing.T) {
 }
 
 // Prove each ownership leaf independently; exactly shard 004 must fail.
-func jsxMutantsPlantedProof(t *testing.T, shard int) {
+func jsxMutantsPlantedProof(t *testing.T, shard int, prepared jsxMutantsPrepared) {
 	t.Helper()
 	executable, err := os.Executable()
 	if err != nil {
+		t.Fatal(err)
+	}
+	encoded, err := json.Marshal(prepared)
+	if err != nil {
+		t.Fatal(err)
+	}
+	descriptor := filepath.Join(t.TempDir(), "prepared.json")
+	if err := os.WriteFile(descriptor, encoded, 0644); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
@@ -252,11 +200,11 @@ func jsxMutantsPlantedProof(t *testing.T, shard int) {
 	name := fmt.Sprintf("TestJsxMutants_%03d", shard)
 	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
 	for _, entry := range os.Environ() {
-		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PROOF_CHILD=") {
+		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PROOF_CHILD=") && !strings.HasPrefix(entry, jsxMutantsPreparedEnv+"=") {
 			cmd.Env = append(cmd.Env, entry)
 		}
 	}
-	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PROOF_CHILD=1")
+	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PROOF_CHILD=1", jsxMutantsPreparedEnv+"="+descriptor)
 	out, err := cmd.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatal("planted proof exceeded 60 seconds")
@@ -287,120 +235,46 @@ func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.C
 	return cmd
 }
 
-// Once per process, always invoking the real buildcache recipe on a miss.
-type jsxMutantsPrepared struct {
-	once      sync.Once
-	directory string
-}
-
-var jsxMutantsProducts sync.Map
-
-func jsxMutantsFetch(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	t.Helper()
-	identity, err := json.Marshal(inputs)
-	if err != nil {
-		t.Fatal(err)
-	}
-	value, _ := jsxMutantsProducts.LoadOrStore(string(identity), &jsxMutantsPrepared{})
-	product := value.(*jsxMutantsPrepared)
-	product.once.Do(func() { product.directory = buildcache.Product(t, inputs, build) })
-	if product.directory == "" {
-		t.Fatal("product preparation failed")
-	}
-	return product.directory
-}
-
 func jsxMutantsSource(t *testing.T, index int) string {
 	t.Helper()
-	if index < 0 {
-		directory, err := filepath.Abs(".")
-		if err != nil {
-			t.Fatal(err)
-		}
-		return directory
-	}
 	change := jsxMutantsChanges()[index]
 	return copyPort(t, "jsx.ts", change.from, change.to)
 }
 
-func TestProduct_JsxMutantsOracle(t *testing.T) { t.Parallel(); jsxMutantsOracle(t) }
-func TestProduct_JsxMutantsLower_Control(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, -1))
-}
-func TestProduct_JsxMutantsNative_Control(t *testing.T) {
-	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, -1)))
-}
-func TestProduct_JsxMutantsLower_000(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 0))
-}
+// The oracle is TestProduct_ParserOracle's and the control TestProduct_WholeMutantsNative_Control's.
 func TestProduct_JsxMutantsNative_000(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 0)))
-}
-func TestProduct_JsxMutantsLower_001(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 1))
+	buildPort(t, jsxMutantsSource(t, 0), true)
 }
 func TestProduct_JsxMutantsNative_001(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 1)))
-}
-func TestProduct_JsxMutantsLower_002(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 2))
+	buildPort(t, jsxMutantsSource(t, 1), true)
 }
 func TestProduct_JsxMutantsNative_002(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 2)))
-}
-func TestProduct_JsxMutantsLower_003(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 3))
+	buildPort(t, jsxMutantsSource(t, 2), true)
 }
 func TestProduct_JsxMutantsNative_003(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 3)))
-}
-func TestProduct_JsxMutantsLower_004(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 4))
+	buildPort(t, jsxMutantsSource(t, 3), true)
 }
 func TestProduct_JsxMutantsNative_004(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 4)))
-}
-func TestProduct_JsxMutantsLower_005(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 5))
+	buildPort(t, jsxMutantsSource(t, 4), true)
 }
 func TestProduct_JsxMutantsNative_005(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 5)))
-}
-func TestProduct_JsxMutantsLower_006(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 6))
+	buildPort(t, jsxMutantsSource(t, 5), true)
 }
 func TestProduct_JsxMutantsNative_006(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 6)))
-}
-func TestProduct_JsxMutantsLower_007(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 7))
+	buildPort(t, jsxMutantsSource(t, 6), true)
 }
 func TestProduct_JsxMutantsNative_007(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 7)))
-}
-func TestProduct_JsxMutantsLower_008(t *testing.T) {
-	t.Parallel()
-	jsxMutantsLower(t, jsxMutantsSource(t, 8))
+	buildPort(t, jsxMutantsSource(t, 7), true)
 }
 func TestProduct_JsxMutantsNative_008(t *testing.T) {
 	t.Parallel()
-	jsxMutantsNative(t, jsxMutantsLower(t, jsxMutantsSource(t, 8)))
+	buildPort(t, jsxMutantsSource(t, 8), true)
 }

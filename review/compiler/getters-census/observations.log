@@ -1,0 +1,318 @@
+=== RUN   TestGettersCensusClosureNumberMethods
+=== PAUSE TestGettersCensusClosureNumberMethods
+=== RUN   TestGettersCensusLazyObject
+=== PAUSE TestGettersCensusLazyObject
+=== RUN   TestGettersCensusPrimaryFunction
+=== PAUSE TestGettersCensusPrimaryFunction
+=== RUN   TestGettersCensusOptionalBooleanFunction
+=== PAUSE TestGettersCensusOptionalBooleanFunction
+=== RUN   TestGettersCensusUpdateNodeFunction
+=== PAUSE TestGettersCensusUpdateNodeFunction
+=== RUN   TestGettersCensusUnaryNodeFunction
+=== PAUSE TestGettersCensusUnaryNodeFunction
+=== RUN   TestGettersCensusOptionalTypeFunction
+=== PAUSE TestGettersCensusOptionalTypeFunction
+=== RUN   TestGettersCensusUpdateTypeFunction
+=== PAUSE TestGettersCensusUpdateTypeFunction
+=== RUN   TestGettersCensusOptionalCommentFunction
+=== PAUSE TestGettersCensusOptionalCommentFunction
+=== RUN   TestGettersCensusUpdateCommentFunction
+=== PAUSE TestGettersCensusUpdateCommentFunction
+=== RUN   TestGettersCensusBinaryFunction
+=== PAUSE TestGettersCensusBinaryFunction
+=== RUN   TestGettersCensusOverloadedFunction
+=== PAUSE TestGettersCensusOverloadedFunction
+=== RUN   TestGettersCensusUnaryFunction
+=== PAUSE TestGettersCensusUnaryFunction
+=== RUN   TestGettersCensusThrowingObject
+=== PAUSE TestGettersCensusThrowingObject
+=== RUN   TestGettersCensusClosureNumberNext
+=== PAUSE TestGettersCensusClosureNumberNext
+=== RUN   TestGettersCensusClosureUnionNext
+=== PAUSE TestGettersCensusClosureUnionNext
+=== RUN   TestGettersCensusSnapshotNext
+=== PAUSE TestGettersCensusSnapshotNext
+=== RUN   TestGettersCensusClassMap
+=== PAUSE TestGettersCensusClassMap
+=== RUN   TestGettersCensusCallbackPairMethods
+=== PAUSE TestGettersCensusCallbackPairMethods
+=== RUN   TestGettersCensusHigherCallbackPairMethods
+=== PAUSE TestGettersCensusHigherCallbackPairMethods
+=== RUN   TestGettersCensusBinaryInline
+=== PAUSE TestGettersCensusBinaryInline
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestGettersCensusClosureNumberMethods
+=== CONT  TestGettersCensusBinaryInline
+=== CONT  TestGettersCensusOverloadedFunction
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== CONT  TestGettersCensusSnapshotNext
+=== NAME  TestGettersCensusOverloadedFunction
+    getters_census_test.go:133: gate cache node miss
+=== NAME  TestGettersCensusSnapshotNext
+    getters_census_test.go:158: gate cache node miss
+=== NAME  TestGettersCensusBinaryInline
+    getters_census_test.go:178: gate cache node miss
+=== NAME  TestGettersCensusClosureNumberMethods
+    getters_census_test.go:78: gate cache node miss
+=== NAME  TestGettersCensusBinaryInline
+    getters_census_test.go:178: Node: exit 0 stdout "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n" stderr ""
+=== NAME  TestGettersCensusOverloadedFunction
+    getters_census_test.go:133: Node: exit 0 stdout "10\n" stderr ""
+=== NAME  TestGettersCensusSnapshotNext
+    getters_census_test.go:158: Node: exit 0 stdout "0/1\n" stderr ""
+=== NAME  TestGettersCensusClosureNumberMethods
+    getters_census_test.go:78: Node: exit 0 stdout "0\n1\n" stderr ""
+=== NAME  TestGettersCensusOverloadedFunction
+    getters_census_test.go:133: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_overloaded_function.a:18:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusOverloadedFunction (0.29s)
+=== CONT  TestGettersCensusHigherCallbackPairMethods
+=== NAME  TestGettersCensusBinaryInline
+    getters_census_test.go:178: gate cache node miss
+=== NAME  TestGettersCensusSnapshotNext
+    getters_census_test.go:158: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_snapshot_next.a:7:56: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusSnapshotNext (0.26s)
+=== CONT  TestGettersCensusCallbackPairMethods
+=== NAME  TestGettersCensusClosureNumberMethods
+    getters_census_test.go:78: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_methods.a:5:14: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusClosureNumberMethods (0.32s)
+=== CONT  TestGettersCensusClassMap
+=== NAME  TestGettersCensusHigherCallbackPairMethods
+    getters_census_test.go:173: gate cache node miss
+=== NAME  TestGettersCensusCallbackPairMethods
+    getters_census_test.go:168: gate cache node miss
+=== NAME  TestGettersCensusClassMap
+    getters_census_test.go:163: gate cache node miss
+=== NAME  TestGettersCensusBinaryInline
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestGettersCensusHigherCallbackPairMethods
+    getters_census_test.go:173: Node: exit 0 stdout "3\n13\ndone\ninitialized\n" stderr ""
+=== NAME  TestGettersCensusCallbackPairMethods
+    getters_census_test.go:168: Node: exit 0 stdout "3\n13\ndone\ninitialized\n" stderr ""
+=== NAME  TestGettersCensusClassMap
+    getters_census_test.go:163: Node: exit 0 stdout "0/0/0\n1/1/1\n9\n" stderr ""
+=== NAME  TestGettersCensusHigherCallbackPairMethods
+    getters_census_test.go:173: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusHigherCallbackPairMethods (0.19s)
+=== CONT  TestGettersCensusClosureNumberNext
+=== NAME  TestGettersCensusCallbackPairMethods
+    getters_census_test.go:168: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusCallbackPairMethods (0.21s)
+=== CONT  TestGettersCensusClosureUnionNext
+=== NAME  TestGettersCensusClosureNumberNext
+    getters_census_test.go:148: gate cache node miss
+=== NAME  TestGettersCensusClassMap
+    getters_census_test.go:163: gate cache node miss
+=== NAME  TestGettersCensusClosureUnionNext
+    getters_census_test.go:153: gate cache node miss
+=== NAME  TestGettersCensusClassMap
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestGettersCensusClosureNumberNext
+    getters_census_test.go:148: Node: exit 0 stdout "0\n1\n" stderr ""
+=== NAME  TestGettersCensusClosureUnionNext
+    getters_census_test.go:153: Node: exit 0 stdout "undefined\nbad mapping\n" stderr ""
+=== NAME  TestGettersCensusClosureNumberNext
+    getters_census_test.go:148: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_next.a:5:41: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusClosureNumberNext (0.19s)
+=== CONT  TestGettersCensusThrowingObject
+=== NAME  TestGettersCensusClosureUnionNext
+    getters_census_test.go:153: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_union_next.a:5:45: stage 0 can't lower a non-accessor method in an accessor literal yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusClosureUnionNext (0.17s)
+=== CONT  TestGettersCensusOptionalTypeFunction
+=== NAME  TestGettersCensusThrowingObject
+    getters_census_test.go:143: gate cache node miss
+=== NAME  TestGettersCensusOptionalTypeFunction
+    getters_census_test.go:108: gate cache node miss
+    getters_census_test.go:108: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusThrowingObject
+    getters_census_test.go:143: Node: exit 0 stdout "constructed\nNot supported\n" stderr ""
+=== NAME  TestGettersCensusOptionalTypeFunction
+    getters_census_test.go:108: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusOptionalTypeFunction (0.15s)
+=== CONT  TestGettersCensusBinaryFunction
+=== NAME  TestGettersCensusClassMap
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestGettersCensusThrowingObject
+    getters_census_test.go:143: gate cache node miss
+=== NAME  TestGettersCensusBinaryFunction
+    getters_census_test.go:128: gate cache node miss
+=== NAME  TestGettersCensusThrowingObject
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestGettersCensusBinaryFunction
+    getters_census_test.go:128: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusClassMap
+    getters_census_test.go:163: JavaScript: exit 0 stdout "0/0/0\n1/1/1\n9\n" stderr ""
+    getters_census_test.go:163: release: exit 0 stdout "0/0/0\n1/1/1\n9\n" stderr ""
+    getters_census_test.go:163: sanitized: exit 0 stdout "0/0/0\n1/1/1\n9\n" stderr ""
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestGettersCensusClassMap (0.67s)
+=== CONT  TestGettersCensusUpdateCommentFunction
+=== NAME  TestGettersCensusBinaryFunction
+    getters_census_test.go:128: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_binary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusBinaryFunction (0.16s)
+=== CONT  TestGettersCensusOptionalCommentFunction
+=== NAME  TestGettersCensusUpdateCommentFunction
+    getters_census_test.go:123: gate cache node miss
+=== NAME  TestGettersCensusOptionalCommentFunction
+    getters_census_test.go:118: gate cache node miss
+=== NAME  TestGettersCensusUpdateCommentFunction
+    getters_census_test.go:123: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusOptionalCommentFunction
+    getters_census_test.go:118: Node: exit 0 stdout "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n" stderr ""
+=== NAME  TestGettersCensusThrowingObject
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestGettersCensusUpdateCommentFunction
+    getters_census_test.go:123: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusUpdateCommentFunction (0.18s)
+=== CONT  TestGettersCensusUpdateTypeFunction
+=== NAME  TestGettersCensusOptionalCommentFunction
+    getters_census_test.go:118: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusOptionalCommentFunction (0.19s)
+=== CONT  TestGettersCensusOptionalBooleanFunction
+=== NAME  TestGettersCensusUpdateTypeFunction
+    getters_census_test.go:113: gate cache node miss
+=== NAME  TestGettersCensusThrowingObject
+    getters_census_test.go:143: JavaScript: exit 0 stdout "constructed\nNot supported\n" stderr ""
+    getters_census_test.go:143: release: exit 0 stdout "constructed\nNot supported\n" stderr ""
+    getters_census_test.go:143: sanitized: exit 0 stdout "constructed\nNot supported\n" stderr ""
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestGettersCensusThrowingObject (0.57s)
+=== CONT  TestGettersCensusUnaryNodeFunction
+=== NAME  TestGettersCensusOptionalBooleanFunction
+    getters_census_test.go:93: gate cache node miss
+=== NAME  TestGettersCensusUnaryNodeFunction
+    getters_census_test.go:103: gate cache node miss
+=== NAME  TestGettersCensusUpdateTypeFunction
+    getters_census_test.go:113: Node: exit 0 stdout "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n" stderr ""
+=== NAME  TestGettersCensusOptionalBooleanFunction
+    getters_census_test.go:93: Node: exit 0 stdout "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n" stderr ""
+=== NAME  TestGettersCensusUpdateTypeFunction
+    getters_census_test.go:113: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusUpdateTypeFunction (0.21s)
+=== CONT  TestGettersCensusUpdateNodeFunction
+=== NAME  TestGettersCensusOptionalBooleanFunction
+    getters_census_test.go:93: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_boolean_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusOptionalBooleanFunction (0.19s)
+=== CONT  TestGettersCensusUnaryFunction
+=== NAME  TestGettersCensusUnaryNodeFunction
+    getters_census_test.go:103: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+=== NAME  TestGettersCensusUpdateNodeFunction
+    getters_census_test.go:98: gate cache node miss
+=== NAME  TestGettersCensusUnaryFunction
+    getters_census_test.go:138: gate cache node miss
+=== NAME  TestGettersCensusUnaryNodeFunction
+    getters_census_test.go:103: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_unary_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusUnaryNodeFunction (0.20s)
+=== CONT  TestGettersCensusPrimaryFunction
+    getters_census_test.go:88: gate cache node miss
+=== NAME  TestGettersCensusUnaryFunction
+    getters_census_test.go:138: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+=== NAME  TestGettersCensusUpdateNodeFunction
+    getters_census_test.go:98: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+    getters_census_test.go:98: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusUpdateNodeFunction (0.18s)
+=== CONT  TestGettersCensusLazyObject
+=== NAME  TestGettersCensusUnaryFunction
+    getters_census_test.go:138: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_unary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusUnaryFunction (0.19s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== NAME  TestGettersCensusLazyObject
+    getters_census_test.go:83: gate cache node miss
+=== NAME  TestGettersCensusPrimaryFunction
+    getters_census_test.go:88: Node: exit 0 stdout "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n" stderr ""
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:590: gate cache native hit
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== NAME  TestGettersCensusPrimaryFunction
+    getters_census_test.go:88: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_primary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable); JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusPrimaryFunction (0.22s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== NAME  TestGettersCensusLazyObject
+    getters_census_test.go:83: Node: exit 0 stdout "constructed\ninitialize\n9\n10\n" stderr ""
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_next.a:5:41: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== NAME  TestGettersCensusLazyObject
+    getters_census_test.go:83: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_lazy_object.a:9:57: stage 0 can't lower reading factory yet; JavaScript/release/sanitized not reached
+--- PASS: TestGettersCensusLazyObject (0.19s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_snapshot_next.a:7:56: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_closure_union_next.a:5:45: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_lazy_object.a:9:57: stage 0 can't lower reading factory yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+    oracle_test.go:748: not yet: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_methods.a:5:14: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:590: gate cache native hit
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestGettersCensusBinaryInline
+    oracle_test.go:590: gate cache native miss
+    getters_census_test.go:178: release: exit 0 stdout "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n" stderr ""
+    getters_census_test.go:178: sanitized: exit 0 stdout "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n" stderr ""
+    getters_census_test.go:178: JavaScript: exit 0 stdout "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n" stderr ""
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+    oracle_test.go:590: gate cache native hit
+=== NAME  TestGettersCensusBinaryInline
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestGettersCensusBinaryInline (9.73s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_inline.a (7.93s)
+PASS
+gate cache: native hits=12 misses=6
+gate cache: node hits=6 misses=24
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.748s

@@ -32,6 +32,8 @@ type sourceFS struct {
 	vfs.FS
 	overlay   map[tspath.RootedFilePath]string
 	nodeTypes bool
+	// display names a file for whoever reads the program (LoadDisplayed); nil names it by its path.
+	display func(string) string
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -44,12 +46,16 @@ func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath
 	return adamicPath, s.FS.FileExists(adamicPath)
 }
 
-// displayName is the name a person wrote, for a file name the checker uses.
+// displayName is the name a person wrote, for a file name the checker uses, as display shows it.
 func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
+	name := path.AsString()
 	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		return adamicPath.AsString()
+		name = adamicPath.AsString()
 	}
-	return path.AsString()
+	if s.display != nil {
+		return s.display(name)
+	}
+	return name
 }
 
 func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {

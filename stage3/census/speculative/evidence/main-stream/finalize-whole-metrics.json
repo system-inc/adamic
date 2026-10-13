@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/speculative/finalize_stream.py",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/tmp/b17vtn1/whole",
+    "/tmp/b17vtn1/whole-result"
+  ],
+  "wall_seconds": 51.580471292999846,
+  "peak_rss_kib": 2390708,
+  "exit": 0,
+  "time_limit_seconds": 300.0,
+  "rss_limit_mib": 6144,
+  "address_space_limit_mib": 12288,
+  "rss_limit_killed": false
+}

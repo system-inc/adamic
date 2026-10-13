@@ -9,6 +9,8 @@ import (
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // These cases combine features that the extracted test262 executions seldom combine.
@@ -98,9 +100,13 @@ func oct6NodeLoops(t *testing.T, loops []oct6Loop) [][]executionResult {
 	if err != nil {
 		t.Fatal(err)
 	}
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatalf("Node loop oracle: %v", err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := exec.CommandContext(ctx, node, "-e", `
 if(!process.version.startsWith('v24.'))throw Error('Node 24 required');
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 const results=cases.map(c=>{
@@ -117,6 +123,7 @@ const results=cases.map(c=>{
  }
  return results;
 });process.stdout.write(JSON.stringify(results));`)
+	command.Env = toolchain.Env()
 	command.Stdin = bytes.NewReader(data)
 	output, err := command.CombinedOutput()
 	if err != nil {

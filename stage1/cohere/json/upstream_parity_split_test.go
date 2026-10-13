@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testUpstreamRepositoryCorpusParitySplitShards = 16
@@ -56,6 +57,17 @@ func upstreamParityDeadline(t *testing.T) (context.Context, func()) {
 
 func upstreamParityCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, as
+		// toolchain.Command runs one under a context it has no form for. A program a test built (the Go oracle) runs as
+		// named, with this process's environment. Path's error fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Env = toolchain.Env()
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -168,8 +180,7 @@ func upstreamParityPrepareProducts(t *testing.T) {
 			t.Fatalf("known difference missing: %s", id)
 		}
 	}
-	product := upstreamParityOracleProduct(t)
-	upstreamParitySetup.cases, upstreamParitySetup.shards, upstreamParitySetup.known, upstreamParitySetup.oracle = cases, shards, known, filepath.Join(product, "oracle")
+	upstreamParitySetup.cases, upstreamParitySetup.shards, upstreamParitySetup.known, upstreamParitySetup.oracle = cases, shards, known, upstreamParityOracleProduct(t)
 	t.Logf("exact union: %d cases; all nine known differences assigned exactly once", len(cases))
 	upstreamParitySetup.ready = true
 }
@@ -389,12 +400,18 @@ func TestUpstreamRepositoryCorpusParity_015(t *testing.T) {
 	upstreamParityRun(t, 15)
 }
 
-var upstreamParityOracleBuild jsonTopBuild
+var upstreamParityOracleBuild struct {
+	once sync.Once
+	path string
+}
 
+// upstreamParityOracleProduct is cohere's internal/format/javascript test binary with testdata/cohere_side_test.go
+// added by an overlay, keyed by what go says the build compiles (GoTest). The overlay names this checkout's paths, so
+// it sits in a temporary directory: it builds the product and is never part of it (#tqrqx60).
 func upstreamParityOracleProduct(t *testing.T) string {
 	t.Helper()
 	upstreamParityOracleBuild.once.Do(func() {
-		cohere, err := filepath.Abs("../../../cohere")
+		root, err := filepath.Abs(repository)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -402,33 +419,20 @@ func upstreamParityOracleProduct(t *testing.T) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		flags := []string{"go test -c ./internal/format/javascript", "overlay=cohere_side_test.go"}
-		for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOWORK", "GOENV"} {
-			flags = append(flags, name+"="+os.Getenv(name))
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/internal/format/javascript/adamic_json_audit_test.go"): side}})
+		if err != nil {
+			t.Fatal(err)
 		}
-		product := buildcache.Product(t, buildcache.Inputs{Name: "json upstream parity audit oracle", Files: []string{"cohere", "stage1/cohere/json/testdata/cohere_side_test.go"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
-			overlay := filepath.Join(dir, "overlay.json")
-			encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(overlay, encoded, 0644); err != nil {
-				return err
-			}
-			command := upstreamParityCommand(context.Background(), "go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), "./internal/format/javascript")
-			command.Dir = cohere
-			output, err := childguard.CombinedOutput(command, jsonGuard)
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
-			}
-			return nil
-		})
-		upstreamParityOracleBuild.dir = product
+		path := filepath.Join(t.TempDir(), "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			t.Fatal(err)
+		}
+		upstreamParityOracleBuild.path = buildcache.GoTest(t, "cohere", "oracle", "./internal/format/javascript", []string{"-overlay=" + path})
 	})
-	if upstreamParityOracleBuild.dir == "" {
+	if upstreamParityOracleBuild.path == "" {
 		t.Fatal("upstream oracle preparation failed")
 	}
-	return upstreamParityOracleBuild.dir
+	return upstreamParityOracleBuild.path
 }
 func TestProduct_JSONUpstreamOracle(t *testing.T) {
 	t.Parallel()

@@ -3,6 +3,7 @@ package tsprinter
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -38,23 +39,93 @@ var tscAgreementFamilyProducts [2]struct {
 	products tsPrinterProducts
 }
 
+// tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build here, the TSC filter, the
+// oracle outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle
+// runs and its output is captured (statementContextCommand; bounded and combinedOutput). printerGateOnce, in
+// printer_gate_products_test.go, is only a per-process memo, and the oracle it builds is keyed by its bytes.
+var tscAgreementRecipe = []string{
+	"stage1/cohere/tsprinter/tsc_corpus_split_test.go",
+	"stage1/cohere/tsprinter/tsc_corpus_test.go",
+	"stage1/cohere/tsprinter/tsc_units_test.go",
+	"stage1/cohere/tsprinter/expression_products_test.go",
+	"stage1/cohere/tsprinter/expressions_test.go",
+	"stage1/cohere/tsprinter/corpus_test.go",
+	"stage1/cohere/tsprinter/statements_shards_test.go",
+	"stage1/cohere/tsprinter/helpers_test.go",
+}
+
+// tscAgreementInputs are what the corpus product's build reads: the TSC corpus, the gaps file, the Go oracle that
+// answers every case, by its bytes as expressionBuild keys a generated input, and the recipe. Keying every tracked file
+// of the repository cost the first shard of every process 19 s of walking (#4ycgm2n).
 func tscAgreementInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "TSC agreement corpus v3", Flags: []string{fmt.Sprint(testTSCCorpusAgreementShards), "GOFLAGS=" + os.Getenv("GOFLAGS"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-	// Match the existing printer product helper's complete repository inputs,
-	// including cohere's rule runner, shims and all embedded compiler resources.
-	for _, file := range expressionInputFiles(t, root) {
-		relative, err := filepath.Rel(root, file)
+	oracle, err := os.ReadFile(tscOracle(t, root))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return tscAgreementKeyInputs(fmt.Sprintf("%x", sha256.Sum256(oracle)))
+}
+
+// tscAgreementKeyInputs is tscAgreementInputs for the oracle whose bytes hash to oracle.
+func tscAgreementKeyInputs(oracle string) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "TSC agreement corpus v3",
+		Files:     append([]string{"stage3/drivers/tsc/corpus", "stage1/cohere/tsprinter/testdata/notyet.json"}, tscAgreementRecipe...),
+		Flags:     []string{fmt.Sprint(testTSCCorpusAgreementShards), "oracle " + oracle},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
+}
+
+// The corpus product's key moves with each corpus file and the recipe, and with nothing else the tree holds: a stand-in
+// tree carries every declared input and one undeclared file. Mutants: the corpus directory or notyet.json dropped from
+// Files, and an edit there no longer moves the key. The recipe is the list this test reads, and its code is compiled
+// in rather than read as the build runs, so no test or trace holds it: it is a judgment of which code shapes the bytes.
+func TestTSCAgreementKeyIsItsCorpusAndRecipe(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	write := func(name, content string) {
+		t.Helper()
+		path := filepath.Join(root, filepath.FromSlash(name))
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	corpus := "stage3/drivers/tsc/corpus/case.ts"
+	files := append([]string{corpus, "stage1/cohere/tsprinter/testdata/notyet.json"}, tscAgreementRecipe...)
+	for _, name := range files {
+		write(name, name)
+	}
+	write("internal/unrelated.go", "package unrelated")
+	key := func(oracle string) string {
+		t.Helper()
+		key, err := buildcache.Key(root, tscAgreementKeyInputs(oracle))
 		if err != nil {
 			t.Fatal(err)
 		}
-		inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
+		return key
 	}
-	return inputs
+	before := key("oracle")
+	write("internal/unrelated.go", "package unrelated // edited")
+	if key("oracle") != before {
+		t.Fatal("an edit to a file the build never reads moved the key")
+	}
+	if key("another oracle") == before {
+		t.Fatal("another oracle kept the key")
+	}
+	for _, name := range files {
+		write(name, name+"!")
+		if key("oracle") == before {
+			t.Errorf("a one-byte edit to %s kept the key", name)
+		}
+		write(name, name)
+	}
 }
 
 // Every independently selected leaf can prepare the corpus; no test ordering is required.
@@ -86,9 +157,14 @@ func tscAgreementPrepare(t *testing.T) string {
 				if err != nil {
 					return err
 				}
-				if err := os.WriteFile(filepath.Join(output, name), content, 0644); err != nil {
+				// A refused file is named by the root the reader supplies (#tqrqx60).
+				if err := os.WriteFile(filepath.Join(output, name), []byte(buildcache.Relative(string(content))), 0644); err != nil {
 					return err
 				}
+			}
+			// Each case's label names its corpus file by the root the reader supplies, never this checkout (#tqrqx60).
+			for i := range cases {
+				cases[i].Label = buildcache.Relative(cases[i].Label)
 			}
 			data.Families = append(data.Families, tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry})
 		}
@@ -118,6 +194,9 @@ func tscAgreementLoad(t *testing.T) tscAgreementData {
 	}
 	for i := range data.Families {
 		data.Families[i].Directory = filepath.Join(directory, data.Families[i].Directory)
+		for j := range data.Families[i].Cases {
+			data.Families[i].Cases[j].Label = buildcache.Absolute(data.Families[i].Cases[j].Label)
+		}
 		source, err := filepath.Abs(data.Families[i].Source)
 		if err != nil {
 			t.Fatal(err)

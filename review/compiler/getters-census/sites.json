@@ -1,0 +1,4841 @@
+[
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1707,
+    "name": "size",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createSet",
+    "type": "number",
+    "contextType": "Set<TElement>",
+    "body": "{\r\n            return size;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 15792,
+        "text": "commonDeclarations.size",
+        "receiver": "Set<Node>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 668,
+        "text": "capturedSuperProperties.size",
+        "receiver": "Set<__String>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 824,
+        "text": "capturedSuperProperties.size",
+        "receiver": "Set<__String>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 2480,
+        "text": "bindingsSet.size",
+        "receiver": "Set<Identifier>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 439,
+        "text": "moduleInfo.exportedFunctions.size",
+        "receiver": "Set<FunctionDeclaration>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 435,
+        "text": "existing.projects.size",
+        "receiver": "Set<T>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builderState.ts",
+        "line": 184,
+        "text": "set.size",
+        "receiver": "Set<V>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 363,
+        "text": "state.changedFilesSet.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 470,
+        "text": "state.seenAffectedFiles.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 473,
+        "text": "state.changedFilesSet.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 895,
+        "text": "state.semanticDiagnosticsFromOldState.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1272,
+        "text": "state.changedFilesSet.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1560,
+        "text": "state.changedFilesSet.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1864,
+        "text": "state.changedFilesSet.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1110,
+        "text": "resolution.files.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1226,
+        "text": "symlinkWatcher.symlinks.size",
+        "receiver": "Set<string>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1385,
+        "text": "resolution.files!.size",
+        "receiver": "Set<Path>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1391,
+        "text": "resolutions.size",
+        "receiver": "Set<ResolutionWithFailedLookupLocations>",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "closure_number_methods",
+    "ownerMembers": {
+      "GetAccessor": 1,
+      "MethodDeclaration": 8,
+      "PropertyAssignment": 2
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 514,
+    "name": "parenthesizer",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "import(\"../types.js\").ParenthesizerRules",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return parenthesizerRules();\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 1276,
+        "text": "factory.parenthesizer",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "lazy_object",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 517,
+    "name": "converters",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "import(\"../types.js\").NodeConverters",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return converters();\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 530,
+        "text": "context.factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 607,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 617,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 599,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 627,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 860,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 879,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 1234,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 510,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 612,
+        "text": "factory.converters",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "lazy_object",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 802,
+    "name": "createJSDocAllType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "() => Mutable<JSDocAllType>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrimaryTypeCreateFunction<JSDocAllType>(SyntaxKind.JSDocAllType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3839,
+        "text": "factory.createJSDocAllType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "primary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 805,
+    "name": "createJSDocUnknownType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "() => Mutable<JSDocUnknownType>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrimaryTypeCreateFunction<JSDocUnknownType>(SyntaxKind.JSDocUnknownType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3871,
+        "text": "factory.createJSDocUnknownType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "primary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 808,
+    "name": "createJSDocNonNullableType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(type: TypeNode, postfix?: boolean) => JSDocNonNullableType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrePostfixUnaryTypeCreateFunction<JSDocNonNullableType>(SyntaxKind.JSDocNonNullableType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3845,
+        "text": "factory.createJSDocNonNullableType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 4723,
+        "text": "factory.createJSDocNonNullableType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_boolean_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 811,
+    "name": "updateJSDocNonNullableType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocNonNullableType, type: TypeNode) => JSDocNonNullableType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrePostfixUnaryTypeUpdateFunction<JSDocNonNullableType>(SyntaxKind.JSDocNonNullableType);\r\n        }",
+    "uses": [],
+    "shape": "update_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 814,
+    "name": "createJSDocNullableType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(type: TypeNode, postfix?: boolean) => JSDocNullableType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrePostfixUnaryTypeCreateFunction<JSDocNullableType>(SyntaxKind.JSDocNullableType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3874,
+        "text": "factory.createJSDocNullableType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 4731,
+        "text": "factory.createJSDocNullableType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_boolean_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 817,
+    "name": "updateJSDocNullableType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocNullableType, type: TypeNode) => JSDocNullableType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocPrePostfixUnaryTypeUpdateFunction<JSDocNullableType>(SyntaxKind.JSDocNullableType);\r\n        }",
+    "uses": [],
+    "shape": "update_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 820,
+    "name": "createJSDocOptionalType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(type: TypeNode) => JSDocOptionalType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeCreateFunction<JSDocOptionalType>(SyntaxKind.JSDocOptionalType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3941,
+        "text": "factory.createJSDocOptionalType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "unary_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 823,
+    "name": "updateJSDocOptionalType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocOptionalType, type: TypeNode) => JSDocOptionalType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeUpdateFunction<JSDocOptionalType>(SyntaxKind.JSDocOptionalType);\r\n        }",
+    "uses": [],
+    "shape": "update_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 826,
+    "name": "createJSDocVariadicType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(type: TypeNode) => JSDocVariadicType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeCreateFunction<JSDocVariadicType>(SyntaxKind.JSDocVariadicType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3937,
+        "text": "factory.createJSDocVariadicType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "unary_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 829,
+    "name": "updateJSDocVariadicType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocVariadicType, type: TypeNode) => JSDocVariadicType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeUpdateFunction<JSDocVariadicType>(SyntaxKind.JSDocVariadicType);\r\n        }",
+    "uses": [],
+    "shape": "update_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 832,
+    "name": "createJSDocNamepathType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(type: TypeNode) => JSDocNamepathType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeCreateFunction<JSDocNamepathType>(SyntaxKind.JSDocNamepathType);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3915,
+        "text": "factory.createJSDocNamepathType",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "unary_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 835,
+    "name": "updateJSDocNamepathType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocNamepathType, type: TypeNode) => JSDocNamepathType",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocUnaryTypeUpdateFunction<JSDocNamepathType>(SyntaxKind.JSDocNamepathType);\r\n        }",
+    "uses": [],
+    "shape": "update_node_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 877,
+    "name": "createJSDocTypeTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => Mutable<JSDocTypeTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagCreateFunction<JSDocTypeTag>(SyntaxKind.JSDocTypeTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9482,
+        "text": "factory.createJSDocTypeTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 880,
+    "name": "updateJSDocTypeTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocTypeTag, tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => JSDocTypeTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagUpdateFunction<JSDocTypeTag>(SyntaxKind.JSDocTypeTag);\r\n        }",
+    "uses": [],
+    "shape": "update_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 883,
+    "name": "createJSDocReturnTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => Mutable<JSDocReturnTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagCreateFunction<JSDocReturnTag>(SyntaxKind.JSDocReturnTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9472,
+        "text": "factory.createJSDocReturnTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 886,
+    "name": "updateJSDocReturnTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocReturnTag, tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => JSDocReturnTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagUpdateFunction<JSDocReturnTag>(SyntaxKind.JSDocReturnTag);\r\n        }",
+    "uses": [],
+    "shape": "update_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 889,
+    "name": "createJSDocThisTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => Mutable<JSDocThisTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagCreateFunction<JSDocThisTag>(SyntaxKind.JSDocThisTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9601,
+        "text": "factory.createJSDocThisTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 892,
+    "name": "updateJSDocThisTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocThisTag, tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => JSDocThisTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagUpdateFunction<JSDocThisTag>(SyntaxKind.JSDocThisTag);\r\n        }",
+    "uses": [],
+    "shape": "update_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 895,
+    "name": "createJSDocAuthorTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocAuthorTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocAuthorTag>(SyntaxKind.JSDocAuthorTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9510,
+        "text": "factory.createJSDocAuthorTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 898,
+    "name": "updateJSDocAuthorTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocAuthorTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocAuthorTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocAuthorTag>(SyntaxKind.JSDocAuthorTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 901,
+    "name": "createJSDocClassTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocClassTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocClassTag>(SyntaxKind.JSDocClassTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9117,
+        "text": "factory.createJSDocClassTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 904,
+    "name": "updateJSDocClassTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocClassTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocClassTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocClassTag>(SyntaxKind.JSDocClassTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 907,
+    "name": "createJSDocPublicTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocPublicTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocPublicTag>(SyntaxKind.JSDocPublicTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9120,
+        "text": "factory.createJSDocPublicTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 910,
+    "name": "updateJSDocPublicTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocPublicTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocPublicTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocPublicTag>(SyntaxKind.JSDocPublicTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 913,
+    "name": "createJSDocPrivateTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocPrivateTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocPrivateTag>(SyntaxKind.JSDocPrivateTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9123,
+        "text": "factory.createJSDocPrivateTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 916,
+    "name": "updateJSDocPrivateTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocPrivateTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocPrivateTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocPrivateTag>(SyntaxKind.JSDocPrivateTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 919,
+    "name": "createJSDocProtectedTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocProtectedTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocProtectedTag>(SyntaxKind.JSDocProtectedTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9126,
+        "text": "factory.createJSDocProtectedTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 922,
+    "name": "updateJSDocProtectedTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocProtectedTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocProtectedTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocProtectedTag>(SyntaxKind.JSDocProtectedTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 925,
+    "name": "createJSDocReadonlyTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocReadonlyTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocReadonlyTag>(SyntaxKind.JSDocReadonlyTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9129,
+        "text": "factory.createJSDocReadonlyTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 928,
+    "name": "updateJSDocReadonlyTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocReadonlyTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocReadonlyTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocReadonlyTag>(SyntaxKind.JSDocReadonlyTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 931,
+    "name": "createJSDocOverrideTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocOverrideTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocOverrideTag>(SyntaxKind.JSDocOverrideTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9132,
+        "text": "factory.createJSDocOverrideTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 934,
+    "name": "updateJSDocOverrideTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocOverrideTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocOverrideTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocOverrideTag>(SyntaxKind.JSDocOverrideTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 937,
+    "name": "createJSDocDeprecatedTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => Mutable<JSDocDeprecatedTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagCreateFunction<JSDocDeprecatedTag>(SyntaxKind.JSDocDeprecatedTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9136,
+        "text": "factory.createJSDocDeprecatedTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "optional_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 940,
+    "name": "updateJSDocDeprecatedTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocDeprecatedTag, tagName: Identifier | undefined, comment?: NodeArray<JSDocComment>) => JSDocDeprecatedTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocSimpleTagUpdateFunction<JSDocDeprecatedTag>(SyntaxKind.JSDocDeprecatedTag);\r\n        }",
+    "uses": [],
+    "shape": "update_comment_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 943,
+    "name": "createJSDocThrowsTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => Mutable<JSDocThrowsTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagCreateFunction<JSDocThrowsTag>(SyntaxKind.JSDocThrowsTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9496,
+        "text": "factory.createJSDocThrowsTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 946,
+    "name": "updateJSDocThrowsTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocThrowsTag, tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => JSDocThrowsTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagUpdateFunction<JSDocThrowsTag>(SyntaxKind.JSDocThrowsTag);\r\n        }",
+    "uses": [],
+    "shape": "update_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 949,
+    "name": "createJSDocSatisfiesTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => Mutable<JSDocSatisfiesTag>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagCreateFunction<JSDocSatisfiesTag>(SyntaxKind.JSDocSatisfiesTag);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 9549,
+        "text": "factory.createJSDocSatisfiesTag",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "optional_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 952,
+    "name": "updateJSDocSatisfiesTag",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(node: JSDocSatisfiesTag, tagName: Identifier | undefined, typeExpression?: JSDocTypeExpression, comment?: NodeArray<JSDocComment>) => JSDocSatisfiesTag",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getJSDocTypeLikeTagUpdateFunction<JSDocSatisfiesTag>(SyntaxKind.JSDocSatisfiesTag);\r\n        }",
+    "uses": [],
+    "shape": "update_type_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1022,
+    "name": "createComma",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.CommaToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6756,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 540,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 544,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1242,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1297,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1622,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 727,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1842,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1909,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1171,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1183,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1259,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 1721,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 1730,
+        "text": "factory.createComma",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1025,
+    "name": "createAssignment",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "{ (left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): import(\"../types.js\").DestructuringAssignment; (left: Expression, right: Expression): import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken>; }",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.EqualsToken) as NodeFactory[\"createAssignment\"];\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 108,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 126,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6680,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6701,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 315,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 328,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 414,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 427,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 440,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 527,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 536,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 1660,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 485,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 189,
+        "text": "context.factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 295,
+        "text": "context.factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 591,
+        "text": "flattenContext.context.factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classThis.ts",
+        "line": 39,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 88,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/taggedTemplate.ts",
+        "line": 88,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1252,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1449,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1668,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1839,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1850,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1920,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1929,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2121,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2132,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2525,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2543,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2553,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2661,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 850,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 934,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1284,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1334,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1589,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1608,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1786,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1877,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1882,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2036,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2039,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2055,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2170,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2204,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2621,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2718,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2812,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 3319,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 502,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 585,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 358,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 381,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 696,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 696,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 882,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 899,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 900,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1023,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1266,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1353,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1373,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1599,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1807,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1828,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1874,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1945,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2390,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 626,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 1106,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 788,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 792,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 847,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 865,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 866,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 869,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 890,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 911,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 1270,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 1294,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2020.ts",
+        "line": 122,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2020.ts",
+        "line": 174,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2020.ts",
+        "line": 186,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2020.ts",
+        "line": 248,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2021.ts",
+        "line": 61,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2021.ts",
+        "line": 87,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2021.ts",
+        "line": 99,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 462,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 494,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 535,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 573,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 615,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 718,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 724,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2016.ts",
+        "line": 71,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2016.ts",
+        "line": 72,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2016.ts",
+        "line": 89,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2016.ts",
+        "line": 108,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1590,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1967,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1998,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2102,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2316,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3085,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3208,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3225,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3250,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3273,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3338,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3828,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3834,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4134,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4157,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4180,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4443,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4583,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 828,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 1389,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 2914,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 3097,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 296,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 297,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 457,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 612,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 634,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 635,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 684,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1168,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1260,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1858,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1909,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1918,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 1938,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 2212,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 2313,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 565,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 615,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 840,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 1000,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 1001,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 1718,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 313,
+        "text": "factory.createAssignment",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "overloaded_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1028,
+    "name": "createLogicalOr",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.BarBarToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/taggedTemplate.ts",
+        "line": 86,
+        "text": "factory.createLogicalOr",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1837,
+        "text": "factory.createLogicalOr",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2119,
+        "text": "factory.createLogicalOr",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1825,
+        "text": "factory.createLogicalOr",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 4578,
+        "text": "factory.createLogicalOr",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1031,
+    "name": "createLogicalAnd",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.AmpersandAmpersandToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 559,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 582,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 583,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2494,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 906,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 907,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1706,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1826,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2206,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3266,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3267,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 427,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 467,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 372,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 524,
+        "text": "factory.createLogicalAnd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1034,
+    "name": "createBitwiseOr",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.BarToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1037,
+    "name": "createBitwiseXor",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.CaretToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1040,
+    "name": "createBitwiseAnd",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.AmpersandToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1043,
+    "name": "createStrictEquality",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.EqualsEqualsEqualsToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6473,
+        "text": "factory.createStrictEquality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6474,
+        "text": "factory.createStrictEquality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6475,
+        "text": "factory.createStrictEquality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 457,
+        "text": "factory.createStrictEquality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3989,
+        "text": "factory.createStrictEquality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1046,
+    "name": "createStrictInequality",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.ExclamationEqualsEqualsToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6479,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6480,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6481,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 560,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 585,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1707,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1827,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 452,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 522,
+        "text": "factory.createStrictInequality",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1049,
+    "name": "createEquality",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.EqualsEqualsToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1052,
+    "name": "createInequality",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.ExclamationEqualsToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1055,
+    "name": "createLessThan",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.LessThanToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2091,
+        "text": "factory.createLessThan",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3170,
+        "text": "factory.createLessThan",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 1673,
+        "text": "factory.createLessThan",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1058,
+    "name": "createLessThanEquals",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.LessThanEqualsToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1061,
+    "name": "createGreaterThan",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.GreaterThanToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1064,
+    "name": "createGreaterThanEquals",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.GreaterThanEqualsToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1067,
+    "name": "createLeftShift",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.LessThanLessThanToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1070,
+    "name": "createRightShift",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.GreaterThanGreaterThanToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1073,
+    "name": "createUnsignedRightShift",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.GreaterThanGreaterThanGreaterThanToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1076,
+    "name": "createAdd",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.PlusToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 479,
+        "text": "factory.createAdd",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1079,
+    "name": "createSubtract",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.MinusToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2107,
+        "text": "factory.createSubtract",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1082,
+    "name": "createMultiply",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.AsteriskToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1085,
+    "name": "createDivide",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.SlashToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1088,
+    "name": "createModulo",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.PercentToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1091,
+    "name": "createExponent",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(left: Expression, right: Expression) => Mutable<BinaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getBinaryCreateFunction(SyntaxKind.AsteriskAsteriskToken);\r\n        }",
+    "uses": [],
+    "shape": "binary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1094,
+    "name": "createPrefixPlus",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.PlusToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1097,
+    "name": "createPrefixMinus",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.MinusToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1100,
+    "name": "createPrefixIncrement",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.PlusPlusToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1103,
+    "name": "createPrefixDecrement",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.MinusMinusToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1106,
+    "name": "createBitwiseNot",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.TildeToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1109,
+    "name": "createLogicalNot",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PrefixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPrefixUnaryCreateFunction(SyntaxKind.ExclamationToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 867,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 908,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 909,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3224,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3269,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3833,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 3203,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 526,
+        "text": "factory.createLogicalNot",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1112,
+    "name": "createPostfixIncrement",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PostfixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPostfixUnaryCreateFunction(SyntaxKind.PlusPlusToken);\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 2097,
+        "text": "factory.createPostfixIncrement",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 3176,
+        "text": "factory.createPostfixIncrement",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 1695,
+        "text": "factory.createPostfixIncrement",
+        "receiver": "NodeFactory",
+        "union": false,
+        "write": false,
+        "called": true
+      }
+    ],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1115,
+    "name": "createPostfixDecrement",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createNodeFactory",
+    "type": "(operand: Expression) => Mutable<PostfixUnaryExpression>",
+    "contextType": "NodeFactory",
+    "body": "{\r\n            return getPostfixUnaryCreateFunction(SyntaxKind.MinusMinusToken);\r\n        }",
+    "uses": [],
+    "shape": "unary_function",
+    "ownerMembers": {
+      "GetAccessor": 72,
+      "PropertyAssignment": 2,
+      "ShorthandPropertyAssignment": 417
+    }
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 2187,
+    "name": "yieldType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createTypeChecker",
+    "type": "Type",
+    "contextType": "IterationTypes",
+    "body": "{\r\n            return Debug.fail(\"Not supported\");\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 41226,
+        "text": "iterationTypes.yieldType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45725,
+        "text": "iterationTypes.yieldType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45725,
+        "text": "iterationTypes.yieldType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45885,
+        "text": "iterationTypes.yieldType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 46451,
+        "text": "iterationTypes.yieldType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "throwing_object",
+    "ownerMembers": {
+      "GetAccessor": 3
+    }
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 2190,
+    "name": "returnType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createTypeChecker",
+    "type": "Type",
+    "contextType": "IterationTypes",
+    "body": "{\r\n            return Debug.fail(\"Not supported\");\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45886,
+        "text": "iterationTypes.returnType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 46452,
+        "text": "iterationTypes.returnType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "throwing_object",
+    "ownerMembers": {
+      "GetAccessor": 3
+    }
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 2193,
+    "name": "nextType",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "createTypeChecker",
+    "type": "Type",
+    "contextType": "IterationTypes",
+    "body": "{\r\n            return Debug.fail(\"Not supported\");\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 39336,
+        "text": "iterationTypes.nextType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 41227,
+        "text": "iterationTypes.nextType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45720,
+        "text": "iterationTypes.nextType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45887,
+        "text": "iterationTypes.nextType",
+        "receiver": "IterationTypes",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "throwing_object",
+    "ownerMembers": {
+      "GetAccessor": 3
+    }
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 474,
+    "name": "pos",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "decodeMappings",
+    "type": "number",
+    "contextType": "MappingsDecoder",
+    "body": "{\r\n            return pos;\r\n        }",
+    "uses": [],
+    "shape": "closure_number_next",
+    "ownerMembers": {
+      "GetAccessor": 3,
+      "MethodDeclaration": 2
+    }
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 477,
+    "name": "error",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "decodeMappings",
+    "type": "string | undefined",
+    "contextType": "MappingsDecoder",
+    "body": "{\r\n            return error;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/sourcemap.ts",
+        "line": 741,
+        "text": "decoder.error",
+        "receiver": "MappingsDecoder",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/sourcemap.ts",
+        "line": 743,
+        "text": "decoder.error",
+        "receiver": "MappingsDecoder",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "closure_union_next",
+    "ownerMembers": {
+      "GetAccessor": 3,
+      "MethodDeclaration": 2
+    }
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 480,
+    "name": "state",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "decodeMappings",
+    "type": "Required<Mapping>",
+    "contextType": "MappingsDecoder",
+    "body": "{\r\n            return captureMapping(/*hasSource*/ true, /*hasName*/ true);\r\n        }",
+    "uses": [],
+    "shape": "snapshot_next",
+    "ownerMembers": {
+      "GetAccessor": 3,
+      "MethodDeclaration": 2
+    }
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 392,
+    "name": "size",
+    "kind": "get",
+    "parent": "ClassDeclaration",
+    "enclosing": "anonymous",
+    "type": "number",
+    "contextType": "IdentifierNameMap<V>",
+    "body": "{\r\n        return this._map.size;\r\n    }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "line": 199,
+        "text": "exportBindings.size",
+        "receiver": "IdentifierNameMap<ExportSpecifier>",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 439,
+        "text": "moduleInfo.exportSpecifiers.size",
+        "receiver": "IdentifierNameMap<ExportSpecifier[]>",
+        "union": false,
+        "write": false,
+        "called": false
+      }
+    ],
+    "shape": "class_map",
+    "ownerMembers": {
+      "GetAccessor": 1,
+      "MethodDeclaration": 7,
+      "PropertyDeclaration": 1
+    }
+  },
+  {
+    "file": "src/compiler/transformer.ts",
+    "line": 295,
+    "name": "onSubstituteNode",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "transformNodes",
+    "type": "(hint: EmitHint, node: Node) => Node",
+    "contextType": "TransformationContext",
+    "body": "{\r\n            return onSubstituteNode;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 254,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 258,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 398,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 399,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 100,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 103,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 160,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 164,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 170,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 171,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 500,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 503,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 349,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 350,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 205,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 207,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 153,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 155,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 77,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 79,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 19,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 24,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 27,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 32,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 36,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      }
+    ],
+    "shape": "callback_pair_methods",
+    "ownerMembers": {
+      "GetAccessor": 2,
+      "MethodDeclaration": 1,
+      "PropertyAssignment": 4,
+      "SetAccessor": 2,
+      "ShorthandPropertyAssignment": 19
+    }
+  },
+  {
+    "file": "src/compiler/transformer.ts",
+    "line": 298,
+    "name": "onSubstituteNode",
+    "kind": "set",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "transformNodes",
+    "type": "(hint: EmitHint, node: Node) => Node",
+    "contextType": "TransformationContext",
+    "body": "{\r\n            Debug.assert(state < TransformationState.Initialized, \"Cannot modify transformation hooks after initialization has completed.\");\r\n            Debug.assert(value !== undefined, \"Value must not be 'undefined'\");\r\n            onSubstituteNode = value;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 254,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 258,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 398,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 399,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 100,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/legacyDecorators.ts",
+        "line": 103,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 160,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 164,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 170,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 171,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 500,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 503,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 349,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 350,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 205,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 207,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 153,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 155,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 77,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 79,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 19,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 24,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 27,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 32,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 36,
+        "text": "context.onSubstituteNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      }
+    ],
+    "shape": "callback_pair_methods",
+    "ownerMembers": {
+      "GetAccessor": 2,
+      "MethodDeclaration": 1,
+      "PropertyAssignment": 4,
+      "SetAccessor": 2,
+      "ShorthandPropertyAssignment": 19
+    }
+  },
+  {
+    "file": "src/compiler/transformer.ts",
+    "line": 303,
+    "name": "onEmitNode",
+    "kind": "get",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "transformNodes",
+    "type": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
+    "contextType": "TransformationContext",
+    "body": "{\r\n            return onEmitNode;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 257,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 401,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 402,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 159,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 163,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 167,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 168,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 501,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 502,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 206,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 208,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 154,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 156,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 76,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 78,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 20,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 25,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 28,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 33,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 37,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      }
+    ],
+    "shape": "higher_callback_pair_methods",
+    "ownerMembers": {
+      "GetAccessor": 2,
+      "MethodDeclaration": 1,
+      "PropertyAssignment": 4,
+      "SetAccessor": 2,
+      "ShorthandPropertyAssignment": 19
+    }
+  },
+  {
+    "file": "src/compiler/transformer.ts",
+    "line": 306,
+    "name": "onEmitNode",
+    "kind": "set",
+    "parent": "ObjectLiteralExpression",
+    "enclosing": "transformNodes",
+    "type": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
+    "contextType": "TransformationContext",
+    "body": "{\r\n            Debug.assert(state < TransformationState.Initialized, \"Cannot modify transformation hooks after initialization has completed.\");\r\n            Debug.assert(value !== undefined, \"Value must not be 'undefined'\");\r\n            onEmitNode = value;\r\n        }",
+    "uses": [
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 257,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 401,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 402,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 159,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2017.ts",
+        "line": 163,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 167,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2018.ts",
+        "line": 168,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 501,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 502,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 206,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/module.ts",
+        "line": 208,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 154,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/system.ts",
+        "line": 156,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 76,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+        "line": 78,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 20,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 25,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 28,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 33,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": false,
+        "called": false
+      },
+      {
+        "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "line": 37,
+        "text": "context.onEmitNode",
+        "receiver": "TransformationContext",
+        "union": false,
+        "write": true,
+        "called": false
+      }
+    ],
+    "shape": "higher_callback_pair_methods",
+    "ownerMembers": {
+      "GetAccessor": 2,
+      "MethodDeclaration": 1,
+      "PropertyAssignment": 4,
+      "SetAccessor": 2,
+      "ShorthandPropertyAssignment": 19
+    }
+  }
+]

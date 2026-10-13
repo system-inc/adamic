@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Build products are inputs. No package-local cache: Product addresses each
@@ -58,7 +59,7 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 
 func wholeMutantBuildFlags() []string {
 	flags := []string{"GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}
-	for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOTOOLCHAIN", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "GOAMD64", "GOARM64", "CGO_ENABLED", "ADAMIC_NATIVE_SPLIT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	return flags
@@ -86,10 +87,13 @@ func wholeMutantBuildOracleProduct(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(path)
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
+		command.Env = append(command.Env, "PWD="+root)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)
@@ -110,20 +114,7 @@ func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) 
 	}
 	// Mutant copies live outside the repository. Their bytes, including each
 	// changed site, are inputs too; normalize the scanner's relocation only.
-	var sources strings.Builder
-	scanner, err := filepath.Abs("../scanner/scanner.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, name := range portFiles {
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		normalized := strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts")
-		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
-	}
-	sourceHash := fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
+	sourceHash := wholeMutantsSourceHash(t, directory)
 	flags := append(wholeMutantBuildFlags(), sourceHash)
 	return files, flags
 }
@@ -268,6 +259,11 @@ func TestWholeMutantsUnion(t *testing.T) {
 // external timeout utility, and also cancels their compiler descendants.
 func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
+	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	if !strings.ContainsRune(name, filepath.Separator) {
+		tool := toolchain.Command(name, args...)
+		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
+	}
 	// Cancellation cleans up the whole process group, including descendants.
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {

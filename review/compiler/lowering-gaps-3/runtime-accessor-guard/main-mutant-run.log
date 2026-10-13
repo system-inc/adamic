@@ -1,0 +1,8 @@
+{'name': 'main-static-revert', 'exit': 1, 'caught': True, 'expected': 'spreading in a program with static constructor objects'}
+{'name': 'main-accessor-revert', 'exit': 1, 'caught': True, 'expected': 'spreading an accessor literal whose getter may throw'}
+{'name': 'main-accessor-release', 'exit': 1, 'caught': True, 'expected': 'LeakSanitizer'}
+{'name': 'main-accessor-edge', 'exit': 1, 'caught': True, 'expected': 'UndefinedBehaviorSanitizer'}
+{'name': 'main-accessor-broad-edge', 'exit': 1, 'caught': True, 'expected': 'throw edge true, want false'}
+{'name': 'main-accessor-getter-retain', 'exit': 1, 'caught': True, 'expected': 'LeakSanitizer'}
+{'name': 'main-accessor-slots-owned-return', 'exit': 0, 'caught': True, 'expected': 'PASS'}
+{'name': 'main-accessor-return-double-release', 'exit': 1, 'caught': True, 'expected': 'AddressSanitizer'}

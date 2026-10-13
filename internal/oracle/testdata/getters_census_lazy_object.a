@@ -1,0 +1,19 @@
+// Reduced from TypeScript 050880ce src/compiler/factory/nodeFactory.ts:514.
+interface Rules { readonly apply: (value: number) => number; }
+interface Factory { readonly flags: number; readonly parenthesizer: Rules; }
+function makeFactory(flags: number): Factory {
+    let cache: Rules | undefined;
+    const rules = (): Rules => {
+        if (cache === undefined) {
+            console.log('initialize');
+            cache = { apply: (value: number) => value + factory.flags };
+        }
+        return cache;
+    };
+    const factory: Factory = { flags, get parenthesizer() { return rules(); } };
+    return factory;
+}
+const factory = makeFactory(7);
+console.log('constructed');
+console.log(`${factory.parenthesizer.apply(2)}`);
+console.log(`${factory.parenthesizer.apply(3)}`);

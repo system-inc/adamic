@@ -12,11 +12,15 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
+	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -73,17 +77,12 @@ func sharedPath(name string) (string, error) {
 	return filepath.Join(directory, name), nil
 }
 
-// run is execute without a test: output goes to a file, never a pipe, and anything on standard error is
-// a failure, as execute requires.
+// run is execute without a test, for a tool: output goes to a file, never a pipe, and anything on standard error
+// is a failure, as execute requires. The tool is the one internal/toolchain resolves, under its environment plus
+// environment, in directory with PWD to match (the go command trusts PWD over the real working directory).
 func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	command := exec.Command(name, args...)
-	command.Dir = directory
-	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
-	// real working directory, so a stale one resolves the module through the wrong path.
-	command.Env = append(os.Environ(), environment...)
-	if directory != "" {
-		command.Env = append(command.Env, "PWD="+directory)
-	}
+	command := toolchain.CommandIn(directory, name, args...)
+	command.Env = append(command.Env, environment...)
 	output, err := os.CreateTemp(sharedDirectory, "stdout-")
 	if err != nil {
 		return nil, err
@@ -129,9 +128,13 @@ func emitJavaScriptTo(directory, module string) error {
 	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
-// goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere
-// so the upstream rules stay unmodified.
-func goOracleIn(sourceRoot, directory string) (string, error) {
+// goOraclePackage is the directory, inside cohere, of the main package goOracleOverlay adds: the Go oracle.
+const goOraclePackage = "adamic_lint_oracle"
+
+// goOracleOverlay writes into directory the overlay that lays the Go oracle over cohere, so the upstream rules stay
+// unmodified: testdata/oracle.go, sourceRoot's generated registry and each of its rules' oracle.go, each a file of
+// goOraclePackage, a main package the overlay adds to cohere. It returns the overlay's path.
+func goOracleOverlay(sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return "", err
@@ -145,17 +148,15 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 		return "", err
 	}
 	replacements := map[string]string{}
-	var virtualFiles []string
 	var failure error
 	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		virtual := filepath.Join(root, goOraclePackage, "adamic_lint_"+name+".go")
 		absolute, err := filepath.Abs(source)
 		if err != nil {
 			failure = err
 			return
 		}
 		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
 	}
 	add("oracle", side)
 	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
@@ -173,12 +174,49 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		return "", err
 	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	if _, err := run(root, nil, "go", args...); err != nil {
-		return "", err
+	return path, nil
+}
+
+// lintGoSettings is every go setting a go run under toolchain.Env builds with, as go reports it there: its CC is the
+// compiler a cgo build runs, which the caller's CC isn't when the caller sets none (toolchain names clang then). A
+// product that builds with toolchain's go keys it.
+func lintGoSettings() string {
+	return buildcache.Tool("go", append([]string{"env"}, toolchain.GoSettings...)...)
+}
+
+// lintCommand is a child for a test's own deadline, run in directory (the caller's when empty) and killed with its
+// whole process group when ctx ends. A bare name is a tool, the program internal/toolchain resolves under its
+// environment with PWD set to directory, never PATH's with this process's; a path is a program a test built, which
+// runs as named with this process's environment. A tool toolchain can't resolve fails as the command starts, with
+// toolchain's error.
+func lintCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(ctx, path, args...)
+			command.Env = toolchain.Env()
+			if directory != "" {
+				absolute, err := filepath.Abs(directory)
+				if err != nil {
+					command.Err = err
+				}
+				command.Env = append(command.Env, "PWD="+absolute)
+			}
+		}
 	}
-	return binary, nil
+	command.Dir = directory
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
 }
 
 // captureUpstream runs cohere's own tests for sourceRoot's rules under a capture overlay and writes each
@@ -240,6 +278,10 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
+	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
+	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
+	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
+	defer os.RemoveAll(capture)
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {

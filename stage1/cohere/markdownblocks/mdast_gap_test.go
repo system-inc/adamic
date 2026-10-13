@@ -2,7 +2,6 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -17,27 +16,9 @@ func TestMdastIdentifierWitnesses(t *testing.T) {
 	}
 	dir := t.TempDir()
 	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_mdast_gap/main.go")
-	replace := map[string]string{}
-	for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
-		source, e := filepath.Abs(p.source)
-		if e != nil {
-			t.Fatal(e)
-		}
-		replace[p.target] = source
-	}
-	overlay, e := json.Marshal(map[string]any{"Replace": replace})
-	if e != nil {
-		t.Fatal(e)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	binaryGo := filepath.Join(dir, "go-gap")
-	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", binaryGo, mainPath)
-	build.Dir = cohere
-	if output, e := combinedOutput(build); e != nil {
-		t.Fatalf("Go %v %s", e, output)
-	}
+	// The mdast grain's Go oracle is this witness's program: the same three overlay replacements (testdata/mdast_go.go as
+	// a synthesized main, mdast_bridge.go and events_transport.go) built from cohere, so the witness reads that product.
+	binaryGo := grainProduct(t, "mdast", "go").goBinary
 	transport := filepath.Join(dir, "events.txt")
 	goResult := execute(t, nil, binaryGo, "gaps/identifier_case.jsonl", transport)
 	clean(t, "actual Go", goResult)

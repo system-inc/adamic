@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 )
 
 const helperMutantShards = 4
@@ -41,59 +42,57 @@ func helperMutantGroup(index int) []helperMutation {
 	return group
 }
 
+// helperClean is the index of the unmutated native build, after the mutants.
+const helperClean = helperMutantShards
+
 var helperProducts [helperMutantShards + 1]struct {
 	once   sync.Once
 	binary string
 }
 var helperNativeBuild sync.Mutex
 
-// index -1 is the Go oracle; other indices name independently built native mutants.
-// Both build-phase declarations and shards call this exact recipe and key.
+// helperClean is the unmutated native build; other indices name independently built native mutants. Both build-phase
+// declarations and shards call this exact recipe and key.
 func helperMutantProduct(t *testing.T, index int) string {
 	t.Helper()
-	product := &helperProducts[index+1]
+	product := &helperProducts[index]
 	product.once.Do(func() {
-		name := "helper-mutants-oracle"
-		flags := []string{"go build", "overlay=oracle.go,catalog.go,descriptors.go"}
-		tools := []string{buildcache.Tool("go", "version")}
-		files := []string{"cohere", "stage1/cohere/lint/helpers/testdata/oracle.go", "stage1/cohere/lint/helpers/testdata/catalog.go", "stage1/cohere/lint/helpers/testdata/descriptors.go", "stage1/cohere/lint/helpers/helpers_test.go", "stage1/cohere/lint/helpers/helper_mutants_test.go"}
-		if index >= 0 {
-			m := helperMutations()[index]
+		// The clean build is a mutant's recipe and key with no mutation planted.
+		name := "helper-native"
+		var m helperMutation
+		var mutation []string
+		if index != helperClean {
+			m = helperMutations()[index]
 			name = "helper-mutants-" + m.file
-			flags = []string{"native.Build", "Sanitize=true", "mutation=" + m.old + "=>" + m.replacement}
-			tools = append(tools, buildcache.Tool("clang", "--version"))
-			files = append(files, "go.mod", "go.work", "internal", "stage1/cohere/lint/helpers/main.ts", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/option_schema.ts", "stage1/cohere/lint/helpers/policy_message.ts", "stage1/cohere/lint/helpers/strict_options.ts")
+			mutation = []string{"mutation=" + m.old + "=>" + m.replacement}
 		}
+		flags := append(append([]string{"native.Build", "Sanitize=true"}, mutation...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+		files := append(compilerinputs.Lowering(), "stage1/cohere/lint/helpers/helpers_test.go", "stage1/cohere/lint/helpers/helper_mutants_test.go", "stage1/cohere/lint/helpers/main.ts", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/option_schema.ts", "stage1/cohere/lint/helpers/policy_message.ts", "stage1/cohere/lint/helpers/strict_options.ts")
 		directory := buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
-			var binary string
-			if index < 0 {
-				binary = oracle(t)
-			} else {
-				m := helperMutations()[index]
-				source := filepath.Join(directory, "source")
-				if err := os.Mkdir(source, 0755); err != nil {
+			source := filepath.Join(directory, "source")
+			if err := os.Mkdir(source, 0755); err != nil {
+				return err
+			}
+			for _, file := range []string{"main.ts", "options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"} {
+				data, err := os.ReadFile(file)
+				if err != nil {
 					return err
 				}
-				for _, file := range []string{"main.ts", "options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"} {
-					data, err := os.ReadFile(file)
-					if err != nil {
-						return err
+				if file == m.file {
+					if strings.Count(string(data), m.old) != 1 {
+						return fmt.Errorf("mutant anchor changed: %s", file)
 					}
-					if file == m.file {
-						if strings.Count(string(data), m.old) != 1 {
-							return fmt.Errorf("mutant anchor changed: %s", file)
-						}
-						data = []byte(strings.Replace(string(data), m.old, m.replacement, 1))
-					}
-					if err := os.WriteFile(filepath.Join(source, file), data, 0644); err != nil {
-						return err
-					}
+					data = []byte(strings.Replace(string(data), m.old, m.replacement, 1))
 				}
-				// native.Build's process-local caches are shared by parallel declarations.
-				helperNativeBuild.Lock()
-				defer helperNativeBuild.Unlock()
-				binary = build(t, source)
+				if err := os.WriteFile(filepath.Join(source, file), data, 0644); err != nil {
+					return err
+				}
 			}
+			// native.Build's process-local caches are shared by parallel declarations.
+			helperNativeBuild.Lock()
+			defer helperNativeBuild.Unlock()
+			binary := build(t, source)
 			data, err := os.ReadFile(binary)
 			if err != nil {
 				return err
@@ -105,11 +104,11 @@ func helperMutantProduct(t *testing.T, index int) string {
 	return product.binary
 }
 
-func TestProduct_HelperMutantsOracle(t *testing.T)  { t.Parallel(); helperMutantProduct(t, -1) }
 func TestProduct_HelperMutantsJSON(t *testing.T)    { t.Parallel(); helperMutantProduct(t, 0) }
 func TestProduct_HelperMutantsSchema(t *testing.T)  { t.Parallel(); helperMutantProduct(t, 1) }
 func TestProduct_HelperMutantsMessage(t *testing.T) { t.Parallel(); helperMutantProduct(t, 2) }
 func TestProduct_HelperMutantsStrict(t *testing.T)  { t.Parallel(); helperMutantProduct(t, 3) }
+func TestProduct_HelperNative(t *testing.T)         { t.Parallel(); helperMutantProduct(t, helperClean) }
 
 func TestHelperMutants_000(t *testing.T) { t.Parallel(); runHelperMutant(t, 0) }
 func TestHelperMutants_001(t *testing.T) { t.Parallel(); runHelperMutant(t, 1) }
@@ -134,7 +133,7 @@ func runHelperMutant(t *testing.T, index int) {
 		return
 	}
 	setup := time.Now()
-	goOracle := helperMutantProduct(t, -1)
+	goOracle := oracle(t)
 	binary := helperMutantProduct(t, index)
 	cases := fixture(t)
 	catalog, err := filepath.Abs("testdata/catalog.json")

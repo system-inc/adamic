@@ -24,7 +24,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testDotARenameShards = 2
@@ -77,18 +76,35 @@ func dotARenameProduct(t *testing.T, slot int, inputs buildcache.Inputs, recipe 
 
 func dotARenameSource(t *testing.T) string {
 	t.Helper()
-	return dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
+	product := dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
 		copyPort(t, dir, "", "")
-		return os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts"))
+		if err := os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts")); err != nil {
+			return err
+		}
+		// The port's imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(dir)
 	})
+	// The loader and Node read the port, so callers get the copy whose imports name this checkout.
+	directory, err := buildcache.Resolved(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return directory
 }
 
-func dotARenameOracle(t *testing.T) string {
+// dotARenameRegistered is a private copy of the renamed source as Resolved reads it, with its registry generated. The
+// source carries the registry copyPort generated for rule.a, so generating it for rule.ts writes .generated/registry.ts
+// and registry.go: in place, that is into Resolved's copy, which every reader of the source on this box shares, or into
+// the product itself when Resolved answers with it, and a second reader would read the first one's registry (#0sqk6ce).
+// Each reader generates into its own copy instead, and the source stays as it was built.
+func dotARenameRegistered(t *testing.T, source string) string {
 	t.Helper()
-	return dotARenameProduct(t, 1, dotARenameInputs(t, "oracle", []string{"go build -overlay", packageDirectory}), func(dir string) error {
-		_, err := dotARenameGoOracleIn(packageDirectory, dir)
-		return err
-	})
+	directory := t.TempDir()
+	if err := os.CopyFS(directory, os.DirFS(source)); err != nil {
+		t.Fatal(err)
+	}
+	prepareRegistry(t, directory)
+	return directory
 }
 
 func dotARenameLowered(t *testing.T, renamed bool) string {
@@ -99,9 +115,14 @@ func dotARenameLowered(t *testing.T, renamed bool) string {
 	}
 	inputs := dotARenameInputs(t, name+"-lowered", []string{"native.C", "javascript.JavaScript", name})
 	return dotARenameProduct(t, slot, inputs, func(dir string) error {
-		prepareRegistry(t, directory)
+		port := directory
+		if renamed {
+			port = dotARenameRegistered(t, directory)
+		} else {
+			prepareRegistry(t, port)
+		}
 		phase := time.Now()
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		program, err := load.Load([]string{filepath.Join(port, "main.ts")})
 		if err != nil {
 			return err
 		}
@@ -131,7 +152,7 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 	}
 	lowered := dotARenameLowered(t, renamed)
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4", "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED")))
+	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
 	return dotARenameProduct(t, slot, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
@@ -143,8 +164,9 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 	})
 }
 
-// C emission exceeds the build phase's 60s grain. Keep lowered/native
-// products shard-prepared until that production dependency is split.
+// Every product the shards read is declared, so Workshop's loom build-tree builds each once and a shard only reads
+// them. C emission is over the 60 s a test may take, never the 600 s a product may (Loom's KindCeilings): measured
+// Oct 10 inside the shards at 97% busy, lowering 71 s and the sanitized native 86 to 152 s.
 func TestProduct_DotARenameSource(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
@@ -152,76 +174,92 @@ func TestProduct_DotARenameSource(t *testing.T) {
 	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
 }
 
-func TestProduct_DotARenameOracle(t *testing.T) {
+func TestProduct_DotARenameOriginalLowered(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
-	dotARenameOracle(t)
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
+	dotARenameLowered(t, false)
 }
 
-func dotARenameGoOracleIn(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+func TestProduct_DotARenameRenamedLowered(t *testing.T) {
+	t.Parallel()
+	dotARenameLowered(t, true)
+}
+
+func TestProduct_DotARenameOriginalNative(t *testing.T) {
+	t.Parallel()
+	dotARenameNative(t, false)
+}
+
+func TestProduct_DotARenameRenamedNative(t *testing.T) {
+	t.Parallel()
+	dotARenameNative(t, true)
+}
+
+// dotARenameFiles is every file under directory by its slash path, as Absolute reads it back, so a product and the
+// copy Resolved made of it read alike.
+func dotARenameFiles(t *testing.T, directory string) map[string]string {
+	t.Helper()
+	root, err := buildcache.ProductRoot(directory)
 	if err != nil {
-		return "", err
+		t.Fatal(err)
 	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
+	files := map[string]string{}
+	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+		if err != nil || entry.IsDir() {
+			return err
+		}
+		data, err := os.ReadFile(path)
 		if err != nil {
-			failure = err
-			return
+			return err
 		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", args...)
-	command.Dir = root
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
+		relative, err := filepath.Rel(root, path)
+		files[filepath.ToSlash(relative)] = buildcache.Absolute(string(data))
 		return err
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	command.WaitDelay = time.Second
-	var diagnostics bytes.Buffer
-	command.Stderr = &diagnostics
-	if err := command.Run(); err != nil || len(commandDiagnostics("go", diagnostics.Bytes())) != 0 {
-		return "", fmt.Errorf("Go oracle build: %v\n%s", err, diagnostics.Bytes())
+	return files
+}
+
+// Two readers of the renamed source, one after the other, each generate the registry into a copy of their own: the
+// second copies the source with the registry it was built with, not the first reader's, and after both, the directory
+// Resolved answered still holds the product's bytes exactly (#0sqk6ce). Generating in place fails it on either
+// answer Resolved gives: a copy gains registry.go and differs from the product, and the product itself gains it too.
+func TestDotARenameReadersRegisterPrivately(t *testing.T) {
+	t.Parallel()
+	source := dotARenameSource(t)
+	built := dotARenameFiles(t, dotARenameProductDirectories[0])
+	const registryTypeScript, registryGo = ".generated/registry.ts", ".generated/registry.go"
+	if _, found := built[registryTypeScript]; !found {
+		t.Fatalf("the renamed source was built without %s", registryTypeScript)
 	}
-	return binary, nil
+	if _, found := built[registryGo]; found {
+		t.Fatalf("the renamed source was built with %s", registryGo)
+	}
+	first := dotARenameFiles(t, dotARenameRegistered(t, source))
+	// Generating for rule.ts changes the registry the source carries, so a reader generating in place would show.
+	if first[registryTypeScript] == built[registryTypeScript] || first[registryGo] == "" {
+		t.Fatalf("the first reader's registry is the source's as built, so a shared registry can't show here")
+	}
+	if seen := dotARenameFiles(t, source)[registryTypeScript]; seen != built[registryTypeScript] {
+		t.Fatalf("after the first reader, the source's %s is not the one it was built with", registryTypeScript)
+	}
+	second := dotARenameFiles(t, dotARenameRegistered(t, source))
+	if second[registryTypeScript] != first[registryTypeScript] || second[registryGo] != first[registryGo] {
+		t.Fatal("the second reader generated a different registry from the same source")
+	}
+	resolved := dotARenameFiles(t, source)
+	for name, content := range built {
+		if resolved[name] != content {
+			t.Errorf("after both readers, %s in Resolved's %s differs from the product's", name, filepath.Base(source))
+		}
+	}
+	for name := range resolved {
+		if _, found := built[name]; !found {
+			t.Errorf("after both readers, Resolved's %s holds %s, which the product doesn't", filepath.Base(source), name)
+		}
+	}
+	t.Logf("two readers registered privately; Resolved's %s holds the product's %d files exactly", filepath.Base(source), len(built))
 }
 
 func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
@@ -238,11 +276,12 @@ func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	workers.Add(3)
 	go func() {
 		defer workers.Done()
-		p.Oracle = filepath.Join(dotARenameOracle(t), "oracle")
+		p.Oracle = lintGoOracleProduct(t)
 	}()
 	go func() {
 		defer workers.Done()
-		p.Changed = dotARenameSource(t)
+		// Node generates the port's registry before it runs it, so it reads a private copy, never the source's.
+		p.Changed = dotARenameRegistered(t, dotARenameSource(t))
 		p.Before, readErr = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
 		if readErr != nil {
 			return

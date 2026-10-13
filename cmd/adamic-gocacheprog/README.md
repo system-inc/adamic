@@ -7,8 +7,8 @@ The helper must be built before enabling it.
 | Variable | Default / behavior |
 | --- | --- |
 | `ADAMIC_GOCACHE_DIR` | User cache directory's `adamic-gocache` |
-| `ADAMIC_GOCACHE_STORE` | `https://adamic-store.kirkouimet.com`; `off` disables all remote operations |
-| `ADAMIC_GOCACHE_WRITE` | `https://loom.kirkouimet.com/public` |
+| `ADAMIC_GOCACHE_STORE` | `https://artifacts.loom.system.inc`; `off` disables all remote operations |
+| `ADAMIC_GOCACHE_WRITE` | `https://runs.loom.system.inc/public` |
 | `ADAMIC_GOCACHE_TOKEN` | Path to a readable bearer token file; absent/unreadable means no remote writes |
 | `ADAMIC_GOCACHE_TRUST` | `main` reads/writes only `gocache`; other values write `gocache-candidate`, read `gocache` then `gocache-candidate` |
 
@@ -30,7 +30,10 @@ The protocol follows Go's `cmd/go/internal/cacheprog` and
 first, byte slices are base64, put bodies are separate JSON string values only
 when their size is nonzero, responses may arrive out of order, and both put
 and get return absolute, extension-free disk paths. Go's output ID is itself
-the SHA-256 of the body; the record validates that relationship too.
+the SHA-256 of the body; the record validates that relationship too. A put whose
+body go abandons mid-copy (no closing quote, the next request written on the
+same line) is dropped without a response, logged, and reading resumes at the
+next request.
 
 `go test ./cmd/adamic-gocacheprog` uses only local httptest servers and helper
 subprocesses, including two actual Go builds with fresh local caches. The second

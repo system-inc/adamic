@@ -80,7 +80,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v2", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -105,13 +105,17 @@ func buildListLayoutSetup(t *testing.T) {
 				mutants[i] = relative
 			}
 			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
-			// Go binaries are stored inside this product; native products have their own stable cache paths.
+			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
+			// in its own cache (#tqrqx60).
 			for i := 0; i < 2; i++ {
 				relative, err := filepath.Rel(directory, manifest.Paths[i])
 				if err != nil {
 					return err
 				}
 				manifest.Paths[i] = relative
+			}
+			for i := 2; i < len(manifest.Paths); i++ {
+				manifest.Paths[i] = buildcache.Relative(manifest.Paths[i])
 			}
 			data, err := json.Marshal(manifest)
 			if err != nil {
@@ -125,6 +129,11 @@ func buildListLayoutSetup(t *testing.T) {
 
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
+
+// TestProduct_MarkdownListLayout builds the shared products every list layout shard reads (238 s inside
+// TestMarkdownListLayout_Setup on Oct 10: the lowered program, its sanitized and release natives, the canary and the
+// Go oracles), so Workshop builds them once and the shards and Setup only read them.
+func TestProduct_MarkdownListLayout(t *testing.T) { t.Parallel(); buildListLayoutSetup(t) }
 
 // A shard prepares the shared products itself, once per process: it fetches them when they are built
 // and builds them on a miss, so it never needs another top-level test to have run first.
@@ -314,6 +323,8 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		}
 		overlayPath := filepath.Join(dir, name+".json")
 		write(t, overlayPath, overlay)
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		binary := filepath.Join(dir, name)
 		command := listLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
 		command.Dir = cohere
@@ -383,22 +394,16 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			t.Fatal(err)
 		}
 		sum := sha256.Sum256(source)
-		product := buildcache.Product(t, buildcache.Inputs{Name: name, Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-			options := native.Options{Sanitize: sanitize}
-			library, err := native.RuntimeLibraryForSource("", string(source), options)
-			if err != nil {
+		// v2: built by native.Build, so a v1 binary, which named its build directory, isn't one this reads.
+		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v2", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
-			path := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(path, source, 0644); err != nil {
-				return err
-			}
-			args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
-			args = append(args, native.RuntimeLinkFlags(library)...)
-			args = append(args, "-lm")
-			output, err := combinedOutput(listLayoutCommand(t, "clang", args...))
-			if err != nil {
-				return fmt.Errorf("native build: %w\n%s", err, output)
+			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
+			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata, random
+			// per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
+			if err := native.Build(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: sanitize}); err != nil {
+				return fmt.Errorf("native build: %w", err)
 			}
 			return nil
 		})
@@ -478,21 +483,13 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 					flags[index] = "-O0"
 				}
 			}
-			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-				library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
-				if err != nil {
+			// v2: built by native.BuildFlags, which names no build directory, so a v1 binary, which did, isn't one this reads.
+			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v2", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}
-				path := filepath.Join(directory, "main.c")
-				if err := os.WriteFile(path, source, 0644); err != nil {
-					return err
-				}
-				arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
-				arguments = append(arguments, native.RuntimeLinkFlags(library)...)
-				arguments = append(arguments, "-lm")
-				output, err := combinedOutput(listLayoutCommand(t, "clang", arguments...))
-				if err != nil {
-					return fmt.Errorf("mutant build: %w\n%s", err, output)
+				if err := native.BuildFlags(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: true}, flags); err != nil {
+					return fmt.Errorf("mutant build: %w", err)
 				}
 				return nil
 			})
@@ -817,7 +814,7 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 	if len(manifest.Paths) != 5 {
 		t.Fatal("incomplete shared setup manifest")
 	}
-	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: manifest.Paths[2], release: manifest.Paths[3], canary: manifest.Paths[4], javascript: manifest.JavaScript}
+	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: buildcache.Absolute(manifest.Paths[2]), release: buildcache.Absolute(manifest.Paths[3]), canary: buildcache.Absolute(manifest.Paths[4]), javascript: manifest.JavaScript}
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}

@@ -3,9 +3,10 @@ package typeaware
 import (
 	"context"
 	"encoding/json"
-	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Product declarations and check units use these same builders. Dependencies
@@ -18,20 +19,14 @@ func typeAwareProductHarness(t *testing.T) *harness {
 	return h
 }
 
-func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, source, overlayName string, buildVCSFalse bool) string {
+func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, source, overlayName string) string {
 	h.t.Helper()
 	virtual := filepath.Join(h.repository, "cohere", virtualName)
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	args := []string{"build"}
-	if buildVCSFalse {
-		args = append(args, "-buildvcs=false")
-	}
-	args = append(args, "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
-	command := exec.Command("go", args...)
-	command.Dir = filepath.Join(h.repository, "cohere")
+	command := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
 	return h.sixBuildProduct(productName, command)
 }
 
@@ -40,11 +35,11 @@ func typeAwareOracle(h *harness, kind string) string {
 	if kind == "six" {
 		source, virtual = "oracle_six.go", "adamic_six_oracle.go"
 	}
-	return typeAwareOverlayOracle(h, "oracle-build", "oracle", virtual, source, "oracle-overlay.json", false)
+	return typeAwareOverlayOracle(h, "oracle-build", "oracle", virtual, source, "oracle-overlay.json")
 }
 
 func sixFactsCostGo(h *harness) string {
-	return h.sixBuildProduct("facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+	return h.sixBuildProduct("facts-cost-go-build", toolchain.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
 }
 
 func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) string {
@@ -52,12 +47,12 @@ func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) strin
 	if sanitize {
 		archiveName += "-asan"
 	}
-	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(archiveName, "", sanitize), sanitize)
+	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(archiveName, sanitize), sanitize)
 }
 
 func volumeProfileControlProduct(t *testing.T, sanitize bool) string {
 	h := typeAwareProductHarness(t)
-	return volumeProfileControlsBinary(h, "", h.archive("checker", "", sanitize), sanitize)
+	return volumeProfileControlsBinary(h, "", h.archive("checker", sanitize), sanitize)
 }
 
 func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {
@@ -85,11 +80,11 @@ func volumeProfileDeclaredMutant(t *testing.T, index int) string {
 func TestProduct_stage0(t *testing.T) { t.Parallel(); typeAwareProductHarness(t).stage0() }
 func TestProduct_checker(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker", "", false)
+	typeAwareProductHarness(t).archive("checker", false)
 }
 func TestProduct_checker_asan(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker-asan", "", true)
+	typeAwareProductHarness(t).archive("checker-asan", true)
 }
 func TestProduct_six_lowered(t *testing.T) {
 	t.Parallel()
@@ -103,6 +98,19 @@ func TestProduct_suite(t *testing.T) {
 func TestProduct_suite_asan(t *testing.T) {
 	t.Parallel()
 	typeAwareNativeProduct(typeAwareProductHarness(t), "suite-asan", "testdata/sharded_suite.ts", true)
+}
+
+// The two mutant natives whose ASan link would otherwise fill their shard's own time (mutantNative says why): six's
+// facts-length (TestSixRuleAgreementAndMutants_028) and TypeAwareAgreement's wrong-node (_003).
+func TestProduct_six_facts_length_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("facts-length", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), checkerMutantArchive(t, "facts-length"), true)
+}
+func TestProduct_typeaware_wrong_node_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("wrong-node", typeAwareWrongNodeEntry(h), h.archive("checker", false), true)
 }
 func TestProduct_six_oracle(t *testing.T) {
 	t.Parallel()
@@ -147,6 +155,18 @@ func TestProduct_query_cost_native(t *testing.T) {
 	t.Parallel()
 	typeAwareNativeProduct(typeAwareProductHarness(t), "query-cost", "testdata/query_cost.ts", false)
 }
+
+// The released-handle refusal reads released.ts's C and its native over the checker archive; no product built either,
+// so Workshop's combined proof (Oct 10) found the C missing on the reading checkout.
+func TestProduct_released_lowered(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released.ts"), "released")
+}
+func TestProduct_released_native(t *testing.T) {
+	t.Parallel()
+	typeAwareNativeProduct(typeAwareProductHarness(t), "released", "testdata/released.ts", false)
+}
 func TestProduct_volume_lowered(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
@@ -171,7 +191,7 @@ func TestProduct_profile_controls_native(t *testing.T) {
 func TestProduct_profile_missing_binding(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
-	volumeProfileMissingBinding(h, "", h.archive("checker", "", false))
+	volumeProfileMissingBinding(h, "", h.archive("checker", false))
 }
 func TestProduct_profile_mutant_binding_slot(t *testing.T) {
 	t.Parallel()

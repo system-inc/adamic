@@ -10,7 +10,10 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func expressionSelection(t *testing.T, count int) []bool {
@@ -49,9 +52,9 @@ func selectExpressionUnits(value string, count int) ([]bool, error) {
 func TestExpressionUnitBoxSelection(t *testing.T) {
 	t.Parallel()
 	for _, boxes := range []int{1, 2, 7, 65, 100} {
-		seen := make([]int, 65)
+		seen := make([]int, testExpressionsAgainstGoAndPrettierShards)
 		for box := 0; box < boxes; box++ {
-			selected, err := selectExpressionUnits(fmt.Sprintf("%d/%d", box, boxes), 65)
+			selected, err := selectExpressionUnits(fmt.Sprintf("%d/%d", box, boxes), testExpressionsAgainstGoAndPrettierShards)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -68,11 +71,11 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 		}
 	}
 	for _, value := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
-		if _, err := selectExpressionUnits(value, 65); err == nil {
+		if _, err := selectExpressionUnits(value, testExpressionsAgainstGoAndPrettierShards); err == nil {
 			t.Fatalf("invalid selector accepted: %s", value)
 		}
 	}
-	selected, err := selectExpressionUnits("", 65)
+	selected, err := selectExpressionUnits("", testExpressionsAgainstGoAndPrettierShards)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -183,6 +186,98 @@ func expressionUnits(t *testing.T, path, want string, count int) (*corpusPlan, [
 	return plan, outputs
 }
 
+// The plan as every unit of one process shares it. Each unit's protocol and
+// specifications are held as bytes: the files expressionUnits wrote belong to
+// the unit that built the plan and are removed when that unit ends.
+type expressionGateUnits struct {
+	plan                       *corpusPlan
+	texts, specs, answers      [][]byte
+	gapText, gapSpecs, gapWant []byte
+	builder                    string
+}
+
+var expressionGateUnitsShared struct {
+	once  sync.Once
+	units *expressionGateUnits
+}
+
+// The first selected unit in a process builds the plan through expressionUnits,
+// with every whole-corpus check it makes: each pinned upstream record present,
+// every stable key unique and both unions exact. The plan is a pure function of
+// the corpus product, so later units in the process read it rather than repeat
+// it. TestExpressionsAgainstGoAndPrettierUnion still builds and checks its own.
+func expressionGateUnitsOnce(t *testing.T) *expressionGateUnits {
+	t.Helper()
+	// printerCorpusFiles skips without a TypeScript source. Skip here, before the
+	// once, so every unit skips alike rather than failing on the builder's skip.
+	if os.Getenv("ADAMIC_TYPESCRIPT_SOURCE") == "" {
+		printerCorpusFiles(t)
+	}
+	shared := &expressionGateUnitsShared
+	shared.once.Do(func() {
+		cases, want, _ := expressionCorpus(t, false)
+		plan, answers := expressionUnits(t, cases, want, testExpressionsAgainstGoAndPrettierShards-1)
+		units := &expressionGateUnits{plan: &corpusPlan{labels: plan.labels}, answers: answers, builder: t.Name()}
+		for _, shard := range plan.shards {
+			text, err := os.ReadFile(shard.text)
+			if err != nil {
+				t.Fatal(err)
+			}
+			specs, err := os.ReadFile(shard.specs)
+			if err != nil {
+				t.Fatal(err)
+			}
+			units.plan.shards = append(units.plan.shards, corpusShard{indices: shard.indices})
+			units.texts, units.specs = append(units.texts, text), append(units.specs, specs)
+		}
+		directory := filepath.Dir(cases)
+		for _, file := range []struct {
+			name string
+			data *[]byte
+		}{{"gaps.txt", &units.gapText}, {"gaps.json", &units.gapSpecs}, {"gap-answers.txt", &units.gapWant}} {
+			data, err := os.ReadFile(filepath.Join(directory, file.name))
+			if err != nil {
+				t.Fatal(err)
+			}
+			*file.data = data
+		}
+		shared.units = units
+	})
+	if shared.units == nil {
+		t.Fatal("expression unit preparation failed")
+	}
+	if shared.units.builder != t.Name() {
+		t.Logf("union: checked once in this process by %s", shared.units.builder)
+	}
+	return shared.units
+}
+
+// A unit's own protocol and specifications, written where its children read them.
+func (units *expressionGateUnits) unit(t *testing.T, number int) corpusShard {
+	t.Helper()
+	directory := t.TempDir()
+	shard := corpusShard{indices: units.plan.shards[number].indices, text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
+	if err := os.WriteFile(shard.text, units.texts[number], 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(shard.specs, units.specs[number], 0644); err != nil {
+		t.Fatal(err)
+	}
+	return shard
+}
+
+// The loud gap unit's inputs. The Prettier script knows its gap proof by the name gaps.json.
+func (units *expressionGateUnits) gaps(t *testing.T) string {
+	t.Helper()
+	directory := t.TempDir()
+	for name, data := range map[string][]byte{"gaps.txt": units.gapText, "gaps.json": units.gapSpecs} {
+		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return directory
+}
+
 func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {
 	// Position is part of the case id: generated cases may share a label.
 	seen := make(map[int]bool, len(plan.labels))
@@ -285,6 +380,10 @@ func TestExpressionUnitUnionRejectsMissingAndRepeated(t *testing.T) {
 func expressionInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
+	tree, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
@@ -294,7 +393,8 @@ func expressionInputFiles(t *testing.T, roots ...string) []string {
 			if err != nil {
 				return err
 			}
-			if entry.Name() == ".git" {
+			// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
+			if entry.Name() == ".git" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
 				if entry.IsDir() {
 					return filepath.SkipDir
 				}

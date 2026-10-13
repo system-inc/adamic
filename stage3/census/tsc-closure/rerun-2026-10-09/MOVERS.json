@@ -1,0 +1,1867 @@
+{
+  "definition": "Exclusive hidden-byte attribution: smallest blocking span wins; ties by start, end and lexical family. Diagnostic kind retained, payload types/names folded by explicit prefixes in compare.py. Descriptive attribution, not isolated causal credit to commits.",
+  "before_total": 5430761,
+  "after_total": 3488582,
+  "families": [
+    {
+      "family": "NotYet: a BinaryExpression with <payload>",
+      "before": 476290,
+      "after": 17272,
+      "delta": -459018
+    },
+    {
+      "family": "NotYet: a PrefixUnaryExpression on <payload>",
+      "before": 390437,
+      "after": 0,
+      "delta": -390437
+    },
+    {
+      "family": "NotYet: a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "before": 329695,
+      "after": 0,
+      "delta": -329695
+    },
+    {
+      "family": "Refused: a number as a condition",
+      "before": 308708,
+      "after": 0,
+      "delta": -308708
+    },
+    {
+      "family": "NotYet: reading <payload>",
+      "before": 994631,
+      "after": 729732,
+      "delta": -264899
+    },
+    {
+      "family": "NotYet: a value of type <payload>",
+      "before": 545281,
+      "after": 806996,
+      "delta": 261715
+    },
+    {
+      "family": "NotYet: a declaration directly in a case (wrap the case in a block)",
+      "before": 159168,
+      "after": 0,
+      "delta": -159168
+    },
+    {
+      "family": "NotYet: a union or optional field read in a program with record storage",
+      "before": 0,
+      "after": 157122,
+      "delta": 157122
+    },
+    {
+      "family": "NotYet: a function returning <payload>",
+      "before": 548359,
+      "after": 399151,
+      "delta": -149208
+    },
+    {
+      "family": "NotYet: a NonNullExpression",
+      "before": 119596,
+      "after": 0,
+      "delta": -119596
+    },
+    {
+      "family": "Refused: a value as a condition",
+      "before": 116148,
+      "after": 0,
+      "delta": -116148
+    },
+    {
+      "family": "Refused: a cast the runtime can't check",
+      "before": 199241,
+      "after": 88460,
+      "delta": -110781
+    },
+    {
+      "family": "NotYet: a function without a body",
+      "before": 89346,
+      "after": 0,
+      "delta": -89346
+    },
+    {
+      "family": "NotYet: a parameter that isn't a plain name",
+      "before": 83515,
+      "after": 2927,
+      "delta": -80588
+    },
+    {
+      "family": "NotYet: a field of type <payload>",
+      "before": 69307,
+      "after": 0,
+      "delta": -69307
+    },
+    {
+      "family": "Refused: Object enumeration with getter or accessor descriptors",
+      "before": 0,
+      "after": 56663,
+      "delta": 56663
+    },
+    {
+      "family": "Refused: overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+      "before": 0,
+      "after": 38191,
+      "delta": 38191
+    },
+    {
+      "family": "Refused: a string as a condition",
+      "before": 32003,
+      "after": 0,
+      "delta": -32003
+    },
+    {
+      "family": "NotYet: checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "before": 0,
+      "after": 29667,
+      "delta": 29667
+    },
+    {
+      "family": "NotYet: a ModuleDeclaration",
+      "before": 22557,
+      "after": 0,
+      "delta": -22557
+    },
+    {
+      "family": "NotYet: a function inside a function (a closure)",
+      "before": 17737,
+      "after": 0,
+      "delta": -17737
+    },
+    {
+      "family": "Refused: a boolean | undefined as a condition",
+      "before": 16681,
+      "after": 0,
+      "delta": -16681
+    },
+    {
+      "family": "checker: diagnosed body",
+      "before": 477567,
+      "after": 463700,
+      "delta": -13867
+    },
+    {
+      "family": "NotYet: a boolean | undefined variable a function value captures",
+      "before": 141,
+      "after": 13571,
+      "delta": 13430
+    },
+    {
+      "family": "SkippedDependency: a dependency function whose body has checker diagnostics (measurement skipped)",
+      "before": 412,
+      "after": 11954,
+      "delta": 11542
+    },
+    {
+      "family": "Refused: overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor",
+      "before": 0,
+      "after": 10855,
+      "delta": 10855
+    },
+    {
+      "family": "NotYet: an assignment value to a member",
+      "before": 0,
+      "after": 10527,
+      "delta": 10527
+    },
+    {
+      "family": "checker: diagnosed dependency body",
+      "before": 0,
+      "after": 9892,
+      "delta": 9892
+    },
+    {
+      "family": "NotYet: for...of over an object",
+      "before": 89162,
+      "after": 98961,
+      "delta": 9799
+    },
+    {
+      "family": "NotYet: a computed key without an own data field",
+      "before": 0,
+      "after": 9022,
+      "delta": 9022
+    },
+    {
+      "family": "Refused: overload 1 of visitEachChild result T cannot be served by implementation result T | undefined",
+      "before": 0,
+      "after": 8943,
+      "delta": 8943
+    },
+    {
+      "family": "Refused: overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+      "before": 0,
+      "after": 8329,
+      "delta": 8329
+    },
+    {
+      "family": "NotYet: a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+      "before": 23509,
+      "after": 31772,
+      "delta": 8263
+    },
+    {
+      "family": "Refused: overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 8081,
+      "delta": 8081
+    },
+    {
+      "family": "Refused: var",
+      "before": 13446,
+      "after": 5717,
+      "delta": -7729
+    },
+    {
+      "family": "Refused: overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>",
+      "before": 0,
+      "after": 7296,
+      "delta": 7296
+    },
+    {
+      "family": "Refused: overload 3 of getGlobalType result GenericType cannot be served by implementation result ObjectType | undefined",
+      "before": 0,
+      "after": 7127,
+      "delta": 7127
+    },
+    {
+      "family": "Refused: overload 1 of visitParameterList parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "before": 0,
+      "after": 5629,
+      "delta": 5629
+    },
+    {
+      "family": "Refused: overload 1 of mergeLexicalEnvironment result NodeArray<Statement> cannot be served by implementation result Statement[] | NodeArray<Statement>",
+      "before": 0,
+      "after": 5462,
+      "delta": 5462
+    },
+    {
+      "family": "NotYet: a call through ?. (an optional call)",
+      "before": 15723,
+      "after": 21015,
+      "delta": 5292
+    },
+    {
+      "family": "Refused: a number | undefined as a condition",
+      "before": 5201,
+      "after": 0,
+      "delta": -5201
+    },
+    {
+      "family": "Refused: overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+      "before": 0,
+      "after": 5107,
+      "delta": 5107
+    },
+    {
+      "family": "Refused: overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+      "before": 0,
+      "after": 5079,
+      "delta": 5079
+    },
+    {
+      "family": "NotYet: a BinaryExpression as a statement",
+      "before": 5069,
+      "after": 0,
+      "delta": -5069
+    },
+    {
+      "family": "Refused: Object.defineProperties",
+      "before": 5744,
+      "after": 700,
+      "delta": -5044
+    },
+    {
+      "family": "Refused: overload 1 of writeTokenText result void cannot be served by implementation result number",
+      "before": 0,
+      "after": 5006,
+      "delta": 5006
+    },
+    {
+      "family": "NotYet: a function value returning union of differently held members",
+      "before": 4940,
+      "after": 0,
+      "delta": -4940
+    },
+    {
+      "family": "Refused: a union of differently held members as a condition",
+      "before": 4884,
+      "after": 0,
+      "delta": -4884
+    },
+    {
+      "family": "Refused: overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+      "before": 0,
+      "after": 4777,
+      "delta": 4777
+    },
+    {
+      "family": "NotYet: a function value returning boolean | undefined",
+      "before": 4692,
+      "after": 0,
+      "delta": -4692
+    },
+    {
+      "family": "Refused: overload 8 of createToken type parameter TKind cannot satisfy implementation parameter TKind",
+      "before": 0,
+      "after": 4572,
+      "delta": 4572
+    },
+    {
+      "family": "Refused: overload 1 of replaceModifiers result T cannot be served by implementation result ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 19 more ... | VariableStatement",
+      "before": 0,
+      "after": 4075,
+      "delta": 4075
+    },
+    {
+      "family": "NotYet: a call spreading elements that cannot be packed",
+      "before": 0,
+      "after": 3907,
+      "delta": 3907
+    },
+    {
+      "family": "Refused: overload 1 of captureMapping result Required<Mapping> cannot be served by implementation result Mapping",
+      "before": 0,
+      "after": 3827,
+      "delta": 3827
+    },
+    {
+      "family": "NotYet: checked view union arm awaits views-v3: array element kind: TypeParameter[]",
+      "before": 0,
+      "after": 3737,
+      "delta": 3737
+    },
+    {
+      "family": "Refused: overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem",
+      "before": 0,
+      "after": 3629,
+      "delta": 3629
+    },
+    {
+      "family": "NotYet: a function with an optional or rest parameter, as a value",
+      "before": 3619,
+      "after": 0,
+      "delta": -3619
+    },
+    {
+      "family": "NotYet: a block-scoped nested function declaration",
+      "before": 0,
+      "after": 3586,
+      "delta": 3586
+    },
+    {
+      "family": "Refused: inherited library member next read as an own field",
+      "before": 0,
+      "after": 3468,
+      "delta": 3468
+    },
+    {
+      "family": "NotYet: checked view union arm awaits views-v3: array element kind",
+      "before": 0,
+      "after": 3351,
+      "delta": 3351
+    },
+    {
+      "family": "Refused: overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+      "before": 0,
+      "after": 3328,
+      "delta": 3328
+    },
+    {
+      "family": "Refused: overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+      "before": 0,
+      "after": 3324,
+      "delta": 3324
+    },
+    {
+      "family": "NotYet: a computed field name",
+      "before": 113387,
+      "after": 110079,
+      "delta": -3308
+    },
+    {
+      "family": "NotYet: an array of never",
+      "before": 15268,
+      "after": 11989,
+      "delta": -3279
+    },
+    {
+      "family": "Refused: overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]",
+      "before": 0,
+      "after": 3100,
+      "delta": 3100
+    },
+    {
+      "family": "NotYet: Object.entries on a shape not proven by a plain literal or its const binding",
+      "before": 3088,
+      "after": 0,
+      "delta": -3088
+    },
+    {
+      "family": "NotYet: a non-accessor method in an accessor literal",
+      "before": 2993,
+      "after": 0,
+      "delta": -2993
+    },
+    {
+      "family": "NotYet: an optional Map get through a structural receiver",
+      "before": 0,
+      "after": 2947,
+      "delta": 2947
+    },
+    {
+      "family": "Refused: overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined",
+      "before": 0,
+      "after": 2771,
+      "delta": 2771
+    },
+    {
+      "family": "Refused: overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody",
+      "before": 0,
+      "after": 2761,
+      "delta": 2761
+    },
+    {
+      "family": "NotYet: a call returning void | undefined",
+      "before": 2706,
+      "after": 0,
+      "delta": -2706
+    },
+    {
+      "family": "NotYet: a call spreading something other than an array",
+      "before": 0,
+      "after": 2611,
+      "delta": 2611
+    },
+    {
+      "family": "Refused: overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+      "before": 0,
+      "after": 2539,
+      "delta": 2539
+    },
+    {
+      "family": "Refused: overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody",
+      "before": 0,
+      "after": 2464,
+      "delta": 2464
+    },
+    {
+      "family": "Refused: overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+      "before": 0,
+      "after": 2461,
+      "delta": 2461
+    },
+    {
+      "family": "Refused: an unproven relation from <payload>",
+      "before": 2474,
+      "after": 4907,
+      "delta": 2433
+    },
+    {
+      "family": "NotYet: ?. to a number, which would be number | undefined",
+      "before": 1964,
+      "after": 4321,
+      "delta": 2357
+    },
+    {
+      "family": "Refused: overload 1 of parenthesizeConciseBodyOfArrowFunction result Expression cannot be served by implementation result ConciseBody",
+      "before": 0,
+      "after": 2343,
+      "delta": 2343
+    },
+    {
+      "family": "NotYet: assigning to <payload>",
+      "before": 12605,
+      "after": 10289,
+      "delta": -2316
+    },
+    {
+      "family": "NotYet: a case that isn't a constant",
+      "before": 2283,
+      "after": 0,
+      "delta": -2283
+    },
+    {
+      "family": "NotYet: a () => never seen as a (node: ElementAccessExpression | EnumMember | PropertyAccessExpression) => string | number | undefined (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 2188,
+      "delta": 2188
+    },
+    {
+      "family": "Refused: overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+      "before": 0,
+      "after": 2160,
+      "delta": 2160
+    },
+    {
+      "family": "Refused: overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+      "before": 0,
+      "after": 2112,
+      "delta": 2112
+    },
+    {
+      "family": "Refused: overload 1 of serializePropertySymbolsForClassOrInterface result TypeElement[] cannot be served by implementation result (ClassElement | TypeElement)[]",
+      "before": 0,
+      "after": 2085,
+      "delta": 2085
+    },
+    {
+      "family": "NotYet: a void call used as a value",
+      "before": 2068,
+      "after": 0,
+      "delta": -2068
+    },
+    {
+      "family": "NotYet: an array of T",
+      "before": 4160,
+      "after": 6227,
+      "delta": 2067
+    },
+    {
+      "family": "Refused: overload 1 of visitArrayWorker parameter visitor cannot be served by implementation parameter visitor",
+      "before": 0,
+      "after": 2032,
+      "delta": 2032
+    },
+    {
+      "family": "Refused: inherited library member every read as an own field",
+      "before": 0,
+      "after": 1961,
+      "delta": 1961
+    },
+    {
+      "family": "Refused: overload 1 of injectClassThisAssignmentIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassDeclaration | ClassExpression",
+      "before": 0,
+      "after": 1866,
+      "delta": 1866
+    },
+    {
+      "family": "Refused: inherited library member get read as an own field",
+      "before": 0,
+      "after": 1863,
+      "delta": 1863
+    },
+    {
+      "family": "NotYet: an ElementAccessExpression",
+      "before": 5054,
+      "after": 6901,
+      "delta": 1847
+    },
+    {
+      "family": "Refused: invariant mutable relation",
+      "before": 4467,
+      "after": 2659,
+      "delta": -1808
+    },
+    {
+      "family": "Refused: inherited library member shift read as an own field",
+      "before": 0,
+      "after": 1799,
+      "delta": 1799
+    },
+    {
+      "family": "Refused: overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration",
+      "before": 0,
+      "after": 1763,
+      "delta": 1763
+    },
+    {
+      "family": "error: statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "before": 1021,
+      "after": 2753,
+      "delta": 1732
+    },
+    {
+      "family": "NotYet: a case whose type differs from the switch's",
+      "before": 3024,
+      "after": 4750,
+      "delta": 1726
+    },
+    {
+      "family": "NotYet: a literal method through a view that erases its receiver",
+      "before": 59,
+      "after": 1768,
+      "delta": 1709
+    },
+    {
+      "family": "Refused: inherited library member some read as an own field",
+      "before": 0,
+      "after": 1660,
+      "delta": 1660
+    },
+    {
+      "family": "Refused: overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+      "before": 0,
+      "after": 1633,
+      "delta": 1633
+    },
+    {
+      "family": "Refused: inherited library member has read as an own field",
+      "before": 0,
+      "after": 1601,
+      "delta": 1601
+    },
+    {
+      "family": "NotYet: optional chaining to .size on a value",
+      "before": 1451,
+      "after": 3042,
+      "delta": 1591
+    },
+    {
+      "family": "NotYet: a for...of destructuring an object",
+      "before": 515,
+      "after": 2031,
+      "delta": 1516
+    },
+    {
+      "family": "Refused: overload 1 of symbolToName result Identifier cannot be served by implementation result EntityName",
+      "before": 0,
+      "after": 1512,
+      "delta": 1512
+    },
+    {
+      "family": "Refused: overload 1 of compact parameter array cannot be served by implementation parameter array",
+      "before": 0,
+      "after": 1502,
+      "delta": 1502
+    },
+    {
+      "family": "Refused: in that narrows a union of object types (any object with the key passes)",
+      "before": 0,
+      "after": 1497,
+      "delta": 1497
+    },
+    {
+      "family": "Refused: overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined",
+      "before": 0,
+      "after": 1495,
+      "delta": 1495
+    },
+    {
+      "family": "Refused: overload 1 of removeTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1495,
+      "delta": 1495
+    },
+    {
+      "family": "Refused: overload 1 of replacePropertyName result T cannot be served by implementation result GetAccessorDeclaration | MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | SetAccessorDeclaration",
+      "before": 0,
+      "after": 1466,
+      "delta": 1466
+    },
+    {
+      "family": "Refused: overload 2 of arrayToMap result Map<K, V2> cannot be served by implementation result Map<K, V1 | V2>",
+      "before": 0,
+      "after": 1415,
+      "delta": 1415
+    },
+    {
+      "family": "Refused: inherited library member setPrototypeOf read as an own field",
+      "before": 1399,
+      "after": 0,
+      "delta": -1399
+    },
+    {
+      "family": "Refused: overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+      "before": 0,
+      "after": 1386,
+      "delta": 1386
+    },
+    {
+      "family": "NotYet: a class method through a view that erases its prototype origin",
+      "before": 55,
+      "after": 1431,
+      "delta": 1376
+    },
+    {
+      "family": "Refused: overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+      "before": 0,
+      "after": 1374,
+      "delta": 1374
+    },
+    {
+      "family": "NotYet: returning a property or element assignment",
+      "before": 0,
+      "after": 1346,
+      "delta": 1346
+    },
+    {
+      "family": "NotYet: a union of differently held members variable a function value captures",
+      "before": 230,
+      "after": 1562,
+      "delta": 1332
+    },
+    {
+      "family": "NotYet: iterating a value",
+      "before": 0,
+      "after": 1316,
+      "delta": 1316
+    },
+    {
+      "family": "Refused: overload 1 of replaceDecoratorsAndModifiers result T cannot be served by implementation result ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration",
+      "before": 0,
+      "after": 1316,
+      "delta": 1316
+    },
+    {
+      "family": "Refused: overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor",
+      "before": 0,
+      "after": 1301,
+      "delta": 1301
+    },
+    {
+      "family": "NotYet: a PostfixUnaryExpression",
+      "before": 141,
+      "after": 1404,
+      "delta": 1263
+    },
+    {
+      "family": "NotYet: replacing <payload>",
+      "before": 4167,
+      "after": 3017,
+      "delta": -1150
+    },
+    {
+      "family": "Refused: overload 1 of sameFlatMap result T[] cannot be served by implementation result readonly T[]",
+      "before": 0,
+      "after": 1134,
+      "delta": 1134
+    },
+    {
+      "family": "Refused: overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined",
+      "before": 0,
+      "after": 1132,
+      "delta": 1132
+    },
+    {
+      "family": "NotYet: a SpreadElement",
+      "before": 224,
+      "after": 1332,
+      "delta": 1108
+    },
+    {
+      "family": "NotYet: ?.[] on a value",
+      "before": 1097,
+      "after": 0,
+      "delta": -1097
+    },
+    {
+      "family": "Refused: inherited library member indexOf read as an own field",
+      "before": 0,
+      "after": 1095,
+      "delta": 1095
+    },
+    {
+      "family": "NotYet: a (_?: unknown) => void seen as a (flags: LexicalEnvironmentFlags, value: boolean) => void (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 1088,
+      "delta": 1088
+    },
+    {
+      "family": "Refused: overload 1 of reduceLeft parameter f cannot be served by implementation parameter f",
+      "before": 0,
+      "after": 1073,
+      "delta": 1073
+    },
+    {
+      "family": "NotYet: for...of over a union of differently held members",
+      "before": 0,
+      "after": 1025,
+      "delta": 1025
+    },
+    {
+      "family": "NotYet: storing <payload>",
+      "before": 1101,
+      "after": 110,
+      "delta": -991
+    },
+    {
+      "family": "NotYet: an array of any",
+      "before": 913,
+      "after": 1900,
+      "delta": 987
+    },
+    {
+      "family": "NotYet: a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+      "before": 4642,
+      "after": 5624,
+      "delta": 982
+    },
+    {
+      "family": "Refused: overload 2 of getOriginalNode result T cannot be served by implementation result T | undefined",
+      "before": 0,
+      "after": 980,
+      "delta": 980
+    },
+    {
+      "family": "Refused: inherited library member includes read as an own field",
+      "before": 0,
+      "after": 976,
+      "delta": 976
+    },
+    {
+      "family": "Refused: overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined",
+      "before": 0,
+      "after": 975,
+      "delta": 975
+    },
+    {
+      "family": "Refused: overload 1 of getGlobalBuiltinTypes result ObjectType[] cannot be served by implementation result Type[]",
+      "before": 0,
+      "after": 971,
+      "delta": 971
+    },
+    {
+      "family": "Refused: overload 1 of groupBy type parameter U cannot satisfy implementation parameter K",
+      "before": 0,
+      "after": 967,
+      "delta": 967
+    },
+    {
+      "family": "NotYet: new a ParenthesizedExpression",
+      "before": 1922,
+      "after": 980,
+      "delta": -942
+    },
+    {
+      "family": "Refused: overload 1 of convertOptionsFromJson result WatchOptions | undefined cannot be served by implementation result CompilerOptions | TypeAcquisition | WatchOptions | undefined",
+      "before": 0,
+      "after": 933,
+      "delta": 933
+    },
+    {
+      "family": "Refused: overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration",
+      "before": 0,
+      "after": 933,
+      "delta": 933
+    },
+    {
+      "family": "Refused: overload 1 of getDiagnostics result DiagnosticWithLocation[] cannot be served by implementation result Diagnostic[]",
+      "before": 0,
+      "after": 910,
+      "delta": 910
+    },
+    {
+      "family": "Refused: overload 1 of createImmediatelyInvokedFunctionExpression result ImmediatelyInvokedFunctionExpression cannot be served by implementation result Mutable<CallExpression>",
+      "before": 0,
+      "after": 883,
+      "delta": 883
+    },
+    {
+      "family": "Refused: inherited library member slice read as an own field",
+      "before": 0,
+      "after": 879,
+      "delta": 879
+    },
+    {
+      "family": "NotYet: a generic class constructor value",
+      "before": 0,
+      "after": 857,
+      "delta": 857
+    },
+    {
+      "family": "NotYet: checked predicate overload target IterationStatement",
+      "before": 0,
+      "after": 835,
+      "delta": 835
+    },
+    {
+      "family": "NotYet: an array of undefined",
+      "before": 833,
+      "after": 0,
+      "delta": -833
+    },
+    {
+      "family": "NotYet: regex replacement other than a string",
+      "before": 808,
+      "after": 0,
+      "delta": -808
+    },
+    {
+      "family": "Refused: overload 1 of createImmediatelyInvokedArrowFunction result ImmediatelyInvokedArrowFunction cannot be served by implementation result Mutable<CallExpression>",
+      "before": 0,
+      "after": 807,
+      "delta": 807
+    },
+    {
+      "family": "NotYet: a VoidExpression as a statement",
+      "before": 796,
+      "after": 0,
+      "delta": -796
+    },
+    {
+      "family": "NotYet: an optional chain longer than one step",
+      "before": 1623,
+      "after": 2412,
+      "delta": 789
+    },
+    {
+      "family": "NotYet: a rest parameter that isn't an array",
+      "before": 0,
+      "after": 778,
+      "delta": 778
+    },
+    {
+      "family": "NotYet: checked view union arm awaits views-v3: array element kind: Declaration[]",
+      "before": 0,
+      "after": 742,
+      "delta": 742
+    },
+    {
+      "family": "panic: runtime error: invalid memory address or nil pointer dereference",
+      "before": 0,
+      "after": 740,
+      "delta": 740
+    },
+    {
+      "family": "Refused: overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "before": 0,
+      "after": 722,
+      "delta": 722
+    },
+    {
+      "family": "Refused: overload 1 of findLast result U | undefined cannot be served by implementation result T | undefined",
+      "before": 0,
+      "after": 721,
+      "delta": 721
+    },
+    {
+      "family": "Refused: overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+      "before": 0,
+      "after": 717,
+      "delta": 717
+    },
+    {
+      "family": "Refused: overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions",
+      "before": 0,
+      "after": 714,
+      "delta": 714
+    },
+    {
+      "family": "Refused: overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+      "before": 0,
+      "after": 712,
+      "delta": 712
+    },
+    {
+      "family": "Refused: overload 1 of or type parameter P cannot satisfy implementation parameter T",
+      "before": 0,
+      "after": 705,
+      "delta": 705
+    },
+    {
+      "family": "NotYet: an array of Path",
+      "before": 50,
+      "after": 749,
+      "delta": 699
+    },
+    {
+      "family": "NotYet: a tuple literal with more values than its tuple has elements",
+      "before": 0,
+      "after": 695,
+      "delta": 695
+    },
+    {
+      "family": "NotYet: a destructured name that isn't plain",
+      "before": 810,
+      "after": 1474,
+      "delta": 664
+    },
+    {
+      "family": "Refused: overload 2 of group parameter resultSelector cannot be served by implementation parameter resultSelector",
+      "before": 0,
+      "after": 652,
+      "delta": 652
+    },
+    {
+      "family": "Refused: inherited library member unshift read as an own field",
+      "before": 0,
+      "after": 639,
+      "delta": 639
+    },
+    {
+      "family": "NotYet: assigning an element of a value",
+      "before": 157,
+      "after": 794,
+      "delta": 637
+    },
+    {
+      "family": "Refused: overload 1 of singleOrMany result T | T[] cannot be served by implementation result T | readonly T[] | undefined",
+      "before": 0,
+      "after": 637,
+      "delta": 637
+    },
+    {
+      "family": "Refused: inherited library member push read as an own field",
+      "before": 0,
+      "after": 631,
+      "delta": 631
+    },
+    {
+      "family": "NotYet: writing a possibly absent optional own field",
+      "before": 0,
+      "after": 628,
+      "delta": 628
+    },
+    {
+      "family": "Refused: overload 2 of skipOuterExpressions result Expression cannot be served by implementation result Node",
+      "before": 0,
+      "after": 626,
+      "delta": 626
+    },
+    {
+      "family": "Refused: inherited library member forEach read as an own field",
+      "before": 0,
+      "after": 623,
+      "delta": 623
+    },
+    {
+      "family": "NotYet: a checked field alias requiring an optional, accessor, or representation conversion",
+      "before": 0,
+      "after": 616,
+      "delta": 616
+    },
+    {
+      "family": "Refused: overload 1 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb",
+      "before": 0,
+      "after": 616,
+      "delta": 616
+    },
+    {
+      "family": "Refused: a constructor object escaping before static fields are initialized",
+      "before": 2832,
+      "after": 3447,
+      "delta": 615
+    },
+    {
+      "family": "NotYet: a call to a PropertyAccessExpression",
+      "before": 1164,
+      "after": 599,
+      "delta": -565
+    },
+    {
+      "family": "Refused: overload 1 of setParent result T cannot be served by implementation result T | undefined",
+      "before": 0,
+      "after": 536,
+      "delta": 536
+    },
+    {
+      "family": "NotYet: toLocaleTimeString: Date methods other than getTime/valueOf in the fs file host",
+      "before": 0,
+      "after": 515,
+      "delta": 515
+    },
+    {
+      "family": "Refused: overload 2 of arrayToMultiMap result MultiMap<K, U> cannot be served by implementation result MultiMap<K, U | V>",
+      "before": 0,
+      "after": 494,
+      "delta": 494
+    },
+    {
+      "family": "NotYet: push with other than one value",
+      "before": 0,
+      "after": 481,
+      "delta": 481
+    },
+    {
+      "family": "NotYet: a (n: Node) => boolean seen as a (element: Node) => \"quit\" | boolean (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 472,
+      "delta": 472
+    },
+    {
+      "family": "Refused: overload 2 of arrayToNumericMap result U[] cannot be served by implementation result (T | U)[]",
+      "before": 0,
+      "after": 460,
+      "delta": 460
+    },
+    {
+      "family": "Refused: inherited library member map read as an own field",
+      "before": 0,
+      "after": 451,
+      "delta": 451
+    },
+    {
+      "family": "NotYet: lastIndexOf with these arguments",
+      "before": 443,
+      "after": 0,
+      "delta": -443
+    },
+    {
+      "family": "NotYet: a call to an Identifier",
+      "before": 469,
+      "after": 67,
+      "delta": -402
+    },
+    {
+      "family": "NotYet: an array of ResolvedConfigFileName",
+      "before": 1361,
+      "after": 1758,
+      "delta": 397
+    },
+    {
+      "family": "Refused: a some callback that doesn't return a boolean",
+      "before": 0,
+      "after": 397,
+      "delta": 397
+    },
+    {
+      "family": "NotYet: checked view field parent of type BindingElement | ParameterDeclaration | VariableDeclaration",
+      "before": 0,
+      "after": 393,
+      "delta": 393
+    },
+    {
+      "family": "NotYet: Array.isArray on a tuple or an erased object/any/unknown view",
+      "before": 0,
+      "after": 349,
+      "delta": 349
+    },
+    {
+      "family": "Refused: a filter callback that doesn't return a boolean",
+      "before": 0,
+      "after": 349,
+      "delta": 349
+    },
+    {
+      "family": "NotYet: a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+      "before": 3807,
+      "after": 4148,
+      "delta": 341
+    },
+    {
+      "family": "NotYet: RegExp with a nonconstant pattern",
+      "before": 277,
+      "after": 615,
+      "delta": 338
+    },
+    {
+      "family": "NotYet: an array of unknown with erased element storage (retain its declared element type before reading elements)",
+      "before": 0,
+      "after": 327,
+      "delta": 327
+    },
+    {
+      "family": "NotYet: a generic function as a value",
+      "before": 5911,
+      "after": 6222,
+      "delta": 311
+    },
+    {
+      "family": "Refused: Object.defineProperty",
+      "before": 114,
+      "after": 414,
+      "delta": 300
+    },
+    {
+      "family": "Refused: a method in object destructuring",
+      "before": 9954,
+      "after": 9668,
+      "delta": -286
+    },
+    {
+      "family": "NotYet: in when a possibly absent spread has no property presence descriptors",
+      "before": 0,
+      "after": 277,
+      "delta": 277
+    },
+    {
+      "family": "NotYet: overload 1 of or with a non-array implementation rest parameter",
+      "before": 0,
+      "after": 277,
+      "delta": 277
+    },
+    {
+      "family": "NotYet: an object with a nullable field viewed as unknown or object (null and undefined slot tags)",
+      "before": 0,
+      "after": 260,
+      "delta": 260
+    },
+    {
+      "family": "Refused: overload 1 of assertEachNode parameter test cannot be served by implementation parameter test",
+      "before": 0,
+      "after": 260,
+      "delta": 260
+    },
+    {
+      "family": "NotYet: a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+      "before": 802,
+      "after": 1061,
+      "delta": 259
+    },
+    {
+      "family": "NotYet: checked predicate overload target readonly ShorthandPropertyAssignment[]",
+      "before": 0,
+      "after": 257,
+      "delta": 257
+    },
+    {
+      "family": "Refused: inherited library member match read as an own field",
+      "before": 0,
+      "after": 254,
+      "delta": 254
+    },
+    {
+      "family": "NotYet: typed array element type Uint16Array",
+      "before": 0,
+      "after": 253,
+      "delta": 253
+    },
+    {
+      "family": "Refused: inherited library member call read as an own field",
+      "before": 0,
+      "after": 245,
+      "delta": 245
+    },
+    {
+      "family": "NotYet: a function value taking boolean | undefined",
+      "before": 243,
+      "after": 0,
+      "delta": -243
+    },
+    {
+      "family": "NotYet: for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
+      "before": 10902,
+      "after": 11145,
+      "delta": 243
+    },
+    {
+      "family": "NotYet: a destructured name held otherwise than its field",
+      "before": 346,
+      "after": 585,
+      "delta": 239
+    },
+    {
+      "family": "NotYet: a destructured parameter beside a parameter with a default",
+      "before": 232,
+      "after": 0,
+      "delta": -232
+    },
+    {
+      "family": "NotYet: checked view field parent of type JsxElement | Node",
+      "before": 0,
+      "after": 216,
+      "delta": 216
+    },
+    {
+      "family": "Refused: Object.getPrototypeOf",
+      "before": 0,
+      "after": 209,
+      "delta": 209
+    },
+    {
+      "family": "Refused: overload 2 of toArray parameter value cannot be served by implementation parameter value",
+      "before": 0,
+      "after": 207,
+      "delta": 207
+    },
+    {
+      "family": "NotYet: checked view field typeArguments of type NodeArray<TypeNode> | undefined",
+      "before": 0,
+      "after": 196,
+      "delta": 196
+    },
+    {
+      "family": "Refused: inherited library member now read as an own field",
+      "before": 0,
+      "after": 191,
+      "delta": 191
+    },
+    {
+      "family": "NotYet: passing union of differently held members to a function value",
+      "before": 181,
+      "after": 0,
+      "delta": -181
+    },
+    {
+      "family": "Refused: a spread after the first field",
+      "before": 315,
+      "after": 492,
+      "delta": 177
+    },
+    {
+      "family": "NotYet: assigning a field of a value",
+      "before": 393,
+      "after": 568,
+      "delta": 175
+    },
+    {
+      "family": "Refused: inherited library member set read as an own field",
+      "before": 0,
+      "after": 174,
+      "delta": 174
+    },
+    {
+      "family": "NotYet: a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow",
+      "before": 0,
+      "after": 167,
+      "delta": 167
+    },
+    {
+      "family": "NotYet: new an Identifier",
+      "before": 1706,
+      "after": 1873,
+      "delta": 167
+    },
+    {
+      "family": "NotYet: a namespace member without a lowered binding",
+      "before": 0,
+      "after": 160,
+      "delta": 160
+    },
+    {
+      "family": "NotYet: checked view field parent of type JSDoc | ModuleBlock | SourceFile",
+      "before": 0,
+      "after": 158,
+      "delta": 158
+    },
+    {
+      "family": "NotYet: a call returning any",
+      "before": 336,
+      "after": 492,
+      "delta": 156
+    },
+    {
+      "family": "NotYet: a tuple element of type string | number | boolean | readonly string[] | SourceFile | undefined",
+      "before": 509,
+      "after": 662,
+      "delta": 153
+    },
+    {
+      "family": "NotYet: a narrowed scalar in a boxed union field",
+      "before": 0,
+      "after": 152,
+      "delta": 152
+    },
+    {
+      "family": "NotYet: findIndex on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)",
+      "before": 0,
+      "after": 152,
+      "delta": 152
+    },
+    {
+      "family": "NotYet: destructuring anything but a tuple into [names]",
+      "before": 233,
+      "after": 379,
+      "delta": 146
+    },
+    {
+      "family": "NotYet: a comparator that doesn't take two elements and return a number",
+      "before": 417,
+      "after": 559,
+      "delta": 142
+    },
+    {
+      "family": "NotYet: a narrowed boolean | undefined field; copy the field into a local and narrow that local instead",
+      "before": 141,
+      "after": 0,
+      "delta": -141
+    },
+    {
+      "family": "NotYet: a template interpolating a union with an object, an array, a map or a function in it",
+      "before": 0,
+      "after": 127,
+      "delta": 127
+    },
+    {
+      "family": "NotYet: an array of boolean | undefined",
+      "before": 362,
+      "after": 486,
+      "delta": 124
+    },
+    {
+      "family": "Refused: overload 1 of createBinaryExpressionTrampoline result (node: BinaryExpression) => TResult cannot be served by implementation result (node: BinaryExpression, outerState: TOuterState) => TResult",
+      "before": 0,
+      "after": 123,
+      "delta": 123
+    },
+    {
+      "family": "Refused: inherited library member replace read as an own field",
+      "before": 120,
+      "after": 0,
+      "delta": -120
+    },
+    {
+      "family": "NotYet: checked predicate overload target CallExpression & { expression: Identifier; arguments: [StringLiteralLike]; } & { expression: Identifier; arguments: ...; }",
+      "before": 0,
+      "after": 118,
+      "delta": 118
+    },
+    {
+      "family": "NotYet: a field from a boolean | undefined variable",
+      "before": 115,
+      "after": 0,
+      "delta": -115
+    },
+    {
+      "family": "NotYet: a class instantiated with TOuterState",
+      "before": 112,
+      "after": 0,
+      "delta": -112
+    },
+    {
+      "family": "NotYet: checked view field id of type number | undefined",
+      "before": 0,
+      "after": 112,
+      "delta": 112
+    },
+    {
+      "family": "NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+      "before": 170,
+      "after": 281,
+      "delta": 111
+    },
+    {
+      "family": "NotYet: an array of ReusableDiagnosticMessageChain",
+      "before": 0,
+      "after": 111,
+      "delta": 111
+    },
+    {
+      "family": "Refused: inherited library member repeat read as an own field",
+      "before": 106,
+      "after": 0,
+      "delta": -106
+    },
+    {
+      "family": "NotYet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+      "before": 101,
+      "after": 0,
+      "delta": -101
+    },
+    {
+      "family": "NotYet: checked view field parent of type CatchClause | VariableDeclarationList | BindingPattern",
+      "before": 0,
+      "after": 100,
+      "delta": 100
+    },
+    {
+      "family": "NotYet: a number | undefined argument to substring",
+      "before": 98,
+      "after": 0,
+      "delta": -98
+    },
+    {
+      "family": "Refused: a narrowed accessor reread, which can return a different value",
+      "before": 0,
+      "after": 95,
+      "delta": 95
+    },
+    {
+      "family": "NotYet: a Map of false | MutableFileSystemEntries",
+      "before": 259,
+      "after": 165,
+      "delta": -94
+    },
+    {
+      "family": "NotYet: a SpreadElement in a tuple literal",
+      "before": 0,
+      "after": 94,
+      "delta": 94
+    },
+    {
+      "family": "NotYet: a number | undefined argument to slice",
+      "before": 94,
+      "after": 0,
+      "delta": -94
+    },
+    {
+      "family": "NotYet: checked predicate overload target Expression",
+      "before": 0,
+      "after": 91,
+      "delta": 91
+    },
+    {
+      "family": "Refused: inherited library member add read as an own field",
+      "before": 0,
+      "after": 85,
+      "delta": 85
+    },
+    {
+      "family": "NotYet: a YieldExpression as a statement",
+      "before": 109,
+      "after": 26,
+      "delta": -83
+    },
+    {
+      "family": "Refused: Object.create",
+      "before": 161,
+      "after": 78,
+      "delta": -83
+    },
+    {
+      "family": "NotYet: apply without a dense argument literal (length, presence and argument representations must be proven)",
+      "before": 0,
+      "after": 81,
+      "delta": 81
+    },
+    {
+      "family": "NotYet: an array of NonNullable<T>",
+      "before": 119,
+      "after": 39,
+      "delta": -80
+    },
+    {
+      "family": "Refused: Object.setPrototypeOf",
+      "before": 78,
+      "after": 0,
+      "delta": -78
+    },
+    {
+      "family": "NotYet: a base that isn't a declared class",
+      "before": 77,
+      "after": 0,
+      "delta": -77
+    },
+    {
+      "family": "NotYet: a class instantiated with any",
+      "before": 0,
+      "after": 77,
+      "delta": 77
+    },
+    {
+      "family": "NotYet: a Map of VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>",
+      "before": 1167,
+      "after": 1243,
+      "delta": 76
+    },
+    {
+      "family": "NotYet: passing boolean | undefined to a function value",
+      "before": 75,
+      "after": 0,
+      "delta": -75
+    },
+    {
+      "family": "NotYet: a call returning Path",
+      "before": 0,
+      "after": 71,
+      "delta": 71
+    },
+    {
+      "family": "NotYet: this outside a method",
+      "before": 1575,
+      "after": 1641,
+      "delta": 66
+    },
+    {
+      "family": "Refused: inherited library member search read as an own field",
+      "before": 0,
+      "after": 66,
+      "delta": 66
+    },
+    {
+      "family": "Refused: inherited library member hasOwnProperty read as an own field",
+      "before": 59,
+      "after": 0,
+      "delta": -59
+    },
+    {
+      "family": "Refused: sort without a comparator",
+      "before": 0,
+      "after": 59,
+      "delta": 59
+    },
+    {
+      "family": "NotYet: a (file: SourceFile, options: CompilerOptions) => true | undefined seen as a (file: SourceFile, options: CompilerOptions) => true | Node | undefined (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 58,
+      "delta": 58
+    },
+    {
+      "family": "NotYet: a logical assignment to this binding",
+      "before": 0,
+      "after": 55,
+      "delta": 55
+    },
+    {
+      "family": "NotYet: an array of CanonicalKey",
+      "before": 51,
+      "after": 0,
+      "delta": -51
+    },
+    {
+      "family": "NotYet: an array of TState",
+      "before": 50,
+      "after": 0,
+      "delta": -50
+    },
+    {
+      "family": "Refused: overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+      "before": 0,
+      "after": 50,
+      "delta": 50
+    },
+    {
+      "family": "NotYet: Date construction other than a numeric timestamp in the fs file host",
+      "before": 0,
+      "after": 48,
+      "delta": 48
+    },
+    {
+      "family": "NotYet: a DeleteExpression as a statement",
+      "before": 0,
+      "after": 47,
+      "delta": 47
+    },
+    {
+      "family": "NotYet: an array of U",
+      "before": 160,
+      "after": 114,
+      "delta": -46
+    },
+    {
+      "family": "NotYet: typeof a value holding both null and undefined without a presence slot",
+      "before": 0,
+      "after": 45,
+      "delta": 45
+    },
+    {
+      "family": "NotYet: hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+      "before": 0,
+      "after": 43,
+      "delta": 43
+    },
+    {
+      "family": "Refused: Object.fromEntries",
+      "before": 0,
+      "after": 43,
+      "delta": 43
+    },
+    {
+      "family": "NotYet: an indexed record write without a plain constant data key",
+      "before": 0,
+      "after": 42,
+      "delta": 42
+    },
+    {
+      "family": "NotYet: a () => true seen as a () => RepopulateDiagnosticChainInfo (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 41,
+      "delta": 41
+    },
+    {
+      "family": "NotYet: checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+      "before": 0,
+      "after": 41,
+      "delta": 41
+    },
+    {
+      "family": "NotYet: push on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)",
+      "before": 0,
+      "after": 41,
+      "delta": 41
+    },
+    {
+      "family": "NotYet: a rest parameter whose elements cannot be packed",
+      "before": 0,
+      "after": 38,
+      "delta": 38
+    },
+    {
+      "family": "NotYet: an array of object",
+      "before": 37,
+      "after": 0,
+      "delta": -37
+    },
+    {
+      "family": "NotYet: a Map of string | number",
+      "before": 36,
+      "after": 0,
+      "delta": -36
+    },
+    {
+      "family": "NotYet: an array of unknown",
+      "before": 36,
+      "after": 0,
+      "delta": -36
+    },
+    {
+      "family": "NotYet: an array of T | U",
+      "before": 35,
+      "after": 0,
+      "delta": -35
+    },
+    {
+      "family": "NotYet: an array of V",
+      "before": 88,
+      "after": 59,
+      "delta": -29
+    },
+    {
+      "family": "NotYet: a (_?: unknown) => void seen as a ((oldItem: U, newItem: T) => void) | undefined (one keeps something weakly that the other keeps strongly)",
+      "before": 0,
+      "after": 25,
+      "delta": 25
+    },
+    {
+      "family": "Refused: a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view)",
+      "before": 108,
+      "after": 109,
+      "delta": 1
+    },
+    {
+      "family": "NotYet: .length on a value",
+      "before": 280,
+      "after": 280,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: JSON.stringify a union containing containers without runtime element metadata",
+      "before": 39,
+      "after": 39,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: Object.assign on a shape not proven by a plain literal or its const binding",
+      "before": 44,
+      "after": 44,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a ClassExpression",
+      "before": 96,
+      "after": 96,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a ConditionalExpression as a statement",
+      "before": 294,
+      "after": 294,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map of CompilerOptionsValue",
+      "before": 61,
+      "after": 61,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map of HostFileInfo",
+      "before": 333,
+      "after": 333,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map of RedirectsCacheKey",
+      "before": 40,
+      "after": 40,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map of ResolvedConfigFilePath",
+      "before": 112,
+      "after": 112,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map of T",
+      "before": 39,
+      "after": 39,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Map whose key and value types aren't known",
+      "before": 662,
+      "after": 662,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+      "before": 309,
+      "after": 309,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a call returning T",
+      "before": 154,
+      "after": 154,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a tagged template other than the intrinsic String.raw",
+      "before": 711,
+      "after": 711,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a template interpolating an object, an array, a map, a function or undefined",
+      "before": 59,
+      "after": 59,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: a tuple literal leaving out an element of type ModuleSpecifierEnding",
+      "before": 1089,
+      "after": 1089,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: an array of Child",
+      "before": 328,
+      "after": 328,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: destructuring a string",
+      "before": 51,
+      "after": 51,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: destructuring a value",
+      "before": 147,
+      "after": 147,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: for...in over an array (holes and own enumerable properties are not represented; use for...of for elements)",
+      "before": 92,
+      "after": 92,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: indexOf on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)",
+      "before": 168,
+      "after": 168,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: new Map from something that isn't [key, value] pairs",
+      "before": 188,
+      "after": 188,
+      "delta": 0
+    },
+    {
+      "family": "NotYet: spreading an array of other elements",
+      "before": 230,
+      "after": 230,
+      "delta": 0
+    },
+    {
+      "family": "Refused: JSON.parse: its result's type can't be proven from the text",
+      "before": 140,
+      "after": 140,
+      "delta": 0
+    },
+    {
+      "family": "Refused: a type argument makes a value of type (left: MappedPosition, right: MappedPosition) => boolean seen as EqualityComparer<SourceMappedPosition> | undefined, which can write string | undefined where string is read",
+      "before": 141,
+      "after": 141,
+      "delta": 0
+    },
+    {
+      "family": "Refused: inherited library member compare read as an own field",
+      "before": 297,
+      "after": 297,
+      "delta": 0
+    },
+    {
+      "family": "panic: statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "before": 3647,
+      "after": 3647,
+      "delta": 0
+    }
+  ]
+}

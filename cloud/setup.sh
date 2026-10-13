@@ -168,7 +168,21 @@ if "$wasiSDK"; then
   curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
  fi
  "$wasiDirectory/bin/clang" --version | head -n 1
- step "wasi sdk ready ($wasiDirectory)"
+ # The WASI tests link with the clang on PATH ($tools/bin/clang), whose resource directory holds builtins for the
+ # native target only, so wasm-ld can't open wasm32-unknown-wasi/libclang_rt.builtins.a and every WASI test skips
+ # (Oct 10: the 36 internal/native wasm units on each box-strict box). The SDK carries the wasm32 builtins for its
+ # own clang; linked into the PATH clang's resource directory when both are the same clang major, they serve it.
+ resource=$("$tools/bin/clang" -print-resource-dir)
+ sdkBuiltins="$wasiDirectory/lib/clang/$(basename "$resource")/lib"
+ [ -d "$sdkBuiltins" ] || { echo "setup: wasi-sdk $wasiVersion has no builtins for clang $(basename "$resource") ($(ls "$wasiDirectory/lib/clang"))" >&2 && exit 1; }
+ for builtins in "$sdkBuiltins"/wasm32-*; do
+  [ -e "$resource/lib/${builtins##*/}" ] && [ ! -L "$resource/lib/${builtins##*/}" ] || ln -sfn "$builtins" "$resource/lib/${builtins##*/}"
+ done
+ # A claimed WASI toolchain links: the WASI tests' own probe, with the clang they run.
+ printf '#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n' > "$run/wasi.c"
+ "$tools/bin/clang" --target=wasm32-wasi --sysroot="$wasiDirectory/share/wasi-sysroot" -O2 "$run/wasi.c" -o "$run/wasi.wasm" ||
+  { echo "setup: $tools/bin/clang can't link for wasm32-wasi with wasi-sdk $wasiVersion" >&2 && exit 1; }
+ step "wasi sdk ready ($wasiDirectory, linking with $tools/bin/clang)"
 fi
 
 # Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
@@ -187,24 +201,8 @@ else
 	step "shared cache off (adamic-gocacheprog build failed; see $run/gocacheprog.log)"
 fi
 
-# One file every shell sources: the agent's shell in Codex is a different session from this one.
-cat > "$tools/env.sh" << ENV
-export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
-export GOTOOLCHAIN=auto
-export GOPROXY="https://proxy.golang.org|direct"
-export TMPDIR=$gate
-export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
-ENV
-# Persist only a successful bootstrap; recheck opt-out and branch presence in later shells.
-# Credentials stay in the caller's environment: cloud setup never grants cache write trust.
-printf 'unset GOCACHEPROG\n' >> "$tools/env.sh"
-if [ "$gocacheprog" = on ]; then
-	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
-		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$tools/env.sh"
-fi
-if "$wasiSDK"; then
- printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
-fi
+# One file every shell sources; write-env.sh keeps the lines other steps wrote, such as a box's gate inputs.
+bash "$repository/cloud/write-env.sh" "$tools" "$gate" "$markdownDependencies" "$repository" "$gocacheprog" "$("$wasiSDK" && echo "$wasiDirectory" || true)"
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"

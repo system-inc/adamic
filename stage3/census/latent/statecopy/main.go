@@ -49,6 +49,10 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		}
 		return value
 	case *ast.StarExpr:
+		// The opaque mapper belongs to the checker; copying its empty facade loses identity.
+		if printed(t.X) == "typeMapper" {
+			return value
+		}
 		if name, ok := t.X.(*ast.Ident); ok {
 			if _, ok := g.types[name.Name].(*ast.StructType); ok {
 				g.needed[name.Name] = true

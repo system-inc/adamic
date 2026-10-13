@@ -1,0 +1,92 @@
+Total: 69.90s
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).dynamicProperties in /workspace/adamic/internal/native/emit_objects.go
+         0     37.74s (flat, cum) 53.99% of Total
+         .          .    427:func (e *emitter) dynamicProperties() bool {
+         .          .    428:	found := false
+         .     37.74s    429:	walkExpressions(e.program, func(expression ir.Expression) {
+         .          .    430:		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
+         .          .    431:			found = true
+         .          .    432:		}
+         .          .    433:		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
+         .          .    434:			found = true
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).dynamicProperties.func1 in /workspace/adamic/internal/native/emit_objects.go
+     630ms      630ms (flat, cum)   0.9% of Total
+     160ms      160ms    429:	walkExpressions(e.program, func(expression ir.Expression) {
+     330ms      330ms    430:		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
+         .          .    431:			found = true
+         .          .    432:		}
+      40ms       40ms    433:		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
+         .          .    434:			found = true
+         .          .    435:		}
+     100ms      100ms    436:	})
+         .          .    437:	return found
+         .          .    438:}
+         .          .    439:
+         .          .    440:func (e *emitter) methodEntryType() string {
+         .          .    441:	if e.program.ClosureConventionNeeded() {
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded in /workspace/adamic/internal/native/emit_objects.go
+         0      5.56s (flat, cum)  7.95% of Total
+         .          .    461:func (e *emitter) fieldReadinessNeeded(name string) bool {
+         .          .    462:	if e.program.UninitializedFields[name] {
+         .          .    463:		return true
+         .          .    464:	}
+         .          .    465:	needed := false
+         .      5.56s    466:	walkExpressions(e.program, func(expression ir.Expression) {
+         .          .    467:		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
+         .          .    468:			needed = true
+         .          .    469:		}
+         .          .    470:	})
+         .          .    471:	return needed
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded.func1 in /workspace/adamic/internal/native/emit_objects.go
+     940ms      990ms (flat, cum)  1.42% of Total
+      10ms       10ms    466:	walkExpressions(e.program, func(expression ir.Expression) {
+     930ms      980ms    467:		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
+         .          .    468:			needed = true
+         .          .    469:		}
+         .          .    470:	})
+         .          .    471:	return needed
+         .          .    472:}
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).fieldTypesNeeded in /workspace/adamic/internal/native/emit_objects.go
+         0     38.81s (flat, cum) 55.52% of Total
+         .          .    447:func (e *emitter) fieldTypesNeeded() bool {
+         .     18.96s    448:	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+         .          .    449:		return true
+         .          .    450:	}
+         .          .    451:	needed := false
+         .     19.85s    452:	walkExpressions(e.program, func(expression ir.Expression) {
+         .          .    453:		if property, ok := expression.(ir.Property); ok && property.View != "" {
+         .          .    454:			needed = true
+         .          .    455:		}
+         .          .    456:	})
+         .          .    457:	return needed
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).fieldTypesNeeded.func1 in /workspace/adamic/internal/native/emit_objects.go
+     1.76s      1.77s (flat, cum)  2.53% of Total
+     100ms      100ms    452:	walkExpressions(e.program, func(expression ir.Expression) {
+     1.64s      1.65s    453:		if property, ok := expression.(ir.Property); ok && property.View != "" {
+         .          .    454:			needed = true
+         .          .    455:		}
+      20ms       20ms    456:	})
+         .          .    457:	return needed
+         .          .    458:}
+         .          .    459:
+         .          .    460:// Hand-built IR can carry field contracts without the lowerer's summary maps.
+         .          .    461:func (e *emitter) fieldReadinessNeeded(name string) bool {
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).hasRecordStorage in /workspace/adamic/internal/native/entries_records.go
+         0      5.10s (flat, cum)  7.30% of Total
+         .          .     32:func (e *emitter) hasRecordStorage() bool {
+         .          .     33:	found := false
+         .      5.10s     34:	walkExpressions(e.program, func(expression ir.Expression) {
+         .          .     35:		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
+         .          .     36:			found = true
+         .          .     37:		}
+         .          .     38:	})
+         .          .     39:	return found
+ROUTINE ======================== github.com/system-inc/adamic/internal/native.(*emitter).hasRecordStorage.func1 in /workspace/adamic/internal/native/entries_records.go
+     110ms      110ms (flat, cum)  0.16% of Total
+      40ms       40ms     34:	walkExpressions(e.program, func(expression ir.Expression) {
+      70ms       70ms     35:		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
+         .          .     36:			found = true
+         .          .     37:		}
+         .          .     38:	})
+         .          .     39:	return found
+         .          .     40:}

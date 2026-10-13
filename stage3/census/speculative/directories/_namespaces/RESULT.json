@@ -1,0 +1,62 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {},
+  "counts": {
+    "NotYet": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "Refused": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "top20": [],
+  "source_bytes": 3500,
+  "examined_bytes": 3500,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 3500,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 0,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "source_bytes": 111,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 1,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "source_bytes": 101,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 1,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "ts.ts",
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+      "source_bytes": 3288,
+      "total_nodes": 166,
+      "visited_nodes": 166,
+      "attempted_nodes": 77,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

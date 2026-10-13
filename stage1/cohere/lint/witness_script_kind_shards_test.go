@@ -5,7 +5,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -86,7 +85,7 @@ func witnessScriptKindSetup(t *testing.T) {
 		lowered := witnessScriptKindLoweredProduct(t)
 		s.Module = filepath.Join(lowered, "lint.mjs")
 		s.Binary = filepath.Join(witnessScriptKindNativeProduct(t), "scanner")
-		s.Oracle = filepath.Join(witnessScriptKindOracleProduct(t), "oracle")
+		s.Oracle = lintGoOracleProduct(t)
 		s.ready = true
 	})
 	s := &witnessScriptKindState
@@ -235,60 +234,6 @@ func witnessScriptKindCommand(ctx context.Context, name string, args ...string) 
 	}
 	command.WaitDelay = 2 * time.Second
 	return command
-}
-
-func witnessScriptKindGoOracleIn(ctx context.Context, sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	command := witnessScriptKindCommand(ctx, "go", args...)
-	command.Dir = root
-	command.Env = append(os.Environ(), "PWD="+root)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		return "", fmt.Errorf("Go oracle build: %w\n%s", err, output)
-	}
-	return binary, nil
 }
 
 func TestWitnessScriptKindStandalone(t *testing.T) {

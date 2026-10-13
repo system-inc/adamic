@@ -79,11 +79,10 @@ func printerUpstreamUnit(t *testing.T, unit int) {
 	setupStart := time.Now()
 	t.Helper()
 	script, library, embedded := printerPreflightInputs(t)
-	oracle := printerOracle(t)
 	var whole []printerCase
 	var shards []printerShard
 	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		cases, want := printerCases(t, mode, oracle)
+		cases, want := printerCases(t, mode)
 		enumeration := enumeratePrinter(t, mode, cases, want)
 		whole = append(whole, enumeration...)
 		shards = append(shards, printerShard{mode: mode, path: cases, cases: enumeration})
@@ -132,11 +131,10 @@ func printerUpstreamUnit(t *testing.T, unit int) {
 func TestPrinterPreflightPlantedDisagreement(t *testing.T) {
 	t.Parallel()
 	script, library, _ := printerPreflightInputs(t)
-	oracle := printerOracle(t)
 	var shards []printerShard
 	var results []run
 	for number, mode := range []string{"defaults", "tabs"} {
-		cases, want := printerCases(t, mode, oracle)
+		cases, want := printerCases(t, mode)
 		shard := printerShard{mode: mode, path: cases, cases: enumeratePrinter(t, mode, cases, want)}
 		got := execute(t, nil, "node", script, library, shard.path, mode, "npm")
 		if _, err := printerPreflightDisagreement(number, shard, got); err != nil {

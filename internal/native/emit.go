@@ -60,7 +60,7 @@ func cProgram(program *ir.Program, handler int) string {
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.
-		fmt.Fprintf(&builder, "static const char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
+		fmt.Fprintf(&builder, "static const unsigned char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
 		fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_BYTES(adamic_bytes_%d, %d);\n", index, index, len(value))
 	}
 	if len(program.Strings) > 0 {
@@ -76,7 +76,7 @@ func cProgram(program *ir.Program, handler int) string {
 			continue
 		}
 		globals = true
-		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
+		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))
 		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
 		if local.Uninitialized {
 			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", readyName(index))
@@ -170,9 +170,11 @@ func cBytes(value string) string {
 }
 
 type emitter struct {
-	program *ir.Program
-	out     strings.Builder
-	indent  int
+	// objectMetadata holds program-wide facts for this emission, never another program.
+	objectMetadata *objectMetadataNeeds
+	program        *ir.Program
+	out            strings.Builder
+	indent         int
 
 	// reuse is where objects are reused in place (reuse.go), at names the statement being emitted,
 	// where it stands in its slice, and taking is the spread whose replaced fields are being
