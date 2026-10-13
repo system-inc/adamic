@@ -438,7 +438,8 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
+			var output []byte
+			if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
 			}
 		})
@@ -510,7 +511,8 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 		return "", nil
 	}
 	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	rules, err := command.Output()
+	var rules []byte
+	err = withCompilerToken(func() (err error) { rules, err = command.Output(); return err })
 	if err != nil {
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {
