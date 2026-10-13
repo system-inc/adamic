@@ -246,7 +246,7 @@ func TestFixturesTaste(t *testing.T) {
 	testFixtureDirectory(t, "taste")
 }
 
-func testFixtureDirectory(t *testing.T, directory string) {
+func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...string) {
 	t.Helper()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -341,6 +341,15 @@ func testFixtureDirectory(t *testing.T, directory string) {
 					t.Fatalf("invalid or duplicate file: %q", entry.File)
 				}
 				seen[entry.File] = true
+				if len(selectedFiles) != 0 {
+					selected := false
+					for _, file := range selectedFiles {
+						selected = selected || file == entry.File
+					}
+					if !selected {
+						continue
+					}
+				}
 				if len(entry.TSC) == 0 || entry.Reason == "" {
 					t.Fatalf("missing provenance for %s", entry.File)
 				}

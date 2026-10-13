@@ -1,0 +1,1076 @@
+[
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEveryRelease",
+    "seconds": 25.37
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapJavaScript",
+    "seconds": 25.59
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapRelease",
+    "seconds": 26.06
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapSanitized",
+    "seconds": 27.41
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningOptionalNumberMap",
+    "seconds": 3.07
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningStringMap",
+    "seconds": 3.27
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningBooleanMap",
+    "seconds": 3.7
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectGenericMap",
+    "seconds": 2.57
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberToSorted",
+    "seconds": 1.94
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberGenericMap",
+    "seconds": 2.9
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberFindIndex",
+    "seconds": 2.11
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningLibraryMap",
+    "seconds": 2.72
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberFindLast",
+    "seconds": 4.67
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberThrow",
+    "seconds": 6.07
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberIndex",
+    "seconds": 3.26
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberCapture",
+    "seconds": 8.05
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberReduceAccumulator",
+    "seconds": 6.92
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectSort",
+    "seconds": 1.4
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberNamedSort",
+    "seconds": 4.65
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectReduce",
+    "seconds": 4.26
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberArguments",
+    "seconds": 22.38
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectSome",
+    "seconds": 6.52
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectGeneric",
+    "seconds": 5.83
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberReduce",
+    "seconds": 8.57
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectFind",
+    "seconds": 7.38
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectForEach",
+    "seconds": 8.33
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectFilter",
+    "seconds": 5
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectEvery",
+    "seconds": 6.73
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberSort",
+    "seconds": 5.69
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberSome",
+    "seconds": 4.92
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionJavaScript",
+    "seconds": 0.92
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionRelease",
+    "seconds": 1.31
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterJavaScript",
+    "seconds": 2.08
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionSanitized",
+    "seconds": 4.02
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterRelease",
+    "seconds": 1.63
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterSanitized",
+    "seconds": 3.73
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialSort",
+    "seconds": 1.07
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestSelfCompareConstantMutant",
+    "seconds": 9.97
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 1.37
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialSome",
+    "seconds": 1.88
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.86
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialMap",
+    "seconds": 1.39
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialMatchingMethods",
+    "seconds": 3.63
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialEach",
+    "seconds": 1.2
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialViewMethod",
+    "seconds": 1.01
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialViewMethodParameter",
+    "seconds": 0.74
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AConstructorNumberArrow",
+    "seconds": 1.37
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialUnionNarrowed",
+    "seconds": 2.72
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialSingleNarrowed",
+    "seconds": 3.35
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestSelfCompareArrayFill",
+    "seconds": 1.56
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AUndefinedError",
+    "seconds": 2.32
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AMarkerUndefined",
+    "seconds": 2.2
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AMarker",
+    "seconds": 1.32
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AErrorSubclassSpread",
+    "seconds": 2.04
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestSelfCompareSweep",
+    "seconds": 9.75
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberFind",
+    "seconds": 2.37
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestSelfCompareClosure",
+    "seconds": 8.62
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AControls",
+    "seconds": 5.13
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEveryJavaScript",
+    "seconds": 0.43
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberMap",
+    "seconds": 1.56
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberGeneric",
+    "seconds": 1.65
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AConstructorArrow",
+    "seconds": 1.1
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AMaybeSetter",
+    "seconds": 1.26
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberForEach",
+    "seconds": 2.79
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AOverrideSource",
+    "seconds": 0.59
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2ALongName",
+    "seconds": 0.57
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2ADerivedSymbol",
+    "seconds": 1.12
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AErrorSpread",
+    "seconds": 0.64
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberFilter",
+    "seconds": 3.79
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningUnrepresentedParameter",
+    "seconds": 1.77
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEverySanitized",
+    "seconds": 2.73
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMiscompile2AOptionalError",
+    "seconds": 2.61
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningOptionalObjectMap",
+    "seconds": 3.04
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningObjectMap",
+    "seconds": 2
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0.05
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/node",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/node",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/node",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/native",
+    "seconds": 3.19
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/stage0",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a",
+    "seconds": 3.39
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill/self-compare",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill",
+    "seconds": 40.68
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/native",
+    "seconds": 4.04
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/stage0",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a",
+    "seconds": 4.37
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure/self-compare",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure",
+    "seconds": 40.79
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/native",
+    "seconds": 4.03
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/stage0",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a",
+    "seconds": 4.65
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep/self-compare",
+    "seconds": 0
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep",
+    "seconds": 40.94
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "seconds": 15.74
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 16.34
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberToSorted",
+    "seconds": 0.87
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectEvery",
+    "seconds": 0.93
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningLibraryMap",
+    "seconds": 1.07
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningOptionalObjectMap",
+    "seconds": 1.09
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberSort",
+    "seconds": 0.79
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberReduce",
+    "seconds": 0.81
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberSome",
+    "seconds": 0.84
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberNamedSort",
+    "seconds": 0.17
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberThrow",
+    "seconds": 1.29
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberReduceAccumulator",
+    "seconds": 0.65
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberForEach",
+    "seconds": 0.5
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningLibraryMap",
+    "seconds": 2.32
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberIndex",
+    "seconds": 0.92
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberFindLast",
+    "seconds": 0.16
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberMap",
+    "seconds": 1.19
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectEvery",
+    "seconds": 2.45
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberGeneric",
+    "seconds": 1.24
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberFilter",
+    "seconds": 0.38
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberFind",
+    "seconds": 0.46
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberIndex",
+    "seconds": 2.93
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberFindIndex",
+    "seconds": 0.71
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberEvery",
+    "seconds": 0.75
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningOptionalObjectMap",
+    "seconds": 3.62
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectSort",
+    "seconds": 0.86
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningOptionalNumberMap",
+    "seconds": 0.24
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningOptionalNumberMap",
+    "seconds": 1.38
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNullableObjectMap",
+    "seconds": 0.79
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberCapture",
+    "seconds": 1.05
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningStringMap",
+    "seconds": 0.41
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectGenericMap",
+    "seconds": 0.5
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberArguments",
+    "seconds": 0.52
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningBooleanMap",
+    "seconds": 0.75
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectGeneric",
+    "seconds": 0.2
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningNumberGenericMap",
+    "seconds": 0.49
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectReduce",
+    "seconds": 0.21
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectSome",
+    "seconds": 0.52
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningStringMap",
+    "seconds": 1.95
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectFind",
+    "seconds": 0.33
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectMap",
+    "seconds": 0.49
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectForEach",
+    "seconds": 0.35
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestCallbackWideningObjectFilter",
+    "seconds": 0.41
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectGenericMap",
+    "seconds": 0.53
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNullableObjectMap",
+    "seconds": 3.14
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberArguments",
+    "seconds": 1.97
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningBooleanMap",
+    "seconds": 2.51
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectSort",
+    "seconds": 0.76
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberGenericMap",
+    "seconds": 2
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectReduce",
+    "seconds": 1.54
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectSome",
+    "seconds": 2.03
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectMap",
+    "seconds": 2.19
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectGeneric",
+    "seconds": 1.17
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectFilter",
+    "seconds": 1.31
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectForEach",
+    "seconds": 2.14
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningObjectFind",
+    "seconds": 2.27
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberFindIndex",
+    "seconds": 1.64
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberGeneric",
+    "seconds": 0.56
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberForEach",
+    "seconds": 0.98
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberFindLast",
+    "seconds": 0.95
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberFilter",
+    "seconds": 0.9
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberFind",
+    "seconds": 0.99
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberEvery",
+    "seconds": 1.3
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberToSorted",
+    "seconds": 1.06
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberCapture",
+    "seconds": 1.57
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberSome",
+    "seconds": 1.85
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberThrow",
+    "seconds": 1.26
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberSort",
+    "seconds": 1.33
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberReduceAccumulator",
+    "seconds": 1.7
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberReduce",
+    "seconds": 1.43
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberNamedSort",
+    "seconds": 1.4
+  },
+  {
+    "check": "support",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestCallbackWideningNumberMap",
+    "seconds": 1.25
+  },
+  {
+    "check": "ir-support",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallbackAdapterTargets",
+    "seconds": 0
+  },
+  {
+    "check": "ir-support",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 0
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsNative",
+    "seconds": 10.38
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsLower",
+    "seconds": 10.45
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsFresh",
+    "seconds": 19.16
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsFlow",
+    "seconds": 16.88
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesNative",
+    "seconds": 25.82
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFlow",
+    "seconds": 26.25
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesLower",
+    "seconds": 26.97
+  },
+  {
+    "check": "fresh-archives",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFresh",
+    "seconds": 26.32
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFlow",
+    "seconds": 27.49
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFresh",
+    "seconds": 29.83
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersLower",
+    "seconds": 29.91
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersNative",
+    "seconds": 30.04
+  }
+]

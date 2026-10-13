@@ -1,0 +1,7 @@
+// a-check: compile
+function run() {
+    const zeros: number[] = [0, 0, 0];
+    console.log(String(zeros.fill(99) === zeros));
+    console.log(zeros.join(","));
+}
+run();

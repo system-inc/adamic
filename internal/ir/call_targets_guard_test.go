@@ -1,7 +1,11 @@
 package ir_test
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"go/ast"
 	"go/importer"
 	"go/parser"
@@ -9,9 +13,12 @@ import (
 	"go/types"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 )
@@ -41,13 +48,13 @@ var targetReaders = map[string]targetReader{
 	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":                          {"runtime", "names the function under test"},
 }
 
-func TestCallTargetReaders(t *testing.T) {
-	t.Parallel()
+func checkCallTargetReaders(t *testing.T, selected string) {
+	t.Helper()
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	listingProduct := callTargetExports(t)
+	listingProduct := callTargetExports(t, selected)
 	encoded, err := os.ReadFile(filepath.Join(listingProduct, "listing.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -68,7 +75,7 @@ func TestCallTargetReaders(t *testing.T) {
 		exports[pkg.ImportPath] = pkg.Export
 		// External tests may use declarations from export_test.go. Import their
 		// package's test variant rather than the production-only export file.
-		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && path == pkg.ForTest {
+		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && (path == pkg.ForTest || exports[path] == "") {
 			exports[path] = pkg.Export
 		}
 	}
@@ -94,6 +101,9 @@ func TestCallTargetReaders(t *testing.T) {
 			continue
 		}
 		base := filepath.Base(pkg.Dir)
+		if base != selected {
+			continue
+		}
 		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow") {
 			continue
 		}
@@ -173,7 +183,7 @@ func TestCallTargetReaders(t *testing.T) {
 		if entry.owner != "compiler" && entry.owner != "runtime" || entry.reason == "" {
 			t.Errorf("invalid reader metadata: %s", reader)
 		}
-		if !seen[reader] {
+		if strings.HasPrefix(reader, "internal/"+selected+"/") && !seen[reader] {
 			t.Errorf("stale call-target allowlist entry %s; remove it", reader)
 		}
 	}
@@ -181,12 +191,173 @@ func TestCallTargetReaders(t *testing.T) {
 
 // callTargetExports is the export data of the packages TestCallTargetReaders reads and everything they import, their
 // tests included, a product built ahead so the test runs no go.
-func callTargetExports(t *testing.T) string {
+func callTargetExports(t *testing.T, selected string) string {
 	t.Helper()
-	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow")
+	pkg := "./internal/" + selected
+	inputs := callTargetExportInputs(t, selected)
+	root, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.Product(t, inputs, func(directory string) error {
+		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+		defer cancel()
+		goTool, err := toolchain.Path("go")
+		if err != nil {
+			return err
+		}
+		command := exec.CommandContext(ctx, goTool, "list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json", pkg)
+		command.Dir = root
+		command.Env = toolchain.Env()
+		output, err := command.Output()
+		if err != nil {
+			return fmt.Errorf("export listing: %w", err)
+		}
+		decoder := json.NewDecoder(bytes.NewReader(output))
+		var packages []buildcache.ListedPackage
+		if err := os.Mkdir(filepath.Join(directory, "exports"), 0755); err != nil {
+			return err
+		}
+		for {
+			var pkg buildcache.ListedPackage
+			if err := decoder.Decode(&pkg); err == io.EOF {
+				break
+			} else if err != nil {
+				return err
+			}
+			if relative, err := filepath.Rel(root, pkg.Dir); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				pkg.Dir = filepath.ToSlash(relative)
+			} else {
+				pkg.Dir = ""
+			}
+			for _, names := range []*[]string{&pkg.GoFiles, &pkg.TestGoFiles, &pkg.XTestGoFiles} {
+				kept := (*names)[:0]
+				for _, name := range *names {
+					if !filepath.IsAbs(name) {
+						kept = append(kept, name)
+					}
+				}
+				*names = kept
+			}
+			if pkg.Export != "" {
+				data, err := callTargetExportMember(pkg.Export)
+				if err != nil {
+					return err
+				}
+				pkg.Export = fmt.Sprintf("exports/%d.a", len(packages))
+				if err := os.WriteFile(filepath.Join(directory, pkg.Export), data, 0644); err != nil {
+					return err
+				}
+			}
+			packages = append(packages, pkg)
+		}
+		encoded, err := json.Marshal(packages)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "listing.json"), encoded, 0644)
+	})
 }
 
-func TestProduct_CallTargetExports(t *testing.T) {
+func callTargetExportInputs(t *testing.T, selected string) buildcache.Inputs {
+	t.Helper()
+	pkg := "./internal/" + selected
+	inputs, err := buildcache.GoTestInputs("", "listing.json", pkg, nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Name = "call-target-export-members " + selected
+	inputs.Files = append(inputs.Files, "internal/ir/call_targets_guard_test.go")
+	inputs.Flags = append(inputs.Flags, "go list -trimpath -buildvcs=false -export -deps -test -json; retain __.PKGDEF")
+	return inputs
+}
+
+// go/importer reads __.PKGDEF, not executable object members. Keep that member
+// in its original ar envelope, so imports use the same compiler export bytes
+// without copying every dependency's machine code into each reader product.
+func callTargetExportMember(path string) ([]byte, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	header := make([]byte, 68)
+	if _, err := io.ReadFull(file, header); err != nil {
+		return nil, err
+	}
+	if string(header[:8]) != "!<arch>\n" || strings.TrimSpace(string(header[8:24])) != "__.PKGDEF" || string(header[66:68]) != "`\n" {
+		return nil, fmt.Errorf("unexpected Go export archive %s", path)
+	}
+	size, err := strconv.Atoi(strings.TrimSpace(string(header[56:66])))
+	if err != nil || size < 0 {
+		return nil, fmt.Errorf("invalid export member size in %s", path)
+	}
+	data := make([]byte, len(header)+size+size%2)
+	copy(data, header)
+	if _, err := io.ReadFull(file, data[len(header):len(header)+size]); err != nil {
+		return nil, err
+	}
+	if size%2 != 0 {
+		data[len(data)-1] = '\n'
+	}
+	return data, nil
+}
+
+// Not parallel: discover each key before the archive cases start, avoiding
+// four simultaneous dependency listings on one four-CPU worker. Archive cases
+// still prepare themselves when selected alone; main supplies their input index.
+func TestCallTargetExportInputsNative(t *testing.T) {
+	callTargetExportInputs(t, "native")
+}
+
+func TestCallTargetExportInputsLower(t *testing.T) {
+	callTargetExportInputs(t, "lower")
+}
+
+func TestCallTargetExportInputsFresh(t *testing.T) {
+	callTargetExportInputs(t, "fresh")
+}
+
+func TestCallTargetExportInputsFlow(t *testing.T) {
+	callTargetExportInputs(t, "flow")
+}
+
+func TestProduct_CallTargetReaderArchivesNative(t *testing.T) {
 	t.Parallel()
-	callTargetExports(t)
+	callTargetExports(t, "native")
+}
+
+func TestProduct_CallTargetReaderArchivesLower(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "lower")
+}
+
+func TestProduct_CallTargetReaderArchivesFresh(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "fresh")
+}
+
+func TestProduct_CallTargetReaderArchivesFlow(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "flow")
+}
+
+func TestCallTargetReadersNative(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "native")
+}
+
+func TestCallTargetReadersLower(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "lower")
+}
+
+func TestCallTargetReadersFresh(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "fresh")
+}
+
+func TestCallTargetReadersFlow(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "flow")
 }
