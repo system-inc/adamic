@@ -34,7 +34,7 @@ func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback strin
 
 // mayBeUndefined reports whether the checker's type for a node includes undefined.
 func (l *lowering) mayBeUndefined(node *ast.Node) bool {
-	proven := l.checker.GetTypeAtLocation(node)
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
 	if proven.Flags()&checker.TypeFlagsUndefined != 0 {
 		return true
 	}

@@ -1,0 +1,7 @@
+// typeof a null match result: JavaScript's typeof null is "object".
+const missing = 'abc'.match(/z/);
+console.log(`${typeof missing} ${missing === null}`);
+const found = 'abc'.match(/b/);
+console.log(`${typeof found}`);
+const executed = /q/.exec('abc');
+console.log(typeof executed);

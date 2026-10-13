@@ -157,11 +157,15 @@ func jsonIndex(name string) (uint64, bool) {
 	return n, err == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
 }
 func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+	t = l.concrete(t)
 	if depth == 0 && l.censusCallReturnsUndefined(node) {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
+	}
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return &ir.JSONSchema{Kind: "null"}, nil
 	}
 	if t.Flags()&checker.TypeFlagsUndefined != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
@@ -180,7 +184,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
 		child, err := l.jsonType(node, element, depth+1)
-		return &ir.JSONSchema{Kind: "array", Element: child}, err
+		return &ir.JSONSchema{Kind: "array", Element: child, Null: l.includesNull(t)}, err
 	}
 	if of == ir.Object || of == ir.Weak {
 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
@@ -200,5 +204,5 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if !ok {
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
-	return &ir.JSONSchema{Kind: kind}, nil
+	return &ir.JSONSchema{Kind: kind, Null: l.includesNull(t)}, nil
 }
