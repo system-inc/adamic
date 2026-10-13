@@ -1,0 +1,13 @@
+=== RUN   TestClosureTargetsBoundOnlyProvenValues
+=== PAUSE TestClosureTargetsBoundOnlyProvenValues
+=== CONT  TestClosureTargetsBoundOnlyProvenValues
+    call_targets_test.go:75: ir.Read bounded without proof
+    call_targets_test.go:78: ir.Read: Unknown failed to include throwing function
+    call_targets_test.go:75: ir.Property bounded without proof
+    call_targets_test.go:78: ir.Property: Unknown failed to include throwing function
+    call_targets_test.go:75: ir.Call bounded without proof
+    call_targets_test.go:78: ir.Call: Unknown failed to include throwing function
+--- FAIL: TestClosureTargetsBoundOnlyProvenValues (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

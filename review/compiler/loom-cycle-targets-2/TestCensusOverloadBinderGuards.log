@@ -1,0 +1,17 @@
+=== RUN   TestCensusOverloadBinderGuards
+=== PAUSE TestCensusOverloadBinderGuards
+=== CONT  TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/constraint
+=== PAUSE TestCensusOverloadBinderGuards/constraint
+=== RUN   TestCensusOverloadBinderGuards/parameter
+=== PAUSE TestCensusOverloadBinderGuards/parameter
+=== RUN   TestCensusOverloadBinderGuards/result
+=== PAUSE TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/constraint
+=== CONT  TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/parameter
+--- PASS: TestCensusOverloadBinderGuards (0.00s)
+    --- PASS: TestCensusOverloadBinderGuards/parameter (0.07s)
+    --- PASS: TestCensusOverloadBinderGuards/result (0.08s)
+    --- PASS: TestCensusOverloadBinderGuards/constraint (0.08s)
+PASS

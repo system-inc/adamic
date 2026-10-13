@@ -1,0 +1,29 @@
+=== RUN   TestInheritanceNativeSignatureLimits
+=== PAUSE TestInheritanceNativeSignatureLimits
+=== CONT  TestInheritanceNativeSignatureLimits
+=== RUN   TestInheritanceNativeSignatureLimits/optional_added
+=== PAUSE TestInheritanceNativeSignatureLimits/optional_added
+=== RUN   TestInheritanceNativeSignatureLimits/boolean_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/boolean_default_added
+=== RUN   TestInheritanceNativeSignatureLimits/generic_default_added
+=== PAUSE TestInheritanceNativeSignatureLimits/generic_default_added
+=== RUN   TestInheritanceNativeSignatureLimits/parameter_count
+=== PAUSE TestInheritanceNativeSignatureLimits/parameter_count
+=== RUN   TestInheritanceNativeSignatureLimits/void_to_number_result
+=== PAUSE TestInheritanceNativeSignatureLimits/void_to_number_result
+=== RUN   TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== PAUSE TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestInheritanceNativeSignatureLimits/optional_added
+=== CONT  TestInheritanceNativeSignatureLimits/parameter_count
+=== CONT  TestInheritanceNativeSignatureLimits/void_to_number_result
+=== CONT  TestInheritanceNativeSignatureLimits/number_to_optional_result
+=== CONT  TestInheritanceNativeSignatureLimits/generic_default_added
+=== CONT  TestInheritanceNativeSignatureLimits/boolean_default_added
+--- PASS: TestInheritanceNativeSignatureLimits (0.00s)
+    --- PASS: TestInheritanceNativeSignatureLimits/parameter_count (0.09s)
+    --- PASS: TestInheritanceNativeSignatureLimits/optional_added (0.09s)
+    --- PASS: TestInheritanceNativeSignatureLimits/void_to_number_result (0.10s)
+    --- PASS: TestInheritanceNativeSignatureLimits/number_to_optional_result (0.11s)
+    --- PASS: TestInheritanceNativeSignatureLimits/boolean_default_added (0.05s)
+    --- PASS: TestInheritanceNativeSignatureLimits/generic_default_added (0.05s)
+PASS

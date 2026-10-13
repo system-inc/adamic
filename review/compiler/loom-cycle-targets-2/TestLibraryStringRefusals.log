@@ -1,0 +1,41 @@
+=== RUN   TestLibraryStringRefusals
+=== PAUSE TestLibraryStringRefusals
+=== CONT  TestLibraryStringRefusals
+=== RUN   TestLibraryStringRefusals/detached
+=== PAUSE TestLibraryStringRefusals/detached
+=== RUN   TestLibraryStringRefusals/null_receiver
+=== PAUSE TestLibraryStringRefusals/null_receiver
+=== RUN   TestLibraryStringRefusals/undefined_receiver
+=== PAUSE TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestLibraryStringRefusals/String_internal_slot
+=== PAUSE TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestLibraryStringRefusals/object_conversion
+=== PAUSE TestLibraryStringRefusals/object_conversion
+=== RUN   TestLibraryStringRefusals/collation
+=== PAUSE TestLibraryStringRefusals/collation
+=== RUN   TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestLibraryStringRefusals/loose_inequality
+=== RUN   TestLibraryStringRefusals/first_class_constructor
+=== PAUSE TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestLibraryStringRefusals/raw_wider_view
+=== PAUSE TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/detached
+=== CONT  TestLibraryStringRefusals/String_internal_slot
+=== CONT  TestLibraryStringRefusals/object_conversion
+=== CONT  TestLibraryStringRefusals/collation
+=== CONT  TestLibraryStringRefusals/undefined_receiver
+=== CONT  TestLibraryStringRefusals/first_class_constructor
+=== CONT  TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/loose_inequality
+=== CONT  TestLibraryStringRefusals/null_receiver
+--- PASS: TestLibraryStringRefusals (0.00s)
+    --- PASS: TestLibraryStringRefusals/String_internal_slot (0.38s)
+    --- PASS: TestLibraryStringRefusals/object_conversion (0.38s)
+    --- PASS: TestLibraryStringRefusals/collation (0.38s)
+    --- PASS: TestLibraryStringRefusals/detached (0.41s)
+    --- PASS: TestLibraryStringRefusals/undefined_receiver (0.16s)
+    --- PASS: TestLibraryStringRefusals/first_class_constructor (0.22s)
+    --- PASS: TestLibraryStringRefusals/raw_wider_view (0.22s)
+    --- PASS: TestLibraryStringRefusals/loose_inequality (0.22s)
+    --- PASS: TestLibraryStringRefusals/null_receiver (0.14s)
+PASS

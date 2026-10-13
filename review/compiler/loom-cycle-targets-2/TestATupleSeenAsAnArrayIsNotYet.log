@@ -1,0 +1,61 @@
+=== RUN   TestATupleSeenAsAnArrayIsNotYet
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet
+=== CONT  TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_return
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_return
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_element
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_element
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_element
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_return
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+--- PASS: TestATupleSeenAsAnArrayIsNotYet (0.00s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array (0.21s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple (0.27s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field (0.28s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_map's_value (0.07s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_initializer (0.35s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined (0.16s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays (0.23s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_element (0.17s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body (0.18s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_return (0.18s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_field (0.19s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_argument (0.13s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_assignment (0.14s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_cast_literal (0.13s)
+PASS

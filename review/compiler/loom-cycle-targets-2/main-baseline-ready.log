@@ -1,0 +1,12 @@
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== CONT  TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath3264463344/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:38: independent ownership refusal: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd3197112000/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- PASS: TestNamespaceAmbientHostInitialization (1.22s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.60s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.233s

@@ -1,0 +1,85 @@
+=== RUN   TestOptionalWideningRefused
+=== PAUSE TestOptionalWideningRefused
+=== CONT  TestOptionalWideningRefused
+=== RUN   TestOptionalWideningRefused/argument
+=== PAUSE TestOptionalWideningRefused/argument
+=== RUN   TestOptionalWideningRefused/array_element
+=== PAUSE TestOptionalWideningRefused/array_element
+=== RUN   TestOptionalWideningRefused/arrow
+=== PAUSE TestOptionalWideningRefused/arrow
+=== RUN   TestOptionalWideningRefused/assignment
+=== PAUSE TestOptionalWideningRefused/assignment
+=== RUN   TestOptionalWideningRefused/cast
+=== PAUSE TestOptionalWideningRefused/cast
+=== RUN   TestOptionalWideningRefused/class_field
+=== PAUSE TestOptionalWideningRefused/class_field
+=== RUN   TestOptionalWideningRefused/field
+=== PAUSE TestOptionalWideningRefused/field
+=== RUN   TestOptionalWideningRefused/field_access_paths
+=== PAUSE TestOptionalWideningRefused/field_access_paths
+=== RUN   TestOptionalWideningRefused/generic
+=== PAUSE TestOptionalWideningRefused/generic
+=== RUN   TestOptionalWideningRefused/incompatible
+=== PAUSE TestOptionalWideningRefused/incompatible
+=== RUN   TestOptionalWideningRefused/initializer
+=== PAUSE TestOptionalWideningRefused/initializer
+=== RUN   TestOptionalWideningRefused/nested
+=== PAUSE TestOptionalWideningRefused/nested
+=== RUN   TestOptionalWideningRefused/parameter_default
+=== PAUSE TestOptionalWideningRefused/parameter_default
+=== RUN   TestOptionalWideningRefused/property_write
+=== PAUSE TestOptionalWideningRefused/property_write
+=== RUN   TestOptionalWideningRefused/readonly
+=== PAUSE TestOptionalWideningRefused/readonly
+=== RUN   TestOptionalWideningRefused/return
+=== PAUSE TestOptionalWideningRefused/return
+=== RUN   TestOptionalWideningRefused/shorthand
+=== PAUSE TestOptionalWideningRefused/shorthand
+=== RUN   TestOptionalWideningRefused/spread
+=== PAUSE TestOptionalWideningRefused/spread
+=== RUN   TestOptionalWideningRefused/spread_other_missing
+=== PAUSE TestOptionalWideningRefused/spread_other_missing
+=== RUN   TestOptionalWideningRefused/tuple_element
+=== PAUSE TestOptionalWideningRefused/tuple_element
+=== CONT  TestOptionalWideningRefused/argument
+=== CONT  TestOptionalWideningRefused/initializer
+=== CONT  TestOptionalWideningRefused/return
+=== CONT  TestOptionalWideningRefused/incompatible
+=== CONT  TestOptionalWideningRefused/tuple_element
+=== CONT  TestOptionalWideningRefused/spread_other_missing
+=== CONT  TestOptionalWideningRefused/spread
+=== CONT  TestOptionalWideningRefused/shorthand
+=== CONT  TestOptionalWideningRefused/generic
+=== CONT  TestOptionalWideningRefused/field_access_paths
+=== CONT  TestOptionalWideningRefused/class_field
+=== CONT  TestOptionalWideningRefused/field
+=== CONT  TestOptionalWideningRefused/property_write
+=== CONT  TestOptionalWideningRefused/readonly
+=== CONT  TestOptionalWideningRefused/assignment
+=== CONT  TestOptionalWideningRefused/cast
+=== CONT  TestOptionalWideningRefused/parameter_default
+=== CONT  TestOptionalWideningRefused/nested
+=== CONT  TestOptionalWideningRefused/arrow
+=== CONT  TestOptionalWideningRefused/array_element
+--- PASS: TestOptionalWideningRefused (0.00s)
+    --- PASS: TestOptionalWideningRefused/initializer (0.12s)
+    --- PASS: TestOptionalWideningRefused/argument (0.12s)
+    --- PASS: TestOptionalWideningRefused/incompatible (0.14s)
+    --- PASS: TestOptionalWideningRefused/return (0.16s)
+    --- PASS: TestOptionalWideningRefused/shorthand (0.09s)
+    --- PASS: TestOptionalWideningRefused/spread (0.10s)
+    --- PASS: TestOptionalWideningRefused/spread_other_missing (0.13s)
+    --- PASS: TestOptionalWideningRefused/tuple_element (0.15s)
+    --- PASS: TestOptionalWideningRefused/class_field (0.08s)
+    --- PASS: TestOptionalWideningRefused/field_access_paths (0.09s)
+    --- PASS: TestOptionalWideningRefused/generic (0.09s)
+    --- PASS: TestOptionalWideningRefused/field (0.07s)
+    --- PASS: TestOptionalWideningRefused/property_write (0.07s)
+    --- PASS: TestOptionalWideningRefused/cast (0.07s)
+    --- PASS: TestOptionalWideningRefused/readonly (0.08s)
+    --- PASS: TestOptionalWideningRefused/assignment (0.08s)
+    --- PASS: TestOptionalWideningRefused/arrow (0.07s)
+    --- PASS: TestOptionalWideningRefused/nested (0.07s)
+    --- PASS: TestOptionalWideningRefused/array_element (0.07s)
+    --- PASS: TestOptionalWideningRefused/parameter_default (0.09s)
+PASS

@@ -1,0 +1,29 @@
+=== RUN   TestInheritanceRefusesUnsoundOverrides
+=== PAUSE TestInheritanceRefusesUnsoundOverrides
+=== CONT  TestInheritanceRefusesUnsoundOverrides
+=== RUN   TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== CONT  TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+--- PASS: TestInheritanceRefusesUnsoundOverrides (0.00s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents (0.09s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle (0.09s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/parameter_bivariance (0.10s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_cycle (0.13s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents (0.06s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing (0.06s)
+PASS

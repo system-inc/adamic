@@ -1,0 +1,29 @@
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== CONT  TestNestedEmptyArrayElementKinds
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== CONT  TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+=== CONT  TestNestedEmptyArrayElementKinds/last
+--- PASS: TestNestedEmptyArrayElementKinds (0.00s)
+    --- PASS: TestNestedEmptyArrayElementKinds/first (0.08s)
+    --- PASS: TestNestedEmptyArrayElementKinds/strings (0.10s)
+    --- PASS: TestNestedEmptyArrayElementKinds/objects (0.11s)
+    --- PASS: TestNestedEmptyArrayElementKinds/union (0.13s)
+    --- PASS: TestNestedEmptyArrayElementKinds/typed (0.06s)
+    --- PASS: TestNestedEmptyArrayElementKinds/last (0.05s)
+PASS

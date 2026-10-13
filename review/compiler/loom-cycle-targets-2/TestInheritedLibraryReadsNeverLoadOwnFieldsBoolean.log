@@ -1,0 +1,101 @@
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=true
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=false
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=false
+=== RUN   TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=true
+=== PAUSE TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=false
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=true
+=== CONT  TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=false
+--- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean (0.04s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=false (0.09s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=true (0.10s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=false (0.10s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__proto__/bracket=true (0.14s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=true (0.08s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=true (0.09s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toString/bracket=false (0.07s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/valueOf/bracket=false (0.12s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=true (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/propertyIsEnumerable/bracket=false (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=false (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/isPrototypeOf/bracket=true (0.07s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=false (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupSetter__/bracket=true (0.07s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=false (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__lookupGetter__/bracket=false (0.06s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=true (0.06s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/hasOwnProperty/bracket=false (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineSetter__/bracket=true (0.05s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=false (0.06s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/__defineGetter__/bracket=true (0.08s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/constructor/bracket=true (0.13s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=true (0.16s)
+    --- PASS: TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean/toLocaleString/bracket=false (0.12s)
+PASS

@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode_user_iterators
+=== PAUSE TestNativeAgreesWithNode_user_iterators
+=== CONT  TestNativeAgreesWithNode_user_iterators
+=== RUN   TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/user_iterators.a
+=== CONT  TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/user_iterators.a
+--- PASS: TestNativeAgreesWithNode_user_iterators (0.00s)
+    --- PASS: TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/user_iterators.a (20.18s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	20.203s

@@ -1,0 +1,45 @@
+=== RUN   TestClassArgumentsUseCheckerIdentity
+=== PAUSE TestClassArgumentsUseCheckerIdentity
+=== CONT  TestClassArgumentsUseCheckerIdentity
+=== RUN   TestClassArgumentsUseCheckerIdentity/separate_literals
+=== PAUSE TestClassArgumentsUseCheckerIdentity/separate_literals
+=== RUN   TestClassArgumentsUseCheckerIdentity/property_order
+=== PAUSE TestClassArgumentsUseCheckerIdentity/property_order
+=== RUN   TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== PAUSE TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== RUN   TestClassArgumentsUseCheckerIdentity/tuples
+=== PAUSE TestClassArgumentsUseCheckerIdentity/tuples
+=== RUN   TestClassArgumentsUseCheckerIdentity/unions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/unions
+=== RUN   TestClassArgumentsUseCheckerIdentity/functions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/functions
+=== RUN   TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== PAUSE TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== RUN   TestClassArgumentsUseCheckerIdentity/different_fields
+=== PAUSE TestClassArgumentsUseCheckerIdentity/different_fields
+=== RUN   TestClassArgumentsUseCheckerIdentity/optional_field
+=== PAUSE TestClassArgumentsUseCheckerIdentity/optional_field
+=== RUN   TestClassArgumentsUseCheckerIdentity/same_representation
+=== PAUSE TestClassArgumentsUseCheckerIdentity/same_representation
+=== CONT  TestClassArgumentsUseCheckerIdentity/separate_literals
+=== CONT  TestClassArgumentsUseCheckerIdentity/functions
+=== CONT  TestClassArgumentsUseCheckerIdentity/tuples
+=== CONT  TestClassArgumentsUseCheckerIdentity/unions
+=== CONT  TestClassArgumentsUseCheckerIdentity/optional_field
+=== CONT  TestClassArgumentsUseCheckerIdentity/same_representation
+=== CONT  TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== CONT  TestClassArgumentsUseCheckerIdentity/property_order
+=== CONT  TestClassArgumentsUseCheckerIdentity/different_fields
+=== CONT  TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+--- PASS: TestClassArgumentsUseCheckerIdentity (0.00s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/tuples (0.24s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/functions (0.29s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/separate_literals (0.32s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/unions (0.32s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/optional_field (0.22s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/nested_arrays (0.27s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/same_representation (0.31s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/property_order (0.30s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/different_fields (0.24s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/recursive_interfaces (0.19s)
+PASS
