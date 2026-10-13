@@ -123,7 +123,7 @@ func runtimeProducts(t *testing.T, name string, group int) {
 	if option.requires != "" && os.Getenv(option.requires) != "1" {
 		t.Skipf("set %s=1", option.requires)
 	}
-	for _, set := range runtimeProductSets(group) {
+	for _, set := range runtimeProductSets(group, runtimeProductGroupCount(name)) {
 		request, err := native.RuntimeRequestFor(option.options, set.features...)
 		if err != nil {
 			t.Fatal(err)
@@ -132,14 +132,25 @@ func runtimeProducts(t *testing.T, name string, group int) {
 	}
 }
 
-// runtimeProductGroups is how many product tests each option's archives are cut into.
+// runtimeProductGroups is the number of NativeRuntimes products per option.
 const runtimeProductGroups = 6
 
+// Other oracle families have their own products. Keep their existing three-shard
+// contract instead of changing their partition when NativeRuntimes gains shards.
+func runtimeProductGroupCount(name string) int {
+	switch name {
+	case "sanitized", "release", "counted", "wasm":
+		return runtimeProductGroups
+	default:
+		return 3
+	}
+}
+
 // Partition whole archives, preserving every translation unit in each build recipe.
-func runtimeProductSets(group int) []runtimeSet {
+func runtimeProductSets(group, groups int) []runtimeSet {
 	var sets []runtimeSet
 	for index, set := range runtimeSets {
-		if index%runtimeProductGroups != group {
+		if index%groups != group {
 			continue
 		}
 		sets = append(sets, set)

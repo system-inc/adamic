@@ -74,13 +74,15 @@ A test calls the same recipe function (`tsgoChecker(t)` above). After the build 
 
 ## Native runtime shards
 
-`internal/oracle/runtimes_test.go` declares six shards per runtime option, with suffixes
+`internal/oracle/runtimes_test.go` declares six NativeRuntimes shards per option, with suffixes
 0 through 5. Each shard builds every sixth feature-set archive, starting at its suffix,
 so the eleven feature sets give each product at most two complete archives. Each archive
 still compiles all its translation units, four at a time. Splitting archives between
 products changes neither their inputs nor the keys consumers use to fetch them.
 
 `TestRuntimeProductShardsCoverEveryArchive` reads the actual product declarations and
-checks that each option has one product for every shard, each shard holds at most two
-archives, and their union holds every feature set exactly once. Adding feature sets must
+checks that each option has one product for every shard and their union holds every
+feature set exactly once. NativeRuntimes shards hold at most two archives. The independent
+ParallelTSanRuntime family keeps its three-product partition, with at most four archives
+per product; extending NativeRuntimes never changes another family's partition. Adding feature sets must
 keep this bound by extending the shards, rather than dropping files or raising a budget.
