@@ -18,6 +18,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -185,6 +186,16 @@ func formatfilesBinary(t *testing.T, program *ir.Program, mutant *mutant) string
 func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mutant, sanitize bool) string {
 	t.Helper()
 	source := native.C(program)
+	directory := buildcache.Product(t, formatfilesNativeInputs(source, mutant, sanitize), func(directory string) error {
+		return formatfilesBuildNative(t, source, filepath.Join(directory, "port"), sanitize)
+	})
+	return filepath.Join(directory, "port")
+}
+
+// formatfilesNativeInputs keys the native port built from source: the compiler that lowered and builds it
+// (compilerinputs.Lowering), the port's and its gitignore slice's .ts files, and the init in
+// formatfiles_prepare_test.go that runs native.Build for it.
+func formatfilesNativeInputs(source string, mutant *mutant, sanitize bool) buildcache.Inputs {
 	name := "formatfiles-native"
 	if !sanitize {
 		name += "-unsanitized"
@@ -195,13 +206,33 @@ func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mut
 		flags = append(flags, mutant.file, mutant.from, mutant.to)
 	}
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), fmt.Sprintf("C-sha256=%x", sha256.Sum256([]byte(source))))
-	inputs := buildcache.Inputs{Name: name,
-		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
+	return buildcache.Inputs{Name: name,
+		Files: append(compilerinputs.Lowering(), "stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "stage1/cohere/formatfiles/formatfiles_prepare_test.go"),
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
-		return formatfilesBuildNative(t, source, filepath.Join(directory, "port"), sanitize)
-	})
-	return filepath.Join(directory, "port")
+}
+
+// An edit to a package the compiler links must move every native product's key, and an edit to tsc's baselines, which
+// nothing links, must keep it.
+func TestFormatfilesCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
+	t.Parallel()
+	products := []buildcache.Inputs{formatfilesNativeInputs("", nil, true), formatfilesNativeInputs("", nil, false)}
+	for index := range mutants {
+		products = append(products, formatfilesNativeInputs("", &mutants[index], true))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		linked, baselines := false, false
+		for _, entry := range product.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", product.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", product.Name)
+		}
+	}
 }
 
 func TestFormatfilesShardPlantedDisagreement(t *testing.T) {
@@ -489,7 +520,9 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 	}
 }
 
-// Both build-phase units and shard preparation use this exact oracle recipe.
+// formatfilesOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's
+// formatfiles package, a product (buildcache.GoTest) both build-phase units and shard preparation share, and the
+// directory go test would run it in.
 func formatfilesOracle(t *testing.T) (string, string) {
 	t.Helper()
 	directory := t.TempDir()
@@ -511,21 +544,8 @@ func formatfilesOracle(t *testing.T) (string, string) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-
-	inputs := buildcache.Inputs{Name: "formatfiles-go-oracle",
-		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go"},
-		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
-	product := buildcache.Product(t, inputs, func(directory string) error {
-		command := formatfilesCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), "./internal/format/formatfiles")
-		command.Dir = cohere
-		output, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("build Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(product, "oracle"), packageDirectory
+	binary := buildcache.GoTest(t, "cohere", "formatfiles.test", "./internal/format/formatfiles", []string{"-overlay=" + overlayPath})
+	return binary, packageDirectory
 }
 
 // Setup children carry no deadline; the gate bounds the whole unit.
