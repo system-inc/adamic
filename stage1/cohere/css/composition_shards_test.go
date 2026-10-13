@@ -492,7 +492,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
+		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)...)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -506,7 +506,7 @@ func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath stri
 	return buildcache.Inputs{
 		Name:      name,
 		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
 		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
 }

@@ -256,7 +256,7 @@ func cssParserGoProductInputs(name string, compilers cssCompilers) buildcache.In
 	return buildcache.Inputs{
 		Name:      "css " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/css/testdata", "stage1/cohere/css/parser_shards_test.go"},
-		Flags:     []string{"go test -c", "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
 		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
 }
@@ -319,7 +319,7 @@ func cssParserOracle(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := cssParserGoCommand(t, cohere, "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
+		command := cssParserGoCommand(t, cohere, append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")...)
 		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}

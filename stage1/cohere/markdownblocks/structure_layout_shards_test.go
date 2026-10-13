@@ -254,7 +254,7 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 		}
 		goDir := buildcache.Product(t, buildcache.Inputs{
 			Name: "markdown-structure-go-" + item.command, Files: goFiles,
-			Flags:     []string{"overlay=" + string(overlay), "main=" + main, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
+			Flags:     []string{"overlay=" + string(overlay), "main=" + main, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
 			Toolchain: []string{buildcache.Tool("go", "version")},
 		}, func(dir string) error {
 			overlayPath := filepath.Join(dir, "overlay.json")
@@ -263,7 +263,7 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			command, cancel := structureLayoutCommand("go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)
+			command, cancel := structureLayoutCommand("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)...)
 			defer cancel()
 			command.Dir = cohere
 			if output, err := combinedOutput(command); err != nil {
