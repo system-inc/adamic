@@ -124,7 +124,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
@@ -137,14 +137,16 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	}
 
 	if usesNodeModules(program) {
-		index, err := nodeTypesIndex(workingDirectory)
+		index, err := nodeTypesIndex()
 		if err != nil {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, currentDirectory.ResolveFile(index))
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+		roots = append(roots, index)
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+		options := compilerOptions()
+		options.TypeRoots = []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}
+		config = tsoptions.NewParsedCommandLine(options, roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
 		if program == nil {
