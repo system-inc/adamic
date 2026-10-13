@@ -89,7 +89,7 @@ func scalarEdgeOracle(t *testing.T) string {
 	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
 	product := buildcache.Product(t, buildcache.Inputs{
 		Name: "scalar-edges-go-oracle", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go"},
-		Flags: []string{"go build overlay oracle"}, Toolchain: []string{buildcache.Tool("go", "version")},
+		Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ") + " overlay oracle"}, Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
 		if err != nil {
@@ -101,7 +101,7 @@ func scalarEdgeOracle(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)...)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)

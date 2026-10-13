@@ -85,7 +85,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlay)
-			args := append(append([]string{"build"}, grainGoBuildFlags...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
+			args := append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
 			cmd := textGoCommand(t, filepath.Join(root, "cohere"), args...)
 			if output, err := textCombinedOutput(cmd); err != nil {
 				return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -134,14 +134,11 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	return p
 }
 
-// grainGoBuildFlags are the reproducible flags every grain Go oracle builds with, each named in its key.
-var grainGoBuildFlags = []string{"-trimpath", "-buildvcs=false", "-ldflags=-buildid="}
-
 // grainGoInputs keys name's Go oracle. The build runs go under toolchain.Env (textGoCommand), so the key names the C
 // and C++ compilers that environment gives go, and the C compiler by its report: the caller's CC and CXX are empty on a
 // box where go runs clang. The other variables pass to go as the caller set them.
 func grainGoInputs(name string, compilers markdownCompilers) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: []string{buildcache.Tool("go", "version"), compilers.report}, Flags: append([]string(nil), grainGoBuildFlags...)}
+	inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: []string{buildcache.Tool("go", "version"), compilers.report}, Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}}
 	for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
 		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
 	}
