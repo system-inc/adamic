@@ -12,7 +12,7 @@ func TestRulesFileReads(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("blocks on %v, budget %d; restack on %v", *rules.Blocks.On, *rules.Blocks.Budget, *rules.Restack.On)
+	t.Logf("blocks on %v, budget %d; restack on %v; first %v", *rules.Blocks.On, *rules.Blocks.Budget, *rules.Restack.On, rules.First)
 }
 
 // Each mistake a hand could make in rules.json is refused, naming what's wrong.
@@ -37,6 +37,9 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"restack on missing", `{"blocks": {"on": true, "budget": 2}, "restack": {}}`, "restack needs on"},
 		{"something after", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}} {}`, "something after the rules object"},
 		{"not an object", `[]`, "cannot unmarshal array"},
+		{"first not a change id", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_short"]}`, `not "chg_short"`},
+		{"first twice", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_2tps70xcxmasvvbzer45mfhtd4", "chg_2tps70xcxmasvvbzer45mfhtd4"]}`, "each once"},
+		{"first not a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": "chg_2tps70xcxmasvvbzer45mfhtd4"}`, "cannot unmarshal string"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
