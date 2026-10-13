@@ -24,7 +24,7 @@ exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
 
 | Program                                                   | Node stdout | Exact refusal                                          | Workaround                                     |
 | --------------------------------------------------------- | ----------- | ------------------------------------------------------ | ---------------------------------------------- |
-| [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | `push with other than one value`                       | One push per value.                            |
+| [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | Closed by spread-shorthand; held to Node in both backends | Multiple values per push restored.                            |
 | [2_mixed_field.ts](gaps/2_mixed_field.ts)                 | `true`      | `a field of type string \| boolean \| undefined`       | Namespace string and separate true bit.        |
 | [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | `a field of type boolean \| undefined`                 | Quoted value and presence bit.                 |
 | [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback` | Explicit map-key collection loop.              |
