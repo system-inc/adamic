@@ -118,6 +118,11 @@ func Features(source string) []string {
 	return features
 }
 
+// SourceFlags returns compiler flags matching the runtime features in emitted C.
+func SourceFlags(source string, options Options) []string {
+	return sourceFlags(source, options)
+}
+
 // sourceFlags compiles anything built for one program's emitted C: its runtime library, a split
 // unit, the checker-archive build. It is the one home for those flags, so a new build path that
 // starts from Flags(options) alone meets adamic.h's layouts without the program's features.
