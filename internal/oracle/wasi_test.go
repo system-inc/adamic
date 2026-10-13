@@ -38,8 +38,8 @@ func wasiFixtureDifference(name string, expected, actual run) error {
 	return nil
 }
 
-// Setup belongs inside the selected shard, including the Node helper's native
-// runtime identity. No result-cache bypass or runtime-cache policy changes here.
+// Setup belongs inside the selected shard. Node identity does not build native
+// archives; each WASI program fetches its own feature/options runtime product.
 func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program)) {
 	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
@@ -50,7 +50,7 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 		t.Fatal(err)
 	}
 	identity(t)
-	t.Logf("WASI shard setup (Node identity, three native runtime archives): %.3fs", time.Since(started).Seconds())
+	t.Logf("WASI shard setup (Node identity): %.3fs", time.Since(started).Seconds())
 	for _, fixtureIndex := range rows {
 		fixture := fixtures[fixtureIndex]
 		t.Run(fixture.path, func(t *testing.T) {

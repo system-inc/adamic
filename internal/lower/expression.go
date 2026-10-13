@@ -1083,6 +1083,9 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if value, handled, err := l.functionApply(node); handled {
+		return value, err
+	}
 	if direct := l.nestedSibling(callee); direct >= 0 {
 		arguments := []ir.Expression{}
 		for _, argument := range call.Arguments.Nodes {
