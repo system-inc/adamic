@@ -79,30 +79,43 @@ func (o Observation) Has(signature Signature) bool {
 // Observe runs a program in directory as the kind of signature needs: the compiler alone for a
 // refusal or a crash, all three ways for a panic or a mismatch. kind "" runs it all three ways.
 func (c *Checkout) Observe(source string, name string, directory string, kind string) Observation {
+	var observation Observation
+	outcome := confirm(func() Outcome {
+		var result Outcome
+		observation, result = c.observe(source, name, directory, kind)
+		return result
+	})
+	observation.Verdict = outcome.Verdict
+	return observation
+}
+
+func (c *Checkout) observe(source string, name string, directory string, kind string) (Observation, Outcome) {
 	if err := os.MkdirAll(directory, 0o755); err != nil {
-		return Observation{Verdict: Finding, Lines: map[string]string{}}
+		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
 	path := filepath.Join(directory, name)
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		return Observation{Verdict: Finding, Lines: map[string]string{}}
+		return Observation{Verdict: Finding, Lines: map[string]string{}}, Outcome{Verdict: Finding}
 	}
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	observation := Observation{Lines: map[string]string{}, Checker: checkerCodes(string(lowered.Stderr))}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
-		observation.Verdict = compilerRefusal(lowered).Verdict
+		outcome := compilerRefusal(lowered)
+		outcome.retry = outcome.Verdict == Finding
+		observation.Verdict = outcome.Verdict
 		observation.Lines["crash"] = crashLine(string(lowered.Stderr))
 		observation.Lines["refusal"] = refusalLine(string(lowered.Stderr))
-		return observation
+		return observation, outcome
 	}
 	if kind == "refusal" || kind == "crash" {
 		observation.Verdict = Agreed
-		return observation
+		return observation, Outcome{Verdict: Agreed}
 	}
-	outcome := c.TryFile(path, directory)
+	outcome := c.tryFile(path, directory)
 	observation.Verdict = outcome.Verdict
 	observation.Lines["panic"] = panicLine(outcome)
 	observation.Lines["mismatch"] = mismatchLine(outcome)
-	return observation
+	return observation, outcome
 }
 
 var checkerCode = regexp.MustCompile(`error (TS[0-9]+)`)

@@ -21,8 +21,8 @@ func (undecidedCycleRule) RunRule(*compiler.Program, *checker.Checker, []*ast.So
 	return nil, nil
 }
 
+// Not parallel: replace the process-wide rule seam, restoring it before parallel tests run.
 func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
-	// Not parallel: replace the process-wide rule seam, restoring it before parallel tests run.
 	previous := loadTimeReadRunner
 	loadTimeReadRunner = undecidedCycleRule{}
 	defer func() { loadTimeReadRunner = previous }()
