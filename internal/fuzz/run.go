@@ -19,21 +19,16 @@ import (
 )
 
 // Checkout is a compiler under test: a checkout of the repository, with its own adamic command built
-// and its own runtime compiled once under the sanitizers. The fuzzer drives a checkout through its
-// command line rather than in process, so the same fuzzer can run against any commit, an old one
+// and its own runtime compiled per feature set under the sanitizers. The fuzzer drives a checkout
+// through its command line rather than in process, so it can run against any commit, an old one
 // included, to prove it finds a bug that commit had.
 type Checkout struct {
 	Root      string
 	directory string
 	adamic    string
-	runtime   string
 }
 
-// flags are native.Build's for a sanitized build, what the oracle compiles with. They're this tree's,
-// even for a checkout of another commit: the C and the runtime are the checkout's, the flags aren't.
-var flags = native.Flags(native.Options{Sanitize: true})
-
-// Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
+// Prepare builds a checkout's adamic command into directory and prepares it for per-program runtime builds.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
 	if err := os.MkdirAll(directory, 0o755); err != nil {
@@ -60,10 +55,6 @@ func PrepareBuilt(root string, adamic string, directory string) (*Checkout, erro
 		return nil, err
 	}
 	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
-	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
-	if err != nil {
-		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
-	}
 	return checkout, nil
 }
 
@@ -138,8 +129,13 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	binary := filepath.Join(directory, "program")
-	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
+	options := native.Options{Sanitize: true}
+	library, err := native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(lowered.Stdout), options)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	}
+	arguments := append(native.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
