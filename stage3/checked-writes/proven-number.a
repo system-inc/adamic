@@ -1,0 +1,8 @@
+enum NodeFlags { Synthesized = 16, Other = 0 }
+interface Node { flags: NodeFlags.Synthesized; }
+const node: Node = {flags: NodeFlags.Synthesized};
+function update(view: {flags: NodeFlags.Synthesized}): void {
+    view.flags = NodeFlags.Synthesized;
+}
+update(node);
+console.log(`${node.flags}`);

@@ -1,0 +1,37 @@
+=== RUN   TestFixturesNamespaces
+=== PAUSE TestFixturesNamespaces
+=== RUN   TestFixturesObjects
+=== PAUSE TestFixturesObjects
+=== CONT  TestFixturesNamespaces
+=== CONT  TestFixturesObjects
+    fixtures_test.go:185: build stage3-fixture-oracle-hook 04cfd7ddbf78 hit 0.20
+=== RUN   TestFixturesObjects/objects
+=== PAUSE TestFixturesObjects/objects
+=== CONT  TestFixturesObjects/objects
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a
+=== PAUSE TestFixturesObjects/objects/19_identifier_multimap.a
+=== CONT  TestFixturesObjects/objects/19_identifier_multimap.a
+=== NAME  TestFixturesNamespaces
+    fixtures_test.go:177: build stage3-fixture-oracle-hook 04cfd7ddbf78 hit 0.24
+=== RUN   TestFixturesNamespaces/namespaces
+=== PAUSE TestFixturesNamespaces/namespaces
+=== CONT  TestFixturesNamespaces/namespaces
+=== RUN   TestFixturesNamespaces/namespaces/06_binary_expression_state.a
+=== PAUSE TestFixturesNamespaces/namespaces/06_binary_expression_state.a
+=== CONT  TestFixturesNamespaces/namespaces/06_binary_expression_state.a
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a/node
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a/stage0
+--- PASS: TestFixturesObjects (6.03s)
+    --- PASS: TestFixturesObjects/objects (0.00s)
+        --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a (0.24s)
+            --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a/stage0 (0.00s)
+=== RUN   TestFixturesNamespaces/namespaces/06_binary_expression_state.a/node
+=== RUN   TestFixturesNamespaces/namespaces/06_binary_expression_state.a/stage0
+--- PASS: TestFixturesNamespaces (6.18s)
+    --- PASS: TestFixturesNamespaces/namespaces (0.00s)
+        --- PASS: TestFixturesNamespaces/namespaces/06_binary_expression_state.a (0.26s)
+            --- PASS: TestFixturesNamespaces/namespaces/06_binary_expression_state.a/node (0.00s)
+            --- PASS: TestFixturesNamespaces/namespaces/06_binary_expression_state.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	6.516s

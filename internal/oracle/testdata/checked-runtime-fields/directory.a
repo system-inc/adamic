@@ -1,0 +1,10 @@
+// a-check: refused a value of type Result[] seen as
+import { readDirectory } from 'adamic';
+interface Result { readonly names: readonly string[] }
+const result = readDirectory('testdata/checked-runtime-fields/dir');
+if (result.kind === 'Ok') {
+    const results: Result[] = [];
+const wider: { names: readonly string[] }[] = results;
+    results.push(result);
+    for (const item of results) console.log(item.names.join(','));
+}

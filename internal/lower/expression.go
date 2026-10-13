@@ -251,6 +251,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
+		if err == nil {
+			value = l.containerAllocation(node, value)
+		}
 		return value, err
 	}
 	read := l.checker.GetTypeAtLocation(node)
@@ -1228,7 +1231,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
+				if !l.checkedOverloadValue(node, declaration) {
+					return nil, l.notYet(node, "an overloaded function as a value")
+				}
 			}
 		}
 	}
@@ -1327,8 +1332,8 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		parameters := signatures[0].Parameters()
+	if resolved := l.checker.GetResolvedSignature(node); resolved != nil {
+		parameters := resolved.Parameters()
 		position := 0
 		expanded := false
 		for index := range arguments {
@@ -1370,7 +1375,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
+	return l.censusOverloadResult(node.AsCallExpression(), ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
 }
 
 // Optional booleans have a three-state byte in the function-call ABI.

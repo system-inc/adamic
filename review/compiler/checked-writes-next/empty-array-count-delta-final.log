@@ -1,0 +1,35 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:754: gate cache node miss
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:597: gate cache native miss
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a (0.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a (0.39s)
+PASS
+gate cache: native hits=2 misses=4
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.429s

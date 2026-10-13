@@ -1,0 +1,8 @@
+=== RUN   TestObjectMetadataCheckedWritesIsPerEmission
+=== PAUSE TestObjectMetadataCheckedWritesIsPerEmission
+=== CONT  TestObjectMetadataCheckedWritesIsPerEmission
+    object_metadata_test.go:46: checked write lost its slot representation metadata
+--- FAIL: TestObjectMetadataCheckedWritesIsPerEmission (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.010s
+FAIL

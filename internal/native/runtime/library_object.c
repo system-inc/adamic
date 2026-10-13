@@ -115,8 +115,8 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
  static const char *const names[] = {"0", "1"};
  static const bool number_references[] = {true, false};
  static const bool string_references[] = {true, true};
- static const adamic_shape number_pair = {2, names, number_references, NULL};
- static const adamic_shape string_pair = {2, names, string_references, NULL};
+ static const adamic_shape number_pair = {2, names, number_references, NULL, NULL};
+ static const adamic_shape string_pair = {2, names, string_references, NULL, NULL};
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
@@ -162,8 +162,8 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
  static const char *const checked_names[] = {"0", "1"};
  static const bool scalar_references[] = {true, false};
  static const bool string_references[] = {true, true};
- static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
- static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
+ static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL, NULL};
+ static const adamic_shape string_pair = {2, checked_names, string_references, NULL, NULL};
  for (size_t at = 0; at < keys->length; at++) {
   adamic_string *key = (adamic_string *)keys->elements[at].reference;
   char *name = malloc(key->length + 1);
