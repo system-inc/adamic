@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'latent'))
+from unit_status import attempted
 """Record exact predicate diagnostic families and before/after eligibility."""
 import json,collections,gzip,pathlib
 root=pathlib.Path(__file__).resolve().parent.parent;report=json.loads((root/'REPORT.json').read_text());import subprocess
@@ -27,7 +31,7 @@ before,after=[next(r for r in report['runs'] if r['name']==n) for n in ['cumulat
 raw={}
 for name in ['cumulative','predicates']:
  with gzip.open(root/'data'/(name+'.jsonl.gz'),'rt') as f:raw[name]=[json.loads(l) for l in f]
-eligible=lambda records:{u['where'] for r in records[1:] for u in r['units'] if u['status']!='skipped_checker_body'}
+eligible=lambda records:{u['where'] for r in records[1:] for u in r['units'] if attempted(u)}
 be,ae=eligible(raw['cumulative']),eligible(raw['predicates']);common=be&ae
 common_counts={}
 for name in ['cumulative','predicates']:

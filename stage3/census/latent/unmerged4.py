@@ -39,6 +39,10 @@ def render(result):
  for r in result['runs']:
   lines += ['# '+r['name']+' full per-file counts','', '| File | Checker | NotYet | Refused |','| --- | ---: | ---: | ---: |']+[f"| {f} | {v['checker']} | {v['NotYet']} | {v['Refused']} |" for f,v in sorted(r['per_file'].items())]
   lines += ['', '# '+r['name']+' all exact reasons','', '| Kind and reason | Count |','| --- | ---: |']+[f"| {esc(k)} | {v} |" for k,v in sorted(r['per_reason'].items(),key=lambda kv:(-kv[1],kv[0]))]+['']
+ for run in result['runs']:
+  if 'never_reached' in run:
+   lines += ['', f"Deferred generic units: {run['deferred_generic_instantiation']}; concrete instantiations reached: {run['instantiated_generics']}. Deferred body bytes: {run['deferred_body_bytes']}, neither examined nor blocked.", 'Never reached (unexamined coverage gaps):']
+   lines += [f"- {unit['where']} {unit['name']}" for unit in run['never_reached']]
  (ROOT/'REPORT.md').write_text('\n'.join(lines))
 if __name__=='__main__':
  result=build(pathlib.Path(sys.argv[1])) if len(sys.argv)>1 else json.loads((ROOT/'REPORT.json').read_text());render(result)

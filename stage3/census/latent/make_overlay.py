@@ -82,7 +82,20 @@ functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.l
 # Generic dependency instantiations must also obey body skip policy.
 needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
 functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled() && len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+# Record actual body entry within a fully mapped concrete generic call. The
+# ledger is run-owned, so per-statement state rollback cannot erase a witness.
+functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true }')
 overlay('internal/lower/functions.go', functions)
+generic = (repository / 'internal/lower/generic.go').read_text()
+needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
+assert generic.count(needle) == 1, 'generic body entry hook'
+generic = generic.replace(needle, '''concreteWitness := len(concreteTypes) == len(declaration.TypeParameters())
+for _, concrete := range concreteTypes { if concrete.Flags() & checker.TypeFlagsTypeParameter != 0 { concreteWitness = false } }
+outerConcreteDepth := latentConcreteCallDepth
+if concreteWitness { latentConcreteCallDepth++ } else { latentConcreteCallDepth = 0 }
+defer func() { latentConcreteCallDepth = outerConcreteDepth }()
+''' + needle)
+overlay('internal/lower/generic.go', generic)
 locals_source = (repository / 'internal/lower/locals.go').read_text()
 needle = 'local, isLocal := l.locals[symbol]'
 assert locals_source.count(needle) == 1

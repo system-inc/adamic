@@ -241,4 +241,9 @@ readiness, specialization completeness and backend passes are not validated. Nat
 runtime equivalence, adaptation oracle suites and the full Adamic gate were not rerun.
 The ratio is zero own-file checker diagnostics out of 78, not native tsc readiness.
 '''
+for run in json.loads((ROOT/'REPORT.json').read_text())['runs']:
+    coverage = run.get('units', run)
+    if 'never_reached' in coverage:
+        text += f"\nDeferred generic units: {coverage['deferred_generic_instantiation']}; reached: {coverage['instantiated_generics']}. Deferred body bytes: {coverage['deferred_body_bytes']}, neither examined nor blocked.\nNever reached (unexamined coverage gaps):\n"
+        text += ''.join(f"- {unit['where']} {unit['name']}\n" for unit in coverage['never_reached'])
 (ROOT/'REPORT.md').write_text(text)
