@@ -268,7 +268,7 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 		goInputs := buildcache.Inputs{
 			Name:      "markdown-quote-layout-go-" + mode.name,
 			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
-			Flags:     []string{"go build", "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
+			Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
 			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
 		}
 		dir := buildcache.Product(t, goInputs, func(dir string) error {
@@ -278,7 +278,7 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			command := quoteLayoutSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
+			command := quoteLayoutSetupCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)...)
 			command.Dir = cohere
 			if output, err := combinedOutput(command); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)

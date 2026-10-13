@@ -137,6 +137,7 @@ func syntaxMutantOracleProduct(t *testing.T) string {
 	t.Helper()
 	inputs := syntaxMutantSetupInputs(t)
 	inputs.Name = "syntax-mutants-go-oracle-v1"
+	inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "))
 	return buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(goOracle(t))
 		if err != nil {
