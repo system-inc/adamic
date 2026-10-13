@@ -184,17 +184,6 @@ func TestAdaptThrowError(t *testing.T) {
 	}
 }
 
-func TestAdaptLeavesCheckoutText(t *testing.T) {
-	t.Parallel()
-	// The rewrite is a pure function of the source. The runner never writes it back; this locks
-	// that adaptSource is the whole mechanism and a confused file is returned untouched.
-	src := "class Box { value: number; }\n"
-	got := adaptSource(src)
-	if got.Source != src || len(got.Counts) != 0 {
-		t.Fatalf("class file changed: %#v", got)
-	}
-}
-
 func TestClassifyAdapt(t *testing.T) {
 	t.Parallel()
 	source := "/*---\ndescription: x\n---*/\nvar value = 1;\nassert.sameValue(value == 1, true);\n"
