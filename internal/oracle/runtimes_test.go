@@ -47,7 +47,8 @@ var runtimeSets = []runtimeSet{
 }
 
 // A runtimeOption is one way the oracle builds a program: sanitized for the comparison and the leak check, release as
-// a user's build, counted for the counts table and macOS's leak check, and wasm for the WASI families, which run
+// a user's build, counted for the counts table and macOS's leak check, wasm for the WASI families, and wasm-request
+// for the request reactor's shim (TestWASIShimRequest), counted so it can check memory stays flat; the wasm options run
 // only where requires is set.
 type runtimeOption struct {
 	name     string
@@ -60,6 +61,7 @@ var runtimeOptions = []runtimeOption{
 	{"release", native.Options{}, ""},
 	{"counted", native.Options{Count: true}, ""},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, "ADAMIC_ORACLE_WASI"},
+	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, "ADAMIC_ORACLE_WASI"},
 }
 
 func init() {
@@ -161,6 +163,18 @@ func TestProduct_NativeRuntimesCounted2(t *testing.T) { t.Parallel(); runtimePro
 func TestProduct_NativeRuntimesWASI0(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 0) }
 func TestProduct_NativeRuntimesWASI1(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 1) }
 func TestProduct_NativeRuntimesWASI2(t *testing.T)    { t.Parallel(); runtimeProducts(t, "wasm", 2) }
+func TestProduct_NativeRuntimesWASIRequest0(t *testing.T) {
+	t.Parallel()
+	runtimeProducts(t, "wasm-request", 0)
+}
+func TestProduct_NativeRuntimesWASIRequest1(t *testing.T) {
+	t.Parallel()
+	runtimeProducts(t, "wasm-request", 1)
+}
+func TestProduct_NativeRuntimesWASIRequest2(t *testing.T) {
+	t.Parallel()
+	runtimeProducts(t, "wasm-request", 2)
+}
 
 // Each set in the table is one some program needs: its witness turns on exactly its features, so a set no program
 // needs any more fails here rather than staying to be built ahead for nothing. A program needing a set the table lacks
