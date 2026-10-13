@@ -71,3 +71,23 @@ func TestAsyncTypeOfCompoundFunctionValueIsNotYet(t *testing.T) {
 		}
 	}
 }
+
+// Empty bodies isolate the async-generator ruling from yield and await refusals.
+func TestAsyncGeneratorsRemainRefused(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"declaration", "async function* values() {}"},
+		{"expression", "const values = async function* () {};"},
+		{"class method", "class Values { async *values() {} }"},
+		{"object method", "const values = { async *values() {} };"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != "an async generator function" || refused.Where == "" {
+				t.Fatalf("want located async-generator refusal, got %v", err)
+			}
+		})
+	}
+}

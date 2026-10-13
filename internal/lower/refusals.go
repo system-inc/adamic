@@ -140,6 +140,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		// Async generators have a separate ruling from synchronous generators.
+		// Keep this refusal when synchronous generator lowering removes its check below.
+		if asyncGenerator(node) {
+			found = &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use synchronous iteration; async generators need a separate ownership and cancellation ruling"}
+			return true
+		}
 		generator := false
 		switch node.Kind {
 		case ast.KindFunctionDeclaration:
@@ -251,4 +257,20 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// asyncGenerator recognizes each function form independently of the synchronous generator gate.
+func asyncGenerator(node *ast.Node) bool {
+	if !ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+		return false
+	}
+	switch node.Kind {
+	case ast.KindFunctionDeclaration:
+		return node.AsFunctionDeclaration().AsteriskToken != nil
+	case ast.KindFunctionExpression:
+		return node.AsFunctionExpression().AsteriskToken != nil
+	case ast.KindMethodDeclaration:
+		return node.AsMethodDeclaration().AsteriskToken != nil
+	}
+	return false
 }
