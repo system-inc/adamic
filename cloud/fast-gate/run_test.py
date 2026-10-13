@@ -2742,3 +2742,49 @@ class PhaseInputs(unittest.TestCase):
             PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
         self.assertEqual(len(result.failures), 1, result.errors)
         self.assertEqual(result.errors, [])
+
+    def test_determinism_inputs_cover_every_program_and_its_imports(self):
+        # Independently of the provider: the smoke list's programs, read as determinism picks them, and what
+        # modules/main.a imports, read from its source.
+        inputs = run.phaseInputs(self.tree, "determinism")["inputs"]
+        self.assertNotIn(".", inputs["paths"])
+        self.assertEqual(inputs["packages"], [run.module + "/cmd/adamic"])
+        smoke, _ = run.Gate.smokeList(types.SimpleNamespace(arguments=types.SimpleNamespace(tree=self.tree, tools=self.tree)))
+        programs = [path for _, path in smoke if path.endswith((".a", ".ts")) and os.path.isfile(os.path.join(self.tree, path))]
+        self.assertTrue(programs)
+        with open(os.path.join(self.tree, "internal/oracle/testdata/modules/main.a")) as handle:
+            imported = re.findall(r"from '\./([^']+)'", handle.read())
+        self.assertTrue(imported)
+        for path in programs + ["cloud/fast-gate/smoke.txt"] + ["internal/oracle/testdata/modules/" + name for name in imported]:
+            self.assertTrue(self.covered(inputs, path), (path, inputs))
+        # A module added beside an import, or a node_modules or package.json a bare import would find first.
+        for path in ("internal/oracle/testdata/modules/added.a", "internal/oracle/testdata/node_modules/adamic/index.d.ts",
+                     "node_modules/adamic/package.json", "internal/package.json"):
+            self.assertTrue(self.covered(inputs, path), (path, inputs))
+        # A fixture no smoke program reads moves nothing.
+        self.assertFalse(self.covered(inputs, "internal/oracle/testdata/unread_by_smoke.a"))
+
+    def test_determinism_import_directory_mutant_is_caught(self):
+        original = run.phaseInputProviders["determinism"]
+        def mutant(tree, unit, full):
+            inputs = original(tree, unit, full)
+            inputs["paths"] = [path for path in inputs["paths"] if path != "internal/oracle/testdata/modules"]
+            return inputs
+        with mock.patch.dict(run.phaseInputProviders, determinism=mutant):
+            result = unittest.TestResult()
+            PhaseInputs("test_determinism_inputs_cover_every_program_and_its_imports").run(result)
+        self.assertEqual(len(result.failures), 1, result.errors)
+        self.assertEqual(result.errors, [])
+
+    def test_determinism_inputs_are_the_whole_tree_for_an_import_they_cant_bound(self):
+        for source, why in (("import { x } from 'lodash';\n", "node_modules"), ("import { x } from './missing.a';\n", "no file")):
+            with tempfile.TemporaryDirectory() as tree:
+                os.makedirs(os.path.join(tree, "cloud/fast-gate"))
+                os.makedirs(os.path.join(tree, "programs"))
+                with open(os.path.join(tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
+                    handle.write("# the list\nprograms/main.a\n")
+                with open(os.path.join(tree, "programs/main.a"), "w") as handle:
+                    handle.write(source)
+                inputs = run.determinismInputs(tree)
+                self.assertEqual(inputs["paths"], ["."], source)
+                self.assertIn(why, inputs["note"])

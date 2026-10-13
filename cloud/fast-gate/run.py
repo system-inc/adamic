@@ -290,6 +290,64 @@ def catalogInputs(tree, unit, full):
     return inputs
 
 
+# An import or export's module specifier in a program: `from '...'`, `import '...'`, `import('...')`, `require('...')`.
+moduleSpecifier = re.compile(r"""(?:\bfrom|\bimport|\brequire)\s*\(?\s*['"]([^'"]+)['"]""")
+
+
+def smokePrograms(tree):
+    """The programs determinism emits, as determinism picks them from the gated tree's smoke list: each .a or .ts
+    fixture that is a file. None when the tree has no smoke list (determinism then reads the tools')."""
+    path = os.path.join(tree, "cloud/fast-gate/smoke.txt")
+    if not os.path.exists(path):
+        return None
+    with open(path) as handle:
+        names = [(line.split()[1] if len(line.split()) == 2 else line.strip()) for line in handle if line.strip() and not line.startswith("#")]
+    return sorted({name for name in names if name.endswith((".a", ".ts")) and os.path.isfile(os.path.join(tree, name))})
+
+
+def determinismInputs(tree):
+    """What determinism reads (#d69xg9s): go build ./cmd/adamic, whose closure holds the loader's prelude and the
+    TypeScript libraries it embeds, then adamic c on each smoke program. A program is read with every file its relative
+    imports reach, so the directory of each such file is declared whole: a sibling added beside an import can change
+    what it resolves to. A bare import resolves through node_modules and package.json up its directory's ancestors before
+    the prelude's 'adamic' module, so each ancestor's node_modules and package.json are declared, present or not, and
+    one added there moves the key. A bare import other than 'adamic', or a relative one that resolves to no file, isn't
+    bounded here: the whole tree."""
+    programs = smokePrograms(tree)
+    if programs is None:
+        return treeInputs("the gated tree has no smoke list, so determinism reads the tools'")
+    paths, seen, queue = {"cloud/fast-gate/smoke.txt"}, set(), list(programs)
+    while queue:
+        name = queue.pop()
+        if name in seen:
+            continue
+        seen.add(name)
+        paths.add(name)
+        directory = os.path.dirname(name)
+        ancestor = directory
+        while True:
+            paths.update(os.path.join(ancestor, entry) if ancestor else entry for entry in ("node_modules", "package.json"))
+            if not ancestor:
+                break
+            ancestor = os.path.dirname(ancestor)
+        with open(os.path.join(tree, name), encoding="utf-8", errors="replace") as handle:
+            source = handle.read()
+        for specifier in moduleSpecifier.findall(source):
+            if specifier == "adamic":
+                continue
+            if not specifier.startswith(("./", "../")):
+                return treeInputs("smoke program %s imports %r, which resolves through node_modules" % (name, specifier))
+            target = os.path.normpath(os.path.join(directory, specifier))
+            found = [candidate for candidate in (target, target + ".ts", target + ".a", target + "/index.ts", target + "/index.a")
+                     if os.path.isfile(os.path.join(tree, candidate))]
+            if not found or target.startswith("../"):
+                return treeInputs("smoke program %s imports %r, which resolves to no file in the tree" % (name, specifier))
+            for candidate in found:
+                paths.add(os.path.dirname(candidate) or ".")
+                queue.append(candidate)
+    return {"packages": [module + "/cmd/adamic"], "paths": sorted(paths)}
+
+
 def phaseInputs(tree, line, full=False, products=None):
     phase, _, unit = line.partition(" ")
     provider = phaseInputProviders.get(phase)
@@ -1972,7 +2030,7 @@ class Gate:
         output, _ = process.communicate()
         return process.returncode, output
 
-    @declaresInputs("determinism", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
+    @declaresInputs("determinism", lambda tree, unit, full: determinismInputs(tree))
     def determinism(self, smoke):
         """Emission is deterministic (@system_adamic, Oct 9: a 43,250-line main.c on the Threadripper against 5,470 lines
         on a Codex box for the same tree). Stage 0 emits each smoke fixture's C twice, each in its own process, so Go's
