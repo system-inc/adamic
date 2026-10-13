@@ -1,0 +1,20 @@
+=== RUN   TestV4HigherCallbackArgument
+=== PAUSE TestV4HigherCallbackArgument
+=== CONT  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:17: gate cache node miss
+    checked_views_v4_higher_test.go:17: gate cache node miss
+    checked_views_v4_higher_test.go:17: javascript exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:4:54
+    checked_views_v4_higher_test.go:17: native exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:4:54
+    checked_views_v4_higher_test.go:17: sanitized exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument3446552995/001/identity.ts:4:54
+    checked_views_v4_higher_test.go:18: gate cache node hit
+    checked_views_v4_higher_test.go:32: gate cache node miss
+    checked_views_v4_higher_test.go:32: guard mutant admitted in native: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:32: guard mutant admitted in sanitized: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:32: guard mutant admitted in javascript: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:33: passing the callback unwrapped is caught in both backends, ASan/UBSan/LSan clean against Node
+--- PASS: TestV4HigherCallbackArgument (1.00s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.007s

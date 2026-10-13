@@ -71,7 +71,7 @@ func (e *emitter) callbackCall(callback string, expression ir.Expression, kind i
 func (e *emitter) closureComparator(sort ir.ArraySort) string {
 	call := ir.CallClosure{Closure: sort.Callback, FunctionType: sort.CallbackType}
 	layout := e.program.ClosureArgumentLayout(call)
-	if !layout.Count && len(layout.Rest) == 0 && len(layout.Fixed) <= 2 {
+	if !e.program.ViewAdapters && !layout.Count && len(layout.Rest) == 0 && len(layout.Fixed) <= 2 {
 		return "adamic_compare_closure"
 	}
 	e.temporaries++
@@ -175,7 +175,14 @@ func missingArgument(of ir.Type) string {
 }
 
 func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
-	if e.program.PackedCountNeededFromCall(call) {
+	if !call.ReceiverPacked && e.program.ViewAdapters && call.CallWhere != "" {
+		e.viewCallableBlameRuntime()
+		return fmt.Sprintf("adamic_view_call_at(%s, NULL, %s, %s, %d, %s)", closure, packed, count, e.packedArgumentSize(call), viewCallableSourceSite(call))
+	}
+	if !call.ReceiverPacked && e.program.ClosureReceiversNeeded() {
+		return fmt.Sprintf("adamic_closure_receiver_call(%s, NULL, %s, %s, %d)", closure, packed, count, e.packedArgumentSize(call))
+	}
+	if e.program.PackedCountNeededFromCall(call) || e.program.ClosureConventionNeeded() {
 		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
 	}
 	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)

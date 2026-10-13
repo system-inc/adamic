@@ -1,0 +1,11 @@
+=== RUN   TestV4EscapeAdapterBoundAliasCallRefusal
+=== PAUSE TestV4EscapeAdapterBoundAliasCallRefusal
+=== CONT  TestV4EscapeAdapterBoundAliasCallRefusal
+    checked_views_v4_bind_refusals_test.go:53: gate cache node miss
+    checked_views_v4_bind_refusals_test.go:53: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundAliasCallRefusal103151710/001/bound-surface.ts:4:185: Adamic 0.1 refuses call on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundAliasCallRefusal (0.92s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.967s

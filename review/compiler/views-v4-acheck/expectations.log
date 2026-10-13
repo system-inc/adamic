@@ -1,0 +1,18 @@
+construct-no-signature.a: expected type error TS7009; match=True
+internal/oracle/testdata/views_v4_refused/construct-no-signature.a:6:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly
+
+factory-165-wrong-arity.a: expected refused readonly field onEmitNode becomes writable; match=True
+adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a:7:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace; keep onEmitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+
+view-parameter-wrong-members.a: expected refused an unproven escaping callable read of viewed.run; match=True
+adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+
+view-parameter-wrong.a: expected refused an unproven escaping callable read of viewed.run; match=True
+adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+
+view-result-wrong-members.a: expected refused an unproven escaping callable read of viewed.run; match=True
+adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+
+view-result-wrong.a: expected refused an unproven escaping callable read of viewed.run; match=True
+adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+

@@ -10,7 +10,7 @@ import (
 
 // value emits what an expression needs evaluated first, in JavaScript's order, and returns a C
 // expression that stays valid to the end of the statement.
-func (e *emitter) evaluate(expression ir.Expression) string {
+func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
@@ -144,6 +144,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Object.Type() == ir.Closure {
+			return e.closureSurface(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -355,8 +358,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return result
 	case ir.ArrayMap:
-		if mapped, ok := e.mapped(expression); ok {
-			return mapped
+		if expression.ViewRead.View == "" {
+			if mapped, ok := e.mapped(expression); ok {
+				return mapped
+			}
 		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
@@ -373,7 +378,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		slot := fmt.Sprintf("%s->elements[%s]", source, index)
+		if expression.ViewRead.View != "" {
+			slot = e.viewArrayElementSlot(expression.ViewRead, source, "(double)"+index)
+		}
+		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, slot, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 		e.line("adamic_value %s = %s;", element, call)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
@@ -387,6 +396,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.arrayReduce(expression)
 	case ir.ArraySearch:
 		return e.libraryArraySearch(expression)
+	case ir.ArrayRangeErrorIs:
+		return fmt.Sprintf("adamic_array_is_range_error(%s)", e.value(expression.Value))
+	case ir.ArrayHoles:
+		return e.arrayHoles(expression)
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			length := e.value(expression.Length)
@@ -452,6 +465,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// Retained, so a write later in the statement can't free it from under its reader.
 		return e.own(expression.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(expression.Element), slot))
 	case ir.ArrayPop:
+		if expression.ViewRead.View != "" {
+			return e.emitViewArrayPop(expression)
+		}
 		array := e.temporary()
 		e.line("adamic_array *%s = %s;", array, e.value(expression.Array))
 		if expression.Type().IsMaybe() {
@@ -595,6 +611,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
+		if ir.HasArrayViews(e.program) {
+			e.viewArrayMutation(array, expression.Element)
+		}
 		if expression.Element.IsReference() {
 			value = retained(value)
 		}
@@ -604,6 +623,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
 	case ir.ArrayJoin:
+		if expression.ViewRead.View != "" {
+			return e.viewArrayJoin(expression)
+		}
 		if expression.Depth > 0 {
 			return e.libraryArrayJoin(expression)
 		}
@@ -746,6 +768,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("(!adamic_string_equal(%s, %s))", left, right)
 	case operandType.IsMaybe() && (operator == ir.Equal || operator == ir.NotEqual):
 		return pairEquality(operator, operandType, left, right)
+	case operandType == ir.Closure && (operator == ir.Equal || operator == ir.NotEqual):
+		return fmt.Sprintf("(adamic_view_adapter_underlying(%s) %s adamic_view_adapter_underlying(%s))", left, cOperators[operator], right)
 	case operandType == ir.Union && operator == ir.Equal:
 		return fmt.Sprintf("adamic_union_equal(%s, %s)", left, right)
 	case operandType == ir.Union && operator == ir.NotEqual:

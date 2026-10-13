@@ -956,6 +956,13 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
+		case ir.Array:
+			arrayNode := span.AsTemplateSpan().Expression
+			var err error
+			value, err = l.viewArrayString(arrayNode, span, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
@@ -1078,6 +1085,9 @@ func slotless(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.arrayLengthConstructor(node); found {
+		return value, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if direct := l.nestedSibling(callee); direct >= 0 {
@@ -1245,7 +1255,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1, CallableMasks: callee.CallableMasks, CallableParameters: callee.CallableParameters, CallableResult: callee.CallableResult, CallableResultName: callee.CallableResultName, CallableResultNull: callee.CallableResultNull}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -1370,7 +1380,11 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
+	callContract := ir.ViewContractID(0)
+	if len(spread) == 0 {
+		callContract = l.viewCallableCallContract(node, signatures)
+	}
+	return ir.CallClosure{CallWhere: l.program.Where(node), CallContract: callContract, Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
 }
 
 // Optional booleans have a three-state byte in the function-call ABI.

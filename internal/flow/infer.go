@@ -292,6 +292,14 @@ func (n *inference) value(expression ir.Expression) shape {
 		return shape{}
 	}
 	switch expression := expression.(type) {
+	case ir.ArrayHoles:
+		// Evaluate length effects, but do not alias or capture the scalar operand.
+		n.value(expression.Length)
+		return shape{fresh: true}
+	case ir.ArrayRangeErrorIs:
+		// Borrowed identity inspection returns a primitive and creates no edge.
+		n.value(expression.Value)
+		return shape{}
 	case ir.TypedArrayNew:
 		n.value(expression.Source)
 		return shape{fresh: true}

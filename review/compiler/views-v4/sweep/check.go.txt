@@ -1,0 +1,3 @@
+package main
+import("context";"encoding/json";"os";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func main(){p,err:=load.Load([]string{os.Args[1]}); stage:="check";if err==nil {stage="lower";_,err=lower.Lower(context.Background(),p)};message:="";if err!=nil {message=err.Error()};json.NewEncoder(os.Stdout).Encode(map[string]interface{}{"admitted":err==nil,"stage":stage,"error":message})}

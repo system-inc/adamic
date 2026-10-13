@@ -1,0 +1,13 @@
+=== RUN   TestV4EscapeAdapterBoundViewRefusal
+=== PAUSE TestV4EscapeAdapterBoundViewRefusal
+=== CONT  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .ts refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal4185022441/001/bound-view.ts:5:241: Adamic 0.1 refuses an escaping callable read of again.run with an unsupported value contract; prove the callable relation or use a callable with runtime-checkable parameter and result types
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .a refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal4185022441/002/bound-view.a:5:241: Adamic 0.1 refuses an unproven escaping callable read of again.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- PASS: TestV4EscapeAdapterBoundViewRefusal (0.38s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.391s

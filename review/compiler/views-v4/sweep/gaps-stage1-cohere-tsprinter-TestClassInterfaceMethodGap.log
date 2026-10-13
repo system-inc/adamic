@@ -1,0 +1,6 @@
+=== RUN   TestClassInterfaceMethodGap
+    class_interface_gap_test.go:42: Node prints 17; lowering refuses before native emission: /tmp/adamic-gate/TestClassInterfaceMethodGap720194106/001/gap.ts:6:28: stage 0 can't lower a class method through a view that erases its prototype origin yet
+    class_interface_gap_test.go:66: explicit callback prints 17 on Node, native and backend; leak-free; gap check rejects this normal-run mutant
+--- PASS: TestClassInterfaceMethodGap (0.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	0.516s

@@ -1,0 +1,79 @@
+=== RUN   TestV4HigherCallbackArgument
+=== PAUSE TestV4HigherCallbackArgument
+=== RUN   TestV4HigherCallbackNeverCalled
+=== PAUSE TestV4HigherCallbackNeverCalled
+=== RUN   TestV4HigherCallbackResult
+=== PAUSE TestV4HigherCallbackResult
+=== RUN   TestV4HigherCallbackArgumentOrder
+=== PAUSE TestV4HigherCallbackArgumentOrder
+=== RUN   TestV4HigherAdamicEscapeRefusal
+=== PAUSE TestV4HigherAdamicEscapeRefusal
+=== RUN   TestV4HigherReturnedCallable
+=== PAUSE TestV4HigherReturnedCallable
+=== CONT  TestV4HigherCallbackArgument
+=== CONT  TestV4HigherCallbackArgumentOrder
+=== CONT  TestV4HigherReturnedCallable
+=== CONT  TestV4HigherAdamicEscapeRefusal
+=== CONT  TestV4HigherCallbackResult
+=== NAME  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:17: gate cache node miss
+=== NAME  TestV4HigherAdamicEscapeRefusal
+    checked_views_v4_higher_test.go:88: gate cache node miss
+=== NAME  TestV4HigherCallbackArgumentOrder
+    checked_views_v4_higher_test.go:75: gate cache node miss
+=== NAME  TestV4HigherCallbackResult
+    checked_views_v4_higher_test.go:49: gate cache node miss
+=== NAME  TestV4HigherReturnedCallable
+    checked_views_v4_higher_test.go:97: gate cache node miss
+--- PASS: TestV4HigherAdamicEscapeRefusal (0.76s)
+=== CONT  TestV4HigherCallbackNeverCalled
+    checked_views_v4_higher_test.go:40: gate cache node miss
+=== NAME  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:17: gate cache node miss
+=== NAME  TestV4HigherReturnedCallable
+    checked_views_v4_higher_test.go:97: gate cache node miss
+=== NAME  TestV4HigherCallbackArgumentOrder
+    checked_views_v4_higher_test.go:77: gate cache node miss
+--- PASS: TestV4HigherCallbackArgumentOrder (1.64s)
+=== NAME  TestV4HigherReturnedCallable
+    checked_views_v4_higher_test.go:97: native exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:74 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:97
+    checked_views_v4_higher_test.go:97: sanitized exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:74 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:97
+    checked_views_v4_higher_test.go:97: javascript exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:74 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherReturnedCallable3722600239/001/identity.ts:3:97
+--- PASS: TestV4HigherReturnedCallable (1.67s)
+=== NAME  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:17: native exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:4:54
+    checked_views_v4_higher_test.go:17: sanitized exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:4:54
+    checked_views_v4_higher_test.go:17: javascript exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:3:71 argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4HigherCallbackArgument814951015/001/identity.ts:4:54
+=== NAME  TestV4HigherCallbackResult
+    checked_views_v4_higher_test.go:49: gate cache node miss
+=== NAME  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:18: gate cache node hit
+=== NAME  TestV4HigherCallbackResult
+    checked_views_v4_higher_test.go:49: javascript exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:3:71 result expected view "ok", producer string call at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:4:52
+    checked_views_v4_higher_test.go:49: native exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:3:71 result expected view "ok", producer string call at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:4:52
+    checked_views_v4_higher_test.go:49: sanitized exit70 at first call: adamic: panic: callable call failed: view.run callback at callback adapted at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:3:71 result expected view "ok", producer string call at /tmp/adamic-gate/TestV4HigherCallbackResult205946936/001/identity.ts:4:52
+    checked_views_v4_higher_test.go:50: gate cache node hit
+=== NAME  TestV4HigherCallbackNeverCalled
+    checked_views_v4_higher_test.go:40: gate cache node miss
+    checked_views_v4_higher_test.go:40: guard mutant admitted in native: exit 0 output "read\nnever\n"
+    checked_views_v4_higher_test.go:40: guard mutant admitted in sanitized: exit 0 output "read\nnever\n"
+    checked_views_v4_higher_test.go:40: guard mutant admitted in javascript: exit 0 output "read\nnever\n"
+--- PASS: TestV4HigherCallbackNeverCalled (1.90s)
+=== NAME  TestV4HigherCallbackArgument
+    checked_views_v4_higher_test.go:32: gate cache node miss
+    checked_views_v4_higher_test.go:32: guard mutant admitted in javascript: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:32: guard mutant admitted in native: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:32: guard mutant admitted in sanitized: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:33: passing the callback unwrapped is caught in both backends, ASan/UBSan/LSan clean against Node
+--- PASS: TestV4HigherCallbackArgument (2.96s)
+=== NAME  TestV4HigherCallbackResult
+    checked_views_v4_higher_test.go:66: gate cache node miss
+    checked_views_v4_higher_test.go:66: guard mutant admitted in native: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:66: guard mutant admitted in sanitized: exit 0 output "bad\n"
+    checked_views_v4_higher_test.go:66: guard mutant admitted in javascript: exit 0 output "bad\n"
+--- PASS: TestV4HigherCallbackResult (3.16s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.205s
