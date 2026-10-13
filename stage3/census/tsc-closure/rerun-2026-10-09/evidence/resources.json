@@ -1,0 +1,6 @@
+{
+  "memory.events": "low 0\nhigh 0\nmax 6739\noom 0\noom_kill 0\noom_group_kill 0",
+  "memory.max": "17179869184",
+  "cpu.max": "400000 100000",
+  "observation": "Memory-limit reclaim events were observed during census; no OOM kill. Original worker exit statuses after restart are not inferred from proc fields."
+}
