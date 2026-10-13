@@ -8,49 +8,6 @@ import (
 	"testing"
 )
 
-// cssCorpusRoots are the directories, relative to the repository, that css's corpus takes its CSS, SCSS and Less files
-// from. The Go oracle and the corpus product's key walk only these, never the whole repository: a walk of the
-// repository lists its root and every directory under it, and since a product's read set takes the reads its process
-// made before it, a new file anywhere in the repository moved every corpus-reading product, all 388 PostCSS answers
-// among them (#t128y5x). Sorted, so walking them in order visits the files in the order a whole-repository walk did.
-// TestCSSCorpusRootsHoldEveryCorpusFile keeps them complete.
-var cssCorpusRoots = []string{"cohere/internal/format/css/testdata", "cohere/internal/lint/rules/tailwind", "stage1/cohere/css/testdata"}
-
-// cssCorpusFile reports whether a file name has one of the corpus's extensions.
-func cssCorpusFile(name string) bool {
-	switch strings.ToLower(filepath.Ext(name)) {
-	case ".css", ".scss", ".less":
-		return true
-	}
-	return false
-}
-
-// cssCorpusRootWalk walks every corpus root under the repository in order, as the Go oracle's side tests do, skipping
-// .git and node_modules, and calls visit with each corpus file's absolute path.
-func cssCorpusRootWalk(repo string, visit func(path string) error) error {
-	for _, root := range cssCorpusRoots {
-		err := filepath.WalkDir(filepath.Join(repo, filepath.FromSlash(root)), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if !cssCorpusFile(path) {
-				return nil
-			}
-			return visit(path)
-		})
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // Every corpus file in the repository lies under a corpus root, so walking the roots finds exactly the files a walk of
 // the whole repository did, in the same order. This test is that whole-repository walk, kept out of every product's
 // process. A CSS file added outside the roots fails here, naming the root to add.
