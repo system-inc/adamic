@@ -1,0 +1,46 @@
+=== RUN   TestLongUnicodePortabilityClang
+=== PAUSE TestLongUnicodePortabilityClang
+=== RUN   TestLongUnicodePortabilityGCC
+=== PAUSE TestLongUnicodePortabilityGCC
+=== RUN   TestLongUnicodeLiteralByteCoverage
+=== PAUSE TestLongUnicodeLiteralByteCoverage
+=== RUN   TestConstantPortabilityClang
+=== PAUSE TestConstantPortabilityClang
+=== RUN   TestConstantPortabilityGCC
+=== PAUSE TestConstantPortabilityGCC
+=== RUN   TestLongStringBytesMutant
+=== PAUSE TestLongStringBytesMutant
+=== RUN   TestStaticNumberInitializerMutant
+=== PAUSE TestStaticNumberInitializerMutant
+=== RUN   TestStaticBooleanInitializerMutant
+=== PAUSE TestStaticBooleanInitializerMutant
+=== CONT  TestLongUnicodePortabilityClang
+=== CONT  TestConstantPortabilityGCC
+=== CONT  TestStaticNumberInitializerMutant
+=== CONT  TestStaticBooleanInitializerMutant
+--- PASS: TestConstantPortabilityGCC (0.03s)
+=== CONT  TestLongStringBytesMutant
+=== NAME  TestStaticBooleanInitializerMutant
+    constants_portability_test.go:37: mutant caught with -Werror absent: 1 [-Wpedantic] warnings
+--- PASS: TestStaticBooleanInitializerMutant (0.03s)
+=== CONT  TestLongUnicodeLiteralByteCoverage
+=== NAME  TestStaticNumberInitializerMutant
+    constants_portability_test.go:32: mutant caught with -Werror absent: 1 [-Wpedantic] warnings
+--- PASS: TestStaticNumberInitializerMutant (0.04s)
+=== CONT  TestConstantPortabilityClang
+--- PASS: TestConstantPortabilityClang (0.03s)
+=== CONT  TestLongUnicodePortabilityGCC
+=== NAME  TestLongUnicodeLiteralByteCoverage
+    c_portability_oracle_test.go:51: long literals cover all 115 valid high UTF-8 bytes
+--- PASS: TestLongUnicodeLiteralByteCoverage (0.08s)
+=== NAME  TestLongStringBytesMutant
+    constants_portability_test.go:27: mutant caught with -Werror absent: 4200 [-Woverflow] warnings
+--- PASS: TestLongStringBytesMutant (0.33s)
+=== NAME  TestLongUnicodePortabilityClang
+    c_portability_oracle_test.go:20: clang: both backends match Node; ASan, UBSan and leak detection clean
+--- PASS: TestLongUnicodePortabilityClang (2.79s)
+=== NAME  TestLongUnicodePortabilityGCC
+    c_portability_oracle_test.go:25: gcc: both backends match Node; ASan, UBSan and leak detection clean
+--- PASS: TestLongUnicodePortabilityGCC (4.14s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	4.215s
