@@ -461,7 +461,7 @@ func leafCompositionGoProduct(t *testing.T, root, name, driverName string) strin
 		"stage1/cohere/markdownblocks/testdata/list_bridge.go",
 		"cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
 		"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "go.mod", "go.work",
-	}, Flags: []string{"overlay=" + driverName, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
+	}, Flags: []string{"overlay=" + driverName, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
 	product := buildcache.Product(t, inputs, func(out string) error {
 		replacements := map[string]string{main: driver}
 		if name == "adamic_markdown_lists" {
@@ -477,7 +477,7 @@ func leafCompositionGoProduct(t *testing.T, root, name, driverName string) strin
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := leafCompositionCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)
+		command := leafCompositionCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)...)
 		command.Dir = cohere
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("Go bridge: %v\n%s", err, output)
