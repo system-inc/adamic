@@ -61,6 +61,17 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 }
 
 func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+	if err := l.nodeProcessSignature(node); err != nil {
+		return err
+	}
+	if _, _, known := l.nodeProcessEnvironmentKey(node); known {
+		return nil
+	}
+	if node.Parent != nil && node.Parent.Name() == node {
+		if _, _, known := l.nodeProcessEnvironmentKey(node.Parent); known {
+			return nil
+		}
+	}
 	if err := l.nodeFSDirectorySignature(node); err != nil {
 		return err
 	}
