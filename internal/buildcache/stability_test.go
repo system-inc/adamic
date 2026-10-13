@@ -49,6 +49,38 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
 	}
 }
 
+// go list -test's look for its cached test main at the package's directory joined to the Go cache's absolute path is
+// go's, never the tree's, wherever the cache sits (#pqq9z5q): two builders with their caches at two places class it
+// alike, as nothing. A missed look at a tree path that only resembles one, or that holds the cache's path as part of a
+// name, is still a tree path, and so is anything a look found. Mutant: the joined look classed as a tree path (each
+// builder's own exists entry, naming its cache).
+// Not parallel: it sets GOCACHE, which settleFacts asks go for.
+func TestGoLookingForItsCachedTestMainIsNoTreeRead(t *testing.T) {
+	root := filepath.Join(t.TempDir(), "adamic")
+	var classes [][]classed
+	for _, cache := range []string{"/home/ahra/.cache/go-build", "/home/ahra/loom-sums/s1/gocache"} {
+		t.Setenv("GOCACHE", cache)
+		facts, err := settleFacts(root, filepath.Join(t.TempDir(), "cache"), filepath.Join(t.TempDir(), "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		testMain := "/28/28079cc4cf0088b656dc5dcec5353d6596c309cc5a5d1e4eea57b8c285139d88-d"
+		classes = append(classes, []classed{
+			facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+testMain), readAbsent),
+			facts.classifyPath(filepath.Join(root, "bridge/tsgo", cache+testMain), readAbsent),
+		})
+		if found := facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+"-not", testMain), readAbsent); found.kind != "exists" {
+			t.Errorf("a missed look at a tree path beside the cache's: %+v", found)
+		}
+		if found := facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+testMain), readStat); found.kind == "" {
+			t.Errorf("a look that found a tree path holding the cache's: %+v", found)
+		}
+	}
+	if !reflect.DeepEqual(classes[0], classes[1]) || !reflect.DeepEqual(classes[0], []classed{{}, {}}) {
+		t.Fatalf("go's look for its cached test main, under two caches: %q and %q, want nothing", classes[0], classes[1])
+	}
+}
+
 // A path above the cache is valued by whether and as what it exists beside the cache at hand, as above values one
 // beside the tree. Mutant: valued against the tree.
 func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {
