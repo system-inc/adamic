@@ -311,6 +311,13 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	packed, count := e.closureArguments(expression)
 	call := e.packedClosureCall(expression, closure, packed, count)
+	processHost := false
+	walkExpressions(e.program, func(value ir.Expression) {
+		if host, ok := value.(ir.ProcessCall); ok && host.Operation == "performance" {
+			processHost = true
+		}
+	})
+
 	if expression.Direct > 0 {
 		target := expression.Direct - 1
 		extra := ""
@@ -349,6 +356,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			}
 			call = fmt.Sprintf("(%s != NULL ? %s : %s)", closure, call, methodCall)
 		}
+	}
+
+	// Preserve user closures' counted and receiver conventions in mixed programs.
+	// Only the five runtime performance closures use padding and void-view cleanup.
+	if processHost && closure != "" && expression.Direct == 0 {
+		call = fmt.Sprintf("(adamic_node_performance_method(%s) ? adamic_node_performance_invoke(%s, %s, %s, %t) : %s)", closure, closure, packed, count, expression.Returns == 0, call)
 	}
 
 	if expression.Returns == 0 {
