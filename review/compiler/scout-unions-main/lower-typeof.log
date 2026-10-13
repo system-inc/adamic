@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/scout_tsc_nullish_content.a:3:17: stage 0 can't lower typeof a value holding both null and undefined without a presence slot yet
+--- FAIL: TestNativeAgreesWithNode (0.18s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.438s
+FAIL

@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:774: stdout differs
+        node:   exit 0, stdout "text1|string|text1\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem1|null||undefined\nnull|tail1|object|undefined\ntext2|string|text2\nnull|object|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\ntrue|object|fallback\nitem2|null||undefined\nnull|tail2|object|undefined\n", stderr ""
+        native: exit 0, stdout "text1|string|text1\nundefined|undefined|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\nfalse|undefined|fallback\nitem1|undefined||undefined\nundefined|tail1|undefined|undefined\ntext2|string|text2\nundefined|undefined|fallback\nundefined|undefined|fallback\n|string|\ntrue|false|\nfalse|undefined|fallback\nitem2|undefined||undefined\nundefined|tail2|undefined|undefined\n", stderr ""
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a (0.96s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.015s
+FAIL

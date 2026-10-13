@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (73.13s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace/callback.a (0.12s)
+            counts_test.go:149: Lower: /workspace/adamic/internal/oracle/testdata/regexp_replace/callback.a:34:31: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	73.145s
+FAIL
