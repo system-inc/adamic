@@ -77,14 +77,16 @@ success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 
 ## Compiler gap: interface call and concrete default argument
 
-`gaps/interfaceDefault.ts` views a concrete `next(value, step = 1)` method through
-an interface exposing only `next(value)`. Source Node prints 5. Main now refuses
-during lowering with a typed `*lower.NotYet` at `gaps/interfaceDefault.ts:10:12`:
+`gaps/interfaceTypeMethod.ts` views `ParserLike.type(minimum = 0, conditional = true)`
+through the `TypeParser` interface's function-valued `type` member. Source Node
+prints 1. Lowering refuses with a typed `*lower.NotYet` at
+`gaps/interfaceTypeMethod.ts:10:12`:
 "stage 0 can't lower a class method through a view that erases its prototype origin yet".
-`TestInterfaceDefaultGap` checks the exact type, location and `What` before native emission.
-The former native stack-buffer-overflow path is blocked, but dispatch preserving the
-concrete method's prototype origin remains a compiler gap for @system_adamic.
-The proving program is unchanged; no compiler or runtime fix was made.
+`TestInterfaceTypeMethodGap` checks the exact type, location and `What` before
+native emission, and checks that its default-free control lowers successfully.
+The audit retains this test as the catcher for the same prototype-origin refusal.
+Dispatch preserving the concrete method's prototype origin remains a compiler
+gap for @system_adamic; no compiler or runtime fix was made.
 
 `gaps/methodReplacement.ts` is another minimal compiler boundary. Node permits
 replacement of one instance's method, printing replacement then original.
