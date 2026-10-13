@@ -166,18 +166,24 @@ func runWASIEmissionShard(t *testing.T, shard int) {
 		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				t.Fatal(err)
+			var code string
+			if fixture.path == moveObjectsPath {
+				// Generation is checked by its independent compiler-keyed product.
+				code = moveSourceFile(t, "program.c")
+			} else {
+				path, err := filepath.Abs(filepath.Join(repository, fixture.path))
+				if err != nil {
+					t.Fatal(err)
+				}
+				program, err := lowered(t, path)
+				if !fixture.lowers {
+					t.Skip("fixture does not lower")
+				}
+				if err != nil {
+					t.Fatal(err)
+				}
+				code = native.C(program)
 			}
-			program, err := lowered(t, path)
-			if !fixture.lowers {
-				t.Skip("fixture does not lower")
-			}
-			if err != nil {
-				t.Fatal(err)
-			}
-			code := native.C(program)
 			if probing {
 				// TestFamiliesCatchAPlantedCase's mutant: C that no target compiles.
 				code += "\nint planted = ;\n"

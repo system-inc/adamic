@@ -45,8 +45,13 @@ var families = []family{
 	{name: "TestWASIEmission", shards: 32, runner: "runWASIEmissionShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "planted = ;", requires: "ADAMIC_ORACLE_WASI", solo: []string{"internal/oracle/testdata/moves/accepted/objects.a"}},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
-	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
-	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed", solo: []string{"internal/oracle/testdata/moves/accepted/objects.a"}},
+	// Counts are split by fixture directory, then stable hash within each group.
+	{name: "TestCountsAreRecorded_Core", shards: 32, runner: "runCountsCoreShard", keys: func() []string { return countGroupKeys("Core") }, planted: "internal/oracle/testdata/string_views_lifetime.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded_Stage3", shards: 16, runner: "runCountsStage3Shard", keys: func() []string { return countGroupKeys("Stage3") }, planted: "stage3/interface-downcasts/default-wrong-type.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded_Host", shards: 8, runner: "runCountsHostShard", keys: func() []string { return countGroupKeys("Host") }, planted: "internal/oracle/testdata/node_buffer_crypto.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded_Concurrency", shards: 4, runner: "runCountsConcurrencyShard", keys: func() []string { return countGroupKeys("Concurrency") }, planted: "internal/oracle/testdata/concurrency/accepted/numbers.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded_Moves", shards: 1, runner: "runCountsMovesShard", keys: func() []string { return countGroupKeys("Moves") }, planted: "internal/oracle/testdata/moves/accepted/objects.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded_Language", shards: 4, runner: "runCountsLanguageShard", keys: func() []string { return countGroupKeys("Language") }, planted: "dedication/dedication.a", caught: "the counts changed"},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
 	// 22.7 s: 20 mutants of library_method_values.a, each built and run.
