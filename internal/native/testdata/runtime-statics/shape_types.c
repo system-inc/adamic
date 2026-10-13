@@ -1,21 +1,28 @@
 #include "harness.h"
-// Every worker's first item lands on the same metadata (the pool's chunks start at multiples of 8),
-// so four workers register one shape's types at once, then read through the registry.
+// Each worker owns an eight-item chunk, whose callbacks make 256 exercise calls.
+// Rendezvous before each of those calls on fresh metadata, so registration writes
+// keep overlapping instead of turning into eight already-registered fast paths.
 static const char *const names[] = {"x"};
 static const bool references[] = {false};
-static const adamic_shape shapes[8] = {
- {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
- {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
-};
+static adamic_shape shapes[256];
 static const int types[] = {1};
-static adamic_shape_types metadata[8] = {
- {&shapes[0], types, NULL, false}, {&shapes[1], types, NULL, false}, {&shapes[2], types, NULL, false}, {&shapes[3], types, NULL, false},
- {&shapes[4], types, NULL, false}, {&shapes[5], types, NULL, false}, {&shapes[6], types, NULL, false}, {&shapes[7], types, NULL, false},
-};
-static void prepare(void) {}
-static void cleanup(void) {}
+static adamic_shape_types metadata[256];
+static pthread_barrier_t registrations;
+static _Thread_local size_t visits;
+static void prepare(void) {
+ for (size_t index = 0; index < 256; index++) {
+  shapes[index] = (adamic_shape){1, names, references, NULL};
+  metadata[index] = (adamic_shape_types){&shapes[index], types, NULL, false};
+ }
+ if (pthread_barrier_init(&registrations, NULL, 4) != 0) { abort(); }
+}
+static void cleanup(void) { pthread_barrier_destroy(&registrations); }
 static double exercise(size_t index) {
- size_t which = index % 8;
+ size_t which = visits < 256 ? visits : index % 256;
+ if (visits++ < 256) {
+  // This orders earlier rounds, never the new round's registry accesses.
+  pthread_barrier_wait(&registrations);
+ }
  adamic_register_shape_types(&metadata[which]);
  adamic_object *object = adamic_object_new(&shapes[which]);
  object->slots[0].number = (double)which;

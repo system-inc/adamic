@@ -82,8 +82,12 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 	if goruntime.GOOS != "linux" {
 		t.Skip("requires Linux ThreadSanitizer")
 	}
+	started := time.Now()
 	library, root := staticsRaceLibrary(t, "", "", "")
+	t.Logf("signal runtime archive: %s", time.Since(started))
+	started = time.Now()
 	binary := staticsRaceFixture(t, root, library, "signal_output")
+	t.Logf("signal fixture link: %s", time.Since(started))
 	for _, worker := range []bool{false, true} {
 		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGUSR2, syscall.SIGALRM, syscall.SIGXCPU, syscall.SIGVTALRM, syscall.SIGPROF, syscall.SIGIO, 30, 34, 64} {
 			if worker && signal == 0 {
@@ -107,11 +111,14 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 			staticsSignalRun(t, binary, true, syscall.SIGTERM, mutant)
 		})
 	}
-	t.Run("exit_flush_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
-		binary := staticsRaceFixture(t, root, library, "signal_output")
-		staticsSignalRun(t, binary, false, 0, true)
-	})
+	// A relaxed readiness gate exposes the exit race without a long print workload.
+	for _, mutant := range []bool{false, true} {
+		t.Run(fmt.Sprintf("exit_flush_%t", mutant), func(t *testing.T) {
+			library, root := staticsExitRaceLibrary(t, mutant)
+			binary := staticsRaceFixture(t, root, library, "exit_race")
+			staticsSignalRun(t, binary, false, 0, mutant)
+		})
+	}
 }
 
 // Not parallel: each build occupies the same runtime/TSan budget as the pool proofs.
@@ -185,6 +192,31 @@ func staticsSignalRaceLibrary(t *testing.T, mutant bool) (string, string) {
 	return staticsRaceLibrary(t, "adamic.c", string(source), changed)
 }
 
+// The writer is paused inside buffer with output_lock held. Readiness and release
+// are relaxed, so only the runtime's join and lock can order finish's buffer reads.
+func staticsExitRaceLibrary(t *testing.T, mutant bool) (string, string) {
+	t.Helper()
+	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, "adamic.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := string(source)
+	patch := func(old, replacement string) {
+		t.Helper()
+		if strings.Count(changed, old) != 1 {
+			t.Fatalf("missing or ambiguous exit race seam: %q", old)
+		}
+		changed = strings.Replace(changed, old, replacement, 1)
+	}
+	patch("static void finish(void) {", "extern void adamic_test_exit_release(void);\nstatic void finish(void) {\n\tadamic_test_exit_release();")
+	patch("static void buffer(const char *bytes, size_t length) {", "extern void adamic_test_exit_writer(void);\nstatic void buffer(const char *bytes, size_t length) {")
+	patch("output_used += length;", "output_used += length;\n\tadamic_test_exit_writer();")
+	if mutant {
+		patch("adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
+	}
+	return staticsRaceLibrary(t, "adamic.c", string(source), changed)
+}
+
 func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
 	t.Helper()
 	for attempt := 0; attempt < 3; attempt++ {
@@ -194,7 +226,9 @@ func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.S
 		if worker {
 			command.Env = append(command.Env, "ADAMIC_STOP_WORKER=1")
 		}
+		started := time.Now()
 		output, err := command.CombinedOutput()
+		t.Logf("signal process attempt %d: %s (%d bytes)", attempt+1, time.Since(started), len(output))
 		timedOut := ctx.Err() != nil
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
@@ -319,6 +353,8 @@ func staticsRaceFlags() []string {
 
 func staticsCompile(t *testing.T, tool string, arguments ...string) {
 	t.Helper()
+	started := time.Now()
+	defer func() { t.Logf("%s compile/link: %s", tool, time.Since(started)) }()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	if output, err := exec.CommandContext(ctx, tool, arguments...).CombinedOutput(); err != nil {
