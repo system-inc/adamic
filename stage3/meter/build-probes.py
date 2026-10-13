@@ -8,11 +8,13 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-STORE = Path(os.environ.get('ADAMIC_STAGE3_BUILD_STORE',
-                          str(Path.home() / '.cache/adamic-stage3/build-products'))) / 'probes'
+sys.path.insert(0, str(ROOT / 'stage3'))
+from caches import stage3_cache
+STORE = Path(os.environ.get('ADAMIC_STAGE3_BUILD_STORE') or stage3_cache() / 'build-products') / 'probes'
 spec = importlib.util.spec_from_file_location('hook_products', ROOT / 'stage3/fixtures/build-hook.py')
 hook = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(hook)

@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -20,8 +21,14 @@ var updateCounts = flag.Bool("update-counts", false, "rewrite counts.md with the
 // countsPath is the checked-in table of every fixture's counts.
 const countsPath = "counts.md"
 
-// Extra counters register source witnesses that need an explicit frontend adapter.
-var additionalFixtureCounts []func(*testing.T) []string
+// Extra counters register source witnesses that need an explicit frontend adapter, each a row of the table.
+var additionalFixtureCounts []countCase
+
+// A countCase is one row of counts.md: its key, the first column, and how to measure the row.
+type countCase struct {
+	key     string
+	measure func(*testing.T) string
+}
 
 const countsHeader = `# Counts
 
@@ -134,90 +141,171 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6])
 }
 
-// Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
-func TestCountsAreRecorded(t *testing.T) {
-	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
-	var lock sync.Mutex
-	t.Run("fixtures", func(t *testing.T) {
-		for index, fixture := range fixtures {
-			if !fixture.lowers || uncounted[fixture.path] || refusedAdamicNonNullFixture(fixture.path) {
-				continue
+// countCases is every row of counts.md, in the table's order: the lowered fixtures, the input fixtures, the
+// node:fs file fixtures, the interface casts, then each extra counter, as registered.
+func countCases() []countCase {
+	var cases []countCase
+	for _, fixture := range fixtures {
+		if fixture.lowers && !uncounted[fixture.path] && !refusedAdamicNonNullFixture(fixture.path) {
+			cases = append(cases, countCase{fixture.path, func(t *testing.T) string { return counted(t, fixture.path, false, nil, false, false) }})
+		}
+	}
+	for _, fixture := range inputFixtures {
+		cases = append(cases, countCase{fixture.path, func(t *testing.T) string {
+			return counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
+		}})
+	}
+	for _, fixture := range fsFileFixtures {
+		path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+		cases = append(cases, countCase{path, func(t *testing.T) string { return counted(t, path, true, nil, false, false) }})
+	}
+	cases = append(cases, interfaceCastCountCases()...)
+	return append(cases, additionalFixtureCounts...)
+}
+
+// countKeys is every row's key, the key TestCountsAreRecorded's family (families_test.go) owns it by.
+func countKeys() []string {
+	cases := countCases()
+	keys := make([]string, len(cases))
+	for index, each := range cases {
+		keys[index] = each.key
+	}
+	return keys
+}
+
+// recordedCounts is counts.md's rows by key, read once for every shard in the process.
+var recordedCounts = sync.OnceValues(func() (map[string]string, error) {
+	recorded, err := os.ReadFile(countsPath)
+	if err != nil {
+		return nil, err
+	}
+	rows := map[string]string{}
+	for _, line := range strings.Split(string(recorded), "\n") {
+		if fields := strings.Split(line, " | "); len(fields) == 7 {
+			rows[strings.TrimPrefix(fields[0], "| ")] = line
+		}
+	}
+	return rows, nil
+})
+
+// measuredCounts is the rows this run measured under -update-counts, for TestMain to write.
+var measuredCounts sync.Map
+
+// measuredPredicateCounts is the predicate table TestCountsAreRecordedTable measured under -update-counts.
+var measuredPredicateCounts sync.Map
+
+// TestCountsAreRecorded is a family (families_test.go): TestCountsAreRecorded_000 and on each measure the rows their
+// shard owns and hold each to its row in counts.md, so a change to a fixture's counts fails until the table is updated.
+// Under -update-counts they measure, and TestMain writes the table.
+func runCountsShard(t *testing.T, shard int) {
+	t.Helper()
+	planted, probing := familyProbe("TestCountsAreRecorded")
+	cases := countCases()
+	keys := countKeys()
+	for _, index := range familyCases(t, "TestCountsAreRecorded", shard, keys) {
+		each := cases[index]
+		t.Run(each.key, func(t *testing.T) {
+			t.Parallel()
+			row := each.measure(t)
+			if *updateCounts {
+				measuredCounts.Store(each.key, row)
+				return
 			}
-			t.Run(fixture.path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, fixture.path, false, nil, false, false)
-				lock.Lock()
-				rows[index] = row
-				lock.Unlock()
-			})
-		}
-		for index, fixture := range inputFixtures {
-			t.Run(fixture.path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
-				lock.Lock()
-				rows[len(fixtures)+index] = row
-				lock.Unlock()
-			})
-		}
-		for index, fixture := range fsFileFixtures {
-			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
-			t.Run(path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, path, true, nil, false, false)
-				lock.Lock()
-				rows[len(fixtures)+len(inputFixtures)+index] = row
-				lock.Unlock()
-			})
-		}
-	})
-	if t.Failed() {
-		return
+			recorded, err := recordedCounts()
+			if err != nil {
+				t.Fatalf("%v: record the counts with -update-counts", err)
+			}
+			want := recorded[each.key]
+			if probing && each.key == planted {
+				// TestFamiliesCatchAPlantedCase's mutant: the row as recorded, one allocation more.
+				if fields := strings.Split(want, " | "); len(fields) == 7 {
+					allocations, _ := strconv.Atoi(fields[1])
+					fields[1] = strconv.Itoa(allocations + 1)
+					want = strings.Join(fields, " | ")
+				}
+			}
+			if row != want {
+				t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):\nrecorded: %s\nmeasured: %s",
+					countsPath, want, row)
+			}
+		})
 	}
-	rows = append(rows, interfaceCastCounts(t)...)
-	for _, count := range additionalFixtureCounts {
-		rows = append(rows, count(t)...)
-	}
-	var table strings.Builder
-	table.WriteString(countsHeader)
-	for _, row := range rows {
-		if row != "" {
-			table.WriteString(row)
-			table.WriteString("\n")
-		}
-	}
-	table.WriteString(predicateCountsTable(t))
+}
+
+// The table is whole: the header, then exactly one row per count case in countCases' order, then the predicate table,
+// which TestPredicateDirectionCountsAreRecorded holds to its measure. With each shard holding its rows to their
+// measures, that is the whole file, as one comparison of it once was. Under -update-counts it measures the predicate
+// table instead, for TestMain to write.
+func TestCountsAreRecordedTable(t *testing.T) {
+	t.Parallel()
 	if *updateCounts {
-		if err := os.WriteFile(countsPath, []byte(table.String()), 0o644); err != nil {
-			t.Fatal(err)
-		}
+		measuredPredicateCounts.Store(countsPath, predicateCountsTable(t))
 		return
 	}
 	recorded, err := os.ReadFile(countsPath)
 	if err != nil {
 		t.Fatalf("%v: record the counts with -update-counts", err)
 	}
-	if string(recorded) == table.String() {
-		return
+	body, found := strings.CutPrefix(string(recorded), countsHeader)
+	if !found {
+		t.Fatalf("%s doesn't start with the table's header", countsPath)
 	}
-	// Say which rows moved, so the failure reads as the review diff will.
-	recordedRows := map[string]string{}
-	for _, line := range strings.Split(string(recorded), "\n") {
-		if fields := strings.Split(line, " | "); len(fields) == 7 {
-			recordedRows[strings.TrimPrefix(fields[0], "| ")] = line
+	rows, _, found := strings.Cut(body, predicateCountsHeader)
+	if !found {
+		t.Fatalf("%s has no predicate direction table after its rows", countsPath)
+	}
+	lines := strings.Split(strings.TrimSuffix(rows, "\n"), "\n")
+	keys := countKeys()
+	for index := range max(len(lines), len(keys)) {
+		line, key := "", ""
+		if index < len(lines) {
+			line = lines[index]
+		}
+		if index < len(keys) {
+			key = keys[index]
+		}
+		if fields := strings.Split(line, " | "); len(fields) != 7 || strings.TrimPrefix(fields[0], "| ") != key {
+			t.Fatalf("%s row %d is %q, want the row of %q (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts)", countsPath, index+1, line, key)
 		}
 	}
-	moved := []string{}
-	for _, row := range rows {
-		if row == "" {
-			continue
-		}
-		fixture := strings.TrimPrefix(strings.Split(row, " | ")[0], "| ")
-		if recordedRows[fixture] != row {
-			moved = append(moved, fmt.Sprintf("recorded: %s\nmeasured: %s", recordedRows[fixture], row))
-		}
+}
+
+// writeCounts writes counts.md from the rows this run measured under -update-counts, keeping each row it didn't
+// measure as recorded, in countCases' order, and the predicate table measured or as recorded. It refuses a run that
+// measured no row, such as one selected with an anchored ^TestCountsAreRecorded$, which names no test now.
+func writeCounts() error {
+	recorded, err := recordedCounts()
+	if err != nil {
+		recorded = map[string]string{}
 	}
-	t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):\n%s",
-		countsPath, strings.Join(moved, "\n"))
+	var table strings.Builder
+	table.WriteString(countsHeader)
+	measured := 0
+	for _, key := range countKeys() {
+		row, ok := measuredCounts.Load(key)
+		if ok {
+			measured++
+		} else if row, ok = recorded[key]; !ok {
+			return fmt.Errorf("no row for %s: measure it with go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts", key)
+		}
+		table.WriteString(row.(string))
+		table.WriteString("\n")
+	}
+	if measured == 0 {
+		return fmt.Errorf("-update-counts measured no row of %s: select the shards with -run TestCountsAreRecorded, unanchored", countsPath)
+	}
+	predicates, ok := measuredPredicateCounts.Load(countsPath)
+	if !ok {
+		file, err := os.ReadFile(countsPath)
+		if err != nil {
+			return err
+		}
+		index := strings.Index(string(file), predicateCountsHeader)
+		if index < 0 {
+			return fmt.Errorf("%s has no predicate direction table to keep", countsPath)
+		}
+		predicates = string(file[index:])
+	}
+	table.WriteString(predicates.(string))
+	return os.WriteFile(countsPath, []byte(table.String()), 0o644)
 }

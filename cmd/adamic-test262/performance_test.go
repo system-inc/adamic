@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -20,12 +21,7 @@ func TestCompilerStartupMeasurement(t *testing.T) {
 		t.Skip("measurement only")
 	}
 	directory := t.TempDir()
-	compiler := filepath.Join(directory, "adamic")
-	build := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
-	build.Dir = "../.."
-	if output, err := build.CombinedOutput(); err != nil {
-		t.Fatalf("%v: %s", err, output)
-	}
+	compiler := buildcache.Adamic(t)
 	source := filepath.Join(directory, "program.a")
 	if err := os.WriteFile(source, []byte(program("assertSameValue(Math.abs(-4), 4);")), 0600); err != nil {
 		t.Fatal(err)

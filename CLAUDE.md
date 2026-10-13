@@ -14,7 +14,7 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/javascript`: the second backend, IR to JavaScript, carrying the same inserted checks as native.
 - `internal/flow`: a control-flow graph built from the IR, with single assignment lifted from cohere's high-level IR, for the analyses reuse in place and arenas need (#5jck546).
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
-- `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
+- `cohere/`: a submodule (cohere, which carries typescript-go). Public over HTTPS, so any machine fetches it without a key: `git submodule update --init --recursive --depth 1`.
 
 ## Compiler file ownership
 
@@ -53,9 +53,9 @@ The input tests drop to uid 65534 when run as root, so TMPDIR must be world-trav
 Add a stage 1 lint rule only under `stage1/cohere/lint/rules/<slug>/`. Its directory
 owns `rule.json`, `rule.ts`, messages, its upstream Go `oracle.go` adapter,
 `mutant.json` and raw `testdata/*.ts.txt` witnesses. Omit `order` for new rules.
-Never edit a dispatch, oracle, corpus or copied-file list. Before building the lint
-driver, run `go run ./cmd/lint-registry`; tests regenerate and validate every
-descriptor automatically. Generated `.generated/` registries stay out of Git.
+Never edit a dispatch, oracle, corpus or copied-file list. After adding or changing a
+rule, run `go run ./cmd/lint-registry` and commit `.generated/`; the tests check it is
+current and never write it, since a test that writes the tree breaks a Loom runner.
 See `docs/lint-registration.md` for the descriptor and adapter contracts.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.

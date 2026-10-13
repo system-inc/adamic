@@ -55,7 +55,7 @@ func TestMethodReplacementGap(t *testing.T) {
 	t.Logf("Node replacement/original; Adamic: %v", err)
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestRawInputGap(t *testing.T) {
 	dir := t.TempDir()
 	first := filepath.Join(dir, "malformed.ts")
@@ -90,7 +90,7 @@ func TestRawInputGap(t *testing.T) {
 	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestParserRecoveryGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {

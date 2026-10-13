@@ -18,6 +18,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -328,26 +329,10 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "values")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/values")
-	command.Dir = cohere
+	// The child guard owns hang detection.
+	binary, packageDirectory := cohereSideOracle(t)
+	command := bounded(t, binary, "-test.timeout=0", "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
@@ -511,4 +496,36 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	}
 	t.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
+}
+
+// cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
+// product (buildcache.GoTest) built ahead, and the directory go test would run it in.
+func cohereSideOracle(t testing.TB) (string, string) {
+	t.Helper()
+	directory := t.TempDir()
+	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "values")
+	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := buildcache.GoTest(t, "cohere", "values.test", "./internal/format/css/values", []string{"-overlay=" + overlayPath})
+	return binary, packageDirectory
+}
+
+func TestProduct_ValuesGoOracle(t *testing.T) {
+	t.Parallel()
+	cohereSideOracle(t)
 }

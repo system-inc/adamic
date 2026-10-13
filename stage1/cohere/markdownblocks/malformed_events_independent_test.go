@@ -88,8 +88,10 @@ func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (st
 func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{
-		Name:      "markdownblocks-malformed-events-lowered",
-		Files:     []string{"stage1/cohere/markdownblocks", "internal", "go.mod", "cohere"},
+		Name: "markdownblocks-malformed-events-lowered",
+		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
+		// complete), not the whole package and cohere; the native build below keeps the same Files.
+		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
@@ -108,7 +110,7 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 	options := native.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
 	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
@@ -328,19 +330,17 @@ func malformedEventsNode(t *testing.T, ctx context.Context, path string, argumen
 }
 
 func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
-	library, err := native.RuntimeLibraryForSource("", source, options)
-	if err != nil {
+	if err := ctx.Err(); err != nil {
 		return err
 	}
-	sourcePath := filepath.Join(filepath.Dir(output), "main.c")
-	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(filepath.Dir(output), "main.c"), []byte(source), 0644); err != nil {
 		return err
 	}
-	flags := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, sourcePath)
-	flags = append(flags, native.RuntimeLinkFlags(library)...)
-	flags = append(flags, "-lm")
-	if result, err := malformedEventsCommand(ctx, "clang", flags...).CombinedOutput(); err != nil {
-		return fmt.Errorf("native build: %w\n%s", err, result)
+	// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no build
+	// directory: given <build directory>/main.c, the sanitized port kept it in its globals' metadata, random per build
+	// (landable-17c's tree, Oct 11: markdownblocks-malformed-events-native, refs/action/ddf7d5cae0d2).
+	if err := native.Build(source, output, options); err != nil {
+		return fmt.Errorf("native build: %w", err)
 	}
 	return nil
 }
@@ -351,7 +351,7 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 	return buildcache.Product(t, buildcache.Inputs{
 		Name:      "markdownblocks-malformed-events-go-errors",
 		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
+		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
 		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
@@ -371,6 +371,8 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
 		command.Dir = cohere
 		if output, err := command.CombinedOutput(); err != nil {

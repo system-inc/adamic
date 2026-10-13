@@ -2,23 +2,18 @@ package native
 
 import (
 	"context"
-	"encoding/binary"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 )
 
-// Each gate-discoverable leaf runs one complete prefix range. Build products are
-// shared by input hashes; comparisons and sanitizer execution always run.
+// Each gate-discoverable leaf runs one complete prefix range. The corpus and the decoder are products built ahead and
+// shared by every unit of a target; each unit's own work is running its range and the comparison, which always run.
 func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	t.Helper()
-	defer checkGrainBudget(t)()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
-	defer cancel()
 	if target == "wasi" && os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("set ADAMIC_TEST_WASI=1")
 	}
@@ -26,95 +21,23 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	phase := time.Now()
+	corpusDirectory := decodeASCIICorpus(t)
+	binary := decodeASCIIDecoder(t, target)
+	t.Logf("product fetch phase %.3fs", time.Since(phase).Seconds())
+	// The unit's clock and deadline start after the fetch, as a product's build is its own unit's.
+	defer checkGrainBudget(t)()
+	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	defer cancel()
 	run := func(t *testing.T, name string, args ...string) []byte {
 		t.Helper()
-		command := exec.CommandContext(ctx, name, args...)
-		command.Dir = repository
+		command := programCommand(ctx, repository, name, args...)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			t.Fatalf("%s %v: %v\n%s", name, args, err, output)
 		}
 		return output
 	}
-	cache, err := newTestBuildCache(repository, "internal/native/decode_ascii")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cache.get = decodeCacheGet(ctx, t, repository)
-	phase := time.Now()
-	corpusDirectory, err := cache.Tree("decode-node-corpus", nil, func(destination string) error {
-		t.Log(string(run(t, "node", "internal/native/decode_ascii/corpus.mjs", filepath.Join(destination, "corpus.bin"))))
-		data, err := os.ReadFile(filepath.Join(destination, "corpus.bin"))
-		if err != nil {
-			return err
-		}
-		offsets := []int{0}
-		for offset := 0; offset < len(data); {
-			if offset+4 > len(data) {
-				return fmt.Errorf("short decoder corpus header")
-			}
-			length := int(binary.LittleEndian.Uint16(data[offset:])) + int(binary.LittleEndian.Uint16(data[offset+2:]))
-			offset += 4 + length
-			if offset > len(data) {
-				return fmt.Errorf("short decoder corpus record")
-			}
-			offsets = append(offsets, offset)
-		}
-		if len(offsets)-1 != decodePrefixes {
-			return fmt.Errorf("decoder prefixes: got %d, want %d", len(offsets)-1, decodePrefixes)
-		}
-		for _, piece := range unitRanges(decodePrefixes, decodePrefixUnitSize) {
-			path := filepath.Join(destination, piece.name()+".bin")
-			if err := os.WriteFile(path, data[offsets[piece.first]:offsets[piece.last]], 0644); err != nil {
-				return err
-			}
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("corpus phase %.3fs (including cache wait)", time.Since(phase).Seconds())
-	runtimeDirectory := filepath.Join(repository, "internal/native/runtime")
-	if alternate := os.Getenv("ADAMIC_DECODE_RUNTIME"); alternate != "" {
-		runtimeDirectory = alternate
-	}
-	sources, err := filepath.Glob(filepath.Join(runtimeDirectory, "*.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(sources) == 0 {
-		t.Fatal("no runtime sources")
-	}
-	compiler := "clang"
-	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls", "-I", runtimeDirectory}
-	if target == "wasi" {
-		if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-			t.Skip("set ADAMIC_TEST_WASI=1")
-		}
-		sysroot := os.Getenv("WASI_SYSROOT")
-		if sysroot == "" {
-			t.Fatal("WASI_SYSROOT missing")
-		}
-		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin/clang")
-		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+sysroot, "-DADAMIC_TARGET_WASI=1", "-Wl,-z,stack-size=1048576")
-	} else {
-		flags = append(flags, "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
-	}
-	snapshot, err := readRuntime(os.DirFS(runtimeDirectory), ".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var contents [][]byte
-	for _, file := range snapshot {
-		contents = append(contents, []byte(file.name), file.contents)
-	}
-	phase = time.Now()
-	binary, err := buildDecodeObjects(ctx, cache, repository, compiler, target, flags, sources, snapshot, contents)
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("compile phase %.3fs (including cache wait)", time.Since(phase).Seconds())
 	phase = time.Now()
 	piece := unitRanges(decodePrefixes, decodePrefixUnitSize)[index]
 	corpus := filepath.Join(corpusDirectory, piece.name()+".bin")

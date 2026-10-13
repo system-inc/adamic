@@ -3,7 +3,6 @@
 import argparse
 import fcntl
 import json
-import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -13,8 +12,8 @@ from artifact import prepare, payload_digest
 def prepare_shared(cache):
     prepared = prepare(cache)
     artifact = Path(prepared['tree']).parent
-    # Apply already installs this locked stock parser. Bundle it for per-unit caches.
-    source = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))) / 'api/node_modules/typescript'
+    # The tree's locked stock parser, stage3/api's installed packages. Bundle it for per-unit caches.
+    source = Path(__file__).resolve().parents[1] / 'api/node_modules/typescript'
     with (artifact / 'shards.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         stock = artifact / 'api'

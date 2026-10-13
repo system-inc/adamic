@@ -5,10 +5,12 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"io"
 	"os"
 	"os/exec"
@@ -21,6 +23,12 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
 	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
+		// in dir with PWD to match. A program a test built (the Go oracle, the native build) runs as named, with this
+		// process's environment.
+		cmd = toolchain.CommandIn(dir, name, args...)
+	}
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
 		t.Fatal(err)
@@ -53,9 +61,12 @@ func oracle(t *testing.T) string {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "go-oracle")
-	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual, filepath.Join(root, "adamic_helper_descriptors.go"))
-	return binary
+	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
+	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual+" "+filepath.Join(root, "adamic_helper_descriptors.go"), []string{"-overlay=" + path})
+}
+func TestProduct_HelperOracle(t *testing.T) {
+	t.Parallel()
+	oracle(t)
 }
 func build(t *testing.T, directory string) string {
 	t.Helper()
@@ -74,8 +85,8 @@ func build(t *testing.T, directory string) string {
 	return binary
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestHelpersMatchCohere(t *testing.T) {
+	t.Parallel()
 	goOracle := oracle(t)
 	catalog := run(t, "", goOracle, "catalog")
 	descriptor := run(t, "", goOracle, "descriptors")
@@ -97,7 +108,7 @@ func TestHelpersMatchCohere(t *testing.T) {
 	entry, _ := filepath.Abs("main.ts")
 	node := run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, catalogPath)
 	compare(t, node, want)
-	compare(t, run(t, "", build(t, "."), cases, catalogPath), want)
+	compare(t, run(t, "", helperMutantProduct(t, helperClean), cases, catalogPath), want)
 	t.Logf("%d oracle output lines matched Go, Node and sanitized native", len(strings.Split(strings.TrimSpace(string(want)), "\n")))
 }
 func compare(t *testing.T, got, want []byte) {
@@ -153,9 +164,9 @@ func smallFixture(t *testing.T, corpus any) string {
 	return path
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestMessageRefusalsMatchGo(t *testing.T) {
-	binary := build(t, ".")
+	t.Parallel()
+	binary := helperMutantProduct(t, helperClean)
 	goOracle := oracle(t)
 	catalog, _ := filepath.Abs("testdata/catalog.json")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
@@ -184,6 +195,9 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 		for _, command := range [][]string{{binary, path, catalog}, {"node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog}} {
 			// Refusals are silent until their final panic; protect startup with FirstOutput.
 			cmd := exec.Command(command[0], command[1:]...)
+			if !strings.ContainsRune(command[0], filepath.Separator) { // node, through internal/toolchain; the native build runs as named
+				cmd = toolchain.Command(command[0], command[1:]...)
+			}
 			output, err := os.CreateTemp(t.TempDir(), "stdout-")
 			if err != nil {
 				t.Fatal(err)
@@ -202,8 +216,8 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 	t.Logf("%d message refusal cases match Go on Node and sanitized native", len(cases))
 }
 
-// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestKnownGapsAreExplicit(t *testing.T) {
+	t.Parallel()
 	corpus := map[string]any{"Definitions": map[string]string{
 		"regex":  `{"type":"array","items":{"type":"string","pattern":"x"}}`,
 		"custom": `{"kind":"unsupported"}`,
@@ -220,5 +234,5 @@ func TestKnownGapsAreExplicit(t *testing.T) {
 	entry, _ := filepath.Abs("main.ts")
 	want := []byte("NotYet: unsupported schema keyword pattern\nNotYet: custom or unsupported Go option type\nNotYet: Unicode fold for untagged option keys\nvalid\n")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog), want)
-	compare(t, run(t, "", build(t, "."), path, catalog), want)
+	compare(t, run(t, "", helperMutantProduct(t, helperClean), path, catalog), want)
 }

@@ -44,6 +44,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const token = "product-identity-local-token"
@@ -180,9 +182,7 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 	}
 	var units []productUnit
 	for _, directory := range directories {
-		command := exec.Command("go", "test", "-list", "^TestProduct_", directory)
-		command.Dir = root
-		output, err := command.Output()
+		output, err := toolchain.CommandIn(root, "go", "test", "-list", "^TestProduct_", directory).Output()
 		if err != nil {
 			return nil, fmt.Errorf("go test -list %s: %v", directory, err)
 		}
@@ -261,7 +261,18 @@ func (m *modeResult) runWith(root, scratch, address, tokenPath string, unit prod
 		log = strings.TrimSuffix(log, ".jsonl") + "-flipped.jsonl"
 	}
 	arguments := []string{"test", "-json", "-count=1", "-run", "^(" + strings.Join(unit.tests, "|") + ")$", "-parallel", strconv.Itoa(parallel), "-timeout", timeout.String(), unit.directory}
-	command := exec.Command("go", arguments...)
+	// A unit's run, as a runner gives it: this process's whole environment under the mode's own, with the toolchain's
+	// go, told it stands in root.
+	goPath, err := toolchain.Path("go")
+	if err != nil {
+		return runOutcome{}, err
+	}
+	absolute, err := filepath.Abs(root)
+	if err != nil {
+		return runOutcome{}, err
+	}
+	environment["PWD"] = absolute
+	command := exec.Command(goPath, arguments...)
 	command.Dir = root
 	command.Env = withEnvironment(os.Environ(), environment)
 	output, _ := command.CombinedOutput()
@@ -964,7 +975,7 @@ func elsewhere(root, scratch, address, tokenPath string, server *store, units []
 		{"-C", other, "checkout", "-q", "--detach", head},
 		{"-C", other, "-c", "user.name=productidentity", "-c", "user.email=productidentity@localhost", "commit", "-q", "--no-verify", "--allow-empty", "-m", "An unrelated commit"},
 	} {
-		if output, err := exec.Command("git", arguments...).CombinedOutput(); err != nil {
+		if output, err := toolchain.GitCommand(arguments...).CombinedOutput(); err != nil {
 			fmt.Printf("FAIL elsewhere: git %s: %v\n%s", strings.Join(arguments, " "), err, output)
 			return false
 		}
@@ -1087,7 +1098,7 @@ func holdsArchive(found product) bool {
 }
 
 func gitOutput(directory string, arguments ...string) (string, error) {
-	output, err := exec.Command("git", append([]string{"-C", directory}, arguments...)...).Output()
+	output, err := toolchain.GitCommandIn(directory, arguments...).Output()
 	return strings.TrimSpace(string(output)), err
 }
 

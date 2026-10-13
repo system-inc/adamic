@@ -31,10 +31,10 @@ func TestPublishedCopyModeIsPrivate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 85*time.Second)
+	// The generator is built ahead, so the deadline covers its run alone, not a go run's compile.
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", "run", "main.go", root, input, output)
-	command.Env = append(os.Environ(), "GOWORK=off")
+	command := exec.CommandContext(ctx, statecopy(t), root, input, output)
 	command.Stdout, command.Stderr = log, log
 	err = command.Run()
 	closeErr := log.Close()

@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: interleaved throughput measurements share the same CPUs.
@@ -61,8 +62,8 @@ func TestPrinterThroughput(t *testing.T) {
 		t.Fatal(err)
 	}
 	goBinary := filepath.Join(directory, "cohere")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, fake)
-	command.Dir = cohere
+	// The bench's own build, not a product: only this test, behind its flag, reads it.
+	command := toolchain.CommandIn(cohere, "go", "build", "-overlay="+overlayPath, "-o", goBinary, fake)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go driver: %v\n%s", err, output)
 	}

@@ -264,20 +264,51 @@ for (const count of [@COUNTS@]) {
 process.stdout.write(lines.join('\n') + '\n');
 `
 
-func TestStringIndexMatchesNode(t *testing.T) {
+// The code points each sweep is made from, by name. One pattern's sweep is as much as one test
+// should carry alone, so each is its own top-level test below, and
+// TestStringIndexPatternsEachHaveOneTest holds the two in step.
+var stringIndexPatterns = map[string]string{
+	"mixed": "0x61, 0xe9, 0x4e16, 0x1f30d, 0x62, 0xd800, 0x63, 0x1f600, 0x1f600, 0xdc00, 0x3b1, 0x20, 0xffff, 0x10ffff, 0xdbff, 0xdfff",
+	// Lone high halves separated from low halves: no supplementary points can form.
+	"BMP":            "0x61, 0xe9, 0x4e16, 0x62, 0xd800, 0x63, 0x3b1, 0x20, 0xffff, 0xdbff",
+	"BMP low halves": "0x61, 0xe9, 0x4e16, 0xdc00, 0xdfff, 0x3b1, 0xffff",
+	"ASCII":          "0x61, 0x62, 0x20, 0x7f",
+}
+
+func TestStringIndexMatchesNodeMixed(t *testing.T) {
 	t.Parallel()
-	for _, pattern := range []struct{ name, points string }{
-		{"mixed", "0x61, 0xe9, 0x4e16, 0x1f30d, 0x62, 0xd800, 0x63, 0x1f600, 0x1f600, 0xdc00, 0x3b1, 0x20, 0xffff, 0x10ffff, 0xdbff, 0xdfff"},
-		// Lone high halves separated from low halves: no supplementary points can form.
-		{"BMP", "0x61, 0xe9, 0x4e16, 0x62, 0xd800, 0x63, 0x3b1, 0x20, 0xffff, 0xdbff"},
-		{"BMP low halves", "0x61, 0xe9, 0x4e16, 0xdc00, 0xdfff, 0x3b1, 0xffff"},
-		{"ASCII", "0x61, 0x62, 0x20, 0x7f"},
-	} {
-		t.Run(pattern.name, func(t *testing.T) {
-			t.Parallel()
-			checkStringIndex(t, pattern.points)
-		})
+	runStringIndexPattern(t, "mixed")
+}
+
+func TestStringIndexMatchesNodeBMP(t *testing.T) {
+	t.Parallel()
+	runStringIndexPattern(t, "BMP")
+}
+
+func TestStringIndexMatchesNodeBMPLowHalves(t *testing.T) {
+	t.Parallel()
+	runStringIndexPattern(t, "BMP low halves")
+}
+
+func TestStringIndexMatchesNodeASCII(t *testing.T) {
+	t.Parallel()
+	runStringIndexPattern(t, "ASCII")
+}
+
+// A pattern added to the table without its test, or a test naming a pattern that isn't there,
+// fails here without building anything.
+func TestStringIndexPatternsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	checkNamedWrappers(t, "string_index_test.go", "TestStringIndexMatchesNode", "runStringIndexPattern", stringIndexPatterns)
+}
+
+func runStringIndexPattern(t *testing.T, name string) {
+	t.Helper()
+	points, ok := stringIndexPatterns[name]
+	if !ok {
+		t.Fatalf("no index pattern %q", name)
 	}
+	checkStringIndex(t, points)
 }
 
 func checkStringIndex(t *testing.T, pattern string) {

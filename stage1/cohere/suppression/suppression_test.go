@@ -18,6 +18,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -255,7 +256,8 @@ func askedCases(t *testing.T) (string, string) {
 }
 
 // cohereSide runs testdata/cohere_side_test.go inside cohere's suppression package, by overlay, with a
-// request.
+// request. The package's test binary with the harness laid over it is a product (buildcache.GoTest), built ahead, and
+// run here in the package's directory, where go test would run it.
 func cohereSide(t *testing.T, request map[string]any) {
 	t.Helper()
 	directory := t.TempDir()
@@ -267,26 +269,9 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "lint", "suppression")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/lint/suppression")
-	command.Dir = cohere
+	binary, packageDirectory := cohereSideOracle(t)
+	command := bounded(t, binary, "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
@@ -442,4 +427,36 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	}
 	t.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
+}
+
+// cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
+// product (buildcache.GoTest) built ahead, and the directory go test would run it in.
+func cohereSideOracle(t testing.TB) (string, string) {
+	t.Helper()
+	directory := t.TempDir()
+	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	packageDirectory := filepath.Join(cohere, "internal", "lint", "suppression")
+	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := buildcache.GoTest(t, "cohere", "suppression.test", "./internal/lint/suppression", []string{"-overlay=" + overlayPath})
+	return binary, packageDirectory
+}
+
+func TestProduct_SuppressionGoOracle(t *testing.T) {
+	t.Parallel()
+	cohereSideOracle(t)
 }

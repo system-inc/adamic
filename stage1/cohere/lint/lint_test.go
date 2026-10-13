@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"io/fs"
 	"os"
@@ -73,6 +74,16 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, go, git, clang) is a tool: the one internal/toolchain resolves, with a tool's environment,
+		// not PATH's, run in directory with PWD to match; git gets GitEnv. A program a test built (the Go oracle, a
+		// port) runs as named, with this process's environment.
+		if name == "git" {
+			command = toolchain.GitCommandIn(directory, args...)
+		} else {
+			command = toolchain.CommandIn(directory, name, args...)
+		}
+	}
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -92,21 +103,6 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 		t.Fatal(err)
 	}
 	return execution{data, duration}
-}
-
-func goOracle(t *testing.T) string {
-	return goOracleFrom(t, ".")
-}
-func goOracleFrom(t *testing.T, sourceRoot string) string {
-	t.Helper()
-	if isPackage(sourceRoot) {
-		return lintGoOracleProduct(t)
-	}
-	binary, err := goOracleIn(sourceRoot, t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	return binary
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
@@ -328,6 +324,10 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
 	} {
 		command := exec.Command(side.name, side.args...)
+		if side.name == "node" {
+			// Node is a tool, the one internal/toolchain resolves, as execute runs it.
+			command = toolchain.Command(side.name, side.args...)
+		}
 		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
 		if err != nil {
 			t.Fatal(err)
@@ -466,6 +466,12 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 	return copyPort(t, t.TempDir(), from, to, targets...)
 }
 func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+	return copyPortImporting(t, directory, rewritePortImports, from, to, targets...)
+}
+
+// copyPortImporting is copyPort with imports, which spells each copied file's imports: rewritePortImports points the
+// ones leaving the package at this checkout, and keepPortImports leaves them as written (portTree).
+func copyPortImporting(t *testing.T, directory string, imports func(t *testing.T, file, source string) string, from, to string, targets ...string) string {
 	if len(targets) == 0 && from != "" {
 		targets = []string{"lint.ts"}
 	}
@@ -486,7 +492,7 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 			changed++
 		}
 		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
-			source = rewritePortImports(t, file, source)
+			source = imports(t, file, source)
 		}
 		destination := filepath.Join(directory, file)
 		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
@@ -525,7 +531,7 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 // Not parallel: shares the CPU with interleaved timing samples.
 func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
@@ -548,7 +554,7 @@ func TestLegacyMutants(t *testing.T) {
 func TestDecorationOptionMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
 	for _, side := range []struct {
 		name string
@@ -571,7 +577,7 @@ func TestCountGuardMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	path := manifest(t, []string{source})
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	answer := execute(t, "", oracle, "--manifest", path).output
 	count := execute(t, "", oracle, "--manifest", path, "--count").output
 	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
@@ -619,7 +625,7 @@ func TestThroughput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	binary := buildPort(t, directory, false)
 	machine := execute(t, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")

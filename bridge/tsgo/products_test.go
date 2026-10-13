@@ -13,11 +13,13 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
@@ -27,8 +29,57 @@ var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a"
 // local module replacements, rather than an exported package's build ID.
 func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Inputs {
 	t.Helper()
-	command := exec.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
-	command.Dir = repository
+	sources := bridgeDependencies(t, repository)
+	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
+		"product=" + name,
+		"go build -trimpath -buildmode=c-archive; go build -trimpath; go test -c -trimpath; -overlay; -o=<product>",
+		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -ffile-compilation-dir=. -I bridge/tsgo -lpthread -ldl -lm, by relative names from <repository>",
+		"native build --tsgo <archive>; --sanitize; --count",
+		"repository=" + repository,
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs.Files = append(inputs.Files, sources.files...)
+	inputs.Flags = append(inputs.Flags, sources.external...)
+
+	// Go reports effective values, including settings loaded from GOENV. Runtime
+	// cache locations and logging switches do not change the compiled product.
+	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
+	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
+		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+	}
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
+	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
+		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+	}
+	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
+		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
+		if len(fields) != 0 {
+			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
+		}
+	}
+	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
+	// asks for what Workshop built. Every go build here passes -trimpath itself rather than trusting GOFLAGS for it
+	// (Loom's tree builder sets only -buildvcs=false), so stage 0, the oracle and the archives name no checkout: go then
+	// maps the module's directory out of cgo's C compiles too (-ffile-prefix-map), and the drivers and natives linking
+	// an archive carry none of its paths (#ax8mr31: tsgo-asan.a gave bridge-test-api 689).
+	return inputs
+}
+
+// bridgeSources is the part of every bridge product's key that doesn't depend on its name: the repository's files
+// the products compile, sorted, and each module-cache source as a named content fingerprint.
+type bridgeSources struct{ files, external []string }
+
+// bridgeDependencies discovers the bridge's sources with go list, once per process for each repository: every
+// product a unit asks for keys by them, and they ran go list about 86 times a run. Parallel units wait on the
+// first discovery; a failed one isn't remembered. Callers copy the slices into Inputs of their own.
+func bridgeDependencies(t testing.TB, repository string) bridgeSources {
+	t.Helper()
+	bridgeDiscovered.Lock()
+	defer bridgeDiscovered.Unlock()
+	if sources, ok := bridgeDiscovered.sources[repository]; ok {
+		return sources
+	}
+	command := toolchain.CommandIn(repository, "go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
 	data, err := command.Output()
 	if err != nil {
 		t.Fatalf("product dependencies: %v", err)
@@ -42,7 +93,7 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		var dependency struct {
 			Dir                                                                        string
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			Module                                                                     *struct{ GoMod, Dir string }
+			Module                                                                     *struct{ Path, Version, GoMod, Dir string }
 		}
 		if err := decoder.Decode(&dependency); err == io.EOF {
 			break
@@ -65,7 +116,14 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 					if err != nil {
 						t.Fatal(err)
 					}
-					external[path] = fmt.Sprintf("%x", sha256.Sum256(content))
+					// Named by module, version and the file's path inside the module, never by where this machine's module
+					// cache sits: a Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed every
+					// bridge product apart from Workshop's (landable-10's run, 35 go builds on Cloud).
+					inside, err := filepath.Rel(dependency.Module.Dir, path)
+					if err != nil {
+						t.Fatal(err)
+					}
+					external[dependency.Module.Path+"@"+dependency.Module.Version+"/"+filepath.ToSlash(inside)] = fmt.Sprintf("%x", sha256.Sum256(content))
 				}
 			}
 		}
@@ -91,69 +149,46 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 			files[optional] = true
 		}
 	}
-	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
-		"product=" + name,
-		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
-		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
-		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -I bridge/tsgo -lpthread -ldl -lm",
-		"native build --tsgo <archive>; --sanitize; --count",
-		"repository=" + repository,
-	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	var sources bridgeSources
 	for file := range files {
-		inputs.Files = append(inputs.Files, file)
+		sources.files = append(sources.files, file)
 	}
-	sort.Strings(inputs.Files)
+	sort.Strings(sources.files)
 	var externalNames []string
 	for path := range external {
 		externalNames = append(externalNames, path)
 	}
 	sort.Strings(externalNames)
 	for _, path := range externalNames {
-		inputs.Flags = append(inputs.Flags, "external-source:"+path+"="+external[path])
+		sources.external = append(sources.external, "external-source:"+path+"="+external[path])
 	}
-
-	// Go reports effective values, including settings loaded from GOENV. Runtime
-	// cache locations and logging switches do not change the compiled product.
-	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
-	for _, variable := range []string{"ADAMIC_GATE_UNCACHED", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "WASI_SYSROOT", "PATH", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
-		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+	if bridgeDiscovered.sources == nil {
+		bridgeDiscovered.sources = map[string]bridgeSources{}
 	}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
-	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
-	}
-	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
-		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "))
-		if len(fields) != 0 {
-			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
-		}
-	}
-	// Stage 0, the oracle and the checker archive are plain go builds: with -trimpath and -buildvcs=false in effect
-	// (cloud/setup.sh exports both, @system_adamic's ruling, Oct 9) their bytes don't depend on where the checkout sits,
-	// so their key names the repository by role and a checkout at any path fetches what main's gate published
-	// (cmd/productidentity -elsewhere proves it). Every other product keeps the path: clang's debug information names
-	// it, and an overlay's map does.
-	if bridgePathFreeProducts[name] && bridgeBuildsArePathFree() {
-		for index, flag := range inputs.Flags {
-			inputs.Flags[index] = strings.ReplaceAll(flag, repository, "<repository>")
-		}
-	}
-	return inputs
+	bridgeDiscovered.sources[repository] = sources
+	return sources
 }
 
-var bridgePathFreeProducts = map[string]bool{"stage0": true, "oracle": true, "tsgo.a": true}
-
-// bridgeBuildsArePathFree says whether go builds here leave out the checkout's path and commit, as GOFLAGS says.
-func bridgeBuildsArePathFree() bool {
-	var trimmed, unstamped bool
-	for _, flag := range strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", "GOFLAGS"), "go env GOFLAGS: ")) {
-		trimmed = trimmed || flag == "-trimpath" || flag == "-trimpath=true"
-		unstamped = unstamped || flag == "-buildvcs=false"
-	}
-	return trimmed && unstamped
+var bridgeDiscovered struct {
+	sync.Mutex
+	sources map[string]bridgeSources
 }
 
+// bridgeProduct is the product name of the bridge recipe, built ahead. Its path is remembered for the process, since
+// a unit fetches each product more than once and every fetch hashes all of cmd/adamic's sources again.
 func bridgeProduct(t testing.TB, repository, name string) string {
+	t.Helper()
+	if path, ok := bridgeProducts.Load(repository + "\x00" + name); ok {
+		return path.(string)
+	}
+	path := fetchBridgeProduct(t, repository, name)
+	bridgeProducts.Store(repository+"\x00"+name, path)
+	return path
+}
+
+var bridgeProducts sync.Map
+
+func fetchBridgeProduct(t testing.TB, repository, name string) string {
 	t.Helper()
 	inputs := bridgeProductInputs(t, repository, name)
 	directory := buildcache.Product(t, inputs, func(directory string) error {
@@ -180,11 +215,31 @@ func bridgeProduct(t testing.TB, repository, name string) string {
 	return filepath.Join(directory, name)
 }
 
+// bridgeProductDeadline is when a product build stops: the test's own deadline (go test's -timeout, whose default of
+// 10 minutes is how loom build-tree runs a product test, and a product unit's 600 s ceiling), less a margin to record
+// the build's log. A fixed budget only turned slow into
+// failed: measured on Workshop Oct 10, one cold c-archive of the checker took 259 to 270 s at 8 jobs, and in the
+// combined proof's -p=12 build the six archives, building at once, were all still running when 5 minutes killed them
+// (and every native waiting on them failed at 456 to 469 s). With no test deadline (go test -timeout=0), the build
+// is bounded only by the run's, as Loom's unit ceiling bounds it.
+func bridgeProductDeadline(t testing.TB) (context.Context, context.CancelFunc) {
+	if test, ok := t.(interface{ Deadline() (time.Time, bool) }); ok {
+		if deadline, ok := test.Deadline(); ok {
+			return context.WithDeadline(context.Background(), deadline.Add(-10*time.Second))
+		}
+	}
+	return context.WithCancel(context.Background())
+}
+
 func buildBridgeProduct(t testing.TB, repository, directory, name string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	ctx, cancel := bridgeProductDeadline(t)
 	defer cancel()
 	run := func(command *exec.Cmd) error {
 		command.Dir = repository
+		if command.Env != nil {
+			// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
+			command.Env = append(command.Env, "PWD="+repository)
+		}
 		output, err := command.CombinedOutput()
 		if write := os.WriteFile(filepath.Join(directory, "build.log"), output, 0o644); write != nil {
 			return write
@@ -211,13 +266,23 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		if err != nil {
 			return "", err
 		}
-		output := filepath.Join(directory, "overlay.json")
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		output := filepath.Join(t.TempDir(), "overlay.json")
 		return output, os.WriteFile(output, data, 0o644)
 	}
 	destination := filepath.Join(directory, name)
-	command := func(tool string, arguments ...string) *exec.Cmd { return exec.CommandContext(ctx, tool, arguments...) }
+	// A tool named bare (go, clang) is toolchain's program, under toolchain's environment; stage 0, named by its
+	// path, runs as itself.
+	command := func(tool string, arguments ...string) *exec.Cmd {
+		cmd := exec.CommandContext(ctx, tool, arguments...)
+		if !strings.ContainsRune(tool, filepath.Separator) {
+			resolved := toolchain.Command(tool, arguments...)
+			cmd.Path, cmd.Err, cmd.Env = resolved.Path, resolved.Err, resolved.Env
+		}
+		return cmd
+	}
 	if strings.HasSuffix(name, ".a") {
-		arguments := []string{"build", "-buildmode=c-archive", "-o", destination}
+		arguments := []string{"build", "-trimpath", "-buildmode=c-archive", "-o", destination}
 		mutants := map[string][3]string{
 			"length.a": {"bridge/tsgo/archive/main.go", "result._type = buffer(answer.Type)", "result._type = buffer(answer.Type)\n\tresult._type.length++"},
 			"stale.a":  {"bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant: retain the released program in the live registry."},
@@ -235,7 +300,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		}
 		cmd := command("go", append(arguments, "./bridge/tsgo/archive")...)
 		if name == "tsgo-asan.a" {
-			cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			cmd.Env = append(cmd.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
 		return run(cmd)
 	}
@@ -244,7 +309,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		if name == "oracle" {
 			pkg = "./bridge/tsgo/oracle"
 		}
-		return run(command("go", "build", "-o", destination, pkg))
+		return run(command("go", "build", "-trimpath", "-o", destination, pkg))
 	}
 	if name == "region-stage0" || name == "linkage.test" {
 		path, before, after := "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)"
@@ -256,14 +321,16 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 			return err
 		}
 		if name == "linkage.test" {
-			return run(command("go", "test", "-c", "-overlay", replacement, "-o", destination, "./bridge/tsgo"))
+			return run(command("go", "test", "-c", "-trimpath", "-overlay", replacement, "-o", destination, "./bridge/tsgo"))
 		}
-		return run(command("go", "build", "-overlay", replacement, "-o", destination, "./cmd/adamic"))
+		return run(command("go", "build", "-trimpath", "-overlay", replacement, "-o", destination, "./cmd/adamic"))
 	}
 	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
 	if archiveName, ok := drivers[name]; ok {
 		archive := bridgeProduct(t, repository, archiveName)
-		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-I", filepath.Join(repository, "bridge/tsgo"), filepath.Join(repository, "bridge/tsgo/testdata/api.c"), archive, "-lpthread", "-ldl", "-lm", "-o", destination))
+		// The driver compiles from the repository (run's directory) by relative names, with its compilation directory
+		// named ".", so the sanitized binary's globals and debug info name no checkout (#rmmw95x).
+		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-ffile-compilation-dir=.", "-I", "bridge/tsgo", "bridge/tsgo/testdata/api.c", archive, "-lpthread", "-ldl", "-lm", "-o", destination))
 	}
 	binaries := map[string]struct {
 		compiler, fixture, archive string

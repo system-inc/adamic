@@ -112,10 +112,12 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 	t.Logf("coverage: %d active pieces, %d query positions, 5 query analyses; each piece has one owner for 1..40 shards", active, queries)
 }
 
-// Not parallel: this cache proof changes its cache directory with t.Setenv.
+// Not parallel: this cache proof changes its cache directory with t.Setenv. Its products are its own: one-line files in
+// a cache of its own, never the run's, so no TestProduct_ builds them and its census stays out of the run's.
 func TestBridgeProductCacheIsVerified(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	t.Setenv("ADAMIC_BUILD_LOG", filepath.Join(t.TempDir(), "builds.log"))
 	builds := 0
 	build := func(directory string) error {
 		builds++

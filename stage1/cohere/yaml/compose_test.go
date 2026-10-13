@@ -2,55 +2,19 @@ package yaml
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func goCompose(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	adapter, err := filepath.Abs("testdata/compose_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	numbers := filepath.Join(root, "cohere/internal/format/yaml/compose/numbers.go")
-	original, err := os.ReadFile(numbers)
-	if err != nil {
-		t.Fatal(err)
-	}
-	exports, err := os.ReadFile("testdata/compose_exports.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := strings.Replace(string(original), "import (", "import (\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", 1) + string(exports)
-	replacement := filepath.Join(t.TempDir(), "numbers.go")
-	if err := os.WriteFile(replacement, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): adapter, numbers: replacement}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "go-compose")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison")
+	binary := goComposeOracle(t)
 	expected := run(t, "", nil, binary, cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
+		yamlArtifacts.Lock()
+		defer yamlArtifacts.Unlock()
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
 			t.Fatal(err)
 		}
@@ -73,6 +37,18 @@ func goCompose(t *testing.T, cases string) []byte {
 		}
 	}
 	return expected
+}
+
+// goComposeOracle is formatter_comparison over testdata/compose_go.go, with compose's numbers.go opened to it by
+// testdata/compose_exports.txt, a product built ahead (#5qykzj5).
+func goComposeOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-compose", "compose_go.go", numbersExports(t, "\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "compose_exports.txt")...)
+}
+
+func TestProduct_YAMLComposeGo(t *testing.T) {
+	t.Parallel()
+	goComposeOracle(t)
 }
 func composeCases(t *testing.T) (string, int, int) {
 	path, files, count := lexCases(t)
@@ -101,106 +77,68 @@ func composeCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-compose-* diagnostic files.
-func TestComposeMatchGo(t *testing.T) {
-	cases, files, count := composeCases(t)
-	expected := goCompose(t, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	entry, err := filepath.Abs("compose_main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "compose")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
-	runner := filepath.Join(root, "oracle/node.mjs")
-	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
-	emitted := filepath.Join(t.TempDir(), "compose.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
+// composeMatchGo compares compose's port build (port_products_test.go) with Go over composeCases, in two shards.
+var composeMatchGo = yamlMatchGo{family: "compose", shards: 2, cases: composeCases, oracle: goComposeOracle, build: yamlComposeBuild, entry: "compose_main.ts"}
+
+func TestComposeMatchGo_000(t *testing.T) { t.Parallel(); composeMatchGoShard(t, 0) }
+func TestComposeMatchGo_001(t *testing.T) { t.Parallel(); composeMatchGoShard(t, 1) }
+
+func TestComposeMatchGoUnion(t *testing.T) {
+	t.Parallel()
+	composeMatchGo.union(t)
+}
+
+func TestComposeMatchGoPlantedFailure(t *testing.T) {
+	t.Parallel()
+	composeMatchGo.planted(t)
+}
+
+func composeMatchGoShard(t *testing.T, shard int) {
+	t.Helper()
+	result := composeMatchGo.run(t, shard)
+	expected := result.expected
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
-	external := run(t, "", nil, "node", "testdata/compose_library.mjs", library, cases)
+	external := run(t, "", nil, "node", "testdata/compose_library.mjs", library, result.path)
 	for _, side := range []struct {
 		name string
 		out  []byte
-	}{{"native ASan/UBSan/LSan", actual}, {"Node", node}, {"emitted JavaScript", backend}, {"yaml@2.9.0", external}} {
+	}{{"native ASan/UBSan/LSan", result.native}, {"Node", result.node}, {"emitted JavaScript", result.emitted}, {"yaml@2.9.0", external}} {
 		if !bytes.Equal(side.out, expected) {
-			os.WriteFile("/tmp/stage1-yaml-compose-expected.txt", expected, 0644)
-			os.WriteFile("/tmp/stage1-yaml-compose-actual.txt", side.out, 0644)
+			os.WriteFile(composeMatchGo.diagnostic(shard, "expected"), expected, 0644)
+			os.WriteFile(composeMatchGo.diagnostic(shard, "actual"), side.out, 0644)
 			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
-	t.Logf("%d repository files, %d cases, %d compose answer bytes identical on all five sides", files, count, len(expected))
+	t.Logf("%d repository files, %d of %d cases, %d compose answer bytes identical on all five sides", result.files, len(result.indices), len(result.all), len(expected))
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
+var composeMutants = yamlMutants{family: "compose", entry: "compose_main.ts", mutated: "composer.ts", mutations: []yamlMutation{
+	{"document start marker lost", "this.document.directives.docStart = props.found >= 0;", "this.document.directives.docStart = false;"},
+	{"block mapping pair lost", "this.node(result).items.push(this.pair(key, value, index, itemIndex));", "this.node(result).items.push(this.pair(key, -1, index, itemIndex));"},
+	{"implicit key limit skipped", "properties.start < this.parser.get(valueProps.found).offset - 1024", "properties.start < this.parser.get(valueProps.found).offset - 999999"},
+}}
+
+func TestProduct_YAMLComposeMutant000(t *testing.T) { t.Parallel(); composeMutants.product(t, 0) }
+func TestProduct_YAMLComposeMutant001(t *testing.T) { t.Parallel(); composeMutants.product(t, 1) }
+func TestProduct_YAMLComposeMutant002(t *testing.T) { t.Parallel(); composeMutants.product(t, 2) }
+
 func TestComposeMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := composeCases(t)
 	expected := goCompose(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"document start marker lost", "this.document.directives.docStart = props.found >= 0;", "this.document.directives.docStart = false;"},
-		{"block mapping pair lost", "this.node(result).items.push(this.pair(key, value, index, itemIndex));", "this.node(result).items.push(this.pair(key, -1, index, itemIndex));"},
-		{"implicit key limit skipped", "properties.start < this.parser.get(valueProps.found).offset - 1024", "properties.start < this.parser.get(valueProps.found).offset - 999999"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range composeMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			entries, err := filepath.Glob("*.ts")
-			if err != nil {
-				t.Fatal(err)
-			}
-			for _, file := range entries {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "composer.ts" {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			entry := filepath.Join(directory, "compose_main.ts")
-			program, err := load.Load([]string{entry})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(lowered), binary, native.Options{}); err != nil {
-				t.Fatal(err)
-			}
-			nativeOut := run(t, "", nil, binary, cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
+			product := composeMutants.product(t, index)
+			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "compose_main.ts"), cases)
 			for _, side := range []struct {
 				name string
 				out  []byte

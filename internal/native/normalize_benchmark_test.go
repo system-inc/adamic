@@ -2,9 +2,10 @@ package native
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // TestNormalizeLongMeasurements is the integration performance probe, not an oracle fixture.
@@ -34,7 +35,12 @@ func TestNormalizeLongMeasurements(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	command := exec.Command("python3", driver, binary, oracle, destination)
+	// The driver runs node by the path toolchain resolves, never by its name on python3's PATH.
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := toolchain.Command("python3", driver, binary, node, oracle, destination)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("measurements: %v\n%s", err, output)
 	} else {
@@ -74,7 +80,7 @@ console.log(elapsed,Buffer.byteLength(out),out.codePointAt(0),out.charCodeAt(out
 `
 
 const normalizeLongDriver = `import subprocess,os,json,sys,time,resource,threading
-binary, oracle, destination = sys.argv[1:]
+binary, node, oracle, destination = sys.argv[1:]
 out=open(destination,'w',buffering=1)
 failed=False
 def limit(): resource.setrlimit(resource.RLIMIT_AS,(12*1024**3,12*1024**3))
@@ -83,7 +89,7 @@ for n in [100000,10000000,100000000,29826160]:
   for form in (['NFC','NFD','NFKC','NFKD'] if n!=29826160 else ['NFKD']):
    for repeat in range(5):
     for impl in ['native','node']:
-     command=[binary,str(kind),str(n),form] if impl=='native' else ['node',oracle,str(kind),str(n),form]
+     command=[binary,str(kind),str(n),form] if impl=='native' else [node,oracle,str(kind),str(n),form]
      load=os.getloadavg(); start=time.monotonic()
      r=subprocess.Popen(command,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,preexec_fn=limit if impl=='native' else None)
      bounded = n==100000000 and kind==4 and form in ['NFKC','NFKD']

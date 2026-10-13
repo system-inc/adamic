@@ -3,13 +3,14 @@ package native
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"strings"
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/bridge/tsgo/spec"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func UsesTSGo(program *ir.Program) bool {
@@ -77,12 +78,9 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
-	archive, err := filepath.Abs(archive)
+	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
-	}
-	if _, err := os.Stat(archive); err != nil {
-		return fmt.Errorf("native: checker archive: %w", err)
 	}
 	directory, err := os.MkdirTemp("", "adamic-tsgo-")
 	if err != nil {
@@ -92,7 +90,10 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return err
 	}
-	units := []string{filepath.Join(directory, "main.c")}
+	// clang is given no absolute path to read, as Build gives it none: it compiles each unit by its name from inside the
+	// directory, so a sanitized binary's globals don't name it (landable-16c's tree, Oct 11: bridge-test-wrong-native,
+	// -healthy-region and -native-asan named /tmp/adamic-tsgo-<random>/adamic.c and every runtime unit, random per build).
+	units := []string{"main.c"}
 	entries, err := runtime.ReadDir("runtime")
 	if err != nil {
 		return err
@@ -107,18 +108,58 @@ func BuildTSGo(source, output, archive string, options Options) error {
 			return err
 		}
 		if strings.HasSuffix(path, ".c") {
-			units = append(units, path)
+			units = append(units, entry.Name())
 		}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
 		return err
 	}
-	arguments := append(tsgoFlags(source, options), "-o", output)
+	if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
+		return err
+	}
+	// The output is where the binary is written, never read into it (macOS's ld names it in the code signature by its
+	// base name alone), so it may be absolute; it must be, since clang runs from the build directory.
+	output, err = filepath.Abs(output)
+	if err != nil {
+		return err
+	}
+	arguments := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), "-o", output)
 	arguments = append(arguments, units...)
-	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
-	combined, err := exec.Command("clang", arguments...).CombinedOutput()
+	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
+	command := toolchain.CommandIn(directory, "clang", arguments...)
+	combined, err := command.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
+	}
+	return nil
+}
+
+// checkerArchive is the checker archive's name on a link line: a link to it in the directory clang links from, so the
+// line names no place on this machine, as Build's names the runtime archive through a link (#m27xj48: on macOS a
+// checker build's debug map named the archive by its absolute path, so the binary differed with where it was built).
+const checkerArchive = "checker.a"
+
+// checkerArchivePath is archive, a path from the working directory, as the absolute path a link to it in a build
+// directory needs; only that link ever holds it.
+func checkerArchivePath(archive string) (string, error) {
+	archive, err := filepath.Abs(archive)
+	if err != nil {
+		return "", err
+	}
+	if _, err := os.Stat(archive); err != nil {
+		return "", fmt.Errorf("native: checker archive: %w", err)
+	}
+	return archive, nil
+}
+
+// objectPrefixFlags take the link's working directory off the paths its debug map records. On macOS ld records each
+// object it links that carries debug info by path, for a debugger to find its DWARF there (the stabs' N_OSO), an
+// archive's member by the archive's path, made absolute against the working directory when it isn't: the checker
+// archive's go.o carries Go's DWARF, so checker.a(go.o) would read as the build directory's path, random per build.
+// -oso_prefix takes the working directory back off. An ELF linker copies the DWARF in and records no input's path.
+func objectPrefixFlags() []string {
+	if goruntime.GOOS == "darwin" {
+		return []string{"-Wl,-oso_prefix,."}
 	}
 	return nil
 }

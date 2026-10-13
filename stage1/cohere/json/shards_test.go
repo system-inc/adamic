@@ -4,6 +4,9 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"sort"
 	"strconv"
 	"strings"
@@ -292,5 +295,44 @@ func TestJSONHashShardsStayStable(t *testing.T) {
 			t.Fatal("repeated case survived")
 		}
 		break
+	}
+}
+
+// Every top shard has one agreement test and one leak test, each bound to its own ordinal, so every case has exactly
+// one agreement owner and one leak owner. A wrapper lost, repeated or bound to another ordinal fails here.
+func TestEveryTopShardHasAnAgreementAndALeakTest(t *testing.T) {
+	t.Parallel()
+	for _, family := range []struct{ file, prefix, helper string }{
+		{"top_portmatchesgocohere_test.go", "TestPortMatchesGoCohere_", "jsonPortTopShard"},
+		{"top_portmatchesgocohereleak_test.go", "TestPortMatchesGoCohereLeak_", "jsonPortTopLeakShard"},
+	} {
+		tree, err := parser.ParseFile(token.NewFileSet(), family.file, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		bound := map[int]bool{}
+		for _, declaration := range tree.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(function.Name.Name, family.prefix) {
+				continue
+			}
+			ordinal, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, family.prefix))
+			if err != nil || len(function.Body.List) != 2 {
+				t.Fatalf("%s: not a generated wrapper", function.Name.Name)
+			}
+			call, ok := function.Body.List[1].(*ast.ExprStmt).X.(*ast.CallExpr)
+			if !ok || len(call.Args) != 2 {
+				t.Fatalf("%s: not a generated wrapper", function.Name.Name)
+			}
+			helper, _ := call.Fun.(*ast.Ident)
+			literal, _ := call.Args[1].(*ast.BasicLit)
+			if helper == nil || helper.Name != family.helper || literal == nil || literal.Value != strconv.Itoa(ordinal) || bound[ordinal] {
+				t.Fatalf("%s is bound to another helper or ordinal, or repeated", function.Name.Name)
+			}
+			bound[ordinal] = true
+		}
+		if len(bound) != testPortMatchesGoCohereShards {
+			t.Fatalf("%s: %d of %d shards have a test", family.file, len(bound), testPortMatchesGoCohereShards)
+		}
 	}
 }

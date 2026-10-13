@@ -163,9 +163,7 @@ func TestNodeCountCheckCatchesMutant(t *testing.T) {
 			t.Fatalf("baseline count %q differs from Go %q", result.output, wantCount)
 		}
 	}
-	from := "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;"
-	to := strings.Replace(from, "let count = 1;", "let count = 0;", 1)
-	mutant := copyPort(t, "nodes.ts", from, to)
+	mutant := countTreeMutant(t)
 	binary := buildPort(t, mutant, true)
 	for _, runner := range []struct {
 		name        string

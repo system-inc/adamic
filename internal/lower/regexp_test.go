@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"os/exec"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestRegExpNativeRefusals(t *testing.T) {
@@ -33,7 +34,7 @@ func TestRegExpSourceNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("node", "-e", `if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));const lone=new RegExp(String.fromCharCode(0xd800)).source;if(lone.length!==1 || lone.charCodeAt(0)!==0xd800)throw Error('unexpected lone-surrogate source');process.stdout.write(JSON.stringify(cases.map(([p,f])=>new RegExp(p,f).source)));`)
+	command := toolchain.Command("node", "-e", `if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));const lone=new RegExp(String.fromCharCode(0xd800)).source;if(lone.length!==1 || lone.charCodeAt(0)!==0xd800)throw Error('unexpected lone-surrogate source');process.stdout.write(JSON.stringify(cases.map(([p,f])=>new RegExp(p,f).source)));`)
 	command.Stdin = bytes.NewReader(data)
 	output, err := command.CombinedOutput()
 	if err != nil {
@@ -56,21 +57,18 @@ func TestRegExpSourceNode(t *testing.T) {
 
 func TestRegExpUnicodeClassSourceAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	source := "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
 	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
-	lowersAndAgreesWithNodeNative(t, source)
+	lowersAndAgreesWithNodeNative(t, "RegExpUnicodeClassSource")
 }
 
 func TestRegExpSlashClassSourceAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	source := "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
 	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
-	lowersAndAgreesWithNodeNative(t, source)
+	lowersAndAgreesWithNodeNative(t, "RegExpSlashClassSource")
 }
 
 func TestRegExpEscapedSlashSourceAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	source := "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"
 	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
-	lowersAndAgreesWithNodeNative(t, source)
+	lowersAndAgreesWithNodeNative(t, "RegExpEscapedSlashSource")
 }

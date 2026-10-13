@@ -2,8 +2,6 @@ package yaml
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
@@ -11,18 +9,20 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
+
+// yamlArtifacts holds the writes to ADAMIC_YAML_ARTIFACTS, whose fixed names parallel tests share (goCompose's files
+// are written by TestComposeMatchGo and TestComposeMutants alike).
+var yamlArtifacts sync.Mutex
 
 func run(t *testing.T, directory string, environment []string, name string, args ...string) []byte {
 	t.Helper()
@@ -32,6 +32,13 @@ func run(t *testing.T, directory string, environment []string, name string, args
 	command := exec.Command(name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the caller's
+		// settings, not PATH's, run in directory with PWD to match. A program a test built (an oracle, a port) runs as
+		// named, with this process's environment.
+		command = toolchain.CommandIn(directory, name, args...)
+		command.Env = append(command.Env, environment...)
+	}
 	var out, errOut bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errOut
 	if err := childguard.Run(command, childguard.Options{}); err != nil {
@@ -43,6 +50,15 @@ func run(t *testing.T, directory string, environment []string, name string, args
 	return out.Bytes()
 }
 
+// lexCorpus is the upstream YAML lexCases reads: in each checkout, the files under roots at the checkout's pin.
+var lexCorpus = []struct {
+	checkout, pin string
+	roots         []string
+}{
+	{"cohere", corpusfiles.CohereCommit, []string{".github/workflows"}},
+	{"cohere/TypeScript", corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}},
+}
+
 func lexCases(t *testing.T) (string, int, int) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
@@ -52,8 +68,10 @@ func lexCases(t *testing.T) (string, int, int) {
 	var texts []string
 	files := 0
 	patterns := []string{"*.yaml", "*.yml"}
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{".github/workflows"}, patterns)
-	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}, patterns)...)
+	var paths []string
+	for _, corpus := range lexCorpus {
+		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, corpus.checkout), corpus.pin, corpus.roots, patterns)...)
+	}
 	sort.Strings(paths)
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
@@ -105,25 +123,10 @@ func lexCases(t *testing.T) (string, int, int) {
 
 func goLexer(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/lexer_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "go-lexer")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison")
+	binary := goLexerOracle(t)
 	if directory := os.Getenv("ADAMIC_YAML_ARTIFACTS"); directory != "" {
+		yamlArtifacts.Lock()
+		defer yamlArtifacts.Unlock()
 		if err := os.MkdirAll(directory, 0755); err != nil {
 			t.Fatal(err)
 		}
@@ -138,32 +141,15 @@ func goLexer(t *testing.T, cases string) []byte {
 	return run(t, "", nil, binary, cases)
 }
 
-func nativeLexer(t *testing.T, directory, cases string, sanitizer bool) ([]byte, []byte) {
+// goLexerOracle is formatter_comparison over testdata/lexer_go.go, a product built ahead (#5qykzj5).
+func goLexerOracle(t *testing.T) string {
 	t.Helper()
-	entry := filepath.Join(directory, "lex_main.ts")
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "lexer")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitizer}); err != nil {
-		t.Fatal(err)
-	}
-	environment := []string{"ASAN_OPTIONS=detect_leaks=1"}
-	out := run(t, "", environment, binary, cases)
-	emitted := filepath.Join(t.TempDir(), "lexer.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return out, run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
+	return formatterComparison(t, "go-lexer", "lexer_go.go")
+}
+
+func TestProduct_YAMLLexerGo(t *testing.T) {
+	t.Parallel()
+	goLexerOracle(t)
 }
 
 func firstDifference(a, b []byte) string {
@@ -176,41 +162,36 @@ func firstDifference(a, b []byte) string {
 	return fmt.Sprintf("lengths %d and %d", len(a), len(b))
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
+var lexerMutants = yamlMutants{family: "lexer", entry: "lex_main.ts", files: []string{"lexer.ts", "lex_main.ts"}, mutated: "lexer.ts", mutations: []yamlMutation{
+	{"keep chomping lost", "this.blockScalarKeep = true;", "this.blockScalarKeep = false;"},
+	{"tab not whitespace", "|| unit === 9;", "|| unit === 8;"},
+	{"BOM not split", "character(line, 0) === '\\ufeff'", "character(line, 0) === 'X'"},
+	{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
+	{"numeric whitespace excludes space", "return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;", "return unit === -1 || unit === 31 || unit === 10 || unit === 13 || unit === 9;"},
+}}
+
+func TestProduct_YAMLLexerMutant000(t *testing.T) { t.Parallel(); lexerMutants.product(t, 0) }
+func TestProduct_YAMLLexerMutant001(t *testing.T) { t.Parallel(); lexerMutants.product(t, 1) }
+func TestProduct_YAMLLexerMutant002(t *testing.T) { t.Parallel(); lexerMutants.product(t, 2) }
+func TestProduct_YAMLLexerMutant003(t *testing.T) { t.Parallel(); lexerMutants.product(t, 3) }
+func TestProduct_YAMLLexerMutant004(t *testing.T) { t.Parallel(); lexerMutants.product(t, 4) }
+
 func TestLexerMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := lexCases(t)
 	expected := goLexer(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, from, to string }{
-		{"keep chomping lost", "this.blockScalarKeep = true;", "this.blockScalarKeep = false;"},
-		{"tab not whitespace", "|| unit === 9;", "|| unit === 8;"},
-		{"BOM not split", "character(line, 0) === '\\ufeff'", "character(line, 0) === 'X'"},
-		{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
-		{"numeric whitespace excludes space", "return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;", "return unit === -1 || unit === 31 || unit === 10 || unit === 13 || unit === 9;"},
-	} {
-		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
+	for index, mutant := range lexerMutants.mutations {
+		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
 		t.Run(mutant.name, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"lexer.ts", "lex_main.ts"} {
-				source, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "lexer.ts" {
-					if strings.Count(string(source), mutant.from) != 1 {
-						t.Fatal("mutation site must occur once")
-					}
-					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			nativeOut, _ := nativeLexer(t, directory, cases, false)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "lex_main.ts"), cases)
+			product := lexerMutants.product(t, index)
+			nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(product, "mutant"), cases)
+			// The mutant's emitted JavaScript must run cleanly, as it always had to; native and Node are compared with Go.
+			run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "mutant.mjs"), cases)
+			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "lex_main.ts"), cases)
 			for _, side := range []struct {
 				name   string
 				output []byte

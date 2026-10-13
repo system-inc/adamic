@@ -59,7 +59,11 @@ type run struct {
 // variables hold: one that holds the same object as it did at that point, which now prints
 // differently, was mutated by that instruction. Printing follows every field, element and map entry,
 // so a mutation of anything a variable's object reaches counts; a closure prints as itself, since
-// what its cells hold isn't a tracked value. Calls are frames, and each compares only its own.
+// what its cells hold isn't a tracked value. An accessor prints as itself too, never read: reading
+// one runs the program's getter from inside the tracer, and a getter whose point prints the object
+// that holds it would call itself until the stack ran out (getters_census_throwing_object.a). What
+// a getter returns is computed, not held, and the storage it reads is the object's own fields.
+// Calls are frames, and each compares only its own.
 const traceRuntime = `
 const adamicTrace = [];
 const adamicIdentities = new WeakMap();
@@ -77,7 +81,10 @@ const adamicPrint = (value, seen) => {
 	if (typeof value.code === 'function') return 'closure' + adamicIdentity(value);
 	if (value instanceof Map) return 'map(' + [...value].map(([key, entry]) => adamicPrint(key, seen) + '=>' + adamicPrint(entry, seen)).join(',') + ')';
 	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
-	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
+	return '{' + Object.keys(value).map((key) => {
+		const property = Object.getOwnPropertyDescriptor(value, key);
+		return key + ':' + (property.get !== undefined || property.set !== undefined ? 'accessor' : adamicPrint(value[key], seen));
+	}).join(',') + '}';
 };
 // A panic on Node is a throw a catch can take, though natively it ends the program where it stands, so
 // what runs after one isn't a path of the program: the runtime silences stdout when it panics, and

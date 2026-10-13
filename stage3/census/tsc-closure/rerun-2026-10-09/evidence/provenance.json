@@ -1,0 +1,31 @@
+{
+  "base": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "main": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "measurement_pin": "f1502d130bc0b4440f29b93b76b7d18bff3f6a60",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript_go": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "binary_sha256": "c003e0186e49c1a75fc3aadb24f7c33586bc3a808dec071d4757b7a3a3cf3ef7",
+  "compiler_changes": "",
+  "overlay_hashes": {
+    "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+    "stage3_census_latent_tool_main.go": "f375ae815b2c4af1b49a0d6db1992ca493c4e03fd6b0297de7b87330aba7c4e8",
+    "internal_lower_latent_hook.go": "07d149dbfecab96a179ce944cf269d3330965571fd5c37d0721834a88ed03e5a",
+    "internal_lower_locals.go": "79caa49ceb8cf9dc44772b70c53a381cdbba6a565ea540324ed59bf672f91d6c",
+    "internal_lower_functions.go": "8fcfa2b1b55232c758478785f3b846055e31e1f6aafc0e5f8c6251d7ab750959",
+    "internal_lower_expression.go": "173075cd5dbe858994a0717821db8eb4a781c6c15aac876311937f04de81a7fa",
+    "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+    "internal_load_load.go": "8d316597ef3cc70d4c232e8898237cc982f813330fa577e4b617875677dca876",
+    "internal_lower_refusals.go": "7413f39ec7d509be852f41f273f4b01928d3c5c80e1aeab71ba0ba0d8ee93295",
+    "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "internal_lower_latent_units.go": "193d96eaad2b4a81d6b7d50eb6016e83d664a1a97a6109027eff956e8ef30ef9",
+    "internal_lower_latent_full.go": "d8ed484b82fc424c0247dffec7514aa74a7724012f05e8ff244a435d6cad7ccd",
+    "internal_lower_statements.go": "b39cf030c3dcb7565516c330e42598003da833acdc1b20e909f9401ae86ca5e4",
+    "internal_lower_latent_state.go": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
+    "internal_lower_lower.go": "769df5f2cb67face0921f260feb4c3b587a2607474abd8e19e903e83b891f256"
+  },
+  "compatibility": "Only ir.Program.argumentFacts is left nil in copied snapshots; this derived backend cache recomputes from public state. No other snapshot guard, eligibility, boundary or arithmetic change. Fixture headers removed only in scratch to retain 54/183 known answer.",
+  "scheduling_adapter": "file-range.py: output files only; full 81-root checker program unchanged",
+  "range_binary_sha256": "d28df4a29e85f68e5935ec28d5152184606299244bc468d4c6c93b236406672b",
+  "range_overlay_sha256": "aa1c9c4b74f0c0ee529c3c9e2aeea60b6855a8629361f29434a09bf7ab9e34f1"
+}

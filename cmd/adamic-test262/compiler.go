@@ -98,6 +98,7 @@ func (worker *compilerWorker) compile(path string) execution {
 			return execution{Exit: -1, Stderr: err.Error()}
 		}
 		command := exec.Command(executable, "--compiler-worker")
+		command.Env = childEnvironment()
 		input, err := command.StdinPipe()
 		if err != nil {
 			return execution{Exit: -1, Stderr: err.Error()}

@@ -2,7 +2,10 @@ package buildcache
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -10,6 +13,7 @@ import (
 	"io"
 	"io/fs"
 	"math/rand/v2"
+	"net"
 	"net/http"
 	"os"
 	"path"
@@ -17,27 +21,29 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
 // The shared tier (@system_adamic's ruling, Oct 9: one store, Loom's): a product another machine built is fetched by
-// its key from adamic-store, read directly and unauthenticated, so a test anywhere starts after a fetch instead of a
+// its key from Loom's artifacts store, read directly and unauthenticated, so a test anywhere starts after a fetch instead of a
 // build. A product is a manifest blob naming one blob per file; refs/build/<key> holds the manifest's sha256. Every
 // blob is checked against its own hash and the manifest against the key it was asked for, so a stored product can't
 // be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is a miss.
 //
-// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for adamic-store, or another store's address
+// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for Loom's artifacts store, or another store's address
 // (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never matches a
 // rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it stays off
-// until those are fixed, and gocacheprog is untouched). Only a machine holding the
-// write credential publishes, through Loom's Worker: the gate boxes hold a publish-scoped token at
+// until those are fixed, and gocacheprog is untouched). Only Workshop's tree builder publishes: it opts in with
+// ADAMIC_BUILD_STORE=traced (traced=<address> for another store) and runs under cmd/traced, and only a settled traced
+// build is published (#vt46geg), by a machine holding the write credential, through Loom's Worker: the gate boxes hold a publish-scoped token at
 // ~/.loom/publish-token (ADAMIC_BUILD_STORE_TOKEN names another file). Every file's blob goes first, then the
 // manifest's, then the ref, so a ref never names a blob the store doesn't hold. A ref never changes: the store
 // refuses one naming a different manifest, which means a key that isn't honest, and that is said loudly.
-const defaultStore = "https://adamic-store.kirkouimet.com"
+const defaultStore = "https://artifacts.loom.system.inc"
 
 // Where writes go (ADAMIC_BUILD_STORE_WRITE overrides it): /blobs/<sha256> and /refs/build/<key> under it.
-const defaultWriter = "https://loom.kirkouimet.com/public"
+const defaultWriter = "https://runs.loom.system.inc/public"
 
 // A fetched product is rebuilt and compared file by file at this rate (ADAMIC_BUILD_AUDIT overrides it): a store
 // that served a wrong product fails the test as poisoned (the ruling on #x2651cf: audit every gate's hits).
@@ -62,20 +68,89 @@ type manifestFile struct {
 // storeAddress is the shared store's address, or "" when the shared tier is off.
 func storeAddress() string {
 	address := os.Getenv("ADAMIC_BUILD_STORE")
+	if rest, ok := strings.CutPrefix(address, "traced="); ok {
+		address = rest
+	}
 	switch address {
 	case "", "off":
 		return ""
-	case "on":
+	case "on", "traced":
 		address = defaultStore
 	}
 	return strings.TrimSuffix(address, "/")
 }
 
-var storeClient = &http.Client{Timeout: 5 * time.Minute}
+// publishing says whether this run is Workshop's tree builder, the one opted in to building traced and publishing what
+// settles (ADAMIC_BUILD_STORE=traced, or traced=<address>).
+func publishing() bool {
+	setting := os.Getenv("ADAMIC_BUILD_STORE")
+	return setting == "traced" || strings.HasPrefix(setting, "traced=")
+}
+
+// storeClient is the store's client, made at its first use: its transport is storeTransport's.
+var storeClient = sync.OnceValue(func() *http.Client {
+	return &http.Client{Timeout: 5 * time.Minute, Transport: storeTransport()}
+})
+
+// systemRoots loads the machine's certificate roots: a variable so a test can see where it runs.
+var systemRoots = x509.SystemCertPool
+
+// storeResolved is where the caller already resolved the store's hosts, ADAMIC_BUILD_STORE_RESOLVED: entries
+// "<host>=<address>,<address>…" separated by spaces. Workshop's tree builder resolves them outside the trace (build-tree)
+// so a traced product test's store lookups read no DNS configuration: /etc/resolv.conf, /etc/hosts and
+// /etc/nsswitch.conf were in every product a lookup's trace settled, each box's own (its nameserver), so no runner on
+// another box matched a native product Workshop built (Fabric on Cloud, Oct 12, #vdha67a). With it a lookup never asks
+// the resolver, so a DNS file in a read set is one the product's own build read, keyed as before.
+const storeResolved = "ADAMIC_BUILD_STORE_RESOLVED"
+
+// storeTransport is http.DefaultTransport's, dialing a host storeResolved names at its addresses, each in turn, rather
+// than resolving it: an address that doesn't answer is a miss like any other, never a lookup. Any other host resolves
+// as usual. Its certificate roots are the machine's, loaded once here as keying work: a handshake left to load them read
+// /etc/ssl/certs inside a product's trace, each box's own bundle, so the product missed on every other box (Loom and
+// Tests, Oct 12, the smoke's css and yaml reds). Roots that don't load leave the handshake to load them, as before.
+func storeTransport() http.RoundTripper {
+	resolved := map[string][]string{}
+	for _, entry := range strings.Fields(os.Getenv(storeResolved)) {
+		host, addresses, ok := strings.Cut(entry, "=")
+		if ok && host != "" {
+			resolved[host] = strings.Split(addresses, ",")
+		}
+	}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	var roots *x509.CertPool
+	keying(func() { roots, _ = systemRoots() })
+	if roots != nil {
+		transport.TLSClientConfig = &tls.Config{RootCAs: roots}
+	}
+	if len(resolved) == 0 {
+		return transport
+	}
+	dialer := &net.Dialer{Timeout: 30 * time.Second, KeepAlive: 30 * time.Second}
+	transport.DialContext = func(dialContext context.Context, network, address string) (net.Conn, error) {
+		host, port, err := net.SplitHostPort(address)
+		if err != nil || len(resolved[host]) == 0 {
+			return dialer.DialContext(dialContext, network, address)
+		}
+		var errs []error
+		for _, ip := range resolved[host] {
+			if net.ParseIP(ip) == nil {
+				errs = append(errs, fmt.Errorf("%s=%s isn't an address", host, ip))
+				continue
+			}
+			connection, err := dialer.DialContext(dialContext, network, net.JoinHostPort(ip, port))
+			if err == nil {
+				return connection, nil
+			}
+			errs = append(errs, err)
+		}
+		return nil, fmt.Errorf("%s at %s, as %s names it: %w", host, strings.Join(resolved[host], ","), storeResolved, errors.Join(errs...))
+	}
+	return transport
+}
 
 // download reads one object, or errNotStored for a 404.
 func download(address string) ([]byte, error) {
-	response, err := storeClient.Get(address)
+	response, err := storeClient().Get(address)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +277,11 @@ func named(err error, what string) error {
 // Anything else in a product (a symlink, a device) can't be stored, so it is an error.
 func describeProduct(key, name, directory string) (manifest, error) {
 	product := manifest{Version: 1, Key: key, Name: name}
-	err := filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
+	root, err := ProductRoot(directory)
+	if err != nil {
+		return product, err
+	}
+	err = filepath.WalkDir(root, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil || entry.IsDir() {
 			return err
 		}
@@ -217,7 +296,7 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		if err != nil {
 			return err
 		}
-		relative, err := filepath.Rel(directory, file)
+		relative, err := filepath.Rel(root, file)
 		if err != nil {
 			return err
 		}
@@ -233,10 +312,16 @@ func describeProduct(key, name, directory string) (manifest, error) {
 	return product, err
 }
 
-// publishToken is the write credential, or "" on a machine that doesn't hold one.
+// publishToken is the write credential, or "" on a machine that doesn't hold one. A run trusted as main's
+// (ADAMIC_BUILD_STORE_TRUST=main) may fall back to the box's token at ~/.loom/publish-token; any other run writes only
+// with the token file it is handed, so a candidate's tree is never given the box's credential by default (the 8.1
+// review, Oct 11: build-tree's traced products fell back to it for main and candidate trees alike).
 func publishToken() string {
 	path := os.Getenv("ADAMIC_BUILD_STORE_TOKEN")
 	if path == "" {
+		if !trusted() {
+			return ""
+		}
 		home, err := os.UserHomeDir()
 		if err != nil {
 			return ""
@@ -300,7 +385,7 @@ func upload(address, token string, content []byte) error {
 		return err
 	}
 	request.Header.Set("Authorization", "Bearer "+token)
-	response, err := storeClient.Do(request)
+	response, err := storeClient().Do(request)
 	if err != nil {
 		return err
 	}
@@ -347,4 +432,219 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 		return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)", key[:12], name, gotJSON, wantJSON))
 	}
 	return nil
+}
+
+// Read sets travel with the products (#vt46geg): a machine with no read sets of its own finds a product in the store
+// by its name key. R2 expires refs/ and blobs/ seven days after they were written, and the Worker never rewrites a
+// ref or a blob it holds, so a read set stays findable only by being written again, new: the tree builder publishes
+// nameKey's whole read set file as refs/<namespace>/<name key>.<day>.<n> (day since the Unix epoch, n from 0 within the
+// day), naming a blob that holds the file and the day it was published, so each day's blob is new bytes and fresh. It
+// publishes on every settlement and, on any use of a product, when the newest ref is more than readsFresh days old
+// (refresh on use, as Loom's builder keeps its own refs; no bucket lifecycle exemption). A reader looks from tomorrow
+// back over the lifetime and takes the newest day that has one, so it never depends on the oldest surviving ref.
+// The namespaces split by trust as products' do: reads (main's; the tree builder runs with ADAMIC_BUILD_STORE_TRUST=main)
+// and reads-candidate.
+const (
+	readsLifetime = 7
+	readsFresh    = 5
+)
+
+type publishedReads struct {
+	NameKey string    `json:"nameKey"`
+	Day     int       `json:"day"`
+	File    readsFile `json:"file"`
+}
+
+// readsClock is the clock read set refs are named by; a test moves it across days.
+var readsClock = time.Now
+
+func readsDay() int { return int(readsClock().Unix() / 86400) }
+
+func readsNamespaces() []string {
+	if trusted() {
+		return []string{"reads"}
+	}
+	return []string{"reads", "reads-candidate"}
+}
+
+func readsWriteNamespace() string {
+	if trusted() {
+		return "reads"
+	}
+	return "reads-candidate"
+}
+
+func readsRef(store, namespace, nameKey string, day, index int) string {
+	return fmt.Sprintf("%s/refs/%s/%s.%d.%d", store, namespace, nameKey, day, index)
+}
+
+// newestReads is the newest read set ref in namespace: the latest day from tomorrow (a writer's clock ahead of this
+// one) back over the lifetime that has one, and the highest index that day; ok is false when there is none.
+func newestReads(store, namespace, nameKey string) (day, index int, ok bool) {
+	for day = readsDay() + 1; day >= readsDay()-readsLifetime; day-- {
+		if _, err := download(readsRef(store, namespace, nameKey, day, 0)); err != nil {
+			continue
+		}
+		for index = 0; ; index++ {
+			if _, err := download(readsRef(store, namespace, nameKey, day, index+1)); err != nil {
+				return day, index, true
+			}
+		}
+	}
+	return 0, 0, false
+}
+
+// fetchReads is nameKey's read sets in the store, newest first, and the product's name as the newest file holding any
+// names it. An unreachable store, or a file that doesn't check, is no sets: a lookup then misses, never trusts it.
+func fetchReads(nameKey string) (string, []readSet) {
+	store := storeAddress()
+	var name string
+	var sets []readSet
+	for _, namespace := range readsNamespaces() {
+		day, index, ok := newestReads(store, namespace, nameKey)
+		if !ok {
+			continue
+		}
+		reference, err := download(readsRef(store, namespace, nameKey, day, index))
+		if err != nil {
+			continue
+		}
+		content, err := blob(store, strings.TrimSpace(string(reference)))
+		if err != nil {
+			continue
+		}
+		var published publishedReads
+		if json.Unmarshal(content, &published) == nil && published.NameKey == nameKey && published.File.Version == readsVersion {
+			if name == "" && len(published.File.Sets) > 0 {
+				name = published.File.Name
+			}
+			sets = append(sets, published.File.Sets...)
+		}
+	}
+	return name, sets
+}
+
+// publishReads stores nameKey's read set file as today's next ref, after its blob.
+func publishReads(cache, nameKey string) error {
+	token := publishToken()
+	if token == "" || storeAddress() == "" {
+		return nil
+	}
+	file, err := loadReads(cache, nameKey)
+	if err != nil || len(file.Sets) == 0 {
+		return err
+	}
+	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
+	if writer == "" {
+		writer = defaultWriter
+	}
+	writer = strings.TrimSuffix(writer, "/")
+	day := readsDay()
+	encoded, err := json.Marshal(publishedReads{NameKey: nameKey, Day: day, File: file})
+	if err != nil {
+		return err
+	}
+	sum := sha256.Sum256(encoded)
+	hash := hex.EncodeToString(sum[:])
+	if err = upload(writer+"/blobs/"+hash, token, encoded); err != nil {
+		return err
+	}
+	namespace := readsWriteNamespace()
+	index := 0
+	if newest, highest, ok := newestReads(storeAddress(), namespace, nameKey); ok && newest == day {
+		index = highest + 1
+	}
+	for ; index < 1<<10; index++ {
+		err = upload(readsRef(writer, namespace, nameKey, day, index), token, []byte(hash))
+		if err == nil || !strings.Contains(err.Error(), "409") {
+			return err
+		}
+	}
+	return errors.New("no free read set index today")
+}
+
+var refreshedProducts, refreshedReads sync.Map
+
+// refreshPublished runs on the tree builder's every use of a product (a hit, or a fetch), once per process: when any
+// of what a runner needs is gone from the store (the product's ref, its manifest, a file's blob, which R2 expires a
+// week after it was written), the product is published again, whole, and its read sets with it, so a runner never
+// finds a read set whose product is gone for longer than until the tree builder next uses it; otherwise the read sets
+// are refreshed when their newest is more than readsFresh days old.
+//
+// The Worker never rewrites a ref or a blob it holds, so what is still there can't be made fresh from here: a product
+// expires a week after it was first published and comes back on the tree builder's next use. Keeping it present
+// throughout needs the Worker to rewrite a held object's same bytes (as Loom's builder does for refs/action, straight
+// in R2) or refs/build and blobs/ exempted from the lifecycle; both are Loom's.
+func refreshPublished(cache, nameKey, key, directory, name string) {
+	if !publishing() || publishToken() == "" || storeAddress() == "" {
+		return
+	}
+	if _, done := refreshedProducts.LoadOrStore(key, true); done {
+		return
+	}
+	if !productHeld(key, name, directory) {
+		if err := publish(key, name, directory); err != nil {
+			note("republish %s %s: %v", name, key[:12], err)
+			return
+		}
+		refreshedReads.Store(nameKey, true)
+		if err := publishReads(cache, nameKey); err != nil {
+			note("republish read sets %s: %v", nameKey[:12], err)
+		}
+		return
+	}
+	refreshReads(cache, nameKey)
+}
+
+// productHeld says whether the store holds everything a runner needs to fetch the product at directory under key:
+// its ref, its manifest, and each file's blob, asked by HEAD, never downloaded.
+func productHeld(key, name, directory string) bool {
+	store := storeAddress()
+	if !held(store + "/refs/" + writeNamespace() + "/" + key) {
+		return false
+	}
+	product, err := describeProduct(key, name, directory)
+	if err != nil {
+		return false
+	}
+	encoded, err := json.Marshal(product)
+	if err != nil {
+		return false
+	}
+	sum := sha256.Sum256(encoded)
+	if !held(store + "/blobs/" + hex.EncodeToString(sum[:])) {
+		return false
+	}
+	for _, file := range product.Files {
+		if !held(store + "/blobs/" + file.SHA256) {
+			return false
+		}
+	}
+	return true
+}
+
+func held(address string) bool {
+	response, err := storeClient().Head(address)
+	if err != nil {
+		return false
+	}
+	response.Body.Close()
+	return response.StatusCode == http.StatusOK
+}
+
+// refreshReads, on the tree builder's use of a product, publishes its read sets again when the store's newest is more
+// than readsFresh days old or gone, once per process, so a product in use never outlives its read sets.
+func refreshReads(cache, nameKey string) {
+	if !publishing() || publishToken() == "" {
+		return
+	}
+	if _, done := refreshedReads.LoadOrStore(nameKey, true); done {
+		return
+	}
+	if day, _, ok := newestReads(storeAddress(), readsWriteNamespace(), nameKey); ok && day > readsDay()-readsFresh {
+		return
+	}
+	if err := publishReads(cache, nameKey); err != nil {
+		note("refresh read sets %s: %v", nameKey[:12], err)
+	}
 }

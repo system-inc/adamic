@@ -16,6 +16,8 @@ import (
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 type executionCase struct {
@@ -62,9 +64,13 @@ func nodeResults(t *testing.T, cases []executionCase) []executionResult {
 	if err != nil {
 		t.Fatal(err)
 	}
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatalf("Node execution oracle: %v", err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := exec.CommandContext(ctx, node, "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.'))throw Error('Node 24 required');
 const results=cases.map(c=>{
@@ -73,6 +79,7 @@ const results=cases.map(c=>{
  r.lastIndex=c.lastIndex;const input=String.fromCharCode(...c.input);
  const m=r.exec(input);return {captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
 });process.stdout.write(JSON.stringify(results));`)
+	command.Env = toolchain.Env()
 	command.Stdin = bytes.NewReader(data)
 	output, err := command.CombinedOutput()
 	if err != nil {

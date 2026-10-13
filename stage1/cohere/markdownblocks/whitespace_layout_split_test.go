@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -24,6 +25,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testMarkdownWhitespaceLayoutShards = 24
@@ -129,7 +131,11 @@ func whitespaceLayoutPrepare(t *testing.T) {
 		if err := os.WriteFile(filepath.Join(directory, "policy.mjs"), policy.backend, 0644); err != nil {
 			return err
 		}
+		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
 		paths := map[string]string{"go": products.goBinary, "goLayout": products.goLayout, "sanitized": products.sanitized, "release": products.release, "policy": policy.sanitized}
+		for name, path := range paths {
+			paths[name] = buildcache.Relative(path)
+		}
 		data, err := json.Marshal(paths)
 		if err != nil {
 			return err
@@ -252,7 +258,7 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	inputs := buildcache.Inputs{
 		Name:      "markdown-whitespace-layout-lowered-" + probe,
 		Files:     whitespaceLayoutBuildFiles(),
-		Flags:     []string{"C and JavaScript", os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")},
+		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
@@ -655,8 +661,22 @@ func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork strin
 	t.Logf("%d whitespace nodes, six modes each, match Go and unchanged original private fork functions", count)
 }
 
+// loweringCompilerInputs are the in-repository sources the compiler that lowers a port links, and the module files
+// that pin them, by the precise directories `go list -deps` names (all of cohere/internal would hash 92 MB of lint for
+// about 5.6 MB used). TestLoweringInputsCoverCompilerDependencies keeps the list complete and every entry needed.
+var loweringCompilerInputs = []string{
+	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
+	"cohere/internal/lint/checking", "cohere/internal/lint/ecmascript/binding", "cohere/internal/lint/ecmascript/comments",
+	"cohere/internal/lint/ecmascript/control_flow_graph", "cohere/internal/lint/ecmascript/imports", "cohere/internal/lint/ecmascript/jsx",
+	"cohere/internal/lint/ecmascript/module", "cohere/internal/lint/ecmascript/module_roots", "cohere/internal/lint/ecmascript/nextjs",
+	"cohere/internal/lint/ecmascript/property", "cohere/internal/lint/ecmascript/react", "cohere/internal/lint/ecmascript/reference",
+	"cohere/internal/lint/ecmascript/regexsyntax", "cohere/internal/lint/ecmascript/scope", "cohere/internal/lint/ecmascript/text",
+	"cohere/internal/lint/linter", "cohere/internal/lint/rule", "cohere/internal/lint/rules/adamic", "cohere/internal/lint/rules/nexus",
+	"cohere/internal/types/sourcename", "cohere/policy", "cohere/rule_runner",
+}
+
 func whitespaceLayoutBuildFiles() []string {
-	files := []string{"internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod"}
+	files := append([]string(nil), loweringCompilerInputs...)
 	for _, directory := range []string{".", "../markdowninline", "testdata"} {
 		entries, err := os.ReadDir(directory)
 		if err != nil {
@@ -669,6 +689,66 @@ func whitespaceLayoutBuildFiles() []string {
 		}
 	}
 	return files
+}
+
+// The lowered ports are keyed by whitespaceLayoutBuildFiles, so it must cover every in-repository package the
+// compiler links and every module file that pins one, or an untraced cache could serve a stale port. Each listed
+// compiler input, dropped alone, must leave a gap, so the list carries nothing the compiler doesn't use.
+func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
+	t.Parallel()
+	root := markdownLayoutProductRoot(t)
+	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
+	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	listing, err := combinedOutput(command)
+	if err != nil {
+		t.Fatalf("go list: %v\n%s", err, listing)
+	}
+	needed := map[string]bool{"go.work": true}
+	inside := func(path string) (string, bool) {
+		relative, err := filepath.Rel(root, path)
+		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+	}
+	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
+		directory, goMod, _ := strings.Cut(line, "\t")
+		if relative, ok := inside(directory); ok {
+			needed[relative] = true
+		}
+		if relative, ok := inside(goMod); ok && goMod != "" {
+			needed[relative] = true
+			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
+				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
+			}
+		}
+	}
+	if gaps := loweringInputGaps(whitespaceLayoutBuildFiles(), needed); len(gaps) > 0 {
+		t.Fatalf("whitespaceLayoutBuildFiles misses lowering inputs: %s", strings.Join(gaps, ", "))
+	}
+	for index, dropped := range loweringCompilerInputs {
+		planted := append(append([]string(nil), loweringCompilerInputs[:index]...), loweringCompilerInputs[index+1:]...)
+		if len(loweringInputGaps(planted, needed)) == 0 {
+			t.Fatalf("dropping %s leaves no gap: it keys nothing the compiler links", dropped)
+		}
+	}
+	t.Logf("%d in-repository compiler directories and module files covered; each of %d declared inputs needed", len(needed), len(loweringCompilerInputs))
+}
+
+// loweringInputGaps returns the needed paths no declared path holds, sorted.
+func loweringInputGaps(declared []string, needed map[string]bool) []string {
+	var gaps []string
+	for path := range needed {
+		covered := false
+		for _, file := range declared {
+			if path == file || strings.HasPrefix(path, file+"/") {
+				covered = true
+				break
+			}
+		}
+		if !covered {
+			gaps = append(gaps, path)
+		}
+	}
+	sort.Strings(gaps)
+	return gaps
 }
 
 var whitespaceLayoutPolicyOnce sync.Once
@@ -755,7 +835,7 @@ func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 		t.Fatal(err)
 	}
 	files := whitespaceLayoutBuildFiles()
-	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal", "cohere/go.mod", "cohere/go.sum", "go.work")
+	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal")
 	return buildcache.Inputs{Name: "markdown-whitespace-layout-setup-v2", Files: files,
 		Flags:     []string{root, os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"), os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), "Split=true", "Jobs=2"},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
@@ -778,6 +858,9 @@ func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLay
 	var paths map[string]string
 	if err := json.Unmarshal(data, &paths); err != nil {
 		t.Fatal(err)
+	}
+	for name, path := range paths {
+		paths[name] = buildcache.Absolute(path)
 	}
 	backend, err := os.ReadFile(filepath.Join(directory, "layout.mjs"))
 	if err != nil {

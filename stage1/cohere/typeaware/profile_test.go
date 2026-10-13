@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func profileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
@@ -39,7 +41,12 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 			h.t.Fatal(err)
 		}
 	}
-	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
+	binary := h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
+	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
+	if err := buildcache.RelativeFiles(directory); err != nil {
+		h.t.Fatal(err)
+	}
+	return binary
 }
 
 func volumeProfileMissingBinding(h *harness, stage0, archive string) string {
@@ -53,7 +60,7 @@ func TestShadowIndexMissingBinding_000(t *testing.T) {
 	started := time.Now()
 	h := volumeProfileHarness(t)
 	stage0 := volumeProfileStage0(h)
-	archive := h.archive("checker", "", false)
+	archive := h.archive("checker", false)
 	t.Logf("setup: %.3fs", time.Since(started).Seconds())
 	mutant := volumeProfileMissingBinding(h, stage0, archive)
 	source := h.write("input.ts", "const x=1;\nexport {};\n")

@@ -10,6 +10,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The helper execs the original command in the same process. RLIMIT_CPU counts
@@ -41,7 +43,7 @@ func TestDeadlineChild(t *testing.T) {
 		os.Exit(125)
 	}
 	argv := os.Args[separator+2:]
-	path, err := exec.LookPath(argv[0])
+	path, err := toolchain.Path(argv[0])
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(125)

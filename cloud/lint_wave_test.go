@@ -2,13 +2,16 @@ package cloud
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The CLI tests use only disposable local Git origins and synthetic Go events.
-// Real three-way worker execution is recorded separately in the unit report.
+// Real three-way worker execution is recorded separately in the unit report. python3 is toolchain's, and it runs with
+// git's environment, since the script drives only git: no home and no global configuration, so its fixtures set
+// every identity they commit with.
 func TestLintWaveCheck(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "lint-wave-check-tests.txt")
@@ -16,7 +19,10 @@ func TestLintWaveCheck(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("python3", "-B", "lint-wave-check-test.py")
+	command := toolchain.Command("python3", "-B", "lint-wave-check-test.py")
+	if command.Err == nil {
+		command.Env = toolchain.GitEnv()
+	}
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()

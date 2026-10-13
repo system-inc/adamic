@@ -4,9 +4,12 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"testing"
@@ -42,6 +45,11 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+// wholeMutantsTreeScanner is the scanner's absolute path as another checkout wrote it into a mutant copy: copyPort
+// names this checkout's scanner, and a copy that is a product fetched from Workshop names Workshop's, so the hash
+// reads either as the tree spells it (#t37sw0f; the copy's own bytes are #tqrqx60's).
+var wholeMutantsTreeScanner = regexp.MustCompile(`/[^'"\s]*/stage1/typescript/scanner/scanner\.ts`)
+
 func wholeMutantsSourceHash(t *testing.T, directory string) string {
 	t.Helper()
 	scanner, err := filepath.Abs("../scanner/scanner.ts")
@@ -54,8 +62,21 @@ func wholeMutantsSourceHash(t *testing.T, directory string) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		normalized := strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts")
+		normalized := wholeMutantsTreeScanner.ReplaceAllString(strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"), "../scanner/scanner.ts")
+		// A copy with a scanner of its own (a scanner mutant) imports it by the copy's temporary path.
+		normalized = strings.ReplaceAll(normalized, directory, "$PORT")
 		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
+	}
+	// That scanner's bytes, including its changed site, are inputs like the port's.
+	for _, name := range []string{"scanner.ts", "characters.ts", "tokens.ts"} {
+		data, err := os.ReadFile(filepath.Join(directory, "scanner", name))
+		if errors.Is(err, fs.ErrNotExist) {
+			continue
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Fprintf(&sources, "scanner/%s %d\n%s", name, len(data), data)
 	}
 	return fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
 }

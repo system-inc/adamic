@@ -12,8 +12,12 @@ go build -o /tmp/tsc-census ./stage3/census/tool > /tmp/tsc-census-build.log 2>&
 ```
 
 Use a new output path for apply and for each oracle run. Apply refuses an existing
-output, verifies source.json's tag and commit, and caches upstream under
-`~/.cache/adamic-stage3` (`STAGE3_CACHE` overrides that location).
+output and builds from the gate inputs' TypeScript checkout, `ADAMIC_TYPESCRIPT_SOURCE`,
+whose HEAD must be source.json's commit; it fetches nothing and keeps no clone.
+Built products are kept under `adamic-stage3/products` in `ADAMIC_BUILD_CACHE_DIR`, or in
+the user cache directory when that is unset (`STAGE3_CACHE` overrides the whole location;
+under `ADAMIC_SANDBOX=1` one of the two must be set), as stage3/caches.py decides, the
+same way Go's products find the build cache.
 It generates upstream diagnostics, runs `adapt/*/adapt.cjs` in numeric order,
 and writes `<out>/patch-set.md`, leaving the source checkout unchanged.
 To deliberately regenerate the checked-in table, run
@@ -24,8 +28,13 @@ upstream generation. Setup has zero source changes.
 
 Each later adaptation must be idempotent and use stock typescript@6.0.3's
 compiler API, parse current text, and document changed and declined sites.
-When later adapters exist, apply installs api/package-lock.json in its cache
-and exposes stock 6.0.3 through NODE_PATH; adapters can require("typescript").
+When later adapters exist, apply exposes stock 6.0.3 through NODE_PATH from
+`stage3/api/node_modules`, which the tree provides installed from
+api/package-lock.json (a prebuilt tree carries it, a runner links it in). Apply
+never runs npm, and refuses an install that isn't that lockfile's, or whose bytes
+aren't the ones `api/node_modules.sha256` pins (a lockfile change regenerates it
+with `stage3/apply.sh --packages-digest > stage3/api/node_modules.sha256`);
+adapters can require("typescript").
 Never weaken Adamic's checker options to improve the census.
 
 The oracle does npm ci, npm run build, and npm test with --light=false,

@@ -3,13 +3,15 @@ package native
 import (
 	"bufio"
 	"context"
-	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The sweep: native toUpperCase and toLowerCase against Node's, byte for byte, over every code point
@@ -23,6 +25,7 @@ const caseHarness = `#include "adamic.h"
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void put_hex(const adamic_string *string) {
@@ -94,8 +97,10 @@ static const uint32_t alphabet[] = {ALPHABET};
 int main(int count, char **arguments) {
 	static char buffer[1 << 20];
 	setvbuf(stdout, buffer, _IOFBF, sizeof buffer);
-	if (count == 2 && strcmp(arguments[1], "points") == 0) {
-		for (uint32_t point = 0; point <= 0x10ffff; point++) {
+	if (count >= 2 && strcmp(arguments[1], "points") == 0) {
+		uint32_t first = count == 4 ? (uint32_t)strtoul(arguments[2], NULL, 10) : 0;
+		uint32_t last = count == 4 ? (uint32_t)strtoul(arguments[3], NULL, 10) : 0x110000;
+		for (uint32_t point = first; point < last; point++) {
 			printf("%x", point);
 			answer((uint32_t[]){point}, 1, true);
 			answer((uint32_t[]){'x', 'Y', point, 'Z', 'w'}, 5, true);
@@ -171,7 +176,9 @@ const flush = () => {
 	chunk = '';
 };
 if (process.argv[1] === 'points') {
-	for (let point = 0; point <= 0x10ffff; point++) {
+	const first = process.argv.length === 4 ? Number(process.argv[2]) : 0;
+	const last = process.argv.length === 4 ? Number(process.argv[3]) : 0x110000;
+	for (let point = first; point < last; point++) {
 		chunk += point.toString(16) + answer([point], true) + answer([0x78, 0x59, point, 0x5a, 0x77], true) +
 			answer([point, 0x3a3], false) + answer([0x41, point, 0x3a3], false) + answer([0x41, 0x3a3, point], false) +
 			answer([0x41, 0x3a3, point, 0x61], false) + '\n';
@@ -214,26 +221,78 @@ var caseAlphabet = []string{
 	"0xdf", "0x130", "0x390",
 }
 
-func TestCaseMappingMatchesNode(t *testing.T) {
+// The code points the points sweep is cut into, by their bounds (first to last, in hexadecimal, both
+// included), three or four planes each. Every code point is one line, and the whole sweep is more
+// than one test should carry alone, so each range is its own top-level test below, and
+// TestCaseMappingPointRangesTile holds the ranges to every code point once and to their tests.
+var caseMappingPointRanges = map[string]testUnitRange{
+	"0 to 2FFFF":      {0, 0x30000},
+	"30000 to 5FFFF":  {0x30000, 0x60000},
+	"60000 to 8FFFF":  {0x60000, 0x90000},
+	"90000 to CFFFF":  {0x90000, 0xd0000},
+	"D0000 to 10FFFF": {0xd0000, 0x110000},
+}
+
+func TestCaseMappingMatchesNodePoints0To2FFFF(t *testing.T) {
 	t.Parallel()
+	runCaseMappingPoints(t, "0 to 2FFFF")
+}
+
+func TestCaseMappingMatchesNodePoints30000To5FFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "30000 to 5FFFF")
+}
+
+func TestCaseMappingMatchesNodePoints60000To8FFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "60000 to 8FFFF")
+}
+
+func TestCaseMappingMatchesNodePoints90000ToCFFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "90000 to CFFFF")
+}
+
+func TestCaseMappingMatchesNodePointsD0000To10FFFF(t *testing.T) {
+	t.Parallel()
+	runCaseMappingPoints(t, "D0000 to 10FFFF")
+}
+
+func TestCaseMappingMatchesNodeContexts(t *testing.T) {
+	t.Parallel()
+	binary, oracle := caseMappingHarness(t)
+	compareStreams(t, 22+22*22+22*22*22+22*22*22*22, []string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
+}
+
+// A range that leaves a code point out or sweeps one twice, a range without its test, or a test
+// naming a range that isn't there fails here without building anything.
+func TestCaseMappingPointRangesTile(t *testing.T) {
+	t.Parallel()
+	checkRangesTile(t, "%X to %X", 0x110000, caseMappingPointRanges)
+	checkNamedWrappers(t, "case_test.go", "TestCaseMappingMatchesNodePoints", "runCaseMappingPoints", caseMappingPointRanges)
+}
+
+func runCaseMappingPoints(t *testing.T, name string) {
+	t.Helper()
+	points, ok := caseMappingPointRanges[name]
+	if !ok {
+		t.Fatalf("no code point range %q", name)
+	}
+	binary, oracle := caseMappingHarness(t)
+	first, last := strconv.Itoa(points.first), strconv.Itoa(points.last)
+	compareStreams(t, points.last-points.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
+}
+
+// caseMappingHarness builds the harness, which each test of the sweep does for itself, and gives the
+// oracle that enumerates the same strings.
+func caseMappingHarness(t *testing.T) (binary, oracle string) {
+	t.Helper()
 	alphabet := strings.Join(caseAlphabet, ", ")
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary = filepath.Join(t.TempDir(), "harness")
 	if err := Build(strings.Replace(caseHarness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	oracle := strings.Replace(caseOracle, "ALPHABET", alphabet, 1)
-	for _, sweep := range []struct {
-		name  string
-		lines int
-	}{
-		{"points", 0x110000},
-		{"contexts", 22 + 22*22 + 22*22*22 + 22*22*22*22},
-	} {
-		t.Run(sweep.name, func(t *testing.T) {
-			t.Parallel()
-			compareStreams(t, sweep.lines, []string{binary, sweep.name}, []string{"node", "--eval", oracle, sweep.name})
-		})
-	}
+	return binary, strings.Replace(caseOracle, "ALPHABET", alphabet, 1)
 }
 
 // compareStreams runs two programs and compares what they write, line by line, as it comes, so a
@@ -281,7 +340,7 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	// finishes well inside five minutes, but in a full parallel gate it does not.
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, arguments[0], arguments[1:]...)
+	command := programCommand(ctx, "", arguments[0], arguments[1:]...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -313,7 +372,7 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 // characters changed.
 func TestCaseTablesMatchNodesUnicode(t *testing.T) {
 	t.Parallel()
-	output, err := exec.Command("node", "--print", "process.versions.unicode").Output()
+	output, err := toolchain.Command("node", "--print", "process.versions.unicode").Output()
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
@@ -176,7 +177,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 			case "batch":
 				path := filepath.Join(t.TempDir(), "cases.txt")
 				write(t, path, stringsInput(corpus.texts[unit.lo:unit.hi]))
-				want := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
+				want := stringsBatchGoAnswers(t, goBinary, goIdentity, corpus, unit)
 				clean(t, "Go", want)
 				for _, side := range []struct {
 					name   string
@@ -191,7 +192,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 				}
 				stringsLeaks(t, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := stringsOracleAnswers(t, "Prettier", "node", []string{script, library}, stringsInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
+					answer := stringsBatchPrettierAnswers(t, library, libraryIdentity, corpus, unit)
 					clean(t, "Prettier", answer)
 					checkStringsOutput(t, unit, "Prettier", answer.stdout, want.stdout)
 				}
@@ -208,7 +209,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 					}
 					singleCase := filepath.Join(t.TempDir(), "single.txt")
 					write(t, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
-					expected := stringsOracleAnswers(t, "Go", goBinary, nil, []byte(pref+stringsEncode.Replace(text)+"\n"), goIdentity)
+					expected := stringsRawGoAnswer(t, goBinary, goIdentity, corpus, unit.lo, pref)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
 					for _, r := range []run{stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), stringsOnNode(t, main, args...)} {
@@ -325,33 +326,33 @@ func equal(t *testing.T, name string, a, b []byte) {
 	}
 }
 
+// stringsPreparedOracle is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
+// lays over it, a product (buildcache.GoBuildIn) built ahead. The overlay names this checkout's paths, so it sits in a
+// temporary directory and is never part of the product (#tqrqx60).
 func stringsPreparedOracle(t *testing.T) string {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	bridge, _ := filepath.Abs("testdata/bridge.go")
-	driver, _ := filepath.Abs("testdata/go_driver.go")
+	bridge, err := filepath.Abs("testdata/bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	driver, err := filepath.Abs("testdata/go_driver.go")
+	if err != nil {
+		t.Fatal(err)
+	}
 	cohere := filepath.Join(root, "cohere")
-	oracleDir := stringsGoProduct(t, "Go oracle", func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-		}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		command := stringsSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-		command.Dir = cohere
-		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-			return fmt.Errorf("Go bridge: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(oracleDir, "go-printer")
+	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
+		mainPath: driver,
+	}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, []string{"-overlay=" + overlayPath})
 }

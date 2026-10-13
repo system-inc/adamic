@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -59,7 +60,7 @@ func typeSymbolMust(h *harness, label, name string, args ...string) result {
 }
 
 func typeSymbolOracle(h *harness) string {
-	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json", false)
+	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json")
 }
 
 func typeSymbolFileHash(path string) (string, error) {
@@ -78,6 +79,14 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 		if err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
+			}
+			// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a checkout,
+			// which a runner's source never holds, so walking it keyed this product apart (landable-10, key check).
+			if !buildcache.Tracked(repository, path, entry.IsDir()) {
+				if entry.IsDir() {
+					return filepath.SkipDir
+				}
+				return nil
 			}
 			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 				relative, err := filepath.Rel(repository, path)
@@ -100,7 +109,7 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 		flags = append(flags, input.name+"="+sum)
 	}
 	flags = append(flags, fmt.Sprintf("sanitize=%t", sanitize))
-	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		flags = append(flags, key+"="+os.Getenv(key))
 	}
 	inputs := buildcache.Inputs{Name: "typeaware-" + name, Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-print-search-dirs"), buildcache.Tool("clang", "-print-resource-dir")}}
@@ -188,7 +197,7 @@ func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
 
 func typeSymbolArchive(h *harness) string {
 	overlay := h.overlay("type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\"")
-	command := exec.Command("go", "build", "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")
+	command := toolchain.Command("go", "build", "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")
 	return h.sixBuildProduct("type-symbol-checker", command)
 }
 
@@ -270,13 +279,14 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		if err := command.Run(); err != nil {
 			return fmt.Errorf("oracle: %w %s", err, stderr.Bytes())
 		}
-		return os.WriteFile(filepath.Join(dir, "findings"), stdout.Bytes(), 0444)
+		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
+		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(stdout.String())), 0444)
 	})
 	truthBytes, err := os.ReadFile(filepath.Join(outputDir, "findings"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return result{stdout: truthBytes}
+	return result{stdout: []byte(buildcache.Absolute(string(truthBytes)))}
 }
 
 func TestVolumeTypeSymbol_000(t *testing.T) {

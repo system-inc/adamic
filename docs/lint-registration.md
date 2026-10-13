@@ -92,11 +92,12 @@ go run ./cmd/adamic build stage1/cohere/lint/main.ts
 The generator validates the entire discovered set: strict JSON, unique public
 names and adapter functions, complete directories, named factories/classes/hooks,
 pinned AST kind names, required adapter exports, witnesses and mutant metadata.
-It writes bucketed TS dispatch and Go selection into ignored `.generated/` files.
+It writes bucketed TS dispatch and Go selection into `.generated/`, which is committed.
 Generation uses sorted descriptors and node kinds, atomic replacement and unchanged
 byte checks. A removed descriptor cannot leave a stale registration behind.
-Do not commit these outputs. CI tests validate and regenerate before filtered tests
-as well as before each port build and Node run.
+Commit these outputs with the rule change. The tests never regenerate the tree's copy:
+TestMain fails when it is stale, naming the command, since a test that writes the tree
+breaks a Loom runner, whose source is read-only.
 
 Tests derive upstream package/test filters and copied module files by discovery.
 Every owned witness must cause an upstream finding, and Go/Node/emitted-JavaScript/sanitized-native

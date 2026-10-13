@@ -3,12 +3,12 @@ package native
 import (
 	"context"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The checker-archive build includes tsgo_runtime.h, and with it adamic.h, before main.c's own
@@ -48,7 +48,7 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 	}
 	compile := func(flags []string) error {
 		arguments := append(append([]string{"-fsyntax-only", "-I" + directory}, flags...), main)
-		output, err := exec.Command("clang", arguments...).CombinedOutput()
+		output, err := toolchain.Command("clang", arguments...).CombinedOutput()
 		if err != nil {
 			return &compileError{output}
 		}

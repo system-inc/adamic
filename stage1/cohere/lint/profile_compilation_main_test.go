@@ -26,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -112,8 +113,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.CommandContext(context.Background(), "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
-	command.Dir = root
+	command := toolchain.CommandIn(root, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
 	output, err := command.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -192,6 +192,8 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		variant.Name = "lint-profile-" + kind
 		options := native.Options{Count: kind == "counted", Jobs: 1}
 		variant.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
+		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
+		variant.Flags = append(variant.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if kind == "profiled" {
 			variant.Flags = append(variant.Flags, "-g", "-lm")
 		}
@@ -226,10 +228,12 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 						units = append(units, path)
 					}
 				}
-				flags := append(native.Flags(options), "-g", "-o", filepath.Join(dir, kind))
+				// Debug info names where it was compiled: the build's own directory, random per build, maps to one name, so
+				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path).
+				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"=/adamic-lint-profile", "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
-				command := exec.CommandContext(context.Background(), "clang", flags...)
+				command := toolchain.Command("clang", flags...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("profile clang: %w\n%s", err, output)
 				}
@@ -301,7 +305,8 @@ func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte
 
 func compilationLowered(t *testing.T, inputs buildcache.Inputs) string {
 	return buildcache.Product(t, inputs, func(dir string) error {
-		program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+		// Named placelessly: the IR's positions would otherwise carry this checkout's path (#tqrqx60).
+		program, err := load.LoadDisplayed([]string{filepath.Join(packageDirectory, "main.ts")}, buildcache.Relative)
 		if err != nil {
 			return err
 		}
@@ -370,16 +375,7 @@ func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
 	prepareRegistry(t, directory)
 	products := compilationProducts(t)
 	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := compilationOracle(t)
+	oracle := lintGoOracleProduct(t)
 	want, countedWant := compilationOracleOutputs(t, oracle, path)
 	return directory, products, path, want, countedWant
-}
-
-func compilationOracle(t *testing.T) string {
-	t.Helper()
-	inputs := testShardsAgreeInputs(t, "profile-oracle")
-	inputs.Files = append(inputs.Files, "stage1/cohere/lint/profile_compilation_main_test.go")
-	inputs.Flags = append(inputs.Flags, "overlay=full-live-registry")
-	product := buildcache.Product(t, inputs, func(dir string) error { _, err := goOracleIn(packageDirectory, dir); return err })
-	return filepath.Join(product, "oracle")
 }

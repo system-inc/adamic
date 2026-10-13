@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -35,7 +36,7 @@ func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Input
 	inputs := buildcache.Inputs{
 		Name:  "estree-syntax-mutant-lowered-" + item.name,
 		Files: estreeFamilyDependencyFiles(t),
-		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
 	return inputs
@@ -44,7 +45,8 @@ func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Input
 func syntaxMutantIRProduct(t *testing.T, item syntaxMutant) string {
 	t.Helper()
 	inputs := syntaxMutantProductInputs(t, item)
-	inputs.Name = "estree-syntax-mutant-ir-" + item.name
+	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
+	inputs.Name = "estree-syntax-mutant-ir-v2-" + item.name
 	return buildcache.Product(t, inputs, func(dir string) error {
 		main := mutantPort(t, item.file, item.from, item.to)
 		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
@@ -122,8 +124,10 @@ type syntaxMutantPrepared struct {
 var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 
+const syntaxMutantsPreparedEnv = "ADAMIC_SYNTAX_MUTANTS_PREPARED"
+
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
 	return inputs
 }
@@ -146,7 +150,9 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 	t.Helper()
 	item := syntaxMutantEnumeration()[index]
 	inputs := syntaxMutantSetupInputs(t)
-	inputs.Name = "syntax-mutant-ready-v2-" + item.name
+	// v3: Want names its sources' directory as <sources>, so a v2 product, which named a temporary directory, isn't
+	// one this reads.
+	inputs.Name = "syntax-mutant-ready-v3-" + item.name
 	return buildcache.Product(t, inputs, func(dir string) error {
 		main, binary := syntaxMutantProducts(t, item)
 		oracle := filepath.Join(syntaxMutantOracleProduct(t), "oracle")
@@ -159,8 +165,12 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 		if index != 0 {
 			args = []string{"--audit", list, t.TempDir()}
 		}
-		want := execute(t, "", oracle, args...)
-		data, err := json.Marshal(syntaxMutantPrepared{Main: main, Binary: binary, Sources: sources, Want: want})
+		// The oracle names each source by its path, and the sources sit in a temporary directory of this build, random per
+		// build, so Want names that directory <sources> (landable-16c's tree, Oct 11: syntax-mutant-ready-v2 products
+		// differed build to build, the path hidden from relocatable in Want's base64). No reader compares the paths.
+		want := bytes.ReplaceAll(execute(t, "", oracle, args...), []byte(filepath.Dir(list)), []byte("<sources>"))
+		// Main and Binary are other products, named by their keys (#tqrqx60).
+		data, err := json.Marshal(syntaxMutantPrepared{Main: buildcache.Relative(main), Binary: buildcache.Relative(binary), Sources: sources, Want: want})
 		if err != nil {
 			return err
 		}
@@ -170,6 +180,17 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 
 func prepareSyntaxMutants(t *testing.T) {
 	t.Helper()
+	// The union's planted-survivor children are handed their parent's prepared mutants, so they fetch nothing.
+	if descriptor := os.Getenv(syntaxMutantsPreparedEnv); descriptor != "" {
+		data, err := os.ReadFile(descriptor)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := json.Unmarshal(data, &syntaxMutantsPrepared); err != nil {
+			t.Fatal(err)
+		}
+		return
+	}
 	for index := range syntaxMutantEnumeration() {
 		dir := syntaxMutantPreparedProduct(t, index)
 		data, err := os.ReadFile(filepath.Join(dir, "ready.json"))
@@ -180,6 +201,8 @@ func prepareSyntaxMutants(t *testing.T) {
 		if err := json.Unmarshal(data, &prepared); err != nil {
 			t.Fatal(err)
 		}
+		prepared.Main, prepared.Binary = buildcache.Absolute(prepared.Main), buildcache.Absolute(prepared.Binary)
+		prepared.Main = resolvedPort(t, filepath.Dir(prepared.Main), filepath.Base(prepared.Main))
 		syntaxMutantsPrepared = append(syntaxMutantsPrepared, prepared)
 	}
 }
@@ -281,7 +304,7 @@ var syntaxMutantRunners = [...]func(*testing.T){TestSyntaxMutants_000, TestSynta
 func TestSyntaxMutantsUnion(t *testing.T) {
 	t.Parallel()
 	setup := time.Now()
-	syntaxMutantReady(t)
+	prepared := syntaxMutantReady(t)
 	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	work := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(work).Seconds()) }()
@@ -321,11 +344,19 @@ func TestSyntaxMutantsUnion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	encoded, err := json.Marshal(prepared)
+	if err != nil {
+		t.Fatal(err)
+	}
+	descriptor := filepath.Join(t.TempDir(), "prepared.json")
+	if err := os.WriteFile(descriptor, encoded, 0644); err != nil {
+		t.Fatal(err)
+	}
 	caught := []int{}
 	for i := range syntaxMutantRunners {
 		name := fmt.Sprintf("TestSyntaxMutants_%03d", i)
 		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1")
+		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1", syntaxMutantsPreparedEnv+"="+descriptor)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			if !strings.Contains(string(output), "mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {

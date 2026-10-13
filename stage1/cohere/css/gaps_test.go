@@ -16,8 +16,9 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
 		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
 	} {
+		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that wait
+		// counts as the parent's own time (212.2 s in the package on Home, for two gaps of 0.15 s each alone on one core).
 		t.Run(gap.path, func(t *testing.T) {
-			t.Parallel()
 			path, err := filepath.Abs(gap.path)
 			if err != nil {
 				t.Fatal(err)

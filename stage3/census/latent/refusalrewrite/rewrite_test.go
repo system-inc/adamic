@@ -1,6 +1,7 @@
 package refusalrewrite
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -9,6 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestCompiler41231d51Shape(t *testing.T) {
@@ -85,7 +89,26 @@ func TestChangedVisitorMutantFailsLoudly(t *testing.T) {
 
 func TestVisitorsCollectContinueAndSkipDiagnosedBodies(t *testing.T) {
 	t.Parallel()
-	source := `package lower
+	probe := behaviorProbe(t)
+	log, err := os.Create(filepath.Join(t.TempDir(), "test.log"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	cmd := exec.Command(probe, "-test.count=1")
+	cmd.Dir = filepath.Dir(probe)
+	cmd.Stdout = log
+	cmd.Stderr = log
+	err = cmd.Run()
+	_ = log.Close()
+	if err != nil {
+		contents, _ := os.ReadFile(log.Name())
+		t.Fatalf("compiled behavior probe: %v\n%s", err, contents)
+	}
+}
+
+// behaviorSource is a refuse with every shape the latent rewrite instruments: directives, pragmas, a contract
+// visitor and a syntax visitor that stop at diagnosed bodies.
+const behaviorSource = `package lower
 import "probe/ast"
 func (l *lowering) refuse(module *ast.SourceFile) error {
  if len(module.CommentDirectives)>0 {
@@ -115,23 +138,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
  return found
 }
 `
-	output, err := Rewrite([]byte(source))
-	if err != nil {
-		t.Fatal(err)
-	}
-	root := t.TempDir()
-	write := func(name, text string) {
-		path := filepath.Join(root, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			t.Fatal(err)
-		}
-	}
-	write("go.mod", "module probe\n\ngo 1.21\n")
-	write("refusals.go", string(output))
-	write("ast/ast.go", `package ast
+
+// behaviorAST is the stub of the ast package Rewrite's output compiles against.
+const behaviorAST = `package ast
 const (KindSourceFile=1;KindFunctionDeclaration=2;KindCallExpression=3)
 type Visitor func(*Node) bool
 type Node struct {Kind int;Parent *Node;Children []*Node;Label string;Contract,Syntax,Diagnosed bool}
@@ -140,8 +149,10 @@ func(n *Node) ForEachChild(visit Visitor){for _,child:=range n.Children{if visit
 type Directive struct{Name string}
 type SourceFile struct{CommentDirectives []Directive;Pragmas []Directive;Root *Node}
 func(s *SourceFile) AsNode()*Node{return s.Root}
-`)
-	write("behavior_test.go", `package lower
+`
+
+// behaviorTest runs the rewritten refuse and latentRefuse over a tree with a diagnosed body.
+const behaviorTest = `package lower
 import("fmt";"reflect";"testing";"probe/ast")
 type Refused struct{What string}
 func(r *Refused) Error()string{return r.What}
@@ -171,20 +182,78 @@ func TestBehavior(t *testing.T){
  want:=[]string{"directive-one","directive-two","pragma","contract:parent","syntax:parent","syntax:child","syntax:sibling"}
  if !reflect.DeepEqual(observations,want){t.Fatalf("findings=%v want=%v",observations,want)}
 }
-`)
-	log, err := os.Create(filepath.Join(root, "test.log"))
-	if err != nil {
-		t.Fatal(err)
+`
+
+// probeToolchain is the probe's go, asked as its build runs go: toolchain's, under toolchain's environment with GOWORK
+// off, at the repository, whose go and toolchain directives the probe's module declares, so GOTOOLCHAIN selects the
+// same release for the key as for the build, and a go env file (which toolchain's GOENV=off never reads) reaches neither.
+func probeToolchain(t *testing.T) []string {
+	t.Helper()
+	var reports []string
+	for _, arguments := range [][]string{{"version"}, {"env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT"}} {
+		command := toolchain.CommandIn("../../../..", "go", arguments...)
+		command.Env = append(command.Env, "GOWORK=off")
+		output, err := command.Output()
+		if err != nil {
+			t.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+		}
+		reports = append(reports, strings.TrimSpace(string(output)))
 	}
-	cmd := exec.Command("go", "test", "-count=1", "./...")
-	cmd.Dir = root
-	cmd.Env = append(os.Environ(), "GOWORK=off")
-	cmd.Stdout = log
-	cmd.Stderr = log
-	err = cmd.Run()
-	_ = log.Close()
-	if err != nil {
-		contents, _ := os.ReadFile(filepath.Join(root, "test.log"))
-		t.Fatalf("compiled behavior probe: %v\n%s", err, contents)
+	return reports
+}
+
+// behaviorProbe is the test binary of a module holding Rewrite's output for behaviorSource beside behaviorAST and
+// behaviorTest: a product built ahead (go test -c with GOWORK off, which vets it as go test did), so the unit runs it
+// without go. Rewrite runs in this process, so its source and this file key it.
+func behaviorProbe(t *testing.T) string {
+	t.Helper()
+	inputs := buildcache.Inputs{
+		Name:      "refusalrewrite behavior probe",
+		Files:     []string{"go.mod", "stage3/census/latent/refusalrewrite/rewrite.go", "stage3/census/latent/refusalrewrite/rewrite_test.go"},
+		Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -buildvcs=false", "GOWORK=off"},
+		Toolchain: probeToolchain(t),
 	}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		output, err := Rewrite([]byte(behaviorSource))
+		if err != nil {
+			return err
+		}
+		// The probe declares the repository's go version, so GOTOOLCHAIN selects for its build the release the key's
+		// go version, asked at the repository, names.
+		repository, err := os.ReadFile("../../../../go.mod")
+		if err != nil {
+			return err
+		}
+		directives := ""
+		for _, line := range strings.Split(string(repository), "\n") {
+			if strings.HasPrefix(line, "go ") || strings.HasPrefix(line, "toolchain ") {
+				directives += strings.TrimSpace(line) + "\n"
+			}
+		}
+		if !strings.HasPrefix(directives, "go ") {
+			return fmt.Errorf("the repository's go.mod declares no go version")
+		}
+		module := filepath.Join(directory, "module")
+		for name, text := range map[string]string{"go.mod": "module probe\n\n" + directives, "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
+			path := filepath.Join(module, name)
+			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+				return err
+			}
+			if err := os.WriteFile(path, []byte(text), 0o644); err != nil {
+				return err
+			}
+		}
+		command := toolchain.CommandIn(module, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
+		command.Env = append(command.Env, "GOWORK=off")
+		if combined, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", err, combined)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "probe.test")
+}
+
+func TestProduct_RefusalRewriteBehaviorProbe(t *testing.T) {
+	t.Parallel()
+	behaviorProbe(t)
 }

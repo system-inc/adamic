@@ -3,11 +3,12 @@ package native
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A split is a post-processing prototype of C's output. It deliberately understands only the
@@ -278,7 +279,8 @@ var unitBuilds sync.Map
 // Preprocessed source/header bytes, ordered flags, compiler identity/version and platform enter
 // the key. Preprocessing on every lookup also observes ambient and system include dependencies.
 func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
-	return runtimeKey(files, append([]string{"adamic-units-v2"}, flags...), compiler, version)
+	// v3: units compile under toolchain.Env, not the caller's environment, so a v2 object isn't reused.
+	return runtimeKey(files, append([]string{"adamic-units-v3"}, flags...), compiler, version, "")
 }
 
 func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {
@@ -297,8 +299,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 			return "", err
 		}
 	}
-	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
-	preprocess.Dir = temporary
+	preprocess := toolchain.CommandIn(temporary, compiler, append(append([]string{}, flags...), "-E", unit.name)...)
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
 	preprocessed, err := preprocess.Output()
@@ -331,8 +332,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	// Clang emits GNU line-marker syntax even for C11. Accept only that generated syntax;
 	// keep all other pedantic diagnostics, including extensions outside system headers.
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
-	command := exec.Command(compiler, arguments...)
-	command.Dir = temporary
+	command := toolchain.CommandIn(temporary, compiler, arguments...)
 	if output, err := command.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
@@ -364,10 +364,12 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 }
 
 func buildUnits(source, output string, options Options) error {
-	return buildUnitsWithLibrary(source, output, options, "", nil)
+	return buildUnitsWithLibrary(source, output, options, "", "")
 }
 
-func buildUnitsWithLibrary(source, output string, options Options, library string, extraLinkFlags []string) error {
+// buildUnitsWithLibrary links the units with library, or the program's own runtime when it is empty, and with the
+// checker archive at the absolute path archive (checkerArchivePath) when it isn't empty.
+func buildUnitsWithLibrary(source, output string, options Options, library string, archive string) error {
 	header, units, err := splitC(source)
 	if err != nil {
 		return err
@@ -383,11 +385,11 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		return err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return err
 	}
@@ -401,11 +403,10 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			common = append(common, file)
 		}
 	}
-	cache, err := os.UserCacheDir()
+	cache, err := cacheDirectory("native-units")
 	if err != nil {
 		return err
 	}
-	cache = filepath.Join(cache, "adamic", "units")
 	jobs := options.Jobs
 	if jobs == 0 {
 		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
@@ -452,12 +453,37 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
+	// The link runs from the units' directory and gives it no input by its place on the machine: each unit's object,
+	// the runtime library and the checker archive go by a link's name there, and only the output by its absolute path,
+	// as BuildTSGo links. On macOS ld's debug map records every object it links that carries debug info, a sanitized
+	// build's all do, by the path it was given made absolute, which -oso_prefix takes the directory back off. Named by
+	// their places, a sanitized split binary held the build cache's path 57 times (measured on a Mac, Oct 11).
+	output, err = filepath.Abs(output)
+	if err != nil {
+		return err
+	}
 	arguments := append(Flags(options), "-o", output)
-	arguments = append(arguments, objects...)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
-	arguments = append(arguments, extraLinkFlags...)
+	for index, object := range objects {
+		name := fmt.Sprintf("unit-%d.o", index)
+		if err := os.Symlink(object, filepath.Join(directory, name)); err != nil {
+			return err
+		}
+		arguments = append(arguments, name)
+	}
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
+		return err
+	}
+	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
+	if archive != "" {
+		if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
+			return err
+		}
+		arguments = append(arguments, checkerArchive, "-lpthread", "-ldl")
+	}
+	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	link := toolchain.CommandIn(directory, compiler, arguments...)
+	if output, err := link.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)
 	}
 	return nil

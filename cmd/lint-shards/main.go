@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	count := flag.Int("n", runtime.NumCPU(), "number of shard processes")
+	count := flag.Int("n", runtime.GOMAXPROCS(0), "number of shard processes")
 	countOnly := flag.Bool("count", false, "print the total findings count only")
 	flag.Usage = func() {
 		fmt.Fprintln(os.Stderr, "usage: lint-shards [-n N] [-count] <native lint binary> <manifest>")

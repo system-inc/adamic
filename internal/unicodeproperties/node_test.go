@@ -12,6 +12,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // nodeScanner is one Node process. It builds a string of every code point, split
@@ -153,7 +155,7 @@ func TestVersionMatchesNode(t *testing.T) {
 
 func nodeVersion(t *testing.T) (string, string) {
 	t.Helper()
-	output, err := exec.Command("node", "--print", "process.version + \" \" + process.versions.unicode").Output()
+	output, err := toolchain.Command("node", "--print", "process.version + \" \" + process.versions.unicode").Output()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -186,7 +188,10 @@ func codePointExpressions() []string {
 // two workers below already use both cores.
 func TestNodeAgrees(t *testing.T) {
 	expressions := codePointExpressions()
-	const batchSize = 80
+	// Each Node process pays about 0.3 s on one core to build every code point and self-check before its first
+	// expression, so four batches instead of twenty-two do the same scans with that cost paid four times. A batch of
+	// 440 is a few seconds of Node, far inside runScanner's four-minute deadline.
+	const batchSize = 440
 	var batches [][]string
 	for start := 0; start < len(expressions); start += batchSize {
 		end := start + batchSize
@@ -308,7 +313,7 @@ func formatPoints(points []uint32) string {
 func runScanner(expressions []string) (map[string][]Range, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--eval", nodeScanner)
+	command := nodeEval(ctx, nodeScanner)
 	command.Stdin = strings.NewReader(strings.Join(expressions, "\n") + "\n")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
@@ -317,6 +322,20 @@ func runScanner(expressions []string) (map[string][]Range, error) {
 		return nil, fmt.Errorf("node scanner: %v\n%s", err, stderr.String())
 	}
 	return parseRanges(stdout.String())
+}
+
+// nodeEval is node --eval script, killed when ctx ends: toolchain.Command's program and environment, under a context
+// toolchain.Command has no form for. A node toolchain.Path can't resolve fails as the command starts, with Path's error.
+func nodeEval(ctx context.Context, script string) *exec.Cmd {
+	path, err := toolchain.Path("node")
+	if err != nil {
+		command := exec.CommandContext(ctx, "node", "--eval", script)
+		command.Err = err
+		return command
+	}
+	command := exec.CommandContext(ctx, path, "--eval", script)
+	command.Env = toolchain.Env()
+	return command
 }
 
 func parseRanges(output string) (map[string][]Range, error) {
@@ -402,7 +421,7 @@ func TestNodeStringProperties(t *testing.T) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--eval", nodeStrings)
+	command := nodeEval(ctx, nodeStrings)
 	command.Stdin = strings.NewReader(input.String())
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

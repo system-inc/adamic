@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // engine owns one checkout's compiler, keyed runtime archive and observation cache. Each worker
@@ -37,33 +38,43 @@ type engine struct {
 	context          string
 	nodeContext      string
 	compiler         *compilerWorker
+	tools            runnerTools
 	inProcess        bool
 	compilerIdentity string
 	profile          *runProfile
 	worker           int
-	root             string
 	fallback         *compilerFallback
+	buildAdamic      adamicBuilder
 }
 
-func prepare(root string, test262 string, work string) (*engine, error) {
-	return prepareMode(root, test262, work, nil, false)
+// An adamicBuilder puts the stage 0 compiler at output: go build of ./cmd/adamic for the command, the shared keyed
+// product for a test (buildcache.Adamic), so no test unit runs go build. A nil one has no compiler to give, for an
+// in-process engine that never falls back.
+type adamicBuilder func(output string) error
+
+// goBuildAdamic builds ./cmd/adamic of the checkout at root.
+func goBuildAdamic(root string) adamicBuilder {
+	return func(output string) error {
+		build := toolchain.CommandIn(root, "go", "build", "-o", output, "./cmd/adamic")
+		if combined, err := build.CombinedOutput(); err != nil {
+			return fmt.Errorf("building adamic: %w\n%s", err, combined)
+		}
+		return nil
+	}
 }
 
-func prepareProfile(root string, test262 string, work string, profile *runProfile) (*engine, error) {
-	return prepareMode(root, test262, work, profile, false)
-}
-
-func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
+func prepareMode(root string, test262 string, work string, buildAdamic adamicBuilder, profile *runProfile, inProcess bool) (*engine, error) {
 	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
 	if !inProcess {
-		build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
-		build.Dir = root
-		if output, err := build.CombinedOutput(); err != nil {
-			return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
+		if buildAdamic == nil {
+			return nil, fmt.Errorf("a subprocess engine needs a stage 0 compiler")
+		}
+		if err := buildAdamic(adamic); err != nil {
+			return nil, err
 		}
 	}
 	done()
@@ -89,7 +100,11 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	if err != nil {
 		return nil, err
 	}
-	cache, version, context, err := prepareCache()
+	tools, err := resolveTools()
+	if err != nil {
+		return nil, err
+	}
+	cache, version, context, err := prepareCache(root, tools)
 	if err != nil {
 		return nil, err
 	}
@@ -100,8 +115,8 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	context = cacheKey(context, sourceIdentity)
 	done()
 	return &engine{
-		profile: profile,
-		root:    root, fallback: &compilerFallback{}, inProcess: inProcess,
+		profile:  profile,
+		fallback: &compilerFallback{}, inProcess: inProcess, buildAdamic: buildAdamic,
 		test262:          test262,
 		work:             work,
 		adamic:           adamic,
@@ -109,6 +124,7 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 		runtimeKey:       filepath.Base(filepath.Dir(library)),
 		compilerIdentity: cacheKey(string(compilerBytes)),
 		cache:            cache, nodeVersion: version, context: context, nodeContext: cache.nodeContext,
+		tools:   tools,
 		include: filepath.Dir(library),
 		flags:   flags,
 		log:     os.Stderr,
@@ -319,7 +335,7 @@ func (e *engine) attempt(test classified) result {
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
 	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
-		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, "clang", arguments...) })
+		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, e.tools.clang, arguments...) })
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
 			return linked, false
@@ -338,7 +354,7 @@ func (e *engine) attempt(test classified) result {
 	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runProgram(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+		return runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -384,7 +400,7 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	command.Env = append(os.Environ(), extra...)
+	command.Env = childEnvironment(extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
@@ -632,7 +648,7 @@ func withCrashPath(path string, reason string) string {
 }
 
 func test262Commit(test262 string) string {
-	command := exec.Command("git", "-C", test262, "rev-parse", "HEAD")
+	command := toolchain.GitCommand("-C", test262, "rev-parse", "HEAD")
 	output, err := command.Output()
 	if err != nil {
 		return ""
@@ -659,11 +675,11 @@ type compilerFallback struct {
 func (e *engine) fallbackCompile(path string) execution {
 	if e.fallback != nil && e.inProcess {
 		e.fallback.once.Do(func() {
-			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")
-			build.Dir = e.root
-			if output, err := build.CombinedOutput(); err != nil {
-				e.fallback.err = fmt.Errorf("building adamic: %w\n%s", err, output)
+			if e.buildAdamic == nil {
+				e.fallback.err = fmt.Errorf("this engine has no stage 0 compiler to fall back to")
+				return
 			}
+			e.fallback.err = e.buildAdamic(e.adamic)
 		})
 		if e.fallback.err != nil {
 			return execution{Exit: -1, Stderr: e.fallback.err.Error()}

@@ -8,6 +8,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Products live for the package, never for the first test that requests them.
@@ -83,8 +85,7 @@ func (h *harness) stage0() string {
 	h.t.Helper()
 	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
-		command := exec.Command("go", "build", "-o", binary, "./cmd/adamic")
-		command.Dir = h.repository
+		command := toolchain.CommandIn(h.repository, "go", "build", "-o", binary, "./cmd/adamic")
 		return binary, buildProduct(h.t, "stage0", command, directory)
 	})
 	if err != nil {

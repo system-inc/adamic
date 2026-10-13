@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -27,6 +28,12 @@ type printerBuildInputs struct {
 
 func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
+	return buildcache.Product(t, printerKey(t, inputs), build)
+}
+
+// printerKey is the buildcache inputs printerBuild keys a product by.
+func printerKey(t *testing.T, inputs printerBuildInputs) buildcache.Inputs {
+	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -40,44 +47,78 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			// Generated inputs live in a read-only product outside the repository.
 			// Its bytes, rather than the machine-specific cache path, identify it.
-			data, err := os.ReadFile(file)
-			if err != nil {
-				t.Fatal(err)
-			}
-			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
+			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%s", filepath.Base(file), printerGeneratedSum(t, file)))
 		} else {
 			key.Files = append(key.Files, filepath.ToSlash(relative))
 		}
 	}
 	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	return buildcache.Product(t, key, build)
+	return key
+}
+
+// printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
+// keys all four corpora, and a process hashes it once rather than once per corpus, the four at once included.
+var printerGeneratedSums sync.Map
+
+type printerGeneratedSumOnce struct {
+	once sync.Once
+	sum  string
+	err  error
+}
+
+func printerGeneratedSum(t *testing.T, file string) string {
+	t.Helper()
+	info, err := os.Stat(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	identity := fmt.Sprintf("%s\x00%d\x00%d", file, info.Size(), info.ModTime().UnixNano())
+	value, _ := printerGeneratedSums.LoadOrStore(identity, &printerGeneratedSumOnce{})
+	entry := value.(*printerGeneratedSumOnce)
+	entry.once.Do(func() {
+		var data []byte
+		if data, entry.err = os.ReadFile(file); entry.err == nil {
+			entry.sum = fmt.Sprintf("%x", sha256.Sum256(data))
+		}
+	})
+	if entry.err != nil {
+		t.Fatal(entry.err)
+	}
+	return entry.sum
+}
+
+// printerRepositoryFiles is the walk of the whole repository (about 98k entries), which every lowered product lists:
+// once per process, since what the tree tracks doesn't change while it runs.
+var printerRepositoryFiles struct {
+	once  sync.Once
+	files []string
+	err   error
 }
 
 func printerInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
+	tree, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
 			t.Fatal(err)
 		}
-		err = filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.Name() == ".git" || entry.Name() == "node_modules" {
-				if entry.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if entry.Type().IsRegular() {
-				seen[path] = true
-			}
-			return nil
-		})
+		var files []string
+		if absolute == tree {
+			printerRepositoryFiles.once.Do(func() { printerRepositoryFiles.files, printerRepositoryFiles.err = printerWalk(tree, absolute) })
+			files, err = printerRepositoryFiles.files, printerRepositoryFiles.err
+		} else {
+			files, err = printerWalk(tree, absolute)
+		}
 		if err != nil {
 			t.Fatal(err)
+		}
+		for _, path := range files {
+			seen[path] = true
 		}
 	}
 	files := make([]string, 0, len(seen))
@@ -86,6 +127,79 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 	}
 	sort.Strings(files)
 	return files
+}
+
+// Two mutant source products reached through links, as a runner holds them, key distinct lowered products, and each
+// keys the same through its link as through its directory, so a real directory's key (Workshop's) doesn't move.
+func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	key := func(source string) string {
+		t.Helper()
+		return buildcache.NameKey(directory, printerKey(t, printerBuildInputs{Name: "lowered GraphQL printer", Files: printerInputFiles(t, source), Toolchain: runtime.Version()}))
+	}
+	keys := map[string]string{}
+	for _, mutant := range []string{"000", "001"} {
+		product := filepath.Join(directory, "products", mutant)
+		if err := os.MkdirAll(filepath.Join(product, "graphql/printer"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(product, "graphql/printer/main.ts"), []byte("mutant "+mutant), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		link := filepath.Join(directory, "links", mutant)
+		if err := os.MkdirAll(filepath.Dir(link), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Symlink(product, link); err != nil {
+			t.Fatal(err)
+		}
+		if files := printerInputFiles(t, link); len(files) != 1 || files[0] != filepath.Join(link, "graphql/printer/main.ts") {
+			t.Fatalf("mutant %s's source through its link lists %q, want its main.ts under the link", mutant, files)
+		}
+		keys[mutant] = key(link)
+		if direct := key(product); direct != keys[mutant] {
+			t.Fatalf("mutant %s keys %s through its link and %s through its directory", mutant, keys[mutant][:12], direct[:12])
+		}
+	}
+	if keys["000"] == keys["001"] {
+		t.Fatalf("mutants 000 and 001 key one lowered product %s through their links", keys["000"][:12])
+	}
+	t.Logf("through their links, mutant 000 keys %s and 001 keys %s", keys["000"][:12], keys["001"][:12])
+}
+
+// printerWalk is every regular file under absolute that the tree carries. A product reached through a link, as a
+// runner links each one it fetched, is walked where it points (buildcache.ProductRoot), and each file is named under
+// absolute as given: walked as the link itself it lists nothing, and mega's run 2 keyed all three mutants' lowered
+// products by the repository alone, so they ran one sanitized binary and escaped the oracle.
+func printerWalk(tree, absolute string) ([]string, error) {
+	start, err := buildcache.ProductRoot(absolute)
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	err = filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(start, path)
+		if err != nil {
+			return err
+		}
+		path = filepath.Join(absolute, relative)
+		// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
+		if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if entry.Type().IsRegular() {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files, err
 }
 
 func printerLoweredProduct(t *testing.T, path string) string {

@@ -4,8 +4,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const cache = process.env.STAGE3_CACHE || path.join(require('node:os').homedir(), '.cache/adamic-stage3');
-const ts = require(process.env.TSC_ADAPT_TYPESCRIPT || path.join(cache, 'api/node_modules/typescript'));
+const ts = require(process.env.TSC_ADAPT_TYPESCRIPT || path.join(__dirname, '../api/node_modules/typescript'));
 assert.equal(ts.version, '6.0.3');
 function canonical(node) {
     if (ts.isParenthesizedTypeNode(node)) return canonical(node.type);

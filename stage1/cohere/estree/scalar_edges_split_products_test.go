@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testScalarEdgesShards = 4
@@ -64,7 +65,7 @@ func scalarEdgeNative(t *testing.T, lowered string) string {
 	inputs := scalarEdgeInputs()
 	inputs.Name = "scalar-edges-sanitized-native-v2"
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}...)
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}...)
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
@@ -98,8 +99,9 @@ func scalarEdgeOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.Dir = filepath.Join(repo, "cohere")
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(path)
+		command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("oracle: %w\n%s", err, output)

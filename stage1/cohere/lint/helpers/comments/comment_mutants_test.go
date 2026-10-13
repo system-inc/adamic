@@ -42,8 +42,30 @@ func TestCommentMutants_004(t *testing.T) {
 	runCommentMutant(t, 4)
 }
 
-func commentMutants() []struct{ file, old, new string } {
-	return []struct{ file, old, new string }{
+// Each mutant's sanitized build is a product made ahead, so its unit only runs it.
+func TestProduct_CommentMutants_000(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, commentMutants()[0])
+}
+func TestProduct_CommentMutants_001(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, commentMutants()[1])
+}
+func TestProduct_CommentMutants_002(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, commentMutants()[2])
+}
+func TestProduct_CommentMutants_003(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, commentMutants()[3])
+}
+func TestProduct_CommentMutants_004(t *testing.T) {
+	t.Parallel()
+	helpersNative(t, commentMutants()[4])
+}
+
+func commentMutants() []nativeMutation {
+	return []nativeMutation{
 		{"can_begin_at.ts", "if(position === 0 && text.startsWith('#!'))", "if(false)"},
 		{"collect_list_interiors.ts", "if(depth === 1)", "if(false)"},
 		{"sort_by_position.ts", "> current.start", "< current.start"},
@@ -92,34 +114,7 @@ func runCommentMutant(t *testing.T, index int) {
 		t.Fatal(err)
 	}
 	want := run(t, "", oracle(t), path)
-	directory := t.TempDir()
-	for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
-		data, err := os.ReadFile(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		text := string(data)
-		if file == m.file {
-			if strings.Count(text, m.old) != 1 {
-				t.Fatalf("mutant anchor count %d", strings.Count(text, m.old))
-			}
-			text = strings.Replace(text, m.old, m.new, 1)
-		}
-		parserRoot, err := filepath.Abs("../../../../typescript")
-		if err != nil {
-			t.Fatal(err)
-		}
-		options, err := filepath.Abs("../options_json.ts")
-		if err != nil {
-			t.Fatal(err)
-		}
-		text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
-		text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-		if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	got := run(t, "", build(t, directory), path)
+	got := run(t, "", helpersNative(t, m), path)
 	requireCommentMutantKilled(t, got, want)
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
 	for i := 0; i < len(a) && i < len(b); i++ {

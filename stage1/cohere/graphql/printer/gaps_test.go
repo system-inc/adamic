@@ -40,8 +40,8 @@ const testPrinterWhitespaceGapShards = 5
 
 // A fixed set of shards hashes the repository-relative JSON path and entry index.
 // Adding entries preserves every existing assignment. ADAMIC_TEST_SHARD=i/n
-// selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
-// Not parallel: printerBuild writes the shared buildcache directory and native.Build writes the shared adamic/runtime cache.
+// selects indices modulo n equal to i; unset runs all. Builds are shared inputs, read-only buildcache products
+// filled by one process at a time and placed whole, so the units run in parallel.
 func printerWhitespaceUnit(t *testing.T, unit int) {
 	setupStart := time.Now()
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
@@ -56,7 +56,7 @@ func printerWhitespaceUnit(t *testing.T, unit int) {
 	if err := json.Unmarshal(proof, &texts); err != nil {
 		t.Fatal(err)
 	}
-	cases, answers := printerCases(t, "defaults", printerOracle(t))
+	cases, answers := printerCases(t, "defaults")
 	enumeration := enumeratePrinter(t, "defaults", cases, answers)
 	byInput := map[string]string{}
 	for _, item := range enumeration {
@@ -102,7 +102,7 @@ func printerWhitespaceUnit(t *testing.T, unit int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	products := preparePrinterProducts(t, printerDirectory(t, "", "", ""))
+	products := printerCopyProducts(t)
 	script, _ := filepath.Abs("testdata/prettier.mjs")
 	embedded, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	for number, shard := range shards {

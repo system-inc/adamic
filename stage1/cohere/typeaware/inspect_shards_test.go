@@ -33,7 +33,7 @@ func TestInspectRequestRefusals(t *testing.T) {
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := h.stage0()
-	normal := h.archive("checker", "", false)
+	normal := h.archive("checker", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts")
 	binary := h.build(stage0, "request", entry, normal, false)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
@@ -55,9 +55,9 @@ func TestInspectRequestRefusals(t *testing.T) {
 		}
 		h.t.Log("released type-name query: panic 70, invalid or released checker handle")
 	})
-	for _, change := range []struct{ name, kind, question, message, from, to string }{
-		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node", `candidate.Kind.String() == "Kind"+kind`, `kind != ""`},
-		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question", `return "", fmt.Errorf("unsupported checker question: %s", question)`, `return out.String(), nil`},
+	for _, change := range []struct{ name, kind, question, message string }{
+		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node"},
+		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question"},
 	} {
 		args := []string{config, probe, "0", "2", change.kind, change.question, "2"}
 		add(change.name+"/refused", func(h *harness) {
@@ -66,8 +66,7 @@ func TestInspectRequestRefusals(t *testing.T) {
 				h.t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
 			}
 		})
-		overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-		archive := h.archive(change.name+"-checker", overlay, false)
+		archive := checkerMutantArchive(t, change.name)
 		mutant := h.build(stage0, change.name, entry, archive, false)
 		add(change.name+"/mutant", func(h *harness) {
 			h.must(change.name+"-mutant-run", exec.Command(mutant, args...))

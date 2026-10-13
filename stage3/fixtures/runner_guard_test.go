@@ -71,7 +71,9 @@ func TestNodeRunnerModeGuardHook(t *testing.T) {
 	t.Parallel()
 	source, present := os.LookupEnv("ADAMIC_NODE_RUNNER_MODE_SOURCE")
 	if !present {
-		t.Skip("subprocess hook")
+		// The child half of requireNodeRunnerModeFatal, which runs it with ADAMIC_NODE_RUNNER_MODE_SOURCE set. On its
+		// own it has nothing to check, so it returns rather than skipping, as TestRelocationChild does.
+		return
 	}
 	nodeRunnerMode(t, source)
 }

@@ -46,7 +46,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 	inputs := buildcache.Inputs{
 		Name:  "estree-acceptance-mutant-lowered-" + item.name,
 		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
-		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
 		main := mutantPort(t, item.file, item.from, item.to)
@@ -75,10 +75,11 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 				return err
 			}
 		}
-		return nil
+		// mutantPort's imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(dir)
 	})
 	if !compile {
-		return filepath.Join(lowered, "main.ts"), ""
+		return resolvedPort(t, lowered, "main.ts"), ""
 	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
@@ -90,7 +91,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
-	return filepath.Join(lowered, "main.ts"), filepath.Join(product, "port")
+	return resolvedPort(t, lowered, "main.ts"), filepath.Join(product, "port")
 }
 
 // Each independently selected shard builds or fetches only its own mutant.
@@ -106,7 +107,7 @@ func acceptanceMutantsOracle(t *testing.T) string {
 	acceptanceOracleOnce.Do(func() {
 		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
 			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
-			Flags:     []string{"repository=" + root(t), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
 		directory := buildcache.Product(t, inputs, func(directory string) error {
 			// GoBuild is absent on this base; preserve the existing overlay recipe.

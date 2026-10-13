@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -526,12 +527,21 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 
 // bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
 // its own, and when the deadline passes or the test ends, the whole group is killed. A fixture that
-// loops, or a child left with nowhere to write, is stopped instead of orphaned.
+// loops, or a child left with nowhere to write, is stopped instead of orphaned. A bare name runs the
+// program toolchain.Path finds, so the node a run answers with is the one the result cache's identity
+// asked for its version; one Path can't find fails as it starts, with Path's error.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
+	path, err := toolchain.Path(name)
+	if err != nil {
+		path = name
+	}
+	command := exec.CommandContext(ctx, path, arguments...)
+	if err != nil {
+		command.Err = err
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -726,9 +736,13 @@ func disagreement(oracle run, native run) string {
 	return ""
 }
 
-func TestNativeAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	for _, fixture := range fixtures {
+// TestNativeAgreesWithNode is a family (families_test.go): TestNativeAgreesWithNode_000 and on each run the fixtures
+// their shard owns, each as a subtest named by its path.
+func runNativeAgreesShard(t *testing.T, shard int) {
+	t.Helper()
+	_, probing := familyProbe("TestNativeAgreesWithNode")
+	for _, index := range familyCases(t, "TestNativeAgreesWithNode", shard, fixturePaths()) {
+		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
@@ -751,8 +765,20 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Lower: %v", err)
 			}
+			if probing {
+				// TestFamiliesCatchAPlantedCase's mutant: TestTheOracleCatchesOneByte's byte, after lowering.
+				program.Strings[0] += "!"
+			}
 			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
-			native, sanitized := natively(t, program)
+			// A program that panicked stopped where it stood, as Node's does, so what it held then
+			// isn't a leak; every program that finishes must have let go of everything.
+			native, leaked, comparable := nativelyCheckingLeaks(t, program, !fixture.checked && oracle.exitCode == 0)
+			if leaked != "" {
+				t.Errorf("leaks:\n%s", leaked)
+			}
+			if !comparable {
+				return
+			}
 			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
 			// allocator rather than malloc) must say exactly what the sanitized one did.
 			if released := released(t, program); disagreement(native, released) != "" {
@@ -781,15 +807,36 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}
-			// A program that panicked stopped where it stood, as Node's does, so what it held then
-			// isn't a leak; every program that finishes must have let go of everything.
-			if oracle.exitCode == 0 {
-				if leaked := leaks(t, program, sanitized); leaked != "" {
-					t.Errorf("leaks:\n%s", leaked)
-				}
-			}
 		})
 	}
+}
+
+// nativelyCheckingLeaks is natively, and leaks when checkLeaks is set, in one run where it can be. On Linux, uncached,
+// a program run with LeakSanitizer on behaves as it does with it off when it leaks nothing (the same stdout, stderr
+// and exit), so the comparison run serves the leak check too, instead of a second run of the same binary: the heaviest
+// fixtures spent half their time in that second run (normalize_coverage_long.a, 9.5 s of 20 alone on one core). When
+// it does leak, LeakSanitizer ends the program with exit 1 and its report, and the program's buffered stdout is lost,
+// so that run isn't comparable and the leak is the failure; the report keeps whatever the program wrote to stderr.
+func nativelyCheckingLeaks(t *testing.T, program *ir.Program, checkLeaks bool) (result run, leaked string, comparable bool) {
+	t.Helper()
+	if !checkLeaks || runtime.GOOS != "linux" || os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
+		result, sanitized := natively(t, program)
+		if checkLeaks {
+			leaked = leaks(t, program, sanitized)
+		}
+		return result, leaked, true
+	}
+	// The two observations natively and leaks would each count, made by one run.
+	identity(t).cache.misses[nativeResults].Add(2)
+	binary := filepath.Join(t.TempDir(), "program")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	result = executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if bytes.Contains(result.stderr, []byte("ERROR: LeakSanitizer")) {
+		return result, fmt.Sprintf("LeakSanitizer ended the run, so its output wasn't compared: exit %d\n%s", result.exitCode, result.stderr), false
+	}
+	return result, "", true
 }
 
 // The oracle has to be able to fail. One byte added to the dedication's string, after lowering, must

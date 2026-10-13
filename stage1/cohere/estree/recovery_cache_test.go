@@ -12,11 +12,13 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // All paths passed to Product are repository-relative. Go dependencies include
@@ -25,8 +27,42 @@ import (
 func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
 	t.Helper()
 	repo := root(t)
-	cmd := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
-	cmd.Dir = repo
+	sources := recoveryDependencies(t, repo)
+	names := append([]string(nil), sources.names...)
+	external := append([]string(nil), sources.external...)
+	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
+	for _, file := range sourceFiles {
+		source, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		normalized := strings.ReplaceAll(string(source), filepath.ToSlash(filepath.Join(repo, "stage1/typescript")), "../../typescript")
+		flags = append(flags, filepath.Base(file)+":"+fmt.Sprintf("%x", sha256.Sum256([]byte(normalized))))
+	}
+	flags = append(flags, external...)
+	flags = append(flags, buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"))
+	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+}
+
+// recoverySources is the part of every lowered program's key that doesn't depend on the program: the compiler's
+// repository files (with stage1/typescript), sorted, and its module-cache sources as named content fingerprints.
+type recoverySources struct{ names, external []string }
+
+// recoveryDependencies discovers the compiler's sources with go list, once per process for each repository, since
+// every recovery build keys by them. Parallel builds wait on the first discovery; a failed one isn't remembered.
+// Callers copy the slices.
+func recoveryDependencies(t *testing.T, repo string) recoverySources {
+	t.Helper()
+	recoveryDiscovered.Lock()
+	defer recoveryDiscovered.Unlock()
+	if sources, ok := recoveryDiscovered.sources[repo]; ok {
+		return sources
+	}
+	cmd := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
 	output, err := cmd.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -87,28 +123,19 @@ func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
 	for file := range files {
 		names = append(names, file)
 	}
-	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
-	for _, file := range sourceFiles {
-		source, err := os.ReadFile(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		normalized := strings.ReplaceAll(string(source), filepath.ToSlash(filepath.Join(repo, "stage1/typescript")), "../../typescript")
-		flags = append(flags, filepath.Base(file)+":"+fmt.Sprintf("%x", sha256.Sum256([]byte(normalized))))
-	}
 	sort.Strings(names)
 	sort.Strings(external)
-	flags = append(flags, external...)
-	environment, err := exec.Command("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN").Output()
-	if err != nil {
-		t.Fatal(err)
+	sources := recoverySources{names: names, external: external}
+	if recoveryDiscovered.sources == nil {
+		recoveryDiscovered.sources = map[string]recoverySources{}
 	}
-	flags = append(flags, string(environment))
-	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	recoveryDiscovered.sources[repo] = sources
+	return sources
+}
+
+var recoveryDiscovered struct {
+	sync.Mutex
+	sources map[string]recoverySources
 }
 
 // native.Build embeds its random scratch path in sanitizer metadata. This local
@@ -164,8 +191,7 @@ func recoveryStableNative(repo, directory, source string) error {
 	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
-	cmd := exec.Command("clang", args...)
-	cmd.Dir = work
+	cmd := toolchain.CommandIn(work, "clang", args...)
 	if output, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("sanitized native build: %w: %s", err, output)
 	}
@@ -243,13 +269,8 @@ func recoveryAnswer(t *testing.T, oracle, list, mode string) []byte {
 
 const testRecoveryNativeRecipeShards = 4
 
-// ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
-// The fixture checks the compiler recipe, including leak detection, rather than
-// merely checking that its command line still contains sanitizer switches.
-func TestRecoveryNativeRecipe(t *testing.T) {
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	source := `#include "adamic.h"
+// recoveryNativeRecipeSource is the fixture the native recipe proof compiles: clean, then each sanitizer's catch.
+const recoveryNativeRecipeSource = `#include "adamic.h"
 #include <limits.h>
 #include <stdlib.h>
 static void * volatile lost;
@@ -264,6 +285,11 @@ int main(int argc,char **argv) {
  return 0;
 }
 `
+
+// recoveryNativeRecipe is the fixture built twice from one recipe in two independent build directories, a and b.
+func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
+	t.Helper()
+	source := recoveryNativeRecipeSource
 	inputs := buildcache.Inputs{
 		Name:      "estree-native-recipe-proof-a",
 		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
@@ -273,6 +299,16 @@ int main(int argc,char **argv) {
 	first := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
 	inputs.Name = "estree-native-recipe-proof-b"
 	second := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+	return first, second
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
+// The fixture checks the compiler recipe, including leak detection, rather than
+// merely checking that its command line still contains sanitizer switches.
+func TestRecoveryNativeRecipe(t *testing.T) {
+	setup := beginRecoverySetup(t)
+	defer setup.report(t)
+	first, second := recoveryNativeRecipe(t, setup)
 	a, err := os.ReadFile(filepath.Join(first, "port"))
 	if err != nil {
 		t.Fatal(err)

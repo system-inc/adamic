@@ -2,19 +2,16 @@ package parser
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -32,22 +29,26 @@ func goOracle(t *testing.T) string {
 	return parserGuardOracle(t)
 }
 
+// buildPort is the port in directory built natively, as a product: the tree build makes each one ahead through its
+// TestProduct_ (port_products_test.go), so no test pays for a lower and a native build inside its own time. Each
+// source is fetched once per process, since many tests ask for the control.
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
+	value, _ := portBuilds.LoadOrStore(fmt.Sprintf("%s sanitize=%t", wholeMutantsSourceHash(t, directory), sanitize), &portBuild{})
+	build := value.(*portBuild)
+	build.once.Do(func() { build.binary = wholeMutantBuildPortProduct(t, directory, sanitize) })
+	if build.binary == "" {
+		t.Fatal("port product preparation failed in an earlier test")
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	return build.binary
 }
+
+type portBuild struct {
+	once   sync.Once
+	binary string
+}
+
+var portBuilds sync.Map
 
 func copyPort(t *testing.T, file, from, to string) string {
 	t.Helper()
@@ -130,7 +131,7 @@ func compilerManifest(t *testing.T) (string, int) {
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
 	}
-	output, err := exec.Command("git", "-C", source, "rev-parse", "HEAD").Output()
+	output, err := toolchain.GitCommand("-C", source, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
 		t.Fatalf("corpus pin differs: %q %v", output, err)
 	}

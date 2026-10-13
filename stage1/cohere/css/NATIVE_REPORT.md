@@ -116,8 +116,8 @@ export ADAMIC_CSS_PRINTER_LIBRARY=/tmp/adamic-css-printer-library
 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^(TestCompositionMatchesGo|TestCSSPrinterAgreesWithGo)$'
 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^(TestClosed.*RegexGap|TestTheCanonicalRangeChecksCanFail|TestEachGapStandsWhereGapsMdSaysItDoes)$'
 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^(TestThePortParsesAsGoCohereDoes|TestCSSPrinterBoundaryProofs)$'
-go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestComposedMemoryChecksCanFail$'
-go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestCSSPrinterOptimizedMatchesGo$'
+go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestComposedMemoryChecksCanFail_'
+go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestCSSPrinterOptimizedMatchesGo_'
 go test -v -count=1 -timeout=30m ./stage1/cohere/css -run '^TestCSSParserOptimizedMatchesNode$'
 go test -count=1 ./internal/fresh
 go test -count=1 -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/regexp'

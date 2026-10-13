@@ -20,8 +20,11 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // ADAMIC_TEST_SHARD=i/n runs shard numbers congruent to i modulo n; unset runs all.
@@ -171,7 +174,7 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 		flags = []string{applied.file, applied.from, applied.to}
 	}
 	flags = append(flags, "sanitize=true", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	files := []string{"internal", "bridge", "go.mod", "go.work", "cohere"}
+	files := compilerinputs.Lowering()
 	for _, f := range portFiles {
 		files = append(files, "stage1/cohere/gitignore/"+f)
 	}
@@ -207,6 +210,10 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 	})
 }
 
+// portBuildOracleProduct is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's
+// internal/gitignore: a buildcache.GoTest product, so go runs as toolchain resolves it in cohere, under its environment,
+// and the key is go's own answer there (cohere's go.mod, go.sum and go.work, the overlay's content, go's settings and
+// release), not the caller's GOFLAGS and a go version asked elsewhere.
 func portBuildOracleProduct(t *testing.T) string {
 	t.Helper()
 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
@@ -217,24 +224,16 @@ func portBuildOracleProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: "gitignore-go-oracle", Files: []string{"cohere", "stage1/cohere/gitignore/testdata/cohere_side_test.go", "go.work", "go.mod"}, Flags: []string{"go test -c -overlay", "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err = os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		cmd := portCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/gitignore")
-		cmd.Dir = cohere
-		output, err := combinedOutput(cmd)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The overlay names this checkout's paths: GoTest keys its map and the side file's content, never its own path.
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoTest(t, "cohere", "oracle", "./internal/gitignore", []string{"-overlay=" + path})
 }
 
 func portOracle(t *testing.T, binary string, request map[string]any) {
@@ -277,8 +276,13 @@ func portAsked(t *testing.T, binary, scratch string) cases {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The oracle makes its trees repositories with the git internal/toolchain resolves, under GitEnv, never its PATH's.
+	git, err := toolchain.Path("git")
+	if err != nil {
+		t.Fatal(err)
+	}
 	output := filepath.Join(scratch, "cases.json")
-	portOracle(t, binary, map[string]any{"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated, "gitSource": gitSource(), "realTrees": []string{root, filepath.Join(root, "cohere")}, "output": output, "largest": largest()})
+	portOracle(t, binary, map[string]any{"mode": "generate", "scratch": scratch, "seed": seed, "generated": generated, "gitSource": gitSource(), "realTrees": []string{root, filepath.Join(root, "cohere")}, "output": output, "largest": largest(), "git": git, "gitEnvironment": toolchain.GitEnv()})
 	data, err := os.ReadFile(output)
 	if err != nil {
 		t.Fatal(err)
@@ -327,6 +331,13 @@ var portShared struct {
 	realAnswers     map[string]map[query]string
 	totals          agreement
 	comparedShards  int
+
+	// The whole live corpus's cases file and Go cohere's answers to it, the same for the union and every
+	// mutant, so made once in a run: the 100 MiB ignore file alone takes seconds to write and answer.
+	fullOnce     sync.Once
+	fullPath     string
+	fullWant     string
+	fullAnswered bool
 }
 
 func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Timer {
@@ -335,7 +346,7 @@ func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Ti
 }
 
 func checkPortAnswerUnion(t *testing.T) {
-	preparePortAnswerInputs(t)
+	preparePortFullAnswers(t)
 	ownStart := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(ownStart).Seconds()) }()
 	deadline := portHardDeadline(t, "union", 90*time.Second)
@@ -343,7 +354,6 @@ func checkPortAnswerUnion(t *testing.T) {
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
 		t.Fatal("enumerated shard count differs from static planner count")
 	}
-	oracle := portShared.oracle
 	seenMutants := map[string]bool{}
 	for _, m := range mutants {
 		if seenMutants[m.name] {
@@ -355,14 +365,9 @@ func checkPortAnswerUnion(t *testing.T) {
 	asked := portShared.asked
 	portCaseShards(t, asked)
 	// Check the non-vacuity requirement over the live full corpus, independently of
-	// which comparison shards the current gate invocation selects.
-	gitAnswers := map[string][]string{}
-	for _, tr := range asked.Trees {
-		if tr.Git == "run" {
-			gitAnswers[tr.Name] = portGitCheckIgnore(t, tr)
-		}
-	}
-	a := againstGit(asked, gitAnswers, portGoAnswers(t, oracle, asked))
+	// which comparison shards the current gate invocation selects. Git's answers are
+	// setup's, which asked git check-ignore of every tree that runs it.
+	a := againstGit(asked, portShared.gitAnswers, portShared.fullWant)
 	if a.compared == 0 || a.ignored == 0 || a.reincluded == 0 {
 		t.Fatalf("git was asked too little: %+v", a)
 	}
@@ -426,6 +431,23 @@ func preparePortAnswerInputs(t *testing.T) {
 	}
 }
 
+// preparePortFullAnswers writes the whole live corpus's cases file into the shared scratch, which TestMain
+// removes, and asks Go cohere its answers, once in a run.
+func preparePortFullAnswers(t *testing.T) {
+	t.Helper()
+	preparePortAnswerInputs(t)
+	portShared.fullOnce.Do(func() {
+		start := time.Now()
+		portShared.fullPath = casesFile(t, portShared.scratch, portShared.asked)
+		portShared.fullWant = portGoAnswers(t, portShared.oracle, portShared.asked)
+		portShared.fullAnswered = true
+		t.Logf("shared full-corpus answers ready: %.3fs", time.Since(start).Seconds())
+	})
+	if !portShared.fullAnswered {
+		t.Fatal("shared full-corpus answers failed")
+	}
+}
+
 func runPortAnswerShard(t *testing.T, index int) {
 	if !portSelected(t, index) {
 		return
@@ -445,6 +467,7 @@ func runPortAnswerShard(t *testing.T, index int) {
 			t.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
 		applied = &m
+		preparePortFullAnswers(t)
 	}
 	product := portProducts(t, applied)
 	t.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
@@ -453,12 +476,12 @@ func runPortAnswerShard(t *testing.T, index int) {
 	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 90*time.Second)
 	defer deadline.Stop()
 
-	subset := asked
+	subset, path, want := asked, portShared.fullPath, portShared.fullWant
 	if index < portComparisonShards {
 		subset = shards[index].asked
+		path = casesFile(t, t.TempDir(), subset)
+		want = portGoAnswers(t, oracle, subset)
 	}
-	path := casesFile(t, subset)
-	want := portGoAnswers(t, oracle, subset)
 	gitAnswers := map[string][]string{}
 	for _, tr := range subset.Trees {
 		if tr.Git == "run" {
@@ -477,7 +500,17 @@ func runPortAnswerShard(t *testing.T, index int) {
 	}
 	dir := product
 	node := portNode(t, filepath.Join(dir, "main.ts"), path)
-	nat := portNative(t, dir, path)
+	// On Linux a comparison shard's one sanitized run is also its leak check: LeakSanitizer acts only at
+	// exit, so the run answers as it does with detection off, and a leak is a report on stderr and a
+	// nonzero exit, which the native side refuses. The 100 MiB ignore file made running twice cost
+	// seconds. A mutant runs with detection off, so it is caught by its answers alone.
+	leakChecked := index < portComparisonShards && runtime.GOOS == "linux"
+	var nat run
+	if leakChecked {
+		nat = portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
+	} else {
+		nat = portNative(t, dir, path)
+	}
 	if index < portComparisonShards {
 		backend := portNode(t, filepath.Join(dir, "program.mjs"), path)
 		for _, side := range []struct {
@@ -485,23 +518,25 @@ func runPortAnswerShard(t *testing.T, index int) {
 			result run
 		}{{"Node", node}, {"native", nat}, {"JavaScript backend", backend}} {
 			if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
+				if side.name == "native" && leakChecked {
+					t.Fatalf("native, leak detection on: exit %d, stderr %q", side.result.exitCode, side.result.stderr)
+				}
 				t.Fatalf("%s: exit %d, stderr %q", side.name, side.result.exitCode, side.result.stderr)
 			}
 			if diff := firstDifference(string(side.result.stdout), want); diff != "" {
 				t.Errorf("%s and Go cohere differ: %s", side.name, diff)
 			}
 		}
-		var leak run
 		switch runtime.GOOS {
 		case "linux":
-			leak = portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
+			// The native run above was the leak check.
 		case "darwin":
-			leak = portExecute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
+			leak := portExecute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
+			if leak.exitCode != 0 {
+				t.Errorf("leaks: exit %d: %s %s", leak.exitCode, leak.stdout, leak.stderr)
+			}
 		default:
 			t.Fatalf("no leak check for %s", runtime.GOOS)
-		}
-		if leak.exitCode != 0 {
-			t.Errorf("leaks: exit %d: %s %s", leak.exitCode, leak.stdout, leak.stderr)
 		}
 		a := againstGit(subset, gitAnswers, string(node.stdout))
 		for _, diff := range a.differences {
@@ -657,6 +692,17 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
 func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	command := exec.CommandContext(context.Background(), name, args...)
+	if !strings.ContainsRune(name, filepath.Separator) {
+		// A bare name (node, leaks) is a tool: the one internal/toolchain resolves, with a tool's environment, not
+		// PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built (the Go
+		// oracle, the port) runs as named, with this process's environment. Path's error fails the command as it starts.
+		if path, err := toolchain.Path(name); err != nil {
+			command.Err = err
+		} else {
+			command = exec.CommandContext(context.Background(), path, args...)
+			command.Env = toolchain.Env()
+		}
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -673,7 +719,8 @@ func portExecute(t *testing.T, environment []string, name string, args ...string
 	t.Helper()
 	command := portCommand(t, name, args...)
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
+		command.Env = append(command.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
@@ -706,13 +753,27 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 		input.WriteString(query.Path)
 		input.WriteByte(0)
 	}
-	command := portCommand(t, "git", "-c", "core.excludesFile="+emptyExclude, "-c", "core.ignorecase=false",
-		"check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")
-	command.Dir = tree.Disk
-	command.Env = []string{
-		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
-		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
+	// GitEnv keeps git's configuration out of reach; these add the scratch home and no optional locks.
+	environment := []string{"HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch, "GIT_OPTIONAL_LOCKS=0"}
+	arguments := []string{"-c", "core.excludesFile=" + emptyExclude, "-c", "core.ignorecase=false"}
+	if !tracked.Git(tree.Disk) {
+		// A Loom runner's source has no .git (#cyasrr4), and check-ignore needs a repository even with --no-index. An
+		// empty one, with the tree as its work tree and an empty info/exclude, reads only the tree's .gitignore files,
+		// as tracked does for its own ignore rules.
+		repository := filepath.Join(scratch, "repository")
+		initialize := toolchain.GitCommand("init", "-q", "--bare", repository)
+		initialize.Env = append(initialize.Env, environment...)
+		if output, err := initialize.CombinedOutput(); err != nil {
+			t.Fatalf("git init for %s: %v\n%s", tree.Disk, err, output)
+		}
+		if err := os.WriteFile(filepath.Join(repository, "info", "exclude"), nil, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		arguments = append([]string{"--git-dir=" + repository, "--work-tree=" + tree.Disk, "-c", "core.bare=false"}, arguments...)
 	}
+	command := toolchain.GitCommandIn(tree.Disk, append(arguments, "check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")...)
+	command.Env = append(command.Env, environment...)
+	command.WaitDelay = time.Second
 	command.Stdin = &input
 	var standardOutput, standardError bytes.Buffer
 	command.Stdout = &standardOutput

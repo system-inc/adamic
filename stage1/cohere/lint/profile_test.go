@@ -49,7 +49,7 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "compiler.txt"), []byte(manifest.String()), 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracle, err := os.ReadFile(goOracle(t))
+	oracle, err := os.ReadFile(lintGoOracleProduct(t))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -201,7 +201,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	oracle := goOracle(t)
+	oracle := lintGoOracleProduct(t)
 	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
 	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
 	path := manifest(t, recoveryRows(t, oracle, rows))
@@ -231,7 +231,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 func TestCommentFoldMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	directory := mutant(t, "point - 32 : point", "point - 31 : point", "unicode.ts")
 	for _, side := range []struct {
 		name string
@@ -250,7 +250,7 @@ func TestCommentFoldMutant(t *testing.T) {
 func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
 	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
 	for _, side := range []struct {
 		name string

@@ -12,16 +12,11 @@ import (
 func TestStatementUpstreamDifferences(t *testing.T) {
 	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/statements_side_test.go")
-	expressions, _ := filepath.Abs("testdata/expressions_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": expressions, root + "/cohere/internal/format/javascript/adamic_statements_test.go": side}})
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
 	recordsPath, _ := filepath.Abs("testdata/statement-upstream-differences.json")
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicStatementUpstreamDifferences$", "./internal/format/javascript")
-	command.Dir = root + "/cohere"
+	// The same two harnesses over cohere's javascript package are tsprinter-go-oracle-v2, built ahead; the unit only
+	// runs it, in the package's directory (#5qykzj5).
+	command := bounded(t, printerGateGoOracle(t)+"/oracle", "-test.v", "-test.run=^TestAdamicStatementUpstreamDifferences$")
+	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go: %v %s", err, output)

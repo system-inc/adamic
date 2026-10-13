@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 var repositoryCorpusRoots = []string{
@@ -18,15 +20,26 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 	if err != nil || !info.IsDir() {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
 	}
-	command := bounded(t, "git", "-C", checkout, "ls-files", "-z", "--", root)
-	data, err := output(command)
+	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries; inside a
+	// traced build, a walk its read set keys (tscAgreementPrepare lists here while it builds, #1p6sent).
+	paths, err := tracked.PathsUnder(checkout, root)
 	if err != nil {
-		return nil, fmt.Errorf("corpus root %s: git ls-files: %w", root, err)
+		return nil, fmt.Errorf("corpus root %s: tracked files: %w", root, err)
 	}
 	var files []string
-	for _, path := range strings.Split(string(data), "\x00") {
-		if strings.HasSuffix(path, ".ts") {
-			files = append(files, filepath.Join(checkout, path))
+	for _, name := range paths {
+		if strings.HasSuffix(name, ".ts") {
+			files = append(files, filepath.Join(checkout, name))
+		}
+	}
+	// Without .git, a .ts file the manifest leaves out (and no .gitignore ignores) is a stale manifest, refused.
+	extra, err := tracked.Unrecorded(checkout, root)
+	if err != nil {
+		return nil, fmt.Errorf("corpus root %s: %w", root, err)
+	}
+	for _, name := range extra {
+		if strings.HasSuffix(name, ".ts") {
+			return nil, fmt.Errorf("corpus root %s: %s is on disk but not in the tree's manifest", root, name)
 		}
 	}
 	if len(files) == 0 {
@@ -46,9 +59,10 @@ func printerCorpusFiles(t *testing.T) []string {
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
-	command := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
-	if data, err := output(command); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("TypeScript pin: %q %v", data, err)
+	// The pin is a check, never an input: tracked.Head asks git as key-time work, with the home's configuration out of
+	// reach (home-6's dry run, Oct 11: this git read ~/.gitconfig inside the build, refusing it and the Go oracle beside it).
+	if head, err := tracked.Head(source); err != nil || head != "050880ce59e30b356b686bd3144efe24f875ebc8" {
+		t.Fatalf("TypeScript pin: %q %v", head, err)
 	}
 	var files []string
 	for _, path := range repositoryCorpusRoots {
@@ -94,5 +108,34 @@ func TestTrackedCorpusRoots(t *testing.T) {
 	}
 	if _, err := trackedRootFiles(t, directory, "empty"); err == nil || !strings.Contains(err.Error(), "empty") {
 		t.Fatalf("empty root was not named: %v", err)
+	}
+	// The same checkout as a Loom runner unpacks it, every file but .git, answers from the tree's manifest alike.
+	if result := execute(t, nil, "git", "-C", directory, "-c", "user.name=Corpus fixture", "-c", "user.email=corpus@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "fixture"); result.exitCode != 0 {
+		t.Fatal(string(result.stderr))
+	}
+	source := t.TempDir()
+	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
+		if err := os.MkdirAll(filepath.Join(source, filepath.Dir(name)), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := trackedRootFiles(t, source, "named"); err == nil || !strings.Contains(err.Error(), tracked.ManifestDirectory) {
+		t.Fatalf("a source with neither .git nor a manifest was listed: %v", err)
+	}
+	if err := tracked.Write(directory, source); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := trackedRootFiles(t, source, "named"); err == nil || !strings.Contains(err.Error(), "named/untracked.ts") {
+		t.Fatalf("a .ts file the manifest leaves out was dropped silently: %v", err)
+	}
+	if err := os.Remove(filepath.Join(source, "named/untracked.ts")); err != nil {
+		t.Fatal(err)
+	}
+	files, err = trackedRootFiles(t, source, "named")
+	if err != nil || len(files) != 1 || files[0] != filepath.Join(source, "named/tracked.ts") {
+		t.Fatalf("named tracked corpus without .git: %v %v", files, err)
 	}
 }

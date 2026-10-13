@@ -29,7 +29,7 @@ func run() int {
 	root := flag.String("root", ".", "the checkout whose compiler the program fails: its adamic command, runtime and oracle/node.mjs")
 	written := flag.String("signature", "", "what to keep, as <kind>:<text>, kind one of "+strings.Join(fuzz.SignatureKinds, ", ")+" (default: the program's first failure)")
 	output := flag.String("o", "", "where the reduced program is written (default: stdout)")
-	parallel := flag.Int("parallel", runtime.NumCPU(), "how many candidates at once")
+	parallel := flag.Int("parallel", runtime.GOMAXPROCS(0), "how many candidates at once")
 	budget := flag.Int("budget", 5000, "the most candidates tried")
 	work := flag.String("work", filepath.Join(os.TempDir(), "adamic-reduce"), "where candidates are built and run")
 	flag.Usage = func() {

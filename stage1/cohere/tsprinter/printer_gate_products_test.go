@@ -1,7 +1,6 @@
 package tsprinter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -35,44 +34,31 @@ func printerGateOnce(t *testing.T, name string, build func() string) string {
 	return state.directory
 }
 
+// printerGateGoOracle is the directory holding the Go printer oracle, cohere's internal/format/javascript test binary
+// with the two side files laid over it: a buildcache.GoTest product, keyed by the files of the packages go compiles,
+// the overlay's map and the side files' content, and go's settings. Its key declared all of cohere, the TypeScript
+// submodule's 41,000 files included, which cost a populated tree's first lookup 15 to 60 s (#4ycgm2n).
 func printerGateGoOracle(t *testing.T) string {
 	t.Helper()
 	return printerGateOnce(t, "go-oracle", func() string {
-		flags := []string{"go test -c -trimpath -ldflags=-buildid= -overlay=<scratch>/overlay.json ./internal/format/javascript"}
-		for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT", "CGO_ENABLED", "GOOS", "GOARCH", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
-			flags = append(flags, name+"="+os.Getenv(name))
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
 		}
-		return buildcache.Product(t, buildcache.Inputs{
-			Name: "tsprinter-go-oracle-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/tsprinter/testdata/expressions_side_test.go", "stage1/cohere/tsprinter/testdata/statements_side_test.go", "stage1/cohere/tsprinter/printer_gate_products_test.go"},
-			Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
-		}, func(dir string) error {
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				return err
-			}
-			replace := map[string]string{}
-			for _, family := range []string{"expressions", "statements"} {
-				replace[root+"/cohere/internal/format/javascript/adamic_"+family+"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": replace})
-			if err != nil {
-				return err
-			}
-			scratch := t.TempDir()
-			path := filepath.Join(scratch, "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			ctx, cancel := context.WithCancel(context.Background())
-			defer cancel()
-			command := statementContextCommand(ctx, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-overlay="+path, "-o="+dir+"/oracle", "./internal/format/javascript")
-			command.Dir = root + "/cohere"
-			output, err := command.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go printer oracle: %w\n%s", err, output)
-			}
-			return nil
-		})
+		replace := map[string]string{}
+		for _, family := range []string{"expressions", "statements"} {
+			replace[root+"/cohere/internal/format/javascript/adamic_"+family+"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
+		}
+		overlay, err := json.Marshal(map[string]any{"Replace": replace})
+		if err != nil {
+			t.Fatal(err)
+		}
+		// The overlay names this checkout's paths: GoTest keys its map and the side files' content, never its own path.
+		path := filepath.Join(t.TempDir(), "overlay.json")
+		if err := os.WriteFile(path, overlay, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return filepath.Dir(buildcache.GoTest(t, "cohere", "oracle", "./internal/format/javascript", []string{"-overlay=" + path}))
 	})
 }
 
@@ -112,7 +98,7 @@ func printerGateNative(t *testing.T, family string, sanitize bool) string {
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 		flags := append([]string{"C sha256=" + statementBytesHash(source), "split=true", "jobs=4"}, native.Flags(options)...)
-		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 			flags = append(flags, variable+"="+os.Getenv(variable))
 		}
 		return buildcache.Product(t, buildcache.Inputs{

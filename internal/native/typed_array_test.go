@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestTypedArrayRuntime(t *testing.T) {
@@ -15,7 +17,7 @@ func TestTypedArrayRuntime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	expected, err := exec.Command("node", "testdata/typed-arrays/node.a").CombinedOutput()
+	expected, err := toolchain.Command("node", "testdata/typed-arrays/node.a").CombinedOutput()
 	if err != nil {
 		t.Fatalf("Node: %v\n%s", err, expected)
 	}
@@ -65,7 +67,7 @@ try { if (mode === 'length') { new Uint8Array(value); } else { const a = new Uin
 catch (error) { console.log(error.name); }`
 			for _, probe := range [][]string{{"length", "-1"}, {"length", "Infinity"}, {"length", "9007199254740992"}, {"offset", "-1"}, {"offset", "1"}, {"offset", "Infinity"}, {"kind"}} {
 				if probe[0] != "kind" {
-					oracle, err := exec.Command("node", "-e", rangeOracle, "--", probe[0], probe[1]).CombinedOutput()
+					oracle, err := toolchain.Command("node", "-e", rangeOracle, "--", probe[0], probe[1]).CombinedOutput()
 					if err != nil || string(oracle) != "RangeError\n" {
 						t.Fatalf("Node range probe %v: %v %q", probe, err, oracle)
 					}

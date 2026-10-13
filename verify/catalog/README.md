@@ -36,18 +36,18 @@ Only their primary fixture fails in the native comparison sweep: 01, 04, 06, 07.
 
 Entry 04 uses the original `super.run` fixture. The later fix in entry 07 masks its virtual-move companion. Entry 07 removes only the unsafe virtual-call proof; its harmless MakeError borrowing optimization is retained, and the throw fixture is a passing neighbor. Entry 08 is a checked fixture: the required inserted check must fire, so restoring the old field read can also be detected by comparison with the checked JavaScript backend. Entry 09 retains the runtime helper and later optional-field machinery still used by main, while restoring the old required reads and literal slot fitting.
 
-Exact targeted commands (each was run three times without the patch and three times with it):
+Exact targeted commands (each was run three times without the patch and three times with it, under the single `^TestNativeAgreesWithNode$` test the oracle had then; here and in the tables below they name the fixture's owning shard of that family, as `command` in catalog.json does):
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'
-ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'
+ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'
 ```
 
 Commit discovery used `git log --all` after fetching all branch refs, because the checkout initially fetched only main:
@@ -95,15 +95,15 @@ Targeted invocation durations below are best of three interleaved clean/patched 
 
 | Loop | Before (control) | After (reverse patch) | Instrument |
 |---|---:|---:|---|
-| 01 shared-slice-append | 2.395s | 2.572s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'` |
-| 02 liveness-throw | 2.384s | 2.272s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'` |
-| 03 defined-lent | 2.219s | 2.280s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'` |
-| 04 borrowed-array-move | 2.457s | 2.275s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'` |
-| 05 spread-method-reuse | 2.254s | 2.212s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'` |
-| 06 constructor-capture-region | 2.090s | 2.179s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'` |
-| 07 borrowed-element-reads | 2.467s | 2.261s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
-| 08 narrowed-number-field | 2.557s | 8.344s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'` |
-| 09 literal-undefined-field | 2.335s | 2.323s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'` |
+| 01 shared-slice-append | 2.395s | 2.572s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'` |
+| 02 liveness-throw | 2.384s | 2.272s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'` |
+| 03 defined-lent | 2.219s | 2.280s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'` |
+| 04 borrowed-array-move | 2.457s | 2.275s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'` |
+| 05 spread-method-reuse | 2.254s | 2.212s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'` |
+| 06 constructor-capture-region | 2.090s | 2.179s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'` |
+| 07 borrowed-element-reads | 2.467s | 2.261s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
+| 08 narrowed-number-field | 2.557s | 8.344s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'` |
+| 09 literal-undefined-field | 2.335s | 2.323s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'` |
 
 01 build flags: commit `e011f8f60899586d6373a5ccb07335ad82cfbf3c`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; node `v24.19.0`; uncached oracle results. Clean load before/after `6.72 7.57 4.31 2/163 15671` / `6.34 7.48 4.29 2/163 15753`; patched load before/after `6.34 7.48 4.29 2/163 15754` / `6.34 7.48 4.29 2/165 15844`. Harness builds: C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`, separate leak checks; no changed Go flags.
 
@@ -249,7 +249,7 @@ Entry 01's first control took 167.846s, but Go reported only 1.050s executing th
 
 | Loop | Before, control best of 3 | After, entry 07 reverse patch best of 3 | Instrument |
 |---|---:|---:|---|
-| Refreshed 07 | 2.225s | 2.330s | `ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
+| Refreshed 07 | 2.225s | 2.330s | `ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
 
 Refreshed 07 build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`; native C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`. `go test -trimpath -count=1`. Clean load before/after `4.60 4.53 3.71 1/247 132095` / `4.60 4.53 3.71 1/247 132178`; mutant `4.60 4.53 3.71 1/247 132179` / `4.31 4.47 3.69 1/249 132261`. All three interleaved pairs, including the initial artifact build, are retained in catalog.json.
 

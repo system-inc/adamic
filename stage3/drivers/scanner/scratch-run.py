@@ -14,6 +14,9 @@ import sys
 import time
 import uuid
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from caches import stage3_cache
+
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 sys.dont_write_bytecode = True
@@ -38,7 +41,7 @@ def main():
     started = time.monotonic()
     environment_file = None
     env = dict(os.environ, GOPROXY='https://proxy.golang.org|direct')
-    cache = Path(env.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3'))).resolve()
+    cache = stage3_cache().resolve()
     env['STAGE3_CACHE'] = str(cache)
 
     def save():

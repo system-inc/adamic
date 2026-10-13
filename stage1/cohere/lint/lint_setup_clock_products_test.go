@@ -19,13 +19,6 @@ func TestProduct_ShardsAgreeNative(t *testing.T) {
 	t.Logf("product wall=%s", time.Since(started))
 }
 
-func TestProduct_ShardsAgreeOracle(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	testShardsAgreeOracle(t)
-	t.Logf("product wall=%s", time.Since(started))
-}
-
 func TestProduct_ShardsAgreeCapture(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
@@ -37,6 +30,13 @@ func TestProduct_ShardsAgreePrepared(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	testShardsAgreePrepare(t)
+	t.Logf("product wall=%s", time.Since(started))
+}
+
+func TestProduct_ShardsAgreeReferences(t *testing.T) {
+	t.Parallel()
+	started := time.Now()
+	testShardsAgreeReferences(t)
 	t.Logf("product wall=%s", time.Since(started))
 }
 
@@ -128,19 +128,5 @@ func TestProduct_DecodedOptionsNative(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	decodedOptionsPrepare(t)
-	t.Logf("product wall=%s", time.Since(started))
-}
-
-func TestProduct_DecodedOptionsGoOracle(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	decodedOptionsPrepare(t)
-	t.Logf("product wall=%s", time.Since(started))
-}
-
-func TestProduct_ProfileCompilationOracle(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	compilationOracle(t)
 	t.Logf("product wall=%s", time.Since(started))
 }

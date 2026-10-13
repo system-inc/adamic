@@ -50,21 +50,6 @@ func recoveryProduct(t *testing.T, s *recoverySetup, in buildcache.Inputs, build
 	return dir
 }
 
-// Overlay Go builds stay local until an oracle without an overlay can use GoBuild.
-// Their inputs are not hand-listed as a Product key.
-func recoveryLocalGoBuild(t *testing.T, s *recoverySetup, build func(string) error) string {
-	t.Helper()
-	dir := t.TempDir()
-	start := time.Now()
-	err := build(dir)
-	elapsed := time.Since(start)
-	s.builds += elapsed
-	t.Logf("BUILD Go oracle cold wall=%.6fs", elapsed.Seconds())
-	if err != nil {
-		t.Fatal(err)
-	}
-	return dir
-}
 func recoveryBuild(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
 	if !sanitize {
@@ -73,36 +58,6 @@ func recoveryBuild(t *testing.T, path string, sanitize bool) (string, string) {
 	setup := beginRecoverySetup(t)
 	defer setup.report(t)
 	return recoveryPort(t, setup, path)
-}
-func recoveryOracle(t *testing.T, s *recoverySetup) string {
-	t.Helper()
-	repo := root(t)
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	dir := recoveryLocalGoBuild(t, s, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err = os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		cmd := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		cmd.Dir = filepath.Join(repo, "cohere")
-		output, err := cmd.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle build: %w: %s", err, output)
-		}
-		if len(output) != 0 {
-			return fmt.Errorf("oracle build output: %s", output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
 }
 func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) {
 	t.Helper()
@@ -213,7 +168,9 @@ func runRecoveryShards(t *testing.T, shards [][]recoveryCase, run func(*testing.
 		if i%total != selected {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) { t.Parallel(); run(t, i, cases) })
+		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and the
+		// parent's own time counts that wait (TestRecoveryLoweredRecipe, one shard: 105.6 s alone on one core, 4 s of work).
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) { run(t, i, cases) })
 	}
 }
 func recoveryComparison(want, got []byte, mutant bool) string {

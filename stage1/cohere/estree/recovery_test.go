@@ -41,13 +41,16 @@ func TestRecoveredGrammar(t *testing.T) {
 	t.Logf("%d recovered grammar cases, %d identical bytes in all three port builds", len(recoveredGrammar()), len(want))
 }
 
+// recoveryLibraryGaps are sources Go accepts and the pinned typescript-estree refuses.
+func recoveryLibraryGaps() []string { return []string{"f<>();", "class C<> {}"} }
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveryLibraryGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
-	for _, source := range []string{"f<>();", "class C<> {}"} {
+	for _, source := range recoveryLibraryGaps() {
 		list := manifest(t, []string{source})
 		recoveryAnswer(t, goOracle(t), list, "--manifest")
 		code := `import {pathToFileURL} from 'node:url';const lib=await import(pathToFileURL(process.argv[1]+'/node_modules/@typescript-eslint/typescript-estree/dist/index.js').href);try{lib.parse(process.argv[2],{warnOnUnsupportedTypeScriptVersion:false});console.log('accepted')}catch(e){console.log('refused')}`

@@ -4,19 +4,26 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestNodeCacheProgram(t *testing.T) {
 	t.Parallel()
 	cache := &resultCache{directory: t.TempDir()}
+	node, err := toolchain.Path("node")
+	if err != nil {
+		t.Fatal(err)
+	}
 	module := filepath.Join(t.TempDir(), "program.mts")
 	for _, word := range []string{"before", "after"} {
 		source := fmt.Sprintf("console.log(%q);\n", word)
@@ -25,7 +32,7 @@ func TestNodeCacheProgram(t *testing.T) {
 		}
 		key := nodeResultKey(source, "node", "adapt", module, "context")
 		result := cache.reuse(key, func() (execution, bool) {
-			return runCommand(time.Second*15, nil, "node", module), true
+			return runCommand(time.Second*15, nil, node, module), true
 		})
 		if result.Stdout != word+"\n" {
 			t.Fatalf("changed Node program served %q, want %q", result.Stdout, word+"\n")
@@ -135,7 +142,7 @@ func TestCacheBypass(t *testing.T) {
 func TestParallelCachedMatchesSerial(t *testing.T) {
 	// Not parallel: compare both modes while changing the bypass environment.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -216,7 +223,7 @@ func TestOrderedProgress(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); err != nil {
 		t.Fatal(err)
 	}
-	e, err := prepare("../..", corpus, t.TempDir())
+	e, err := prepare(t, corpus, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -236,7 +243,7 @@ func TestOrderedProgress(t *testing.T) {
 
 func TestUnavailableCacheStillRuns(t *testing.T) {
 	t.Parallel()
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -257,7 +264,7 @@ func TestUnavailableCacheStillRuns(t *testing.T) {
 
 func TestImportedInputsRunFresh(t *testing.T) {
 	t.Parallel()
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -326,7 +333,7 @@ func TestCompilerCacheProgram(t *testing.T) {
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 	// Not parallel: explicitly enable reuse even in the uncached integration gate.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -354,12 +361,16 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 // Not parallel: changes the process-wide ADAMIC_GATE_UNCACHED environment.
 func TestCacheBypassPreservesIdentity(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	before, versionBefore, contextBefore, err := prepareCache()
+	tools, err := resolveTools()
+	if err != nil {
+		t.Fatal(err)
+	}
+	before, versionBefore, contextBefore, err := prepareCache("../..", tools)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	after, versionAfter, contextAfter, err := prepareCache()
+	after, versionAfter, contextAfter, err := prepareCache("../..", tools)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -369,5 +380,130 @@ func TestCacheBypassPreservesIdentity(t *testing.T) {
 	}
 	if before.directory != after.directory || versionBefore != versionAfter {
 		t.Fatal("cache bypass changed directory or Node version")
+	}
+}
+
+// runnerContext runs this binary's TestRunnerLocationHelper standing in directory, as the runner of
+// the checkout at root, under environment, and returns the compiler, native and Node contexts it
+// derived. A child process, because the working directory and environment are the process's own.
+func runnerContext(t *testing.T, directory string, root string, environment []string) string {
+	t.Helper()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(executable, "-test.run=^TestRunnerLocationHelper$")
+	command.Dir = directory
+	command.Env = append(append([]string{}, environment...),
+		"PWD="+directory, "ADAMIC_TEST262_CONTEXT_HELPER=1", "ADAMIC_TEST262_CONTEXT_ROOT="+root)
+	output, err := command.CombinedOutput()
+	if err != nil {
+		t.Fatalf("helper: %v: %s", err, output)
+	}
+	return string(output)
+}
+
+// The same tree checked out at two paths of different depth keys the same observations. A runner
+// standing elsewhere in the tree, where a relative -root or -work names other files, does not.
+func TestContextIgnoresCheckoutLocation(t *testing.T) {
+	t.Parallel()
+	scratch := t.TempDir()
+	var packages []string
+	for _, checkout := range []string{"a/adamic", "bb/cc/adamic"} {
+		directory := filepath.Join(scratch, filepath.FromSlash(checkout), "cmd", "adamic-test262")
+		if err := os.MkdirAll(directory, 0700); err != nil {
+			t.Fatal(err)
+		}
+		packages = append(packages, directory)
+	}
+	environment := os.Environ()
+	first := runnerContext(t, packages[0], "../..", environment)
+	second := runnerContext(t, packages[1], "../..", environment)
+	if first != second {
+		t.Fatalf("moving the checkout changed the context: %s vs %s", first, second)
+	}
+	root := filepath.Join(scratch, "a", "adamic")
+	if runnerContext(t, root, ".", environment) == first {
+		t.Fatal("a runner standing elsewhere in the checkout reused the package's context")
+	}
+}
+
+// A variable no child reads leaves the context alone; one that changes what Node prints does not.
+func TestContextEnvironment(t *testing.T) {
+	t.Parallel()
+	directory, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var environment []string
+	for _, variable := range os.Environ() {
+		name, _, _ := strings.Cut(variable, "=")
+		if name != "HOME" && name != "TZ" && name != "ADAMIC_JUNK" {
+			environment = append(environment, variable)
+		}
+	}
+	plain := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir()))
+	junk := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir(), "ADAMIC_JUNK=1"))
+	if plain != junk {
+		t.Fatalf("an unrelated variable and HOME changed the context: %s vs %s", plain, junk)
+	}
+	// Node's context alone: a time zone changes what Node's Date prints, so Node's observations must not be reused.
+	zoned := runnerContext(t, directory, "../..", append(append([]string{}, environment...), "HOME="+t.TempDir(), "TZ=Pacific/Kiritimati"))
+	if strings.Fields(zoned)[1] == strings.Fields(plain)[1] {
+		t.Fatal("a time zone, which changes Node's Date output, reused Node's context")
+	}
+}
+
+// Every variable resultEnvironment names is keyed when it's set, even to nothing, and none when none is: the context
+// and childEnvironment both read through keyedEnvironment, so a name that went missing from what it keys would be a
+// variable children see and the key doesn't name.
+func TestEveryResultVariableIsKeyed(t *testing.T) {
+	t.Parallel()
+	if keyed := keyedEnvironment(func(string) (string, bool) { return "", false }); len(keyed) != 0 {
+		t.Fatalf("nothing set keyed %q", keyed)
+	}
+	seen := map[string]bool{}
+	for _, name := range append(append([]string{}, resultEnvironment...), passedEnvironment...) {
+		if seen[name] {
+			t.Errorf("%s is named twice", name)
+		}
+		seen[name] = true
+	}
+	for _, name := range resultEnvironment {
+		keyed := keyedEnvironment(func(wanted string) (string, bool) { return "", wanted == name })
+		if !reflect.DeepEqual(keyed, []string{name + "="}) {
+			t.Errorf("%s set to nothing keyed %q", name, keyed)
+		}
+	}
+}
+
+// A child runs with what the key names and passedEnvironment's, then the engine's own settings, and nothing else of
+// the runner's environment: a variable the key doesn't name can't change an observation a hit replays. The child here
+// is env itself, run as clang, the native program and Node are. Mutant: runCommandWithLimit back on os.Environ, and
+// ADAMIC_JUNK reaches the child.
+// Not parallel: sets the runner's environment through t.Setenv.
+func TestChildrenSeeOnlyWhatTheKeyNames(t *testing.T) {
+	t.Setenv("ADAMIC_JUNK", "1")
+	t.Setenv("TZ", "Pacific/Kiritimati")
+	allowed := map[string]bool{"ADAMIC_ENGINE_SETTING": true}
+	for _, name := range append(append([]string{}, resultEnvironment...), passedEnvironment...) {
+		allowed[name] = true
+	}
+	result := runCommand(time.Minute, []string{"ADAMIC_ENGINE_SETTING=1"}, "/usr/bin/env")
+	if result.Exit != 0 {
+		t.Fatalf("env: exit %d: %s", result.Exit, result.Stderr)
+	}
+	seen := map[string]bool{}
+	for _, line := range strings.Split(strings.TrimSpace(result.Stdout), "\n") {
+		name, _, _ := strings.Cut(line, "=")
+		seen[name] = true
+		if !allowed[name] {
+			t.Errorf("a child saw %s, which the key doesn't name", name)
+		}
+	}
+	for _, name := range []string{"TZ", "ADAMIC_ENGINE_SETTING"} {
+		if !seen[name] {
+			t.Errorf("a child didn't see %s", name)
+		}
 	}
 }

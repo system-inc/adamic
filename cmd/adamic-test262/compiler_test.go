@@ -13,7 +13,7 @@ import (
 
 func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 	t.Parallel()
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}

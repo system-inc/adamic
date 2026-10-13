@@ -10,6 +10,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Compile the probe in map.c's own translation unit so it measures the private hash, the real
@@ -59,7 +61,7 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 			files[index].contents = []byte(source[:start] + changed + source[end:])
 		}
 	}
-	compiler, err := exec.LookPath("clang")
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +73,7 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 	binary := filepath.Join(t.TempDir(), "probe")
 	arguments := append(append([]string{}, flags...), RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm", "-o", binary)
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link probe: %v\n%s", err, output)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
@@ -83,61 +85,108 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 	return stderr.String() + stdout.String(), err
 }
 
-func TestMapHashProbeBound(t *testing.T) {
+// The probe's two allocators, by name. Each probe builds and runs the runtime on its own, 10 s alone on one core, so
+// each is its own top-level test below, and TestMapHashAllocatorsEachHaveOneTest holds the two in step.
+var mapHashProbeAllocators = map[string]bool{"malloc": false, "slabs": true}
+
+func TestMapHashProbeBoundMalloc(t *testing.T) {
 	t.Parallel()
-	for _, slabs := range []bool{false, true} {
-		t.Run(map[bool]string{false: "malloc", true: "slabs"}[slabs], func(t *testing.T) {
-			output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
-			t.Log(output)
-			if err != nil {
-				t.Fatalf("runtime map hash: %v", err)
-			}
-		})
+	runMapHashProbeBound(t, "malloc")
+}
+
+func TestMapHashProbeBoundSlabs(t *testing.T) {
+	t.Parallel()
+	runMapHashProbeBound(t, "slabs")
+}
+
+// An allocator added to the table without its test, or a test naming an allocator that isn't there, fails here
+// without building anything.
+func TestMapHashAllocatorsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	checkNamedWrappers(t, "map_hash_test.go", "TestMapHashProbeBound", "runMapHashProbeBound", mapHashProbeAllocators)
+}
+
+func runMapHashProbeBound(t *testing.T, name string) {
+	t.Helper()
+	slabs, ok := mapHashProbeAllocators[name]
+	if !ok {
+		t.Fatalf("no map hash probe allocator %q", name)
+	}
+	output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
+	t.Log(output)
+	if err != nil {
+		t.Fatalf("runtime map hash: %v", err)
 	}
 }
 
-func TestMapHashProbeCatchesMutants(t *testing.T) {
-	t.Parallel()
-	mutants := []struct {
-		name, before, after, caught string
-	}{
-		// Restore the old finite-number hash, retaining SameValueZero normalization so only
-		// the distribution check catches it. Empty before means replace the entire function body.
-		{"old hash", "", `{
+// The numeric hash's mutants, by name. Each probe builds and runs the runtime on its own, as much
+// as one test should carry alone, so each is its own top-level test below, and
+// TestMapHashMutantsEachHaveOneTest holds the two in step.
+var mapHashMutants = map[string]struct {
+	before, after, caught string
+}{
+	// Restore the old finite-number hash, retaining SameValueZero normalization so only
+	// the distribution check catches it. Empty before means replace the entire function body.
+	"old hash": {"", `{
 	if (number == 0) { number = 0; }
 	if (isnan(number)) { return 0x7ff8000000000000ull; }
 	uint64_t bits;
 	memcpy(&bits, &number, sizeof bits);
 	return (bits ^ (bits >> 29)) * 1099511628211ull;
 }`, "probe bound 64 exceeded: integers"},
-		// V8 normalizes -0 through its integer conversion. Send only -0 down the raw-double
-		// path to remove that normalization without changing any other integer's hash.
-		{"zero normalization", "if (number >= INT32_MIN", "if (!(number == 0 && signbit(number)) && number >= INT32_MIN", "zero hashes differ"},
-		{"NaN normalization", "isnan(number)", "false", "NaN hashes differ"},
+	// V8 normalizes -0 through its integer conversion. Send only -0 down the raw-double
+	// path to remove that normalization without changing any other integer's hash.
+	"zero normalization": {"if (number >= INT32_MIN", "if (!(number == 0 && signbit(number)) && number >= INT32_MIN", "zero hashes differ"},
+	"NaN normalization":  {"isnan(number)", "false", "NaN hashes differ"},
+}
+
+func TestMapHashProbeCatchesMutantsOldHash(t *testing.T) {
+	t.Parallel()
+	runMapHashMutant(t, "old hash")
+}
+
+func TestMapHashProbeCatchesMutantsZeroNormalization(t *testing.T) {
+	t.Parallel()
+	runMapHashMutant(t, "zero normalization")
+}
+
+func TestMapHashProbeCatchesMutantsNaNNormalization(t *testing.T) {
+	t.Parallel()
+	runMapHashMutant(t, "NaN normalization")
+}
+
+// A mutant added to the table without its test, or a test naming a mutant that isn't there,
+// fails here without building anything.
+func TestMapHashMutantsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	checkNamedWrappers(t, "map_hash_test.go", "TestMapHashProbeCatchesMutants", "runMapHashMutant", mapHashMutants)
+}
+
+func runMapHashMutant(t *testing.T, name string) {
+	t.Helper()
+	mutant, ok := mapHashMutants[name]
+	if !ok {
+		t.Fatalf("no map hash mutant %q", name)
 	}
-	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			output, err := mapHashProbe(t, Options{Sanitize: true}, func(source string) string {
-				if mutant.before == "" {
-					return mutant.after
-				}
-				if strings.Count(source, mutant.before) != 1 {
-					t.Fatal("mutant must change exactly one site")
-				}
-				return strings.Replace(source, mutant.before, mutant.after, 1)
-			})
-			var exit *exec.ExitError
-			if !errors.As(err, &exit) || exit.ExitCode() != 1 || !strings.Contains(output, mutant.caught) || strings.Contains(output, "ERROR: AddressSanitizer") || strings.Contains(output, "runtime error:") {
-				t.Fatalf("mutant escaped or failed for another reason: %v\n%s", err, output)
-			}
-			for _, line := range strings.Split(output, "\n") {
-				if mutant.name == "old hash" && strings.Contains(line, "entries=2048 buckets=") {
-					t.Log(line)
-				}
-				if strings.Contains(line, mutant.caught) {
-					t.Log(line)
-				}
-			}
-		})
+	output, err := mapHashProbe(t, Options{Sanitize: true}, func(source string) string {
+		if mutant.before == "" {
+			return mutant.after
+		}
+		if strings.Count(source, mutant.before) != 1 {
+			t.Fatal("mutant must change exactly one site")
+		}
+		return strings.Replace(source, mutant.before, mutant.after, 1)
+	})
+	var exit *exec.ExitError
+	if !errors.As(err, &exit) || exit.ExitCode() != 1 || !strings.Contains(output, mutant.caught) || strings.Contains(output, "ERROR: AddressSanitizer") || strings.Contains(output, "runtime error:") {
+		t.Fatalf("mutant escaped or failed for another reason: %v\n%s", err, output)
+	}
+	for _, line := range strings.Split(output, "\n") {
+		if name == "old hash" && strings.Contains(line, "entries=2048 buckets=") {
+			t.Log(line)
+		}
+		if strings.Contains(line, mutant.caught) {
+			t.Log(line)
+		}
 	}
 }

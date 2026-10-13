@@ -5,14 +5,20 @@ import (
 	"crypto/sha256"
 	"debug/macho"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	gotoken "go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Product identity is the check the shared tier lands on (Kirk's ruling, Oct 9): a product built or fetched through
@@ -24,18 +30,16 @@ import (
 // recipe as written and a change to GoBuild's flags shows up as a difference.
 var freshFlags = []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 
-// freshGoBuild is 'go build' run directly at root with GoBuild's flags, nothing from buildcache, and its own empty Go
-// build cache when goCache is set, so nothing cached anywhere can stand in for the build.
-func freshGoBuild(t *testing.T, root, output, pkg string, goCache bool, arguments []string, environment ...string) ([]byte, float64) {
+// freshGoBuild is 'go build' run directly at root with GoBuild's flags and nothing from buildcache, through goCache:
+// an empty Go build cache, or a copy of a template built from one (freshGoCache), so nothing cached anywhere can stand
+// in for the build. It runs toolchain's go under toolchain's environment, as GoBuild's own build does, so the two
+// builds it compares differ only in the cache.
+func freshGoBuild(t *testing.T, root, output, pkg, goCache string, arguments []string, environment ...string) ([]byte, float64) {
 	t.Helper()
 	started := time.Now()
 	path := filepath.Join(t.TempDir(), output)
-	command := exec.Command("go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
-	command.Dir = root
-	command.Env = append(os.Environ(), environment...)
-	if goCache {
-		command.Env = append(command.Env, "GOCACHE="+t.TempDir())
-	}
+	command := toolchain.CommandIn(root, "go", append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...)
+	command.Env = append(append(command.Env, environment...), "GOCACHE="+goCache)
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("go build %s: %v\n%s", pkg, err, combined)
 	}
@@ -147,11 +151,10 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 		// bytes of the external link's debug info (Oct 9 16:34Z). GoBuild has no callers yet, so no gate product is affected.
 	} {
 		t.Run(built.output, func(t *testing.T) {
-			store, log := shared(t)
-			token := filepath.Join(t.TempDir(), "publish-token")
-			os.WriteFile(token, []byte("gate-box-token"), 0o600)
-			t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
-			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, true, nil)
+			// Built for this machine alone (ADAMIC_BUILD_STORE=off), keyed by GoInputs' declared files: a fetched
+			// product's bytes are its manifest's, checked by hash, so the store's half is the Settle tests'.
+			cached(t)
+			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, t.TempDir(), nil)
 
 			started := time.Now()
 			cold, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
@@ -159,31 +162,8 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 				t.Fatal(err)
 			}
 			coldSeconds := time.Since(started).Seconds()
-			if len(store.writes) == 0 {
-				t.Fatal("the cold build published nothing")
-			}
-
-			// Another machine: an empty cache, no credential.
-			t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-			t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
-			writes := len(store.writes)
-			started = time.Now()
-			warm, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
-			if err != nil {
-				t.Fatal(err)
-			}
-			warmSeconds := time.Since(started).Seconds()
-			if lines, _ := os.ReadFile(log); strings.Count(string(lines), " miss ") != 1 || strings.Count(string(lines), " fetched ") != 1 || len(store.writes) != writes {
-				t.Fatalf("the cold build must miss and the warm one fetch, writing nothing: census %q, writes %v", lines, store.writes[writes:])
-			}
-
-			t.Logf("product %s fresh=%x cold=%x warm=%x seconds fresh=%.2f cold=%.2f warm=%.2f",
-				built.output, sha256.Sum256(fresh), sha256.Sum256(cold), sha256.Sum256(warm), freshSeconds, coldSeconds, warmSeconds)
+			t.Logf("product %s fresh=%x cold=%x seconds fresh=%.2f cold=%.2f", built.output, sha256.Sum256(fresh), sha256.Sum256(cold), freshSeconds, coldSeconds)
 			identical(t, built.output+" fresh and cold", fresh, cold)
-			// A fetch is a copy of what was stored, so warm and cold are the same bytes on every platform.
-			if !bytes.Equal(cold, warm) {
-				t.Errorf("the fetched product isn't what was built: %s", describeRanges(differingRanges(cold, warm), uuidAndSignature(cold)))
-			}
 		})
 	}
 }
@@ -196,6 +176,7 @@ func inRepository(t *testing.T, directory string) {
 }
 
 func resetRepositoryRoot() {
+	forgetInputs()
 	root.once = sync.Once{}
 	root.directory = ""
 	root.err = nil
@@ -210,9 +191,8 @@ func freshGoCache(t *testing.T) func() string {
 	module := t.TempDir()
 	write(t, module, "go.mod", "module example.com/template\n\ngo 1.21\n")
 	write(t, module, "main.go", "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n")
-	command := exec.Command("go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
-	command.Dir = module
-	command.Env = append(os.Environ(), "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
+	command := toolchain.CommandIn(module, "go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
+	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
 	if combined, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("the template Go build cache: %v\n%s", err, combined)
 	}
@@ -250,15 +230,15 @@ type inputChange struct {
 // output and the same bytes. A key that ignores the input finds the product from before the change in either place.
 func changeEachInput(t *testing.T, directory, output, pkg string, arguments, environment *[]string, steps []inputChange) {
 	t.Helper()
-	store, log := shared(t)
-	token := filepath.Join(t.TempDir(), "publish-token")
-	os.WriteFile(token, []byte("gate-box-token"), 0o600)
+	// Each change is built for this machine alone through one cache kept across the steps, keyed by GoInputs' declared
+	// files: the tripwire a measured read set is held against, so a declared key that ignores an input still fails here.
+	_, log := cached(t)
 	cold := t.TempDir()
 	cache := freshGoCache(t)
 	var previous []byte
 	for _, step := range steps {
 		step.change()
-		fresh, _ := freshGoBuild(t, directory, output, pkg, false, *arguments, append(*environment, "GOCACHE="+cache())...)
+		fresh, _ := freshGoBuild(t, directory, output, pkg, cache(), *arguments, *environment...)
 		if got := run(t, filepath.Join(t.TempDir(), output), fresh); got != step.output {
 			t.Fatalf("after changing %s a fresh build printed %q, want %q: the test's own expectation is wrong", step.input, got, step.output)
 		}
@@ -266,15 +246,11 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 			t.Fatalf("changing %s didn't change the product, so this step proves nothing", step.input)
 		}
 		previous = fresh
-		for _, way := range []string{"cold", "warm"} {
-			if way == "cold" {
-				t.Setenv("ADAMIC_BUILD_CACHE_DIR", cold)
-				t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
-			} else {
-				t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-				t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
-			}
+		for _, way := range []string{"cold"} {
+			t.Setenv("ADAMIC_BUILD_CACHE_DIR", cold)
 			before, _ := os.ReadFile(log)
+			// Each step changed the tree under this process, which a unit's never does: key it afresh.
+			forgetInputs()
 			binary := GoBuild(t, output, pkg, *arguments, *environment...)
 			after, _ := os.ReadFile(log)
 			// The census line this build wrote: 'build <name> <key12> <outcome> <seconds>', after any note about the store.
@@ -300,9 +276,6 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 				t.Fatalf("after changing %s, the warm product printed %q, a fresh build %q (%v): the key ignores %s, or the store served another product", step.input, got, step.output, outcome, step.input)
 			}
 		}
-	}
-	if len(store.objects) == 0 {
-		t.Fatal("nothing was published, so no warm build was fetched")
 	}
 }
 
@@ -334,17 +307,137 @@ func replaceIn(t *testing.T, directory, name, old, new string) func() {
 
 // A key that leaves out one of a GoBuild's inputs serves a stale product: each input go build reads from inside the
 // package's own directories is changed in turn, and the product must follow. Drop that input from GoInputs and its
-// step fails, naming it.
+// step fails, naming it. everyInputSteps is the sequence, in the order its changes apply to everyInputModule.
+func everyInputSteps(t *testing.T, directory string, arguments, environment *[]string) []inputChange {
+	return []inputChange{
+		{"nothing (the first build)", func() {}, "hello 42 first 9 plain"},
+		{"the package's Go file", replaceIn(t, directory, "app/main.go", "fmt.Println(", `fmt.Println("go",`), "go hello 42 first 9 plain"},
+		{"a dependency's Go file", replaceIn(t, directory, "library/library.go", "index < 3", "index < 4"), "go hello 42 first 16 plain"},
+		{"the package's header", replaceIn(t, directory, "app/greeting.h", "hello", "howdy"), "go howdy 42 first 16 plain"},
+		{"a C file", replaceIn(t, directory, "app/answer.c", "42", "43"), "go howdy 43 first 16 plain"},
+		{"an embedded file", replaceIn(t, directory, "app/message.txt", "first", "second"), "go howdy 43 second 16 plain"},
+		{"go.mod", replaceIn(t, directory, "go.mod", "go 1.21", "go 1.22"), "go howdy 43 second 6 plain"},
+		// -gcflags changes the code and no file go list reports, so only the key's arguments can tell.
+		{"an argument that changes no file", func() { *arguments = []string{"-gcflags=-N -l"} }, "go howdy 43 second 6 plain"},
+		{"an argument that changes the files", func() { *arguments = []string{"-gcflags=-N -l", "-tags=fancy"} }, "go howdy 43 second 6 fancy"},
+		{"the environment", func() { *environment = []string{"CGO_CFLAGS=-O2 -g -DANSWER_OFFSET=100"} }, "go howdy 143 second 6 fancy"},
+	}
+}
+
+// The sequence runs as two top-level tests, each its own Loom atom: the ten steps in one test were 31 s alone on one
+// core of a Loom box. Each part names its test and its first and last step; TestEveryInputStepRunsInExactlyOnePart
+// holds the parts to the whole sequence.
+var everyInputParts = []struct{ test, first, last string }{
+	{"TestProductIdentityAfterEveryCompiledFileChanges", "nothing (the first build)", "a C file"},
+	{"TestProductIdentityAfterEveryOtherInputChanges", "an embedded file", "the environment"},
+}
+
 // Not parallel: changes the working directory (t.Chdir) and points the build cache and the store at this test through t.Setenv.
-func TestProductIdentityAfterEveryInputChanges(t *testing.T) {
-	directory := goModule(t, map[string]string{
-		"go.mod":          "module github.com/system-inc/adamic\n\ngo 1.21\n",
-		"app/greeting.h":  "#define GREETING \"hello\"\n",
-		"app/message.txt": "first",
-		"app/plain.go":    "//go:build !fancy\n\npackage main\n\nconst tagged = \"plain\"\n",
-		"app/fancy.go":    "//go:build fancy\n\npackage main\n\nconst tagged = \"fancy\"\n",
-		"app/answer.c":    "#ifndef ANSWER_OFFSET\n#define ANSWER_OFFSET 0\n#endif\nint answer(void) { return 42 + ANSWER_OFFSET; }\n",
-		"library/library.go": `package library
+func TestProductIdentityAfterEveryCompiledFileChanges(t *testing.T) {
+	changeEveryInputPart(t)
+}
+
+// Not parallel: changes the working directory (t.Chdir) and points the build cache and the store at this test through t.Setenv.
+func TestProductIdentityAfterEveryOtherInputChanges(t *testing.T) {
+	changeEveryInputPart(t)
+}
+
+// changeEveryInputPart runs the steps of the part named for this test. A part that starts later in the sequence first
+// makes every earlier change, unbuilt, and builds that tree as its own first step, expecting what the step before its
+// first printed: its first change then has a product from before it, which a key that ignores the change finds as a
+// hit, and a fresh build to differ from, exactly as in the whole sequence.
+func changeEveryInputPart(t *testing.T) {
+	t.Helper()
+	directory := goModule(t, everyInputModule)
+	var arguments, environment []string
+	steps := everyInputSteps(t, directory, &arguments, &environment)
+	first, last := everyInputPart(t, steps, t.Name())
+	part := steps[first : last+1]
+	if first > 0 {
+		for _, step := range steps[:first] {
+			step.change()
+		}
+		part = append([]inputChange{{"nothing since " + steps[first-1].input + " (this part's first build)", func() {}, steps[first-1].output}}, part...)
+	}
+	changeEachInput(t, directory, "app", "./app", &arguments, &environment, part)
+}
+
+// everyInputPart is where in steps the part a test runs starts and ends.
+func everyInputPart(t *testing.T, steps []inputChange, test string) (int, int) {
+	t.Helper()
+	at := func(input string) int {
+		index := slices.IndexFunc(steps, func(step inputChange) bool { return step.input == input })
+		if index < 0 {
+			t.Fatalf("no step changes %q", input)
+		}
+		return index
+	}
+	for _, part := range everyInputParts {
+		if part.test == test {
+			return at(part.first), at(part.last)
+		}
+	}
+	t.Fatalf("no part of everyInputParts is %s's", test)
+	return 0, 0
+}
+
+// Every step of everyInputSteps runs in exactly one part, in order: the parts, one after another, are the whole
+// sequence, and each part's test is a top-level test of this file that runs its part, the only caller of
+// changeEveryInputPart. It builds nothing.
+func TestEveryInputStepRunsInExactlyOnePart(t *testing.T) {
+	t.Parallel()
+	file, err := parser.ParseFile(gotoken.NewFileSet(), "identity_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	callers := map[string]bool{}
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || function.Body == nil {
+			continue
+		}
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			if call, ok := node.(*ast.CallExpr); ok {
+				if name, ok := call.Fun.(*ast.Ident); ok && name.Name == "changeEveryInputPart" {
+					callers[function.Name.Name] = true
+				}
+			}
+			return true
+		})
+	}
+	for _, part := range everyInputParts {
+		if !callers[part.test] {
+			t.Errorf("%s runs no part: no test of that name calls changeEveryInputPart, so its steps would run nowhere", part.test)
+		}
+		delete(callers, part.test)
+	}
+	for caller := range callers {
+		t.Errorf("%s calls changeEveryInputPart but is no part of everyInputParts", caller)
+	}
+	var arguments, environment []string
+	steps := everyInputSteps(t, t.TempDir(), &arguments, &environment)
+	next := 0
+	for _, part := range everyInputParts {
+		first, last := everyInputPart(t, steps, part.test)
+		if first != next || last < first {
+			t.Fatalf("%s runs steps %d to %d, want it to start at %d (%q): a step would run in no part or in two", part.test, first, last, next, steps[min(next, len(steps)-1)].input)
+		}
+		next = last + 1
+	}
+	if next != len(steps) {
+		t.Fatalf("the parts end at step %d of %d: %q runs in no part", next, len(steps), steps[next].input)
+	}
+}
+
+// everyInputModule is the repository everyInputSteps changes, one input at a time.
+var everyInputModule = map[string]string{
+	"go.mod":          "module github.com/system-inc/adamic\n\ngo 1.21\n",
+	"app/greeting.h":  "#define GREETING \"hello\"\n",
+	"app/message.txt": "first",
+	"app/plain.go":    "//go:build !fancy\n\npackage main\n\nconst tagged = \"plain\"\n",
+	"app/fancy.go":    "//go:build fancy\n\npackage main\n\nconst tagged = \"fancy\"\n",
+	"app/answer.c":    "#ifndef ANSWER_OFFSET\n#define ANSWER_OFFSET 0\n#endif\nint answer(void) { return 42 + ANSWER_OFFSET; }\n",
+	"library/library.go": `package library
 
 // Sum adds what each closure captured: 0+1+2 when each iteration has its own variable (go 1.22 on), 3+3+3 before.
 func Sum() int {
@@ -359,7 +452,7 @@ func Sum() int {
 	return total
 }
 `,
-		"app/main.go": `package main
+	"app/main.go": `package main
 
 /*
 #include "greeting.h"
@@ -380,21 +473,6 @@ var message string
 
 func main() { fmt.Println(C.GoString(C.greeting()), C.answer(), message, library.Sum(), tagged) }
 `,
-	})
-	var arguments, environment []string
-	changeEachInput(t, directory, "app", "./app", &arguments, &environment, []inputChange{
-		{"nothing (the first build)", func() {}, "hello 42 first 9 plain"},
-		{"the package's Go file", replaceIn(t, directory, "app/main.go", "fmt.Println(", `fmt.Println("go",`), "go hello 42 first 9 plain"},
-		{"a dependency's Go file", replaceIn(t, directory, "library/library.go", "index < 3", "index < 4"), "go hello 42 first 16 plain"},
-		{"the package's header", replaceIn(t, directory, "app/greeting.h", "hello", "howdy"), "go howdy 42 first 16 plain"},
-		{"a C file", replaceIn(t, directory, "app/answer.c", "42", "43"), "go howdy 43 first 16 plain"},
-		{"an embedded file", replaceIn(t, directory, "app/message.txt", "first", "second"), "go howdy 43 second 16 plain"},
-		{"go.mod", replaceIn(t, directory, "go.mod", "go 1.21", "go 1.22"), "go howdy 43 second 6 plain"},
-		// -gcflags changes the code and no file go list reports, so only the key's arguments can tell.
-		{"an argument that changes no file", func() { arguments = []string{"-gcflags=-N -l"} }, "go howdy 43 second 6 plain"},
-		{"an argument that changes the files", func() { arguments = []string{"-gcflags=-N -l", "-tags=fancy"} }, "go howdy 43 second 6 fancy"},
-		{"the environment", func() { environment = []string{"CGO_CFLAGS=-O2 -g -DANSWER_OFFSET=100"} }, "go howdy 143 second 6 fancy"},
-	})
 }
 
 // GoBuild keys a header reached through '#cgo CFLAGS: -I' outside the package's directory, so the product must follow

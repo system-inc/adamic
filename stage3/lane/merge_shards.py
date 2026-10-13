@@ -4,8 +4,11 @@ import argparse
 import json
 import os
 from pathlib import Path
+import sys
 from check import check_results
 from shard_plan import LANE, load_plan, names_digest
+sys.path.append(str(LANE.parent))
+from caches import cache_root
 
 
 def merge(results, whole, plan=None):
@@ -66,7 +69,7 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     plan = load_plan()
-    artifact = Path(os.environ.get('STAGE3_ARTIFACT', str(Path.home() / '.cache/adamic-stage3-artifacts' / plan['artifact'])))
+    artifact = Path(os.environ.get('STAGE3_ARTIFACT') or cache_root() / 'adamic-stage3-artifacts' / plan['artifact'])
     os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
     try:
         report = merge(args.results.resolve(), args.whole.resolve(), plan)

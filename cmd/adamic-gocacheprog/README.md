@@ -7,8 +7,8 @@ The helper must be built before enabling it.
 | Variable | Default / behavior |
 | --- | --- |
 | `ADAMIC_GOCACHE_DIR` | User cache directory's `adamic-gocache` |
-| `ADAMIC_GOCACHE_STORE` | `https://adamic-store.kirkouimet.com`; `off` disables all remote operations |
-| `ADAMIC_GOCACHE_WRITE` | `https://loom.kirkouimet.com/public` |
+| `ADAMIC_GOCACHE_STORE` | `https://artifacts.loom.system.inc`; `off` disables all remote operations |
+| `ADAMIC_GOCACHE_WRITE` | `https://runs.loom.system.inc/public` |
 | `ADAMIC_GOCACHE_TOKEN` | Path to a readable bearer token file; absent/unreadable means no remote writes |
 | `ADAMIC_GOCACHE_TRUST` | `main` reads/writes only `gocache`; other values write `gocache-candidate`, read `gocache` then `gocache-candidate` |
 

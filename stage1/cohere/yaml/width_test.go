@@ -2,45 +2,34 @@ package yaml
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func goWidth(t *testing.T, cases string) []byte {
 	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := filepath.Abs("testdata/width_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	goBinary := filepath.Join(t.TempDir(), "go-width")
-	run(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	goBinary := goWidthOracle(t)
 	return run(t, "", nil, goBinary, cases)
 }
 
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+// goWidthOracle is formatter_comparison over testdata/width_go.go, a product built ahead (#5qykzj5).
+func goWidthOracle(t *testing.T) string {
+	t.Helper()
+	return formatterComparison(t, "go-width", "width_go.go")
+}
+
+func TestProduct_YAMLWidthGo(t *testing.T) {
+	t.Parallel()
+	goWidthOracle(t)
+}
+
 func TestWidthsMatchGo(t *testing.T) {
+	t.Parallel()
+	binary := yamlWidthBuild.binary(t, "width_main.ts")
+	emitted := yamlWidthBuild.emitted(t, "width_main.ts")
 	var input strings.Builder
 	count := 0
 	add := func(text string) {
@@ -79,23 +68,7 @@ func TestWidthsMatchGo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "width")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	runner := filepath.Join(root, "oracle/node.mjs")
-	emitted := filepath.Join(t.TempDir(), "width.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
 	for _, side := range []struct {
 		name string
 		out  []byte
