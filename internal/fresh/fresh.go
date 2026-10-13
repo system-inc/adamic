@@ -1204,6 +1204,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MaybeToString:
 		a.value(expression.Value)
 		return value{}
+	case ir.MethodPresence:
+		// Presence evaluates the receiver and returns a boolean without retaining a method.
+		a.value(expression.Object)
+		return value{}
 	case ir.ArrayIsArray:
 		a.value(expression.Value)
 		return value{}
