@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"sort"
+	"strings"
 	"sync"
 	"testing"
 
@@ -88,7 +89,7 @@ func pilotGoProduct(t *testing.T, family string) string {
 	}
 	// Sort map-derived inputs to keep the recipe key deterministic.
 	sort.Strings(files)
-	flags := []string{"go build", "overlay:" + command}
+	flags := []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay:" + command}
 	for _, name := range []string{"GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "CC", "CXX"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
@@ -105,7 +106,7 @@ func pilotGoProduct(t *testing.T, family string) string {
 		defer os.Remove(overlayPath)
 		ctx, cancel := markdownLayoutSetupContext(t.Context())
 		defer cancel()
-		build := tableLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, output), filepath.Join(cohere, "cmd", command, "main.go"))
+		build := tableLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, output), filepath.Join(cohere, "cmd", command, "main.go"))...)
 		build.Dir = cohere
 		if result, err := build.CombinedOutput(); err != nil {
 			return fmt.Errorf("%s Go product: %w\n%s", family, err, result)

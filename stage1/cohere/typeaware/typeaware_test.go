@@ -155,7 +155,7 @@ func (h *harness) archive(name string, sanitize bool) string {
 	h.t.Helper()
 	path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
 		archive := filepath.Join(directory, "checker.a")
-		command := toolchain.CommandIn(h.repository, "go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+		command := toolchain.CommandIn(h.repository, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")...)
 		if sanitize {
 			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
