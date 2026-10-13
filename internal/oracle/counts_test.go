@@ -87,7 +87,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	if input {
 		context = cacheKey(context, inputIdentity(t))
 	}
-	key := nativeResultKey(native.C(program), given.libraries[2], given.nodeVersion, context)
+	code := native.C(program)
+	runtimeKey := oracleRuntimeIdentity(t, code, native.Options{Count: true})
+	key := nativeResultKey(code, runtimeKey, given.nodeVersion, context)
 	executeCounted := func() recordedRun {
 		var result run
 		if input {
