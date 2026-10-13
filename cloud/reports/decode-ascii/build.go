@@ -46,14 +46,14 @@ func main() {
 	} else {
 		source = native.C(lowered)
 	}
-	library, err := native.RuntimeLibrary(os.Args[1], options)
+	library, err := native.RuntimeLibraryForSource(os.Args[1], source, options)
 	check(err)
 	directory, err := os.MkdirTemp("", "decode-service-build-")
 	check(err)
 	defer os.RemoveAll(directory)
 	path := filepath.Join(directory, "main.c")
 	check(os.WriteFile(path, []byte(source), 0644))
-	arguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", os.Args[4])
+	arguments := append(native.SourceFlags(source, options), "-I", filepath.Dir(library), "-o", os.Args[4])
 	if !options.Request {
 		arguments = append(arguments, path)
 	}
