@@ -31,13 +31,14 @@ adamic_object *adamic_object_freeze(adamic_object *object) {
 void adamic_object_check_write(const adamic_object *object, const char *name) {
  // Private fields are internal slots, unaffected by Object.freeze in JavaScript.
  if (!object->frozen || name[0] == '#') return;
- const char prefix[] = "TypeError: Cannot assign to read only property '";
+ const char prefix[] = "Cannot assign to read only property '";
  const char suffix[] = "' of object '#<Object>'";
  size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
  char *message = malloc(length + 1);
  if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
  (void)snprintf(message, length + 1, "%s%s%s", prefix, name, suffix);
- adamic_panic(message, length);
+ adamic_object_throw_type_error(message, length);
+ free(message);
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
@@ -141,6 +142,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
   adamic_object_check_write(target, name);
+  if (adamic_thrown != NULL) break;
   adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
   adamic_value value = source->slots[index];

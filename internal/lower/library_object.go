@@ -9,6 +9,9 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.objectDescriptorCall(node, name); handled {
+		return value, handled, err
+	}
 	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
@@ -17,8 +20,6 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
-	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
-		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
 		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
 	case "fromEntries":
@@ -43,6 +44,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			value, err := l.expression(written[0])
 			return value, true, err
 		}
+	}
+	if objectIntegrityMethod(name) {
+		return l.objectIntegrityCallArguments(node, name, written)
 	}
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {

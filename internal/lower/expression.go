@@ -21,6 +21,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
+	if l.descriptorMapResult(node, 0) {
+		return ir.Object, nil
+	}
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
@@ -495,6 +498,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
+	if value, handled, err := l.objectDescriptorBuiltin(node); handled {
+		return value, err
+	}
 	switch node.Kind {
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
@@ -620,8 +626,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
+		if value, handled, err := l.objectDescriptorRead(node); handled {
+			return value, err
+		}
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.objectDescriptorElement(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)

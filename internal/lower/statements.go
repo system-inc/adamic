@@ -159,6 +159,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 			}
 			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
+		if value, handled, err := l.objectDescriptorBuiltin(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		// A builtin's result thrown away, like map.set(key, value) or array.push(value).
 		if lowered, isBuiltin, err := l.builtin(expression); isBuiltin {
 			if err != nil {

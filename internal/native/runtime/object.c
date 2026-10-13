@@ -12,6 +12,8 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->sealed = false;
+	object->nonextensible = false;
 	object->tuple = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
