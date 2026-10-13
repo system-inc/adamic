@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "--drop-row",
+    "exit": 1,
+    "caught_by": "exact 31-row ledger coverage"
+  },
+  {
+    "mutant": "--wrong-owner",
+    "exit": 1,
+    "caught_by": "immediate source introduction owner"
+  },
+  {
+    "mutant": "--runtime-edit",
+    "exit": 1,
+    "caught_by": "byte-identical JavaScript guard on changed helper body"
+  }
+]

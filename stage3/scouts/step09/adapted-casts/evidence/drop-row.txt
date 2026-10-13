@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step09/adapted-casts/verify.py", line 9, in <module>
+    assert len(rows)==31 and collections.Counter(map(key,rows))==collections.Counter(map(key,expected)),'exact 31-row ledger coverage'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact 31-row ledger coverage
