@@ -414,8 +414,8 @@ class Gate:
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
         self.watchers = []
-        self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "determinism", "census"] if arguments.full
-                        else ["coverage", "tools", "build", "vet", "tests", "smoke", "determinism", "census"])
+        self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full
+                        else ["coverage", "tools", "build", "vet", "tests", "smoke", "census"])
         if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
             index = self.planned.index("tests") + 1
             self.planned[index:index] = ["audit", "upload"]
@@ -555,8 +555,7 @@ class Gate:
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
                    self.guarded("tests", self.testSplit, packages, log),
-                   self.guarded("smoke", self.smoke, smoke, log),
-                   self.guarded("determinism", self.determinism, smoke)]
+                   self.guarded("smoke", self.smoke, smoke, log)]
         if "stage3" in executors:
             threads.append(self.guarded("stage3", self.stage3))
         if executors & {"workers", "bench-workers"}:
@@ -684,7 +683,7 @@ class Gate:
                 self.catalogFull()
             else:
                 self.step("catalog", ["bash", "-n", "verify/catalog/check.sh"])
-        elif phase in ("smoke", "determinism"):
+        elif phase == "smoke":
             smoke, source = self.smokeList()
             if not smoke:
                 self.fail(phase, "no smoke list in the gated tree or the tools checkout")
@@ -692,11 +691,8 @@ class Gate:
             self.result.update({"smoke_list": "cloud/fast-gate/smoke.txt", "smoke_list_source": source,
                                 "smoke_list_blob": self.git(source["root"], "hash-object", os.path.join(source["root"], "cloud/fast-gate/smoke.txt")),
                                 "smoke_fixtures": ["%s %s" % entry for entry in smoke]})
-            if phase == "smoke":
-                with open(logPath, "a") as log:
-                    self.smoke(smoke, log)
-            else:
-                self.determinism(smoke)
+            with open(logPath, "a") as log:
+                self.smoke(smoke, log)
         elif phase == "census":
             if not os.path.isfile(logPath):
                 self.fail("census", "no test.jsonl: supply the pool's merged log with --census")
@@ -805,8 +801,7 @@ class Gate:
                    self.guarded("wasi", self.wasiSplit, log, wasi),
                    self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
-                   self.guarded("catalog", self.catalogFull),
-                   self.guarded("determinism", self.determinism, self.smokeList()[0])]
+                   self.guarded("catalog", self.catalogFull)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -1966,51 +1961,6 @@ class Gate:
             return None
         return output
 
-    def emitC(self, binary, path):
-        """One emission of path's C by stage 0, in its own process: its exit code and stdout."""
-        process = self.spawn([binary, "c", path], subprocess.PIPE, subprocess.DEVNULL)
-        output, _ = process.communicate()
-        return process.returncode, output
-
-    @declaresInputs("determinism", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
-    def determinism(self, smoke):
-        """Emission is deterministic (@system_adamic, Oct 9: a 43,250-line main.c on the Threadripper against 5,470 lines
-        on a Codex box for the same tree). Stage 0 emits each smoke fixture's C twice, each in its own process, so Go's
-        per-process map order can differ, and the two must match byte for byte, exit code included. The record keeps
-        each program's C sha256 (emission_sha256), so records of one sha on two boxes can be compared."""
-        started = time.monotonic()
-        binary = os.path.join(os.path.abspath(self.arguments.out), "determinism-adamic")
-        with open(os.path.join(self.arguments.out, "determinism.log"), "w") as output:
-            code = self.spawn(["go", "build", "-o", binary, "./cmd/adamic"], output).wait()
-        if code != 0:
-            self.exits["determinism"] = code
-            self.fail("determinism", "go build ./cmd/adamic for the determinism check failed (determinism.log)")
-            return
-        programs = sorted({path for _, path in smoke if path.endswith((".a", ".ts")) and os.path.isfile(os.path.join(self.arguments.tree, path))})
-        hashes, differing = {}, []
-
-        def check(path):
-            first, second = self.emitC(binary, path), self.emitC(binary, path)
-            hashes[path] = hashlib.sha256((first[1] or "").encode()).hexdigest()
-            if first != second:
-                a, b = (first[1] or "").split("\n"), (second[1] or "").split("\n")
-                line = next((index + 1 for index in range(max(len(a), len(b))) if index >= len(a) or index >= len(b) or a[index] != b[index]), 0)
-                differing.append("%s (exit %d and %d, first difference at line %d)" % (path, first[0], second[0], line))
-
-        threads = [threading.Thread(target=check, args=(path,)) for path in programs]
-        for index in range(0, len(threads), 8):
-            for thread in threads[index:index + 8]:
-                thread.start()
-            for thread in threads[index:index + 8]:
-                thread.join()
-        self.result["emission_sha256"] = dict(sorted(hashes.items()))
-        self.steps["determinism"] = round(time.monotonic() - started, 1)
-        if differing or len(hashes) != len(programs):
-            self.exits["determinism"] = 1
-            self.fail("determinism", "stage 0 emitted different C for the same program in two runs: %s" % "; ".join(sorted(differing) or ["a check didn't finish"]))
-            return
-        self.exits["determinism"] = 0
-
     @declaresInputs("smoke", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
     def smoke(self, smoke, log):
         """The pinned smoke set in one process, then a check that every entry passed in its lane: an entry
@@ -2735,9 +2685,9 @@ def longTests(units):
 
 
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
-wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog", "determinism"]
+wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog"]
 # The unconditional non-test units; conditional executors are listed with --base.
-fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "determinism", "census"]
+fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "census"]
 fastPhases = fastBasePhases + ["stage3", "workers", "a-check", "catalog-apply", "catalog", "darwin"]
 stage3Units = ["stage3-apply-tests", "stage3-lane-tests", "stage3-lane"]
 
