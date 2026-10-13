@@ -124,7 +124,12 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if usesParallelMap(program) {
+				// One worker keeps peak liveness reproducible across machines.
+				result = executeParallel(t, "1", false, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}
