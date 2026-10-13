@@ -230,7 +230,7 @@ func stringsGoProductInputs(name string, compilers stringsCompilers) buildcache.
 	return buildcache.Inputs{
 		Name:      "cssstrings " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssstrings/testdata", "stage1/cohere/cssstrings/port_test.go"},
-		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
+		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
 		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
 	}
 }

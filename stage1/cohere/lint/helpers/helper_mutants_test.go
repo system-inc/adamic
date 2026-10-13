@@ -57,7 +57,7 @@ func helperMutantProduct(t *testing.T, index int) string {
 	product := &helperProducts[index+1]
 	product.once.Do(func() {
 		name := "helper-mutants-oracle"
-		flags := []string{"go build", "overlay=oracle.go,catalog.go,descriptors.go"}
+		flags := []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=oracle.go,catalog.go,descriptors.go"}
 		tools := []string{buildcache.Tool("go", "version")}
 		files := []string{"cohere", "stage1/cohere/lint/helpers/testdata/oracle.go", "stage1/cohere/lint/helpers/testdata/catalog.go", "stage1/cohere/lint/helpers/testdata/descriptors.go", "stage1/cohere/lint/helpers/helpers_test.go", "stage1/cohere/lint/helpers/helper_mutants_test.go"}
 		// The clean build is a mutant's recipe and key with no mutation planted.
