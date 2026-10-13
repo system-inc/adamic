@@ -1,0 +1,10 @@
+{'name': 'accessor-revert', 'exit': 1, 'caught': True, 'expected': "stage 0 can't lower spreading an accessor literal whose getter may throw"}
+{'name': 'accessor-release', 'exit': 1, 'caught': True, 'expected': 'LeakSanitizer'}
+{'name': 'accessor-edge', 'exit': 1, 'caught': False, 'expected': 'AddressSanitizer'}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/lowering-gaps-3/run-accessor-mutants.py", line 20, in <module>
+    run('accessor-edge', {'internal/ir/accessor_spread.go':lambda s:s.replace('return !data(literal.Spread, map[int]bool{})','return false && !data(literal.Spread, map[int]bool{})')}, 'AddressSanitizer')
+  File "/workspace/adamic/review/compiler/lowering-gaps-3/run-accessor-mutants.py", line 14, in run
+    if not caught: raise RuntimeError(name+' did not fail by its intended check')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: accessor-edge did not fail by its intended check

@@ -1,0 +1,28 @@
+function run(failure: number): void {
+	const source = {
+		get first(): string {
+			console.log('get first');
+			if (failure === 0) { throw new Error(`failure${failure}`); }
+			return `ownedfirst${failure}`;
+		},
+		get middle(): string {
+			console.log('get middle');
+			if (failure === 1) { throw new Error(`failure${failure}`); }
+			return `ownedmiddle${failure}`;
+		},
+		get last(): string {
+			console.log('get last');
+			if (failure === 2) { throw new Error(`failure${failure}`); }
+			return `ownedlast${failure}`;
+		},
+	};
+	try {
+		const copy = { ...source };
+		console.log(copy.first + copy.middle + copy.last);
+	} catch (error) {
+		if (error instanceof Error) { console.log(error.message); } else { throw error; }
+	}
+	console.log('after');
+}
+run(1);
+run(3);

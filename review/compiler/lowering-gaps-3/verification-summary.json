@@ -1,0 +1,51 @@
+{
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "corpus": 2171,
+  "baseline_admitted": 1555,
+  "tip_admitted": 1561,
+  "new": [
+    "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "internal/oracle/testdata/template_nullish.a"
+  ],
+  "regressions": [],
+  "unresolved_timeouts": 0,
+  "oracle_leaves": [
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/template_nullish.a",
+      "seconds": 0.53
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a",
+      "seconds": 0.54
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a",
+      "seconds": 0.57
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a",
+      "seconds": 0.59
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a",
+      "seconds": 0.59
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/plain_data_spread.a",
+      "seconds": 0.36
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a",
+      "seconds": 0.41
+    }
+  ],
+  "lower_shards": 12,
+  "lower_existing_tests": 276,
+  "lower_new_test": "TestClassFeaturesThrowingAccessorSpread",
+  "lower_new_seconds": 0.17,
+  "plain_c_sha256": "cd1a775183200bd2c65a8e95fa554966ad4774982ef99b9b4f98bec646a2487b"
+}
