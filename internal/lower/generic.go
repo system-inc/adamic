@@ -57,6 +57,9 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 				continue
 			}
 			from, to := l.checker.GetTypeAtLocation(argument), l.checker.GetTypeOfSymbol(given[index])
+			if !l.nullableViewsMatch(from, to, map[[2]*checker.Type]bool{}) {
+				return 0, l.notYet(argument, "a nullable reference view changes its empty case or adds a second empty case (nullable reference needs an empty-case tag)")
+			}
 			if found := l.widened(from, to, map[[2]*checker.Type]bool{}); found != nil {
 				return 0, &Refused{Where: l.program.Where(argument), What: "a type argument makes a value of type " + l.checker.TypeToString(from) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "use the value's invariant type argument, or make the parameter readonly (adamic/invariant-mutable)"}
 			}
@@ -84,7 +87,13 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 			name += "_unread"
 			continue
 		}
+		if l.includesNull(concrete) && l.includesUndefined(concrete) {
+			return 0, l.notYet(call, nullableTagReason)
+		}
 		held, hasRepresentation := l.representation(concrete)
+		if concrete.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+			held, hasRepresentation = ir.Object, true
+		}
 		if !hasRepresentation {
 			key += ",unread"
 			name += "_unread"
@@ -159,6 +168,11 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 // signatures and structural fields; a native representation alone loses those facts.
 // This is also where nullable representations can extend the key.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	proven = l.concrete(proven)
+	// Exact empty types have no ordinary representation; keep null and undefined distinct.
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		return l.checker.TypeToString(proven)
+	}
 	held, known := l.representation(proven)
 	if !known {
 		return "unread"
@@ -231,9 +245,17 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 // result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
 // so a generic function calling another with its own type parameter passes the concrete type on.
 func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+	l.inferTypesSeen(declared, instantiated, into, map[[2]*checker.Type]bool{})
+}
+
+func (l *lowering) inferTypesSeen(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type, visited map[[2]*checker.Type]bool) {
 	if declared == nil || instantiated == nil {
 		return
 	}
+	if visited[[2]*checker.Type{declared, instantiated}] {
+		return
+	}
+	visited[[2]*checker.Type{declared, instantiated}] = true
 	// Optional implementation parameters and results can wrap the same generic
 	// binder that the resolved overload exposes directly. Infer from the present
 	// member; an absent argument supplies no evidence about that binder.
@@ -257,7 +279,7 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 		// GetNonNullableType also turns a rigid T into T & {}. Removing only
 		// the optional member preserves the binder we are trying to infer.
 		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
-			l.inferTypes(present[0], given, into)
+			l.inferTypesSeen(present[0], given, into, visited)
 		}
 		return
 	}
@@ -295,7 +317,14 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
 			for index := range declaredArguments {
 				if index < len(instantiatedArguments) {
-					l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
+					l.inferTypesSeen(declaredArguments[index], instantiatedArguments[index], into, visited)
+				}
+			}
+		}
+		if declared.ObjectFlags()&checker.ObjectFlagsReference == 0 && len(l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall)) == 0 {
+			for _, property := range l.checker.GetPropertiesOfType(declared) {
+				if given := l.checker.GetTypeOfPropertyOfType(instantiated, property.Name); given != nil {
+					l.inferTypesSeen(l.checker.GetTypeOfPropertyOfType(declared, property.Name), given, into, visited)
 				}
 			}
 		}
@@ -304,10 +333,10 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 			declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
 			for index := range declaredParameters {
 				if index < len(instantiatedParameters) {
-					l.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)
+					l.inferTypesSeen(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into, visited)
 				}
 			}
-			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
+			l.inferTypesSeen(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into, visited)
 		}
 	}
 }
