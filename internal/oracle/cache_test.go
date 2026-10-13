@@ -162,7 +162,6 @@ type gateIdentity struct {
 	cache       *resultCache
 	context     string
 	nodeVersion string
-	libraries   [3]string // sanitized, release, counted
 }
 
 var gateOnce sync.Once
@@ -184,14 +183,6 @@ func identity(t *testing.T) gateIdentity {
 			return
 		}
 		gate.nodeVersion = string(version)
-		for index, options := range []native.Options{{Sanitize: true}, {}, {Count: true}} {
-			library, err := native.RuntimeLibrary("", options)
-			if err != nil {
-				gateError = err
-				return
-			}
-			gate.libraries[index] = filepath.Base(filepath.Dir(library))
-		}
 		// The cache holds what these exact checks observed. Editing a harness or oracle runner must
 		// invalidate it even when a fixture's generated code happens to remain identical.
 		files, err := filepath.Glob("*.go")
@@ -234,6 +225,17 @@ func identity(t *testing.T) gateIdentity {
 		t.Fatal(gateError)
 	}
 	return gate
+}
+
+// Node identity never prepares a native archive. Native observations key the exact
+// feature/options archive their emitted C links, and share its cached build.
+func oracleRuntimeIdentity(t *testing.T, code string, options native.Options) string {
+	t.Helper()
+	library, err := native.RuntimeLibraryForSource("", code, options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return filepath.Base(filepath.Dir(library))
 }
 
 // Reuse import declarations already parsed by lowered, keyed by the current source bytes. This
@@ -332,7 +334,8 @@ func cachedNative(t *testing.T, program *ir.Program, release bool) nativeResult 
 		variant = 1
 	}
 	code := native.C(program)
-	key := nativeResultKey(code, given.libraries[variant], given.nodeVersion, cacheKey(given.context, fmt.Sprint(variant)))
+	runtimeKey := oracleRuntimeIdentity(t, code, native.Options{Sanitize: !release})
+	key := nativeResultKey(code, runtimeKey, given.nodeVersion, cacheKey(given.context, fmt.Sprint(variant)))
 	return cachedResult(t, given.cache, nativeResults, key, func() nativeResult {
 		if release {
 			return nativeResult{Run: record(releasedUncached(t, program))}
@@ -434,7 +437,12 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 	}
 	given := identity(t)
 	context := cacheKey(given.context, t.Name(), sourceIdentity(t, path), javascript.JavaScript(program), external)
-	key := nativeResultKey(native.C(program), cacheKey(given.libraries[:]...), given.nodeVersion, context)
+	code := native.C(program)
+	var libraries []string
+	for _, options := range []native.Options{{Sanitize: true}, {}, {Count: true}} {
+		libraries = append(libraries, oracleRuntimeIdentity(t, code, options))
+	}
+	key := nativeResultKey(code, cacheKey(libraries...), given.nodeVersion, context)
 	evidence := cachedResult(t, given.cache, checkedProbes, key, func() probeEvidence {
 		evidence := &probeEvidence{}
 		probeRuns.Store(t.Name(), evidence)
