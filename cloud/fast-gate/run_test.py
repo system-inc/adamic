@@ -305,35 +305,6 @@ class FailClosed(unittest.TestCase):
         # Nothing but git ran: no build, vet or test.
         self.assertEqual([command[0] for command in launched if command[0] != "git"], [])
 
-    def test_emission_that_differs_between_two_runs_is_red_at_determinism(self):
-        # Oct 9: one tree emitted a 43,250-line main.c on one box and 5,470 lines on another. Stage 0 emits each smoke
-        # fixture twice, in two processes; an emitter ordering by a map differs between them.
-        os.makedirs(os.path.join(self.tree, "internal/oracle/testdata"), exist_ok=True)
-        with open(os.path.join(self.tree, "internal/oracle/testdata/a.a"), "w") as handle:
-            handle.write("console.log(1);\n")
-        calls = []
-
-        def steady(gate, binary, path):
-            calls.append(path)
-            return 0, "int main(void) {}\n"
-
-        def mapOrdered(gate, binary, path):
-            calls.append(path)
-            return 0, "static void f(void);\nint main(void) {}\n" if len(calls) % 2 else "int main(void) {}\nstatic void f(void);\n"
-
-        for full in (False, True):
-            with self.subTest(full=full):
-                calls.clear()
-                with mock.patch.object(run.Gate, "emitC", steady):
-                    gate, status, result = self.gate(full=full)
-                self.assertTrue(status.startswith("green:"), status)
-                self.assertEqual(calls, ["internal/oracle/testdata/a.a"] * 2)
-                self.assertEqual(list(result["emission_sha256"]), ["internal/oracle/testdata/a.a"])
-                with mock.patch.object(run.Gate, "emitC", mapOrdered):
-                    gate, status, result = self.gate(full=full)
-                self.assertIn("first failure at determinism", status)
-                self.assertIn("internal/oracle/testdata/a.a (exit 0 and 0, first difference at line 1)", gate.failure["detail"])
-
     def test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit(self):
         # Loom's pool runs the whole gate as units (Oct 9): one phase, one unit of it, with this gate's own record.
         gate, status, result = self.gate(full=True, extra={"phase": "wasi", "unit": "requests"})
@@ -347,10 +318,9 @@ class FailClosed(unittest.TestCase):
         self.assertIn("first failure at wasi", status)
         self.assertIn("has no unit 'no-such-fixture'", gate.failure["detail"])
         # A phase runs nothing of the others: no tests, no build.
-        with mock.patch.object(run.Gate, "emitC", lambda gate, binary, path: (0, "int main(void) {}\n")):
-            gate, status, result = self.gate(full=True, extra={"phase": "determinism"})
+        gate, status, result = self.gate(full=True, extra={"phase": "tools"})
         self.assertTrue(status.startswith("green:"), status)
-        self.assertEqual(result["planned_stages"], ["determinism"])
+        self.assertEqual(result["planned_stages"], ["tools"])
         self.assertNotIn("tests", result["stages_exit"])
         self.assertNotIn("build", result["stages_exit"])
 
@@ -366,7 +336,7 @@ class FailClosed(unittest.TestCase):
                                         "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
 
     def test_fast_phases_plan_only_themselves(self):
-        for phase in ("coverage", "tools", "build", "vet", "smoke", "determinism", "census", "stage3", "catalog"):
+        for phase in ("coverage", "tools", "build", "vet", "smoke", "census", "stage3", "catalog"):
             with self.subTest(phase=phase):
                 extra = {"phase": phase}
                 if phase == "census":
@@ -685,9 +655,9 @@ class Products(unittest.TestCase):
                 self.assertIn("-test.timeout=30m", commands[1])
 
     def test_all_fast_stages_start_concurrently(self):
-        barrier = threading.Barrier(7)
+        barrier = threading.Barrier(6)
         stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests",
-                  "smoke": "smoke", "determinism": "determinism", "stage3": "stage3"}
+                  "smoke": "smoke", "stage3": "stage3"}
         def target(stage):
             def concurrent(gate, *args):
                 barrier.wait(2)
@@ -2277,7 +2247,7 @@ class PhaseUnitTests(unittest.TestCase):
             listed = subprocess.run([sys.executable, run.__file__, "--full", "--list-units", "--tree", tree], capture_output=True, text=True, check=True).stdout.split("\n")
             self.assertEqual([line for line in listed if line], ["coverage", "tools", "build", "vet", "wasi a.a", "wasi requests",
                                                                 "stage3 stage3-apply-tests", "stage3 stage3-lane-tests", "stage3 stage3-lane",
-                                                                "catalog 1", "catalog 12", "determinism"])
+                                                                "catalog 1", "catalog 12"])
 
     def test_the_pool_lists_fast_non_test_units_from_a_plain_checkout(self):
         listed = realRun([sys.executable, run.__file__, "--list-units", "--tree", "/unused"],
@@ -2721,6 +2691,9 @@ class PhaseInputs(unittest.TestCase):
             if full:
                 command.append("--full")
             expected = realRun(command, input=base, capture_output=True, text=True, check=True, timeout=90).stdout
+            # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s): the one
+            # line the base lists that this doesn't.
+            expected = "".join(line for line in expected.splitlines(keepends=True) if line != "determinism\n")
             self.assertEqual(self.listing(full), expected)
 
     def test_every_listed_unit_has_nonempty_inputs(self):
