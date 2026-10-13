@@ -189,6 +189,15 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 				derived(allowed)
 			}
 			return derived(expression.Value)
+		case ir.ObjectCall:
+			if expression.Method == "create" || expression.Method == "setPrototypeOf" {
+				for _, argument := range expression.Arguments {
+					if derived(argument) {
+						escaped = true
+					}
+				}
+				return false
+			}
 		case ir.Call:
 			for position, argument := range expression.Arguments {
 				if derived(argument) && plan.callEscapes(expression, position) {

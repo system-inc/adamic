@@ -1,0 +1,6 @@
+
+const prototype = {};
+const child: {} = Object.create(prototype);
+console.log(`${Object.is(Object.getPrototypeOf(child),prototype)}`);
+
+console.log(`${Object.is(Object.getPrototypeOf({value:1}),Object.getPrototypeOf({}))}`);

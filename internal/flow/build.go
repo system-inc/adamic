@@ -475,6 +475,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
+			throws = throws || objectPrototypeMayThrow(value.Interface())
 			switch value.Type() {
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {

@@ -299,6 +299,8 @@ typedef struct adamic_class {
 // seen through any type it satisfies, as JavaScript allows, without ever being copied.
 typedef struct adamic_object {
 	adamic_heap heap;
+	struct adamic_object *prototype;
+	bool null_prototype;
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;

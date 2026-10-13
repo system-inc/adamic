@@ -12,6 +12,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))
 	}
+	if value, handled := e.objectPrototypeCall(call, arguments); handled {
+		return value
+	}
 	switch call.Method {
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
