@@ -170,9 +170,13 @@ func run(command []string, report string) (int, error) {
 			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
 		}
 	}
-	lines := strings.Join(append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...), "\n") + "\n"
-	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(lines), 0o644)
-	fmt.Print(lines)
+	lines := append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...)
+	if result.settlement.TestReads != "" {
+		lines = append(lines, result.settlement.TestReads)
+	}
+	text := strings.Join(lines, "\n") + "\n"
+	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(text), 0o644)
+	fmt.Print(text)
 	fmt.Printf("traced: %d settled, %d refused; journal and report in %s\n", len(result.settlement.Settled), len(result.settlement.Refused), directory)
 	if status == 0 && len(result.settlement.Refused) > 0 {
 		status = 3

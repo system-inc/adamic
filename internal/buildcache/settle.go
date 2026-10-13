@@ -143,6 +143,9 @@ type Settlement struct {
 	// CommandExited says the trace holds the command's own exit, with CommandStatus its status.
 	CommandExited bool
 	CommandStatus int
+	// TestReads is the test read set's line (#sfqdxvy), "test read set <key>: <n> reads" or "no test read set: <why>",
+	// when ADAMIC_TRACE_TEST_KEY asked for one; empty otherwise.
+	TestReads string
 }
 
 // A Report is one product's outcome as cmd/traced writes it to ADAMIC_TRACE_REPORT, one JSON line each, for Loom's
@@ -165,6 +168,9 @@ const (
 	ReportRefused = "refused"
 	ReportFound   = "found"
 	ReportLost    = "lost"
+	// ReportReadSet is the run's test read set (#sfqdxvy), recorded under NameKey (ADAMIC_TRACE_TEST_KEY) with its
+	// marker under Key: Loom vouches for the test with it only when cmd/find finds it under that very key.
+	ReportReadSet = "readSet"
 )
 
 // WriteReport writes reports to file, one JSON line each, replacing what it held.
@@ -584,6 +590,9 @@ type traceState struct {
 	started   bool
 	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
 	command, commandStatus int
+	// runReads is everything the run read, the command's reads and every process's it started, taken as the command
+	// exits (snapshot), and runLast when each path was last read: the test read set's (#sfqdxvy). Nil until it exits.
+	runReads, runLast map[string]int
 }
 
 // A pathReads is a process's reads of one path: their kinds, and when it first and last read the path (0 for a path it
@@ -853,29 +862,34 @@ func (state *traceState) marker(pid, process int, marker string) {
 			return
 		}
 		delete(state.open, id)
-		// Everything this process and the processes it started read so far, which is everything up to the build's end,
-		// but what they wrote before reading it: that is the build's own output, never an input. Only the build's own
-		// processes make output for it; what a sibling or a process above it wrote is an input like any other (a
-		// sibling's product, a generated file). A product is always a product, whoever wrote it.
-		snapshot, last := map[string]int{}, map[string]int{}
-		for other, reads := range state.reads {
-			if !state.descends(other, owner) {
-				continue
-			}
-			for name, found := range reads {
-				kinds := found.kinds
-				if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
-					kinds &= readWrite
-				}
-				if kinds != 0 {
-					snapshot[name] |= kinds
-					last[name] = max(last[name], found.lastRead)
-				}
-			}
-		}
+		snapshot, last := state.snapshot(owner)
 		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
 		state.order = append(state.order, id)
 	}
+}
+
+// snapshot is everything owner and the processes it started read so far, by kinds, with when each path was last read,
+// but what they wrote before reading it: that is the owner's own output, never an input. Only the owner's own processes
+// make output for it; what a sibling or a process above it wrote is an input like any other (a sibling's product, a
+// generated file). A product is always a product, whoever wrote it.
+func (state *traceState) snapshot(owner int) (map[string]int, map[string]int) {
+	snapshot, last := map[string]int{}, map[string]int{}
+	for other, reads := range state.reads {
+		if !state.descends(other, owner) {
+			continue
+		}
+		for name, found := range reads {
+			kinds := found.kinds
+			if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
+				kinds &= readWrite
+			}
+			if kinds != 0 {
+				snapshot[name] |= kinds
+				last[name] = max(last[name], found.lastRead)
+			}
+		}
+	}
+	return snapshot, last
 }
 
 // madeBy says whether owner or a process it started wrote name, or a directory above it, before first reading it.
@@ -908,6 +922,10 @@ func (state *traceState) descends(process, ancestor int) bool {
 // includes too, and forgets its threads, so a reused pid is placed by its own fork.
 func (state *traceState) exited(pid int) {
 	process, ok := state.process[pid]
+	if ok && process == pid && pid == state.command && state.started {
+		// The whole run's reads, the test read set's, before the command's own fold away with it.
+		state.runReads, state.runLast = state.snapshot(pid)
+	}
 	delete(state.process, pid)
 	delete(state.keying, pid)
 	if !ok || process != pid {
@@ -916,6 +934,28 @@ func (state *traceState) exited(pid int) {
 	reads := state.reads[pid]
 	delete(state.reads, pid)
 	delete(state.directory, pid)
+	// A process that outlives the command has no live ancestor left to fold into: its reads join the run's, since the
+	// test read set is everything the run read, whenever it read it (Mentat's review of 8.8).
+	defer func() {
+		if state.runReads == nil || pid == state.command {
+			return
+		}
+		for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
+			if _, live := state.reads[ancestor]; live {
+				return
+			}
+		}
+		for name, found := range reads {
+			kinds := found.kinds
+			if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(state.command, name, found.firstRead) {
+				kinds &= readWrite
+			}
+			if kinds != 0 {
+				state.runReads[name] |= kinds
+				state.runLast[name] = max(state.runLast[name], found.lastRead)
+			}
+		}
+	}()
 	for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
 		if into, live := state.reads[ancestor]; live {
 			for name, found := range reads {
@@ -1129,6 +1169,9 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "a lost trace: its build's markers aren't in the trace")
 		}
 	}
+	if nameKey := os.Getenv("ADAMIC_TRACE_TEST_KEY"); nameKey != "" {
+		state.recordTestReads(&settlement, nameKey, processes, recipes, products, productEnds)
+	}
 	// What the run found already built, under its key in the cache: a test's products are these and the ones it
 	// settled (Planner's step 5 proof on Home, Oct 11: a tree that took a test's products from the census lost every
 	// one found). One this trace built itself is pending until it settles, and its settlement is its line.
@@ -1278,6 +1321,100 @@ func placeSettled(cache, key string, entry journalEntry) string {
 	}
 	os.WriteFile(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs), 0o644)
 	return product
+}
+
+// TestReadSetName is a test read set's name in its read sets file, and so in a Finding (#sfqdxvy).
+const TestReadSetName = "test read set"
+
+// recordTestReads records the whole run's reads as the test read set under nameKey, the name key Loom's tree builder
+// names in ADAMIC_TRACE_TEST_KEY (#sfqdxvy), and gives settlement its line, and its report line when it's recorded:
+// outcome readSet, the name key and the marker's key, which Loom keeps to vouch with this set and no other. A product test that only finds products another
+// test built has no build, so no product's set holds the reads that decided the names it asked for; this set does: what
+// the command and every process it started read, keying aside and not what the run wrote before reading it (snapshot),
+// classed and keyed as a product's set is, with the recipe of the processes that journaled. Recorded by recordUnion
+// beside a marker product under its key, so cmd/find finds it exactly when every value the run read is what it was,
+// and never published. Only a run that can stand for the test's next run is recorded: nothing lost, the command
+// exited 0, and every process that journaled ran one recipe; any other records nothing, and its test runs.
+func (state *traceState) recordTestReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) {
+	settlement.TestReads = state.testReads(settlement, nameKey, processes, recipes, products, productEnds)
+}
+
+// testReads is recordTestReads' line, after recording the set and its report line when it can.
+func (state *traceState) testReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) string {
+	facts := state.facts
+	none := func(why string) string { return "no test read set: " + why }
+	switch {
+	case !nameKeyPattern.MatchString(nameKey):
+		return none(fmt.Sprintf("ADAMIC_TRACE_TEST_KEY %q isn't a name key (64 lowercase hex digits)", nameKey))
+	case len(state.lost) > 0:
+		return none("the whole run can't be keyed: " + strings.Join(state.lost, "; "))
+	case state.commandStatus != 0:
+		return none(fmt.Sprintf("the command didn't exit 0 (%d), and a failing run isn't the run a skip would stand in for", state.commandStatus))
+	case state.runReads == nil:
+		return none("the command's exit isn't in the trace")
+	}
+	name := ""
+	for _, pid := range slices.Sorted(maps.Keys(processes)) {
+		switch own := recipeName(processes[pid]); {
+		case name == "":
+			name = own
+		case own != name:
+			return none("its processes ran different binaries, " + name + " and " + own)
+		}
+	}
+	if name == "" {
+		return none("no process of the run keyed a product, so no recipe names the code it ran")
+	}
+	if _, ok := recipes[name]; !ok {
+		for _, process := range processes {
+			recipes[name] = recipeFor(facts.root, process)
+			break
+		}
+	}
+	set, reason := state.measured(journalEntry{Name: TestReadSetName, NameKey: nameKey}, state.runReads, state.runLast, products, productEnds)
+	if reason == "" {
+		set.Entries, reason = withRecipe(set.Entries, recipes[name])
+	}
+	if reason != "" {
+		return none(reason)
+	}
+	set.Trace = filepath.Base(facts.trace)
+	settingsOverride = recipes[name].settings
+	set, evaluated, _, err := recordUnion(facts.root, facts.cache, nameKey, TestReadSetName, set, func(key string) string {
+		return placeTestMarker(facts.cache, key, nameKey)
+	})
+	settingsOverride = ""
+	if err != nil {
+		return none(err.Error())
+	}
+	settlement.Reports = append(settlement.Reports, Report{Name: TestReadSetName, NameKey: nameKey, Key: evaluated.key, Outcome: ReportReadSet, Reads: len(set.Entries)})
+	return fmt.Sprintf("test read set %s: %d reads", evaluated.key[:12], len(set.Entries))
+}
+
+// placeTestMarker is a test read set's marker product under key: a directory naming the set it stands for, so a lookup
+// finds the set when its key names something in the cache, as a product's is found. Nothing reads it, and nothing
+// publishes it (Find's refresh passes over TestReadSetName). Its file goes by a temporary file and a rename, as a read
+// sets file does: a seeded cache links a seed's files, and a write in place would write the seed's (Mentat's re-review).
+func placeTestMarker(cache, key, nameKey string) string {
+	marker := filepath.Join(cache, key)
+	if err := os.MkdirAll(marker, 0o755); err != nil {
+		return marker
+	}
+	partial, err := os.CreateTemp(marker, ".test-read-set-")
+	if err != nil {
+		return marker
+	}
+	_, err = partial.WriteString(nameKey + "\n")
+	if closeErr := partial.Close(); err == nil {
+		err = closeErr
+	}
+	if err == nil {
+		err = os.Rename(partial.Name(), filepath.Join(marker, "test-read-set"))
+	}
+	if err != nil {
+		os.Remove(partial.Name())
+	}
+	return marker
 }
 
 func underAny(name string, places []string) bool {
