@@ -1,0 +1,7 @@
+interface Step {value: string; done: boolean;}
+class Result {
+ get done(): boolean {throw new Error('done getter');}
+ get value(): string {return 'ignored';}
+}
+const source = {[Symbol.iterator]() {return {next(): Result {return new Result();}, return(): Step {console.log('must not close'); return {value: 'complete',done:true};}};}};
+try {for(const value of source) {console.log(value);break;}} catch(error) {console.log(error instanceof Error ? error.message : 'unexpected');}

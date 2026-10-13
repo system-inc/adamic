@@ -1,0 +1,9 @@
+// Reduced and specialized from core.ts:1337, arrayFrom.
+function arrayFrom(iterator: Iterable<number>): number[] {
+    const result: number[] = [];
+    for (const value of iterator) {
+        result.push(value);
+    }
+    return result;
+}
+console.log(arrayFrom([1, 2]).join(','));

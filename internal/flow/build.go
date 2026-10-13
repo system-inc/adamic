@@ -480,7 +480,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
-			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
+			case iteratorMethodType, iteratorFieldType, callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosuresMayThrow {
 					throws = true
@@ -505,14 +505,16 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 }
 
 var (
-	callType        = reflect.TypeOf(ir.Call{})
-	callClosureType = reflect.TypeOf(ir.CallClosure{})
-	arrayMapType    = reflect.TypeOf(ir.ArrayMap{})
-	arrayVisitType  = reflect.TypeOf(ir.ArrayVisit{})
-	arrayReduceType = reflect.TypeOf(ir.ArrayReduce{})
-	arrayFromType   = reflect.TypeOf(ir.ArrayFrom{})
-	arraySortType   = reflect.TypeOf(ir.ArraySort{})
-	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
+	iteratorMethodType = reflect.TypeOf(ir.IteratorMethod{})
+	iteratorFieldType  = reflect.TypeOf(ir.IteratorField{})
+	callType           = reflect.TypeOf(ir.Call{})
+	callClosureType    = reflect.TypeOf(ir.CallClosure{})
+	arrayMapType       = reflect.TypeOf(ir.ArrayMap{})
+	arrayVisitType     = reflect.TypeOf(ir.ArrayVisit{})
+	arrayReduceType    = reflect.TypeOf(ir.ArrayReduce{})
+	arrayFromType      = reflect.TypeOf(ir.ArrayFrom{})
+	arraySortType      = reflect.TypeOf(ir.ArraySort{})
+	mapForEachType     = reflect.TypeOf(ir.MapForEach{})
 )
 
 func (b *builder) linkLabels(names []string, target BlockId) {

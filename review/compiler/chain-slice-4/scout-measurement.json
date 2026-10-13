@@ -1,0 +1,103 @@
+[
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected_failure": false,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-selection"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-markdown"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript"
+    ],
+    "exit": 0,
+    "expected_failure": false,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected_failure": false,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected_failure": false,
+    "caught": true
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected_failure": true,
+    "caught": true
+  }
+]

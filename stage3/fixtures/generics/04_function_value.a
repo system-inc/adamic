@@ -1,0 +1,4 @@
+// Reduced from TypeScript core.ts:1937 and contains at :220; pin 050880ce.
+function equateValues<T>(left: T, right: T): boolean { return left === right; }
+const comparer: (left: number, right: number) => boolean = equateValues;
+console.log(`${comparer(4, 4)} ${comparer(4, 5)}`);

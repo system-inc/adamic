@@ -311,8 +311,14 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 					}
 				}
 			}
-		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			// Keep every proven nonempty contextual element representation, including weak handles.
+		}
+		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+		if contextual != nil {
+			if base := l.readonlyArrayView(contextual); base != nil {
+				contextual = base
+			}
+		}
+		if contextual != nil && l.checker.IsArrayType(contextual) {
 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
 			}
@@ -321,6 +327,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	if target := l.weakTarget(arrayType); target != nil {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
+	}
+	if base := l.readonlyArrayView(arrayType); base != nil {
+		arrayType = base
 	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
@@ -339,6 +348,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.generatorResultRead(node); handled {
+		return value, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -671,6 +683,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.generatorCall(node); handled {
+		return value, handled, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}

@@ -1,0 +1,14 @@
+drop-transitive: caught 7.26s
+declarations-only: caught 5.70s
+allow-conflicts: caught 13.68s
+drop-reference-audit: caught 6.32s
+duplicate-roots: caught 8.31s
+physical-prelude: caught 7.51s
+allow-cycle: caught 7.54s
+entry-types-only: caught 7.26s
+audit-entry-types-only: caught 8.32s
+skip-union-declarations: caught 6.01s
+audit-skip-union-declarations: caught 5.44s
+project-node-roots: caught 6.87s
+standalone-node-prelude: caught 8.12s
+ordinary-project-old-selection: caught 7.22s

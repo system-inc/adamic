@@ -1,0 +1,13 @@
+--- internal/lower/invariance.go
++++ internal/lower/invariance.go
+@@ -245,10 +245,6 @@
+ 	}
+ 	var found []*checker.Type
+ 	for _, member := range members {
+-		if base := l.readonlyArrayView(member); base != nil {
+-			found = append(found, base)
+-			continue
+-		}
+ 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+ 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+ 			found = append(found, member)

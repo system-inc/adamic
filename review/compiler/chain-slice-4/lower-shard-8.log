@@ -1,0 +1,284 @@
+=== RUN   TestOptionalFunctionValueRelation
+=== PAUSE TestOptionalFunctionValueRelation
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== RUN   TestNumericEnumNeverProof
+=== PAUSE TestNumericEnumNeverProof
+=== RUN   TestNumericEnumLiteralPromises
+=== PAUSE TestNumericEnumLiteralPromises
+=== RUN   TestNodeFSFileOptionsBorrow
+=== PAUSE TestNodeFSFileOptionsBorrow
+=== RUN   TestNodeFSFileRefusesOptionEffects
+=== PAUSE TestNodeFSFileRefusesOptionEffects
+=== RUN   TestNodeFSFileRefusesVoidValues
+=== PAUSE TestNodeFSFileRefusesVoidValues
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileNamespaceImport
+=== PAUSE TestNodeFSFileNamespaceImport
+=== RUN   TestNodeFSFileQualifiedErrorType
+=== PAUSE TestNodeFSFileQualifiedErrorType
+=== RUN   TestNodeFSFileKeepsDetachedMethodRefusal
+=== PAUSE TestNodeFSFileKeepsDetachedMethodRefusal
+=== RUN   TestNodeFSFileScratchOptionsBorrow
+=== PAUSE TestNodeFSFileScratchOptionsBorrow
+=== RUN   TestNodeFSFileScratchOverloadsAreNamed
+=== PAUSE TestNodeFSFileScratchOverloadsAreNamed
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== PAUSE TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== RUN   TestNodeLibraryDistinguishesReceiverOwners
+=== PAUSE TestNodeLibraryDistinguishesReceiverOwners
+=== RUN   TestNodeLibraryQualifiedTypeAssertion
+=== PAUSE TestNodeLibraryQualifiedTypeAssertion
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== RUN   TestOptionalIndexingMapShapeRefused
+=== PAUSE TestOptionalIndexingMapShapeRefused
+=== RUN   TestOptionalIndexingKeepsIndexSignaturesRefused
+=== PAUSE TestOptionalIndexingKeepsIndexSignaturesRefused
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestNullishPrototypeReadsAreRejectedByChecker
+=== PAUSE TestNullishPrototypeReadsAreRejectedByChecker
+=== CONT  TestOptionalFunctionValueRelation
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestNodeFSFileScratchOverloadsAreNamed
+=== CONT  TestNullishPrototypeReadsAreRejectedByChecker
+=== CONT  TestNodeFSFileScratchOptionsBorrow
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.07s)
+=== CONT  TestNodeLibraryDistinguishesReceiverOwners
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestNodeLibraryQualifiedTypeAssertion
+--- PASS: TestNodeLibraryDistinguishesReceiverOwners (0.70s)
+=== CONT  TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== CONT  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+--- PASS: TestNodeLibraryQualifiedTypeAssertion (0.70s)
+=== CONT  TestOptionalIndexingKeepsIndexSignaturesRefused
+--- PASS: TestOptionalIndexingKeepsIndexSignaturesRefused (0.07s)
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+--- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.21s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.03s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.06s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.04s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.04s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.04s)
+=== CONT  TestOptionalIndexingMapShapeRefused
+--- PASS: TestOptionalIndexingMapShapeRefused (0.09s)
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.04s)
+=== CONT  TestNodeFSFileRefusesOptionEffects
+--- PASS: TestNodeFSFileScratchOptionsBorrow (1.38s)
+=== CONT  TestNodeFSFileKeepsDetachedMethodRefusal
+--- PASS: TestNodeFSFileScratchOverloadsAreNamed (1.59s)
+=== CONT  TestNodeFSFileQualifiedErrorType
+--- PASS: TestNodeFSFileRefusesOptionEffects (0.41s)
+=== CONT  TestNodeFSFileNamespaceImport
+--- PASS: TestNullishPrototypeReadsAreRejectedByChecker (1.66s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesVoidValues
+--- PASS: TestNodeFSFileKeepsDetachedMethodRefusal (0.50s)
+=== CONT  TestNumericEnumNeverProof
+=== RUN   TestNumericEnumNeverProof/member
+=== RUN   TestNumericEnumNeverProof/parameter
+=== RUN   TestNumericEnumNeverProof/combination
+--- PASS: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (1.18s)
+=== CONT  TestNodeFSFileOptionsBorrow
+=== RUN   TestNumericEnumNeverProof/array_read
+=== RUN   TestNumericEnumNeverProof/closed_return
+--- PASS: TestNodeFSFileQualifiedErrorType (0.49s)
+=== CONT  TestNumericEnumLiteralPromises
+=== RUN   TestNumericEnumLiteralPromises/member_tag
+--- PASS: TestNumericEnumNeverProof (0.22s)
+    --- PASS: TestNumericEnumNeverProof/member (0.03s)
+    --- PASS: TestNumericEnumNeverProof/parameter (0.05s)
+    --- PASS: TestNumericEnumNeverProof/combination (0.02s)
+    --- PASS: TestNumericEnumNeverProof/array_read (0.04s)
+    --- PASS: TestNumericEnumNeverProof/closed_return (0.08s)
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== RUN   TestNumericEnumLiteralPromises/narrowed_member
+--- PASS: TestNodeFSFileRefusesVoidValues (0.49s)
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== RUN   TestNumericEnumLiteralPromises/plain_literal
+--- PASS: TestOptionalFunctionValueRelation (0.00s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.08s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.03s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestNumericEnumLiteralPromises/indexed_subset
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+--- PASS: TestNodeFSFileNamespaceImport (0.62s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== RUN   TestNumericEnumLiteralPromises/subset_member
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestNumericEnumLiteralPromises/open_tag
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+--- PASS: TestNumericEnumLiteralPromises (0.22s)
+    --- PASS: TestNumericEnumLiteralPromises/member_tag (0.07s)
+    --- PASS: TestNumericEnumLiteralPromises/narrowed_member (0.03s)
+    --- PASS: TestNumericEnumLiteralPromises/plain_literal (0.03s)
+    --- PASS: TestNumericEnumLiteralPromises/indexed_subset (0.04s)
+    --- PASS: TestNumericEnumLiteralPromises/subset_member (0.02s)
+    --- PASS: TestNumericEnumLiteralPromises/open_tag (0.03s)
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.03s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.04s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.02s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.02s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.03s)
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.03s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.09s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.04s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.04s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.03s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.07s)
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: arithmetic
+    enums_open_test.go:23: signed_flags
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+--- PASS: TestNodeFSFileOptionsBorrow (1.05s)
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: cast
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: containers
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: optional_object
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+--- PASS: TestNodeLibraryNamesUnimplementedMembers (0.00s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (0.39s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.39s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (0.40s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (0.34s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (0.35s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (0.36s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (0.42s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.68s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+--- PASS: TestNumericEnumsAreOpen (1.92s)
+--- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (0.67s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (0.70s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (0.68s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (0.31s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (0.31s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	4.326s

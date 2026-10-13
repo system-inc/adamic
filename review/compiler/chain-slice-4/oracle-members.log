@@ -1,0 +1,333 @@
+=== RUN   TestGeneratorParameterBorrowMutant
+=== PAUSE TestGeneratorParameterBorrowMutant
+=== RUN   TestGeneratorLocalBorrowMutant
+=== PAUSE TestGeneratorLocalBorrowMutant
+=== RUN   TestGeneratorCycleFrame
+=== PAUSE TestGeneratorCycleFrame
+=== RUN   TestGeneratorBasic
+=== PAUSE TestGeneratorBasic
+=== RUN   TestGeneratorCancellation
+=== PAUSE TestGeneratorCancellation
+=== RUN   TestGeneratorThrow
+=== PAUSE TestGeneratorThrow
+=== RUN   TestGeneratorDefaults
+=== PAUSE TestGeneratorDefaults
+=== RUN   TestGeneratorClose
+=== PAUSE TestGeneratorClose
+=== RUN   TestGeneratorDelegate
+=== PAUSE TestGeneratorDelegate
+=== RUN   TestGeneratorDelegateThrow
+=== PAUSE TestGeneratorDelegateThrow
+=== RUN   TestGeneratorReentrant
+=== PAUSE TestGeneratorReentrant
+=== RUN   TestGeneratorOwned
+=== PAUSE TestGeneratorOwned
+=== RUN   TestGeneratorCaptures
+=== PAUSE TestGeneratorCaptures
+=== RUN   TestGeneratorDefaultError
+=== PAUSE TestGeneratorDefaultError
+=== RUN   TestGeneratorMapIterator
+=== PAUSE TestGeneratorMapIterator
+=== RUN   TestGeneratorChecker
+=== PAUSE TestGeneratorChecker
+=== RUN   TestGeneratorFirstReference
+=== PAUSE TestGeneratorFirstReference
+=== RUN   TestGeneratorCompletions
+=== PAUSE TestGeneratorCompletions
+=== RUN   TestGeneratorRegExpIteratorResultCompatibility
+=== PAUSE TestGeneratorRegExpIteratorResultCompatibility
+=== RUN   TestGeneratorRegExpTreeResultCompatibility
+=== PAUSE TestGeneratorRegExpTreeResultCompatibility
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestIterationDispatchMutants
+=== PAUSE TestIterationDispatchMutants
+=== RUN   TestIterationDispatchPendingStops
+=== PAUSE TestIterationDispatchPendingStops
+=== RUN   TestLoweringChainMixedFileAgreement
+=== PAUSE TestLoweringChainMixedFileAgreement
+=== RUN   TestStep16GenericOutcomes
+=== PAUSE TestStep16GenericOutcomes
+=== RUN   TestStep16IdentityMutant
+=== PAUSE TestStep16IdentityMutant
+=== RUN   TestStep16OptionalResultMutant
+=== PAUSE TestStep16OptionalResultMutant
+=== RUN   TestStep20IntrinsicIteratorWrites
+=== PAUSE TestStep20IntrinsicIteratorWrites
+=== RUN   TestStep20IterationOutcomes
+=== PAUSE TestStep20IterationOutcomes
+=== RUN   TestStep20ArrayViewVariance
+=== PAUSE TestStep20ArrayViewVariance
+=== CONT  TestGeneratorParameterBorrowMutant
+=== CONT  TestLoweringChainMixedFileAgreement
+=== CONT  TestGeneratorChecker
+=== CONT  TestIterationDispatchPendingStops
+=== CONT  TestIterationDispatchMutants
+=== NAME  TestGeneratorParameterBorrowMutant
+    generator_borrow_mutants_test.go:13: Load: load: no file at /internal/oracle/testdata/generators/owned.a
+--- FAIL: TestGeneratorParameterBorrowMutant (0.00s)
+=== CONT  TestGenericBodyRelationsMaybeBind
+    generic_body_relations_test.go:34: open /internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a: no such file or directory
+--- FAIL: TestGenericBodyRelationsMaybeBind (0.00s)
+=== CONT  TestGeneratorRegExpTreeResultCompatibility
+=== RUN   TestIterationDispatchPendingStops/non_object_step
+=== RUN   TestIterationDispatchMutants/next_reread
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/cached_next.a
+=== RUN   TestIterationDispatchMutants/completion_value_enters_body
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/class.a
+=== RUN   TestIterationDispatchMutants/close_skipped_on_break
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/break.a
+=== RUN   TestIterationDispatchMutants/close_on_next_throw
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/next_throw.a
+=== RUN   TestIterationDispatchMutants/close_throw_replaces_original
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/close_throw_body.a
+=== RUN   TestIterationDispatchMutants/close_skipped_on_outer_continue
+    iteration_dispatch_mutant_test.go:25: Load: load: no file at /stage3/fixtures/iteration-dispatch/labeled_continue.a
+--- FAIL: TestIterationDispatchMutants (0.00s)
+    --- FAIL: TestIterationDispatchMutants/next_reread (0.00s)
+    --- FAIL: TestIterationDispatchMutants/completion_value_enters_body (0.00s)
+    --- FAIL: TestIterationDispatchMutants/close_skipped_on_break (0.00s)
+    --- FAIL: TestIterationDispatchMutants/close_on_next_throw (0.00s)
+    --- FAIL: TestIterationDispatchMutants/close_throw_replaces_original (0.00s)
+    --- FAIL: TestIterationDispatchMutants/close_skipped_on_outer_continue (0.00s)
+=== CONT  TestGeneratorRegExpIteratorResultCompatibility
+=== NAME  TestGeneratorRegExpTreeResultCompatibility
+    generators_test.go:72: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorRegExpTreeResultCompatibility (11.30s)
+=== CONT  TestGeneratorCompletions
+    generators_test.go:22: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorCompletions (0.00s)
+=== CONT  TestGeneratorFirstReference
+=== NAME  TestGeneratorChecker
+    generators_test.go:20: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorChecker (11.30s)
+=== CONT  TestGeneratorDelegate
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:21: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorFirstReference (0.00s)
+=== CONT  TestStep20IntrinsicIteratorWrites
+=== NAME  TestGeneratorDelegate
+    generators_test.go:13: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorDelegate (0.00s)
+=== CONT  TestGeneratorMapIterator
+    generators_test.go:19: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorMapIterator (0.00s)
+=== CONT  TestGeneratorDefaultError
+    generators_test.go:18: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorDefaultError (0.00s)
+=== RUN   TestStep20IntrinsicIteratorWrites/[1]
+=== NAME  TestIterationDispatchPendingStops/non_object_step
+    iteration_dispatch_test.go:41: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestGeneratorRegExpIteratorResultCompatibility
+    generators_test.go:68: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorRegExpIteratorResultCompatibility (11.30s)
+=== CONT  TestStep20ArrayViewVariance
+    step20_variance_test.go:18: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestStep20ArrayViewVariance (0.00s)
+=== CONT  TestGeneratorOwned
+=== RUN   TestIterationDispatchPendingStops/non_object_iterator
+=== NAME  TestGeneratorOwned
+    generators_test.go:16: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorOwned (0.00s)
+=== CONT  TestGeneratorReentrant
+    generators_test.go:15: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorReentrant (0.00s)
+=== CONT  TestStep20IterationOutcomes
+=== NAME  TestIterationDispatchPendingStops/non_object_iterator
+    iteration_dispatch_test.go:41: open ../../oracle/node.mjs: no such file or directory
+=== RUN   TestIterationDispatchPendingStops/non_callable_next
+    iteration_dispatch_test.go:41: open ../../oracle/node.mjs: no such file or directory
+=== RUN   TestIterationDispatchPendingStops/non_object_close
+    iteration_dispatch_test.go:41: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestLoweringChainMixedFileAgreement
+    lowering_chain_mixed_test.go:26: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestIterationDispatchPendingStops (11.30s)
+    --- FAIL: TestIterationDispatchPendingStops/non_object_step (11.30s)
+    --- FAIL: TestIterationDispatchPendingStops/non_object_iterator (0.00s)
+    --- FAIL: TestIterationDispatchPendingStops/non_callable_next (0.00s)
+    --- FAIL: TestIterationDispatchPendingStops/non_object_close (0.00s)
+=== CONT  TestGeneratorDelegateThrow
+    generators_test.go:14: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorDelegateThrow (0.00s)
+=== CONT  TestGeneratorCancellation
+    generators_test.go:9: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorCancellation (0.00s)
+=== CONT  TestGeneratorDefaults
+--- FAIL: TestLoweringChainMixedFileAgreement (11.30s)
+=== CONT  TestGeneratorThrow
+=== NAME  TestGeneratorDefaults
+    generators_test.go:11: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorDefaults (0.00s)
+=== CONT  TestGeneratorClose
+=== NAME  TestGeneratorThrow
+    generators_test.go:10: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorThrow (0.00s)
+=== NAME  TestGeneratorClose
+    generators_test.go:12: open ../../oracle/node.mjs: no such file or directory
+=== CONT  TestGeneratorCycleFrame
+--- FAIL: TestGeneratorClose (0.00s)
+=== CONT  TestStep16IdentityMutant
+=== NAME  TestGeneratorCycleFrame
+    generator_cycle_test.go:17: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorCycleFrame (0.00s)
+=== CONT  TestGeneratorBasic
+=== NAME  TestStep16IdentityMutant
+    step16_generics_test.go:101: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestStep16IdentityMutant (0.00s)
+=== CONT  TestStep16OptionalResultMutant
+=== NAME  TestGeneratorBasic
+    generators_test.go:8: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorBasic (0.00s)
+=== CONT  TestStep16GenericOutcomes
+=== NAME  TestStep16OptionalResultMutant
+    step16_generics_test.go:143: open ../../oracle/node.mjs: no such file or directory
+=== RUN   TestStep16GenericOutcomes/01_identity
+=== CONT  TestGeneratorLocalBorrowMutant
+    generator_borrow_mutants_test.go:17: Load: load: no file at /internal/oracle/testdata/generators/owned.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/[1]
+=== NAME  TestStep16GenericOutcomes/01_identity
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/01_identity.a
+--- FAIL: TestStep16OptionalResultMutant (0.00s)
+--- FAIL: TestGeneratorLocalBorrowMutant (0.00s)
+=== NAME  TestStep20IterationOutcomes
+    step20_iteration_test.go:35: open ../../stage3/fixtures/iteration/outcomes.json: no such file or directory
+=== RUN   TestStep16GenericOutcomes/02_optional_return
+--- FAIL: TestStep20IterationOutcomes (0.00s)
+=== RUN   TestStep20IntrinsicIteratorWrites/new_String('x')
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_String('x')
+=== NAME  TestStep16GenericOutcomes/02_optional_return
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/02_optional_return.a
+=== CONT  TestGeneratorCaptures
+    generators_test.go:17: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestGeneratorCaptures (0.00s)
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== RUN   TestStep20IntrinsicIteratorWrites/Array.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Array.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/String.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/String.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Map.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Map.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Set.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Set.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== RUN   TestStep16GenericOutcomes/03_callback_return
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+=== CONT  TestStep20IntrinsicIteratorWrites/[1]
+=== NAME  TestStep16GenericOutcomes/03_callback_return
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/03_callback_return.a
+=== RUN   TestStep16GenericOutcomes/04_function_value
+=== NAME  TestStep20IntrinsicIteratorWrites/[1]
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep16GenericOutcomes/04_function_value
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/04_function_value.a
+=== RUN   TestStep16GenericOutcomes/05_nested_class
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/05_nested_class.a
+=== RUN   TestStep16GenericOutcomes/06_polymorphic_recursion
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+=== NAME  TestStep16GenericOutcomes/06_polymorphic_recursion
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/06_polymorphic_recursion.a
+=== RUN   TestStep16GenericOutcomes/07_generic_cast
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/07_generic_cast.a
+=== RUN   TestStep16GenericOutcomes/08_readonly_view
+=== NAME  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+    step20_intrinsic_test.go:36: Load: load: no file at ../../stage3/fixtures/iteration/intrinsic_iterator_prototype.a
+=== NAME  TestStep16GenericOutcomes/08_readonly_view
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/08_readonly_view.a
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== RUN   TestStep16GenericOutcomes/09_recursive_optional
+=== NAME  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+    step20_intrinsic_test.go:36: Load: load: no file at ../../stage3/fixtures/iteration/intrinsic_iterator_alias.a
+=== NAME  TestStep16GenericOutcomes/09_recursive_optional
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/09_recursive_optional.a
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== RUN   TestStep16GenericOutcomes/10_identifier_multimap
+=== NAME  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+    step20_intrinsic_test.go:36: Load: load: no file at ../../stage3/fixtures/iteration/intrinsic_iterator_write.a
+=== CONT  TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== NAME  TestStep16GenericOutcomes/10_identifier_multimap
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/10_identifier_multimap.a
+=== RUN   TestStep16GenericOutcomes/11_indexed_result
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/11_indexed_result.a
+=== RUN   TestStep16GenericOutcomes/12_mixed_indexed_result
+=== NAME  TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep16GenericOutcomes/12_mixed_indexed_result
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/12_mixed_indexed_result.a
+=== RUN   TestStep16GenericOutcomes/13_constrained_local
+=== CONT  TestStep20IntrinsicIteratorWrites/Set.prototype
+=== NAME  TestStep16GenericOutcomes/13_constrained_local
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/13_constrained_local.a
+=== RUN   TestStep16GenericOutcomes/14_optional_literal_union
+=== NAME  TestStep20IntrinsicIteratorWrites/Set.prototype
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep16GenericOutcomes/14_optional_literal_union
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/14_optional_literal_union.a
+=== RUN   TestStep16GenericOutcomes/15_array_callback
+=== CONT  TestStep20IntrinsicIteratorWrites/Map.prototype
+=== NAME  TestStep16GenericOutcomes/15_array_callback
+    step16_generics_test.go:62: Load: load: no file at /stage3/fixtures/generics/15_array_callback.a
+--- FAIL: TestStep16GenericOutcomes (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/01_identity (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/02_optional_return (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/03_callback_return (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/04_function_value (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/05_nested_class (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/06_polymorphic_recursion (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/07_generic_cast (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/08_readonly_view (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/09_recursive_optional (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/10_identifier_multimap (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/11_indexed_result (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/12_mixed_indexed_result (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/13_constrained_local (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/14_optional_literal_union (0.00s)
+    --- FAIL: TestStep16GenericOutcomes/15_array_callback (0.00s)
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== NAME  TestStep20IntrinsicIteratorWrites/Map.prototype
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== NAME  TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep20IntrinsicIteratorWrites/new_Set<number>()
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== CONT  TestStep20IntrinsicIteratorWrites/String.prototype
+=== NAME  TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep20IntrinsicIteratorWrites/String.prototype
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== CONT  TestStep20IntrinsicIteratorWrites/new_String('x')
+=== CONT  TestStep20IntrinsicIteratorWrites/Array.prototype
+=== NAME  TestStep20IntrinsicIteratorWrites/new_String('x')
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+=== NAME  TestStep20IntrinsicIteratorWrites/Array.prototype
+    step20_intrinsic_test.go:22: open ../../oracle/node.mjs: no such file or directory
+--- FAIL: TestStep20IntrinsicIteratorWrites (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/[1] (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/Uint8Array.prototype (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/Set.prototype (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/Map.prototype (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/new_Set<number>() (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/new_Uint8Array(1) (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/new_Map<string,_number>() (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/String.prototype (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/new_String('x') (0.00s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/Array.prototype (0.00s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
