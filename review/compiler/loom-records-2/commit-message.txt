@@ -1,0 +1,11 @@
+Classify deliberate records refusals in the flow corpus
+
+Carry the records change onto current main and exclude only its eight pinned
+compile-time refusal witnesses, using main's existing refusal classification.
+Keep every flow check for the programs that lower.
+
+Assumption: stage3 records status pins are correct on this main tip because
+both the unchanged squash and uncached verification pass. Preserve their
+exact refusal checks; the historical Loom stage3 failure was unavailable (401).
+
+Records admission remains 24 newly admitted programs, all agreeing with Node.

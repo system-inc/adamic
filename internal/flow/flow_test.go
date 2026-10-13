@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedRecordFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -329,6 +329,19 @@ func refusedGettersCensusFixture(path string) bool {
 		"getters_census_snapshot_next.a", "getters_census_unary_function.a",
 		"getters_census_unary_node_function.a", "getters_census_update_comment_function.a",
 		"getters_census_update_node_function.a", "getters_census_update_type_function.a":
+		return true
+	}
+	return false
+}
+
+// These witnesses are pinned by TestRecordRefusal* in internal/oracle/records_refusal_test.go.
+// They deliberately stop before lowering, so there is no graph to check. Every other
+// records fixture stays in the corpus and receives all four flow checks.
+func refusedRecordFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "records_prototype_read.a", "records_prototype_in.a", "records_prototype_set.a",
+		"records_compare_properties_left.a", "records_compare_properties_right.a",
+		"records_environment_boundary.a", "records_named_invalidated.a", "records_narrowed_number.a":
 		return true
 	}
 	return false

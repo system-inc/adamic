@@ -1,0 +1,1670 @@
+[
+  {
+    "log": "final-stage3.log",
+    "test": "TestFixturesRecords",
+    "result": "PASS",
+    "seconds": 3.09
+  },
+  {
+    "log": "flow-refusal-mutant.log",
+    "test": "TestFlowCorpusRemainder",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalPrototypeIn",
+    "result": "PASS",
+    "seconds": 2.98
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalPrototypeSet",
+    "result": "PASS",
+    "seconds": 3.01
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalEnvironment",
+    "result": "PASS",
+    "seconds": 3.01
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordNarrowingMutant",
+    "result": "PASS",
+    "seconds": 3.2
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestNamedRecordTypeGuardMutant",
+    "result": "PASS",
+    "seconds": 3.44
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalCompareLeft",
+    "result": "PASS",
+    "seconds": 0.46
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalCompareRight",
+    "result": "PASS",
+    "seconds": 0.59
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalPrototypeRead",
+    "result": "PASS",
+    "seconds": 0.57
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordPrototypeMutant",
+    "result": "PASS",
+    "seconds": 0.58
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "result": "PASS",
+    "seconds": 0.4
+  },
+  {
+    "log": "refusal-removal-mutants.log",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "result": "PASS",
+    "seconds": 0.44
+  },
+  {
+    "log": "counts-table.log",
+    "test": "TestCountsAreRecordedTable",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_064",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_127",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_126",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_125",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_124",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_000",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_094",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_108",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_107",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_092",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_106",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_105",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_103",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_102",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_101",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_100",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_099",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_098",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_097",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_096",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_095",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_116",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_123",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_120",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_119",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_121",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_093",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_118",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_104",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_063",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_109",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_117",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_059",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_058",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_057",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_056",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_060",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_053",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_051",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_050",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_055",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_052",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_047",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_046",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_045",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_043",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_032",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_041",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_039",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_048",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_037",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_049",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_090",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_091",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_076",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_089",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_075",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_087",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_077",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_074",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_085",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_084",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_086",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_088",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_069",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_082",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_081",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_071",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_068",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_070",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_067",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_066",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_078",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_114",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_016",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_080",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_115",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_030",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_031",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_029",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_027",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_023",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_022",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_021",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_020",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_019",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_025",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_026",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_012",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_015",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_014",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_110",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_024",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_010",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_007",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_006",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_004",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_005",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_002",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_001",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_009",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_113",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_017",
+    "result": "PASS",
+    "seconds": 0.06
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_011",
+    "result": "PASS",
+    "seconds": 0.06
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_054",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_122",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_061",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_044",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_062",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_036",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_035",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_038",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_034",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_033",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_083",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_040",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_072",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_079",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_065",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_112",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_073",
+    "result": "PASS",
+    "seconds": 0.03
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_028",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_018",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_111",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_013",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_008",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_003",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-sharded.log",
+    "test": "TestNativeAgreesWithNode_042",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_024",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_031",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_000",
+    "result": "PASS",
+    "seconds": 0.03
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_014",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_028",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_011",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_025",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_023",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_020",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_017",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_007",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_005",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_021",
+    "result": "PASS",
+    "seconds": 0.03
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_004",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_016",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_008",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_013",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_015",
+    "result": "PASS",
+    "seconds": 0.03
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_029",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_030",
+    "result": "PASS",
+    "seconds": 0.03
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_009",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_026",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_027",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_002",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_001",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_018",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_012",
+    "result": "PASS",
+    "seconds": 0.04
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_019",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_003",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_022",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_006",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "own-counts.log",
+    "test": "TestCountsAreRecorded_010",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestNamedRecordReadTypes",
+    "result": "PASS",
+    "seconds": 0.2
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestNamedRecordRefusals",
+    "result": "PASS",
+    "seconds": 0.77
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordDivergenceSupportedNeighbors",
+    "result": "PASS",
+    "seconds": 0.77
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestDetachedOwnRefusals",
+    "result": "PASS",
+    "seconds": 0.95
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestPartialRecordStorageRefusals",
+    "result": "PASS",
+    "seconds": 0.27
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordForms",
+    "result": "PASS",
+    "seconds": 0.48
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordObservationMustNotEscapeGuard",
+    "result": "PASS",
+    "seconds": 0.48
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordDiscardedReadProof",
+    "result": "PASS",
+    "seconds": 0.41
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestDetachedOwnAreaAdapters",
+    "result": "PASS",
+    "seconds": 0.28
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordRefusals",
+    "result": "PASS",
+    "seconds": 1.34
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestEntriesRecordBoundaries",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestEntriesAllocationProof",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestDetachedOwnRepresentation",
+    "result": "PASS",
+    "seconds": 0.35
+  },
+  {
+    "log": "own-lower.log",
+    "test": "TestRecordPrototypeLiteralNames",
+    "result": "PASS",
+    "seconds": 1.84
+  },
+  {
+    "log": "repro-flow.log",
+    "test": "TestFlowCorpusRemainder",
+    "result": "FAIL",
+    "seconds": 5.22
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalPrototypeSet",
+    "result": "PASS",
+    "seconds": 0.22
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordCensusComparisonBuckets",
+    "result": "PASS",
+    "seconds": 0.47
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordHostEnvironmentObservation",
+    "result": "PASS",
+    "seconds": 23.76
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordNarrowingMutant",
+    "result": "PASS",
+    "seconds": 0.18
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordCoalesceMutant",
+    "result": "PASS",
+    "seconds": 0.75
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestPartialRecordAbsentEntryMutant",
+    "result": "PASS",
+    "seconds": 25.1
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestDetachedOwnInheritedMutant",
+    "result": "PASS",
+    "seconds": 25.26
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordPrototypeMutant",
+    "result": "PASS",
+    "seconds": 0.52
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestPartialRecordJavaScriptAgreesWithNode",
+    "result": "PASS",
+    "seconds": 26.55
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestNamedRecordTypeGuardMutant",
+    "result": "PASS",
+    "seconds": 0.31
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordOwnershipMutant",
+    "result": "PASS",
+    "seconds": 2.15
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalEnvironment",
+    "result": "PASS",
+    "seconds": 0.41
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestNamedRecordAbsentEntryMutant",
+    "result": "PASS",
+    "seconds": 2.04
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "result": "PASS",
+    "seconds": 0.26
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "result": "PASS",
+    "seconds": 0.46
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalPrototypeIn",
+    "result": "PASS",
+    "seconds": 0.33
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalPrototypeRead",
+    "result": "PASS",
+    "seconds": 0.2
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalCompareRight",
+    "result": "PASS",
+    "seconds": 0.26
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestNamedRecordAliasReadinessMutant",
+    "result": "PASS",
+    "seconds": 1.98
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestDetachedOwnReadinessMutant",
+    "result": "PASS",
+    "seconds": 0.97
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestNamedRecordJavaScriptAgreesWithNode",
+    "result": "PASS",
+    "seconds": 3.68
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordRefusalCompareLeft",
+    "result": "PASS",
+    "seconds": 0.42
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordJavaScriptAgreesWithNode",
+    "result": "PASS",
+    "seconds": 29.49
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordOperationMutants",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "own-oracle-checks.log",
+    "test": "TestRecordObservationGuardMutants",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "nullable-slot-mutant.log",
+    "test": "TestNamedRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.89
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit00",
+    "result": "PASS",
+    "seconds": 6.95
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit01",
+    "result": "PASS",
+    "seconds": 6.96
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordReadMutants",
+    "result": "PASS",
+    "seconds": 7.0
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit05",
+    "result": "PASS",
+    "seconds": 0.05
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit04",
+    "result": "PASS",
+    "seconds": 0.04
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit03",
+    "result": "PASS",
+    "seconds": 0.5
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordMutantsUnit02",
+    "result": "PASS",
+    "seconds": 0.13
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestJSONReplacerDuplicatesObjectMutant",
+    "result": "PASS",
+    "seconds": 9.01
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestJSONReplacerDuplicatesRecordMutant",
+    "result": "PASS",
+    "seconds": 15.99
+  },
+  {
+    "log": "own-native.log",
+    "test": "TestRecordsAgainstNode",
+    "result": "PASS",
+    "seconds": 20.38
+  },
+  {
+    "log": "readers.log",
+    "test": "TestCallTargetReaders",
+    "result": "PASS",
+    "seconds": 27.21
+  },
+  {
+    "log": "final-flow.log",
+    "test": "TestFlowCorpusRemainder",
+    "result": "PASS",
+    "seconds": 4.81
+  },
+  {
+    "log": "flow-refusal-mutant-corrected.log",
+    "test": "TestFlowCorpusRemainder",
+    "result": "FAIL",
+    "seconds": 14.23
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_016",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_012",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_031",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_015",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_030",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_014",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_010",
+    "result": "PASS",
+    "seconds": 0.01
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_008",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_004",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_011",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_007",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_006",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_009",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_005",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_000",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_013",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_003",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_022",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_002",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_027",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_026",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_001",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_025",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_024",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_028",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_023",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_021",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_019",
+    "result": "PASS",
+    "seconds": 0.0
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_020",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_017",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_018",
+    "result": "PASS",
+    "seconds": 0.02
+  },
+  {
+    "log": "counts-mutant.log",
+    "test": "TestCountsAreRecorded_029",
+    "result": "FAIL",
+    "seconds": 0.01
+  },
+  {
+    "log": "optional-indexing.log",
+    "test": "TestOptionalIndexingKeepsReadonlyIndexSignaturesNotYet",
+    "result": "PASS",
+    "seconds": 0.06
+  },
+  {
+    "log": "optional-indexing.log",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "result": "PASS",
+    "seconds": 0.17
+  },
+  {
+    "log": "stage3-classification-mutant.log",
+    "test": "TestFixturesRecords",
+    "result": "FAIL",
+    "seconds": 2.7
+  },
+  {
+    "log": "source-mutants/prototype-literal.log",
+    "test": "TestRecordPrototypeLiteralNames",
+    "result": "FAIL",
+    "seconds": 0.64
+  },
+  {
+    "log": "source-mutants/type-only-index-admission.log",
+    "test": "TestRecordForms",
+    "result": "FAIL",
+    "seconds": 0.2
+  },
+  {
+    "log": "source-mutants/shorthand-own-escape.log",
+    "test": "TestDetachedOwnRefusals",
+    "result": "FAIL",
+    "seconds": 0.29
+  },
+  {
+    "log": "source-mutants/nullable-record-container.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.44
+  },
+  {
+    "log": "source-mutants/spread-invariance.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.44
+  },
+  {
+    "log": "source-mutants/logical-record-conversion.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.44
+  },
+  {
+    "log": "source-mutants/mutable-invariance.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.45
+  },
+  {
+    "log": "source-mutants/readonly-index.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.45
+  },
+  {
+    "log": "source-mutants/numeric-index.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.45
+  },
+  {
+    "log": "source-mutants/record-cycles.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.45
+  },
+  {
+    "log": "source-mutants/storage-views.log",
+    "test": "TestRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.47
+  },
+  {
+    "log": "source-mutants/opaque-own-argument.log",
+    "test": "TestDetachedOwnRepresentation",
+    "result": "FAIL",
+    "seconds": 0.16
+  },
+  {
+    "log": "named-mutants/erase-named-contract.log",
+    "test": "TestNamedRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.21
+  },
+  {
+    "log": "named-mutants/index-read-type.log",
+    "test": "TestNamedRecordReadTypes",
+    "result": "FAIL",
+    "seconds": 0.09
+  },
+  {
+    "log": "named-mutants/unrestricted-write.log",
+    "test": "TestNamedRecordRefusals",
+    "result": "FAIL",
+    "seconds": 0.27
+  }
+]
