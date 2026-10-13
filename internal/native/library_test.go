@@ -157,8 +157,8 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 
 // Many callers begin on an empty cache together. A compiler wrapper records actual compilations,
 // so the test requires one build as well as an intact archive every caller can link.
+// Not parallel: publish the executable wrapper before other tests fork.
 func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
-	t.Parallel()
 	directory := t.TempDir()
 	compiler, err := toolchain.Path("clang")
 	if err != nil {

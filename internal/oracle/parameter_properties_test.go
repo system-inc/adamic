@@ -33,6 +33,7 @@ func init() {
 }
 
 func TestParameterPropertyMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"missing store", "late store"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()

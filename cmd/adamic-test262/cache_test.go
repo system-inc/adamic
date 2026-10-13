@@ -71,8 +71,8 @@ func TestCacheAtomicBytes(t *testing.T) {
 	}
 }
 
+// Not parallel: the bypass changes process environment.
 func TestCacheBypass(t *testing.T) {
-	// Not parallel: the bypass changes process environment.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	cache := &resultCache{directory: t.TempDir()}
 	cache.observe("same", func() (execution, bool) { return execution{Stdout: "cached"}, true })
@@ -96,8 +96,8 @@ func TestCacheBypass(t *testing.T) {
 	}
 }
 
+// Not parallel: compare both modes while changing the bypass environment.
 func TestParallelCachedMatchesSerial(t *testing.T) {
-	// Not parallel: compare both modes while changing the bypass environment.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
 	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
@@ -287,8 +287,8 @@ func TestCompilerCacheProgram(t *testing.T) {
 	}
 }
 
+// Not parallel: explicitly enable reuse even in the uncached integration gate.
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
-	// Not parallel: explicitly enable reuse even in the uncached integration gate.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
