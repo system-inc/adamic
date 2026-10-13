@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step09/adapted-casts/verify.py", line 18, in <module>
+    assert row['adaptation']==source[key(row)]['introduction']['adaptation'],'immediate source introduction owner'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: immediate source introduction owner
