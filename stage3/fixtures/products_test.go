@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -135,13 +136,33 @@ func hookPython(t testing.TB, directory string, environment []string, arguments 
 func fixtureOracleHook(t testing.TB, repository string) string {
 	t.Helper()
 	directory := buildcache.Product(t, fixtureHookInputs(t, repository), func(directory string) error {
-		result := hookPython(t, repository, nil, "stage3/fixtures/build-hook.py", "--prepare", "--store", directory)
+		// The helper's store names its manifest, build log and lock by an action key that hashes absolute paths (the
+		// checkout, each package's directory, GOTOOLDIR), so they differ by box: it builds into a store of its own here,
+		// and only the executable stays (#dhm3wav: Workshop and Adam held the same 47 MB executable under 892955... and
+		// a9aa6f... named files).
+		store := filepath.Join(directory, "store")
+		result := hookPython(t, repository, nil, "stage3/fixtures/build-hook.py", "--prepare", "--store", store)
 		if result.Exit != 0 {
 			return fmt.Errorf("oracle preparation: %s%s", result.Stdout, result.Stderr)
 		}
 		// Save the content-addressed executable name. The helper's action
 		// manifest includes GOCACHE paths and must not be consulted on fetch.
 		name := filepath.Base(strings.TrimSpace(result.Stdout))
+		if err := os.Rename(filepath.Join(store, name), filepath.Join(directory, name)); err != nil {
+			return err
+		}
+		entries, err := os.ReadDir(store)
+		if err != nil {
+			return err
+		}
+		for _, entry := range entries {
+			if err := os.Remove(filepath.Join(store, entry.Name())); err != nil {
+				return err
+			}
+		}
+		if err := os.Remove(store); err != nil {
+			return err
+		}
 		return os.WriteFile(filepath.Join(directory, "product-name"), []byte(name), 0644)
 	})
 	name, err := os.ReadFile(filepath.Join(directory, "product-name"))
@@ -168,7 +189,20 @@ func TestProduct_FixtureOracleHook(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fixtureOracleHook(t, repository)
+	binary := fixtureOracleHook(t, repository)
+	// The product holds the executable and its name, nothing named by the helper's placeful action key. Mutant: prepare
+	// into the product directory itself (<key>.json, <key>.build.log, <key>.lock beside the executable).
+	entries, err := os.ReadDir(filepath.Dir(binary))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names []string
+	for _, entry := range entries {
+		names = append(names, entry.Name())
+	}
+	if want := []string{filepath.Base(binary), "product-name"}; !slices.Equal(names, want) {
+		t.Fatalf("oracle hook product holds %q, want only %q", names, want)
+	}
 }
 
 func TestFixtureOracleProductTracksInputs(t *testing.T) {

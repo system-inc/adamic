@@ -169,6 +169,9 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	return buildcache.Inputs{Name: "lint-profile-lowered", Files: paths, Flags: []string{"source-root=" + packageDirectory}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 }
 
+// profiledCompilationDirectory is where the profiled build's debug info says it was compiled, whatever the box.
+const profiledCompilationDirectory = "/adamic-lint-profile"
+
 func compilationProducts(t *testing.T) string {
 	return compilationProductKinds(t, []string{"scanner", "counted", "profiled"})
 }
@@ -195,7 +198,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 		variant.Flags = append(variant.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if kind == "profiled" {
-			variant.Flags = append(variant.Flags, "-g", "-lm")
+			variant.Flags = append(variant.Flags, "-g", "-ffile-compilation-dir="+profiledCompilationDirectory, "-lm")
 		}
 		group.Add(1)
 		go func() {
@@ -229,8 +232,10 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 					}
 				}
 				// Debug info names where it was compiled: the build's own directory, random per build, maps to one name, so
-				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path).
-				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"=/adamic-lint-profile", "-o", filepath.Join(dir, kind))
+				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path). clang
+				// runs in this package's directory, which each unit's comp_dir named, so a builder's checkout path reached the
+				// bytes until the compilation directory was named too (#dhm3wav: Workshop's profiled 8 bytes off Adam's).
+				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := toolchain.Command("clang", flags...)
