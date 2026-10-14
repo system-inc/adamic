@@ -78,7 +78,7 @@ class ApplyCheckoutTests(unittest.TestCase):
                 shutil.copytree(ROOT / 'stage3/applyproducts', source / 'stage3/applyproducts', dirs_exist_ok=True)
                 shutil.copyfile(ROOT / 'stage3/caches.py', source / 'stage3/caches.py')
                 subprocess.run(['git', '-C', str(source), 'add', 'stage3/applyproducts', 'stage3/caches.py'], check=True)
-                subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test', '-c', 'user.email=apply-test@example.invalid', 'commit', '-m', 'Seed product helpers'], check=True)
+                subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test', '-c', 'user.email=apply-test@example.invalid', 'commit', '--allow-empty', '-m', 'Seed product helpers'], check=True)
                 before = table.read_bytes()
                 self.assertEqual(subprocess.check_output(['git', '-C', str(source), 'status', '--porcelain']), b'')
                 command = ['bash', str(source / 'stage3/apply.sh'), str(output)]
