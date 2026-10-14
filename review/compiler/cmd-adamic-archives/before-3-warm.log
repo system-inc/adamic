@@ -1,0 +1,13 @@
+=== RUN   TestExplainChecksOutput
+=== PAUSE TestExplainChecksOutput
+=== CONT  TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/overload_erased
+=== PAUSE TestExplainChecksOutput/overload_erased
+=== CONT  TestExplainChecksOutput/overload_erased
+=== RUN   TestExplainChecksOutput/overload_erased/build
+=== PAUSE TestExplainChecksOutput/overload_erased/build
+=== CONT  TestExplainChecksOutput/overload_erased/build
+--- PASS: TestExplainChecksOutput (0.00s)
+    --- PASS: TestExplainChecksOutput/overload_erased (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_erased/build (1.15s)
+PASS
