@@ -1,0 +1,9 @@
+function trimmed<T extends string | undefined>(value: T): string {
+ return String.prototype.trim.call(value);
+}
+console.log(trimmed<string>(' a '));
+try {
+ console.log(trimmed<string | undefined>(undefined));
+} catch (error) {
+ console.log('caught');
+}

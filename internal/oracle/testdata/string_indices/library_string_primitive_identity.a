@@ -1,0 +1,7 @@
+console.log(String());
+console.log(String(null));
+console.log(String(undefined));
+console.log(String(true));
+console.log(String(42));
+console.log(String(-0));
+console.log(`${typeof String('abc')} ${String('abc')}`);

@@ -1,0 +1,35 @@
+// tsc core.ts:2438 removePrefix, reduced without its helper dependency.
+function removePrefix(str: string, prefix: string): string {
+    return str.startsWith(prefix) ? str.substr(prefix.length) : str;
+}
+console.log(removePrefix('prefix-name', 'prefix-'));
+console.log(removePrefix('other', 'prefix-'));
+// V8 clamps relative starts and lengths in UTF-16 units.
+const text = `a${String.fromCharCode(0xd83c, 0xdf0d, 0xd800)}bc`;
+for(const start of [-Infinity, -20, -2.9, -1, -0, 0, 1, 2, 3, 7, 20, Infinity, NaN]) {
+    console.log(`${start}:${text.substr(start)}`);
+    for(const count of [-Infinity, -2, -0, 0, 1.9, 2, 20, Infinity, NaN]) {
+        console.log(`${start},${count}:${text.substr(start, count)}`);
+    }
+}
+function optionalCount(count: number | undefined): string {
+    return text.substr(1, count);
+}
+console.log(optionalCount(undefined));
+console.log(optionalCount(2));
+console.log(text.substr(0, undefined));
+console.log(''.substr(-1, 2));
+let order = '';
+function receiver(): string {
+    order += 'r';
+    return text;
+}
+function startOperand(): number {
+    order += 's';
+    return -3;
+}
+function countOperand(): number {
+    order += 'c';
+    return 2;
+}
+console.log(`${receiver().substr(startOperand(), countOperand())}:${order}`);

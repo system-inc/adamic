@@ -35,6 +35,8 @@ for package in ['flow', 'fresh']:
         # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
         if package == 'fresh' and pattern.endswith('non_null*.ts'):
             continue
+        if pattern == patterns[0]:
+            manifest.extend(__import__("string_indices").generate(root, package, families))
         for path in sorted(glob.glob(str(root / pattern))):
             source = Path(path)
             if package == 'flow' and (source.name in excluded or refused(source.name)):

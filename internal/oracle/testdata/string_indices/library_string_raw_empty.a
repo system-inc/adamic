@@ -1,0 +1,10 @@
+// Primitive arguments are evaluated even when a proven raw literal is empty.
+let order = '';
+function argument(): string { order = order + 'a'; return 'unused'; }
+console.log(String.raw({raw: []}, argument()));
+console.log(String.raw({raw: {length: 0}}, argument()));
+console.log(String.raw({raw: {length: NaN}}, argument()));
+console.log(String.raw({raw: {length: -Infinity}}, argument()));
+console.log(String.raw({raw: {length: 0.32}}, argument()));
+console.log(order);
+console.log(String.raw({raw: ['a', 'b', 'c']}, 42, true, 'ignored'));
