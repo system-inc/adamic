@@ -92,6 +92,8 @@
 `json_stringify.c:blanks:1`
 `json_stringify.c:empty:1`
 `library_language.c:identities:1`
+# Immortal RangeError text; any literal indexing follows string_index.c shared-literal caching.
+`library_number_format.c:name:1`
 `map.c:key_cache:1`
 `map.c:value_cache:1`
 `map_set.c:collection_next:1`
@@ -150,6 +152,8 @@
 `runtime-file:library_array.c`
 `runtime-file:library_language.c`
 `runtime-file:library_math_number.c`
+`runtime-file:library_number_format.c`
+`runtime-file:library_number_format.h`
 `runtime-file:library_object.c`
 `runtime-file:map.c`
 `runtime-file:map_set.c`

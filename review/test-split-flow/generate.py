@@ -30,6 +30,7 @@ def refused(name):
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
 for package in ['flow', 'fresh']:
+    manifest.extend(__import__('number_math').generate(root, package, families))
     paths = []
     for pattern in patterns:
         # flow's programs() globs the non-null .ts controls too; fresh's doesn't.

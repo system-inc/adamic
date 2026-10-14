@@ -1,0 +1,2 @@
+function separately(value: number): number { return value * 10 - 1; }
+console.log(`${separately(0.1)}`);

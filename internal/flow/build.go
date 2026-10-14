@@ -469,6 +469,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			throws = throws || ir.NumberFormatMayThrow(value.Interface())
 			if literal, ok := value.Interface().(ir.ObjectLiteral); ok && program.ObjectSpreadMayThrow(literal) {
 				throws = true
 			}

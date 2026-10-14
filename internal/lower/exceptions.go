@@ -177,6 +177,7 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		found = found || ir.NumberFormatMayThrow(node)
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
@@ -265,14 +266,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "repeat"
 			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
 				failing = "normalize"
-			}
-		case ir.ToFixed:
-			if !constantWithin(node.Digits, 0, 100) {
-				failing = "toFixed"
-			}
-		case ir.NumberFormat:
-			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
-				failing = node.Method
 			}
 		case ir.TypedArrayNew:
 			if !node.FromArray && !constantWithin(node.Source, 0, 9007199254740991) {

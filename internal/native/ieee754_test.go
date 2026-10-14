@@ -2,10 +2,12 @@ package native
 
 import (
 	"fmt"
+	"maps"
 	"math"
 	"math/rand/v2"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -112,8 +114,11 @@ func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
 			words[uint32(word)] = true
 		}
 	}
+	// In order, so the seeded random low words go to the same high words every run: a map's order
+	// would make the sweep, and every mismatch it finds, change from run to run.
+	ordered := slices.Sorted(maps.Keys(words))
 	values := []float64{}
-	for word := range words {
+	for _, word := range ordered {
 		// The comparisons are against a high word, mostly with the sign masked off, so it means the
 		// same as a magnitude; a few (log1p's 0xBFD2BEC4) keep the sign in it.
 		for _, high := range []uint32{word - 1, word, word + 1} {
@@ -236,27 +241,28 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	if len(native) != lines || len(oracle) != lines {
 		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
-	mismatches := map[string]int{}
-	total := 0
-	for index := range asked {
-		if native[index] == oracle[index] {
-			continue
+	same := func(left, right string) bool {
+		if left == right {
+			return true
 		}
 		// A program can't see a NaN's payload (0.1 has no typed arrays), so every NaN is the same NaN.
-		nativeBits, _ := strconv.ParseUint(native[index], 16, 64)
-		oracleBits, _ := strconv.ParseUint(oracle[index], 16, 64)
-		if math.IsNaN(math.Float64frombits(nativeBits)) && math.IsNaN(math.Float64frombits(oracleBits)) {
-			continue
-		}
+		leftBits, _ := strconv.ParseUint(left, 16, 64)
+		rightBits, _ := strconv.ParseUint(right, 16, 64)
+		return math.IsNaN(math.Float64frombits(leftBits)) && math.IsNaN(math.Float64frombits(rightBits))
+	}
+	// Where this Node's V8 contracts multiply-adds, a difference a fused build explains is forgiven
+	// (fused_test.go); every other one fails.
+	explained, unexplained := contraction(native, oracle, same, func() []string { return fusedAnswers(t, ieee754Harness, input.String(), lines) })
+	mismatches := map[string]int{}
+	for count, index := range unexplained {
 		operation, _, _ := strings.Cut(asked[index], " ")
 		mismatches[operation]++
-		total++
-		if total <= 20 {
+		if count < 20 {
 			t.Errorf("%s: native %s, Node %s", asked[index], native[index], oracle[index])
 		}
 	}
-	if total > 0 {
-		t.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
+	if len(unexplained) > 0 {
+		t.Errorf("%d of %d answers differ, by function: %v", len(unexplained), lines, mismatches)
 	}
-	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches", lines, len(values), len(ieee754Unary), total)
+	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d more that only contraction in this Node explains", lines, len(values), len(ieee754Unary), len(unexplained), explained)
 }

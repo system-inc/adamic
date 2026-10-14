@@ -36,8 +36,12 @@
 
 // fdlibm's error bounds assume every operation is rounded on its own. A compiler allowed to fuse a
 // multiply and an add into one FMA (clang does by default on arm64, where FMA is always there) gives
-// different bits, so contraction is off for this file, as V8 builds itself with -ffp-contract=off.
+// different bits, so contraction is off for this file. Not every V8 is built that way: Node's on
+// macOS arm64 takes clang's default, -ffp-contract=on, and this file compiled the same way (only
+// ADAMIC_FUSED_RUNTIME, a test build, lifts the pragma) gives that Node's answers bit for bit.
+#ifndef ADAMIC_FUSED_RUNTIME
 #pragma STDC FP_CONTRACT OFF
+#endif
 
 static inline uint64_t adamic_ieee754_bits(double value) {
 	uint64_t bits;
