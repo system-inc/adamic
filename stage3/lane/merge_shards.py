@@ -1,20 +1,42 @@
 #!/usr/bin/env python3
 """Prove the executed union and apply the original verdict to the same-tree whole run."""
 import argparse
+from collections import Counter
 import json
 import os
 from pathlib import Path
 import sys
 from check import check_results
-from shard_plan import LANE, load_plan, names_digest
+from shard_plan import LANE, load_plan, names_digest, title
 sys.path.append(str(LANE.parent))
 from caches import cache_root
+
+
+def outcome_difference(observed, expected):
+    def counts(rows):
+        return Counter((row['task']['runner'], row['task']['file'], title(row['name']), row['status'])
+                       for row in rows)
+    actual, wanted = counts(observed), counts(expected)
+    def listing(counter):
+        return [dict(runner=runner, file=file, name=name, status=status, count=count)
+                for (runner, file, name, status), count in sorted(counter.items())]
+    return listing(wanted - actual), listing(actual - wanted)
 
 
 def merge(results, whole, plan=None):
     plan = plan or load_plan()
     errors, records, reports = [], [], []
+    execution = json.loads((whole / 'execution.json').read_text())
+    profile = [json.loads(line) for line in (whole / 'whole-tasks.jsonl').read_text().splitlines()]
+    whole_records = [dict(record, task=row['task'], status=status) for row in profile
+                     for status, key in [('pass', 'passes'), ('fail', 'errors')] for record in row[key]]
     for unit in plan['units']:
+        if not (results / unit['name'] / 'report.json').is_file():
+            tasks = {(row['runner'], row['file']) for row in unit['tasks']}
+            missing = [title(row['name']) for row in whole_records
+                       if (row['task']['runner'], row['task']['file']) in tasks]
+            errors.append('missing shard ' + unit['name'] + '; missing tests: ' + json.dumps(missing))
+            continue
         report = json.loads((results / unit['name'] / 'report.json').read_text())
         reports.append(report)
         if report['name'] != unit['name'] or report['inputs_hash'] != unit['inputs_hash'] or report['artifact'] != plan['artifact']:
@@ -30,14 +52,13 @@ def merge(results, whole, plan=None):
         if counted != report['counts']:
             errors.append('unit evidence counts mismatch: ' + unit['name'])
         records.extend(observed)
-    execution = json.loads((whole / 'execution.json').read_text())
     if execution.get('artifact') != plan['artifact']:
         errors.append('unsharded lane did not run on the same hashed artifact')
-    profile = [json.loads(line) for line in (whole / 'whole-tasks.jsonl').read_text().splitlines()]
-    whole_records = [dict(record, task=row['task'], status=status) for row in profile
-                     for status, key in [('pass', 'passes'), ('fail', 'errors')] for record in row[key]]
     if names_digest(records) != names_digest(whole_records):
         errors.append('executed test union differs from the unsharded lane')
+    missing, extra = outcome_difference(records, whole_records)
+    if missing or extra:
+        errors.append('executed identity/outcome union differs from whole run')
     # Identity counts retain multiplicity, so duplicate titles cannot hide missing tests.
     counts = {status: sum(row['counts'][status] for row in reports) for status in ('pass', 'fail', 'skip')}
     oracle = json.loads((whole / 'oracle/report.json').read_text())
@@ -59,7 +80,7 @@ def merge(results, whole, plan=None):
     return dict(status='fail' if errors else 'pass', errors=errors, counts=counts,
                 whole_counts=whole_counts, units=len(reports), tests=len(records),
                 artifact=plan['artifact'], failed_tests=failures, baseline_diffs=paths,
-                whole_verdict=whole_verdict['status'])
+                whole_verdict=whole_verdict['status'], missing_tests=missing, extra_tests=extra)
 
 
 if __name__ == '__main__':

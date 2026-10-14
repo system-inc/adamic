@@ -1,0 +1,274 @@
+{
+  "old_commands": {
+    "apply": [
+      "ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean",
+      "ProductTests.test_build_with_pinned_packages_never_runs_npm",
+      "ProductTests.test_build_without_api_packages_installs_nothing",
+      "ProductTests.test_corrupt_product_never_builds",
+      "ProductTests.test_existing_output_is_refused",
+      "ProductTests.test_fetch_exposes_prepared_parser",
+      "ProductTests.test_input_key_covers_all_inputs",
+      "ProductTests.test_manifest_key_ignores_checkout_permissions",
+      "ProductTests.test_manifest_mutant_is_rejected",
+      "ProductTests.test_missing_product_builds_and_reports",
+      "ProductTests.test_new_adaptation_directory_changes_hash",
+      "ProductTests.test_only_manifest_absence_is_a_cache_miss",
+      "ProductTests.test_packages_come_installed_from_the_lockfile",
+      "ProductTests.test_packages_digest_pins_every_byte",
+      "ProductTests.test_payload_manifest_mutant_is_rejected",
+      "ProductTests.test_payload_mutant_is_rejected",
+      "ProductTests.test_publish_hook_describes_local_payloads",
+      "ProductTests.test_restore_fetches_verified_product",
+      "ProductTests.test_shards_partition_every_case",
+      "ProductTests.test_symlinked_directory_digests_as_its_link",
+      "ProductTests.test_typescript_source_is_the_pinned_gate_input",
+      "ProductTests.test_unconfigured_cold_cache_builds_without_remote_read",
+      "ProductTests.test_unkeyed_parser_override_is_refused",
+      "ProductTests.test_write_table_is_explicit",
+      "ProofShardTests.test_every_indexed_read_file_has_one_shard"
+    ],
+    "lane": [
+      "test_check.LandingLaneTests.test_changed_sanctioned_type",
+      "test_check.LandingLaneTests.test_diff_must_describe_snapshots",
+      "test_check.LandingLaneTests.test_diff_previews_are_first_40_lines_per_file",
+      "test_check.LandingLaneTests.test_different_single_failure",
+      "test_check.LandingLaneTests.test_error_text_drop_mutant_is_caught",
+      "test_check.LandingLaneTests.test_extra_comment_line",
+      "test_check.LandingLaneTests.test_failed_apply",
+      "test_check.LandingLaneTests.test_failed_build",
+      "test_check.LandingLaneTests.test_failed_install",
+      "test_check.LandingLaneTests.test_failure_cause_precedence_and_multiple_files",
+      "test_check.LandingLaneTests.test_failure_details_survive_missing_api_snapshot",
+      "test_check.LandingLaneTests.test_failure_text_and_diff_are_published",
+      "test_check.LandingLaneTests.test_filtered_run",
+      "test_check.LandingLaneTests.test_manifest_includes_only_proved_property_handoffs",
+      "test_check.LandingLaneTests.test_measured_macos_counts",
+      "test_check.LandingLaneTests.test_metadata_error_does_not_change_acceptance",
+      "test_check.LandingLaneTests.test_method_conversion_is_not_a_property_union",
+      "test_check.LandingLaneTests.test_missing_evidence",
+      "test_check.LandingLaneTests.test_missing_sanctioned_line",
+      "test_check.LandingLaneTests.test_multiline_printer_form",
+      "test_check.LandingLaneTests.test_node_version_matches_report",
+      "test_check.LandingLaneTests.test_observer_preserves_arguments_and_return_values",
+      "test_check.LandingLaneTests.test_original_mocha_event_retains_elapsed_and_stack",
+      "test_check.LandingLaneTests.test_pending_test",
+      "test_check.LandingLaneTests.test_proved_reference_changes_are_included",
+      "test_check.LandingLaneTests.test_reporter_counts_must_agree",
+      "test_check.LandingLaneTests.test_sanctioned_observation_passes",
+      "test_check.LandingLaneTests.test_source_pin",
+      "test_check.LandingLaneTests.test_unexpected_tests_exit",
+      "test_check.LandingLaneTests.test_unknown_platform",
+      "test_check.LandingLaneTests.test_unknown_platform_stops_runner_before_apply",
+      "test_check.LandingLaneTests.test_unproved_reference_change",
+      "test_check.LandingLaneTests.test_unsanctioned_line",
+      "test_check.LandingLaneTests.test_wrong_baseline_path",
+      "test_check.LandingLaneTests.test_wrong_oracle_exit",
+      "test_check.LandingLaneTests.test_wrong_passed_count",
+      "test_check.LandingLaneTests.test_zero_failure_is_not_the_expected_failure",
+      "test_table.LaneTableTests.test_no_arguments_creates_fresh_results",
+      "test_table.LaneTableTests.test_shell_entry_point_with_no_arguments",
+      "test_table.LaneTableTests.test_table_is_preserved_beside_report"
+    ]
+  },
+  "units": [
+    {
+      "cases": [
+        "ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean",
+        "ProductTests.test_restore_fetches_verified_product"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard00",
+      "selector": "0"
+    },
+    {
+      "cases": [
+        "ProductTests.test_build_with_pinned_packages_never_runs_npm",
+        "ProductTests.test_shards_partition_every_case"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard01",
+      "selector": "1"
+    },
+    {
+      "cases": [
+        "ProductTests.test_build_without_api_packages_installs_nothing",
+        "ProductTests.test_symlinked_directory_digests_as_its_link"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard02",
+      "selector": "2"
+    },
+    {
+      "cases": [
+        "ProductTests.test_corrupt_product_never_builds",
+        "ProductTests.test_typescript_source_is_the_pinned_gate_input"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard03",
+      "selector": "3"
+    },
+    {
+      "cases": [
+        "ProductTests.test_existing_output_is_refused",
+        "ProductTests.test_unconfigured_cold_cache_builds_without_remote_read"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard04",
+      "selector": "4"
+    },
+    {
+      "cases": [
+        "ProductTests.test_fetch_exposes_prepared_parser",
+        "ProductTests.test_unkeyed_parser_override_is_refused"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard05",
+      "selector": "5"
+    },
+    {
+      "cases": [
+        "ProductTests.test_input_key_covers_all_inputs",
+        "ProductTests.test_write_table_is_explicit"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard06",
+      "selector": "6"
+    },
+    {
+      "cases": [
+        "ProductTests.test_manifest_key_ignores_checkout_permissions",
+        "ProofShardTests.test_every_indexed_read_file_has_one_shard"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard07",
+      "selector": "7"
+    },
+    {
+      "cases": [
+        "ProductTests.test_manifest_mutant_is_rejected"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard08",
+      "selector": "8"
+    },
+    {
+      "cases": [
+        "ProductTests.test_missing_product_builds_and_reports"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard09",
+      "selector": "9"
+    },
+    {
+      "cases": [
+        "ProductTests.test_new_adaptation_directory_changes_hash"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard10",
+      "selector": "10"
+    },
+    {
+      "cases": [
+        "ProductTests.test_only_manifest_absence_is_a_cache_miss"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard11",
+      "selector": "11"
+    },
+    {
+      "cases": [
+        "ProductTests.test_packages_come_installed_from_the_lockfile"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard12",
+      "selector": "12"
+    },
+    {
+      "cases": [
+        "ProductTests.test_packages_digest_pins_every_byte"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard13",
+      "selector": "13"
+    },
+    {
+      "cases": [
+        "ProductTests.test_payload_manifest_mutant_is_rejected"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard14",
+      "selector": "14"
+    },
+    {
+      "cases": [
+        "ProductTests.test_payload_mutant_is_rejected"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard15",
+      "selector": "15"
+    },
+    {
+      "cases": [
+        "ProductTests.test_publish_hook_describes_local_payloads"
+      ],
+      "family": "apply",
+      "name": "TestStage3ApplyShard16",
+      "selector": "16"
+    },
+    {
+      "cases": [
+        "test_check.LandingLaneTests.test_changed_sanctioned_type",
+        "test_check.LandingLaneTests.test_diff_must_describe_snapshots",
+        "test_check.LandingLaneTests.test_diff_previews_are_first_40_lines_per_file",
+        "test_check.LandingLaneTests.test_different_single_failure",
+        "test_check.LandingLaneTests.test_error_text_drop_mutant_is_caught",
+        "test_check.LandingLaneTests.test_extra_comment_line",
+        "test_check.LandingLaneTests.test_failed_apply",
+        "test_check.LandingLaneTests.test_failed_build",
+        "test_check.LandingLaneTests.test_failed_install",
+        "test_check.LandingLaneTests.test_failure_cause_precedence_and_multiple_files",
+        "test_check.LandingLaneTests.test_failure_details_survive_missing_api_snapshot",
+        "test_check.LandingLaneTests.test_failure_text_and_diff_are_published",
+        "test_check.LandingLaneTests.test_filtered_run",
+        "test_check.LandingLaneTests.test_manifest_includes_only_proved_property_handoffs",
+        "test_check.LandingLaneTests.test_measured_macos_counts",
+        "test_check.LandingLaneTests.test_metadata_error_does_not_change_acceptance",
+        "test_check.LandingLaneTests.test_method_conversion_is_not_a_property_union",
+        "test_check.LandingLaneTests.test_missing_evidence",
+        "test_check.LandingLaneTests.test_missing_sanctioned_line",
+        "test_check.LandingLaneTests.test_multiline_printer_form",
+        "test_check.LandingLaneTests.test_node_version_matches_report",
+        "test_check.LandingLaneTests.test_observer_preserves_arguments_and_return_values",
+        "test_check.LandingLaneTests.test_original_mocha_event_retains_elapsed_and_stack",
+        "test_check.LandingLaneTests.test_pending_test",
+        "test_check.LandingLaneTests.test_proved_reference_changes_are_included",
+        "test_check.LandingLaneTests.test_reporter_counts_must_agree",
+        "test_check.LandingLaneTests.test_sanctioned_observation_passes",
+        "test_check.LandingLaneTests.test_source_pin",
+        "test_check.LandingLaneTests.test_unexpected_tests_exit",
+        "test_check.LandingLaneTests.test_unknown_platform",
+        "test_check.LandingLaneTests.test_unknown_platform_stops_runner_before_apply",
+        "test_check.LandingLaneTests.test_unproved_reference_change",
+        "test_check.LandingLaneTests.test_unsanctioned_line",
+        "test_check.LandingLaneTests.test_wrong_baseline_path",
+        "test_check.LandingLaneTests.test_wrong_oracle_exit",
+        "test_check.LandingLaneTests.test_wrong_passed_count",
+        "test_check.LandingLaneTests.test_zero_failure_is_not_the_expected_failure"
+      ],
+      "family": "lane",
+      "name": "TestStage3LaneLandingLaneTests",
+      "selector": "test_check.LandingLaneTests"
+    },
+    {
+      "cases": [
+        "test_table.LaneTableTests.test_no_arguments_creates_fresh_results",
+        "test_table.LaneTableTests.test_shell_entry_point_with_no_arguments",
+        "test_table.LaneTableTests.test_table_is_preserved_beside_report"
+      ],
+      "family": "lane",
+      "name": "TestStage3LaneLaneTableTests",
+      "selector": "test_table.LaneTableTests"
+    }
+  ],
+  "version": 1
+}
