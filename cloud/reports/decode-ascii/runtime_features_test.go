@@ -14,8 +14,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: main reads process-wide os.Args.
 func TestRuntimeFeaturesMatchNode(t *testing.T) {
-	// Not parallel: main reads process-wide os.Args.
 	fixture := "../../../internal/oracle/testdata/closure_convention_nested.a"
 	program, err := load.Load([]string{fixture})
 	if err != nil {
