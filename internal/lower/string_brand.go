@@ -1,0 +1,149 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// stringBrandRepresentation proves one string pointer ABI, including the missing pointer.
+// A void intersection conservatively uses the missing pointer, never an object layout.
+// The existing phantom proof excludes real fields, primitive names, indices and callables.
+func (l *lowering) stringBrandRepresentation(proven *checker.Type) (bool, bool) {
+	proven = l.concrete(proven)
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	stringMember, missing := false, false
+	for _, member := range members {
+		switch {
+		case member.Flags()&checker.TypeFlagsStringLike != 0:
+			stringMember = true
+		case member.Flags()&checker.TypeFlagsUndefined != 0:
+			missing = true
+		default:
+			base := l.phantomBase(member)
+			if base == nil {
+				return false, false
+			}
+			if base.Flags()&checker.TypeFlagsStringLike != 0 {
+				stringMember = true
+			} else if base.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+				missing = true
+			} else {
+				return false, false
+			}
+		}
+	}
+	return stringMember, missing
+}
+
+// Refuse observable brand layouts before ordinary primitive lowering can erase them.
+func (l *lowering) stringBrandRefusal(node *ast.Node) error {
+	var proven *checker.Type
+	var readName string
+	var key *checker.Type
+	switch node.Kind {
+	case ast.KindParameter:
+		if node.Parent == nil || !ast.IsFunctionLike(node.Parent) || node.Parent.Body() == nil {
+			return nil
+		}
+		proven = l.checker.GetTypeAtLocation(node.Name())
+	case ast.KindBindingElement:
+		if node.Parent == nil || node.Parent.Kind != ast.KindObjectBindingPattern {
+			return nil
+		}
+		proven = l.checker.GetTypeAtLocation(node.Parent)
+		name := node.AsBindingElement().PropertyName
+		if name == nil {
+			name = node.Name()
+		}
+		if name.Kind == ast.KindComputedPropertyName {
+			key = l.checker.GetTypeAtLocation(name.AsComputedPropertyName().Expression)
+		} else {
+			readName = name.Text()
+		}
+	case ast.KindPropertyAccessExpression:
+		proven = l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
+		readName = node.Name().Text()
+	case ast.KindElementAccessExpression:
+		access := node.AsElementAccessExpression()
+		proven = l.checker.GetTypeAtLocation(access.Expression)
+		key = l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	default:
+		if ast.IsFunctionLike(node) && node.Body() != nil {
+			proven = l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(node))
+			break
+		}
+		if !l.isExpression(node) || ast.IsDeclarationName(node) {
+			return nil
+		}
+		proven = l.checker.GetTypeAtLocation(node)
+	}
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		primitive, objects := l.phantomParts(member)
+		if primitive == nil || primitive.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) == 0 {
+			continue
+		}
+		for _, object := range objects {
+			for _, field := range l.checker.GetPropertiesOfType(object) {
+				real := !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) || primitiveMember(primitive.Flags(), field.Name)
+				observed := readName == field.Name
+				if key != nil {
+					keys := []*checker.Type{key}
+					if key.Flags()&checker.TypeFlagsUnion != 0 {
+						keys = key.Types()
+					}
+					for _, candidate := range keys {
+						if candidate.Flags()&checker.TypeFlagsStringLiteral != 0 {
+							name, _ := candidate.AsLiteralType().Value().(string)
+							observed = observed || name == field.Name
+						} else if candidate.Flags()&checker.TypeFlagsString != 0 {
+							observed = true
+						}
+					}
+				}
+				if real || observed {
+					reason := "a string brand member " + field.Name + " read at runtime"
+					if real {
+						reason = "a string brand member " + field.Name + " with a runtime layout"
+					}
+					return &Refused{Where: l.program.Where(node), What: reason, Fix: "keep the brand phantom and unread, or use an explicit object with a string field"}
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// Erasing phantom fields is a representation proof, not permission to refine literals.
+// Unknown, object values and standalone void brands cannot enter through this cast.
+func (l *lowering) stringBrandCast(source, target *checker.Type) bool {
+	from, _ := l.stringBrandRepresentation(source)
+	to, _ := l.stringBrandRepresentation(target)
+	if !from || !to {
+		return false
+	}
+	branded := false
+	normalize := func(proven *checker.Type) *checker.Type {
+		members := castMembers(proven)
+		strings := []*checker.Type{}
+		for _, member := range members {
+			if base := l.phantomBase(member); base != nil {
+				branded = true
+				member = base
+			}
+			if member.Flags()&checker.TypeFlagsStringLike != 0 {
+				strings = append(strings, member)
+			}
+		}
+		return l.checker.GetUnionType(strings)
+	}
+	fromType, toType := normalize(source), normalize(target)
+	// Removing missing from a source is checked by cast; literals must already fit.
+	return branded && l.checker.IsTypeAssignableTo(fromType, toType)
+}
