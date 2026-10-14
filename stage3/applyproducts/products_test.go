@@ -13,9 +13,11 @@ import (
 )
 
 func TestProduct_Stage3Adapted10(t *testing.T) { t.Parallel(); Product(t, 0) }
-func TestProduct_Stage3Adapted40(t *testing.T) { t.Parallel(); Product(t, 1) }
-func TestProduct_Stage3Adapted70(t *testing.T) { t.Parallel(); Product(t, 2) }
-func TestProduct_Stage3Adapted99(t *testing.T) { t.Parallel(); Product(t, 3) }
+func TestProduct_Stage3Adapted20(t *testing.T) { t.Parallel(); Product(t, 1) }
+func TestProduct_Stage3Adapted40(t *testing.T) { t.Parallel(); Product(t, 2) }
+func TestProduct_Stage3Adapted65(t *testing.T) { t.Parallel(); Product(t, 3) }
+func TestProduct_Stage3Adapted70(t *testing.T) { t.Parallel(); Product(t, 4) }
+func TestProduct_Stage3Adapted99(t *testing.T) { t.Parallel(); Product(t, 5) }
 
 func tracksInputs(t *testing.T, index int) {
 	t.Helper()
@@ -101,9 +103,11 @@ func tracksPath(t *testing.T, index int, changed string) {
 	}
 }
 func TestStage3Adapted10TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 0) }
-func TestStage3Adapted40TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 1) }
-func TestStage3Adapted70TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 2) }
-func TestStage3Adapted99TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 3) }
+func TestStage3Adapted20TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 1) }
+func TestStage3Adapted40TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 2) }
+func TestStage3Adapted65TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 3) }
+func TestStage3Adapted70TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 4) }
+func TestStage3Adapted99TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 5) }
 
 func TestProductDeadlineKillsDescendants(t *testing.T) {
 	t.Parallel()
@@ -111,6 +115,7 @@ func TestProductDeadlineKillsDescendants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Inject a short deadline through the same context accepted by the production worker.
 	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
 	defer cancel()
 	script := "import subprocess,time; child=subprocess.Popen(['node','-e','setInterval(()=>{},1000)']); print(child.pid,flush=True); time.sleep(30)"
@@ -135,5 +140,5 @@ func TestProductDeadlineKillsDescendants(t *testing.T) {
 
 func TestStage3Adapted99TracksMetadata(t *testing.T) {
 	t.Parallel()
-	tracksPath(t, 3, "stage3/adapt/checker-options-evidence.json")
+	tracksPath(t, len(boundaries)-1, "stage3/adapt/checker-options-evidence.json")
 }

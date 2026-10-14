@@ -8,13 +8,15 @@ the narrower boundary lists describe each product precisely.
 
 | Path or glob | Reader | Observation and buildcache reconciliation |
 |---|---|---|
-| `stage3/source.json` | All four products, all four TracksInputs tests; Fetch/Get | Successful open in cold product trace; explicit Inputs.Files. TracksInputs changes this pin in a private copy. |
+| `stage3/source.json` | All six products, all six TracksInputs tests; Fetch/Get | Successful open in cold product trace; explicit Inputs.Files. TracksInputs changes this pin in a private copy. |
 | `stage3/apply.py`, `stage3/caches.py` | All products and TracksInputs tests | Successful Python source opens; explicit Inputs.Files. |
 | `stage3/api/package.json`, `stage3/api/package-lock.json`, `stage3/api/node_modules.sha256` | All products and TracksInputs tests | Lock and pin opened in trace; package.json is conservatively declared even where not opened. Explicit Inputs.Files. |
 | `stage3/api/node_modules/**` | All product workers, directly or through Node's parser resolution | Every file is read by packages_digest; observed opens include hidden lock, TypeScript JS/declarations, @types/node and undici-types. Physical install omitted from Inputs.Files intentionally: installed_packages checks the lock inventory and versions; pinned_packages checks every byte, executable bit, directory name and symlink against the declared api/node_modules.sha256. Loom supplies this NodeProject from its lockfile. |
 | `stage3/adapt/00-setup/**`, `stage3/adapt/10-*/**` | Product 10 and its TracksInputs test | Directory opens and adapt.cjs execution observed. Inputs.Files declares the complete directories, including proofs and non-code files. |
-| `stage3/adapt/[0-3][0-9]-*/**`, `stage3/adapt/40-*/**` | Product 40 and its TracksInputs test | Cumulative directory selection in inputs(); predecessor 10 fetched; worker also validates the parser. Source audit supplements product-10 trace. |
-| `stage3/adapt/[0-6][0-9]-*/**`, `stage3/adapt/70-*/**` | Product 70 and its TracksInputs test | Cumulative Inputs.Files; predecessor 40 fetched. Source audit supplements trace. |
+| `stage3/adapt/[01][0-9]-*/**`, `stage3/adapt/20-*/**` | Product 20 and its TracksInputs test | Cumulative Inputs.Files; predecessor 10 fetched. Worker applies adaptation 20 alone. |
+| `stage3/adapt/[0-3][0-9]-*/**`, `stage3/adapt/40-*/**` | Product 40 and its TracksInputs test | Cumulative directory selection in inputs(); predecessor 20 fetched; worker also validates the parser. Source audit supplements product-10 trace. |
+| `stage3/adapt/[0-5][0-9]-*/**`, `stage3/adapt/6[0-5]-*/**` | Product 65 and its TracksInputs test | Cumulative Inputs.Files; predecessor 40 fetched. Worker applies adaptations 41 through 65. |
+| `stage3/adapt/[0-6][0-9]-*/**`, `stage3/adapt/70-*/**` | Product 70 and its TracksInputs test | Cumulative Inputs.Files; predecessor 65 fetched; worker applies adaptation 70 alone. Source audit supplements trace. |
 | `stage3/adapt/**` | Product 99 and its TracksInputs test; Fetch/Get | Cumulative Inputs.Files, including top-level adapt files. Final save_product/product_key reads the complete adaptation tree except __pycache__. Source audit supplements trace. |
 | `go.mod` | All product/key operations | Successful root-discovery open. Go module metadata belongs to Loom's Go closure; not an additional product semantic input. Missing stage3/go.mod and stage3/applyproducts/go.mod probes also observed. |
 
@@ -32,7 +34,7 @@ The corresponding complete syscall trace and the parser are archived beside it.
 The trace command, exit, timing and the untraced cold measurements are recorded
 in PLANNER_FIXES_REPORT.md. It runs the compiled Go test binary so compiler reads
 are not confused with product-time reads. This is an empirical lower bound;
-source audit of all four recipes and all tests supplies conditional paths above.
+source audit of all six recipes and all tests supplies conditional paths above.
 
 Git's index acceleration also opens `.git/**`, `.gitmodules`, `cohere/.git`,
 `cohere/.gitmodules` and `cohere/TypeScript/.git`, including submodule object
@@ -78,3 +80,8 @@ outside these products' declared inputs, so it does not affect product bytes
 or require another Inputs.Files entry. Planner may conservatively declare the
 tracked root attribute file for both packages. This differs from mutable .git
 index/log files: it is a stable repository path, recorded explicitly here.
+
+The six boundaries are 10, 20, 40, 65, 70 and 99. The package read union
+is unchanged; new products 20 and 65 use the cumulative subsets above. The
+10-minute step deadline adds no reads. The short deadline test still injects
+its context independently and uses the same process-group cancellation.

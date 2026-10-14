@@ -8,7 +8,7 @@ root = Path(__file__).resolve().parents[2]
 recipe = root / 'stage3/applyproducts/products.go'
 original = recipe.read_text()
 try:
-    for index, boundary in enumerate(('10', '40', '70', '99')):
+    for index, boundary in enumerate(('10', '20', '40', '65', '70', '99')):
         # This is a recipe mutant, not a test-side simulation of a bad key.
         recipe.write_text(original.replace('entries, err := os.ReadDir',
             f'if index == {index} {{ files = files[1:] }}\n\tentries, err := os.ReadDir', 1))

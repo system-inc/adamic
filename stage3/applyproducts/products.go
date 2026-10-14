@@ -1,4 +1,4 @@
-// Package applyproducts owns the four successive adapted TypeScript build products.
+// Package applyproducts owns the six successive adapted TypeScript build products.
 package applyproducts
 
 import (
@@ -16,7 +16,11 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-var boundaries = []string{"10", "40", "70", "99"}
+// Tracing makes a healthy step exceed 80 seconds. Loom already bounds hangs
+// with go test -timeout 14m and the tracer's own 15-minute limit.
+const stepDeadline = 10 * time.Minute
+
+var boundaries = []string{"10", "20", "40", "65", "70", "99"}
 
 type lookup func(buildcache.Inputs, func(string) error) string
 
@@ -44,7 +48,7 @@ func inputs(repository string, index int) (buildcache.Inputs, error) {
 		return buildcache.Inputs{}, err
 	}
 	for _, entry := range entries {
-		if index == 3 || entry.IsDir() && entry.Name()[:2] <= boundaries[index] {
+		if index == len(boundaries)-1 || entry.IsDir() && entry.Name()[:2] <= boundaries[index] {
 			files = append(files, "stage3/adapt/"+entry.Name())
 		}
 	}
@@ -70,7 +74,7 @@ func resolve(repository string, index int, get lookup) (string, error) {
 		return "", err
 	}
 	return get(key, func(directory string) error {
-		ctx, cancel := context.WithTimeout(context.Background(), 80*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), stepDeadline)
 		defer cancel()
 		command := workerCommand(ctx, repository, "stage3/apply.py", "--step-worker", directory, boundaries[index], previous)
 		// All packages and the pinned source are supplied by the gate; no network work runs here.
@@ -122,7 +126,7 @@ func Fetch(t testing.TB) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	key, err := inputs(repository, 3)
+	key, err := inputs(repository, len(boundaries)-1)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -138,7 +142,7 @@ func Get() (string, error) {
 		return "", err
 	}
 	var failure error
-	directory, err := resolve(repository, 3, func(inputs buildcache.Inputs, build func(string) error) string {
+	directory, err := resolve(repository, len(boundaries)-1, func(inputs buildcache.Inputs, build func(string) error) string {
 		if failure != nil {
 			return ""
 		}
