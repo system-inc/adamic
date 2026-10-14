@@ -65,6 +65,15 @@ func keying(compute func()) {
 // keyingNow is how many traced keyings this process is running: a test asks it whether a look ran as keying.
 var keyingNow atomic.Int64
 
+// The make files run what they look up about this machine as keying, and journal a product they read as found, through
+// these hooks (make_relative.go).
+func init() {
+	asKeying = keying
+	foundProduct = func(nameKey, directory string) {
+		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: directory})
+	}
+}
+
 var builds atomic.Int64
 
 // traced runs a product's build between build-begin and build-end markers naming it, and returns the build's id.
