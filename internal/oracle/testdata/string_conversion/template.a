@@ -1,0 +1,8 @@
+let order = '';
+function first(): number[] { order = order + 'a'; return [1, 2]; }
+function later(): number { order = order + 'b'; return 42; }
+console.log(`before ${first()} after ${later()}`);
+console.log(order);
+console.log(`${[1, 2]} ${[[1, 2], [3]]}`);
+console.log(`${new Map<string, number>()} ${new Set<number>()}`);
+console.log(String.raw`raw ${[1, 2]}`);

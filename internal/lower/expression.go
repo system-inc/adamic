@@ -952,6 +952,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			value = ir.NumberToString{Value: value}
 		case ir.Boolean:
 			value = ir.BooleanToString{Value: value}
+		case ir.Array, ir.Map:
+			value, err = l.stringReferenceValue(span.AsTemplateSpan().Expression, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
 		case ir.Union:
