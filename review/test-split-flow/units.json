@@ -4922,6 +4922,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -11574,6 +11582,14 @@
     "program": "internal/oracle/testdata/regexp_native_class_octal.a",
     "path": "../oracle/testdata/regexp_native_class_octal.a",
     "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
   },
   {
     "package": "flow",
@@ -18234,6 +18250,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -24886,6 +24910,14 @@
     "program": "internal/oracle/testdata/regexp_native_class_octal.a",
     "path": "../oracle/testdata/regexp_native_class_octal.a",
     "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
   },
   {
     "package": "flow",
@@ -31702,6 +31734,14 @@
     "program": "internal/oracle/testdata/regexp_native_class_octal.a",
     "path": "../oracle/testdata/regexp_native_class_octal.a",
     "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
   },
   {
     "package": "fresh",
