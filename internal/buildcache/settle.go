@@ -30,9 +30,9 @@ import (
 // hands its build), and the reads of builds running beside it in the same process, a superset Kirk accepted. Each
 // read is classed, and a build is refused, named, when one can't be keyed: an untracked file, .git, content in the
 // home directory, a write in the tree, a path outside every known place, a lost trace. A refused build is never
-// placed, recorded or published: it is Loom's to fix, never the author's red. The rest are keyed by their read sets
-// and the recipe (the test binary's linked packages), placed under their keys, recorded beside them as read sets,
-// and published when the shared store is on.
+// placed or recorded: it is Loom's to fix, never the author's red. The rest are keyed by their read sets and the recipe
+// (the test binary's linked packages), placed under their keys, and recorded beside them as read sets, which Loom ships
+// with the cache.
 //
 // A read set is valued when the build settles, not when it read, so the tree must be the tree it read: before is
 // TreeState when the run began, and a run whose tree state differs at its end (a commit, a checkout, an edit, a
@@ -1169,21 +1169,8 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if set.Drift != nil {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
-		// Only Workshop's tree builder publishes: the product, then its read set, so a set never names a product the
-		// store doesn't hold.
-		report := Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries)}
-		if publishing() {
-			if err = publish(evaluated.key, entry.Name, product); err == nil {
-				err = publishReads(facts.cache, entry.NameKey)
-			}
-			if err != nil {
-				// Still settled: placed under its key here, and only the store lacks it.
-				report.Reason = "publish failed: " + err.Error()
-				line += "; " + report.Reason
-			}
-		}
 		settlement.Settled = append(settlement.Settled, line)
-		settlement.Reports = append(settlement.Reports, report)
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries)})
 	}
 	for id, entry := range built {
 		if !settled[id] {
@@ -1353,9 +1340,9 @@ const TestReadSetName = "test read set"
 // test built has no build, so no product's set holds the reads that decided the names it asked for; this set does: what
 // the command and every process it started read, keying aside and not what the run wrote before reading it (snapshot),
 // classed and keyed as a product's set is, with the recipe of the processes that journaled. Recorded by recordUnion
-// beside a marker product under its key, so cmd/find finds it exactly when every value the run read is what it was,
-// and never published. Only a run that can stand for the test's next run is recorded: nothing lost, the command
-// exited 0, and every process that journaled ran one recipe; any other records nothing, and its test runs.
+// beside a marker product under its key, so cmd/find finds it exactly when every value the run read is what it was. Only
+// a run that can stand for the test's next run is recorded: nothing lost, the command exited 0, and every process that
+// journaled ran one recipe; any other records nothing, and its test runs.
 func (state *traceState) recordTestReads(settlement *Settlement, nameKey string, processes map[int]journalEntry, recipes map[string]recipe, products map[string]string, productEnds map[string]int) {
 	settlement.TestReads = state.testReads(settlement, nameKey, processes, recipes, products, productEnds)
 }
@@ -1413,9 +1400,9 @@ func (state *traceState) testReads(settlement *Settlement, nameKey string, proce
 }
 
 // placeTestMarker is a test read set's marker product under key: a directory naming the set it stands for, so a lookup
-// finds the set when its key names something in the cache, as a product's is found. Nothing reads it, and nothing
-// publishes it (Find's refresh passes over TestReadSetName). Its file goes by a temporary file and a rename, as a read
-// sets file does: a seeded cache links a seed's files, and a write in place would write the seed's (Mentat's re-review).
+// finds the set when its key names something in the cache, as a product's is found. Nothing reads it. Its file goes by a
+// temporary file and a rename, as a read sets file does: a seeded cache links a seed's files, and a write in place would
+// write the seed's (Mentat's re-review).
 func placeTestMarker(cache, key, nameKey string) string {
 	marker := filepath.Join(cache, key)
 	if err := os.MkdirAll(marker, 0o755); err != nil {

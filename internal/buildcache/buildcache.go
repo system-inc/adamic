@@ -4,10 +4,10 @@
 //
 // A product's address is its name key (its name, flags and tool reports) and the read set its last traced build
 // measured, valued on the tree at hand (reads.go, #vt46geg): a change misses only the products that read it. A product
-// is found by the cache's read sets, then the store's. Only Workshop's tree builder (ADAMIC_BUILD_STORE=traced, under
-// cmd/traced) builds traced, and only a settled traced build is placed under its key or published (settle.go). Every
-// other miss builds as before, for this machine alone: keyed by the declared Files, never published, never found by a
-// read set, and never failing for want of a trace.
+// is found by the cache's read sets, which a runner's cache holds as Loom's tree index unpacked them. Only Workshop's
+// tree builder (ADAMIC_BUILD_STORE=traced, under cmd/traced) builds traced, and only a settled traced build is placed
+// under its key (settle.go). Every other miss builds as before, for this machine alone: keyed by the declared Files,
+// never found by a read set, and never failing for want of a trace.
 //
 // A product on disk is always complete: it is filled in a private directory and placed whole by rename, so a failed
 // build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh directory: the uncached proof mode,
@@ -68,7 +68,7 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 }
 
 // ErrUntraced is a product Workshop's tree builder (ADAMIC_BUILD_STORE=traced) would build outside cmd/traced: what it
-// publishes must be keyed by what its build read, so building untraced there is refused rather than published.
+// builds is for every runner, so it must be keyed by what its build read, and building untraced there is refused.
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
@@ -105,32 +105,20 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	var described, name string
+	var described string
 	var looked found
 	keying(func() {
-		described, name = describe(root, inputs), portable(root, inputs.Name)
+		described = describe(root, inputs)
 		looked, err = productFor(root, cache, nameKey, 0, nil)
 	})
 	if err != nil {
 		return "", "", err
 	}
-	// The store's read sets for this name key join the cache's, so a machine with none of its own finds what the store
-	// holds (#vt46geg). Find (find.go) joins them the same way, for many name keys at once.
-	if looked.directory == "" && storeAddress() != "" {
-		joined, err := joinStoreReads(cache, nameKey, name)
-		if err != nil {
-			return "", "", err
-		}
-		if joined {
-			keying(func() { looked, err = productFor(root, cache, nameKey, 0, nil) })
-			if err != nil {
-				return "", "", err
-			}
-		}
-	}
+	// Only the cache's own read sets give a product's keys: the store holds products by key, never read sets, so a name
+	// key the cache holds no read set for has nothing to fetch (Oct 14: asking the store for read sets was 96.7% of its
+	// billed reads, every one a 404).
 	if looked.directory != "" {
 		journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: looked.directory})
-		refreshPublished(cache, nameKey, looked.key, looked.directory, name)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
@@ -156,7 +144,6 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 				return "", "", err
 			}
 			journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: product})
-			refreshPublished(cache, nameKey, key, product, name)
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
@@ -182,11 +169,11 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
 		}
 		return holding(nameKey, product), record(inputs.Name, nameKey, outcome, started), nil
-	case publishing():
+	case treeBuilder():
 		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w, so a build's reads become its key", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
 	}
 	// Untraced, as every machine but Workshop's tree builder builds: for this machine alone, keyed by the declared
-	// Files, never published and never found by a read set.
+	// Files and never found by a read set.
 	var key string
 	keying(func() { key, err = Key(root, inputs) })
 	if err != nil {

@@ -271,7 +271,7 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 			case way == "cold" && len(outcome) == 5 && outcome[3] == "hit":
 				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q: the key ignores %s, so the product from before the change was a hit", step.input, got, step.output, step.input)
 			case way == "cold":
-				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q, though its key moved (%v): go build itself built a stale product, and it was published under an honest key", step.input, got, step.output, outcome)
+				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q, though its key moved (%v): go build itself built a stale product, and it was placed under an honest key", step.input, got, step.output, outcome)
 			default:
 				t.Fatalf("after changing %s, the warm product printed %q, a fresh build %q (%v): the key ignores %s, or the store served another product", step.input, got, step.output, outcome, step.input)
 			}

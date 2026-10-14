@@ -243,9 +243,9 @@ func readFiles(directory string, data bool, each func(file string, content []byt
 }
 
 // RelativeFiles rewrites every text file under directory through Relative, for a build that writes files naming this
-// tree for its own steps (a mutant port whose imports reach back into the repository, which the build then lowers)
-// and ends by making them a product's: the last step of its build, before Product scans and publishes it. A reader
-// that hands those files to a tool reads them through Resolved.
+// tree for its own steps (a mutant port whose imports reach back into the repository, which the build then lowers) and
+// ends by making them a product's: the last step of its build, before Product scans it. A reader that hands those files
+// to a tool reads them through Resolved.
 func RelativeFiles(directory string) error {
 	return textFiles(directory, func(file string, content []byte, mode fs.FileMode) error {
 		if relative := Relative(string(content)); relative != string(content) {
@@ -261,10 +261,10 @@ var resolvedDirectories, resolvedCopies sync.Map
 
 // Resolved is a product's directory as this machine reads it, for a reader that hands its files to a tool that can't
 // read Relative's names itself (node running a mutant port, the loader lowering it): a copy beside the product whose
-// text files are read back through Absolute, made once per machine and roots, or the product itself when no file holds
-// a name. The copy is never a product and never published; the product itself stays as it was built, and a key that
-// names a file in the copy names it in the product, <build cache>/<name key>/... (places). A directory that
-// isn't a product (a package's own, which a caller may pass alike) is read as it is, and nothing is written beside it.
+// text files are read back through Absolute, made once per machine and roots, or the product itself when no file holds a
+// name. The copy is never a product; the product itself stays as it was built, and a key that names a file in the copy
+// names it in the product, <build cache>/<name key>/... (places). A directory that isn't a product (a package's own,
+// which a caller may pass alike) is read as it is, and nothing is written beside it.
 func Resolved(directory string) (string, error) {
 	if found, ok := resolvedDirectories.Load(directory); ok {
 		return found.(string), nil
