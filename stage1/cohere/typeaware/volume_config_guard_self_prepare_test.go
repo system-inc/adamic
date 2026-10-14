@@ -112,7 +112,7 @@ func volumeGuardArchive(h *volumeGuardHarness, name, overlay string, sanitize bo
 	}
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
 		builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
-		args := []string{"build", "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a")}
+		args := append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a"))
 		if overlay != "" {
 			args = append(args, "-overlay", overlay)
 		}
@@ -127,7 +127,7 @@ func volumeGuardArchive(h *volumeGuardHarness, name, overlay string, sanitize bo
 	return filepath.Join(directory, "checker.a")
 }
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize)}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
+	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
 }
 func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)
@@ -366,7 +366,7 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 	switch name {
 	case "stage0":
 		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
-			cmd, cancel := volumeGuardCommand(h.ctx, "go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
+			cmd, cancel := volumeGuardCommand(h.ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")...)
 			defer cancel()
 			cmd.Dir = h.repository
 			cmd.Env = append(cmd.Env, "PWD="+h.repository)
@@ -388,7 +388,7 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 			overlay := builder.write("volume-oracle-overlay.json", string(data))
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlay)
-			cmd := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
+			cmd := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)...)
 			volumeGuardMust(builder, "volume-oracle-build", cmd)
 			return nil
 		})
