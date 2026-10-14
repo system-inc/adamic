@@ -34,17 +34,27 @@ const testShardsAgreeShards = 32
 // testShardsAgreeHeavy are the rows too heavy for a hash bucket, by the key testShardsAgreeOwner hashes (the base
 // name, and the options when the row has any), each with the name its tests carry. checker.ts is one row that takes
 // about 24 s per output pass and 6 s per count pass alone on one core, so the bucket it hashed to ran about 118 s of
-// it (#wyt8ntk); here it has a test per process count and mode instead. A future heavy row joins by name.
+// it (#wyt8ntk); here it has a test per mode instead. A future heavy row joins by name.
 var testShardsAgreeHeavy = []struct{ Key, Name string }{
 	{"checker.ts", "Checker"},
 }
 
-// testShardsAgreePasses are the process counts every row is compared at, by the label a heavy row's tests carry. Zero
-// is the unit's CPUs, never the host's cores: on a runner's 64-core box this ran 64 shard processes in an 8-CPU share.
+// testShardsAgreePasses are the process counts every bucket's rows are compared at. Zero is the unit's CPUs, never the
+// host's cores: on a runner's 64-core box this ran 64 shard processes in an 8-CPU share.
 var testShardsAgreePasses = []struct {
 	Label string
 	Count int
 }{{"1", 1}, {"2", 2}, {"N", 0}}
+
+// testShardsAgreeHeavyPasses are the process counts a heavy row is compared at, by the label its tests carry: one. A
+// heavy entry is one row (testShardsAgreePartition refuses another size), and shards.Run deals rows round-robin, so at
+// 2 and at the unit's CPUs that row runs on shard 0 exactly as at 1 and every other shard runs none: checker.ts printed
+// the same 10,244,022 bytes at 1, 2 and 8 (lint#20/20, Oct 14), and those four passes were 64 to 87 s of the unit's
+// 309 to 412 (#xj8b4ge). What they added, an empty shard that prints nothing, is TestShardsAgreeEmptyShards'.
+var testShardsAgreeHeavyPasses = []struct {
+	Label string
+	Count int
+}{{"1", 1}}
 
 func testShardsAgreeCount(count int) int {
 	if count == 0 {
@@ -117,7 +127,7 @@ func testShardsAgreeHeavyPass(t *testing.T, name, label string, countOnly bool) 
 		}
 	}
 	count := -1
-	for _, pass := range testShardsAgreePasses {
+	for _, pass := range testShardsAgreeHeavyPasses {
 		if pass.Label == label {
 			count = pass.Count
 		}
@@ -355,8 +365,8 @@ func testShardsAgreePartition(t *testing.T, rows []string) (buckets, heavy [][]s
 				visits[i]++
 			}
 		}
-		if len(heavy[index]) == 0 {
-			t.Fatalf("heavy row %q names no row of the corpus", entry.Key)
+		if len(heavy[index]) != 1 {
+			t.Fatalf("heavy row %q names %d rows of the corpus, want one: a heavy entry is compared at one process", entry.Key, len(heavy[index]))
 		}
 	}
 	for shard := range buckets {
@@ -646,7 +656,7 @@ func TestShardsAgree_030(t *testing.T) { t.Parallel(); testShardsAgree(t, 30) }
 
 func TestShardsAgree_031(t *testing.T) { t.Parallel(); testShardsAgree(t, 31) }
 
-// Each heavy row has a test per process count and mode, named for it; TestShardsAgree_Union reads these lines.
+// Each heavy row has a test per heavy pass and mode, named for it; TestShardsAgree_Union reads these lines.
 
 func TestShardsAgreeChecker_1_Output(t *testing.T) {
 	t.Parallel()
@@ -658,24 +668,46 @@ func TestShardsAgreeChecker_1_Count(t *testing.T) {
 	testShardsAgreeHeavyPass(t, "Checker", "1", true)
 }
 
-func TestShardsAgreeChecker_2_Output(t *testing.T) {
+// An empty shard prints nothing, and its count is zero: one bucket row in a manifest of its own, run at one process and
+// at the unit's CPUs (at least two), so every shard but 0 has no row, gives the same output and count. A planted empty
+// shard that prints a byte (the real binary behind a wrapper that writes one first for any shard but 0) fails both.
+func TestShardsAgreeEmptyShards(t *testing.T) {
 	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "2", false)
-}
-
-func TestShardsAgreeChecker_2_Count(t *testing.T) {
-	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "2", true)
-}
-
-func TestShardsAgreeChecker_N_Output(t *testing.T) {
-	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "N", false)
-}
-
-func TestShardsAgreeChecker_N_Count(t *testing.T) {
-	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "N", true)
+	products := testShardsAgreeReady(t)
+	row := ""
+	for _, bucket := range products.Buckets {
+		if len(bucket) > 0 {
+			row = bucket[0]
+			break
+		}
+	}
+	if row == "" {
+		t.Fatal("no bucket holds a row")
+	}
+	path := manifest(t, []string{row})
+	count := max(2, testShardsAgreeCount(0))
+	planted := filepath.Join(t.TempDir(), "planted")
+	script := fmt.Sprintf("#!/bin/sh\ncase \"$*\" in *\"--shard 0/\"*) ;; *) printf x ;; esac\nexec '%s' \"$@\"\n", products.Binary)
+	if err := os.WriteFile(planted, []byte(script), 0755); err != nil {
+		t.Fatal(err)
+	}
+	for _, countOnly := range []bool{false, true} {
+		one, err := shards.Run(products.Binary, path, 1, countOnly)
+		if err != nil {
+			t.Fatal(err)
+		}
+		many, err := shards.Run(products.Binary, path, count, countOnly)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(one, many) {
+			t.Fatalf("count only %t: %d shards over one row printed %q, one shard %q", countOnly, count, many, one)
+		}
+		if _, err := shards.Run(planted, path, count, countOnly); err == nil {
+			t.Fatalf("count only %t: an empty shard that prints a byte passed", countOnly)
+		}
+	}
+	t.Logf("one row at 1 and %d shards: the same output and count; a planted empty shard's byte fails both", count)
 }
 
 // Product recipes run without a test-side deadline. The build phase owns their ceiling.
