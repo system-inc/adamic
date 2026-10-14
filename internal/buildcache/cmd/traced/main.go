@@ -24,7 +24,8 @@
 //
 // With ADAMIC_TRACE_REPORT naming a file, it also writes there one JSON line per product (buildcache.Report: name,
 // nameKey, key and reads when settled, reason when refused), for Loom's tree builder. A run that can't be keyed at all
-// writes one line more, outcome lost, first; one that can't trace or settle (exit 2) writes only that line. The file is
+// writes one line more, outcome lost, first; one that can't trace or settle (exit 2) writes only that line; one strace
+// failed under before the command exited (exit 2) writes it first, then whatever settled before. The file is
 // emptied before the command runs, so a report left by an earlier run never reads as this one's.
 package main
 
@@ -176,6 +177,11 @@ func run(command []string, report string) (int, error) {
 			status, len(complaints.lines), result.settlement.CommandStatus)
 		status = result.settlement.CommandStatus
 	}
+	lost := tracerLost(result.settlement.CommandExited, status, complaints)
+	if lost != "" {
+		fmt.Fprintln(os.Stderr, "traced:", lost)
+		result.settlement.Reports = append([]buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + lost}}, result.settlement.Reports...)
+	}
 	if report != "" {
 		if err = buildcache.WriteReport(report, result.settlement.Reports); err != nil {
 			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
@@ -189,6 +195,9 @@ func run(command []string, report string) (int, error) {
 	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(text), 0o644)
 	fmt.Print(text)
 	fmt.Printf("traced: %d settled, %d refused; journal and report in %s\n", len(result.settlement.Settled), len(result.settlement.Refused), directory)
+	if lost != "" {
+		return 2, nil
+	}
 	if status == 0 && len(result.settlement.Refused) > 0 {
 		status = 3
 	}
@@ -227,6 +236,19 @@ func treeStateBefore(take func() (string, error)) (string, error) {
 		return "", fmt.Errorf("ADAMIC_TRACE_TREE_STATE: %s holds no state", path)
 	}
 	return string(state), nil
+}
+
+// tracerLost is why a run was lost to strace itself, or "": strace complained and failed before the trace held the
+// command's exit, so the trace is cut short and the command died with it or ran on untraced (Workshop, Oct 14, #j4hwdks:
+// strace 6.8's PTRACE_LISTEN failing on WSL2 mid-fill, the fill reading 0 settled, 0 refused, its product never recorded
+// and a read-mode unit failing on it). It's the tracer's failure, never the command's: the report's first line says the
+// run was lost and traced exits 2, as for a run it couldn't trace, so the caller traces it again. What settled before
+// strace failed stands, each product's build traced whole.
+func tracerLost(commandExited bool, status int, complaints *straceComplaints) string {
+	if commandExited || status == 0 || len(complaints.lines) == 0 {
+		return ""
+	}
+	return fmt.Sprintf("strace exited %d before the command did, after %s, so the trace is cut short", status, strings.Join(complaints.lines, "; "))
 }
 
 // straceComplaints keeps strace's own lines from the stderr it shares with the command: each one it prints as
