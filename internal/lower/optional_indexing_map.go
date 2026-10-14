@@ -37,6 +37,9 @@ func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 	if !keyKnown || !keyable(keyType) || !valueKnown || (slotless(valueType) && !(valueType == ir.Union && l.writable(types[1]))) {
 		return nil, true, l.notYet(node, "an optional Map get with unsupported key or value storage")
 	}
+	if err := l.libraryCollectionKeySlots(access.Expression, keyType); err != nil {
+		return nil, true, err
+	}
 	base, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, true, err

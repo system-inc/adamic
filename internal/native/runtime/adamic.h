@@ -531,7 +531,7 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
-// adamic_map is a Map with string or number keys (map.c).
+// adamic_map stores up to four ordered entries inline, then uses a hash table (map.c).
 typedef struct adamic_map_entry {
 	adamic_value key;
 	adamic_value value;
@@ -543,6 +543,8 @@ typedef struct adamic_map {
 	size_t count;
 	size_t used;
 	size_t capacity;
+	// Historical slots stay inline until promotion; live iterators keep their positions.
+	adamic_map_entry small[4];
 	adamic_map_entry *entries;
 	size_t bucket_count;
 	size_t *buckets;
@@ -583,6 +585,11 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).
 adamic_map *adamic_map_new_identity(bool reference_values);
+
+// Closing the last iteration permits safe compaction back to inline storage.
+void adamic_map_iterator_close(adamic_map_iterator *iterator);
+// Repair inline storage after copying the map bytes into a new location.
+void adamic_map_relocated(const adamic_map *from, adamic_map *to);
 
 // adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
 adamic_map *adamic_map_new_booleans(bool reference_values);
