@@ -50,7 +50,8 @@ var testShardsAgreePasses = []struct {
 // heavy entry is one row (testShardsAgreePartition refuses another size), and shards.Run deals rows round-robin, so at
 // 2 and at the unit's CPUs that row runs on shard 0 exactly as at 1 and every other shard runs none: checker.ts printed
 // the same 10,244,022 bytes at 1, 2 and 8 (lint#20/20, Oct 14), and those four passes were 64 to 87 s of the unit's
-// 309 to 412 (#xj8b4ge). What they added, an empty shard that prints nothing, is TestShardsAgreeEmptyShards'.
+// 309 to 412 (#xj8b4ge). What they added, an empty shard that prints nothing, TestShardsRunEmptyShardsPrintNothing
+// checks. Its name stays outside TestShardsAgree<Name>_, which TestShardsAgree_Union reads as a heavy row's wrapper.
 var testShardsAgreeHeavyPasses = []struct {
 	Label string
 	Count int
@@ -671,7 +672,7 @@ func TestShardsAgreeChecker_1_Count(t *testing.T) {
 // An empty shard prints nothing, and its count is zero: one bucket row in a manifest of its own, run at one process and
 // at the unit's CPUs (at least two), so every shard but 0 has no row, gives the same output and count. A planted empty
 // shard that prints a byte (the real binary behind a wrapper that writes one first for any shard but 0) fails both.
-func TestShardsAgreeEmptyShards(t *testing.T) {
+func TestShardsRunEmptyShardsPrintNothing(t *testing.T) {
 	t.Parallel()
 	products := testShardsAgreeReady(t)
 	row := ""
