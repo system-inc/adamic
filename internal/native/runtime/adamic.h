@@ -3,6 +3,14 @@
 #ifndef ADAMIC_H
 #define ADAMIC_H
 
+#if defined(__SANITIZE_ADDRESS__)
+#define ADAMIC_ADDRESS_SANITIZER 1
+#elif defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define ADAMIC_ADDRESS_SANITIZER 1
+#endif
+#endif
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -72,7 +80,12 @@ void adamic_release_slow(void *value);
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates.
-static inline void *adamic_retain(void *value) {
+#ifdef ADAMIC_ADDRESS_SANITIZER
+__attribute__((noinline, unused)) static
+#else
+static inline
+#endif
+void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
@@ -82,7 +95,12 @@ static inline void *adamic_retain(void *value) {
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+#ifdef ADAMIC_ADDRESS_SANITIZER
+__attribute__((noinline, unused)) static
+#else
+static inline
+#endif
+void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
