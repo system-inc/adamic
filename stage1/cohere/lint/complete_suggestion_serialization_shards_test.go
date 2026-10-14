@@ -160,7 +160,7 @@ func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, director
 	t.Helper()
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: "complete-suggestion-go-oracle", Files: completeSuggestionProductFiles(t),
-		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1"},
+		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
 		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
 	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
 }
@@ -387,7 +387,7 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	args := append(append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary), virtualFiles...)
 	command := lintCommand(ctx, root, "go", args...)
 	var output, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &output, &stderr

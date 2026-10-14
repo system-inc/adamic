@@ -11,6 +11,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 	"sync"
@@ -385,6 +386,90 @@ func TestAnAuditedFetchThatDiffersFromARebuildIsPoisoning(t *testing.T) {
 	var wrong poisonedError
 	if !errors.As(err, &wrong) || !strings.Contains(err.Error(), "differs from a rebuild") {
 		t.Fatalf("got %v, want poisoning", err)
+	}
+}
+
+// An audit says what it found on its own line, with the whole key: clean with the copies' digest, or mismatch with both
+// digests and where both copies are kept, the stored one and the rebuilt one, under the cache's audit-mismatch
+// directory (Build's rule: a difference nobody can diff is evidence destroyed, #f1ydmys). Mutants: the rebuilt copy
+// removed on a mismatch; the stored copy left for the failed fill to remove; no audit line.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestAnAuditKeepsBothCopiesOfAMismatchAndSaysWhatItFound(t *testing.T) {
+	store, log := shared(t)
+	t.Setenv("ADAMIC_BUILD_AUDIT", "1")
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	key := recorded(t)
+	store.put(t, key, map[string]string{"product": "built"})
+	build := func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
+	}
+	Product(t, thisPackage, build)
+	if lines, _ := os.ReadFile(log); !regexp.MustCompile(`(?m)^audit \S+ ` + key + ` clean [0-9a-f]{64}$`).Match(lines) {
+		t.Fatalf("a clean audit's line: %q", lines)
+	}
+	cache := t.TempDir()
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	key = recorded(t)
+	store.put(t, key, map[string]string{"product": "a wrong product"})
+	if _, err := Get(thisPackage, build); err == nil {
+		t.Fatal("a wrong product passed its audit")
+	}
+	lines, _ := os.ReadFile(log)
+	match := regexp.MustCompile(`(?m)^audit \S+ ` + key + ` mismatch ([0-9a-f]{64}) ([0-9a-f]{64}) (\S+)$`).FindSubmatch(lines)
+	if match == nil || string(match[1]) == string(match[2]) {
+		t.Fatalf("a mismatch's line: %q", lines)
+	}
+	kept := string(match[3])
+	if filepath.Dir(kept) != filepath.Join(cache, auditMismatches) {
+		t.Fatalf("both copies kept in %s, not under %s", kept, filepath.Join(cache, auditMismatches))
+	}
+	for copy, want := range map[string]string{"stored": "a wrong product", "rebuilt": "built"} {
+		if content, err := os.ReadFile(filepath.Join(kept, copy, "product")); err != nil || string(content) != want {
+			t.Errorf("the %s copy holds %q (%v), want %q", copy, content, err, want)
+		}
+	}
+}
+
+// ADAMIC_BUILD_AUDIT_KEYS audits exactly the keys it lists, untraced too (`loom audit-tree`, #f1ydmys): a listed key's
+// fetch is rebuilt and compared, an unlisted one only fetched whatever ADAMIC_BUILD_AUDIT says, and a list under
+// ADAMIC_BUILD_CACHE=read, which never builds, is an error, as is a list that can't be read. Mutants: the list ignored
+// untraced; an unlisted key audited at the rate; the read-mode guard dropped; an unreadable list read as empty.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestListedKeysAreAuditedUntracedAndNoOthers(t *testing.T) {
+	store, log := shared(t)
+	t.Setenv("ADAMIC_BUILD_AUDIT", "1")
+	key := recorded(t)
+	store.put(t, key, map[string]string{"product": "built"})
+	rebuilt := 0
+	build := func(directory string) error {
+		rebuilt++
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
+	}
+	list := filepath.Join(t.TempDir(), "audit-keys")
+	for _, each := range []struct {
+		name, listed, mode string
+		audited, fails     bool
+	}{
+		{"a listed key", "some other key\n" + key + "\n", "", true, false},
+		{"an unlisted key", strings.Repeat("e", 64) + "\n", "", false, false},
+		{"a list in read mode", key + "\n", "read", false, true},
+		{"an unreadable list", "", "", false, true},
+	} {
+		t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+		t.Setenv("ADAMIC_BUILD_CACHE", each.mode)
+		recorded(t)
+		path := list + "-" + strings.ReplaceAll(each.name, " ", "-")
+		if each.listed != "" {
+			os.WriteFile(path, []byte(each.listed), 0o644)
+		}
+		t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", path)
+		os.WriteFile(log, nil, 0o644)
+		rebuilt = 0
+		_, err := Get(thisPackage, build)
+		lines, _ := os.ReadFile(log)
+		if (err != nil) != each.fails || (rebuilt == 1) != each.audited || strings.Contains(string(lines), " audited ") != each.audited {
+			t.Errorf("%s: err %v, rebuilt %d times, census %q", each.name, err, rebuilt, lines)
+		}
 	}
 }
 
