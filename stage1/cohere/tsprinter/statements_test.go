@@ -109,18 +109,14 @@ const testStatementsAgainstGoAndPrettierShards = 16
 // ADAMIC_TEST_SHARD=i/n runs the shards whose number modulo n is i;
 // unset runs all shards. The mixed live repository/pinned TypeScript corpus uses
 // a fixed 16 shards and SHA-256(relative path, file/mode-local index) modulo 16.
-// Build products are prepared once and shared by leaves.
-func statementPrepareCommon(t *testing.T) statementSharedProducts {
+// Build products are prepared once and shared by leaves. statementReadyShared
+// calls this once per process, after the partition and the ADAMIC_TS_PRETTIER skip.
+func statementPrepareCommon(t *testing.T, shards *statementGateShards) statementSharedProducts {
 	t.Helper()
 	setup := time.Now()
 	cpu := statementCPU()
 	t.Cleanup(func() { t.Logf("shared setup CPU including builds: %.3fs", statementCPU()-cpu) })
-	cases, want, specs := statementCorpus(t)
-	shards := statementShards(t, cases, want, specs)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
-	if library == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
 	port, _ := filepath.Abs("statementsMain.ts")
 	loweredDir := printerGateLowered(t, "statements")
 	binary, release := printerGateNative(t, "statements", true)+"/port", printerGateNative(t, "statements", false)+"/port"
@@ -142,10 +138,10 @@ func statementPrepareCommon(t *testing.T) statementSharedProducts {
 			}
 		}
 	}
-	libraryHash := statementDirectoryHash(t, library)
+	libraryHash := statementLibraryHashOnce(t)
 	elapsed := time.Since(setup).Seconds()
-	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(want, "\n"), len(shards))
-	return statementSharedProducts{Cases: cases, Want: want, Specs: specs, Port: port, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed}
+	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(shards.want, "\n"), len(shards.shards))
+	return statementSharedProducts{Cases: shards.cases, Want: shards.want, Specs: shards.specs, Port: port, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed, Shards: shards}
 }
 
 func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
@@ -157,8 +153,8 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	setup := time.Now()
 	cpu := statementCPU()
 	t.Cleanup(func() { t.Logf("shard CPU: %.3fs", statementCPU()-cpu) })
-	cases, want, specs := products.Cases, products.Want, products.Specs
-	shards := statementShards(t, cases, want, specs)
+	// The partition is the process's; only this shard's own files are written here.
+	shard := products.Shards.shard(t, shardNumber)
 	port := products.Port
 	binary, release, library := products.Binary, products.Release, products.Library
 	loweredDir := products.LoweredDir
@@ -170,23 +166,17 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 		t.Fatal(err)
 	}
 	backend := filepath.Join(loweredDir, "program.mjs")
-	selected := func(number int) bool { return number == shardNumber }
 	libraryHash := products.LibraryHash
-	oracleAnswers := make([][2][]byte, len(shards))
-	for number, shard := range shards {
-		if !selected(number) {
-			continue
+	var oracleAnswers [2][]byte
+	for side := 0; side < 2; side++ {
+		directory := statementLibraryOracle(t, shardNumber, side, shard, libraryHash, library)
+		answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
+		if err != nil {
+			t.Fatal(err)
 		}
-		for side := 0; side < 2; side++ {
-			directory := statementLibraryOracle(t, number, side, shard, libraryHash, library)
-			answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-			if err != nil {
-				t.Fatal(err)
-			}
-			oracleAnswers[number][side] = answers
-		}
+		oracleAnswers[side] = answers
 	}
-	t.Logf("shard-local input preparation: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(want, "\n"), len(shards))
+	t.Logf("shard-local input preparation: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(products.Want, "\n"), len(products.Shards.shards))
 	caseStart := time.Now()
 	caseContext, cancelCases := context.WithTimeout(context.Background(), 60*time.Second)
 	statementCaseContexts.Store(t, caseContext)
@@ -195,40 +185,33 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 		statementCaseContexts.Delete(t)
 		t.Logf("case time after shared setup: %.3fs", time.Since(caseStart).Seconds())
 	})
-	for number, shard := range shards {
-		if !selected(number) {
-			continue
+	compare := func(name string, result run) {
+		if err := statementDisagreement(name, result, shard.want, shard.labels); err != nil {
+			t.Fatal(err)
 		}
-		func() {
-			compare := func(name string, result run) {
-				if err := statementDisagreement(name, result, shard.want, shard.labels); err != nil {
-					t.Fatal(err)
-				}
-			}
-			compare("Node", statementOnNode(t, port, "--cases", shard.text, "80"))
-			compare("native", statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
-			compare("backend", statementOnNode(t, backend, "--cases", shard.text, "80"))
-			for _, side := range []struct {
-				name   string
-				result run
-			}{
-				{"Node gaps", statementOnNode(t, port, "--cases", gapPath, "80")},
-				{"native gaps", statementExecute(t, nil, binary, "--cases", gapPath, "80")},
-				{"backend gaps", statementOnNode(t, backend, "--cases", gapPath, "80")},
-			} {
-				if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
-					t.Fatal(err)
-				}
-			}
-			if report := statementLeaks(t, binary, release, "--cases", shard.text, "80"); report != "" {
-				t.Fatal(report)
-			}
-			statementPrinterLibrary(t, "npm Prettier", run{stdout: oracleAnswers[number][0]}, shard.specs, false)
-			statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[number][1]}, shard.specs, true)
-			compare("release", statementExecute(t, nil, release, "--cases", shard.text, "80"))
-			t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
-		}()
 	}
+	compare("Node", statementOnNode(t, port, "--cases", shard.text, "80"))
+	compare("native", statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
+	compare("backend", statementOnNode(t, backend, "--cases", shard.text, "80"))
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node gaps", statementOnNode(t, port, "--cases", gapPath, "80")},
+		{"native gaps", statementExecute(t, nil, binary, "--cases", gapPath, "80")},
+		{"backend gaps", statementOnNode(t, backend, "--cases", gapPath, "80")},
+	} {
+		if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if report := statementLeaks(t, binary, release, "--cases", shard.text, "80"); report != "" {
+		t.Fatal(report)
+	}
+	statementPrinterLibrary(t, "npm Prettier", run{stdout: oracleAnswers[0]}, shard.specs, false)
+	statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[1]}, shard.specs, true)
+	compare("release", statementExecute(t, nil, release, "--cases", shard.text, "80"))
+	t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
 }
 
 func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, libraryHash, library string) string {

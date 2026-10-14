@@ -31,15 +31,16 @@ func TestProduct_TSPrinterTSCStatementsCorpus(t *testing.T) {
 }
 func TestProduct_TSPrinterTSCManifest(t *testing.T) { t.Parallel(); tscAgreementPrepare(t) }
 
+// The partition and the npm library's hash are the process's, made once; each
+// product writes only its own shard's files.
 func statementDeclaredLibraryOracle(t *testing.T, number, side int) {
 	t.Helper()
-	cases, want, specs := statementCorpus(t)
-	shard := statementShards(t, cases, want, specs)[number]
+	shard := statementGateShardsOnce(t).shard(t, number)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
 		t.Skip("set ADAMIC_TS_PRETTIER")
 	}
-	statementLibraryOracle(t, number, side, shard, statementDirectoryHash(t, library), library)
+	statementLibraryOracle(t, number, side, shard, statementLibraryHashOnce(t), library)
 }
 func TestProduct_TSPrinterStatementsNPM_000(t *testing.T) {
 	t.Parallel()
