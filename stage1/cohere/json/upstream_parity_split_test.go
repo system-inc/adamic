@@ -124,9 +124,6 @@ func upstreamParityPrepareProducts(t *testing.T) {
 	if err := gatesample.Validate(); err != nil {
 		t.Fatal(err)
 	}
-	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
-	}
 	started := time.Now()
 	defer func() { t.Logf("shared setup: %.3fs", time.Since(started).Seconds()) }()
 	tree, err := parser.ParseFile(token.NewFileSet(), "upstream_parity_split_test.go", nil, 0)
