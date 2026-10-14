@@ -10330,7 +10330,15 @@ func TestCompilerAndStage1Agree_6077(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_6078(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6078) }
 
-func TestCompilerAndStage1Agree_6079(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6079) }
+func TestCompilerAndStage1Agree_6079_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6079, 0)
+}
+
+func TestCompilerAndStage1Agree_6079_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6079, 1)
+}
 
 func TestCompilerAndStage1Agree_6081(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6081) }
 

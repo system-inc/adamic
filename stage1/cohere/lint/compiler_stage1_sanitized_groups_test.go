@@ -28,9 +28,12 @@ var compilerAgreementCheckerSanitizedWrapper = regexp.MustCompile(`(?m)^func ` +
 // compilerAgreementSide4Split names the side-4 owners heavy enough under ASan to split, each into Parts sub-shards dealt
 // by a hash of the case's key and rule (compilerAgreementPart), so a case keeps its sub-shard as the corpus grows. Their numbered side-4 shards
 // ran 15.2 to 26.5 s at an 8-CPU share over 72 to 110 cases, and every other side-4 shard at most 14.6 (#3tf18zm, 45
-// test logs over lint's 20 units, Oct 14). Each part is TestCompilerAndStage1Agree_<shard>_<part>, and the owner's
-// numbered side-4 wrapper is gone. A future heavy owner joins by number.
-var compilerAgreementSide4Split = []struct{ Owner, Parts int }{{289, 4}, {293, 4}, {385, 4}, {673, 4}, {1009, 4}}
+// test logs over lint's 20 units, Oct 14). 1215 is a fix bucket, _6079 at 19.1 s, whose program.ts alone is 14.1 s on
+// one core: two parts put it beside transformers/destructuring.ts and a small file, about 12 s, and its fourth file
+// apart, and no count up to its four files gives program.ts a part to itself without an empty one. The fix buckets
+// whose one file alone is over 15 s (types.ts, utilities.ts, parser.ts) stay whole. Each part is TestCompilerAndStage1Agree_<shard>_<part>, and the owner's numbered side-4
+// wrapper is gone. A future heavy owner joins by number.
+var compilerAgreementSide4Split = []struct{ Owner, Parts int }{{289, 4}, {293, 4}, {385, 4}, {673, 4}, {1009, 4}, {1215, 2}}
 
 // compilerAgreementMaxParts bounds a split owner's parts, so every sub-unit has its own number past the shards'.
 const compilerAgreementMaxParts = 16
