@@ -1,0 +1,20 @@
+command: go test ./internal/lower -run ^Test(ArrayNarrowingFindLastRefused|Fx5MutantWitness)$ -count=1 -v -timeout 90s
+=== RUN   TestArrayNarrowingFindLastRefused
+=== PAUSE TestArrayNarrowingFindLastRefused
+=== RUN   TestFx5MutantWitness
+=== PAUSE TestFx5MutantWitness
+=== CONT  TestArrayNarrowingFindLastRefused
+=== CONT  TestFx5MutantWitness
+=== NAME  TestArrayNarrowingFindLastRefused
+    array_narrowing_test.go:115: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/find_last.a:3:15, got <nil>
+--- FAIL: TestArrayNarrowingFindLastRefused (0.04s)
+=== NAME  TestFx5MutantWitness
+    fx5_mutant_witness_test.go:7: Native build: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3780025988/main.c:81:24: error: assigning to 'adamic_maybe_number' (aka 'struct adamic_maybe_number') from incompatible type 'adamic_heap *' (aka 'struct adamic_heap *')
+           81 |         adamic_global_1_found = adamic_temporary_13;
+              |                               ^ ~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+--- FAIL: TestFx5MutantWitness (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.206s
+FAIL

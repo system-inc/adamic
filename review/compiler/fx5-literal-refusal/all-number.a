@@ -1,0 +1,2 @@
+const items: (string | number)[] = [1, 2];
+console.log(`${typeof items[0]} ${items[0]}`);
