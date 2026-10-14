@@ -177,6 +177,9 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
+		if call, ok := node.(ir.ObjectCall); ok && call.Method == "setPrototypeOf" {
+			found = true
+		}
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {

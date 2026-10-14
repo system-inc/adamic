@@ -13,6 +13,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if name == "getPrototypeOf" || name == "setPrototypeOf" || name == "create" {
+		return l.objectPrototypeLink(node, name)
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}

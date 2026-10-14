@@ -68,6 +68,8 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
+	object->prototype = NULL;
+	object->null_prototype = false;
 	region->count++;
 	ADAMIC_COUNT_ALLOCATION();
 	return object;

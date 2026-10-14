@@ -1,0 +1,3 @@
+// Compiler ruling 2. Cached intrinsic signature must come from provenance, without an annotation.
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+console.log(`${hasOwnProperty.call({key:1}, "key")}`);
