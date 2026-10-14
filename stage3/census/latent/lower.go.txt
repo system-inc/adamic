@@ -19,6 +19,7 @@ func (e *LatentDependencySkipped) Error() string {
 }
 
 type LatentFinding struct {
+	PieceAtom string `json:"piece_atom,omitempty"`
 	SiteWhere     string `json:"site_where,omitempty"`
 	SiteKind      string `json:"site_kind,omitempty"`
 	SiteStart     int    `json:"site_start,omitempty"`
@@ -45,7 +46,7 @@ func latentRecord(err error) {
 	if err == nil {
 		return
 	}
-	finding := LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "error", Text: err.Error()}
+	finding := LatentFinding{PieceAtom: latentPieceOrigin, Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "error", Text: err.Error()}
 	var refused *Refused
 	var notYet *NotYet
 	var skipped *LatentDependencySkipped
@@ -111,6 +112,7 @@ func latentDeclarations(program *load.Program, file *ast.SourceFile) []LatentDec
 }
 
 type LatentFile struct {
+	Piece *latentPieceRecord `json:"piece,omitempty"`
 	ProjectFailedBoundaries map[string][]LatentBoundary `json:"project_failed_boundaries,omitempty"`
 	FailedBoundaries []LatentBoundary `json:"failed_boundaries,omitempty"`
 	SpeculativeCoverage *LatentSpeculativeCoverage `json:"speculative_coverage,omitempty"`
