@@ -1,0 +1,14 @@
+// Show why coercion and public owner widening cannot satisfy the byte contracts.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),ts=require('typescript');
+const {owner,canonical}=require('./plan.cjs'),root=path.resolve(process.argv[2]),rules=JSON.parse(fs.readFileSync(path.join(__dirname,'disposition.json'))).filter(r=>r.status==='blocked'),rows=[];
+const api=fs.readFileSync(path.join(root,'built/local/typescript.d.ts'),'utf8'),snapshot=ts.createSourceFile('public.d.ts',api,99,true);
+let symbol;function find(n){if(ts.isPropertySignature(n)&&n.name.getText(snapshot)==='symbol'&&ts.isInterfaceDeclaration(n.parent)&&n.parent.name.text==='Type')symbol=n;ts.forEachChild(n,find);}find(snapshot);assert.ok(symbol);assert.equal(symbol.type.getText(snapshot),'Symbol');const widened=api.slice(0,symbol.type.end)+' | undefined'+api.slice(symbol.type.end);assert.notEqual(widened,api);
+const options={target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments:true};
+for(const r of rules){
+ if(r.before==='symbol!'){rows.push({site:r.id,blocked_by:'public API bytes',owner:'Type.symbol: Symbol',owner_widening_changes_snapshot:true});continue;}
+ if(r.before==='meaning!'){rows.push({site:r.id,blocked_by:'numeric optional propagation',chain:['nodeBuilder.symbolToNode / symbolToEntityName','symbolToExpression / symbolToName','lookupSymbolChain','lookupSymbolChainWorker/getSymbolChain','needsQualification'],numeric_use:'flags & meaning',required_public_parameters:['TypeChecker.symbolToEntityName.meaning','TypeChecker.symbolToExpression.meaning'],note:'Public parameter types can remain narrower than an implementation. The internal chain still reaches SymbolFlags bit operations; this site is retained pending a byte-preserving honest treatment of those operations.'});continue;}
+ const file=path.join(root,r.file),text=fs.readFileSync(file,'utf8'),source=ts.createSourceFile(file,text,99,true);let match;function visit(n){if(ts.isNonNullExpression(n)&&owner(n)===r.owner&&canonical(n,source)===r.before)match=n;ts.forEachChild(n,visit);}visit(source);assert.ok(match,r.id);
+ let n=match,replacement='Number('+match.expression.getText(source)+')';if(ts.isBinaryExpression(match.parent)&&match.parent.left===match&&match.parent.operatorToken.kind===ts.SyntaxKind.BarEqualsToken){n=match.parent;replacement=match.expression.getText(source)+' = '+replacement+' | '+n.right.getText(source);}
+ const changed=text.slice(0,n.getStart(source))+replacement+text.slice(n.end);assert.notEqual(ts.transpileModule(changed,{compilerOptions:options}).outputText,ts.transpileModule(text,{compilerOptions:options}).outputText,'coercion must be rejected by JS identity');rows.push({site:r.id,blocked_by:'JavaScript bytes',explicit_handling:replacement,byte_check:'rejects coercion edit'});
+}
+console.log(JSON.stringify({blocked_sites:rows},null,2));

@@ -1,0 +1,6 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),ts=require('typescript');
+const root=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]),rows=JSON.parse(fs.readFileSync(path.join(__dirname,'split.json'))).filter(r=>r.type_lie),printer=ts.createPrinter({removeComments:true});
+function owner(n){const a=[];for(let p=n.parent;p;p=p.parent)if(ts.isFunctionLike(p)&&p.name&&ts.isIdentifier(p.name))a.unshift(p.name.text);return a.join('/');}
+const rules=[];
+for(const row of rows){const file=ts.createSourceFile(row.file,fs.readFileSync(path.join(root,row.file),'utf8'),ts.ScriptTarget.Latest,true);let node;function visit(n){if(ts.isNonNullExpression(n)&&n.getStart(file)===row.start&&n.end===row.end)node=n;ts.forEachChild(n,visit);}visit(file);assert.ok(node);rules.push({id:row.id,file:row.file,line:row.line,column:row.column,owner:owner(node),before:printer.printNode(ts.EmitHint.Expression,node,file),after:printer.printNode(ts.EmitHint.Expression,node.expression,file),node_value:row.node_passes,input_set:row.nullish_input_set});}
+fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'sites.json'),JSON.stringify(rules,null,2)+'\n');console.log('22 observed nonliteral type lies recorded with named AST owners');
