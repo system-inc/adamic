@@ -351,7 +351,7 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 	return buildcache.Product(t, buildcache.Inputs{
 		Name:      "markdownblocks-malformed-events-go-errors",
 		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
+		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
 		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
@@ -373,7 +373,7 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
+		command := malformedEventsCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)...)
 		command.Dir = cohere
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("Go errors: %w\n%s", err, output)

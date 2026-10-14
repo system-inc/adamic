@@ -18,6 +18,8 @@ import tempfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from caches import stage3_cache
 
+reproducible_flags = ['-trimpath', '-ldflags=-buildid=', '-buildvcs=false']
+
 
 def records(text):
     decoder = json.JSONDecoder()
@@ -68,7 +70,7 @@ def action_key(repository):
     manifest_hashes = [(str(path), hashlib.sha256(path.read_bytes()).hexdigest()
                         if path.exists() else None) for path in sorted(manifests)]
     version = subprocess.check_output(['go', 'version'], text=True)
-    key = [sorted(inputs), manifest_hashes, settings, version, str(repository), '-buildvcs=false']
+    key = [sorted(inputs), manifest_hashes, settings, version, str(repository), *reproducible_flags]
     return hashlib.sha256(json.dumps(key, sort_keys=True).encode()).hexdigest()
 
 
@@ -94,7 +96,7 @@ def fetch(repository, store, prepare):
                 binary = Path(scratch) / 'oracle.test'
                 with (store / (key + '.build.log')).open('w') as log:
                     result = subprocess.run(
-                        ['go', 'test', '-buildvcs=false', '-c', '-o', str(binary), './internal/oracle'],
+                        ['go', 'test', *reproducible_flags, '-c', '-o', str(binary), './internal/oracle'],
                         cwd=repository, stdout=log, stderr=subprocess.STDOUT)
                 if result.returncode:
                     raise RuntimeError('oracle hook preparation failed (exit %d):\n%s' % (

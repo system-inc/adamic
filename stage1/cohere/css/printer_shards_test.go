@@ -51,7 +51,7 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 		inputs := buildcache.Inputs{
 			Name:      "css-printer-oracle-" + strconv.Itoa(index),
 			Files:     []string{"stage1/cohere/css/testdata/" + side, "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"},
-			Flags:     []string{"test", "-c", "./internal/format/css/" + pkg},
+			Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "./internal/format/css/" + pkg},
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
@@ -67,7 +67,7 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 			defer os.Remove(overlayPath)
 			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
 			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
+			cmd := exec.CommandContext(t.Context(), "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)...)
 			cmd.Dir = filepath.Join(repo, "cohere")
 			output, err := cmd.CombinedOutput()
 			if err != nil {
