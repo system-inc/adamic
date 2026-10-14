@@ -39,7 +39,7 @@ func TestOnlyAFailedListenLetsTheCommandsStatusStand(t *testing.T) {
 // A run starts from the state ADAMIC_TRACE_TREE_STATE's file holds rather than taking its own, refuses a file that is
 // missing or empty, and takes its own when the variable is unset; the variable never reaches the command (#2q48btg).
 // Mutants: the file's state ignored for one taken; an empty file read as a state; the variable left set.
-// Serial: it sets ADAMIC_TRACE_TREE_STATE, which t.Setenv refuses beside parallel tests.
+// Not parallel: t.Setenv(ADAMIC_TRACE_TREE_STATE), which is process-wide.
 func TestARunStartsFromTheWavesTreeState(t *testing.T) {
 	taken := 0
 	take := func() (string, error) {
