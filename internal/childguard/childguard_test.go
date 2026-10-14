@@ -2,6 +2,7 @@ package childguard
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -9,6 +10,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestChild(t *testing.T) {
@@ -194,4 +197,34 @@ func TestStalledReportsSystemLoad(t *testing.T) {
 		return
 	}
 	t.Fatal("system load changed during every guard run")
+}
+
+// Not parallel: scheduling determines the cancellation and process-group cleanup bound.
+func TestContextCancellationKillsProcessGroup(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	defer cancel()
+	cmd := toolchain.CommandContextIn(ctx, "", "sh", "-c", "sleep 60 & echo started; wait")
+	var output bytes.Buffer
+	cmd.Stdout = &output
+	done := make(chan error, 1)
+	go func() { done <- Run(cmd, Options{Unbounded: true}) }()
+	select {
+	case err := <-done:
+		if err == nil || ctx.Err() != context.DeadlineExceeded {
+			t.Fatalf("want cancelled child, got %v, context %v", err, ctx.Err())
+		}
+		if output.String() != "started\n" {
+			t.Fatalf("child did not start: %q", output.String())
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("cancelled process group kept its output pipe open")
+	}
+}
+
+func TestUnboundedIgnoresGuardTimers(t *testing.T) {
+	t.Parallel()
+	output, err := CombinedOutput(child("finish"), Options{FirstOutput: time.Millisecond, Stall: time.Millisecond, Ceiling: time.Millisecond, Unbounded: true})
+	if err != nil || string(output) != "ready\ndone\n" {
+		t.Fatalf("unbounded child: %v, %q", err, output)
+	}
 }
