@@ -332,15 +332,114 @@ def listUnits():
         print("\n".join(units))
 
 
-# An executable a Go file names literally where it launches it: exec.Command("x", exec.CommandContext(ctx, "x", or a
-# toolchain's CommandIn(dir, "x". A name it computes isn't read here, which is why a launcher declaration covers a file
-# only when nothing in it references the compiler at all.
-literalLaunch = re.compile(r'(?:exec\.Command\(|exec\.CommandContext\([^,]+,\s*|CommandIn\([^,]+,\s*)"([^"]+)"')
+def goCode(source, strings=True):
+    """source with its comments blanked, and with strings=False its string and rune literals' contents too, newlines
+    kept, so a launch read from it is code and its line and offset are source's."""
+    out, index, length = [], 0, len(source)
+    while index < length:
+        if source.startswith("//", index):
+            end = source.find("\n", index)
+            end = length if end < 0 else end
+            out.append(" " * (end - index))
+        elif source.startswith("/*", index):
+            end = source.find("*/", index + 2)
+            end = length if end < 0 else end + 2
+            out.append(re.sub(r"[^\n]", " ", source[index:end]))
+        elif source[index] in "\"'`":
+            end = goLiteralEnd(source, index)
+            out.append(source[index:end] if strings else source[index] + re.sub(r"[^\n]", " ", source[index + 1:end - 1]) + source[end - 1])
+        else:
+            end = index + 1
+            out.append(source[index])
+        index = end
+    return "".join(out)
 
 
-def undeclaredRuns(source, runs):
-    """The executables source launches by a literal name that its launcher declaration's runs don't name."""
-    return sorted({name for name in literalLaunch.findall(source) if os.path.basename(name) not in runs})
+def goLiteralEnd(source, index):
+    """The index just past the Go string or rune literal opening at index."""
+    quote, position = source[index], index + 1
+    while position < len(source) and source[position] != quote:
+        if quote != "`" and source[position] == "\\":
+            position += 1
+        elif quote != "`" and source[position] == "\n":
+            return position
+        position += 1
+    return min(position + 1, len(source))
+
+
+def goArguments(code, index, count):
+    """The first count arguments of the call whose open parenthesis is at code[index - 1], as written."""
+    arguments, depth, start, position = [], 0, index, index
+    while position < len(code) and len(arguments) < count:
+        character = code[position]
+        if character in "\"'`":
+            position = goLiteralEnd(code, position)
+            continue
+        if character in "([{":
+            depth += 1
+        elif character in ")]}" and depth:
+            depth -= 1
+        elif character in ",)" and not depth:
+            arguments.append(code[start:position].strip())
+            if character == ")":
+                break
+            start = position + 1
+        position += 1
+    return arguments
+
+
+# A declared launcher's file is read for what it launches, and a launch it can't read refuses the file, naming its
+# line: the compiler-reference rule is per file, so a launcher that computed its executable could run the compiler
+# from a path built elsewhere and pass (system_adamic's review of #9qqvs57). So every exec.Command, exec.CommandContext
+# and CommandIn (internal/toolchain's) names its executable as a literal, and os.StartProcess, syscall.Exec,
+# syscall.ForkExec and a hand-built exec.Cmd, whose path is always computed, refuse. A file that hands a computed path
+# to a helper in another package isn't a launcher at all; the helper package is what gets declared.
+launchCall = re.compile(r'(?<![\w.])(?:(?P<package>\w+)\.)?(?P<function>CommandContext|Command|CommandIn)\(')
+computedLaunch = re.compile(r'\bos\.StartProcess\b|\bsyscall\.(?:Exec|ForkExec)\b')
+literalName = re.compile(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`')
+
+
+def launcherRefusal(source, runs):
+    """Why a declared launcher's Go file, running only runs, can't pass, as "line N: why", or None when it can."""
+    code, calls = goCode(source), goCode(source, strings=False)
+    line = lambda index: "line %d" % (code.count("\n", 0, index) + 1)
+    found = compilerMarker.search(source)
+    if found:
+        return "%s: references the compiler (%s)" % (line(found.start()), found.group(0))
+    execNames = {"exec"}
+    for alias in re.finditer(r'(?:^|[\s(])([\w.]+)\s+"os/exec"', code):
+        if alias.group(1) in (".", "_"):
+            return "%s: imports os/exec as %s, so its launches can't be read" % (line(alias.start(1)), alias.group(1))
+        execNames.add(alias.group(1))
+    found = computedLaunch.search(calls)
+    if found:
+        return "%s: launches by a computed path (%s)" % (line(found.start()), found.group(0))
+    for name in execNames:
+        # A composite literal as gofmt writes it, never a func's *exec.Cmd result before its body.
+        found = re.search(r'(?<![\w.*])' + re.escape(name) + r'\.Cmd\{', calls)
+        if found:
+            return "%s: builds an %s.Cmd by hand, a computed path" % (line(found.start()), name)
+    for call in launchCall.finditer(calls):
+        package, function = call.group("package"), call.group("function")
+        if function == "CommandIn" or package in execNames:
+            if re.search(r'\bfunc\s*(?:\([^)]*\)\s*)?$', calls[calls.rfind("\n", 0, call.start()) + 1:call.start()]):
+                continue  # A definition, not a launch.
+        else:
+            continue
+        arguments = goArguments(code, call.end(), 1 if function == "Command" else 2)
+        executable = arguments[-1] if len(arguments) == (1 if function == "Command" else 2) else ""
+        literal = literalName.fullmatch(executable)
+        if not literal:
+            return "%s: launches a computed executable, %s(%s)" % (line(call.start()), call.group(0)[:-1], executable or "...")
+        launched = literal.group(1) if literal.group(1) is not None else literal.group(2)
+        if os.path.basename(launched) not in runs:
+            return "%s: launches %s, which its declaration's runs don't name" % (line(call.start()), launched)
+    return None
+
+
+# A reference to the compiler itself, one kind of the census's evidence; launching a process is the other.
+compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
+launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 
 
 class ChangeRefusal(ValueError):
@@ -1572,8 +1671,6 @@ class Gate:
         # Two kinds of evidence: a reference to the compiler itself, and launching a process, which may run it. A package
         # the map declares a launcher (launchers) answers the second alone: it names what it runs and asserts none of it
         # is the compiler, so a file of it that also references the compiler still needs a compiler declaration.
-        compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
-        launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
         launchers = declarations.get("launchers", {})
         if not isinstance(launchers, dict):
             raise ValueError("invalid compiler dependency map: launchers")
@@ -1598,7 +1695,7 @@ class Gate:
                 with open(os.path.join(self.arguments.tree, path)) as handle:
                     source = handle.read()
                 if re.search(r"subprocess|child_process|\badamic\b|\bcompiler\b|ADAMIC", source) and not any(path.startswith(driver + "/") for driver in self.compilerDrivers):
-                    missing.append(path)
+                    missing.append((path, path))
                 continue
             if not path.endswith(".go"):
                 continue
@@ -1609,22 +1706,25 @@ class Gate:
                 package = os.path.dirname(package)
             if not package:
                 if marked(source) and path.endswith("_test.go"):
-                    missing.append(path)
+                    missing.append((path, path))
                 elif marked(source):
                     self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
                 continue
             if not marked(source) or package in packages:
                 continue
-            if package in launchers and not compilerMarker.search(source) and not undeclaredRuns(source, launchers[package]["runs"]):
-                # A declared launcher: it runs only what it names, and nothing here references the compiler.
+            if package in launchers:
+                refusal = launcherRefusal(source, launchers[package]["runs"])
+                if not refusal:
+                    continue  # A declared launcher: it runs only what it names, and nothing here references the compiler.
+                missing.append((path, path + " (" + package + " is a declared launcher, refused at " + refusal + ")"))
                 continue
-            missing.append(path)
+            missing.append((path, path))
         # Only consumers this change adds or edits can turn its gate red; any already on the base are named, so one
         # undeclared package never reds every worker's gate.
-        onBase = [path for path in missing if path not in touchedFiles]
+        onBase = [named for path, named in missing if path not in touchedFiles]
         if onBase:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
-        missing = [path for path in missing if path in touchedFiles]
+        missing = [named for path, named in missing if path in touchedFiles]
         if missing:
             raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}

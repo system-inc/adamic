@@ -2249,10 +2249,10 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("transitive walk removed", 'pending.append(dependent)', 'pass', "test_real_closure_then_one_test_edge"),
             ("opaque dependencies ignored", 'dependencies = self.compilerDependencies(directories, changed)', 'dependencies = {}', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("compiler oracle narrowed", 'if compilerChanged or oracle not in changedPackages else self.selectOracle()', 'if False else self.selectOracle()', "test_opaque_gap_and_whole_oracle_are_selected"),
-            ("computed invocation detection removed", '|"os/exec"|os\\.StartProcess|syscall\\.Exec', '', "test_census_rejects_computed_compiler_outside_stage1"),
+            ("computed invocation detection removed", 'return compilerMarker.search(source) or launchMarker.search(source)', 'return compilerMarker.search(source)', "test_census_rejects_computed_compiler_outside_stage1"),
             ("census restricted to stage1", '"ls-files").splitlines()', '"ls-files", "--", "stage1").splitlines()', "test_census_rejects_computed_compiler_outside_stage1"),
             ("removed map entry accepted", 'if missing:', 'if False:', "test_census_rejects_removed_declaration"),
-            ("base consumers red the change", 'missing = [path for path in missing if path in touchedFiles]', 'pass', "test_an_undeclared_consumer_on_the_base_is_named_not_red"),
+            ("base consumers red the change", 'missing = [named for path, named in missing if path in touchedFiles]', 'missing = [named for path, named in missing]', "test_an_undeclared_consumer_on_the_base_is_named_not_red"),
             ("branch map ignored", 'declarations.setdefault(field, {}).update(layer[field])', 'pass', "test_a_branch_declares_its_own_consumer_over_the_tools_map"),
             ("driver dependencies not validated", 'any(value not in directories for value in inputs)', 'False', "test_invalid_driver_map_fails_closed"),
             ("script census removed", 'if re.search(r"subprocess|child_process|', 'if False and re.search(r"subprocess|child_process|', "test_census_rejects_undeclared_script_driver"),
@@ -2854,11 +2854,13 @@ class ListUnitsRefusal(unittest.TestCase):
 class CensusLaunchers(unittest.TestCase):
     """A launcher declaration (#9qqvs57, system_adamic's ruling of Oct 14) lets a package that launches processes, and
     never the compiler, through the census honestly: it names what it runs and why. It never covers a file that
-    references the compiler, or one launching by a literal name it doesn't list, and a declaration naming adamic, or
-    giving no why, is a bad map. Mutants: a launcher covering a file that references the compiler (the declared launcher
-    that runs adamic passes); the literal names unread; the declaration unchecked."""
+    references the compiler, one launching by a literal name it doesn't list, or one launching anything it computes
+    (system_adamic's review: the compiler-reference rule is per file, so a computed path could be the compiler), and a
+    declaration naming adamic, or giving no why, is a bad map. Mutants: a launcher covering a file that references the
+    compiler (the declared launcher that runs adamic passes); the literal names unread; the declaration unchecked; a
+    computed executable read as no launch (exec.Command(compilerPath()) passes)."""
 
-    launcher = 'package launch\\n\\nimport "os/exec"\\n\\nfunc run() error { return exec.Command(%s).Run() }\\n'
+    launcher = 'package launch\n\nimport "os/exec"\n\nfunc run() error {\n\treturn %s.Run()\n}\n'
 
     def census(self, source, launchers):
         with tempfile.TemporaryDirectory() as root:
@@ -2877,24 +2879,57 @@ class CensusLaunchers(unittest.TestCase):
 
     declared = {"tool/launch": {"runs": ["go", "node"], "why": "launches go test -c and Node, never adamic"}}
 
+    def refused(self, source, reason):
+        with self.assertRaises(run.ChangeRefusal, msg=source) as raised:
+            self.census(source, self.declared)
+        self.assertIn("tool/launch is a declared launcher, refused at line ", str(raised.exception), source)
+        self.assertIn(reason, str(raised.exception), source)
+        return str(raised.exception)
+
     def test_a_declared_launcher_passes(self):
-        self.census(self.launcher % '"node", "x.js"', self.declared)
+        for call in ('exec.Command("node", "x.js")', 'exec.CommandContext(context.Background(), "go", "test", "-c")',
+                     'exec.CommandContext(ctx, `node`)', 'toolchain.CommandIn(directory, "go", arguments...)',
+                     'exec.Command("/usr/bin/node")'):
+            self.census(self.launcher % call, self.declared)
+
+    def test_a_comment_or_a_definition_is_no_launch(self):
+        source = self.launcher % 'exec.Command("node")' + '\n// exec.Command(name) is what it would be\n/* exec.Command(other) */\nfunc CommandIn(directory, name string) {}\nfunc command() *exec.Cmd {\n\treturn nil\n}\nvar text = "exec.Command(name)"\n'
+        self.census(source, self.declared)
 
     def test_a_launcher_that_runs_the_compiler_is_refused(self):
-        for source in (self.launcher % '"adamic", "c", "x.a"', self.launcher % 'os.Getenv("ADAMIC_BIN")'):
-            with self.assertRaises(run.ChangeRefusal, msg=source):
-                self.census(source, self.declared)
+        self.refused(self.launcher % 'exec.Command("adamic", "c", "x.a")', 'references the compiler ("adamic")')
+        self.refused(self.launcher % 'exec.Command(os.Getenv("ADAMIC_BIN"))', "references the compiler (ADAMIC_BIN)")
+
+    def test_a_computed_executable_is_refused_naming_its_line(self):
+        # The fourth mutant: nothing in the file references the compiler, and the path it runs could be it.
+        self.assertIn("refused at line 6: launches a computed executable, exec.Command(compilerPath())",
+                      self.refused(self.launcher % "exec.Command(compilerPath())", "computed executable"))
+        for call in ("exec.CommandContext(ctx, name, arguments...)", 'exec.Command(name, "x")', "exec.Command(names[0])",
+                     'exec.Command("no" + "de")', "toolchain.CommandIn(directory, tool)", "exec.CommandContext(context.WithTimeout(ctx, limit), path)"):
+            self.refused(self.launcher % call, "computed executable")
+
+    def test_a_launch_whose_path_is_always_computed_is_refused(self):
+        for call, reason in (("os.StartProcess(path, nil, nil)", "computed path (os.StartProcess)"),
+                             ("syscall.Exec(path, nil, nil)", "computed path (syscall.Exec)"),
+                             ("syscall.ForkExec(path, nil, nil)", "computed path (syscall.ForkExec)"),
+                             ("(&exec.Cmd{Path: path})", "builds an exec.Cmd by hand")):
+            self.refused(self.launcher % call, reason)
+
+    def test_an_aliased_os_exec_is_read_and_a_dot_import_refused(self):
+        aliased = self.launcher.replace('import "os/exec"', 'import run "os/exec"')
+        self.census(aliased % 'run.Command("node")', self.declared)
+        self.refused(aliased % "run.Command(compilerPath())", "computed executable")
+        self.refused(self.launcher.replace('import "os/exec"', 'import . "os/exec"') % 'Command("node")', "imports os/exec as .")
 
     def test_a_literal_name_the_declaration_doesnt_list_is_refused(self):
-        with self.assertRaises(run.ChangeRefusal):
-            self.census(self.launcher % '"python3", "x.py"', self.declared)
+        self.refused(self.launcher % 'exec.Command("python3", "x.py")', "launches python3, which its declaration's runs don't name")
 
     def test_an_undeclared_launcher_is_refused(self):
         with self.assertRaises(run.ChangeRefusal):
-            self.census(self.launcher % '"node", "x.js"', {})
+            self.census(self.launcher % 'exec.Command("node", "x.js")', {})
 
     def test_a_bad_declaration_is_a_bad_map(self):
         for declaration in ({"runs": ["node", "adamic"], "why": "x"}, {"runs": ["node"]}, {"runs": [], "why": "x"}):
             with self.assertRaises(ValueError, msg=declaration) as raised:
-                self.census(self.launcher % '"node"', {"tool/launch": declaration})
+                self.census(self.launcher % 'exec.Command("node")', {"tool/launch": declaration})
             self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
