@@ -14,11 +14,18 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
+# Read the getter refusal controls from the same helper programs() uses.
+flow_source = (root / 'internal/flow/flow_test.go').read_text()
+getters_helper = re.search(r'func refusedGettersCensusFixture\([^)]*\) bool \{(.*?)\n\}', flow_source, re.S)
+if getters_helper is None:
+    raise SystemExit('cannot find flow getter refusal controls')
+getters_refusals = set(re.findall(r'"([^"]+\.a)"', getters_helper.group(1)))
+
 # Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in getters_refusals or name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []

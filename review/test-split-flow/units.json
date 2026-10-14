@@ -682,6 +682,46 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_apply_a_dbcf254a71e4",
+    "program": "internal/oracle/testdata/call_presence_apply.a",
+    "path": "../oracle/testdata/call_presence_apply.a",
+    "sha256": "aa046aa093d895e938cec3b40db332f4999c2f9b63d9e698e6c51f8caebf7120"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_closure_a_a1077032cace",
+    "program": "internal/oracle/testdata/call_presence_closure.a",
+    "path": "../oracle/testdata/call_presence_closure.a",
+    "sha256": "b05c0cdf0d392380c966bb0d72129a33760d4a8fbbc816e442fbf5754d2435ca"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_direct_a_aec5cbc872f3",
+    "program": "internal/oracle/testdata/call_presence_direct.a",
+    "path": "../oracle/testdata/call_presence_direct.a",
+    "sha256": "a9336865eb572bd5e27d7de069072b5339d206b85c8f310534f8d8819e6f8a38"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_method_a_f9017e341766",
+    "program": "internal/oracle/testdata/call_presence_method.a",
+    "path": "../oracle/testdata/call_presence_method.a",
+    "sha256": "2d0c7ee0e024db98b5417e31d1135b899a6ee70f14d801f63eabaff88957fc62"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_spread_a_2fbf53be0768",
+    "program": "internal/oracle/testdata/call_presence_spread.a",
+    "path": "../oracle/testdata/call_presence_spread.a",
+    "sha256": "dba25bfebbd92eff55a38735a3d7dc75b125ae4486fe56b48d1f3bc5d9c1ac12"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_call_targets_closure_a_eb889fade84a",
     "program": "internal/oracle/testdata/call_targets_closure.a",
     "path": "../oracle/testdata/call_targets_closure.a",
@@ -2166,6 +2206,30 @@
     "program": "internal/oracle/testdata/generic_values.a",
     "path": "../oracle/testdata/generic_values.a",
     "sha256": "f3f4ee3bbf2aaf60165a1ec7278df2fbf85826212ac9485e9acd06070da9eba3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
   },
   {
     "package": "flow",
@@ -7314,6 +7378,46 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_apply_a_dbcf254a71e4",
+    "program": "internal/oracle/testdata/call_presence_apply.a",
+    "path": "../oracle/testdata/call_presence_apply.a",
+    "sha256": "aa046aa093d895e938cec3b40db332f4999c2f9b63d9e698e6c51f8caebf7120"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_closure_a_a1077032cace",
+    "program": "internal/oracle/testdata/call_presence_closure.a",
+    "path": "../oracle/testdata/call_presence_closure.a",
+    "sha256": "b05c0cdf0d392380c966bb0d72129a33760d4a8fbbc816e442fbf5754d2435ca"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_direct_a_aec5cbc872f3",
+    "program": "internal/oracle/testdata/call_presence_direct.a",
+    "path": "../oracle/testdata/call_presence_direct.a",
+    "sha256": "a9336865eb572bd5e27d7de069072b5339d206b85c8f310534f8d8819e6f8a38"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_method_a_f9017e341766",
+    "program": "internal/oracle/testdata/call_presence_method.a",
+    "path": "../oracle/testdata/call_presence_method.a",
+    "sha256": "2d0c7ee0e024db98b5417e31d1135b899a6ee70f14d801f63eabaff88957fc62"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_spread_a_2fbf53be0768",
+    "program": "internal/oracle/testdata/call_presence_spread.a",
+    "path": "../oracle/testdata/call_presence_spread.a",
+    "sha256": "dba25bfebbd92eff55a38735a3d7dc75b125ae4486fe56b48d1f3bc5d9c1ac12"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_call_targets_closure_a_eb889fade84a",
     "program": "internal/oracle/testdata/call_targets_closure.a",
     "path": "../oracle/testdata/call_targets_closure.a",
@@ -8798,6 +8902,30 @@
     "program": "internal/oracle/testdata/generic_values.a",
     "path": "../oracle/testdata/generic_values.a",
     "sha256": "f3f4ee3bbf2aaf60165a1ec7278df2fbf85826212ac9485e9acd06070da9eba3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
   },
   {
     "package": "flow",
@@ -13946,6 +14074,46 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_apply_a_dbcf254a71e4",
+    "program": "internal/oracle/testdata/call_presence_apply.a",
+    "path": "../oracle/testdata/call_presence_apply.a",
+    "sha256": "aa046aa093d895e938cec3b40db332f4999c2f9b63d9e698e6c51f8caebf7120"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_closure_a_a1077032cace",
+    "program": "internal/oracle/testdata/call_presence_closure.a",
+    "path": "../oracle/testdata/call_presence_closure.a",
+    "sha256": "b05c0cdf0d392380c966bb0d72129a33760d4a8fbbc816e442fbf5754d2435ca"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_direct_a_aec5cbc872f3",
+    "program": "internal/oracle/testdata/call_presence_direct.a",
+    "path": "../oracle/testdata/call_presence_direct.a",
+    "sha256": "a9336865eb572bd5e27d7de069072b5339d206b85c8f310534f8d8819e6f8a38"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_method_a_f9017e341766",
+    "program": "internal/oracle/testdata/call_presence_method.a",
+    "path": "../oracle/testdata/call_presence_method.a",
+    "sha256": "2d0c7ee0e024db98b5417e31d1135b899a6ee70f14d801f63eabaff88957fc62"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_spread_a_2fbf53be0768",
+    "program": "internal/oracle/testdata/call_presence_spread.a",
+    "path": "../oracle/testdata/call_presence_spread.a",
+    "sha256": "dba25bfebbd92eff55a38735a3d7dc75b125ae4486fe56b48d1f3bc5d9c1ac12"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_call_targets_closure_a_eb889fade84a",
     "program": "internal/oracle/testdata/call_targets_closure.a",
     "path": "../oracle/testdata/call_targets_closure.a",
@@ -15430,6 +15598,30 @@
     "program": "internal/oracle/testdata/generic_values.a",
     "path": "../oracle/testdata/generic_values.a",
     "sha256": "f3f4ee3bbf2aaf60165a1ec7278df2fbf85826212ac9485e9acd06070da9eba3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
   },
   {
     "package": "flow",
@@ -20578,6 +20770,46 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_apply_a_dbcf254a71e4",
+    "program": "internal/oracle/testdata/call_presence_apply.a",
+    "path": "../oracle/testdata/call_presence_apply.a",
+    "sha256": "aa046aa093d895e938cec3b40db332f4999c2f9b63d9e698e6c51f8caebf7120"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_closure_a_a1077032cace",
+    "program": "internal/oracle/testdata/call_presence_closure.a",
+    "path": "../oracle/testdata/call_presence_closure.a",
+    "sha256": "b05c0cdf0d392380c966bb0d72129a33760d4a8fbbc816e442fbf5754d2435ca"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_direct_a_aec5cbc872f3",
+    "program": "internal/oracle/testdata/call_presence_direct.a",
+    "path": "../oracle/testdata/call_presence_direct.a",
+    "sha256": "a9336865eb572bd5e27d7de069072b5339d206b85c8f310534f8d8819e6f8a38"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_method_a_f9017e341766",
+    "program": "internal/oracle/testdata/call_presence_method.a",
+    "path": "../oracle/testdata/call_presence_method.a",
+    "sha256": "2d0c7ee0e024db98b5417e31d1135b899a6ee70f14d801f63eabaff88957fc62"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_call_presence_spread_a_2fbf53be0768",
+    "program": "internal/oracle/testdata/call_presence_spread.a",
+    "path": "../oracle/testdata/call_presence_spread.a",
+    "sha256": "dba25bfebbd92eff55a38735a3d7dc75b125ae4486fe56b48d1f3bc5d9c1ac12"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_call_targets_closure_a_eb889fade84a",
     "program": "internal/oracle/testdata/call_targets_closure.a",
     "path": "../oracle/testdata/call_targets_closure.a",
@@ -22062,6 +22294,30 @@
     "program": "internal/oracle/testdata/generic_values.a",
     "path": "../oracle/testdata/generic_values.a",
     "sha256": "f3f4ee3bbf2aaf60165a1ec7278df2fbf85826212ac9485e9acd06070da9eba3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
   },
   {
     "package": "flow",
@@ -27218,6 +27474,46 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_call_presence_apply_a_dbcf254a71e4",
+    "program": "internal/oracle/testdata/call_presence_apply.a",
+    "path": "../oracle/testdata/call_presence_apply.a",
+    "sha256": "aa046aa093d895e938cec3b40db332f4999c2f9b63d9e698e6c51f8caebf7120"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_call_presence_closure_a_a1077032cace",
+    "program": "internal/oracle/testdata/call_presence_closure.a",
+    "path": "../oracle/testdata/call_presence_closure.a",
+    "sha256": "b05c0cdf0d392380c966bb0d72129a33760d4a8fbbc816e442fbf5754d2435ca"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_call_presence_direct_a_aec5cbc872f3",
+    "program": "internal/oracle/testdata/call_presence_direct.a",
+    "path": "../oracle/testdata/call_presence_direct.a",
+    "sha256": "a9336865eb572bd5e27d7de069072b5339d206b85c8f310534f8d8819e6f8a38"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_call_presence_method_a_f9017e341766",
+    "program": "internal/oracle/testdata/call_presence_method.a",
+    "path": "../oracle/testdata/call_presence_method.a",
+    "sha256": "2d0c7ee0e024db98b5417e31d1135b899a6ee70f14d801f63eabaff88957fc62"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_call_presence_spread_a_2fbf53be0768",
+    "program": "internal/oracle/testdata/call_presence_spread.a",
+    "path": "../oracle/testdata/call_presence_spread.a",
+    "sha256": "dba25bfebbd92eff55a38735a3d7dc75b125ae4486fe56b48d1f3bc5d9c1ac12"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_call_targets_closure_a_eb889fade84a",
     "program": "internal/oracle/testdata/call_targets_closure.a",
     "path": "../oracle/testdata/call_targets_closure.a",
@@ -28702,6 +28998,174 @@
     "program": "internal/oracle/testdata/generic_values.a",
     "path": "../oracle/testdata/generic_values.a",
     "sha256": "f3f4ee3bbf2aaf60165a1ec7278df2fbf85826212ac9485e9acd06070da9eba3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_binary_function_a_3b46c41a76d7",
+    "program": "internal/oracle/testdata/getters_census_binary_function.a",
+    "path": "../oracle/testdata/getters_census_binary_function.a",
+    "sha256": "6d6fe64e8569967fb0a6bd590c853a552763e626d124895cb464dab829c763fb"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_callback_pair_methods_a_be50df445a04",
+    "program": "internal/oracle/testdata/getters_census_callback_pair_methods.a",
+    "path": "../oracle/testdata/getters_census_callback_pair_methods.a",
+    "sha256": "793b5c24a9e915e21a5e4baa42741a07561f3edb8bf988c9a16c1681d7b0a074"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_number_methods_a_677dd2030a20",
+    "program": "internal/oracle/testdata/getters_census_closure_number_methods.a",
+    "path": "../oracle/testdata/getters_census_closure_number_methods.a",
+    "sha256": "b7362c778058b4ee04d537d686a93b71ceab5123f130ed9ddbca1889ed37504f"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_number_next_a_80510145a441",
+    "program": "internal/oracle/testdata/getters_census_closure_number_next.a",
+    "path": "../oracle/testdata/getters_census_closure_number_next.a",
+    "sha256": "337ac197648a09151fa1c4ae55ce37212d81afa55da8718f60bf8693b64eb3ce"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_union_next_a_b1f2494204e1",
+    "program": "internal/oracle/testdata/getters_census_closure_union_next.a",
+    "path": "../oracle/testdata/getters_census_closure_union_next.a",
+    "sha256": "521c2ac6b591b1272990f66e6ae7cd6426bb2893666436cbd81927f760158030"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_higher_callback_pair_methods_a_7972dab473dc",
+    "program": "internal/oracle/testdata/getters_census_higher_callback_pair_methods.a",
+    "path": "../oracle/testdata/getters_census_higher_callback_pair_methods.a",
+    "sha256": "c891ca8316304868cfd20427a291cbdfe98da4274590b774f512cea8fd9cb40b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_lazy_object_a_432b28f4dfe8",
+    "program": "internal/oracle/testdata/getters_census_lazy_object.a",
+    "path": "../oracle/testdata/getters_census_lazy_object.a",
+    "sha256": "6aeade35e8d6774f5f3fada84d9280705e92bd7f65c8ab32069a03cd4a369a15"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_boolean_function_a_8aff4bdd0e90",
+    "program": "internal/oracle/testdata/getters_census_optional_boolean_function.a",
+    "path": "../oracle/testdata/getters_census_optional_boolean_function.a",
+    "sha256": "99886bb932bcdeb82ecafd4aa6456f8d7093c4f4dc9743e26cd7c8b50d9e5514"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_comment_function_a_2029e3521983",
+    "program": "internal/oracle/testdata/getters_census_optional_comment_function.a",
+    "path": "../oracle/testdata/getters_census_optional_comment_function.a",
+    "sha256": "8efc4e9c3e0820221b25f48126a57ae337078acdd88c05b1f7153b739853b2c1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_type_function_a_cd5f07b5b690",
+    "program": "internal/oracle/testdata/getters_census_optional_type_function.a",
+    "path": "../oracle/testdata/getters_census_optional_type_function.a",
+    "sha256": "a9be9232b55f687a8bd6ece7f4cb590b3f557c38139b7fb31459b5d3cdd41974"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_overloaded_function_a_ba2c01de019e",
+    "program": "internal/oracle/testdata/getters_census_overloaded_function.a",
+    "path": "../oracle/testdata/getters_census_overloaded_function.a",
+    "sha256": "5cfbcacb9c50a48586ce6671d31056ac17eba4ea7675e4efa0976099df57eab2"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_primary_function_a_7a40b40de68a",
+    "program": "internal/oracle/testdata/getters_census_primary_function.a",
+    "path": "../oracle/testdata/getters_census_primary_function.a",
+    "sha256": "39bca8f2f1657e55528615e1340f74947cffd6458dbe8307c31125786f4b139b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_snapshot_next_a_69ca8f62041c",
+    "program": "internal/oracle/testdata/getters_census_snapshot_next.a",
+    "path": "../oracle/testdata/getters_census_snapshot_next.a",
+    "sha256": "98927c4c249aea6c20220c5e3475ae741176b99b36424c809151e76cfa7773b1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_unary_function_a_e1dc5e26e4f4",
+    "program": "internal/oracle/testdata/getters_census_unary_function.a",
+    "path": "../oracle/testdata/getters_census_unary_function.a",
+    "sha256": "a25309ec10c210811e0e230c6b7287504c432c759f2f67a2ad280eabd5d5ba54"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_unary_node_function_a_26e29f471fc7",
+    "program": "internal/oracle/testdata/getters_census_unary_node_function.a",
+    "path": "../oracle/testdata/getters_census_unary_node_function.a",
+    "sha256": "5c4de901d256ecdb97cb95b3b1f5988784afecea99eba21b7540695e317600c3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_comment_function_a_24e4bd0b0eb8",
+    "program": "internal/oracle/testdata/getters_census_update_comment_function.a",
+    "path": "../oracle/testdata/getters_census_update_comment_function.a",
+    "sha256": "289f7cf4620cf0019d397df273124dd672c42df3061fa6e6bbbe0c7a05ace321"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_node_function_a_4e79d9aa3c1a",
+    "program": "internal/oracle/testdata/getters_census_update_node_function.a",
+    "path": "../oracle/testdata/getters_census_update_node_function.a",
+    "sha256": "04d188fc4bb30ae9b309dba9c19b9d9903f72250b6af87463272fbf1382715cf"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_type_function_a_36f5dfd0d83a",
+    "program": "internal/oracle/testdata/getters_census_update_type_function.a",
+    "path": "../oracle/testdata/getters_census_update_type_function.a",
+    "sha256": "e9ab04959d8a07692e584cea3ca6a8f06d5f0ec0381a731f3817a2ab39586801"
   },
   {
     "package": "fresh",
