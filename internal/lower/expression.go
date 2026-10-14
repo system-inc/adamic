@@ -486,6 +486,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.libraryMethodValue(node); known {
 		return value, err
 	}
+	if value, handled, err := l.libraryIteratorObservation(node); handled {
+		return value, err
+	}
 	if l.isArgumentsLength(node) {
 		return l.readArgumentsCount(), nil
 	}
@@ -947,6 +950,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if l.libraryIteratorTagType(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
+			value = l.libraryIteratorString(value)
+		}
 		switch value.Type() {
 		case ir.Number:
 			value = ir.NumberToString{Value: value}
@@ -1313,7 +1319,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// not retain a source signature to prove its required arguments or ABI.
 		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}

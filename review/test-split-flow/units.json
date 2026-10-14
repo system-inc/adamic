@@ -26784,6 +26784,550 @@
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
   },
   {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_903f25b_iterator_tag_a_46c5d58560da",
+    "program": "internal/oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "path": "../oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "sha256": "524ba4301c9818a527584fb1d3c02b74f6ae8f44a52d9f8d257068a680ffe5c1"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_903f25b_iterator_tag_a_46c5d58560da",
+    "program": "internal/oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "path": "../oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "sha256": "524ba4301c9818a527584fb1d3c02b74f6ae8f44a52d9f8d257068a680ffe5c1"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_903f25b_iterator_tag_a_46c5d58560da",
+    "program": "internal/oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "path": "../oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "sha256": "524ba4301c9818a527584fb1d3c02b74f6ae8f44a52d9f8d257068a680ffe5c1"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_903f25b_iterator_tag_a_46c5d58560da",
+    "program": "internal/oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "path": "../oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "sha256": "524ba4301c9818a527584fb1d3c02b74f6ae8f44a52d9f8d257068a680ffe5c1"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_array_checked_a_e03a29dfb1a8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "sha256": "ff9801e0e5979cfe7e2e3ad4cf6e7aeed271c23de7372df97dde11a87e056eba"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_array_checked_a_e03a29dfb1a8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "sha256": "ff9801e0e5979cfe7e2e3ad4cf6e7aeed271c23de7372df97dde11a87e056eba"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_array_checked_a_e03a29dfb1a8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "sha256": "ff9801e0e5979cfe7e2e3ad4cf6e7aeed271c23de7372df97dde11a87e056eba"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_array_checked_a_e03a29dfb1a8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "sha256": "ff9801e0e5979cfe7e2e3ad4cf6e7aeed271c23de7372df97dde11a87e056eba"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_identity_close_a_0689a803fcda",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "sha256": "e9492a625a64587c7255d3146d7c12c1d9419b5ad331de375ffeee42689abae0"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_identity_close_a_0689a803fcda",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "sha256": "e9492a625a64587c7255d3146d7c12c1d9419b5ad331de375ffeee42689abae0"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_identity_close_a_0689a803fcda",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "sha256": "e9492a625a64587c7255d3146d7c12c1d9419b5ad331de375ffeee42689abae0"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_identity_close_a_0689a803fcda",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "sha256": "e9492a625a64587c7255d3146d7c12c1d9419b5ad331de375ffeee42689abae0"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_map_set_live_a_185fd9dfb03b",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "sha256": "73fac6e2755c7b02887a3c391663bd7894787cd8a172047d26c85bb5d990d083"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_map_set_live_a_185fd9dfb03b",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "sha256": "73fac6e2755c7b02887a3c391663bd7894787cd8a172047d26c85bb5d990d083"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_map_set_live_a_185fd9dfb03b",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "sha256": "73fac6e2755c7b02887a3c391663bd7894787cd8a172047d26c85bb5d990d083"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_map_set_live_a_185fd9dfb03b",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "sha256": "73fac6e2755c7b02887a3c391663bd7894787cd8a172047d26c85bb5d990d083"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_string_next_a_c94bb0197ad4",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "sha256": "75e6bb763d8eafe8882a60343e84c8723fe9194a737970e1f595e0d6a808a31c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_string_next_a_c94bb0197ad4",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "sha256": "75e6bb763d8eafe8882a60343e84c8723fe9194a737970e1f595e0d6a808a31c"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_string_next_a_c94bb0197ad4",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "sha256": "75e6bb763d8eafe8882a60343e84c8723fe9194a737970e1f595e0d6a808a31c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_string_next_a_c94bb0197ad4",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "sha256": "75e6bb763d8eafe8882a60343e84c8723fe9194a737970e1f595e0d6a808a31c"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tags_a_bcfe90816de1",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "sha256": "7d3784ddcdd26e0dbb897c73d577fa6ca277728c8f12f240a5794c7b70a28539"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tags_a_bcfe90816de1",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "sha256": "7d3784ddcdd26e0dbb897c73d577fa6ca277728c8f12f240a5794c7b70a28539"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tags_a_bcfe90816de1",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "sha256": "7d3784ddcdd26e0dbb897c73d577fa6ca277728c8f12f240a5794c7b70a28539"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tags_a_bcfe90816de1",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "sha256": "7d3784ddcdd26e0dbb897c73d577fa6ca277728c8f12f240a5794c7b70a28539"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_to_array_a_90e860a34ccc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "sha256": "7980e4d574ebd3d8ad48a51e0a62ff1db7d222c153562d8de9b26a60b08c4720"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_to_array_a_90e860a34ccc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "sha256": "7980e4d574ebd3d8ad48a51e0a62ff1db7d222c153562d8de9b26a60b08c4720"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_to_array_a_90e860a34ccc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "sha256": "7980e4d574ebd3d8ad48a51e0a62ff1db7d222c153562d8de9b26a60b08c4720"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_to_array_a_90e860a34ccc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "sha256": "7980e4d574ebd3d8ad48a51e0a62ff1db7d222c153562d8de9b26a60b08c4720"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tsc_helpers_a_4f998ca39818",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "sha256": "a4ae8c211e56a58d757f1e276c59551ea490705a580a3c6581636f30eb8a7966"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tsc_helpers_a_4f998ca39818",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "sha256": "a4ae8c211e56a58d757f1e276c59551ea490705a580a3c6581636f30eb8a7966"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tsc_helpers_a_4f998ca39818",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "sha256": "a4ae8c211e56a58d757f1e276c59551ea490705a580a3c6581636f30eb8a7966"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_iterator_tsc_helpers_a_4f998ca39818",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "sha256": "a4ae8c211e56a58d757f1e276c59551ea490705a580a3c6581636f30eb8a7966"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_callback_a_3d51ef280b94",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "sha256": "cf2d5af776fbd43fd51d77db39da78e7c0fb0efd565195abe06daa8d5923a64c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_callback_a_3d51ef280b94",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "sha256": "cf2d5af776fbd43fd51d77db39da78e7c0fb0efd565195abe06daa8d5923a64c"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_callback_a_3d51ef280b94",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "sha256": "cf2d5af776fbd43fd51d77db39da78e7c0fb0efd565195abe06daa8d5923a64c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_callback_a_3d51ef280b94",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "sha256": "cf2d5af776fbd43fd51d77db39da78e7c0fb0efd565195abe06daa8d5923a64c"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_done_a_01d2817ed157",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "sha256": "61e0099903c087398cd57309727842dab9a06b865d0e221d9db2b2d6629544b0"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_done_a_01d2817ed157",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "sha256": "61e0099903c087398cd57309727842dab9a06b865d0e221d9db2b2d6629544b0"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_done_a_01d2817ed157",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "sha256": "61e0099903c087398cd57309727842dab9a06b865d0e221d9db2b2d6629544b0"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_done_a_01d2817ed157",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "sha256": "61e0099903c087398cd57309727842dab9a06b865d0e221d9db2b2d6629544b0"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_entries_a_83afe57302fc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "sha256": "34fa9f3cb5a12409d354339f8e4d33b9a9af85eac99758ca2cc5d86db88096b2"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_entries_a_83afe57302fc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "sha256": "34fa9f3cb5a12409d354339f8e4d33b9a9af85eac99758ca2cc5d86db88096b2"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_entries_a_83afe57302fc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "sha256": "34fa9f3cb5a12409d354339f8e4d33b9a9af85eac99758ca2cc5d86db88096b2"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_entries_a_83afe57302fc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "sha256": "34fa9f3cb5a12409d354339f8e4d33b9a9af85eac99758ca2cc5d86db88096b2"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_iterable_a_571705ff6ba8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "sha256": "3404cf72068def07d6fe0f4ab847a9643ac664c9d71234bfd1e86afe11c36584"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_iterable_a_571705ff6ba8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "sha256": "3404cf72068def07d6fe0f4ab847a9643ac664c9d71234bfd1e86afe11c36584"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_iterable_a_571705ff6ba8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "sha256": "3404cf72068def07d6fe0f4ab847a9643ac664c9d71234bfd1e86afe11c36584"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_iterable_a_571705ff6ba8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "sha256": "3404cf72068def07d6fe0f4ab847a9643ac664c9d71234bfd1e86afe11c36584"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_nested_entries_a_72a454c9daee",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "sha256": "be28f2d3bcd36187fda901a5346aa77041cc959aa6ac38bebdcef94cdae97898"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_nested_entries_a_72a454c9daee",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "sha256": "be28f2d3bcd36187fda901a5346aa77041cc959aa6ac38bebdcef94cdae97898"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_nested_entries_a_72a454c9daee",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "sha256": "be28f2d3bcd36187fda901a5346aa77041cc959aa6ac38bebdcef94cdae97898"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_library_overlay_nested_entries_a_72a454c9daee",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "sha256": "be28f2d3bcd36187fda901a5346aa77041cc959aa6ac38bebdcef94cdae97898"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_array_entries_a_81db03cde4e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "sha256": "433085308160eb86bcf5f17d2842ffbb0d3161965af99a7307cb699638c05506"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_array_entries_a_81db03cde4e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "sha256": "433085308160eb86bcf5f17d2842ffbb0d3161965af99a7307cb699638c05506"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_array_entries_a_81db03cde4e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "sha256": "433085308160eb86bcf5f17d2842ffbb0d3161965af99a7307cb699638c05506"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_array_entries_a_81db03cde4e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "sha256": "433085308160eb86bcf5f17d2842ffbb0d3161965af99a7307cb699638c05506"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_map_entries_a_f66442c64447",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "sha256": "9f762bd8ea2f3408f808eda2414cb6468451e93b4c555b53704e46451ef9044e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_map_entries_a_f66442c64447",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "sha256": "9f762bd8ea2f3408f808eda2414cb6468451e93b4c555b53704e46451ef9044e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_map_entries_a_f66442c64447",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "sha256": "9f762bd8ea2f3408f808eda2414cb6468451e93b4c555b53704e46451ef9044e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_map_entries_a_f66442c64447",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "sha256": "9f762bd8ea2f3408f808eda2414cb6468451e93b4c555b53704e46451ef9044e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_a_cd38e01e9e48",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "sha256": "6647ce466a9e029118809c6ba96d9a776c7bef1c8fd2908d3bc9e36071334cce"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_a_cd38e01e9e48",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "sha256": "6647ce466a9e029118809c6ba96d9a776c7bef1c8fd2908d3bc9e36071334cce"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_a_cd38e01e9e48",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "sha256": "6647ce466a9e029118809c6ba96d9a776c7bef1c8fd2908d3bc9e36071334cce"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_a_cd38e01e9e48",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "sha256": "6647ce466a9e029118809c6ba96d9a776c7bef1c8fd2908d3bc9e36071334cce"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_checked_a_217ff645d1e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "sha256": "dbcaf8c65a8cdf7f3c4163a550f1bab60366c3932f9e3b024c770e1a03f28e4c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_checked_a_217ff645d1e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "sha256": "dbcaf8c65a8cdf7f3c4163a550f1bab60366c3932f9e3b024c770e1a03f28e4c"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_checked_a_217ff645d1e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "sha256": "dbcaf8c65a8cdf7f3c4163a550f1bab60366c3932f9e3b024c770e1a03f28e4c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_checked_a_217ff645d1e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "sha256": "dbcaf8c65a8cdf7f3c4163a550f1bab60366c3932f9e3b024c770e1a03f28e4c"
+  },
+  {
     "package": "fresh",
     "family": "Writes",
     "test": "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f",
@@ -33422,5 +33966,141 @@
     "program": "internal/flow/testdata/mutations.a",
     "path": "../flow/testdata/mutations.a",
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_903f25b_iterator_tag_a_46c5d58560da",
+    "program": "internal/oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "path": "../oracle/testdata/sequence_iterators/903f25b_iterator_tag.a",
+    "sha256": "524ba4301c9818a527584fb1d3c02b74f6ae8f44a52d9f8d257068a680ffe5c1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_array_checked_a_e03a29dfb1a8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_array_checked.a",
+    "sha256": "ff9801e0e5979cfe7e2e3ad4cf6e7aeed271c23de7372df97dde11a87e056eba"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_identity_close_a_0689a803fcda",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_identity_close.a",
+    "sha256": "e9492a625a64587c7255d3146d7c12c1d9419b5ad331de375ffeee42689abae0"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_map_set_live_a_185fd9dfb03b",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_map_set_live.a",
+    "sha256": "73fac6e2755c7b02887a3c391663bd7894787cd8a172047d26c85bb5d990d083"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_string_next_a_c94bb0197ad4",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_string_next.a",
+    "sha256": "75e6bb763d8eafe8882a60343e84c8723fe9194a737970e1f595e0d6a808a31c"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_tags_a_bcfe90816de1",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tags.a",
+    "sha256": "7d3784ddcdd26e0dbb897c73d577fa6ca277728c8f12f240a5794c7b70a28539"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_to_array_a_90e860a34ccc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_to_array.a",
+    "sha256": "7980e4d574ebd3d8ad48a51e0a62ff1db7d222c153562d8de9b26a60b08c4720"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_iterator_tsc_helpers_a_4f998ca39818",
+    "program": "internal/oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "path": "../oracle/testdata/sequence_iterators/library_iterator_tsc_helpers.a",
+    "sha256": "a4ae8c211e56a58d757f1e276c59551ea490705a580a3c6581636f30eb8a7966"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_overlay_callback_a_3d51ef280b94",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_callback.a",
+    "sha256": "cf2d5af776fbd43fd51d77db39da78e7c0fb0efd565195abe06daa8d5923a64c"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_overlay_done_a_01d2817ed157",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_done.a",
+    "sha256": "61e0099903c087398cd57309727842dab9a06b865d0e221d9db2b2d6629544b0"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_overlay_entries_a_83afe57302fc",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_entries.a",
+    "sha256": "34fa9f3cb5a12409d354339f8e4d33b9a9af85eac99758ca2cc5d86db88096b2"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_overlay_iterable_a_571705ff6ba8",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_iterable.a",
+    "sha256": "3404cf72068def07d6fe0f4ab847a9643ac664c9d71234bfd1e86afe11c36584"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_library_overlay_nested_entries_a_72a454c9daee",
+    "program": "internal/oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/library_overlay_nested_entries.a",
+    "sha256": "be28f2d3bcd36187fda901a5346aa77041cc959aa6ac38bebdcef94cdae97898"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_runtime_tuple_array_entries_a_81db03cde4e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_array_entries.a",
+    "sha256": "433085308160eb86bcf5f17d2842ffbb0d3161965af99a7307cb699638c05506"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_runtime_tuple_map_entries_a_f66442c64447",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_map_entries.a",
+    "sha256": "9f762bd8ea2f3408f808eda2414cb6468451e93b4c555b53704e46451ef9044e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_a_cd38e01e9e48",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries.a",
+    "sha256": "6647ce466a9e029118809c6ba96d9a776c7bef1c8fd2908d3bc9e36071334cce"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_sequence_iterators_runtime_tuple_object_entries_checked_a_217ff645d1e9",
+    "program": "internal/oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "path": "../oracle/testdata/sequence_iterators/runtime_tuple_object_entries_checked.a",
+    "sha256": "dbcaf8c65a8cdf7f3c4163a550f1bab60366c3932f9e3b024c770e1a03f28e4c"
   }
 ]

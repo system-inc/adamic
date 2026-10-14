@@ -425,6 +425,9 @@ func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node
 }
 
 func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.librarySequenceIterator(node); handled {
+		return value, true, err
+	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	var receiverNode *ast.Node
 	var member *ast.Symbol

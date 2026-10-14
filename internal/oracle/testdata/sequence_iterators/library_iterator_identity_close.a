@@ -1,0 +1,53 @@
+const array = [1, 2, 3].values();
+const map = new Map<number, number>([
+    [1, 10],
+    [2, 20],
+    [3, 30],
+]).keys();
+const set = new Set<number>([1, 2, 3]).values();
+const string = 'A😀Z'[Symbol.iterator]();
+console.log(`${array[Symbol.iterator]() === array} ${map[Symbol.iterator]() === map}`);
+console.log(`${set[Symbol.iterator]() === set} ${string[Symbol.iterator]() === string}`);
+for(const value of array) {
+    console.log(`break ${value}`);
+    if(value === 1) {
+        break;
+    }
+}
+console.log(`after break ${array.next().value}`);
+function exitMap(): number {
+    for(const value of map) {
+        console.log(`return ${value}`);
+        if(value === 1) {
+            return 99;
+        }
+    }
+    return 0;
+}
+console.log(`${exitMap()} ${map.next().value}`);
+try {
+    for(const value of set) {
+        console.log(`throw ${value}`);
+        if(value === 1) {
+            throw new Error('body');
+        }
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+console.log(`after throw ${set.next().value}`);
+for(const value of string) {
+    console.log(`string break ${value}`);
+    if(value === 'A') {
+        break;
+    }
+}
+const resumed = string.next();
+if(!resumed.done) {
+    console.log(`${resumed.value.length} ${resumed.value.codePointAt(0)}`);
+}
+console.log(`${array[Symbol.iterator]() === array} ${map[Symbol.iterator]() === map}`);
+console.log(`${set[Symbol.iterator]() === set} ${string[Symbol.iterator]() === string}`);

@@ -1,0 +1,16 @@
+const text = 'aé😀\ud800x\udc00'.repeat(2);
+const iterator = text[Symbol.iterator]();
+const first = iterator.next();
+console.log(`${first.done} ${first.value}`);
+for(const point of iterator) {
+    console.log(`${point.length} ${point.charCodeAt(0)} ${point.codePointAt(0)}`);
+}
+const end = iterator.next();
+const again = iterator.next();
+console.log(`${end.done} ${end.value === undefined} ${again.done} ${again.value === undefined}`);
+const empty = ''[Symbol.iterator]();
+console.log(`${empty.next().done} ${empty.next().value === undefined}`);
+for(const point of text) {
+    console.log(`direct ${point.length} ${point.codePointAt(0)}`);
+}
+console.log(`${iterator[Symbol.iterator]() === iterator}`);

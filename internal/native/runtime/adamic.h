@@ -573,7 +573,7 @@ typedef struct adamic_map_iterator {
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
-adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+adamic_object *adamic_collection_iterator(void *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);

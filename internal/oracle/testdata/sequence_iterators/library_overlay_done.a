@@ -1,0 +1,22 @@
+const iterator = new Map<string, string>([['key', 'value']]).values();
+const yielded = iterator.next();
+if (!yielded.done) { console.log(yielded.value.toUpperCase()); }
+const completed = iterator.next();
+if (completed.done) { console.log(`${completed.done}`); }
+const setIterator = new Set<string>(['item']).values();
+const item = setIterator.next();
+if (!item.done) { console.log(item.value.toUpperCase()); }
+const end = setIterator.next();
+if (end.done) { console.log(`${end.done}`); }
+
+function yieldResult(explicit: boolean): IteratorYieldResult<string> {
+    if (explicit) { return { done: false, value: 'explicit' }; }
+    return { value: 'omitted' };
+}
+const omitted = yieldResult(false);
+if (!omitted.done) { console.log(omitted.value); }
+if (omitted.done) { console.log('wrong branch'); }
+console.log(`${omitted.done}`);
+const explicit = yieldResult(true);
+if (!explicit.done) { console.log(explicit.value); }
+console.log(`${explicit.done}`);
