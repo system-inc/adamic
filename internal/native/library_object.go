@@ -22,7 +22,13 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "hasOwn":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_own(%s, %s)", arguments[0], arguments[1]))
 	case "keys":
-		return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", arguments[0]))
+		if call.Arguments[0].Type() != ir.Union {
+			return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", arguments[0]))
+		}
+		fallthrough
+	case "getOwnPropertyNames":
+		e.declarations = append(e.declarations, "adamic_array *adamic_object_names(const adamic_heap *, bool);")
+		return e.own(ir.Array, fmt.Sprintf("adamic_object_names(%s, %t)", arguments[0], call.Method == "getOwnPropertyNames"))
 	case "values", "entries":
 		if call.Checked {
 			e.declarations = append(e.declarations, "adamic_array *adamic_object_values_checked(adamic_object *, int, const char *, bool, const adamic_value *, size_t);")

@@ -33422,5 +33422,165 @@
     "program": "internal/flow/testdata/mutations.a",
     "path": "../flow/testdata/mutations.a",
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_coercion_a_0f90d1a9d71b",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "sha256": "118370d9c2023b42f391d88562274fff7ea5dc2fdd1355e632472f2a52a93e72"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_coercion_a_0f90d1a9d71b",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "sha256": "118370d9c2023b42f391d88562274fff7ea5dc2fdd1355e632472f2a52a93e72"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_coercion_a_0f90d1a9d71b",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "sha256": "118370d9c2023b42f391d88562274fff7ea5dc2fdd1355e632472f2a52a93e72"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_coercion_a_0f90d1a9d71b",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "sha256": "118370d9c2023b42f391d88562274fff7ea5dc2fdd1355e632472f2a52a93e72"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_enumeration_a_7a997944a69e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "sha256": "de5732d3357ec0963c52f0395533dda278555ef175333b0688ef6223b9607c4f"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_enumeration_a_7a997944a69e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "sha256": "de5732d3357ec0963c52f0395533dda278555ef175333b0688ef6223b9607c4f"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_enumeration_a_7a997944a69e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "sha256": "de5732d3357ec0963c52f0395533dda278555ef175333b0688ef6223b9607c4f"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_enumeration_a_7a997944a69e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "sha256": "de5732d3357ec0963c52f0395533dda278555ef175333b0688ef6223b9607c4f"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_intrinsic_a_e19d3ff20432",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "sha256": "10902f520bdfeb6b78c2692d9920b3b3f69d705cc162ecad8e76746b952c0452"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_intrinsic_a_e19d3ff20432",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "sha256": "10902f520bdfeb6b78c2692d9920b3b3f69d705cc162ecad8e76746b952c0452"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_intrinsic_a_e19d3ff20432",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "sha256": "10902f520bdfeb6b78c2692d9920b3b3f69d705cc162ecad8e76746b952c0452"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_intrinsic_a_e19d3ff20432",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "sha256": "10902f520bdfeb6b78c2692d9920b3b3f69d705cc162ecad8e76746b952c0452"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_replaced_a_c4c49d3fc97e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "sha256": "f791b52320764600a1dedd261dad8b62339af153837caab2887996cb40e73761"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_replaced_a_c4c49d3fc97e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "sha256": "f791b52320764600a1dedd261dad8b62339af153837caab2887996cb40e73761"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_replaced_a_c4c49d3fc97e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "sha256": "f791b52320764600a1dedd261dad8b62339af153837caab2887996cb40e73761"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_object_intrinsics_library_object_replaced_a_c4c49d3fc97e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "sha256": "f791b52320764600a1dedd261dad8b62339af153837caab2887996cb40e73761"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_intrinsics_library_object_coercion_a_0f90d1a9d71b",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_coercion.a",
+    "sha256": "118370d9c2023b42f391d88562274fff7ea5dc2fdd1355e632472f2a52a93e72"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_intrinsics_library_object_enumeration_a_7a997944a69e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_enumeration.a",
+    "sha256": "de5732d3357ec0963c52f0395533dda278555ef175333b0688ef6223b9607c4f"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_intrinsics_library_object_intrinsic_a_e19d3ff20432",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_intrinsic.a",
+    "sha256": "10902f520bdfeb6b78c2692d9920b3b3f69d705cc162ecad8e76746b952c0452"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_object_intrinsics_library_object_replaced_a_c4c49d3fc97e",
+    "program": "internal/oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "path": "../oracle/testdata/object_intrinsics/library_object_replaced.a",
+    "sha256": "f791b52320764600a1dedd261dad8b62339af153837caab2887996cb40e73761"
   }
 ]
