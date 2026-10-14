@@ -2,20 +2,16 @@ package css
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -23,33 +19,6 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
-
-// cssParserCommand bounds each owned child, including its compiler descendants.
-func cssParserCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	return cssParserCommandContext(t, ctx, cancel, name, arguments...)
-}
-
-// Shared setup has no deadline; cancellation still kills the process group.
-func cssParserSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
-	return cssParserCommandContext(t, ctx, cancel, name, arguments...)
-}
-
-// cssParserGoCommand is cssParserSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env,
-// the environment whose compilers the Go oracle's key names.
-func cssParserGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := cssParserSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
 
 // cssCompilers are the C and C++ compilers go builds a Go oracle with, and the C compiler's report.
 type cssCompilers struct{ c, cPlusPlus, report string }
@@ -73,72 +42,9 @@ func cssGoCompilers() cssCompilers {
 	return compilers
 }
 
-func cssParserCommandContext(t *testing.T, ctx context.Context, cancel context.CancelFunc, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	t.Cleanup(func() {
-		cancel()
-		if command.Process != nil && command.ProcessState == nil {
-			_ = command.Cancel()
-		}
-	})
-	return command
-}
-
-// Setup retains process-group cancellation without a deadline of its own.
-func compositionSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
-	t.Cleanup(cancel)
-	return compositionCommandContext(ctx, name, arguments...)
-}
-
-// compositionGoCommand is compositionSetupCommand for go as toolchain resolves it,
-// run in directory under toolchain.Env, the environment whose compilers the
-// oracle's key names.
-func compositionGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := compositionSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
-
-func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	cmd := exec.CommandContext(ctx, name, arguments...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
-		if cmd.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	cmd.WaitDelay = time.Second
-	return cmd
-}
-
 // The overlay source and the complete Go module trees address each oracle by
 // content. Corpus enumeration stays live: only its binary is cached. The build
-// runs go under toolchain.Env (compositionGoCommand), so the key names the C and
+// runs go under toolchain.Env, so the key names the C and
 // C++ compilers that environment gives go, and the C compiler by its report.
 func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
 	t.Helper()
@@ -160,8 +66,9 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)...)
-		output, err := command.CombinedOutput()
+		command := toolchain.CommandContextIn(t.Context(), filepath.Join(repo, "cohere"), "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)...)
+		command.WaitDelay = time.Second
+		output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
@@ -322,7 +229,7 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 }
 
 // Go overlay builds use the same content-addressed cache as the other products. The build runs go under
-// toolchain.Env (cssParserGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
+// toolchain.Env, so its key names the C and C++ compilers that environment gives go, and the C
 // compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
 // didn't name could start to unseen.
 func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
@@ -397,7 +304,8 @@ func cssParserOracle(t *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		command := cssParserGoCommand(t, cohere, append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")...)
+		command := toolchain.CommandContextIn(t.Context(), cohere, "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")...)
+		command.WaitDelay = time.Second
 		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
@@ -436,8 +344,9 @@ func cssParserOracleIdentity(t *testing.T, path string) string {
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }
 
-func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) {
+func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 	t.Helper()
+	oracle := cssParserOracle(t)
 	repo, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -492,7 +401,8 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 		if err := os.WriteFile(requestPath, data, 0644); err != nil {
 			return err
 		}
-		cmd := cssParserSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+		cmd := toolchain.CommandContextIn(t.Context(), "", oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+		cmd.WaitDelay = time.Second
 		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
 		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
@@ -535,10 +445,12 @@ func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity
 		if err := os.WriteFile(input, data, 0644); err != nil {
 			return err
 		}
-		cmd := cssParserCommand(t, "node", script, library, input)
+		cmd := toolchain.Command("node", script, library, input)
+		cmd.Env = os.Environ()
+		cmd.WaitDelay = time.Second
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout, cmd.Stderr = &stdout, &stderr
-		if err := childguard.Run(cmd, childguard.Options{Stall: childStall}); err != nil || stderr.Len() != 0 {
+		if err := childguard.Run(cmd, childguard.Options{Stall: childStall, Ceiling: 90 * time.Second}); err != nil || stderr.Len() != 0 {
 			return fmt.Errorf("PostCSS oracle: %v; %s", err, &stderr)
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
@@ -629,9 +541,10 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 			defer os.Remove(overlayPath)
 			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
 			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := exec.CommandContext(t.Context(), "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)...)
-			cmd.Dir = filepath.Join(repo, "cohere")
-			output, err := cmd.CombinedOutput()
+			cmd := toolchain.CommandContextIn(t.Context(), filepath.Join(repo, "cohere"), "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)...)
+			// This printer build historically inherited the caller environment.
+			cmd.Env = nil
+			output, err := childguard.CombinedOutput(cmd, childguard.Options{Unbounded: true})
 			if err != nil {
 				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
 			}
@@ -675,8 +588,7 @@ var cssParserTopCorpusSetup struct {
 func prepareCSSParserTopCorpus(t *testing.T) {
 	t.Helper()
 	cssParserTopCorpusSetup.once.Do(func() {
-		oracle := cssParserOracle(t)
-		cases, answers := cachedCSSParserOracleOutputs(t, oracle)
+		cases, answers := cachedCSSParserOracleOutputs(t)
 		cssParserTopCorpusSetup.corpus = readCSSParserCorpus(t, cases, answers)
 		cssParserTopCorpusSetup.units = cssParserShards(cssParserTopCorpusSetup.corpus.keys)
 	})
