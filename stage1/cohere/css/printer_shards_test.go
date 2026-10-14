@@ -291,75 +291,82 @@ type cssModeShard struct {
 	cases  []cssCase
 }
 
-func cssModePlan(lines []string, count int) []cssModeShard {
-	parts := cssPartition(lines, count/8)
+// cssModePlan is the printer's shards: first the unmutated printer, each mode by cssPrinterPartitions content-hash
+// partitions, then each mutant in each mode on the one partition that holds its witness case. A case's id names its
+// check group ((mutant+1)*2 + mode) times the corpus size plus its line, so no two shards share an id.
+func cssModePlan(lines []string) []cssModeShard {
+	parts := cssPartition(lines, cssPrinterPartitions)
+	group := func(variant, modeIndex int, part []cssCase) cssModeShard {
+		unit := cssModeShard{mode: []string{"default", "narrow"}[modeIndex], mutant: variant}
+		for _, c := range part {
+			unit.cases = append(unit.cases, cssCase{((variant+1)*2+modeIndex)*len(lines) + c.id, c.line})
+		}
+		return unit
+	}
 	var plan []cssModeShard
-	for variant := -1; variant < len(printerMutants); variant++ {
-		for modeIndex, mode := range []string{"default", "narrow"} {
-			for _, part := range parts {
-				unit := cssModeShard{mode: mode, mutant: variant}
-				for _, c := range part {
-					unit.cases = append(unit.cases, cssCase{((variant+1)*2+modeIndex)*len(lines) + c.id, c.line})
-				}
-				plan = append(plan, unit)
-			}
+	for modeIndex := range 2 {
+		for _, part := range parts {
+			plan = append(plan, group(-1, modeIndex, part))
+		}
+	}
+	for variant, witness := range cssPrinterMutantWitness {
+		for modeIndex := range 2 {
+			plan = append(plan, group(variant, modeIndex, parts[cssPrinterOwner(lines[witness], cssPrinterPartitions)]))
 		}
 	}
 	return plan
 }
 
-func cssModeUnion(lines []string, plan []cssModeShard, count int) error {
-	if count%8 != 0 || count == 0 {
-		return fmt.Errorf("invalid mode shard count %d", count)
+// cssModeUnion holds the plan exact: every case in both modes exactly once across the unmutated shards, each by its
+// hash owner, and each mutant shard in each mode exactly its witness's whole partition.
+func cssModeUnion(lines []string, plan []cssModeShard) error {
+	if len(plan) != testCSSPrinterAgreesWithGoShards {
+		return fmt.Errorf("enumerated %d printer shards, declared %d", len(plan), testCSSPrinterAgreesWithGoShards)
 	}
-	for index, unit := range plan {
-		group := index / (count / 8)
-		if unit.mutant != group/2-1 || unit.mode != []string{"default", "narrow"}[group%2] {
+	var units [][]cssCase
+	for index, unit := range plan[:2*cssPrinterPartitions] {
+		group := index / cssPrinterPartitions
+		if unit.mutant != -1 || unit.mode != []string{"default", "narrow"}[group] {
 			return fmt.Errorf("incorrect mode/check group in shard %d", index)
 		}
 		for _, c := range unit.cases {
-			if c.id/len(lines) != group || cssPrinterOwner(c.line, count/8) != index%(count/8) {
+			if c.id/len(lines) != group || cssPrinterOwner(c.line, cssPrinterPartitions) != index%cssPrinterPartitions {
 				return fmt.Errorf("incorrect case owner in shard %d", index)
 			}
 		}
-	}
-	var units [][]cssCase
-	for _, unit := range plan {
 		units = append(units, unit.cases)
 	}
-	var enumeration []string
-	for range 8 {
-		enumeration = append(enumeration, lines...)
+	if err := cssUnion(append(append([]string{}, lines...), lines...), units, 2*cssPrinterPartitions); err != nil {
+		return err
 	}
-	return cssUnion(enumeration, units, count)
-}
-
-func cssPrinterModeShards(t *testing.T, path string, count int) []cssModeShard {
-	t.Helper()
-	parts := cssShards(t, path, count/8)
-	total := 0
-	for _, part := range parts {
-		total += len(part)
-	}
-	lines := make([]string, total)
-	for _, part := range parts {
-		for _, c := range part {
-			lines[c.id] = c.line
+	for offset, unit := range plan[2*cssPrinterPartitions:] {
+		index := 2*cssPrinterPartitions + offset
+		variant, modeIndex := offset/2, offset%2
+		if unit.mutant != variant || unit.mode != []string{"default", "narrow"}[modeIndex] {
+			return fmt.Errorf("incorrect mutant/mode in shard %d", index)
+		}
+		owner := cssPrinterOwner(lines[cssPrinterMutantWitness[variant]], cssPrinterPartitions)
+		group := (variant+1)*2 + modeIndex
+		seen := map[int]bool{}
+		for _, c := range unit.cases {
+			id := c.id - group*len(lines)
+			if c.id/len(lines) != group || seen[id] || lines[id] != c.line || cssPrinterOwner(c.line, cssPrinterPartitions) != owner {
+				return fmt.Errorf("incorrect, repeated or foreign case %d in mutant shard %d", c.id, index)
+			}
+			seen[id] = true
+		}
+		if want := len(plan[modeIndex*cssPrinterPartitions+owner].cases); len(seen) != want || !seen[cssPrinterMutantWitness[variant]] {
+			return fmt.Errorf("mutant shard %d holds %d cases, want its witness's whole partition of %d", index, len(seen), want)
 		}
 	}
-	plan := cssModePlan(lines, count)
-	if err := cssModeUnion(lines, plan, count); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("check union: %d unique check-group/mode/case ids, %d case ids per group and mode, %d shards", total*8, total, count)
-	return plan
+	return nil
 }
 
 func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 	t.Parallel()
 	lines := cssPrinterCorpusLines(t)
-	plan := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	if err := cssModeUnion(lines, plan, testCSSPrinterAgreesWithGoShards); err != nil {
+	plan := cssModePlan(lines)
+	if err := cssModeUnion(lines, plan); err != nil {
 		t.Fatal(err)
 	}
 	planted := 0
@@ -378,20 +385,35 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 			caught = append(caught, fmt.Sprintf("shard-%03d", id))
 		}
 	}
-	if len(caught) != 1 || caught[0] != fmt.Sprintf("shard-%03d", cssPrinterOwner(lines[0], testCSSPrinterAgreesWithGoShards/8)) {
+	if len(caught) != 1 || caught[0] != fmt.Sprintf("shard-%03d", cssPrinterOwner(lines[0], cssPrinterPartitions)) {
 		t.Fatalf("planted mode/case %d caught by %v, want exactly its hash owner", planted, caught)
 	}
 	t.Logf("planted disagreement mode/case %d caught exactly by %s", planted, caught[0])
-	broken := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	owner := cssPrinterOwner(lines[0], testCSSPrinterAgreesWithGoShards/8)
-	broken[owner].cases = append(broken[owner].cases, broken[owner].cases[0])
-	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
-		t.Fatal("repeated case accepted")
-	}
-	broken = cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	broken[owner].cases = broken[owner].cases[1:]
-	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
-		t.Fatal("missing case accepted")
+	owner := cssPrinterOwner(lines[0], cssPrinterPartitions)
+	witnessShard := 2 * cssPrinterPartitions
+	for _, broken := range []struct {
+		name  string
+		shard int
+		edit  func([]cssCase) []cssCase
+	}{
+		{"repeated case", owner, func(cases []cssCase) []cssCase { return append(cases, cases[0]) }},
+		{"missing case", owner, func(cases []cssCase) []cssCase { return cases[1:] }},
+		{"repeated mutant case", witnessShard, func(cases []cssCase) []cssCase { return append(cases, cases[0]) }},
+		{"mutant shard without its witness", witnessShard, func(cases []cssCase) []cssCase {
+			var kept []cssCase
+			for _, c := range cases {
+				if c.id%len(lines) != cssPrinterMutantWitness[0] {
+					kept = append(kept, c)
+				}
+			}
+			return kept
+		}},
+	} {
+		plan := cssModePlan(lines)
+		plan[broken.shard].cases = broken.edit(plan[broken.shard].cases)
+		if cssModeUnion(lines, plan) == nil {
+			t.Fatalf("%s accepted", broken.name)
+		}
 	}
 }
 
