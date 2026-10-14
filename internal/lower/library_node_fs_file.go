@@ -45,9 +45,12 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	operation := ""
 	of := ir.Number // Void calls are only admitted as discarded statements.
 	switch symbol.Name {
-	case "isFile", "isDirectory", "isSymbolicLink":
+	case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
 		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
+		}
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return nil, true, l.notYet(node, "node:fs.StatsBase."+memberName+" through an optional call")
 		}
 		if callee.Kind != ast.KindPropertyAccessExpression || len(call.Arguments.Nodes) != 0 {
 			return nil, true, l.notYet(node, memberName+": "+"a detached Stats method")
@@ -56,8 +59,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if err != nil {
 			return nil, true, err
 		}
-		operation = map[string]string{"isFile": "is_file", "isDirectory": "is_directory", "isSymbolicLink": "is_symbolic_link"}[symbol.Name]
-		return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{receiver}, Of: ir.Boolean}, true, nil
+		return ir.NodeHostCall{Module: "node:fs", Member: symbol.Name, Arguments: []ir.Expression{receiver}, Returns: ir.Boolean}, true, nil
 	case "readFileSync":
 		operation, of = "read_file", ir.String
 	case "mkdtempSync":
@@ -102,8 +104,13 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, l.notYet(node, memberName+": "+"fs void calls used as values")
 		}
 	}
-	for _, argument := range call.Arguments.Nodes {
-		value, err := l.expression(argument)
+	for index, argument := range call.Arguments.Nodes {
+		lowerArgument := l.expression
+		if operation == "write" && index == 2 && l.checker.GetTypeAtLocation(argument).Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+			// This intrinsic consumes an exact empty position as its existing sentinel; it stores no nullable view.
+			lowerArgument = l.value
+		}
+		value, err := lowerArgument(argument)
 		if err != nil {
 			if missing, ok := err.(*NotYet); ok {
 				err = l.notYet(node, "node:fs."+memberName+": "+missing.What)
@@ -122,7 +129,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			read, reading := value.(ir.Read)
 			if reading {
 				for _, argument := range call.Arguments.Nodes {
-					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !(l.exactObject(argument, 0) || l.nodeFSDirectoryStatOptions(argument)) {
+					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.nodeHostExactOptions(argument, node) {
 						continue
 					}
 					symbol := l.symbol(ast.SkipParentheses(argument))
@@ -175,6 +182,12 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			if field.Name == name {
 				value := literalValue(field.Value)
 				if _, absent := value.(ir.Undefined); absent {
+					// rmSync merges own properties over its defaults, then validates
+					// them. A present undefined is an invalid value, not an absent key.
+					// The scalar fs host cannot carry this TypeError and its code.
+					if operation == "rm" {
+						return nil, l.notYet(node, "node:fs.rmSync options."+name+" present as undefined (Node throws TypeError ERR_INVALID_ARG_TYPE; option validation is not represented by the scalar fs host)")
+					}
 					return fallback, nil
 				}
 				return value, nil
@@ -471,7 +484,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	default:
 		return false
 	}
-	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer
+	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer && l.nodeHostConsumesArgument(outer.Parent, index)
 }
 
 func init() {

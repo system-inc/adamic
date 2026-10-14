@@ -141,6 +141,11 @@ func load(paths []string, overlay map[string]string, display func(string) string
 		if err != nil {
 			return nil, err
 		}
+		adaptedPrelude, err := nodePrelude(prelude)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodePreludeText = adaptedPrelude
 		fs.nodeTypes = true
 		roots = append(roots, index)
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})

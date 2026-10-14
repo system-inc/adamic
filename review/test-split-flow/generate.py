@@ -14,11 +14,32 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
+# Matches flow_test.go's deliberate getter refusal controls.
+getter_refusals = {
+    'getters_census_binary_function.a',
+    'getters_census_callback_pair_methods.a',
+    'getters_census_closure_number_methods.a',
+    'getters_census_closure_number_next.a',
+    'getters_census_closure_union_next.a',
+    'getters_census_higher_callback_pair_methods.a',
+    'getters_census_lazy_object.a',
+    'getters_census_optional_boolean_function.a',
+    'getters_census_optional_comment_function.a',
+    'getters_census_optional_type_function.a',
+    'getters_census_overloaded_function.a',
+    'getters_census_primary_function.a',
+    'getters_census_snapshot_next.a',
+    'getters_census_unary_function.a',
+    'getters_census_unary_node_function.a',
+    'getters_census_update_comment_function.a',
+    'getters_census_update_node_function.a',
+    'getters_census_update_type_function.a',
+}
 # Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in getter_refusals or name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
@@ -43,7 +64,7 @@ for package in ['flow', 'fresh']:
             label = re.sub('[^A-Za-z0-9]', '_', relative)
             digest = hashlib.sha256(relative.encode()).hexdigest()[:12]
             name = 'Test' + package.title() + kind + '_' + label + '_' + digest
-            if package == 'flow' and relative != '../oracle/testdata/timsort.a':
+            if package == 'flow' and relative not in {'../oracle/testdata/timsort.a', '../oracle/testdata/node_fs_directory_system.a'}:
                 name = 'TestFlowProgram_' + label + '_' + digest
             group.append((relative, name, helper))
             source = (root / 'internal' / package / relative).resolve()
@@ -60,7 +81,7 @@ for package in ['flow', 'fresh']:
     text += '}\n\n'
     for group in rows:
         for index, (relative,name,helper) in enumerate(group):
-            if package == "flow" and relative != "../oracle/testdata/timsort.a":
+            if package == "flow" and relative not in {"../oracle/testdata/timsort.a", "../oracle/testdata/node_fs_directory_system.a"}:
                 name = "TestFlowProgram_" + re.sub("[^A-Za-z0-9]", "_", relative) + "_" + hashlib.sha256(relative.encode()).hexdigest()[:12]
                 if group != rows[0]:
                     continue

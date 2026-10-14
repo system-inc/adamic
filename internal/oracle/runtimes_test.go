@@ -44,6 +44,7 @@ var runtimeSets = []runtimeSet{
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/callback.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
+	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
 }
 
 // A runtimeOption is one way the oracle builds a program: sanitized for the comparison and the leak check, release as
