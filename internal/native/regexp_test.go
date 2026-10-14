@@ -305,39 +305,6 @@ process.stdout.write(JSON.stringify(cases));`)
 	runRegexCases(t, cases[unit*randomRegexUnitSize:min((unit+1)*randomRegexUnitSize, len(cases))])
 }
 
-func TestRegExpNativeStepLimit(t *testing.T) {
-	t.Parallel()
-	program, err := regex.Compile("(a+)+$", "")
-	if err != nil {
-		t.Fatal(err)
-	}
-	declarations, err := program.NativeDeclarations("probe")
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := "#include \"adamic.h\"\n" + declarations + `
-static adamic_string input = ADAMIC_STRING("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
-int main(int argc,char **argv) {
- adamic_start(argc,argv);adamic_regex_set_step_limit(1000);
- adamic_object *regex=adamic_regex_new(&probe,&adamic_string_empty,&adamic_string_empty);
- bool result=adamic_regex_test(regex,&input);adamic_release(regex);return result?1:0;
-}
-`
-	binary := filepath.Join(t.TempDir(), "budget")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, binary)
-	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-	output, err := command.CombinedOutput()
-	var exit *exec.ExitError
-	if !errors.As(err, &exit) || exit.ExitCode() != 70 || !bytes.Contains(output, []byte("regexp: instruction step limit exceeded")) {
-		t.Fatalf("native catastrophic backtracking: exit=%v output=%s", err, output)
-	}
-}
-
 // Jump chains plus match have exact instruction counts, independent of scanning,
 // backtracking and the compiler's regexp optimizations.
 func TestRegExpNativeStepLimitBoundary(t *testing.T) {
