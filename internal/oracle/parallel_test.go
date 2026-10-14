@@ -380,15 +380,8 @@ func buildParallelProgram(t *testing.T, code, binary string, options native.Opti
 	if err != nil {
 		t.Fatal(err)
 	}
-	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(code), 0600); err != nil {
-		t.Fatal(err)
-	}
-	arguments := append(native.Flags(options), "-I", filepath.Dir(library), main, "-o", binary)
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
-	arguments = append(arguments, "-lm")
-	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-		t.Fatalf("slab fixture build: %v\n%s", err, output)
+	if err := native.BuildWithRuntime(code, binary, options, library); err != nil {
+		t.Fatalf("slab fixture build: %v", err)
 	}
 }
 

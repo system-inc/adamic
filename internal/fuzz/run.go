@@ -451,14 +451,7 @@ func (c *Checkout) link(binary string, directory string, options native.Options,
 	if err != nil {
 		return err
 	}
-	arguments := append(native.SourceFlags(string(source), options), "-I", filepath.Dir(runtime), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(runtime)...)
-	arguments = append(arguments, "-lm")
-	output, err := exec.Command("clang", arguments...).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("%s", firstLines(string(output), 12))
-	}
-	return nil
+	return native.BuildWithRuntime(string(source), binary, options, runtime)
 }
 
 func threadFinding(key string, expected Run, actual Run) Outcome {
