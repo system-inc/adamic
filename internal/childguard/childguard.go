@@ -226,21 +226,34 @@ func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, err err
 	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
 	// exactly the processes it left behind, and none when it left none.
 	_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-	select {
-	case <-finished:
-	case <-ctx.Done():
+	closeReads := func() {
 		for _, p := range pipes {
 			p.read.Close()
 		}
-		<-finished
-		if err == nil {
-			err = fmt.Errorf("childguard: %s's output is still held by a process outside its group: %w", cmd.Path, ctx.Err())
-		}
 	}
-	for _, p := range pipes {
-		p.read.Close()
+	if held := captureEnd(ctx, finished, closeReads); err == nil && held != nil {
+		err = fmt.Errorf("childguard: %s's output is still held by a process outside its group: %w", cmd.Path, held)
 	}
+	closeReads()
 	return pipes[0].output.Bytes(), pipes[1].output.Bytes(), err
+}
+
+// captureEnd waits for Capture's reads to finish, or for ctx: then it closes the reads, waits for them to stop and
+// returns ctx's error. Reads that finished as ctx ended are whole, whichever a select would pick, so they return nil.
+func captureEnd(ctx context.Context, finished <-chan struct{}, closeReads func()) error {
+	select {
+	case <-finished:
+		return nil
+	case <-ctx.Done():
+		select {
+		case <-finished:
+			return nil
+		default:
+		}
+		closeReads()
+		<-finished
+		return ctx.Err()
+	}
 }
 
 // CombinedOutput is Run with both streams captured in one buffer.

@@ -276,6 +276,27 @@ func TestCaptureEndsWithAWriterOutsideTheGroup(t *testing.T) {
 	}
 }
 
+// Reads that finished as ctx ended are whole: with both ready, a bare select would pick ctx's branch half the time and
+// name an outside writer for a run whose reads had ended, so a thousand tries catch it. Reads still open when ctx ends
+// are closed and named.
+func TestCaptureEndReadsFinishedAsCtxEnded(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	finished := make(chan struct{})
+	close(finished)
+	for try := range 1000 {
+		if err := captureEnd(ctx, finished, func() { t.Fatal("closed reads that had finished") }); err != nil {
+			t.Fatalf("try %d: finished reads reported as held: %v", try, err)
+		}
+	}
+	open := make(chan struct{})
+	closed := false
+	if err := captureEnd(ctx, open, func() { closed = true; close(open) }); !errors.Is(err, context.Canceled) || !closed {
+		t.Fatalf("open reads at ctx's end: err %v, closed %t", err, closed)
+	}
+}
+
 func TestCaptureReportsTheExit(t *testing.T) {
 	t.Parallel()
 	_, _, err := Capture(context.Background(), child("exit"))
