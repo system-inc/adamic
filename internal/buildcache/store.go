@@ -397,23 +397,76 @@ func upload(address, token string, content []byte) error {
 	return nil
 }
 
-// auditing says whether this fetched product is rebuilt and compared.
-func auditing() bool {
+// auditing says whether this fetched product is rebuilt and compared: every key ADAMIC_BUILD_AUDIT_KEYS lists and no
+// other, traced or not, when it names a file; otherwise, under a trace, a share of them at ADAMIC_BUILD_AUDIT's rate.
+// An audit rebuilds, so a listed audit under ADAMIC_BUILD_CACHE=read, which never builds, is an error, as is a list
+// that can't be read: an audit asked for never passes by silently skipping.
+func auditing(key string) (bool, error) {
+	listed, err := auditKeys()
+	switch {
+	case err != nil:
+		return false, err
+	case listed != nil && os.Getenv("ADAMIC_BUILD_CACHE") == "read":
+		return false, errors.New("ADAMIC_BUILD_AUDIT_KEYS rebuilds what it lists, and ADAMIC_BUILD_CACHE=read never builds")
+	case listed != nil:
+		return listed[key], nil
+	case traceDirectory() == "":
+		return false, nil
+	}
 	rate := defaultAudit
 	if value := os.Getenv("ADAMIC_BUILD_AUDIT"); value != "" {
 		if parsed, err := strconv.ParseFloat(value, 64); err == nil {
 			rate = parsed
 		}
 	}
-	return rand.Float64() < rate
+	return rand.Float64() < rate, nil
 }
 
-// audit rebuilds a fetched product beside it and compares the two file by file.
+// auditKeys is the product keys ADAMIC_BUILD_AUDIT_KEYS's file lists, one a line, read once for each file a process
+// is pointed at: Loom's `loom audit-tree` reruns the product tests that found a tree's products, untraced from an empty
+// cache, and audits exactly the keys never audited Clean (#f1ydmys). nil when the variable is unset.
+func auditKeys() (map[string]bool, error) {
+	path := os.Getenv("ADAMIC_BUILD_AUDIT_KEYS")
+	if path == "" {
+		return nil, nil
+	}
+	auditKeysRead.Lock()
+	defer auditKeysRead.Unlock()
+	if keys, read := auditKeysRead.files[path]; read {
+		return keys, nil
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("ADAMIC_BUILD_AUDIT_KEYS: %w", err)
+	}
+	keys := map[string]bool{}
+	for _, line := range strings.Fields(string(content)) {
+		keys[line] = true
+	}
+	auditKeysRead.files[path] = keys
+	return keys, nil
+}
+
+var auditKeysRead = struct {
+	sync.Mutex
+	files map[string]map[string]bool
+}{files: map[string]map[string]bool{}}
+
+// auditMismatches is where an audit keeps both copies of a product whose rebuild differed, under the cache: a
+// difference nobody can diff is evidence destroyed (Build's rule).
+const auditMismatches = "audit-mismatch"
+
+// audit rebuilds a fetched product beside it and compares the two file by file, and says what it found on an audit
+// line ($ADAMIC_BUILD_LOG): 'audit <name> <key> clean <digest>', or 'audit <name> <key> mismatch <stored digest>
+// <rebuilt digest> <kept>', the digests over each copy's files as the manifest lists them. A mismatch keeps both copies
+// under the cache's audit-mismatch directory, the stored one moved from fetched (which then fails to fill), and is
+// poisoning.
 func audit(key, name, fetched string, build func(directory string) error) error {
 	rebuilt, err := os.MkdirTemp(filepath.Dir(fetched), ".audit-"+key[:12]+"-")
 	if err != nil {
 		return err
 	}
+	// Gone by the time it runs when a mismatch moved it to be kept.
 	defer os.RemoveAll(rebuilt)
 	if err = build(rebuilt); err != nil {
 		return err
@@ -428,10 +481,27 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 	}
 	wantJSON, _ := json.Marshal(want.Files)
 	gotJSON, _ := json.Marshal(got.Files)
-	if !bytes.Equal(wantJSON, gotJSON) {
-		return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)", key[:12], name, gotJSON, wantJSON))
+	rebuiltDigest, storedDigest := sha256.Sum256(wantJSON), sha256.Sum256(gotJSON)
+	if bytes.Equal(wantJSON, gotJSON) {
+		note("audit %s %s clean %x", strings.ReplaceAll(name, " ", "_"), key, storedDigest)
+		return nil
 	}
-	return nil
+	place, err := os.MkdirTemp(filepath.Join(filepath.Dir(fetched), auditMismatches), key[:12]+"-")
+	if errors.Is(err, fs.ErrNotExist) {
+		if err = os.MkdirAll(filepath.Join(filepath.Dir(fetched), auditMismatches), 0o755); err == nil {
+			place, err = os.MkdirTemp(filepath.Join(filepath.Dir(fetched), auditMismatches), key[:12]+"-")
+		}
+	}
+	if err == nil {
+		if err = os.Rename(rebuilt, filepath.Join(place, "rebuilt")); err == nil {
+			err = os.Rename(fetched, filepath.Join(place, "stored"))
+		}
+	}
+	if err != nil {
+		place = "not kept: " + err.Error()
+	}
+	note("audit %s %s mismatch %x %x %s", strings.ReplaceAll(name, " ", "_"), key, storedDigest, rebuiltDigest, place)
+	return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible); both kept in %s", key[:12], name, gotJSON, wantJSON, place))
 }
 
 // Read sets travel with the products (#vt46geg): a machine with no read sets of its own finds a product in the store
