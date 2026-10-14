@@ -40,7 +40,7 @@ def product_key():
         kind = ('symlink:' + os.readlink(path)) if path.is_symlink() else (
             'directory' if path.is_dir() else 'file')
         data = b'' if path.is_dir() else path.read_bytes()
-        record = json.dumps([name, kind, path.stat().st_mode & 0o777,
+        record = json.dumps([name, kind, bool(path.stat().st_mode & 0o111) if not path.is_dir() else False,
                              hashlib.sha256(data).hexdigest()], separators=(',', ':'))
         digest.update(record.encode() + b'\n')
     return digest.hexdigest()
@@ -252,22 +252,23 @@ def pinned_packages(project):
     return modules
 
 
-def build_product(out):
+def build_product(out, cache=None, *, previous=None, through=None):
     if any(os.environ.get(name) for name in ['CENSUS_TYPESCRIPT', 'TSC_ADAPT_TYPESCRIPT']):
         raise RuntimeError('keyed builds require the pinned stage3/api parser, without overrides')
     pin = json.loads((stage / 'source.json').read_text())
-    source = typescript_source(pin)
     adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
-    adaptation_env = dict(os.environ)
     if any(directory.name != '00-setup' for directory in adaptations):
-        adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
-    # A file:// clone, since a local path ignores --depth: the pinned commit alone, not the checkout's history.
-    run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
-    # The product names no path on the machine that built it.
-    run('git', '-C', str(out), 'remote', 'remove', 'origin')
-    run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
-    # The pristine measurement tree includes upstream's normal generated inputs.
-    run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
+        pinned_packages(stage / 'api')
+    state = None
+    if previous is not None:
+        state = json.loads((previous / 'state.json').read_text())
+        shutil.copytree(previous / 'tree', out, symlinks=True)
+    else:
+        source = typescript_source(pin)
+        run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
+        run('git', '-C', str(out), 'remote', 'remove', 'origin')
+        run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
+        run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
     with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
         def snapshot():
@@ -275,9 +276,10 @@ def build_product(out):
             run('git', '-C', str(out), 'add', '--all', '--force', 'src', env=env, stdout=subprocess.DEVNULL)
             return subprocess.check_output(['git', '-C', str(out), 'write-tree'], env=env, text=True).strip()
         # Include tracked files outside src, too; generated build inputs are only in src.
-        run('git', '-C', str(out), 'read-tree', 'HEAD', env=env)
-        pristine = previous = snapshot()
-        rows = []
+        run('git', '-C', str(out), 'read-tree', state['previous'] if state else 'HEAD', env=env)
+        pristine = state['pristine'] if state else snapshot()
+        previous = state['previous'] if state else pristine
+        rows = state['rows'] if state else []
         def counts(before, after):
             changes = subprocess.check_output(['git', '-C', str(out), 'diff', '--numstat', before, after], text=True).splitlines()
             added = removed = 0
@@ -288,7 +290,14 @@ def build_product(out):
                 added += int(a)
                 removed += int(r)
             return len(changes), added, removed
+        adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
+        adaptation_env = dict(os.environ)
+        if any(directory.name != '00-setup' for directory in adaptations):
+            adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
         for directory in adaptations:
+            if through is not None and (directory.name[:2] > through or
+                    state and directory.name <= state['last']):
+                continue
             if not directory.is_dir():
                 continue
             if len(directory.name) < 4 or not directory.name[:2].isdigit() or directory.name[2] != '-':
@@ -306,7 +315,40 @@ def build_product(out):
         for name, files, added, removed in rows:
             text += f'| {name} | {files} | {added} | {removed} |\n'
         text += f'| **Total** | {total[0]} | {total[1]} | {total[2]} |\n'
-        (out / 'patch-set.md').write_text(text)
+        if through is None or through == '99':
+            (out / 'patch-set.md').write_text(text)
+        if through is not None:
+            (cache / 'state.json').write_text(json.dumps(dict(
+                pristine=pristine, previous=previous, rows=rows, last=rows[-1][0])))
+
+
+def step_worker(directory, through, previous):
+    directory = Path(directory)
+    build_product(directory / 'tree', directory,
+                  previous=Path(previous) if previous else None, through=through)
+    if through == '99':
+        save_product(str(directory / 'products'), product_key(), directory / 'tree')
+
+
+def go_product():
+    result = subprocess.check_output(
+        ['go', 'run', './stage3/applyproducts/fetch'], cwd=stage.parent,
+        env=dict(os.environ, GOWORK='off'), text=True)
+    return Path(result.strip())
+
+
+def fetch_product(out, cache):
+    product = go_product()
+    restore_product(str(product / 'products'), product_key(), out)
+    # Existing proofs read this parser-cache path. The parser is the pinned tree install.
+    cache.mkdir(parents=True, exist_ok=True)
+    api = cache / 'api'
+    if not api.exists() or api.is_symlink():
+        with tempfile.TemporaryDirectory(prefix='stage3-api-', dir=cache) as scratch:
+            alias = Path(scratch) / 'api'
+            alias.symlink_to(stage / 'api', target_is_directory=True)
+            os.replace(alias, api)
+    return product
 
 
 def main():
@@ -350,20 +392,28 @@ def main():
             store = os.environ.get('ADAMIC_BUILD_CACHE_URL', store)
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.build_product:
-        build_product(out)
-        save_product(store, key, out)
+        cache.mkdir(parents=True, exist_ok=True)
+        product = fetch_product(out, cache)
+        if store.startswith(('http://', 'https://', 'file://')):
+            parser.error('--build-product requires a local product store')
+        Path(store).mkdir(parents=True, exist_ok=True)
+        for payload in (product / 'products').iterdir():
+            shutil.copyfile(payload, Path(store) / payload.name)
     else:
         try:
             restore_product(store, key, out)
         except ProductMissing:
             print(f'stage3 product cache miss: {key}; building adapted tree locally', file=sys.stderr)
-            build_product(out)
-            local_store = store if not store.startswith(('http://', 'https://', 'file://')) else str(cache / 'products')
-            save_product(local_store, key, out)
+            cache.mkdir(parents=True, exist_ok=True)
+            fetch_product(out, cache)
+            # The final Go product already owns packaging; tests only restore it.
     if args.write_table:
         (stage / 'patch-set.md').write_bytes((out / 'patch-set.md').read_bytes())
     print(out)
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 5 and sys.argv[1] == '--step-worker':
+        step_worker(sys.argv[2], sys.argv[3], sys.argv[4])
+    else:
+        main()

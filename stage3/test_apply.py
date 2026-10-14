@@ -75,6 +75,10 @@ class ApplyCheckoutTests(unittest.TestCase):
                 subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test',
                                 '-c', 'user.email=apply-test@example.invalid', 'commit', '-m',
                                 'Seed the apply checkout test'], check=True)
+                shutil.copytree(ROOT / 'stage3/applyproducts', source / 'stage3/applyproducts', dirs_exist_ok=True)
+                shutil.copyfile(ROOT / 'stage3/caches.py', source / 'stage3/caches.py')
+                subprocess.run(['git', '-C', str(source), 'add', 'stage3/applyproducts', 'stage3/caches.py'], check=True)
+                subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test', '-c', 'user.email=apply-test@example.invalid', 'commit', '-m', 'Seed product helpers'], check=True)
                 before = table.read_bytes()
                 self.assertEqual(subprocess.check_output(['git', '-C', str(source), 'status', '--porcelain']), b'')
                 command = ['bash', str(source / 'stage3/apply.sh'), str(output)]
@@ -145,6 +149,32 @@ class ProductTests(unittest.TestCase):
                 link.unlink()
                 (root / 'patch-set.md').write_text('stale generated output')
                 self.assertEqual(APPLY.product_key(), baseline)
+
+    def test_manifest_key_ignores_checkout_permissions(self):
+        # Go keys retain executable status, not checkout umask or group access.
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name in ['source.json', 'apply.py', 'api/package.json', 'api/package-lock.json', 'api/node_modules.sha256']:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(name)
+                path.chmod(0o600)
+            directory = root / 'adapt/00-setup'
+            directory.mkdir(parents=True, mode=0o700)
+            script = directory / 'adapt.cjs'
+            script.write_text('module.exports = {};')
+            script.chmod(0o600)
+            with mock.patch.object(APPLY, 'stage', root), mock.patch.object(
+                    APPLY.subprocess, 'check_output', return_value=b'pinned tool'):
+                original = APPLY.product_key()
+                (root / 'source.json').chmod(0o644)
+                script.chmod(0o664)
+                directory.chmod(0o755)
+                self.assertEqual(APPLY.product_key(), original,
+                                 'checkout permissions changed the manifest key')
+                script.chmod(0o755)
+                self.assertNotEqual(APPLY.product_key(), original,
+                                    'executable input mode was omitted')
 
     def test_new_adaptation_directory_changes_hash(self):
         with tempfile.TemporaryDirectory() as scratch:
@@ -334,6 +364,24 @@ class ProductTests(unittest.TestCase):
             self.assertEqual((output / 'input.a').read_text(), 'const value = 1;')
             self.assertEqual((output / 'patch-set.md').read_text(), 'generated table')
 
+    def test_fetch_exposes_prepared_parser(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            scratch = Path(scratch)
+            store = self.product(scratch)
+            prepared = scratch / 'prepared'
+            prepared.mkdir()
+            shutil.move(store, prepared / 'products')
+            parser = scratch / 'stage/api'
+            parser.mkdir(parents=True)
+            (parser / 'package.json').write_text('prepared stock parser')
+            cache = scratch / 'cache'
+            with mock.patch.object(APPLY, 'go_product', return_value=prepared), mock.patch.object(
+                    APPLY, 'product_key', return_value='test-key'), mock.patch.object(APPLY, 'stage', scratch / 'stage'):
+                APPLY.fetch_product(scratch / 'output', cache)
+            self.assertTrue((cache / 'api').is_symlink(), 'prepared parser was not exposed')
+            self.assertEqual((cache / 'api/package.json').read_text(), 'prepared stock parser')
+            self.assertEqual((scratch / 'output/input.a').read_text(), 'const value = 1;')
+
     def test_payload_mutant_is_rejected(self):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)
@@ -375,16 +423,17 @@ class ProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)
             output = scratch / 'output'
-            def build(out):
+            def build(out, cache):
                 out.mkdir()
                 (out / 'patch-set.md').write_text('fallback table')
+                APPLY.save_product(os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products')), 'missing', out)
             message = io.StringIO()
-            with (mock.patch.object(APPLY, 'build_product', side_effect=build) as builder, mock.patch.object(
+            with (mock.patch.object(APPLY, 'fetch_product', side_effect=build) as builder, mock.patch.object(
                     APPLY, 'product_key', return_value='missing'), mock.patch.dict(
                     os.environ, STAGE3_PRODUCT_STORE=str(scratch / 'products'), STAGE3_CACHE=str(scratch / 'cache')),
                     mock.patch.object(sys, 'argv', ['apply.py', str(output)]), mock.patch.object(sys, 'stderr', message)):
                 APPLY.main()
-            builder.assert_called_once_with(output)
+            builder.assert_called_once_with(output, scratch / 'cache')
             self.assertIn('cache miss: missing; building adapted tree locally', message.getvalue())
             self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
             APPLY.restore_product(str(scratch / 'products'), 'missing', scratch / 'fetched')
@@ -394,9 +443,10 @@ class ProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)
             output = scratch / 'output'
-            def build(out):
+            def build(out, cache):
                 out.mkdir()
                 (out / 'patch-set.md').write_text('fallback table')
+                APPLY.save_product(os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products')), 'missing', out)
             original_fetch = APPLY.fetch
             def local_fetch(store, name, target):
                 self.assertEqual(store, str(scratch / 'cache/products'))
@@ -404,11 +454,11 @@ class ProductTests(unittest.TestCase):
             with (mock.patch.dict(os.environ, {'STAGE3_CACHE': str(scratch / 'cache')}, clear=True),
                     mock.patch.object(APPLY, 'product_key', return_value='missing'),
                     mock.patch.object(APPLY, 'fetch', side_effect=local_fetch),
-                    mock.patch.object(APPLY, 'build_product', side_effect=build) as builder,
+                    mock.patch.object(APPLY, 'fetch_product', side_effect=build) as builder,
                     mock.patch.object(sys, 'argv', ['apply.py', str(output)]),
                     mock.patch.object(sys, 'stderr', io.StringIO()) as message):
                 APPLY.main()
-            builder.assert_called_once_with(output)
+            builder.assert_called_once_with(output, scratch / 'cache')
             self.assertIn('cache miss: missing', message.getvalue())
             self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
 
@@ -434,7 +484,7 @@ class ProductTests(unittest.TestCase):
             scratch = Path(scratch)
             store = self.product(scratch)
             (store / 'test-key.p000').write_bytes(b'corrupt')
-            with (mock.patch.object(APPLY, 'build_product', side_effect=AssertionError('rebuilt corruption')),
+            with (mock.patch.object(APPLY, 'fetch_product', side_effect=AssertionError('rebuilt corruption')),
                     mock.patch.object(APPLY, 'product_key', return_value='test-key'), mock.patch.dict(
                     os.environ, STAGE3_PRODUCT_STORE=str(store)), mock.patch.object(
                     sys, 'argv', ['apply.py', str(scratch / 'output')])):
