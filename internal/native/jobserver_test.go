@@ -36,6 +36,7 @@ func tokens(t *testing.T, count int) {
 
 // With two tokens, never more than two compiles run at once however many ask, and both tokens are used (#cyew6p3).
 // Mutant: the token never taken (eight at once).
+// Not parallel: ADAMIC_CC_JOBSERVER and native's process-wide jobserver (tokens).
 func TestCompilesHoldAJobserverTokenEach(t *testing.T) {
 	tokens(t, 2)
 	var running, most atomic.Int32
@@ -69,6 +70,7 @@ func TestCompilesHoldAJobserverTokenEach(t *testing.T) {
 
 // A compile that fails gives its token back, so the next compile on a one-token jobserver still runs. Mutant: the token
 // returned only on success (the next compile waits forever).
+// Not parallel: ADAMIC_CC_JOBSERVER and native's process-wide jobserver (tokens).
 func TestAFailedCompileGivesItsTokenBack(t *testing.T) {
 	tokens(t, 1)
 	failed := errors.New("clang failed")
@@ -89,6 +91,7 @@ func TestAFailedCompileGivesItsTokenBack(t *testing.T) {
 
 // Unset, a compile runs as before; a jobserver that can't be opened fails the compile naming it, never runs it
 // unbounded. Mutant: an unopenable jobserver ignored.
+// Not parallel: ADAMIC_CC_JOBSERVER and native's process-wide jobserver.
 func TestAJobserverThatCantBeOpenedFailsTheCompile(t *testing.T) {
 	t.Setenv(JobserverVariable, "")
 	jobserver = &compilerJobserver{}
@@ -109,6 +112,7 @@ func TestAJobserverThatCantBeOpenedFailsTheCompile(t *testing.T) {
 
 // The jobserver moves no key: a unit's and a runtime's keys are the same with it named and unset, since how many
 // compile at once changes no byte. Mutant: the variable read into runtimeKeyParts.
+// Not parallel: ADAMIC_CC_JOBSERVER (t.Setenv).
 func TestTheJobserverMovesNoKey(t *testing.T) {
 	files := []runtimeFile{{"unit.c", []byte("int adamic_unit(void) { return 1; }\n")}}
 	flags := []string{"-O2", "-std=c11"}
