@@ -1,0 +1,6 @@
+function visit<T>(items: MapIterator<T>, callback: (item: T) => void): void {
+    for (const item of items) { callback(item); }
+}
+visit(new Map<string, string>([['a', 'alpha'], ['b', 'beta']]).values(), item => {
+    console.log(item.toUpperCase());
+});
