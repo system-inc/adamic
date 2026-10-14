@@ -1,0 +1,935 @@
+{
+  "version": 1,
+  "status": "scanner-blocked",
+  "requested_refs": [],
+  "output": "/tmp/scanner-main-prepared",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 3.273
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-d66d0d7edc7c",
+        "/tmp/scanner-main-prepared/compiler-tree",
+        "87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 1.969
+    },
+    {
+      "name": "integrated-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "integrated-ref.stdout",
+      "stderr": "integrated-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "cohere"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "cohere-pin.stdout",
+      "stderr": "cohere-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.003
+    },
+    {
+      "name": "cohere-init-local",
+      "command": [
+        "git",
+        "init",
+        "/tmp/scanner-main-prepared/compiler-tree/cohere"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-init-local.stdout",
+      "stderr": "cohere-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.003
+    },
+    {
+      "name": "cohere-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-ref.stdout",
+      "stderr": "cohere-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-git.stdout",
+      "stderr": "cohere-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree/cohere",
+      "stdout": "cohere-checkout.stdout",
+      "stderr": "cohere-checkout.stderr",
+      "exit": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cohere-typescript-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "TypeScript"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree/cohere",
+      "stdout": "cohere-typescript-pin.stdout",
+      "stderr": "cohere-typescript-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-init-local",
+      "command": [
+        "git",
+        "init",
+        "/tmp/scanner-main-prepared/compiler-tree/cohere/TypeScript"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-typescript-init-local.stdout",
+      "stderr": "cohere-typescript-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.003
+    },
+    {
+      "name": "cohere-typescript-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-ref.stdout",
+      "stderr": "cohere-typescript-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-typescript-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-git.stdout",
+      "stderr": "cohere-typescript-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-typescript-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree/cohere/TypeScript",
+      "stdout": "cohere-typescript-checkout.stdout",
+      "stderr": "cohere-typescript-checkout.stderr",
+      "exit": 0,
+      "wall_seconds": 1.07
+    },
+    {
+      "name": "setup",
+      "command": [
+        "bash",
+        "cloud/setup.sh"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "setup.stdout",
+      "stderr": "setup.stderr",
+      "exit": 0,
+      "wall_seconds": 59.532
+    },
+    {
+      "name": "nproc",
+      "command": [
+        "nproc"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "nproc.stdout",
+      "stderr": "nproc.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "compiler-node-types",
+      "command": [
+        "npm",
+        "ci",
+        "--prefix",
+        "/tmp/scanner-main-prepared/compiler-tree/stage3/api",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "compiler-node-types.stdout",
+      "stderr": "compiler-node-types.stderr",
+      "exit": 0,
+      "wall_seconds": 0.466
+    },
+    {
+      "name": "compiler-build",
+      "command": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-o",
+        "/tmp/scanner-main-prepared/adamic",
+        "./cmd/adamic"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "compiler-build.stdout",
+      "stderr": "compiler-build.stderr",
+      "exit": 0,
+      "wall_seconds": 4.431
+    },
+    {
+      "name": "apply",
+      "command": [
+        "bash",
+        "/tmp/scanner-main-prepared/pipeline/apply.sh",
+        "/tmp/scanner-main-prepared/full-tree"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "apply.stdout",
+      "stderr": "apply.stderr",
+      "exit": 0,
+      "wall_seconds": 8.892
+    },
+    {
+      "name": "corpus-scanner",
+      "command": [
+        "git",
+        "-C",
+        "/tmp/scanner-main-prepared/full-tree",
+        "show",
+        "HEAD:src/compiler/scanner.ts"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "corpus-scanner.stdout",
+      "stderr": "corpus-scanner.stderr",
+      "exit": 0,
+      "wall_seconds": 0.016
+    },
+    {
+      "name": "corpus-type-imports",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-corpus.cjs",
+        "/tmp/scanner-main-prepared/inputs"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "corpus-type-imports.stdout",
+      "stderr": "corpus-type-imports.stderr",
+      "exit": 0,
+      "wall_seconds": 1.834
+    },
+    {
+      "name": "reference",
+      "command": [
+        "bash",
+        "/workspace/adamic/stage3/drivers/scanner/run.sh",
+        "/tmp/scanner-main-prepared/reference",
+        "--tree",
+        "/tmp/scanner-main-prepared/full-tree",
+        "--inputs",
+        "/tmp/scanner-main-prepared/inputs",
+        "--node-only"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "reference.stdout",
+      "stderr": "reference.stderr",
+      "exit": 0,
+      "wall_seconds": 10.383
+    },
+    {
+      "name": "slice",
+      "command": [
+        "bash",
+        "/workspace/adamic/stage3/slice/run.sh",
+        "/tmp/scanner-main-prepared/full-tree",
+        "/tmp/scanner-main-prepared/slice",
+        "src/compiler/scanner.ts:createScanner",
+        "src/compiler/types.ts:ScriptTarget",
+        "src/compiler/types.ts:SyntaxKind"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "slice.stdout",
+      "stderr": "slice.stderr",
+      "exit": 0,
+      "wall_seconds": 3.937
+    },
+    {
+      "name": "scanner-0",
+      "command": [
+        "bash",
+        "/workspace/adamic/stage3/drivers/scanner/run.sh",
+        "/tmp/scanner-main-prepared/split-0",
+        "--tree",
+        "/tmp/scanner-main-prepared/slice",
+        "--inputs",
+        "/tmp/scanner-main-prepared/inputs",
+        "--oracle",
+        "/tmp/scanner-main-prepared/reference/node.stdout",
+        "--compiler",
+        "/tmp/scanner-main-prepared/adamic",
+        "--compiler-cwd",
+        "/tmp/scanner-main-prepared/compiler-tree"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "scanner-0.stdout",
+      "stderr": "scanner-0.stderr",
+      "exit": 1,
+      "wall_seconds": 6.694
+    },
+    {
+      "name": "full-tree-check-0",
+      "command": [
+        "diff",
+        "-u",
+        "/tmp/scanner-main-prepared/reference/node.stdout",
+        "/tmp/scanner-main-prepared/split-0/node.stdout"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "full-tree-check-0.stdout",
+      "stderr": "full-tree-check-0.stderr",
+      "exit": 0,
+      "wall_seconds": 0.164
+    },
+    {
+      "name": "scanner-1",
+      "command": [
+        "bash",
+        "/workspace/adamic/stage3/drivers/scanner/run.sh",
+        "/tmp/scanner-main-prepared/split-1",
+        "--tree",
+        "/tmp/scanner-main-prepared/slice",
+        "--inputs",
+        "/tmp/scanner-main-prepared/inputs",
+        "--oracle",
+        "/tmp/scanner-main-prepared/reference/node.stdout",
+        "--compiler",
+        "/tmp/scanner-main-prepared/adamic",
+        "--compiler-cwd",
+        "/tmp/scanner-main-prepared/compiler-tree"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "scanner-1.stdout",
+      "stderr": "scanner-1.stderr",
+      "exit": 1,
+      "wall_seconds": 6.702
+    },
+    {
+      "name": "full-tree-check-1",
+      "command": [
+        "diff",
+        "-u",
+        "/tmp/scanner-main-prepared/reference/node.stdout",
+        "/tmp/scanner-main-prepared/split-1/node.stdout"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "full-tree-check-1.stdout",
+      "stderr": "full-tree-check-1.stderr",
+      "exit": 0,
+      "wall_seconds": 0.165
+    },
+    {
+      "name": "discovery-01",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-01.stdout",
+      "stderr": "discovery-01.stderr",
+      "exit": 1,
+      "wall_seconds": 0.416
+    },
+    {
+      "name": "witness-01-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-01-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-01-00-node.stdout",
+      "stderr": "witness-01-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.214
+    },
+    {
+      "name": "witness-01-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-01-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-01-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-01-00-build.stdout",
+      "stderr": "witness-01-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "discovery-02",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-02.stdout",
+      "stderr": "discovery-02.stderr",
+      "exit": 1,
+      "wall_seconds": 0.416
+    },
+    {
+      "name": "witness-02-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-02-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-02-00-node.stdout",
+      "stderr": "witness-02-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "witness-02-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-02-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-02-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-02-00-build.stdout",
+      "stderr": "witness-02-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "discovery-02-placeholder",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-stub.cjs",
+        "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/debug.ts",
+        "14",
+        "14"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-02-placeholder.stdout",
+      "stderr": "discovery-02-placeholder.stderr",
+      "exit": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "discovery-03",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-03.stdout",
+      "stderr": "discovery-03.stderr",
+      "exit": 1,
+      "wall_seconds": 0.466
+    },
+    {
+      "name": "witness-03-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-03-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-03-00-node.stdout",
+      "stderr": "witness-03-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "witness-03-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-03-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-03-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-03-00-build.stdout",
+      "stderr": "witness-03-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.068
+    },
+    {
+      "name": "discovery-03-placeholder",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-stub.cjs",
+        "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/diagnosticInformationMap.generated.ts",
+        "6",
+        "1",
+        "DiagnosticMessage"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-03-placeholder.stdout",
+      "stderr": "discovery-03-placeholder.stderr",
+      "exit": 0,
+      "wall_seconds": 0.72
+    },
+    {
+      "name": "discovery-04",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-04.stdout",
+      "stderr": "discovery-04.stderr",
+      "exit": 1,
+      "wall_seconds": 0.518
+    },
+    {
+      "name": "witness-04-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-04-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-04-00-node.stdout",
+      "stderr": "witness-04-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "witness-04-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-04-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-04-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-04-00-build.stdout",
+      "stderr": "witness-04-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "discovery-04-placeholder",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-stub.cjs",
+        "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/utilities.ts",
+        "65",
+        "22"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-04-placeholder.stdout",
+      "stderr": "discovery-04-placeholder.stderr",
+      "exit": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "discovery-05",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-05.stdout",
+      "stderr": "discovery-05.stderr",
+      "exit": 1,
+      "wall_seconds": 4.539
+    },
+    {
+      "name": "witness-05-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-05-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-05-00-node.stdout",
+      "stderr": "witness-05-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "witness-05-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-05-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-05-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-05-00-build.stdout",
+      "stderr": "witness-05-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "discovery-06",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-06.stdout",
+      "stderr": "discovery-06.stderr",
+      "exit": 1,
+      "wall_seconds": 4.332
+    },
+    {
+      "name": "witness-06-00-node",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-witness.cjs",
+        "/tmp/scanner-main-prepared/discovery/witness-06-00.a"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-06-00-node.stdout",
+      "stderr": "witness-06-00-node.stderr",
+      "exit": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "witness-06-00-build",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/witness-06-00.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/witness-06-00-native"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "witness-06-00-build.stdout",
+      "stderr": "witness-06-00-build.stderr",
+      "exit": 1,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "discovery-06-placeholder",
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/drivers/scanner/scratch-stub.cjs",
+        "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/core.ts",
+        "107",
+        "20"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-06-placeholder.stdout",
+      "stderr": "discovery-06-placeholder.stderr",
+      "exit": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "discovery-07",
+      "command": [
+        "/tmp/scanner-main-prepared/adamic",
+        "build",
+        "/tmp/scanner-main-prepared/discovery/main.a",
+        "-o",
+        "/tmp/scanner-main-prepared/discovery/scanner"
+      ],
+      "cwd": "/tmp/scanner-main-prepared/compiler-tree",
+      "stdout": "discovery-07.stdout",
+      "stderr": "discovery-07.stderr",
+      "exit": 1,
+      "wall_seconds": 4.23
+    }
+  ],
+  "merges": [],
+  "scanner": [
+    {
+      "split": 0,
+      "exit": 1,
+      "report": {
+        "tokens": 1369432,
+        "errors": 466,
+        "sha256": "10e253011b72b3689350cc72123758e335e1c40d8256b02493016cb8c0d24581",
+        "bytes": 108018963,
+        "input_tree": "/tmp/scanner-main-prepared/inputs",
+        "files": 81,
+        "node_exit": 0,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1,
+        "native": "blocked at compilation",
+        "build_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    },
+    {
+      "split": 1,
+      "exit": 1,
+      "report": {
+        "tokens": 1369432,
+        "errors": 466,
+        "sha256": "10e253011b72b3689350cc72123758e335e1c40d8256b02493016cb8c0d24581",
+        "bytes": 108018963,
+        "input_tree": "/tmp/scanner-main-prepared/inputs",
+        "files": 81,
+        "node_exit": 0,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1,
+        "native": "blocked at compilation",
+        "build_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    }
+  ],
+  "ordered_stops": [
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/corePublic.ts",
+      "file": "corePublic.ts",
+      "line": 9,
+      "column": 5,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "order": 1,
+      "build_exit": 1,
+      "scope": "first unchanged stop",
+      "witness": {
+        "file": "discovery/witness-01-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+        "catalogue_origin": "native3/01-index"
+      },
+      "placeholder": "index-signature removal with throwing marker; later record observations are dependent"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/debug.ts",
+      "file": "debug.ts",
+      "line": 14,
+      "column": 14,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "order": 2,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": {
+        "file": "discovery/witness-02-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "catalogue_origin": "native3/04-cast"
+      },
+      "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "file": "diagnosticInformationMap.generated.ts",
+      "line": 13,
+      "column": 34,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "order": 3,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": {
+        "file": "discovery/witness-03-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "catalogue_origin": "native3/04-cast"
+      },
+      "placeholder": "typed throwing diagnostic factory; later casts are placeholder-dependent"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/utilities.ts",
+      "file": "utilities.ts",
+      "line": 65,
+      "column": 22,
+      "message": "stage 0 can't lower typed array element type Uint16Array yet",
+      "order": 4,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": {
+        "file": "discovery/witness-04-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "stage 0 can't lower typed array element type Uint16Array yet",
+        "catalogue_origin": "land-area-next/05-uint16"
+      },
+      "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/scanner.ts",
+      "file": "scanner.ts",
+      "line": 3510,
+      "column": 67,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "order": 5,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": {
+        "file": "discovery/witness-05-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "catalogue_origin": "native3/04-cast"
+      },
+      "placeholder": "typed throwing UTF16 worker"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/core.ts",
+      "file": "core.ts",
+      "line": 107,
+      "column": 20,
+      "message": "stage 0 can't lower new an Identifier yet",
+      "order": 6,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": {
+        "file": "discovery/witness-06-00.a",
+        "node_exit": 0,
+        "build_exit": 1,
+        "message": "stage 0 can't lower new an Identifier yet",
+        "catalogue_origin": "native3/11-array"
+      },
+      "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+    },
+    {
+      "path": "/tmp/scanner-main-prepared/discovery/adapted/src/compiler/scanner.ts",
+      "file": "scanner.ts",
+      "line": 778,
+      "column": 15,
+      "message": "stage 0 can't lower destructuring a string yet",
+      "order": 7,
+      "build_exit": 1,
+      "scope": "behind throwing discovery placeholders",
+      "witness": null,
+      "continuation": "stopped: no freshly verified Node witness for this diagnostic"
+    }
+  ],
+  "base": "87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4",
+  "scratch_branch": "scratch/scanner-run-d66d0d7edc7c",
+  "scratch_tree": "/tmp/scanner-main-prepared/compiler-tree",
+  "resolved_refs": [],
+  "integrated_sha": "87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4",
+  "cohere_sha": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "toolchain_environment": "/workspace/adamic-tools/env.sh",
+  "setup_timing_lines": [
+    "setup: node ready (0.017s)",
+    "setup: go ready (0.016s)",
+    "setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s",
+    "setup: submodules ready (0.061s)",
+    "setup: markdown dependencies ready (0.062s)",
+    "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.155s)",
+    "setup: shared cache ready (0.211s)",
+    "setup: go build ready (59.354s)",
+    "setup: test binaries deferred (use --warm-tests) (59.455s)",
+    "setup: build cache warm (59.456s)",
+    "setup: build-flags commit=87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=on load-before=1.14 1.29 0.94 1/177 9117 load-after=1.52 1.29 0.96 1/183 9655",
+    "setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (59.484s)",
+    "setup: source /workspace/adamic-tools/env.sh",
+    "setup: logs /tmp/adamic-gate/setup.ajcsFz"
+  ],
+  "nproc": 5,
+  "compiler": {
+    "exit": 0,
+    "sha": "87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4",
+    "binary_sha256": "82ceb8fe8e74bf1f82fde362ad37186ac3565b5cee03059244f129db913d53d3"
+  },
+  "wall_seconds": 128.141,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}
