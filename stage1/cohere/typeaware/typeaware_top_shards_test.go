@@ -15,6 +15,8 @@ type typeAwarePlan struct {
 	h        *harness
 	expected []string
 	shards   []sixShard
+	// witnesses finds each planted mutant's witness cases, by mutant name (sixMutantWitnesses).
+	witnesses map[string]func(*harness) []string
 }
 
 type typeAwarePlanEntry struct {
