@@ -107,7 +107,7 @@ func acceptanceMutantsOracle(t *testing.T) string {
 	acceptanceOracleOnce.Do(func() {
 		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
 			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
-			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
 			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
 		directory := buildcache.Product(t, inputs, func(directory string) error {
 			// GoBuild is absent on this base; preserve the existing overlay recipe.

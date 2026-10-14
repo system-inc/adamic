@@ -236,14 +236,14 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 		}
 		overlayPath := filepath.Join(directory, mode+".json")
 		write(t, overlayPath, overlay)
-		goInputs := buildcache.Inputs{Name: "markdown table Go " + mode, Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/" + driver}, Flags: []string{string(overlay)}, Toolchain: []string{buildcache.Tool("go", "version")}}
+		goInputs := buildcache.Inputs{Name: "markdown table Go " + mode, Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/" + driver}, Flags: []string{string(overlay), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{buildcache.Tool("go", "version")}}
 		if mode == "list" {
 			goInputs.Files = append(goInputs.Files, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
 		}
 		product := buildcache.Product(t, goInputs, func(product string) error {
 			ctx, cancel := markdownLayoutSetupContext(t.Context())
 			defer cancel()
-			build := tableLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)
+			build := tableLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)...)
 			build.Dir = cohere
 			if output, err := build.CombinedOutput(); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode, err, output)
