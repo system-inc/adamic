@@ -13,7 +13,6 @@ func TestRegExpNativeRefusals(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
-		"const matches = /a{18446744073709551616}/.test('a');",
 		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
@@ -71,4 +70,11 @@ func TestRegExpEscapedSlashSourceAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
 	lowersAndAgreesWithNodeNative(t, "RegExpEscapedSlashSource")
+}
+
+func TestRegExpV8QuantifierBoundsLower(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerSource(t, "const matches = /a{18446744073709551616}/.test('a');"); err != nil {
+		t.Fatal(err)
+	}
 }
