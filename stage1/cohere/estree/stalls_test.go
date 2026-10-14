@@ -2,7 +2,6 @@ package estree
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,18 +10,24 @@ import (
 	"time"
 )
 
+// refusedBeforeDeadline holds a refusal of argv (a program, then its input path) to its calibrated budget.
 func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
+	t.Helper()
+	refusedWithin(t, argv, diagnostic, estreeRefusalBudget(t, argv))
+}
+
+func refusedWithin(t *testing.T, argv []string, diagnostic string, budget time.Duration) {
 	t.Helper()
 	output, err := os.CreateTemp(t.TempDir(), "stdout")
 	if err != nil {
 		t.Fatal(err)
 	}
 	var stderr bytes.Buffer
-	err, timedOut := runWithCPUBudget(t, argv, output, &stderr, 2*time.Second)
+	err, timedOut, cpu := runWithCPUBudget(t, argv, output, &stderr, budget)
 	output.Close()
 	info, _ := os.Stat(output.Name())
 	if timedOut || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
-		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
+		t.Fatalf("%v: timeout=%v cpu=%s budget=%s exit=%v stdout=%d stderr=%s", argv, timedOut, cpu, budget, err, info.Size(), &stderr)
 	}
 }
 
@@ -141,23 +146,20 @@ func portStallControlShard(t *testing.T, shard int) {
 		if err := os.WriteFile(path, []byte("class C { ) }"), 0644); err != nil {
 			t.Fatal(err)
 		}
+		// The guard-disabled port held to the calibrated budget a refusal gets: it must run until the budget stops it. A
+		// 500 ms wall deadline caught it before, and Node's startup alone outlasts that whether the guard holds or not.
 		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}} {
-			ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
-			cmd := estreeScopedCommand(ctx, argv[0], argv[1:]...)
+			budget := estreeRefusalBudget(t, argv)
 			output, err := os.CreateTemp(t.TempDir(), "control-log")
 			if err != nil {
-				cancel()
 				t.Fatal(err)
 			}
-			cmd.Stdout, cmd.Stderr = output, output
-			err = cmd.Run()
+			err, timedOut, cpu := runWithCPUBudget(t, argv, output, output, budget)
 			output.Close()
-			timedOut := ctx.Err() == context.DeadlineExceeded
-			cancel()
 			if err := portStallControlResult(timedOut, err); err != nil {
 				t.Fatal(err)
 			}
-			t.Logf("%s guard-disabled control caught by 500ms deadline", argv[0])
+			t.Logf("%s guard-disabled control ran to its budget: %s of CPU against a budget of %s", argv[0], cpu, budget)
 		}
 	}
 }

@@ -264,7 +264,8 @@ func TestRecoveryShardProofChild(t *testing.T) {
 				if c.id == planted {
 					script = "printf 'accepted'"
 				}
-				refusedBeforeDeadline(t, []string{"/bin/sh", "-c", script}, "ESTree unattached decorator")
+				// A shell script, with no port to load, so no fixed cost to calibrate: the parser's own budget.
+				refusedWithin(t, []string{"/bin/sh", "-c", script}, "ESTree unattached decorator", estreeParserBudget)
 				continue
 			}
 			want.WriteString("0 Program " + c.id + "\n")
