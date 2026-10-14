@@ -1,0 +1,108 @@
+[
+  {
+    "file": "internal/metamorphic/metamorphic_test.go",
+    "test": "TestTheLeakCheckReadsTheCounts",
+    "id": "TestTheLeakCheckReadsTheCounts:c25bf1830cfbf9413673dfec69544a474d2a30e77d371825c69128882094f2e1",
+    "line": 132,
+    "condition": "runtime.GOOS != \"darwin\"",
+    "reads": [],
+    "callers": [
+      "TestTheLeakCheckReadsTheCounts"
+    ],
+    "message": "\"Not on macOS: Linux's leak check is LeakSanitizer's, run on the sanitized binary\"",
+    "class": "not-applicable",
+    "provides": "macOS-only counted-build leak witness; Linux uses LeakSanitizer on the sanitized binary."
+  },
+  {
+    "file": "internal/oracle/gcc_lane_test.go",
+    "test": "TestGCCAgreesWithNode",
+    "id": "TestGCCAgreesWithNode:8e1ac89c8ea9525bf996608391643f7c58b47070d50d2866cc1b34260c01c49f",
+    "line": 21,
+    "condition": "os.Getenv(\"ADAMIC_GCC_LANE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GCC_LANE\")",
+      "os.Getenv(\"ADAMIC_LANE_CC\")",
+      "os.Getenv(\"ADAMIC_LANE_REPORT\")",
+      "os.Getenv(\"ADAMIC_LANE_SANITIZE\")",
+      "os.ReadFile(filepath.Join(source, entry.Name()))"
+    ],
+    "callers": [
+      "TestGCCAgreesWithNode"
+    ],
+    "message": "\"opt in with ADAMIC_GCC_LANE=1\"",
+    "class": "opt-in-lane",
+    "provides": "Dedicated GCC verification lane opts in with ADAMIC_GCC_LANE=1. ADAMIC_LANE_CC selects the compiler (default gcc); ADAMIC_LANE_SANITIZE=1 enables sanitizers. Missing compiler or failed builds fail the opted-in lane rather than skipping it.",
+    "opt_in_off": [
+      "ADAMIC_GCC_LANE"
+    ]
+  },
+  {
+    "file": "internal/oracle/release_flags_test.go",
+    "test": "TestNativeReleaseFlagsAgreeWithNode",
+    "id": "TestNativeReleaseFlagsAgreeWithNode:acee7bcd3dc3537b672326f62074666026f5bf75dfbc5007fde603e48d7d3efd",
+    "line": 18,
+    "condition": "os.Getenv(\"ADAMIC_RELEASE_LANE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_RELEASE_LANE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeReleaseFlagsAgreeWithNode"
+    ],
+    "message": "\"set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane\"",
+    "class": "opt-in-lane",
+    "provides": "Dedicated shipping-build verification lane opts in with ADAMIC_RELEASE_LANE=1. The lane traces production release options; missing tools or failed builds fail the opted-in lane rather than skipping it.",
+    "opt_in_off": [
+      "ADAMIC_RELEASE_LANE"
+    ]
+  },
+  {
+    "file": "internal/oracle/release_flags_test.go",
+    "test": "TestNativeExistingReleaseAgreesWithNode",
+    "id": "TestNativeExistingReleaseAgreesWithNode:657fcad842d7dc04a11e8f0a17b161826c0f0fd4c245d76eff93418ab613fe0d",
+    "line": 28,
+    "condition": "os.Getenv(\"ADAMIC_RELEASE_MEASURE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_RELEASE_MEASURE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeExistingReleaseAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_RELEASE_MEASURE=1 for the timing control\"",
+    "class": "measurement",
+    "provides": "Opt-in timing control: ADAMIC_RELEASE_MEASURE=1 compares the existing release variant on finishing fixtures; not a substitute for the shipping-build verification lane.",
+    "opt_in_off": [
+      "ADAMIC_RELEASE_MEASURE"
+    ]
+  },
+  {
+    "file": "internal/oracle/slabs_test.go",
+    "test": "TestNativeMallocAgreesWithNode",
+    "id": "TestNativeMallocAgreesWithNode:4be973d40ef3554399a7b55adc4838f67420bcdfeaba943cfec966c3f7a02827",
+    "line": 30,
+    "condition": "os.Getenv(\"ADAMIC_SLAB_MEASURE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_SLAB_MEASURE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeMallocAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_SLAB_MEASURE=1 for the timing control\"",
+    "class": "measurement",
+    "provides": "ADAMIC_SLAB_MEASURE=1 enables the existing malloc allocator timing control, separate from the slab correctness lane.",
+    "opt_in_off": [
+      "ADAMIC_SLAB_MEASURE"
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+# Tests the landing gate leaves to the whole gate on every new main, whose first red pauses landings
+# (@system_adamic's ruling, Oct 7 19:37). A test belongs here only if it takes over 15 s warm and is
+# a mutant test, a randomized or differential sweep, or a whole external suite; nothing else moves
+# without a ruling. The fast gate skips these in touched packages and its status line counts them.
+#
+# package             test                              seconds  kind
+# Seconds: wall from the test's run event to its verdict (a test whose work is in parallel subtests
+# reports a small Elapsed of its own), on the Threadripper, Oct 7, one-function internal/native edit
+# 74cf77df, measured beside another gate (load 20 to 34 of 64); to be re-measured alone, and any
+# entry under 15 s comes off.
+internal/native       TestNormalizeMatchesNode          63.9     differential-sweep
+internal/native       TestRecordMutants                 39.9     mutant
+internal/native       TestWASI                          36.9     external-suite
+internal/native       TestSplitTSGoAgrees               35.5     differential-sweep
+internal/native       TestRegExpBytecodeRandomNode      29.8     randomized-sweep
+internal/native       TestCaseMappingMatchesNode        24.9     differential-sweep
+internal/native       TestRegExpBytecodeTest262         24.2     external-suite
+internal/native       TestMapHashProbeCatchesMutants    23.9     mutant
+internal/native       TestRecordReadMutants             22.3     mutant
+internal/native       TestNormalizeRandomMatchesNode    18.6     randomized-sweep
+# stage1/cohere/lint's corpus-wide tests, until the rule-scoped lint gate (#60hxabf) is on main
+# (@system_adamic via @system_cohere_adamic, Oct 8 11:42 MDT): the five the scoped gate skips by name,
+# about 1,190 s of their own time. The lint seat runs them unscoped on every area head before it moves,
+# so a landing never carries an unrun result. Seconds: the largest of four big gates, Cloud, Oct 8.
+# TestProfileSnapshotsAgree was the fifth and isn't deferred: it is a measurement (it compares profiled
+# snapshot builds named in ADAMIC_LINT_PROFILE_SNAPSHOTS, which no gate has), it skips in the whole gate
+# too, and a deferred test the whole gate skips is a void a Gate-runs request turns red (the star, Oct 8 22:21Z).
+stage1/cohere/lint    TestJsxLintTrees                  415.8    differential-sweep
+stage1/cohere/lint    TestCompilerAndStage1Agree        557.0    differential-sweep
+stage1/cohere/lint    TestNodeTableIsLinkOnly           153.0    differential-sweep
+stage1/cohere/lint    TestShardsAgree                   392.0    differential-sweep
