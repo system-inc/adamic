@@ -3,7 +3,6 @@ package buildcache
 import (
 	"fmt"
 	"go/ast"
-	"go/importer"
 	"go/parser"
 	gotoken "go/token"
 	"go/types"
@@ -41,10 +40,14 @@ func makeCensus(directory string) ([]string, error) {
 		}
 		files = append(files, file)
 	}
+	// Hermetic: a runner has no GOROOT, and a source importer reads the standard library from one (chg_7fdbgdq4 on Cloud:
+	// "could not import bytes ... ($goroot not set)"). The census needs only which of this package's own objects each use
+	// names, which resolves without any import's contents, so every import is an empty package and the errors that leaves
+	// (a selector into one) are left unsaid. A file that doesn't parse still fails it.
 	info := &types.Info{Uses: map[*ast.Ident]types.Object{}}
-	checked, err := (&types.Config{Importer: importer.ForCompiler(fileSet, "source", nil)}).Check("github.com/system-inc/adamic/internal/buildcache", fileSet, files, info)
-	if err != nil {
-		return nil, err
+	checked, _ := (&types.Config{Importer: emptyImports{}, Error: func(error) {}}).Check("github.com/system-inc/adamic/internal/buildcache", fileSet, files, info)
+	if checked == nil {
+		return nil, fmt.Errorf("the package in %s didn't type-check at all", directory)
 	}
 	seen := map[string]bool{}
 	for identifier, object := range info.Uses {
@@ -63,6 +66,21 @@ func makeCensus(directory string) ([]string, error) {
 	}
 	sort.Strings(census)
 	return census, nil
+}
+
+// emptyImports answers every import with an empty, complete package named for its path's last element (the one
+// before a major version suffix, as math/rand/v2 is rand), so the census type-checks with no GOROOT and no module cache.
+type emptyImports struct{}
+
+func (emptyImports) Import(path string) (*types.Package, error) {
+	elements := strings.Split(path, "/")
+	name := elements[len(elements)-1]
+	if len(elements) > 1 && len(name) > 1 && name[0] == 'v' && strings.Trim(name[1:], "0123456789") == "" {
+		name = elements[len(elements)-2]
+	}
+	imported := types.NewPackage(path, name)
+	imported.MarkComplete()
+	return imported, nil
 }
 
 // censusIsMakeFile is isMakeFile, or the files MAKE_CENSUS_FILES lists (comma-separated) to try a candidate set.
@@ -99,6 +117,30 @@ func TestTheMakeFilesUseNothingFromTheMachinery(t *testing.T) {
 	}
 	if len(census) > 0 {
 		t.Fatalf("the make files use %d things the machinery defines:\n%s", len(census), strings.Join(census, "\n"))
+	}
+}
+
+// The census holds with no GOROOT, as on a runner, and still sees a make file using a machinery helper beside a standard
+// library call it can't see into: a fixture package whose make file calls helper (defined in helper.go) and uses bytes.
+// Mutants: the census back on a source importer (with no GOROOT it stops at the first import and sees nothing, which the
+// whole package's census alone passes); the empty imports' errors read as a failure.
+// Not parallel: t.Setenv("GOROOT"), which is process-wide.
+func TestTheMakeCensusHoldsWithNoGoRootAndStillSeesAMachineryUse(t *testing.T) {
+	t.Setenv("GOROOT", "")
+	directory := t.TempDir()
+	for name, content := range map[string]string{
+		"helper.go":  "package buildcache\n\nfunc helper() int { return 1 }\n",
+		"make_x.go":  "package buildcache\n\nimport \"bytes\"\n\nfunc made() int { var buffer bytes.Buffer; buffer.WriteString(\"x\"); return helper() + buffer.Len() }\n",
+		"make_y.go":  "package buildcache\n\nfunc alsoMade() int { return made() }\n",
+		"other_x.go": "package buildcache\n\nfunc unused() {}\n",
+	} {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	census, err := makeCensus(directory)
+	if err != nil || !slices.Equal(census, []string{"make_x.go: helper (defined in helper.go)"}) {
+		t.Fatalf("census %q, err %v, want make_x.go's use of helper alone", census, err)
 	}
 }
 
