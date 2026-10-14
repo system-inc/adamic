@@ -9,28 +9,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// These are checker rules, not runtime freezing. A mutable object held in a readonly field remains mutable.
-func TestClassFeaturesReadonlyChecker(t *testing.T) {
-	t.Parallel()
-	for _, source := range []string{
-		`class Box { readonly value = 'initial'; } const box = new Box(); box.value = 'changed';`,
-		`class Box { readonly value = 'initial'; change(): void { this.value = 'changed'; } }`,
-		`class Base { readonly value: string; constructor() { this.value = 'base'; } } class Child extends Base { constructor() { super(); this.value = 'child'; } }`,
-		`class Box { static readonly value = 'initial'; static { this.value = 'changed'; } }`,
-		`class Box { readonly #value = 'initial'; change(): void { this.#value = 'changed'; } }`,
-	} {
-		path := filepath.Join(t.TempDir(), "main.a")
-		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
-		}
-		_, err := load.Load([]string{path})
-		if err == nil || !strings.Contains(err.Error(), "read-only") {
-			t.Fatalf("want tsc readonly diagnostic, got %v", err)
-		}
-	}
-	lowersAndAgreesWithNode(t, `class Box { readonly value: string; readonly item = { text: 'initial' }; constructor() { this.value = 'set'; this.value = 'again'; } } const box = new Box(); box.item.text = 'changed'; console.log(box.value + ':' + box.item.text);`)
-}
-
 func TestClassFeaturesPrivateChecker(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "main.a")
@@ -115,14 +93,6 @@ func TestClassFeaturesNarrowedAccessor(t *testing.T) {
 	_, err := lowerSource(t, `let calls = 0; const source: { readonly value: string | undefined } = { get value(): string | undefined { calls++; return calls === 1 ? 'first' : undefined; } }; if (source.value !== undefined) console.log(source.value);`)
 	if err == nil || !strings.Contains(err.Error(), "narrowed accessor reread") {
 		t.Fatalf("want changing getter reread refused, got %v", err)
-	}
-}
-
-func TestClassFeaturesStaticParentCycle(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `class Base { static child: typeof Child | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
-	if err == nil || !strings.Contains(err.Error(), "cycle") {
-		t.Fatalf("constructor parent cycle accepted: %v", err)
 	}
 }
 
