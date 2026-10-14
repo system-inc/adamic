@@ -61,7 +61,7 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 	product := buildcache.Product(t, buildcache.Inputs{
 		Name:      "markdownblocks-whole-document-preflight-go-products",
 		Files:     buildFiles,
-		Flags:     []string{"go build -overlay -o cmd/adamic_markdown_blocks/main.go"},
+		Flags:     []string{"go build -overlay -o cmd/adamic_markdown_blocks/main.go", "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
 		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS", "GOTOOLCHAIN", "GOWORK")},
 	}, func(dir string) error {
 		build := func(replacements map[string]string, binary string) error {
@@ -76,7 +76,7 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(path)
-			command := preflightCommand(t, budget, "go", "build", "-overlay="+path, "-o", binary, mainPath)
+			command := preflightCommand(t, budget, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary, mainPath)...)
 			command.Dir = cohere
 			var output bytes.Buffer
 			command.Stdout, command.Stderr = &output, &output

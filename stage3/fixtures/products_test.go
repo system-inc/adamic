@@ -79,7 +79,7 @@ for path, label in external.items():
 tools.extend(sorted(fingerprints))
 workspace = 'workspace=off' if settings['GOWORK'] in ['', 'off'] else 'workspace=on'
 locations = {'GOWORK','GOTOOLDIR','GOTOOLCHAIN','GOENV','GOROOT','GOPATH'}
-print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Flags':['-buildvcs=false','-c','./internal/oracle','repository='+str(root), workspace] + flags + [k+'='+str(v) for k,v in sorted(settings.items()) if k not in locations], 'Toolchain':tools}))
+print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Flags':hook['reproducible_flags'] + ['-c','./internal/oracle','repository='+str(root), workspace] + flags + [k+'='+str(v) for k,v in sorted(settings.items()) if k not in locations], 'Toolchain':tools}))
 `
 
 // fixtureHookInputs is the oracle hook's key for repository, discovered once per process: every fixture asks for the

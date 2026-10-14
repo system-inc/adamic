@@ -32,25 +32,12 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"sync/atomic"
 	"syscall"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
-
-// Inputs are everything that can change a product. Name is one per build function. Files are repository-relative
-// files and directories, valued by content (a file by its git blob id and exec bit, a directory by every name and file
-// under it, sorted). Flags are every flag and environment value the build reads. Toolchain names the tools, from Tool
-// or runtime.Version().
-type Inputs struct {
-	Name      string
-	Files     []string
-	Flags     []string
-	Toolchain []string
-}
 
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
@@ -335,8 +322,6 @@ func portable(root, value string) string {
 	return withoutParallelShare(value)
 }
 
-type place struct{ path, name string }
-
 // places are the directories portable rewrites, longest first, so a checkout inside the home directory becomes
 // <repository> rather than ~/....: the repository, the build cache (a key that names another product by its path,
 // such as estree's main=<build cache>/<key>/main.ts, names it by its key), the home directory, and each as its symbolic
@@ -377,17 +362,6 @@ func places(root string) []place {
 	return found
 }
 
-func resolved(path string) string {
-	resolutions.Add(1)
-	if value, err := filepath.EvalSymlinks(path); err == nil {
-		return value
-	}
-	return ""
-}
-
-// resolutions counts the paths this process has resolved: a test asks it.
-var resolutions atomic.Int64
-
 // productResolutions holds what each product directory places has met resolves to. places runs for every key a process
 // computes, over every product it holds, and a resolution is a stat per path element, each one a stop under a trace
 // (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving product directories
@@ -401,33 +375,6 @@ func productResolved(directory string) string {
 	value := resolved(directory)
 	productResolutions.Store(directory, value)
 	return value
-}
-
-// replacePath replaces path with name where it stands as a whole path: not inside a longer name (/work/adamic in
-// /work/adamic-bench stays) and not as the tail of another path (/root in /chroot stays).
-func replacePath(value, path, name string) string {
-	var built strings.Builder
-	for {
-		index := strings.Index(value, path)
-		if index < 0 {
-			built.WriteString(value)
-			return built.String()
-		}
-		end := index + len(path)
-		before := index == 0 || !pathByte(value[index-1]) && value[index-1] != '/'
-		after := end == len(value) || value[end] == '/' || !pathByte(value[end])
-		built.WriteString(value[:index])
-		if before && after {
-			built.WriteString(name)
-		} else {
-			built.WriteString(path)
-		}
-		value = value[end:]
-	}
-}
-
-func pathByte(b byte) bool {
-	return 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z' || '0' <= b && b <= '9' || strings.IndexByte("._-+@~", b) >= 0
 }
 
 // parallelShare is go's -p flag as a token of its own: after the start, a space, a quote or an equals sign (GOFLAGS=-p=8),
@@ -829,43 +776,6 @@ func cacheDirectory() (string, error) {
 		return "", err
 	}
 	return directory, os.MkdirAll(directory, 0o755)
-}
-
-// cacheLocation is where products live on this machine (location.BuildCache), the one rule internal/native's caches
-// live under too.
-func cacheLocation() (string, error) {
-	return location.BuildCache()
-}
-
-var root struct {
-	once      sync.Once
-	directory string
-	err       error
-}
-
-// repositoryRoot is the nearest directory above the working directory holding this module's go.mod.
-func repositoryRoot() (string, error) {
-	root.once.Do(func() {
-		directory, err := os.Getwd()
-		if err != nil {
-			root.err = err
-			return
-		}
-		for {
-			content, err := os.ReadFile(filepath.Join(directory, "go.mod"))
-			if err == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
-				root.directory = directory
-				return
-			}
-			parent := filepath.Dir(directory)
-			if parent == directory {
-				root.err = errors.New("buildcache: no adamic go.mod above the working directory")
-				return
-			}
-			directory = parent
-		}
-	})
-	return root.directory, root.err
 }
 
 // describe is a product's inputs as its key reads them (its name, each flag and tool portable), beside it in the cache, so the
