@@ -15,11 +15,11 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var numbersEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
@@ -203,7 +203,7 @@ func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay recipes also use buildcache.Product; products are immutable.
+// The Go oracle is buildcache.GoBuildIn's product (numbersPreparedOracle); products are immutable.
 type numbersInputs struct {
 	Name      string
 	Files     []string
@@ -215,46 +215,6 @@ func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) e
 	t.Helper()
 	keyed := numbersCacheInputs(t, inputs)
 	return buildcache.Product(t, keyed, build)
-}
-
-// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
-// toolchain.Env (numbersGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
-// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
-// didn't name could start to unseen.
-func numbersGoProduct(t *testing.T, name string, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, numbersGoProductInputs(name, numbersGoCompilers()), build)
-}
-
-func numbersGoProductInputs(name string, compilers numbersCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      "cssnumbers " + name,
-		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssnumbers/testdata", "stage1/cohere/cssnumbers/port_test.go"},
-		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
-	}
-}
-
-// numbersCompilers are the C and C++ compilers go builds with, and the C compiler's report.
-type numbersCompilers struct{ c, cPlusPlus, report string }
-
-// numbersGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
-// names neither.
-func numbersGoCompilers() numbersCompilers {
-	var compilers numbersCompilers
-	for _, setting := range toolchain.Env() {
-		switch name, value, _ := strings.Cut(setting, "="); name {
-		case "CC":
-			compilers.c = value
-		case "CXX":
-			compilers.cPlusPlus = value
-		}
-	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
-	}
-	return compilers
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -292,21 +252,37 @@ func numbersCacheInputs(t *testing.T, inputs numbersInputs) buildcache.Inputs {
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
 	}
-	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
-	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
-	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
+	// A lowering or native build runs the compiler linked into this test binary. Its key names the compiler by its
+	// sources (numbersCompilerFiles, the Go release) rather than by this binary's bytes, which differ wherever the test
+	// binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 
 	return keyed
 }
 
+// numbersCompilerFiles is compilerinputs.Lowering, the compiler's exact repository paths, as numbersInputs names a
+// repository file: through repository, from this package's directory.
+func numbersCompilerFiles() []string {
+	var files []string
+	for _, path := range compilerinputs.Lowering() {
+		files = append(files, repository+"/"+path)
+	}
+	return files
+}
+
 type numbersProgram struct{ dir, main, c, javascript string }
+
+// numbersProgramInputs keys the port lowered from main: the compiler, and main with the numbers.ts beside it and the
+// cssstrings strings.ts it imports.
+func numbersProgramInputs(name, main string) numbersInputs {
+	return numbersInputs{
+		Name: name + " lowering and backends", Files: append(numbersCompilerFiles(), main, filepath.Join(filepath.Dir(main), "numbers.ts"), filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts")),
+		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
+	}
+}
 
 func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 	t.Helper()
-	dir := numbersProduct(t, numbersInputs{
-		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "numbers.ts"), filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts"), repository + "/internal", repository + "/go.mod", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
-		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
-	}, func(dir string) error {
+	dir := numbersProduct(t, numbersProgramInputs(name, main), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -332,11 +308,16 @@ func numbersClangToolchain(t *testing.T) string {
 	return buildcache.Tool("clang", "--version")
 }
 
+// numbersNativeInputs keys the native binary native.Build makes from c: the compiler, whose native.Build links more
+// than internal/native (internal/ir, internal/flow, internal/toolchain, bridge/tsgo), and c by content.
+func numbersNativeInputs(name, c string, options native.Options, clang string) numbersInputs {
+	return numbersInputs{Name: name, Files: append(numbersCompilerFiles(), c), Flags: native.Flags(options), Toolchain: clang}
+}
+
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
-	flags := native.Flags(options)
-	dir := numbersProduct(t, numbersInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: numbersClangToolchain(t)}, func(dir string) error {
+	dir := numbersProduct(t, numbersNativeInputs(name, program.c, options, numbersClangToolchain(t)), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
