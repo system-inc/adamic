@@ -14,7 +14,6 @@ internal/oracle/import_cycles_test.go	TestImportCycleLoadTimeReads
 internal/oracle/import_cycles_test.go	TestImportCycleRuntimeCalls
 internal/oracle/library_map_set_test.go	TestLibraryMapSetMutants
 internal/oracle/module_namespace_reads_test.go	TestModuleNamespaceReadinessMutants
-internal/oracle/module_namespace_reads_test.go	TestModuleNamespaceReadsMatchNode
 internal/oracle/namespaces_test.go	TestNamespaceSemanticMutants
 internal/oracle/parameter_properties_test.go	TestParameterPropertyMutants
 internal/oracle/wasi_test.go	TestWASIOracleCatchesMutants
