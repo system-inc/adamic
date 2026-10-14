@@ -17,11 +17,11 @@ from artifact import input_key, payload_digest, upstream_packages_digest
 
 
 def packages():
-    source = apply.typescript_source(json.loads((ROOT / 'stage3/source.json').read_text()))
+    source = ROOT / 'stage3/typescript'
     modules = apply.installed_packages(source)
     actual, wanted = apply.packages_digest(modules), upstream_packages_digest(ROOT)
     if actual != wanted:
-        raise ValueError(f'supplied upstream packages hash to {actual}, not pinned {wanted}')
+        raise ValueError(f'{modules} hashes to {actual}, not pinned {wanted} by stage3/lane/node_modules.sha256 (npm 11.11.0); install the tree NodeProject from its lockfile')
     return source, modules
 
 
@@ -47,6 +47,14 @@ def regular_bins(tree):
                 path.chmod(0o755)
 
 
+def copy_packages(modules, target):
+    # The runner marker is deliberately outside packages_digest. Never publish it.
+    shutil.copytree(modules, target, symlinks=True,
+                    ignore=lambda directory, names: [apply.runnerMarker]
+                    if Path(directory) == modules else [])
+    regular_bins(target)
+
+
 def step(directory, phase, previous):
     key, inputs = input_key()
     os.environ['npm_config_cache'] = str(directory / 'npm-cache')
@@ -58,8 +66,7 @@ def step(directory, phase, previous):
         if (source / 'package-lock.json').read_bytes() != (previous / 'tree/package-lock.json').read_bytes():
             raise ValueError('supplied packages lock differs from adapted tree lock')
         shutil.copytree(previous / 'tree', directory / 'tree', symlinks=True)
-        shutil.copytree(modules, directory / 'tree/node_modules', symlinks=True)
-        regular_bins(directory / 'tree/node_modules')
+        copy_packages(modules, directory / 'tree/node_modules')
         phases = dict(apply=dict(exit=0), install=dict(exit=0))
     else:
         shutil.copytree(previous / 'tree', directory / 'tree', symlinks=True)

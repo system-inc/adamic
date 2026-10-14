@@ -1,4 +1,4 @@
-"""The supplied upstream install must match its committed byte pin before copying."""
+"""The tree NodeProject install must match its committed byte pin before copying."""
 import json
 from pathlib import Path
 import tempfile
@@ -11,7 +11,7 @@ class ProductPackageTests(unittest.TestCase):
     def test_changed_installed_bytes_are_refused_before_copy(self):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
-            source = root / 'source'
+            source = root / 'stage3/typescript'
             module = source / 'node_modules/probe'
             module.mkdir(parents=True)
             package = dict(version='1.0.0', integrity='sha512-pinned')
@@ -23,13 +23,24 @@ class ProductPackageTests(unittest.TestCase):
             payload = module / 'index.js'
             payload.write_text('original installed bytes')
             (root / 'stage3/lane').mkdir(parents=True)
-            (root / 'stage3/source.json').write_text('{}')
             (root / 'stage3/lane/node_modules.sha256').write_text(products.apply.packages_digest(source / 'node_modules'))
-            with patch.object(products, 'ROOT', root), patch.object(products.apply, 'typescript_source', return_value=source):
+            with patch.object(products, 'ROOT', root), patch.object(products.apply, 'typescript_source', side_effect=AssertionError('external checkout must not supply packages')):
                 self.assertEqual(products.packages(), (source, source / 'node_modules'))
                 payload.write_text('changed bytes, unchanged version and hidden lockfile')
-                with self.assertRaisesRegex(ValueError, 'supplied upstream packages hash to .*not pinned'):
+                with self.assertRaisesRegex(ValueError, 'not pinned .*stage3/lane/node_modules.sha256'):
                     products.packages()
+
+
+    def test_runner_marker_is_not_published(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            source = Path(scratch) / 'node_modules'
+            source.mkdir()
+            (source / 'payload.js').write_text('package bytes')
+            (source / products.apply.runnerMarker).write_text('runner-specific marker')
+            target = Path(scratch) / 'copy'
+            products.copy_packages(source, target)
+            self.assertEqual((target / 'payload.js').read_text(), 'package bytes')
+            self.assertFalse((target / products.apply.runnerMarker).exists())
 
 
 if __name__ == '__main__':

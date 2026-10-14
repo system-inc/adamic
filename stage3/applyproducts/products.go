@@ -44,7 +44,7 @@ func inputs(repository string, index int) (buildcache.Inputs, error) {
 		return buildcache.Inputs{}, err
 	}
 	for _, entry := range entries {
-		if entry.IsDir() && entry.Name()[:2] <= boundaries[index] {
+		if index == 3 || entry.IsDir() && entry.Name()[:2] <= boundaries[index] {
 			files = append(files, "stage3/adapt/"+entry.Name())
 		}
 	}

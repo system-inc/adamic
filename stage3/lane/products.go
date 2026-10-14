@@ -44,7 +44,7 @@ func laneInputs(t testing.TB, root string, index int) buildcache.Inputs {
 		}
 		name := filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if name == "stage3/lane" || name == "stage3/oracle" || entry.Name() == "__pycache__" || name == "stage3/api/node_modules" {
+			if name == "stage3/lane" || name == "stage3/oracle" || entry.Name() == "__pycache__" || name == "stage3/api/node_modules" || name == "stage3/typescript/node_modules" {
 				return filepath.SkipDir
 			}
 			return nil

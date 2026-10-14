@@ -19,6 +19,11 @@ func TestProduct_Stage3Adapted99(t *testing.T) { t.Parallel(); Product(t, 3) }
 
 func tracksInputs(t *testing.T, index int) {
 	t.Helper()
+	tracksPath(t, index, "stage3/source.json")
+}
+
+func tracksPath(t *testing.T, index int, changed string) {
+	t.Helper()
 	repository, err := root()
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +36,7 @@ func tracksInputs(t *testing.T, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Change the real pin in a private input tree. An omitted pin must fail this assertion.
+	// Change a real declared input in a private tree. An omitted input must fail this assertion.
 	scratch := t.TempDir()
 	for _, name := range recipe.Files {
 		source := filepath.Join(repository, name)
@@ -84,7 +89,7 @@ func tracksInputs(t *testing.T, index int) {
 	if err := os.MkdirAll(filepath.Join(scratch, "stage3"), 0755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(scratch, "stage3/source.json"), []byte("changed pinned TypeScript source"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(scratch, changed), []byte("changed pinned TypeScript source"), 0644); err != nil {
 		t.Fatal(err)
 	}
 	after, err := buildcache.Key(scratch, recipe)
@@ -126,4 +131,9 @@ func TestProductDeadlineKillsDescendants(t *testing.T) {
 	if syscall.Kill(pid, 0) != syscall.ESRCH {
 		t.Fatal("deadline left the worker's child running")
 	}
+}
+
+func TestStage3Adapted99TracksMetadata(t *testing.T) {
+	t.Parallel()
+	tracksPath(t, 3, "stage3/adapt/checker-options-evidence.json")
 }

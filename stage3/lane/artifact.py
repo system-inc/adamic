@@ -26,7 +26,7 @@ def digest_files(root, files):
 
 
 def upstream_packages_digest(root):
-    # Install validates the supplied locked packages against this byte pin.
+    # Install validates the tree NodeProject against this npm 11.11.0 byte pin.
     # Consumers need the pin and the fetched artifact, never another install.
     return (root / 'stage3/lane/node_modules.sha256').read_text().strip()
 
@@ -39,7 +39,8 @@ def input_key(root=ROOT):
     files = [file for file in stage.rglob('*') if file.is_file()
              and file.relative_to(stage).parts[0] not in ('lane', 'oracle')
              and '__pycache__' not in file.parts
-             and file.relative_to(stage).parts[:2] != ('api', 'node_modules')]
+             and file.relative_to(stage).parts[:2] != ('api', 'node_modules')
+             and file.relative_to(stage).parts[:2] != ('typescript', 'node_modules')]
     tools = {name: subprocess.check_output([name, '--version'], text=True).strip()
              for name in ('node', 'npm', 'git', 'python3')}
     # An arbitrary compiler API override is an additional untracked input.

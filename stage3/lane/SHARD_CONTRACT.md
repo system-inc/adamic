@@ -99,8 +99,9 @@ timing and baseline diffs are preserved per unit by the step12 observer.
 `TestProduct_Stage3LaneCompiler` and `TestProduct_Stage3LaneHarness`. Prepare
 apply's `TestProduct_Stage3Adapted99` first. Each lane product fetches its
 predecessor and fails if it is missing; no consumer silently builds a missing
-predecessor. The gate supplies `ADAMIC_TYPESCRIPT_SOURCE`, its locked installed
-packages, and stage3/api's byte-pinned installed packages. Product steps never
+predecessor. The gate supplies `ADAMIC_TYPESCRIPT_SOURCE` for apply. Loom
+installs the tree NodeProjects `stage3/typescript` and `stage3/api` from their
+lockfiles with npm 11.11.0; the lane reads `stage3/typescript/node_modules`. Product steps never
 fetch packages or source. Install materializes the supplied packages after
 checking their hidden lockfile, versions and the adapted tree's lockfile.
 
@@ -111,15 +112,18 @@ Current buildcache stores regular-file blobs rather than implicitly archiving
 symlinks: installed `.bin` aliases become relative shell wrappers which execute
 the original target in its own directory. No compiler or test source is changed
 by that packaging step. The original package bytes, including alias targets,
-are pinned by lane/node_modules.sha256 and validated before copying. The pin
+are pinned by lane/node_modules.sha256, measured from the npm 11.11.0 install,
+and validated before copying. A mismatch names that pin and the reference npm
+version. The hidden npm lockfile is included, matching the API pin precedent. The pin
 participates in every product key and in the artifact input identity. A shard
 runner needs the committed pin and fetched artifact, not a second upstream install.
 
-The artifact's identity excludes the physical stage3/api/node_modules install;
-`api/node_modules.sha256` pins those bytes, verified by apply and the final
-producer. This avoids binding a runner's extra lockfile marker. All other
+The artifact's identity excludes both physical NodeProject installs;
+`api/node_modules.sha256` pins API bytes, verified by apply and the final
+producer; `lane/node_modules.sha256` pins the tree TypeScript install. This avoids binding a runner's extra lockfile marker. All other
 previous artifact inputs remain bound, and the supplied upstream install's
-full digest is now bound too. Paths are absent from both digests. `shard.py`
+full digest is now bound too through lane/node_modules.sha256. The tree
+TypeScript package.json and lockfile remain direct identity inputs. Paths are absent from both digests. `shard.py`
 and its payload, input, inventory, count, baseline and deadline checks are
 unchanged. `bind_products.py ARTIFACT` updates the existing inventory's artifact,
 runtime and unit hashes after this identity change; it does not repartition it.
@@ -129,3 +133,16 @@ Only `TestShard_Stage3LaneFile001` is declared in Go in wave 1. It reads
 manifest argv from the repository root with fresh STAGE3_RESULTS, and checks
 both command success and the recorded counts. Missing or empty manifests fail.
 The other 150 Go shard declarations are intentionally left for wave 2.
+
+Planner follow-up: [READS.md](READS.md) inventories the additional Loom unit-key
+reads, separately from buildcache's product inputs. The npm 11.11.0 pin includes
+hidden npm metadata. A clean npm 11.9.0 install with the same lockfile and gate
+flags has exactly the same digest and passes deliberately: the check binds
+bytes, not the npm version string. An install with changed bytes fails naming
+stage3/lane/node_modules.sha256. Neither physical NodeProject install is hashed
+into the artifact identity; their declared byte pins and lockfiles are, and the
+producer validates the bytes before publishing. Shard consumers fetch products
+and need no installed packages.
+
+The root .fast-gate-lockfile-sha256 runner marker is excluded from the pin and
+from the copied product payload, so it cannot change bytes under the same key.

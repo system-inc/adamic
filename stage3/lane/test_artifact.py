@@ -48,6 +48,21 @@ class ArtifactTests(unittest.TestCase):
         pin.write_text('second verified install')
         self.assertNotEqual(before, artifact.input_key(self.root)[0])
 
+    def test_tree_install_is_keyed_by_pin_and_lockfile(self):
+        project = self.root / 'stage3/typescript'
+        modules = project / 'node_modules'
+        modules.mkdir(parents=True)
+        lock = project / 'package-lock.json'
+        lock.write_text('first lockfile')
+        package = modules / 'index.js'
+        package.write_text('first physical install')
+        before = artifact.input_key(self.root)[0]
+        package.write_text('changed physical install')
+        (modules / '.fast-gate-lockfile-sha256').write_text('runner marker')
+        self.assertEqual(before, artifact.input_key(self.root)[0])
+        lock.write_text('second lockfile')
+        self.assertNotEqual(before, artifact.input_key(self.root)[0])
+
     def test_upstream_installed_bytes_invalidate_key(self):
         before = artifact.input_key(self.root)[0]
         self.packages.return_value = 'different installed bytes'

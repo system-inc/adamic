@@ -126,7 +126,7 @@ func runShard(t testing.TB, artifact, name, manifest string) {
 	defer cancel()
 	// The entire argv, including interpreter, is read from the manifest.
 	command := boundedCommand(ctx, root, selected.Command[0], selected.Command[1:]...)
-	command.Env = append(os.Environ(), "STAGE3_ARTIFACT="+artifact, "STAGE3_RESULTS="+results, "PYTHONDONTWRITEBYTECODE=1")
+	command.Env = append(os.Environ(), "STAGE3_ARTIFACT="+artifact, "STAGE3_RESULTS="+results, "PYTHONDONTWRITEBYTECODE=1", "PYTHONPYCACHEPREFIX="+filepath.Join(results, "pycache"))
 	output, err := command.CombinedOutput()
 	t.Logf("%s", output)
 	if err != nil {
