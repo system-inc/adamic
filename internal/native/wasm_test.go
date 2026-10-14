@@ -243,7 +243,8 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 	return wasiObservation{stdout.Bytes(), stderr.Bytes(), exit}
 }
 
-// TestProduct_WASICompiler builds the stage 0 compiler the WASI units run, so the tree build builds it ahead.
+// TestProduct_WASICompiler builds the stage 0 compiler the WASI units run, so the tree build builds it ahead. It is the
+// one product test that builds it (buildcache.AdamicOwner): every other package's finds it, so it has one key.
 func TestProduct_WASICompiler(t *testing.T) {
 	t.Parallel()
 	buildcache.Adamic(t)
