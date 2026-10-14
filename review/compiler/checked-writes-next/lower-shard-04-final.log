@@ -1,0 +1,118 @@
+=== RUN   TestAgreementEnumConstantWitness
+=== PAUSE TestAgreementEnumConstantWitness
+=== RUN   TestArrayPredicateCoexistsWithUnknownReflection
+=== PAUSE TestArrayPredicateCoexistsWithUnknownReflection
+=== RUN   TestCensusBooleanDeadBranch
+=== PAUSE TestCensusBooleanDeadBranch
+=== RUN   TestInheritanceRefusesUnsoundOverrides
+=== PAUSE TestInheritanceRefusesUnsoundOverrides
+=== RUN   TestInheritanceNativeSignatureNeighbors
+=== PAUSE TestInheritanceNativeSignatureNeighbors
+=== RUN   TestEmptyLiteralGenericReturnUsesSamePath
+=== PAUSE TestEmptyLiteralGenericReturnUsesSamePath
+=== RUN   TestEnumNamespaceSharedCycle
+=== PAUSE TestEnumNamespaceSharedCycle
+=== RUN   TestFunctionValueUnionViewsStayNotYet
+=== PAUSE TestFunctionValueUnionViewsStayNotYet
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== PAUSE TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== RUN   TestLibraryRegexOffsetRequiresNoCaptures
+=== PAUSE TestLibraryRegexOffsetRequiresNoCaptures
+=== RUN   TestNamespaceAmbientContextsDoNotExecute
+=== PAUSE TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:29: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+=== RUN   TestConditionAssertionAdmission
+=== PAUSE TestConditionAssertionAdmission
+=== RUN   TestProvenRelationsErase
+=== PAUSE TestProvenRelationsErase
+=== RUN   TestSwitchEmptyBlockFallsThrough
+=== PAUSE TestSwitchEmptyBlockFallsThrough
+=== RUN   TestUntaggedViewMemberTags
+=== PAUSE TestUntaggedViewMemberTags
+=== CONT  TestAgreementEnumConstantWitness
+=== CONT  TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== CONT  TestConditionAssertionAdmission
+=== CONT  TestNamespaceAmbientContextsDoNotExecute
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+--- PASS: TestNamespaceAmbientContextsDoNotExecute (0.08s)
+=== CONT  TestUntaggedViewMemberTags
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== CONT  TestSwitchEmptyBlockFallsThrough
+--- PASS: TestAgreementEnumConstantWitness (0.29s)
+=== CONT  TestProvenRelationsErase
+--- PASS: TestConditionAssertionAdmission (0.31s)
+=== CONT  TestLibraryRegexOffsetRequiresNoCaptures
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.32s)
+=== CONT  TestInheritanceNativeSignatureNeighbors
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_default
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_default
+=== RUN   TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== PAUSE TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_optional
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_optional
+=== RUN   TestInheritanceNativeSignatureNeighbors/void_result
+=== PAUSE TestInheritanceNativeSignatureNeighbors/void_result
+=== CONT  TestFunctionValueUnionViewsStayNotYet
+--- PASS: TestSwitchEmptyBlockFallsThrough (0.29s)
+=== CONT  TestEnumNamespaceSharedCycle
+--- PASS: TestEnumNamespaceSharedCycle (0.04s)
+=== CONT  TestEmptyLiteralGenericReturnUsesSamePath
+--- PASS: TestEmptyLiteralGenericReturnUsesSamePath (0.09s)
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionGapsAreLoud/block
+--- PASS: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.56s)
+=== CONT  TestCensusBooleanDeadBranch
+--- PASS: TestLibraryRegexOffsetRequiresNoCaptures (0.27s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides
+=== RUN   TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestArrayPredicateCoexistsWithUnknownReflection
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+--- PASS: TestFunctionValueUnionViewsStayNotYet (0.29s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_default
+--- PASS: TestNestedFunctionGapsAreLoud (0.21s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.08s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.02s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.11s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_optional
+--- PASS: TestCensusBooleanDeadBranch (0.21s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/void_result
+=== CONT  TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== CONT  TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== CONT  TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+--- PASS: TestInheritanceNativeSignatureNeighbors (0.00s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/identical_default (0.25s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/identical_optional (0.21s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/void_result (0.26s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/wider_same_representation (0.21s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+--- PASS: TestProvenRelationsErase (0.84s)
+--- PASS: TestInheritanceRefusesUnsoundOverrides (0.00s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/parameter_bivariance (0.09s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_cycle (0.08s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle (0.06s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing (0.05s)
+--- PASS: TestArrayPredicateCoexistsWithUnknownReflection (0.93s)
+PASS

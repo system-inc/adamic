@@ -198,3 +198,5 @@ The corpus rejects non-UTF-8 files explicitly. Syntax errors follow Go's parser,
 not Babel's error messages. Inputs outside this corpus and the 72 extra probes
 are not exhaustively proven; notably pathological comment attachment and
 arbitrarily large radix keys have not had a generated differential sweep.
+
+The checked-writes rebuild on main revalidated the existing closure of `gaps/emptyFallback.ts` with `TestClosedEmptyFallbackGap`: source Node, the JavaScript backend, sanitized native and leak checks agree. `multiplePush.ts` and `repeatInTry.ts` remain recorded gaps; this rebuild does not close them.

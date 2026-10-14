@@ -1,0 +1,1489 @@
+=== RUN   TestCheckedViewsNextMutants
+=== PAUSE TestCheckedViewsNextMutants
+=== RUN   TestCheckedViewsNextAdamicRefusals
+=== PAUSE TestCheckedViewsNextAdamicRefusals
+=== RUN   TestCheckedViewsNextProvenAdamic
+=== PAUSE TestCheckedViewsNextProvenAdamic
+=== RUN   TestCheckedWiderWrites
+=== PAUSE TestCheckedWiderWrites
+=== RUN   TestCheckedWiderWriteMutants
+=== PAUSE TestCheckedWiderWriteMutants
+=== RUN   TestCheckedWiderWritesAdamicRefuses
+=== PAUSE TestCheckedWiderWritesAdamicRefuses
+=== RUN   TestCheckedWiderWritesProvenAdamic
+=== PAUSE TestCheckedWiderWritesProvenAdamic
+=== RUN   TestCheckedNeverContractMutant
+=== PAUSE TestCheckedNeverContractMutant
+=== RUN   TestCheckedWiderWritesKeepSpreadOverrideRefusal
+=== PAUSE TestCheckedWiderWritesKeepSpreadOverrideRefusal
+=== RUN   TestCheckedDiagnosticReferenceMutants
+=== PAUSE TestCheckedDiagnosticReferenceMutants
+=== RUN   TestCheckedWiderWritesProvenContainers
+=== PAUSE TestCheckedWiderWritesProvenContainers
+=== RUN   TestCheckedFlowContainerContractMutants
+=== PAUSE TestCheckedFlowContainerContractMutants
+=== RUN   TestCheckedEmitContractsMutants
+=== PAUSE TestCheckedEmitContractsMutants
+=== RUN   TestCheckedEmitProvenAdamic
+=== PAUSE TestCheckedEmitProvenAdamic
+=== CONT  TestCheckedViewsNextMutants
+=== RUN   TestCheckedViewsNextMutants/optional-boolean-misfit
+=== CONT  TestCheckedNeverContractMutant
+=== PAUSE TestCheckedViewsNextMutants/optional-boolean-misfit
+=== CONT  TestCheckedFlowContainerContractMutants
+=== CONT  TestCheckedDiagnosticReferenceMutants
+=== RUN   TestCheckedViewsNextMutants/optional-false-misfit
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_alias_check
+=== PAUSE TestCheckedViewsNextMutants/optional-false-misfit
+=== PAUSE TestCheckedDiagnosticReferenceMutants/drop_alias_check
+=== CONT  TestCheckedWiderWritesProvenAdamic
+=== RUN   TestCheckedViewsNextMutants/required-boolean-misfit
+=== PAUSE TestCheckedViewsNextMutants/required-boolean-misfit
+=== RUN   TestCheckedViewsNextMutants/branch-file-misfit
+=== PAUSE TestCheckedViewsNextMutants/branch-file-misfit
+=== RUN   TestCheckedViewsNextMutants/branch-start-misfit
+=== PAUSE TestCheckedViewsNextMutants/branch-start-misfit
+=== RUN   TestCheckedViewsNextMutants/branch-length-misfit
+=== PAUSE TestCheckedViewsNextMutants/branch-length-misfit
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+=== RUN   TestCheckedFlowContainerContractMutants/flow-node-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/flow-node-misfit
+=== PAUSE TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+=== RUN   TestCheckedViewsNextMutants/branch-bottom-number-misfit
+=== PAUSE TestCheckedViewsNextMutants/branch-bottom-number-misfit
+=== RUN   TestCheckedViewsNextMutants/branch-bottom-string-misfit
+=== PAUSE TestCheckedViewsNextMutants/branch-bottom-string-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/flow-array-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/flow-array-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-number-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-number-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-string-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-string-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-map-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-map-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-splice-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-splice-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-object-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-object-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-nested-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-nested-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-boolean-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-boolean-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-fill-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-fill-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-map-object-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-map-object-misfit
+=== RUN   TestCheckedFlowContainerContractMutants/container-alias-misfit
+=== PAUSE TestCheckedFlowContainerContractMutants/container-alias-misfit
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+=== PAUSE TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+=== CONT  TestCheckedWiderWritesAdamicRefuses
+=== CONT  TestCheckedWiderWriteMutants
+=== RUN   TestCheckedViewsNextMutants/generic-site-misfit
+=== PAUSE TestCheckedViewsNextMutants/generic-site-misfit
+=== RUN   TestCheckedViewsNextMutants/overload-result-misfit
+=== PAUSE TestCheckedViewsNextMutants/overload-result-misfit
+=== RUN   TestCheckedViewsNextMutants/overload-callback-misfit
+=== RUN   TestCheckedWiderWriteMutants/drop_check
+=== PAUSE TestCheckedWiderWriteMutants/drop_check
+=== PAUSE TestCheckedViewsNextMutants/overload-callback-misfit
+=== RUN   TestCheckedWiderWriteMutants/drop_literal_set
+=== PAUSE TestCheckedWiderWriteMutants/drop_literal_set
+=== CONT  TestCheckedWiderWrites
+=== RUN   TestCheckedWiderWrites/overload-callback-fit
+=== PAUSE TestCheckedWiderWrites/overload-callback-fit
+=== RUN   TestCheckedWiderWrites/overload-callback-misfit
+=== PAUSE TestCheckedWiderWrites/overload-callback-misfit
+=== RUN   TestCheckedWiderWrites/optional-boolean-fit
+=== PAUSE TestCheckedWiderWrites/optional-boolean-fit
+=== RUN   TestCheckedWiderWrites/optional-boolean-misfit
+=== PAUSE TestCheckedWiderWrites/optional-boolean-misfit
+=== RUN   TestCheckedWiderWrites/required-boolean-fit
+=== PAUSE TestCheckedWiderWrites/required-boolean-fit
+=== RUN   TestCheckedWiderWrites/required-boolean-misfit
+=== PAUSE TestCheckedWiderWrites/required-boolean-misfit
+=== RUN   TestCheckedWiderWrites/optional-false-fit
+=== PAUSE TestCheckedWiderWrites/optional-false-fit
+=== RUN   TestCheckedWiderWrites/optional-false-misfit
+=== PAUSE TestCheckedWiderWrites/optional-false-misfit
+=== RUN   TestCheckedWiderWrites/branch-file-fit
+=== PAUSE TestCheckedWiderWrites/branch-file-fit
+=== RUN   TestCheckedWiderWrites/branch-file-misfit
+=== PAUSE TestCheckedWiderWrites/branch-file-misfit
+=== RUN   TestCheckedWiderWrites/branch-start-fit
+=== PAUSE TestCheckedWiderWrites/branch-start-fit
+=== RUN   TestCheckedWiderWrites/branch-start-misfit
+=== PAUSE TestCheckedWiderWrites/branch-start-misfit
+=== RUN   TestCheckedWiderWrites/branch-length-fit
+=== PAUSE TestCheckedWiderWrites/branch-length-fit
+=== RUN   TestCheckedWiderWrites/branch-length-misfit
+=== PAUSE TestCheckedWiderWrites/branch-length-misfit
+=== RUN   TestCheckedWiderWrites/branch-bottom-number-fit
+=== PAUSE TestCheckedWiderWrites/branch-bottom-number-fit
+=== RUN   TestCheckedWiderWrites/branch-bottom-number-misfit
+=== PAUSE TestCheckedWiderWrites/branch-bottom-number-misfit
+=== RUN   TestCheckedWiderWrites/branch-bottom-string-fit
+=== PAUSE TestCheckedWiderWrites/branch-bottom-string-fit
+=== RUN   TestCheckedWiderWrites/branch-bottom-string-misfit
+=== PAUSE TestCheckedWiderWrites/branch-bottom-string-misfit
+=== RUN   TestCheckedWiderWrites/generic-site-fit
+=== PAUSE TestCheckedWiderWrites/generic-site-fit
+=== RUN   TestCheckedWiderWrites/generic-site-misfit
+=== PAUSE TestCheckedWiderWrites/generic-site-misfit
+=== RUN   TestCheckedWiderWrites/overload-result-fit
+=== PAUSE TestCheckedWiderWrites/overload-result-fit
+=== RUN   TestCheckedWiderWrites/overload-result-misfit
+=== PAUSE TestCheckedWiderWrites/overload-result-misfit
+=== RUN   TestCheckedWiderWrites/emit-comment-fit
+=== PAUSE TestCheckedWiderWrites/emit-comment-fit
+=== RUN   TestCheckedWiderWrites/emit-comment-misfit
+=== PAUSE TestCheckedWiderWrites/emit-comment-misfit
+=== RUN   TestCheckedWiderWrites/emit-resolution-fit
+=== PAUSE TestCheckedWiderWrites/emit-resolution-fit
+=== RUN   TestCheckedWiderWrites/emit-resolution-misfit
+=== PAUSE TestCheckedWiderWrites/emit-resolution-misfit
+=== RUN   TestCheckedWiderWrites/emit-callback-fit
+=== PAUSE TestCheckedWiderWrites/emit-callback-fit
+=== RUN   TestCheckedWiderWrites/emit-callback-misfit
+=== PAUSE TestCheckedWiderWrites/emit-callback-misfit
+=== RUN   TestCheckedWiderWrites/emit-node-fit
+=== PAUSE TestCheckedWiderWrites/emit-node-fit
+=== RUN   TestCheckedWiderWrites/emit-node-misfit
+=== PAUSE TestCheckedWiderWrites/emit-node-misfit
+=== RUN   TestCheckedWiderWrites/emit-auto-fit
+=== PAUSE TestCheckedWiderWrites/emit-auto-fit
+=== RUN   TestCheckedWiderWrites/emit-auto-misfit
+=== PAUSE TestCheckedWiderWrites/emit-auto-misfit
+=== RUN   TestCheckedWiderWrites/container-slice-fit
+=== PAUSE TestCheckedWiderWrites/container-slice-fit
+=== RUN   TestCheckedWiderWrites/container-slice-misfit
+=== PAUSE TestCheckedWiderWrites/container-slice-misfit
+=== RUN   TestCheckedWiderWrites/container-map-values-fit
+=== PAUSE TestCheckedWiderWrites/container-map-values-fit
+=== RUN   TestCheckedWiderWrites/container-map-values-misfit
+=== PAUSE TestCheckedWiderWrites/container-map-values-misfit
+=== RUN   TestCheckedWiderWrites/container-boolean-fit
+=== PAUSE TestCheckedWiderWrites/container-boolean-fit
+=== RUN   TestCheckedWiderWrites/container-boolean-misfit
+=== PAUSE TestCheckedWiderWrites/container-boolean-misfit
+=== RUN   TestCheckedWiderWrites/container-fill-fit
+=== PAUSE TestCheckedWiderWrites/container-fill-fit
+=== RUN   TestCheckedWiderWrites/container-fill-misfit
+=== PAUSE TestCheckedWiderWrites/container-fill-misfit
+=== RUN   TestCheckedWiderWrites/container-map-object-fit
+=== PAUSE TestCheckedWiderWrites/container-map-object-fit
+=== RUN   TestCheckedWiderWrites/container-map-object-misfit
+=== PAUSE TestCheckedWiderWrites/container-map-object-misfit
+=== RUN   TestCheckedWiderWrites/container-alias-fit
+=== PAUSE TestCheckedWiderWrites/container-alias-fit
+=== RUN   TestCheckedWiderWrites/container-alias-misfit
+=== PAUSE TestCheckedWiderWrites/container-alias-misfit
+=== RUN   TestCheckedWiderWrites/container-number-fit
+=== PAUSE TestCheckedWiderWrites/container-number-fit
+=== RUN   TestCheckedWiderWrites/container-number-misfit
+=== PAUSE TestCheckedWiderWrites/container-number-misfit
+=== RUN   TestCheckedWiderWrites/container-string-fit
+=== PAUSE TestCheckedWiderWrites/container-string-fit
+=== RUN   TestCheckedWiderWrites/container-string-misfit
+=== PAUSE TestCheckedWiderWrites/container-string-misfit
+=== RUN   TestCheckedWiderWrites/container-map-fit
+=== PAUSE TestCheckedWiderWrites/container-map-fit
+=== RUN   TestCheckedWiderWrites/container-map-misfit
+=== PAUSE TestCheckedWiderWrites/container-map-misfit
+=== RUN   TestCheckedWiderWrites/container-splice-fit
+=== PAUSE TestCheckedWiderWrites/container-splice-fit
+=== RUN   TestCheckedWiderWrites/container-splice-misfit
+=== PAUSE TestCheckedWiderWrites/container-splice-misfit
+=== RUN   TestCheckedWiderWrites/container-object-fit
+=== PAUSE TestCheckedWiderWrites/container-object-fit
+=== RUN   TestCheckedWiderWrites/container-object-misfit
+=== PAUSE TestCheckedWiderWrites/container-object-misfit
+=== RUN   TestCheckedWiderWrites/container-nested-fit
+=== PAUSE TestCheckedWiderWrites/container-nested-fit
+=== RUN   TestCheckedWiderWrites/container-nested-misfit
+=== PAUSE TestCheckedWiderWrites/container-nested-misfit
+=== RUN   TestCheckedWiderWrites/flow-node-fit
+=== PAUSE TestCheckedWiderWrites/flow-node-fit
+=== RUN   TestCheckedWiderWrites/flow-node-misfit
+=== PAUSE TestCheckedWiderWrites/flow-node-misfit
+=== RUN   TestCheckedWiderWrites/flow-undefined-fit
+=== PAUSE TestCheckedWiderWrites/flow-undefined-fit
+=== RUN   TestCheckedWiderWrites/flow-undefined-misfit
+=== PAUSE TestCheckedWiderWrites/flow-undefined-misfit
+=== RUN   TestCheckedWiderWrites/flow-array-fit
+=== PAUSE TestCheckedWiderWrites/flow-array-fit
+=== RUN   TestCheckedWiderWrites/flow-array-misfit
+=== PAUSE TestCheckedWiderWrites/flow-array-misfit
+=== RUN   TestCheckedWiderWrites/never-nullable-fit
+=== PAUSE TestCheckedWiderWrites/never-nullable-fit
+=== RUN   TestCheckedWiderWrites/never-nullable-misfit
+=== PAUSE TestCheckedWiderWrites/never-nullable-misfit
+=== RUN   TestCheckedWiderWrites/never-index-misfit
+=== PAUSE TestCheckedWiderWrites/never-index-misfit
+=== RUN   TestCheckedWiderWrites/never-splice-misfit
+=== PAUSE TestCheckedWiderWrites/never-splice-misfit
+=== RUN   TestCheckedWiderWrites/never-wide-fit
+=== PAUSE TestCheckedWiderWrites/never-wide-fit
+=== RUN   TestCheckedWiderWrites/never-number-fit
+=== PAUSE TestCheckedWiderWrites/never-number-fit
+=== RUN   TestCheckedWiderWrites/never-number-misfit
+=== PAUSE TestCheckedWiderWrites/never-number-misfit
+=== RUN   TestCheckedWiderWrites/never-string-fit
+=== PAUSE TestCheckedWiderWrites/never-string-fit
+=== RUN   TestCheckedWiderWrites/never-string-misfit
+=== PAUSE TestCheckedWiderWrites/never-string-misfit
+=== RUN   TestCheckedWiderWrites/never-object-fit
+=== PAUSE TestCheckedWiderWrites/never-object-fit
+=== RUN   TestCheckedWiderWrites/never-object-misfit
+=== PAUSE TestCheckedWiderWrites/never-object-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-alias-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-alias-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-proof-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-proof-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-rich-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-rich-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-related-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-related-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-related-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-related-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-nested-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-nested-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-inner-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-inner-misfit
+=== RUN   TestCheckedWiderWrites/reference-structure
+=== PAUSE TestCheckedWiderWrites/reference-structure
+=== RUN   TestCheckedWiderWrites/flags-fit
+=== PAUSE TestCheckedWiderWrites/flags-fit
+=== RUN   TestCheckedWiderWrites/flags-misfit
+=== PAUSE TestCheckedWiderWrites/flags-misfit
+=== RUN   TestCheckedWiderWrites/string-fit
+=== PAUSE TestCheckedWiderWrites/string-fit
+=== RUN   TestCheckedWiderWrites/string-misfit
+=== PAUSE TestCheckedWiderWrites/string-misfit
+=== RUN   TestCheckedWiderWrites/boolean-fit
+=== PAUSE TestCheckedWiderWrites/boolean-fit
+=== RUN   TestCheckedWiderWrites/boolean-misfit
+=== PAUSE TestCheckedWiderWrites/boolean-misfit
+=== RUN   TestCheckedWiderWrites/diagnostic-fit
+=== PAUSE TestCheckedWiderWrites/diagnostic-fit
+=== RUN   TestCheckedWiderWrites/diagnostic-misfit
+=== PAUSE TestCheckedWiderWrites/diagnostic-misfit
+=== RUN   TestCheckedWiderWrites/number-fit
+=== PAUSE TestCheckedWiderWrites/number-fit
+=== RUN   TestCheckedWiderWrites/number-misfit
+=== PAUSE TestCheckedWiderWrites/number-misfit
+=== RUN   TestCheckedWiderWrites/compound-fit
+=== PAUSE TestCheckedWiderWrites/compound-fit
+=== RUN   TestCheckedWiderWrites/compound-misfit
+=== PAUSE TestCheckedWiderWrites/compound-misfit
+=== RUN   TestCheckedWiderWrites/nullable-number-fit
+=== PAUSE TestCheckedWiderWrites/nullable-number-fit
+=== RUN   TestCheckedWiderWrites/nullable-number-misfit
+=== PAUSE TestCheckedWiderWrites/nullable-number-misfit
+=== RUN   TestCheckedWiderWrites/range-fit
+=== PAUSE TestCheckedWiderWrites/range-fit
+=== RUN   TestCheckedWiderWrites/range-misfit
+=== PAUSE TestCheckedWiderWrites/range-misfit
+=== RUN   TestCheckedWiderWrites/receiver-fit
+=== PAUSE TestCheckedWiderWrites/receiver-fit
+=== RUN   TestCheckedWiderWrites/parent-fit
+=== PAUSE TestCheckedWiderWrites/parent-fit
+=== RUN   TestCheckedWiderWrites/parent-misfit
+=== PAUSE TestCheckedWiderWrites/parent-misfit
+=== CONT  TestCheckedViewsNextProvenAdamic
+=== CONT  TestCheckedViewsNextAdamicRefusals
+    checked_views_next_test.go:96: /workspace/adamic/stage3/checked-writes/refused-optional-boolean.a:4:7: Adamic 0.1 refuses a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_views_next_test.go:96: /workspace/adamic/stage3/checked-writes/refused-branch-diagnostic.a:8:41: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_views_next_test.go:96: /workspace/adamic/stage3/checked-writes/refused-branch-bottom.a:4:41: Adamic 0.1 refuses a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_views_next_test.go:96: /workspace/adamic/stage3/checked-writes/refused-overload-result.a:9:1: Adamic 0.1 refuses overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result
+--- PASS: TestCheckedViewsNextAdamicRefusals (0.21s)
+=== CONT  TestCheckedEmitProvenAdamic
+--- PASS: TestCheckedWiderWritesAdamicRefuses (0.33s)
+=== CONT  TestCheckedWiderWritesKeepSpreadOverrideRefusal
+--- PASS: TestCheckedWiderWritesKeepSpreadOverrideRefusal (0.05s)
+=== CONT  TestCheckedWiderWritesProvenContainers
+=== NAME  TestCheckedNeverContractMutant
+    checked_writes_test.go:324: gate cache node hit
+=== NAME  TestCheckedEmitProvenAdamic
+    checked_writes_test.go:635: gate cache node hit
+=== NAME  TestCheckedViewsNextProvenAdamic
+    checked_views_next_test.go:113: gate cache node hit
+=== NAME  TestCheckedWiderWritesProvenAdamic
+    checked_writes_test.go:291: gate cache node hit
+=== NAME  TestCheckedWiderWritesProvenContainers
+    checked_writes_test.go:462: gate cache node hit
+=== NAME  TestCheckedNeverContractMutant
+    checked_writes_test.go:332: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitProvenAdamic
+    checked_writes_test.go:640: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWritesProvenContainers
+    checked_writes_test.go:467: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWritesProvenAdamic
+    checked_writes_test.go:296: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextProvenAdamic
+    checked_views_next_test.go:115: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedNeverContractMutant
+    checked_writes_test.go:338: caught drop never contract: expected exit 70, mutant exit 0 stdout "1\n"
+--- PASS: TestCheckedNeverContractMutant (7.09s)
+=== CONT  TestCheckedEmitContractsMutants
+=== RUN   TestCheckedEmitContractsMutants/emit-drop-check
+=== PAUSE TestCheckedEmitContractsMutants/emit-drop-check
+=== RUN   TestCheckedEmitContractsMutants/emit-node-misfit
+=== PAUSE TestCheckedEmitContractsMutants/emit-node-misfit
+=== RUN   TestCheckedEmitContractsMutants/emit-auto-misfit
+=== PAUSE TestCheckedEmitContractsMutants/emit-auto-misfit
+=== RUN   TestCheckedEmitContractsMutants/emit-callback-misfit
+=== PAUSE TestCheckedEmitContractsMutants/emit-callback-misfit
+=== RUN   TestCheckedEmitContractsMutants/emit-comment-misfit
+=== PAUSE TestCheckedEmitContractsMutants/emit-comment-misfit
+=== RUN   TestCheckedEmitContractsMutants/emit-resolution-misfit
+=== PAUSE TestCheckedEmitContractsMutants/emit-resolution-misfit
+=== CONT  TestCheckedFlowContainerContractMutants/flow-node-misfit
+--- PASS: TestCheckedWiderWritesProvenContainers (6.80s)
+=== CONT  TestCheckedDiagnosticReferenceMutants/drop_alias_check
+=== NAME  TestCheckedFlowContainerContractMutants/flow-node-misfit
+    checked_writes_test.go:518: gate cache node hit
+--- PASS: TestCheckedEmitProvenAdamic (6.99s)
+=== CONT  TestCheckedFlowContainerContractMutants/container-map-misfit
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:430: gate cache node hit
+--- PASS: TestCheckedWiderWritesProvenAdamic (7.27s)
+=== CONT  TestCheckedFlowContainerContractMutants/container-alias-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-map-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-alias-misfit
+    checked_writes_test.go:518: gate cache node hit
+--- PASS: TestCheckedViewsNextProvenAdamic (7.39s)
+=== CONT  TestCheckedFlowContainerContractMutants/container-map-object-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-map-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/flow-node-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:438: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-alias-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-map-object-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-map-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-fill-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/flow-node-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "identifier\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-boolean-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:444: caught drop alias check: expected exit 70, mutant exit 0 stdout "0\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-nested-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-alias-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "0\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-object-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-fill-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-nested-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-map-object-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-splice-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-object-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-splice-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-boolean-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-nested-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-object-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-fill-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== CONT  TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-splice-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-boolean-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-string-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-object-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== CONT  TestCheckedFlowContainerContractMutants/container-number-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/container-nested-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "1\n"
+=== CONT  TestCheckedFlowContainerContractMutants/flow-array-misfit
+=== NAME  TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-splice-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "2\n"
+=== CONT  TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+=== NAME  TestCheckedFlowContainerContractMutants/container-number-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/flow-array-misfit
+    checked_writes_test.go:518: gate cache node hit
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:430: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-string-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/container-number-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/flow-array-misfit
+    checked_writes_test.go:523: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedFlowContainerContractMutants/flow-undefined-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== CONT  TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:438: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:430: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/container-string-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "outside\n"
+=== CONT  TestCheckedViewsNextMutants/optional-boolean-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedFlowContainerContractMutants/flow-array-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "false\n"
+=== CONT  TestCheckedWiderWriteMutants/drop_check
+=== NAME  TestCheckedFlowContainerContractMutants/container-number-misfit
+    checked_writes_test.go:529: caught drop allocation contract: expected exit 70; mutant exit 0 stdout "3\n"
+=== CONT  TestCheckedWiderWrites/overload-callback-fit
+--- PASS: TestCheckedFlowContainerContractMutants (0.00s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-map-misfit (0.66s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-node-misfit (0.95s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-alias-misfit (0.97s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-map-object-misfit (0.87s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-fill-misfit (0.86s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-boolean-misfit (0.82s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-object-misfit (0.84s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-nested-misfit (0.93s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-splice-misfit (0.97s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-undefined-misfit (0.97s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-string-misfit (1.03s)
+    --- PASS: TestCheckedFlowContainerContractMutants/flow-array-misfit (0.98s)
+    --- PASS: TestCheckedFlowContainerContractMutants/container-number-misfit (1.07s)
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:444: caught drop nested contract: expected exit 70, mutant exit 0 stdout "0\n"
+=== CONT  TestCheckedViewsNextMutants/overload-callback-misfit
+=== NAME  TestCheckedWiderWriteMutants/drop_check
+    checked_writes_test.go:223: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/overload-callback-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-callback-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:438: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWriteMutants/drop_check
+    checked_writes_test.go:231: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/optional-boolean-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:444: caught drop allocation proof: expected exit 70, mutant exit 0 stdout "0\n"
+--- PASS: TestCheckedDiagnosticReferenceMutants (0.00s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_alias_check (0.99s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_nested_contract (0.94s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_allocation_proof (1.11s)
+=== CONT  TestCheckedViewsNextMutants/overload-result-misfit
+=== NAME  TestCheckedViewsNextMutants/overload-callback-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/overload-result-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-callback-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/optional-boolean-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/generic-site-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/overload-callback-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/branch-bottom-string-misfit
+=== NAME  TestCheckedWiderWriteMutants/drop_check
+    checked_writes_test.go:237: caught drop check: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+=== CONT  TestCheckedViewsNextMutants/branch-bottom-number-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/branch-bottom-string-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-callback-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedViewsNextMutants/branch-length-misfit
+=== NAME  TestCheckedViewsNextMutants/overload-result-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/branch-length-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/generic-site-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/branch-bottom-number-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/branch-bottom-string-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/overload-result-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/branch-start-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/generic-site-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/branch-file-misfit
+=== NAME  TestCheckedViewsNextMutants/branch-length-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/branch-bottom-number-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/required-boolean-misfit
+=== NAME  TestCheckedViewsNextMutants/branch-file-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/branch-bottom-string-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedViewsNextMutants/optional-false-misfit
+=== NAME  TestCheckedViewsNextMutants/required-boolean-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/optional-false-misfit
+    checked_views_next_test.go:62: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/branch-length-misfit
+    checked_views_next_test.go:75: contract mutant changed 2 contracts; original exit 70 is caught, mutant matches Node
+=== NAME  TestCheckedViewsNextMutants/branch-start-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== CONT  TestCheckedWiderWrites/container-nested-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/branch-file-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/required-boolean-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedViewsNextMutants/branch-start-misfit
+    checked_views_next_test.go:75: contract mutant changed 2 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedWiderWriteMutants/drop_literal_set
+=== NAME  TestCheckedViewsNextMutants/optional-false-misfit
+    checked_views_next_test.go:67: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWriteMutants/drop_literal_set
+    checked_writes_test.go:223: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/branch-file-misfit
+    checked_views_next_test.go:75: contract mutant changed 2 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedWiderWrites/emit-callback-misfit
+=== NAME  TestCheckedWiderWrites/container-nested-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/emit-callback-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/required-boolean-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+=== CONT  TestCheckedWiderWrites/container-object-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedViewsNextMutants/optional-false-misfit
+    checked_views_next_test.go:75: contract mutant changed 1 contracts; original exit 70 is caught, mutant matches Node
+--- PASS: TestCheckedViewsNextMutants (0.00s)
+    --- PASS: TestCheckedViewsNextMutants/optional-boolean-misfit (1.20s)
+    --- PASS: TestCheckedViewsNextMutants/overload-callback-misfit (1.16s)
+    --- PASS: TestCheckedViewsNextMutants/overload-result-misfit (1.25s)
+    --- PASS: TestCheckedViewsNextMutants/generic-site-misfit (1.26s)
+    --- PASS: TestCheckedViewsNextMutants/branch-bottom-number-misfit (1.07s)
+    --- PASS: TestCheckedViewsNextMutants/branch-bottom-string-misfit (1.16s)
+    --- PASS: TestCheckedViewsNextMutants/branch-length-misfit (1.38s)
+    --- PASS: TestCheckedViewsNextMutants/branch-start-misfit (1.23s)
+    --- PASS: TestCheckedViewsNextMutants/branch-file-misfit (1.12s)
+    --- PASS: TestCheckedViewsNextMutants/required-boolean-misfit (1.15s)
+    --- PASS: TestCheckedViewsNextMutants/optional-false-misfit (1.34s)
+=== CONT  TestCheckedWiderWrites/container-object-fit
+=== NAME  TestCheckedWiderWrites/container-nested-fit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-splice-misfit
+=== NAME  TestCheckedWiderWrites/container-object-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWriteMutants/drop_literal_set
+    checked_writes_test.go:231: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-splice-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-callback-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 2 checks
+=== CONT  TestCheckedWiderWrites/container-splice-fit
+=== NAME  TestCheckedWiderWrites/container-object-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects DiagnosticWithLocation, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/parent-misfit
+=== NAME  TestCheckedWiderWrites/container-splice-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/parent-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWriteMutants/drop_literal_set
+    checked_writes_test.go:237: caught drop literal set: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+--- PASS: TestCheckedWiderWriteMutants (0.00s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_check (1.27s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_literal_set (1.16s)
+=== CONT  TestCheckedWiderWrites/container-map-misfit
+=== NAME  TestCheckedWiderWrites/container-object-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-map-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-splice-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-map-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-splice-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/parent-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: (copy as Mutable<T>).parent expects Parent, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-string-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-object-fit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-string-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-map-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[value] expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-splice-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-number-misfit
+=== NAME  TestCheckedWiderWrites/container-map-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-number-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-string-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "outside\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects \"left\" | \"right\", got outside\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/receiver-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-string-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-map-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-number-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-number-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/range-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-string-fit
+    checked_writes_test.go:165: Node exit 0 stdout "right\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/range-fit
+=== NAME  TestCheckedWiderWrites/receiver-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/range-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:165: Node exit 0 stdout "parentparent\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/nullable-number-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-number-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/receiver-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/nullable-number-fit
+=== NAME  TestCheckedWiderWrites/range-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0 2\n"; checked exit 70 stderr "adamic: panic: write failed: range.end expects 1, got 2\n"; 2 checks
+=== CONT  TestCheckedWiderWrites/compound-misfit
+=== NAME  TestCheckedWiderWrites/range-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/nullable-number-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/compound-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-number-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/compound-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/nullable-number-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2 | undefined, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-alias-misfit
+=== NAME  TestCheckedWiderWrites/range-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0 1\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/number-misfit
+=== NAME  TestCheckedWiderWrites/container-alias-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/number-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/nullable-number-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/compound-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 0 | 1, got 2\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-alias-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/compound-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/nullable-number-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/number-fit
+=== NAME  TestCheckedWiderWrites/number-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-map-object-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-alias-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: item.count expects number, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-misfit
+=== NAME  TestCheckedWiderWrites/number-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/compound-fit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-map-object-fit
+=== NAME  TestCheckedWiderWrites/container-alias-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-map-object-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-alias-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-fill-misfit
+=== NAME  TestCheckedWiderWrites/number-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-bottom-number-fit
+=== NAME  TestCheckedWiderWrites/container-map-object-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[value] expects DiagnosticWithLocation, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-fill-fit
+=== NAME  TestCheckedWiderWrites/branch-bottom-number-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-fill-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-fill-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-map-object-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/number-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-callback-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-bottom-number-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-fill-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-boolean-misfit
+=== NAME  TestCheckedWiderWrites/container-map-object-fit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-resolution-misfit
+=== NAME  TestCheckedWiderWrites/container-fill-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-boolean-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-resolution-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-bottom-number-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-boolean-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-fill-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-length-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-callback-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-boolean-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects true, got false\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-resolution-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-resolution-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.fileName expects string, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-length-fit
+=== NAME  TestCheckedWiderWrites/container-boolean-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/branch-length-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-callback-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/emit-comment-misfit
+=== NAME  TestCheckedWiderWrites/branch-length-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.length expects number, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-start-misfit
+=== NAME  TestCheckedWiderWrites/emit-comment-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-start-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-boolean-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-comment-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-resolution-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/branch-length-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/emit-resolution-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-start-fit
+=== NAME  TestCheckedWiderWrites/emit-comment-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.pos expects -1, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/overload-result-misfit
+=== NAME  TestCheckedWiderWrites/branch-start-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.start expects number, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-file-misfit
+=== NAME  TestCheckedWiderWrites/branch-start-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-length-fit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/overload-result-fit
+=== NAME  TestCheckedWiderWrites/branch-file-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-result-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-comment-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/overload-result-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-comment-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-file-fit
+=== NAME  TestCheckedWiderWrites/branch-file-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/generic-site-misfit
+=== NAME  TestCheckedWiderWrites/branch-file-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-result-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: createTempVariable(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/optional-false-misfit
+=== NAME  TestCheckedWiderWrites/generic-site-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-start-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/optional-false-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-result-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/branch-file-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/overload-result-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/optional-false-fit
+=== NAME  TestCheckedWiderWrites/branch-start-fit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/generic-site-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/optional-false-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/generic-site-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.flags expects 16, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/required-boolean-misfit
+=== NAME  TestCheckedWiderWrites/optional-false-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.multiLine expects false | undefined, got true\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-bottom-string-misfit
+=== NAME  TestCheckedWiderWrites/branch-file-fit
+    checked_writes_test.go:165: Node exit 0 stdout "inputinput\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/required-boolean-fit
+=== NAME  TestCheckedWiderWrites/required-boolean-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-bottom-string-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/required-boolean-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/generic-site-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/optional-false-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/required-boolean-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.multiLine expects true, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-bottom-string-fit
+=== NAME  TestCheckedWiderWrites/branch-bottom-string-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n2\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got outsideoutside\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/optional-boolean-misfit
+=== NAME  TestCheckedWiderWrites/branch-bottom-string-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/required-boolean-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/optional-boolean-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/generic-site-fit
+    checked_writes_test.go:165: Node exit 0 stdout "16\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/branch-bottom-number-misfit
+=== NAME  TestCheckedWiderWrites/optional-false-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-alias-fit
+=== NAME  TestCheckedWiderWrites/branch-bottom-number-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-alias-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-bottom-string-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/required-boolean-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/boolean-misfit
+=== NAME  TestCheckedWiderWrites/optional-boolean-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.multiLine expects true | undefined, got false\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/boolean-fit
+=== NAME  TestCheckedWiderWrites/boolean-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/boolean-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/branch-bottom-string-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/string-misfit
+=== NAME  TestCheckedWiderWrites/branch-bottom-number-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n2\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 1\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/string-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-alias-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/string-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/string-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/boolean-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.enabled expects true, got false\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/flags-misfit
+=== NAME  TestCheckedWiderWrites/diagnostic-alias-fit
+    checked_writes_test.go:165: Node exit 0 stdout "16\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/flags-fit
+=== NAME  TestCheckedWiderWrites/boolean-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/flags-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flags-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/string-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "outsideoutside\n"; checked exit 70 stderr "adamic: panic: write failed: view.text expects \"left\" | \"right\", got outsideoutside\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/reference-structure
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/string-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/boolean-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-inner-misfit
+=== NAME  TestCheckedWiderWrites/flags-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "before 16\nafter 0\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-inner-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-inner-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-inner-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/string-fit
+    checked_writes_test.go:165: Node exit 0 stdout "right\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-nested-misfit
+=== NAME  TestCheckedWiderWrites/reference-structure
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "right\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).parent expects { readonly name: \"left\"; }, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-nested-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-nested-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-nested-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flags-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-inner-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file.metadata.flags expects 16 | 32, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-related-misfit
+=== NAME  TestCheckedWiderWrites/diagnostic-inner-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-related-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flags-fit
+    checked_writes_test.go:165: Node exit 0 stdout "16\n268435472\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-related-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-nested-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-related-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-nested-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-rich-misfit
+=== NAME  TestCheckedWiderWrites/diagnostic-inner-fit
+    checked_writes_test.go:165: Node exit 0 stdout "32\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-rich-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-rich-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-rich-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-related-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.start expects number, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-proof-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-nested-fit
+    checked_writes_test.go:165: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-proof-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-related-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-rich-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/diagnostic-rich-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-alias-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-related-fit
+    checked_writes_test.go:165: Node exit 0 stdout "7\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-auto-misfit
+=== NAME  TestCheckedWiderWrites/diagnostic-proof-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: (view as Mutable<T>).file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-map-values-fit
+=== NAME  TestCheckedWiderWrites/emit-auto-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-proof-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-map-values-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-rich-fit
+    checked_writes_test.go:165: Node exit 0 stdout "newnew 3 2 3 4\nNaN -Infinity\n"; checked exit 0 stderr ""; 3 checks
+=== CONT  TestCheckedWiderWrites/container-slice-misfit
+=== NAME  TestCheckedWiderWrites/diagnostic-alias-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: wide.flags expects 16, got 0\n"; 2 checks
+=== CONT  TestCheckedWiderWrites/container-slice-fit
+=== NAME  TestCheckedWiderWrites/diagnostic-proof-fit
+    checked_writes_test.go:165: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/never-index-misfit
+=== NAME  TestCheckedWiderWrites/container-slice-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-slice-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-index-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-auto-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.autoGenerate expects AutoGenerateInfo, got undefined\n"; 2 checks
+=== CONT  TestCheckedWiderWrites/never-object-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-map-values-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-slice-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-slice-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-object-fit
+=== NAME  TestCheckedWiderWrites/never-index-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects never, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-string-misfit
+=== NAME  TestCheckedWiderWrites/never-object-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/container-map-values-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/never-string-fit
+=== NAME  TestCheckedWiderWrites/never-string-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-string-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-object-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-number-misfit
+=== NAME  TestCheckedWiderWrites/container-slice-fit
+    checked_writes_test.go:165: Node exit 0 stdout "2\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/never-number-fit
+=== NAME  TestCheckedWiderWrites/never-number-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-number-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-object-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/never-string-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/never-string-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got badbad\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-wide-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-number-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-splice-misfit
+=== NAME  TestCheckedWiderWrites/never-object-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/overload-callback-misfit
+=== NAME  TestCheckedWiderWrites/never-splice-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-string-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-node-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-callback-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-number-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/never-wide-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/never-number-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-auto-fit
+=== NAME  TestCheckedWiderWrites/never-splice-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/flow-undefined-misfit
+=== NAME  TestCheckedWiderWrites/emit-auto-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/never-wide-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n1\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/never-nullable-misfit
+=== NAME  TestCheckedWiderWrites/flow-undefined-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-node-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/never-nullable-fit
+=== NAME  TestCheckedWiderWrites/never-nullable-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/overload-callback-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 70 stderr "adamic: panic: write failed: factory(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/flow-array-misfit
+=== NAME  TestCheckedWiderWrites/never-nullable-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-array-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-auto-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/never-nullable-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: view[] expects never, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/flow-array-fit
+=== NAME  TestCheckedWiderWrites/never-nullable-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/flow-undefined-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.node expects undefined, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/emit-node-fit
+=== NAME  TestCheckedWiderWrites/flow-array-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.antecedents expects undefined, got array\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/flow-node-misfit
+=== NAME  TestCheckedWiderWrites/emit-node-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-array-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-node-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/emit-auto-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 2 checks
+=== CONT  TestCheckedWiderWrites/flow-undefined-fit
+=== NAME  TestCheckedWiderWrites/never-nullable-fit
+    checked_writes_test.go:165: Node exit 0 stdout "0\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/flow-node-fit
+=== NAME  TestCheckedWiderWrites/flow-undefined-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-node-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-array-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/emit-node-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/flow-node-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "identifier\n"; checked exit 70 stderr "adamic: panic: write failed: view.node expects BinaryExpression | CallExpression, got object\n"; 1 checks
+=== CONT  TestCheckedWiderWrites/container-nested-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-undefined-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/flow-node-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/flow-array-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/diagnostic-fit
+=== NAME  TestCheckedWiderWrites/emit-node-fit
+    checked_writes_test.go:165: Node exit 0 stdout "false\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/optional-boolean-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-fit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-undefined-fit
+    checked_writes_test.go:165: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedWiderWrites/container-map-values-misfit
+=== NAME  TestCheckedWiderWrites/container-nested-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects (1 | 2)[], got array\n"; 1 checks
+=== CONT  TestCheckedEmitContractsMutants/emit-drop-check
+=== NAME  TestCheckedWiderWrites/container-map-values-misfit
+    checked_writes_test.go:144: gate cache node hit
+=== NAME  TestCheckedWiderWrites/flow-node-fit
+    checked_writes_test.go:165: Node exit 0 stdout "call\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedEmitContractsMutants/emit-callback-misfit
+=== NAME  TestCheckedEmitContractsMutants/emit-drop-check
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedEmitContractsMutants/emit-callback-misfit
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/optional-boolean-fit
+    checked_writes_test.go:155: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-drop-check
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-callback-misfit
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWiderWrites/container-map-values-misfit
+    checked_writes_test.go:155: gate cache node hit
+    checked_writes_test.go:165: Node exit 0 stdout "3\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects 1 | 2, got 3\n"; 2 checks
+=== CONT  TestCheckedEmitContractsMutants/emit-auto-misfit
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedWiderWrites/diagnostic-fit
+    checked_writes_test.go:165: Node exit 0 stdout "inputinput\n"; checked exit 0 stderr ""; 1 checks
+=== CONT  TestCheckedEmitContractsMutants/emit-node-misfit
+=== NAME  TestCheckedWiderWrites/optional-boolean-fit
+    checked_writes_test.go:165: Node exit 0 stdout "undefined\ntrue\n"; checked exit 0 stderr ""; 1 checks
+--- PASS: TestCheckedWiderWrites (0.00s)
+    --- PASS: TestCheckedWiderWrites/overload-callback-fit (1.33s)
+    --- PASS: TestCheckedWiderWrites/container-nested-fit (1.04s)
+    --- PASS: TestCheckedWiderWrites/emit-callback-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/container-object-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/container-splice-misfit (0.69s)
+    --- PASS: TestCheckedWiderWrites/parent-misfit (0.66s)
+    --- PASS: TestCheckedWiderWrites/container-object-fit (1.10s)
+    --- PASS: TestCheckedWiderWrites/container-map-misfit (0.71s)
+    --- PASS: TestCheckedWiderWrites/container-splice-fit (1.18s)
+    --- PASS: TestCheckedWiderWrites/container-string-misfit (0.70s)
+    --- PASS: TestCheckedWiderWrites/container-map-fit (1.14s)
+    --- PASS: TestCheckedWiderWrites/container-number-misfit (0.59s)
+    --- PASS: TestCheckedWiderWrites/container-string-fit (1.14s)
+    --- PASS: TestCheckedWiderWrites/parent-fit (1.13s)
+    --- PASS: TestCheckedWiderWrites/receiver-fit (1.16s)
+    --- PASS: TestCheckedWiderWrites/range-misfit (0.94s)
+    --- PASS: TestCheckedWiderWrites/container-number-fit (1.32s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-misfit (1.05s)
+    --- PASS: TestCheckedWiderWrites/range-fit (1.40s)
+    --- PASS: TestCheckedWiderWrites/compound-misfit (0.91s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-fit (1.60s)
+    --- PASS: TestCheckedWiderWrites/number-misfit (0.83s)
+    --- PASS: TestCheckedWiderWrites/container-alias-misfit (1.05s)
+    --- PASS: TestCheckedWiderWrites/compound-fit (1.50s)
+    --- PASS: TestCheckedWiderWrites/container-alias-fit (1.54s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-misfit (0.89s)
+    --- PASS: TestCheckedWiderWrites/container-map-object-misfit (1.09s)
+    --- PASS: TestCheckedWiderWrites/number-fit (1.69s)
+    --- PASS: TestCheckedWiderWrites/container-fill-misfit (1.23s)
+    --- PASS: TestCheckedWiderWrites/container-map-object-fit (2.00s)
+    --- PASS: TestCheckedWiderWrites/branch-bottom-number-fit (1.70s)
+    --- PASS: TestCheckedWiderWrites/container-fill-fit (1.76s)
+    --- PASS: TestCheckedWiderWrites/container-boolean-misfit (0.87s)
+    --- PASS: TestCheckedWiderWrites/emit-resolution-misfit (1.01s)
+    --- PASS: TestCheckedWiderWrites/emit-callback-fit (1.71s)
+    --- PASS: TestCheckedWiderWrites/branch-length-misfit (0.59s)
+    --- PASS: TestCheckedWiderWrites/container-boolean-fit (0.93s)
+    --- PASS: TestCheckedWiderWrites/emit-resolution-fit (0.93s)
+    --- PASS: TestCheckedWiderWrites/emit-comment-misfit (0.64s)
+    --- PASS: TestCheckedWiderWrites/branch-start-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/branch-length-fit (0.80s)
+    --- PASS: TestCheckedWiderWrites/emit-comment-fit (0.88s)
+    --- PASS: TestCheckedWiderWrites/branch-file-misfit (0.51s)
+    --- PASS: TestCheckedWiderWrites/overload-result-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/overload-result-fit (1.03s)
+    --- PASS: TestCheckedWiderWrites/branch-start-fit (1.18s)
+    --- PASS: TestCheckedWiderWrites/generic-site-misfit (0.71s)
+    --- PASS: TestCheckedWiderWrites/optional-false-misfit (0.73s)
+    --- PASS: TestCheckedWiderWrites/branch-file-fit (0.88s)
+    --- PASS: TestCheckedWiderWrites/required-boolean-misfit (0.58s)
+    --- PASS: TestCheckedWiderWrites/branch-bottom-string-misfit (0.61s)
+    --- PASS: TestCheckedWiderWrites/generic-site-fit (0.93s)
+    --- PASS: TestCheckedWiderWrites/optional-false-fit (0.97s)
+    --- PASS: TestCheckedWiderWrites/required-boolean-fit (1.01s)
+    --- PASS: TestCheckedWiderWrites/optional-boolean-misfit (0.52s)
+    --- PASS: TestCheckedWiderWrites/branch-bottom-string-fit (0.78s)
+    --- PASS: TestCheckedWiderWrites/branch-bottom-number-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/boolean-misfit (0.55s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-fit (0.89s)
+    --- PASS: TestCheckedWiderWrites/string-misfit (0.51s)
+    --- PASS: TestCheckedWiderWrites/boolean-fit (0.89s)
+    --- PASS: TestCheckedWiderWrites/flags-misfit (0.47s)
+    --- PASS: TestCheckedWiderWrites/string-fit (1.00s)
+    --- PASS: TestCheckedWiderWrites/reference-structure (0.54s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-misfit (0.61s)
+    --- PASS: TestCheckedWiderWrites/flags-fit (1.21s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-misfit (0.63s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-fit (0.87s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-misfit (0.46s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-fit (0.81s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-misfit (0.49s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-fit (0.68s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-misfit (0.45s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-fit (0.82s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-misfit (0.37s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-fit (0.66s)
+    --- PASS: TestCheckedWiderWrites/emit-auto-misfit (0.38s)
+    --- PASS: TestCheckedWiderWrites/container-slice-misfit (0.39s)
+    --- PASS: TestCheckedWiderWrites/never-index-misfit (0.34s)
+    --- PASS: TestCheckedWiderWrites/container-map-values-fit (0.68s)
+    --- PASS: TestCheckedWiderWrites/never-object-misfit (0.41s)
+    --- PASS: TestCheckedWiderWrites/container-slice-fit (0.57s)
+    --- PASS: TestCheckedWiderWrites/never-string-misfit (0.39s)
+    --- PASS: TestCheckedWiderWrites/never-number-misfit (0.38s)
+    --- PASS: TestCheckedWiderWrites/never-object-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/never-string-fit (0.54s)
+    --- PASS: TestCheckedWiderWrites/never-number-fit (0.68s)
+    --- PASS: TestCheckedWiderWrites/never-splice-misfit (0.37s)
+    --- PASS: TestCheckedWiderWrites/never-wide-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/emit-node-misfit (0.45s)
+    --- PASS: TestCheckedWiderWrites/overload-callback-misfit (0.49s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-misfit (0.39s)
+    --- PASS: TestCheckedWiderWrites/flow-undefined-misfit (0.50s)
+    --- PASS: TestCheckedWiderWrites/flow-array-misfit (0.38s)
+    --- PASS: TestCheckedWiderWrites/emit-auto-fit (0.70s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-fit (0.58s)
+    --- PASS: TestCheckedWiderWrites/flow-node-misfit (0.39s)
+    --- PASS: TestCheckedWiderWrites/flow-array-fit (0.67s)
+    --- PASS: TestCheckedWiderWrites/emit-node-fit (0.64s)
+    --- PASS: TestCheckedWiderWrites/flow-undefined-fit (0.59s)
+    --- PASS: TestCheckedWiderWrites/container-nested-misfit (0.36s)
+    --- PASS: TestCheckedWiderWrites/flow-node-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/container-map-values-misfit (0.40s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/optional-boolean-fit (0.64s)
+=== CONT  TestCheckedEmitContractsMutants/emit-resolution-misfit
+=== NAME  TestCheckedEmitContractsMutants/emit-drop-check
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== CONT  TestCheckedEmitContractsMutants/emit-comment-misfit
+=== NAME  TestCheckedEmitContractsMutants/emit-node-misfit
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedEmitContractsMutants/emit-resolution-misfit
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedEmitContractsMutants/emit-comment-misfit
+    checked_writes_test.go:606: gate cache node hit
+=== NAME  TestCheckedEmitContractsMutants/emit-callback-misfit
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== NAME  TestCheckedEmitContractsMutants/emit-auto-misfit
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-node-misfit
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-resolution-misfit
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-comment-misfit
+    checked_writes_test.go:611: gate cache node hit
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedEmitContractsMutants/emit-auto-misfit
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== NAME  TestCheckedEmitContractsMutants/emit-node-misfit
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== NAME  TestCheckedEmitContractsMutants/emit-resolution-misfit
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "true\n"
+=== NAME  TestCheckedEmitContractsMutants/emit-comment-misfit
+    checked_writes_test.go:617: caught drop contract: pinned exit 70; mutant exit 0 stdout "false\n"
+--- PASS: TestCheckedEmitContractsMutants (0.00s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-drop-check (0.55s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-callback-misfit (0.58s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-auto-misfit (0.50s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-node-misfit (0.49s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-resolution-misfit (0.48s)
+    --- PASS: TestCheckedEmitContractsMutants/emit-comment-misfit (0.44s)
+PASS
+gate cache: native hits=0 misses=92
+gate cache: node hits=290 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	31.011s

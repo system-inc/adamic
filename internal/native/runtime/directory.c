@@ -22,9 +22,9 @@ static const char *const ok_status_names[] = {"kind", "type", "size", "symbolicL
 static const char *const error_names[] = {"kind", "message"};
 static const bool two_references[] = {true, true};
 static const bool status_references[] = {true, true, false, false};
-static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL};
-static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL};
-static const adamic_shape error_shape = {2, error_names, two_references, NULL};
+static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, NULL};
+static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, NULL};
+static const adamic_shape error_shape = {2, error_names, two_references, NULL, NULL};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 static adamic_string file_type = ADAMIC_STRING("file");
@@ -169,5 +169,7 @@ adamic_object *adamic_file_status(const adamic_string *path) {
 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
 	result->slots[2].number = (double)status.st_size;
 	result->slots[3].boolean = symbolic;
+	adamic_object_field_types(result)[2] = 1;
+	adamic_object_field_types(result)[3] = 2;
 	return result;
 }

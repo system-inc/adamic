@@ -1,0 +1,104 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/write_files.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/write_files.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_input.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_input.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_date.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_date.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_input.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_date.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_date.a
+    counts_test.go:233: gate cache native miss
+    counts_test.go:233: | internal/oracle/testdata/node_fs_file_date.a | 12 | 12 | 3 | 16 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a
+    counts_test.go:233: | internal/oracle/testdata/empty-path.a | 4 | 4 | 4 | 8 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_input.a
+    counts_test.go:233: gate cache native miss
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_input.a | 45 | 45 | 24 | 57 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a
+    counts_test.go:233: | internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 24 | 81 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a
+    counts_test.go:233: | internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 11 | 45 | 12 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a
+    counts_test.go:233: | internal/oracle/testdata/arguments.a | 77 | 77 | 70 | 124 | 27 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/write_files.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a
+    counts_test.go:233: | internal/oracle/testdata/walk.a | 222 | 222 | 117 | 288 | 36 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a
+    counts_test.go:233: | internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 11 | 36 | 9 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a
+    counts_test.go:233: | internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 13 | 30 | 7 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a
+    counts_test.go:233: | internal/oracle/testdata/utf8_sweep.a | 38498 | 38498 | 36235 | 67035 | 7706 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/write_files.a
+    counts_test.go:233: | internal/oracle/testdata/write_files.a | 132 | 132 | 184 | 299 | 8 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a
+    counts_test.go:233: | internal/oracle/testdata/read_arguments.a | 15 | 15 | 11 | 18 | 9 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_date.a (0.61s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/empty-path.a (0.62s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_input.a (1.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_mkdir.a (1.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_buffer.a (1.74s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/arguments.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/walk.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_write_file.a (1.28s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_fs_file_close.a (1.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/utf8_sweep.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/write_files.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/read_arguments.a (0.12s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.026s

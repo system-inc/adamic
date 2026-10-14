@@ -1,0 +1,8 @@
+// a-check: refused a value of type Result[] seen as
+interface Result { readonly done?: boolean | undefined; readonly value: string | undefined }
+const iterator = new Map<string, string>([['a', 'alpha']]).values();
+const results: Result[] = [];
+const wider: { done?: boolean | undefined; value: string | undefined }[] = results;
+results.push(iterator.next());
+results.push(iterator.next());
+for (const result of results) console.log(result.done ? 'done' : (result.value ?? 'absent'));

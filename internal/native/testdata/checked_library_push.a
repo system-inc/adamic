@@ -1,0 +1,8 @@
+const iterator = 'aba'.matchAll(/a/g);
+const source: { readonly done?: boolean | undefined }[] = [];
+for (let index = 0; index < 3; index++) {
+    source.push(iterator.next());
+}
+const results: { readonly done?: boolean | undefined }[] = [];
+results.push(...source);
+console.log(results.map(result => result.done ? 'done' : 'match').join(','));

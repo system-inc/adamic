@@ -1,0 +1,10 @@
+=== RUN   TestRuntimeCheckedLibraryPush
+=== PAUSE TestRuntimeCheckedLibraryPush
+=== CONT  TestRuntimeCheckedLibraryPush
+    checked_library_push_test.go:73: /tmp/adamic-gate/TestRuntimeCheckedLibraryPush2056652970/001/library-push: exit status 70
+        adamic: panic: write failed: array[] expects { readonly done: boolean }, got object
+        adamic: counts: allocations 14 frees 0 retains 8 releases 0 peak 14 regions 0
+--- FAIL: TestRuntimeCheckedLibraryPush (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.163s
+FAIL

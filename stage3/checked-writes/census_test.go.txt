@@ -1,0 +1,257 @@
+package lower
+
+import (
+	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+)
+
+// This worker exists only in the no-output latent overlay. It measures the relation
+// refusal at each pinned site; no checker-rejected program can leave usable IR.
+func TestCheckedWritesCensus(t *testing.T) {
+	tree := os.Getenv("CHECKED_WRITES_TREE")
+	input := os.Getenv("CHECKED_WRITES_RECORDS")
+	output := os.Getenv("CHECKED_WRITES_OUTPUT")
+	if tree == "" || input == "" || output == "" {
+		t.Fatal("missing census paths")
+	}
+	var cohort struct {
+		Records []json.RawMessage `json:"records"`
+		Hashes  map[string]string `json:"source_sha256"`
+	}
+	content, err := os.ReadFile(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(content, &cohort); err != nil {
+		t.Fatal(err)
+	}
+	for name, want := range cohort.Hashes {
+		data, err := os.ReadFile(filepath.Join(tree, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fmt.Sprintf("%x", sha256.Sum256(data)) != want {
+			t.Fatalf("source hash mismatch: %s", name)
+		}
+	}
+	var records []struct {
+		ID                                                                                                    int
+		Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere, Receiving, SourceFamily string
+	}
+	paths := []string{}
+	seen := map[string]bool{}
+	for _, raw := range cohort.Records {
+		var r map[string]json.RawMessage
+		if err = json.Unmarshal(raw, &r); err != nil {
+			t.Fatal(err)
+		}
+		get := func(name string) string { var s string; json.Unmarshal(r[name], &s); return s }
+		var id int
+		json.Unmarshal(r["id"], &id)
+		records = append(records, struct {
+			ID                                                                                                    int
+			Where, Reason, Classification, Family, OriginalType, Expression, SourceWhere, Receiving, SourceFamily string
+		}{id, get("where"), get("reason"), get("classification"), get("family"), get("original_type"), get("source_expression"), get("source_expression_where"), get("receiving_syntax"), get("source_family")})
+		file := strings.Split(get("where"), ":")[0]
+		if !seen[file] {
+			seen[file] = true
+			paths = append(paths, filepath.Join(tree, file))
+		}
+	}
+	if ordinary, err := load.Load(paths); ordinary != nil || err == nil {
+		t.Fatal("latent overlay permitted ordinary Load")
+	}
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result, err := Lower(context.Background(), program); result != nil || err == nil {
+		t.Fatal("latent overlay permitted backend IR")
+	}
+	checker, release := program.Checker(context.Background(), program.Files()[0])
+	defer release()
+	nodes := map[string][]*ast.Node{}
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		where := strings.TrimPrefix(program.Where(n), tree+"/")
+		nodes[where] = append(nodes[where], n)
+		n.ForEachChild(visit)
+		return false
+	}
+	for _, file := range program.Files() {
+		file.AsNode().ForEachChild(visit)
+	}
+	rows := []map[string]any{}
+	counts := map[string]int{}
+	for _, r := range records {
+		recovered := false
+		candidates := nodes[r.Where]
+		var matched *ast.Node
+		for _, node := range candidates {
+			if !(&lowering{}).isExpression(node) && node.Kind != ast.KindShorthandPropertyAssignment {
+				continue
+			}
+			if r.OriginalType != "" && checker.TypeToString(checker.GetTypeAtLocation(node)) != r.OriginalType {
+				continue
+			}
+			if r.Expression != "" && !strings.HasPrefix(strings.Join(strings.Fields(sourceExpression(node)), " "), strings.Join(strings.Fields(r.Expression), " ")) {
+				continue
+			}
+			matched = node
+			break
+		}
+		status, reason := "unmatched", "pinned source expression could not be matched in the reproduced checker program"
+		fields := []string{}
+		if matched != nil && r.Receiving == "AsExpression" {
+			for matched.Parent != nil && matched.Parent.Kind == ast.KindParenthesizedExpression {
+				matched = matched.Parent
+			}
+			if matched.Parent != nil && matched.Parent.Kind == ast.KindAsExpression {
+				matched = matched.Parent
+			} else {
+				matched = nil
+			}
+		}
+		if r.OriginalType == "" && r.Expression == "" {
+			matched = nil
+			canonical := func(name string) string {
+				parts := strings.Split(name, " | ")
+				sort.Strings(parts)
+				return strings.Join(parts, " | ")
+			}
+			matches := []*ast.Node{}
+			for _, candidate := range candidates {
+				if l := (&lowering{}); !l.isExpression(candidate) {
+					continue
+				}
+				if canonical(checker.TypeToString(checker.GetTypeAtLocation(candidate))) == canonical(r.SourceFamily) {
+					matches = append(matches, candidate)
+				}
+			}
+			if len(matches) == 1 {
+				matched = matches[0]
+			} else {
+				reason = "pinned census source type did not map uniquely to a stock-checker expression; no proof or checked admission measured"
+			}
+		}
+		// Some pinned reasons name a nested generic return rather than the enclosing
+		// expression type. Resolve the actual unique receiving site, not a guessed T.
+		if matched == nil && r.OriginalType == "" && r.Expression == "" {
+			matches := []*ast.Node{}
+			for _, candidate := range candidates {
+				if candidate.Kind == ast.KindShorthandPropertyAssignment || ((&lowering{}).isExpression(candidate) && viewSite(candidate)) {
+					matches = append(matches, candidate)
+				}
+			}
+			if len(matches) == 1 {
+				matched = matches[0]
+				recovered = true
+			}
+		}
+		if matched != nil && matched.Parent != nil && matched.Parent.Kind == ast.KindShorthandPropertyAssignment && matched.Parent.Name() == matched {
+			matched = matched.Parent
+			recovered = true
+		}
+		if matched != nil {
+			child := matched
+			for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+				child = child.Parent
+			}
+			if parent := child.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
+				binary := parent.AsBinaryExpression()
+				if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && binary.Left == child {
+					matched = binary.Right
+					recovered = true
+				}
+			}
+		}
+		if matched != nil {
+			l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			l.typeMapper = l.checkedSiteMapper(matched)
+			failure := l.refuseWidening(matched)
+			if failure != nil {
+				status = "stopped"
+				reason = failure.Error()
+			} else if len(l.result.CheckedWrites) > 0 || l.result.CheckedElements {
+				status = "checked relation"
+				reason = "actual-shape field contract"
+				for name := range l.result.CheckedWrites {
+					fields = append(fields, name)
+				}
+			} else {
+				contextual := checker.GetContextualType(matched, 0)
+				if contextual == nil {
+					contextual = l.impliedTarget(matched)
+				}
+				own := checker.GetTypeAtLocation(matched)
+				if matched.Kind == ast.KindShorthandPropertyAssignment {
+					own = checker.GetTypeAtLocation(matched.Name())
+					literal := checker.GetContextualType(matched.Parent, 0)
+					if literal != nil {
+						contextual = checker.GetTypeOfPropertyOfType(literal, matched.Name().Text())
+					}
+				}
+				if matched.Kind == ast.KindAsExpression {
+					own = checker.GetTypeAtLocation(matched.AsAsExpression().Expression)
+					contextual = checker.GetTypeAtLocation(matched)
+				}
+				if contextual != nil && l.freshOrWidened(matched, own, contextual) == nil {
+					status = "proven relation"
+					reason = "fresh or invariant relation: " + checker.TypeToString(own) + " into " + checker.TypeToString(contextual)
+				} else {
+					if contextual != nil {
+						found := l.freshOrWidened(matched, own, contextual)
+						if found != nil {
+							failure := l.wideningRefusal(matched, own, contextual, found)
+							if failure != nil {
+								status = "stopped"
+								reason = failure.Error()
+							} else {
+								status = "checked relation"
+								reason = "actual-shape field contract"
+							}
+						}
+					} else {
+						status = "stopped"
+						reason = r.Where + ": no contextual slot for the pinned generic relation; instantiate the receiving signature before proving its mutable return"
+					}
+				}
+			}
+		}
+		sort.Strings(fields)
+		reason = strings.TrimPrefix(reason, tree+"/")
+		if r.Classification == "d" {
+			counts[status]++
+		}
+		row := map[string]any{"id": r.ID, "where": r.Where, "class": r.Classification, "family": r.Family, "source_family": r.SourceFamily, "original_reason": r.Reason, "status": status, "first_reason": reason, "fields": fields}
+		if recovered {
+			expression := sourceExpression(matched)
+			if len(expression) > 512 {
+				expression = expression[:512]
+			}
+			row["resolved_receiving_expression"] = expression
+			row["resolved_receiving_type"] = checker.TypeToString(checker.GetTypeAtLocation(matched))
+			row["resolution"] = "unique receiving expression or shorthand at pinned location; nested relation measured before instantiation"
+		}
+		rows = append(rows, row)
+	}
+	report := map[string]any{"measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced", "class_d_counts": counts, "records": rows}
+	data, err := json.MarshalIndent(report, "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(output, append(data, '\n'), 0644); err != nil {
+		t.Fatal(err)
+	}
+	fmt.Printf("class-d relation counts: %v\n", counts)
+}
