@@ -1637,11 +1637,3 @@ func cssParserTopCorpus(t *testing.T) cssParserCorpus {
 	}
 	return cssParserTopCorpusSetup.corpus
 }
-func cssParserContainsCase(indices []int, witness int) bool {
-	for _, i := range indices {
-		if i == witness {
-			return true
-		}
-	}
-	return false
-}
