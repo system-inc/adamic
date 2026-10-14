@@ -23,9 +23,9 @@ stage 0 can't lower indexOf with these arguments yet        (Node prints 3)
 
 **Around it:** `indexOfFrom` (tokenize.ts) slices from the position and searches the rest. The tokenizer looks for a closing quote, the end of a comment and the end of a line that way, as upstream does with `css.indexOf(search, from)`. It copies the rest of the value each time, which upstream doesn't.
 
-## 2. A `boolean | undefined` field
+## 2. A `boolean | undefined` field (required class storage closed by compiler/scout-unions-main)
 
-A field that holds a boolean or nothing is refused, in a class or an object type. A field of `number | undefined`, `string | undefined` or `T[] | undefined` lowers.
+Required class fields now use packed boolean-or-undefined storage and agree with Node. Optional class fields and their presence semantics remain separate work. The following records the original refusal; the port workaround remains in place.
 
 ```ts
 class Holder {
@@ -40,7 +40,7 @@ console.log(`${holder.flag === true}`);
 stage 0 can't lower a field of type boolean | undefined yet        (Node prints true)
 ```
 
-`interface Flags { readonly flag: boolean | undefined }` is refused the same way.
+An interface field of boolean-or-undefined already lowers on main; the reduced class gap is now closed too.
 
 **Around it:** a node's flags (`inline`, `quoted`, `isHex`, `isColor`) are present on some nodes and absent on others, which is how upstream's classes leave them. The natural port is one optional field each. Instead the node carries a `shape`, which constructor made it, and the shape says which fields it has (`keysOf`, nodes.ts), with the flags as plain booleans. That is upstream's own rule, a node's fields are its class's, so it reads well enough, but it is a second way of saying what the type should.
 

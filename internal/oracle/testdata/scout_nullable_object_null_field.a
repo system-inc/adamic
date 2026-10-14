@@ -1,0 +1,10 @@
+interface Item { readonly text: string; }
+interface Holder { value: Item | null | undefined; }
+function consume(value: Item | null): string { return value === null ? 'null' : 'object'; }
+const holder: Holder = {value: {text: 'item'}};
+holder.value = null;
+console.log(consume(holder.value));
+function observe(holder: Holder): void {
+    if (holder.value === null) console.log(consume(holder.value));
+}
+observe(holder);

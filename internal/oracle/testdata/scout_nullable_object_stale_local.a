@@ -1,0 +1,8 @@
+interface Item { readonly text: string; }
+let local: Item | null | undefined = {text: 'value'};
+function replace(): void { local = null; }
+function observe(value: Item): string { return typeof value; }
+if (local !== null && local !== undefined) {
+    replace();
+    console.log(observe(local));
+}
