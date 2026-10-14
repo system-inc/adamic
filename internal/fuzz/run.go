@@ -28,6 +28,7 @@ type Checkout struct {
 	Root      string
 	directory string
 	adamic    string
+	runtime   string // Optional supplied archive for featureless fixture tools.
 }
 
 // Prepare builds a checkout's adamic command into directory and prepares it for per-program runtime builds.
@@ -170,9 +171,13 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 	}
 	binary := filepath.Join(directory, "program")
 	options := native.Options{Sanitize: true}
-	library, err := native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(lowered.Stdout), options)
-	if err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	library := c.runtime
+	if library == "" || len(native.Features(string(lowered.Stdout))) != 0 {
+		var err error
+		library, err = native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(lowered.Stdout), options)
+		if err != nil {
+			return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+		}
 	}
 	arguments := append(native.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
 	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
