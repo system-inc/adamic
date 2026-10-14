@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"io/fs"
 	"maps"
 	"os"
 	"os/exec"
@@ -606,12 +607,14 @@ func TestGoTestMutatedPlantsAndKeysEachMutation(t *testing.T) {
 	}
 }
 
-// GoExports' export data is the same at every commit that changes nothing it compiles: a test main is package main,
-// and go stamps the commit into every one it compiles unless -buildvcs=false, so its export data's build id moved at
-// each commit under an unmoved key (landable-8, internal/ir: 4 of 335 files, each a test main's). Built uncached here
-// at two commits a note apart. Mutant: GoExports' go list without -buildvcs=false.
+// GoExports' product is the same at every commit that changes nothing it compiles and from any Go cache. A main
+// package's export data is stamped with the commit unless -buildvcs=false (landable-8, internal/ir: 4 of 335 files
+// moved at each commit under an unmoved key), and a test main's names the file go generated for it in its cache, which
+// -trimpath doesn't rewrite (#dhm3wav: Workshop's and Adam's caches gave 4 archives two sizes), so a test main keeps no
+// export data. Built uncached here at two commits a note apart, each with its own Go cache at a path of another
+// length. Mutants: GoExports' go list without -buildvcs=false; a test main's export data kept.
 // Not parallel: inRepository changes the working directory and repositoryRoot.
-func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
+func TestGoExportsAreTheSameAtEveryCommitAndFromEveryGoCache(t *testing.T) {
 	root, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
 		t.Fatal(err)
@@ -628,34 +631,55 @@ func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_CACHE", "off")
 	// GoExports itself, whatever the environment a gate gives it.
 	t.Setenv("GOFLAGS", "")
-	testMain := func() []byte {
+	caches := t.TempDir()
+	product := func(goCache string) map[string][]byte {
 		t.Helper()
+		t.Setenv("GOCACHE", filepath.Join(caches, goCache))
 		directory := GoExports(t, "./tool")
-		content, err := os.ReadFile(filepath.Join(directory, "listing.json"))
+		files := map[string][]byte{}
+		err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil || entry.IsDir() {
+				return err
+			}
+			content, err := os.ReadFile(path)
+			files[mustRelative(directory, path)] = content
+			return err
+		})
 		if err != nil {
 			t.Fatal(err)
 		}
 		var listing []ListedPackage
-		if err := json.Unmarshal(content, &listing); err != nil {
+		if err := json.Unmarshal(files["listing.json"], &listing); err != nil {
 			t.Fatal(err)
 		}
+		mains := 0
 		for _, listed := range listing {
-			if listed.ImportPath == "github.com/system-inc/adamic/tool.test" && listed.Export != "" {
-				data, err := os.ReadFile(filepath.Join(directory, listed.Export))
-				if err != nil {
-					t.Fatal(err)
+			if listed.ImportPath == "github.com/system-inc/adamic/tool" && listed.Export == "" {
+				t.Fatalf("the listing holds no export data for the tool itself: %s", files["listing.json"])
+			}
+			if listed.ImportPath == "github.com/system-inc/adamic/tool.test" {
+				mains++
+				if listed.Export != "" {
+					t.Fatalf("the test main keeps export data, %s", listed.Export)
 				}
-				return data
 			}
 		}
-		t.Fatalf("the listing holds no test main's export data: %s", content)
-		return nil
+		if mains != 1 {
+			t.Fatalf("the listing holds %d test mains, want 1: %s", mains, files["listing.json"])
+		}
+		return files
 	}
-	first := testMain()
+	first := product("a")
 	write(t, root, "notes.txt", "two\n")
 	gitIn(t, root, "commit", "-q", "-am", "two")
-	if second := testMain(); !slices.Equal(first, second) {
-		t.Fatal("a test main's export data differs between two commits that change nothing it compiles")
+	second := product("another-go-cache")
+	if len(first) != len(second) {
+		t.Fatalf("the product holds %d files at one commit and Go cache, %d at the other", len(first), len(second))
+	}
+	for name, content := range first {
+		if !bytes.Equal(content, second[name]) {
+			t.Errorf("%s differs between two commits and Go caches that change nothing it compiles", name)
+		}
 	}
 }
 
