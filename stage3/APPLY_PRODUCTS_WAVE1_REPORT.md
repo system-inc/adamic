@@ -1,5 +1,5 @@
 Built four offline adapted-tree products on main, plus a fetch-only product 99 API for the lane.
-Code commit: `9cb9ac58f31cae822409505ddb6e44b9b547e3d6`; branch: `typescript/stage3-apply-products`.
+Code: `9cb9ac58f31cae822409505ddb6e44b9b547e3d6`, fixture fix `7c6ce8edefddb6d52ec0ed67832782315702c0d6`; branch: `typescript/stage3-apply-products`.
 Cold products: 18.60 / 39.70 / 47.66 / 23.41 seconds; whole-tree equality and all 25 apply fixtures passed.
 Four input-drop mutants, a real tree-byte mutant, a parent-only deadline mutant and a write-table mutant were caught.
 Not covered here: lane products, the remaining 150 Go shards, remote publication, or the full repository gate.
@@ -136,4 +136,30 @@ passed as recorded above.
 Compressed verification logs are in `applyproducts/evidence/`. No full upstream
 oracle or full repository gate was run for part A. Source-only delivery; remote
 build-store publishing, traced settlement and cold remote restoration are not
-claimed by these local-cache measurements. Both commits use Task: #hefhych.
+claimed by these local-cache measurements. Every delivered commit uses Task: #hefhych.
+
+## Committed-tip correction and current-main proof
+
+The part B reader rerun exposed a fixture setup bug after part A's first push:
+when the new helpers were already in HEAD, its second seed commit had nothing
+to commit and exited 1 before apply ran. The earlier pre-commit fixture run had
+new helpers to seed and therefore passed. Commit
+`7c6ce8edefddb6d52ec0ed67832782315702c0d6` permits that seed to be empty.
+It changes no product input or recipe; the cold products and tree comparison
+above remain the final recipe measurements.
+
+| Corrective command | Exit | Result |
+|---|---:|---|
+| `timeout 90 go test ./stage3/applyproducts ./stage3/applyproducts/fetch -count=1 -timeout 90s -v` on committed A | 0 | Whole packages |
+| `timeout 90 env -u PYTHONDONTWRITEBYTECODE python3 -B stage3/test_apply.py` on committed A | 0 | 25 fixtures, 13.951 s; child apply supplies its own bytecode protection |
+| Same environment with `STAGE3_APPLY_MUTANT=1`, one cleanliness fixture | 1 | Intended dirty-table assertion, 14.756 s |
+| Entire Go packages in the current-main merge candidate | 0 | 0.636 s |
+| `timeout 90 python3 -B stage3/test_apply.py` in that candidate | 0 | 25 fixtures, 13.502 s |
+
+Main advanced to `87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4`, only in
+internal/load and notices. `git diff --exit-code d072c133 origin/main -- stage3`
+exited 0. A was merged without committing in the separate reference worktree;
+merge tree `50a9ae72b69ac12a6c0ffd82c4026d42d73934d9` passed the commands
+above and the temporary merge was aborted. No history was rewritten. Delivering
+the committed-fixture correction requires an additional fast-forward push to
+A, rather than leaving the already published branch with a broken fixture.
