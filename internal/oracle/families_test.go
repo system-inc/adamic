@@ -35,6 +35,7 @@ var families = []family{
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 		"internal/oracle/testdata/normalize_coverage_long.a",
 		"internal/oracle/testdata/user_iterators.a",
+		"internal/oracle/testdata/closure_convention_regexp_count.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{

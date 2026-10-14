@@ -3538,6 +3538,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_method_presence_a_b25fc66ad310",
+    "program": "internal/oracle/testdata/method_presence.a",
+    "path": "../oracle/testdata/method_presence.a",
+    "sha256": "b072efa124bd075cbcae1cd463e898d5339491b7527e63d5c8c04e2eaa7782ed"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_move_throw_a_59e55e7d3c9b",
     "program": "internal/oracle/testdata/move_throw.a",
     "path": "../oracle/testdata/move_throw.a",
@@ -4326,6 +4334,78 @@
     "program": "internal/oracle/testdata/notyet_library_string_bounds.a",
     "path": "../oracle/testdata/notyet_library_string_bounds.a",
     "sha256": "3459f1f41b3282fb2c39a404ad90561127f4fd5bd1f4f964fddea665961715dc"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_array_a_578fedab1d7c",
+    "program": "internal/oracle/testdata/nullable_coverage_array.a",
+    "path": "../oracle/testdata/nullable_coverage_array.a",
+    "sha256": "ad4f7525b03d95c81672980ecb7cc138d0cc26d2b478c49ebe53acf3f4492b31"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_calls_a_e1d0b9a19754",
+    "program": "internal/oracle/testdata/nullable_coverage_calls.a",
+    "path": "../oracle/testdata/nullable_coverage_calls.a",
+    "sha256": "4f41951efb74d26d4fcbf0b7b16985d57c73a181ecd086914451368f9259af3a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_class_a_7aef42d55500",
+    "program": "internal/oracle/testdata/nullable_coverage_class.a",
+    "path": "../oracle/testdata/nullable_coverage_class.a",
+    "sha256": "ae1d39243214605f3a34dd30c611763d7a1b18c452daca0a5cc0fcf977543403"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_map_a_fd947d0d2021",
+    "program": "internal/oracle/testdata/nullable_coverage_map.a",
+    "path": "../oracle/testdata/nullable_coverage_map.a",
+    "sha256": "d0642f540ee1ea27e41f6f7100303069cd517f2890dd4220357a108027110d36"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_nested_generics_a_bc074b02322d",
+    "program": "internal/oracle/testdata/nullable_coverage_nested_generics.a",
+    "path": "../oracle/testdata/nullable_coverage_nested_generics.a",
+    "sha256": "878cf2f06029a7f78e0ae07210a82f038c0f70aeb5b3f44770cfe2bf119560c2"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_object_a_67a8bcb2ee8f",
+    "program": "internal/oracle/testdata/nullable_coverage_object.a",
+    "path": "../oracle/testdata/nullable_coverage_object.a",
+    "sha256": "5c6e23a44dd169ecfc7e55de8f36318a419e9e49446e7d34f63a2d6315f6faa3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_string_a_7ff1377c2a7d",
+    "program": "internal/oracle/testdata/nullable_coverage_string.a",
+    "path": "../oracle/testdata/nullable_coverage_string.a",
+    "sha256": "d1c70d7970f4119f480a0857f56e6a2b6a4ca86329a35041264e5db2353a447e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_map_narrowed_a_3fc28e182676",
+    "program": "internal/oracle/testdata/nullable_references_map_narrowed.a",
+    "path": "../oracle/testdata/nullable_references_map_narrowed.a",
+    "sha256": "acb182ec943fd3bc96df7254aa862339859d975dacacf9d95593915da68ba40f"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_typeof_match_a_0907428ce5f9",
+    "program": "internal/oracle/testdata/nullable_references_typeof_match.a",
+    "path": "../oracle/testdata/nullable_references_typeof_match.a",
+    "sha256": "0872c9101a6afb985ff26f369a632f1732968162231ca2ac8898231097609a4e"
   },
   {
     "package": "flow",
@@ -10234,6 +10314,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_method_presence_a_b25fc66ad310",
+    "program": "internal/oracle/testdata/method_presence.a",
+    "path": "../oracle/testdata/method_presence.a",
+    "sha256": "b072efa124bd075cbcae1cd463e898d5339491b7527e63d5c8c04e2eaa7782ed"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_move_throw_a_59e55e7d3c9b",
     "program": "internal/oracle/testdata/move_throw.a",
     "path": "../oracle/testdata/move_throw.a",
@@ -11022,6 +11110,78 @@
     "program": "internal/oracle/testdata/notyet_library_string_bounds.a",
     "path": "../oracle/testdata/notyet_library_string_bounds.a",
     "sha256": "3459f1f41b3282fb2c39a404ad90561127f4fd5bd1f4f964fddea665961715dc"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_array_a_578fedab1d7c",
+    "program": "internal/oracle/testdata/nullable_coverage_array.a",
+    "path": "../oracle/testdata/nullable_coverage_array.a",
+    "sha256": "ad4f7525b03d95c81672980ecb7cc138d0cc26d2b478c49ebe53acf3f4492b31"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_calls_a_e1d0b9a19754",
+    "program": "internal/oracle/testdata/nullable_coverage_calls.a",
+    "path": "../oracle/testdata/nullable_coverage_calls.a",
+    "sha256": "4f41951efb74d26d4fcbf0b7b16985d57c73a181ecd086914451368f9259af3a"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_class_a_7aef42d55500",
+    "program": "internal/oracle/testdata/nullable_coverage_class.a",
+    "path": "../oracle/testdata/nullable_coverage_class.a",
+    "sha256": "ae1d39243214605f3a34dd30c611763d7a1b18c452daca0a5cc0fcf977543403"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_map_a_fd947d0d2021",
+    "program": "internal/oracle/testdata/nullable_coverage_map.a",
+    "path": "../oracle/testdata/nullable_coverage_map.a",
+    "sha256": "d0642f540ee1ea27e41f6f7100303069cd517f2890dd4220357a108027110d36"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_nested_generics_a_bc074b02322d",
+    "program": "internal/oracle/testdata/nullable_coverage_nested_generics.a",
+    "path": "../oracle/testdata/nullable_coverage_nested_generics.a",
+    "sha256": "878cf2f06029a7f78e0ae07210a82f038c0f70aeb5b3f44770cfe2bf119560c2"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_object_a_67a8bcb2ee8f",
+    "program": "internal/oracle/testdata/nullable_coverage_object.a",
+    "path": "../oracle/testdata/nullable_coverage_object.a",
+    "sha256": "5c6e23a44dd169ecfc7e55de8f36318a419e9e49446e7d34f63a2d6315f6faa3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_string_a_7ff1377c2a7d",
+    "program": "internal/oracle/testdata/nullable_coverage_string.a",
+    "path": "../oracle/testdata/nullable_coverage_string.a",
+    "sha256": "d1c70d7970f4119f480a0857f56e6a2b6a4ca86329a35041264e5db2353a447e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_map_narrowed_a_3fc28e182676",
+    "program": "internal/oracle/testdata/nullable_references_map_narrowed.a",
+    "path": "../oracle/testdata/nullable_references_map_narrowed.a",
+    "sha256": "acb182ec943fd3bc96df7254aa862339859d975dacacf9d95593915da68ba40f"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_typeof_match_a_0907428ce5f9",
+    "program": "internal/oracle/testdata/nullable_references_typeof_match.a",
+    "path": "../oracle/testdata/nullable_references_typeof_match.a",
+    "sha256": "0872c9101a6afb985ff26f369a632f1732968162231ca2ac8898231097609a4e"
   },
   {
     "package": "flow",
@@ -16930,6 +17090,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_method_presence_a_b25fc66ad310",
+    "program": "internal/oracle/testdata/method_presence.a",
+    "path": "../oracle/testdata/method_presence.a",
+    "sha256": "b072efa124bd075cbcae1cd463e898d5339491b7527e63d5c8c04e2eaa7782ed"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_move_throw_a_59e55e7d3c9b",
     "program": "internal/oracle/testdata/move_throw.a",
     "path": "../oracle/testdata/move_throw.a",
@@ -17718,6 +17886,78 @@
     "program": "internal/oracle/testdata/notyet_library_string_bounds.a",
     "path": "../oracle/testdata/notyet_library_string_bounds.a",
     "sha256": "3459f1f41b3282fb2c39a404ad90561127f4fd5bd1f4f964fddea665961715dc"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_array_a_578fedab1d7c",
+    "program": "internal/oracle/testdata/nullable_coverage_array.a",
+    "path": "../oracle/testdata/nullable_coverage_array.a",
+    "sha256": "ad4f7525b03d95c81672980ecb7cc138d0cc26d2b478c49ebe53acf3f4492b31"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_calls_a_e1d0b9a19754",
+    "program": "internal/oracle/testdata/nullable_coverage_calls.a",
+    "path": "../oracle/testdata/nullable_coverage_calls.a",
+    "sha256": "4f41951efb74d26d4fcbf0b7b16985d57c73a181ecd086914451368f9259af3a"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_class_a_7aef42d55500",
+    "program": "internal/oracle/testdata/nullable_coverage_class.a",
+    "path": "../oracle/testdata/nullable_coverage_class.a",
+    "sha256": "ae1d39243214605f3a34dd30c611763d7a1b18c452daca0a5cc0fcf977543403"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_map_a_fd947d0d2021",
+    "program": "internal/oracle/testdata/nullable_coverage_map.a",
+    "path": "../oracle/testdata/nullable_coverage_map.a",
+    "sha256": "d0642f540ee1ea27e41f6f7100303069cd517f2890dd4220357a108027110d36"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_nested_generics_a_bc074b02322d",
+    "program": "internal/oracle/testdata/nullable_coverage_nested_generics.a",
+    "path": "../oracle/testdata/nullable_coverage_nested_generics.a",
+    "sha256": "878cf2f06029a7f78e0ae07210a82f038c0f70aeb5b3f44770cfe2bf119560c2"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_object_a_67a8bcb2ee8f",
+    "program": "internal/oracle/testdata/nullable_coverage_object.a",
+    "path": "../oracle/testdata/nullable_coverage_object.a",
+    "sha256": "5c6e23a44dd169ecfc7e55de8f36318a419e9e49446e7d34f63a2d6315f6faa3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_string_a_7ff1377c2a7d",
+    "program": "internal/oracle/testdata/nullable_coverage_string.a",
+    "path": "../oracle/testdata/nullable_coverage_string.a",
+    "sha256": "d1c70d7970f4119f480a0857f56e6a2b6a4ca86329a35041264e5db2353a447e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_map_narrowed_a_3fc28e182676",
+    "program": "internal/oracle/testdata/nullable_references_map_narrowed.a",
+    "path": "../oracle/testdata/nullable_references_map_narrowed.a",
+    "sha256": "acb182ec943fd3bc96df7254aa862339859d975dacacf9d95593915da68ba40f"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_typeof_match_a_0907428ce5f9",
+    "program": "internal/oracle/testdata/nullable_references_typeof_match.a",
+    "path": "../oracle/testdata/nullable_references_typeof_match.a",
+    "sha256": "0872c9101a6afb985ff26f369a632f1732968162231ca2ac8898231097609a4e"
   },
   {
     "package": "flow",
@@ -23626,6 +23866,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_method_presence_a_b25fc66ad310",
+    "program": "internal/oracle/testdata/method_presence.a",
+    "path": "../oracle/testdata/method_presence.a",
+    "sha256": "b072efa124bd075cbcae1cd463e898d5339491b7527e63d5c8c04e2eaa7782ed"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_move_throw_a_59e55e7d3c9b",
     "program": "internal/oracle/testdata/move_throw.a",
     "path": "../oracle/testdata/move_throw.a",
@@ -24414,6 +24662,78 @@
     "program": "internal/oracle/testdata/notyet_library_string_bounds.a",
     "path": "../oracle/testdata/notyet_library_string_bounds.a",
     "sha256": "3459f1f41b3282fb2c39a404ad90561127f4fd5bd1f4f964fddea665961715dc"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_array_a_578fedab1d7c",
+    "program": "internal/oracle/testdata/nullable_coverage_array.a",
+    "path": "../oracle/testdata/nullable_coverage_array.a",
+    "sha256": "ad4f7525b03d95c81672980ecb7cc138d0cc26d2b478c49ebe53acf3f4492b31"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_calls_a_e1d0b9a19754",
+    "program": "internal/oracle/testdata/nullable_coverage_calls.a",
+    "path": "../oracle/testdata/nullable_coverage_calls.a",
+    "sha256": "4f41951efb74d26d4fcbf0b7b16985d57c73a181ecd086914451368f9259af3a"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_class_a_7aef42d55500",
+    "program": "internal/oracle/testdata/nullable_coverage_class.a",
+    "path": "../oracle/testdata/nullable_coverage_class.a",
+    "sha256": "ae1d39243214605f3a34dd30c611763d7a1b18c452daca0a5cc0fcf977543403"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_map_a_fd947d0d2021",
+    "program": "internal/oracle/testdata/nullable_coverage_map.a",
+    "path": "../oracle/testdata/nullable_coverage_map.a",
+    "sha256": "d0642f540ee1ea27e41f6f7100303069cd517f2890dd4220357a108027110d36"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_nested_generics_a_bc074b02322d",
+    "program": "internal/oracle/testdata/nullable_coverage_nested_generics.a",
+    "path": "../oracle/testdata/nullable_coverage_nested_generics.a",
+    "sha256": "878cf2f06029a7f78e0ae07210a82f038c0f70aeb5b3f44770cfe2bf119560c2"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_object_a_67a8bcb2ee8f",
+    "program": "internal/oracle/testdata/nullable_coverage_object.a",
+    "path": "../oracle/testdata/nullable_coverage_object.a",
+    "sha256": "5c6e23a44dd169ecfc7e55de8f36318a419e9e49446e7d34f63a2d6315f6faa3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_coverage_string_a_7ff1377c2a7d",
+    "program": "internal/oracle/testdata/nullable_coverage_string.a",
+    "path": "../oracle/testdata/nullable_coverage_string.a",
+    "sha256": "d1c70d7970f4119f480a0857f56e6a2b6a4ca86329a35041264e5db2353a447e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_map_narrowed_a_3fc28e182676",
+    "program": "internal/oracle/testdata/nullable_references_map_narrowed.a",
+    "path": "../oracle/testdata/nullable_references_map_narrowed.a",
+    "sha256": "acb182ec943fd3bc96df7254aa862339859d975dacacf9d95593915da68ba40f"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_nullable_references_typeof_match_a_0907428ce5f9",
+    "program": "internal/oracle/testdata/nullable_references_typeof_match.a",
+    "path": "../oracle/testdata/nullable_references_typeof_match.a",
+    "sha256": "0872c9101a6afb985ff26f369a632f1732968162231ca2ac8898231097609a4e"
   },
   {
     "package": "flow",
@@ -30482,6 +30802,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_method_presence_a_b25fc66ad310",
+    "program": "internal/oracle/testdata/method_presence.a",
+    "path": "../oracle/testdata/method_presence.a",
+    "sha256": "b072efa124bd075cbcae1cd463e898d5339491b7527e63d5c8c04e2eaa7782ed"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_move_throw_a_59e55e7d3c9b",
     "program": "internal/oracle/testdata/move_throw.a",
     "path": "../oracle/testdata/move_throw.a",
@@ -31414,6 +31742,78 @@
     "program": "internal/oracle/testdata/notyet_library_string_bounds.a",
     "path": "../oracle/testdata/notyet_library_string_bounds.a",
     "sha256": "3459f1f41b3282fb2c39a404ad90561127f4fd5bd1f4f964fddea665961715dc"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_array_a_578fedab1d7c",
+    "program": "internal/oracle/testdata/nullable_coverage_array.a",
+    "path": "../oracle/testdata/nullable_coverage_array.a",
+    "sha256": "ad4f7525b03d95c81672980ecb7cc138d0cc26d2b478c49ebe53acf3f4492b31"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_calls_a_e1d0b9a19754",
+    "program": "internal/oracle/testdata/nullable_coverage_calls.a",
+    "path": "../oracle/testdata/nullable_coverage_calls.a",
+    "sha256": "4f41951efb74d26d4fcbf0b7b16985d57c73a181ecd086914451368f9259af3a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_class_a_7aef42d55500",
+    "program": "internal/oracle/testdata/nullable_coverage_class.a",
+    "path": "../oracle/testdata/nullable_coverage_class.a",
+    "sha256": "ae1d39243214605f3a34dd30c611763d7a1b18c452daca0a5cc0fcf977543403"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_map_a_fd947d0d2021",
+    "program": "internal/oracle/testdata/nullable_coverage_map.a",
+    "path": "../oracle/testdata/nullable_coverage_map.a",
+    "sha256": "d0642f540ee1ea27e41f6f7100303069cd517f2890dd4220357a108027110d36"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_nested_generics_a_bc074b02322d",
+    "program": "internal/oracle/testdata/nullable_coverage_nested_generics.a",
+    "path": "../oracle/testdata/nullable_coverage_nested_generics.a",
+    "sha256": "878cf2f06029a7f78e0ae07210a82f038c0f70aeb5b3f44770cfe2bf119560c2"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_object_a_67a8bcb2ee8f",
+    "program": "internal/oracle/testdata/nullable_coverage_object.a",
+    "path": "../oracle/testdata/nullable_coverage_object.a",
+    "sha256": "5c6e23a44dd169ecfc7e55de8f36318a419e9e49446e7d34f63a2d6315f6faa3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_coverage_string_a_7ff1377c2a7d",
+    "program": "internal/oracle/testdata/nullable_coverage_string.a",
+    "path": "../oracle/testdata/nullable_coverage_string.a",
+    "sha256": "d1c70d7970f4119f480a0857f56e6a2b6a4ca86329a35041264e5db2353a447e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_references_map_narrowed_a_3fc28e182676",
+    "program": "internal/oracle/testdata/nullable_references_map_narrowed.a",
+    "path": "../oracle/testdata/nullable_references_map_narrowed.a",
+    "sha256": "acb182ec943fd3bc96df7254aa862339859d975dacacf9d95593915da68ba40f"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_nullable_references_typeof_match_a_0907428ce5f9",
+    "program": "internal/oracle/testdata/nullable_references_typeof_match.a",
+    "path": "../oracle/testdata/nullable_references_typeof_match.a",
+    "sha256": "0872c9101a6afb985ff26f369a632f1732968162231ca2ac8898231097609a4e"
   },
   {
     "package": "fresh",

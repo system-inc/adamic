@@ -665,6 +665,11 @@ func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	runNativeAgreesShard(t, -4)
 }
 
+func TestNativeAgreesWithNode_closure_convention_regexp_count(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -5)
+}
+
 func TestWASIAgreesWithNode_000(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, 0)

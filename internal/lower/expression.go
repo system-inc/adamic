@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if proven := l.checker.GetTypeAtLocation(node); l.includesNull(proven) && l.includesUndefined(proven) {
+		return 0, l.notYet(node, nullableTagReason)
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -41,6 +44,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
@@ -58,6 +62,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	}
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
+	}
+	if parameter && flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		return ir.Object, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -96,22 +103,25 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// Preserve the area's nullable reference and RegExp protocols. Only
-			// differently stored members need the boxed union representation.
+			// Preserve a single nullable reference ABI. Differently stored members use
+			// compiler union boxes, which keep primitive and null tags distinct.
+			var reference ir.Type
 			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
 				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 					continue
 				}
-				of, known := l.representation(member)
-				if !known {
+				held, known := l.representation(member)
+				if !known || held == ir.Weak {
 					return 0, false
 				}
-				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
+				boxed = boxed || !held.IsReference() || held == ir.Union || (reference != 0 && reference != held)
+				reference = held
 			}
 			if boxed {
 				return ir.Union, true
 			}
+			return reference, reference != 0
 		}
 		var shared ir.Type
 		mixed, weak := false, false
@@ -170,6 +180,7 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}
@@ -182,6 +193,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
@@ -196,6 +208,12 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.methodObservation(node); handled {
+		return value, err
+	}
+	if err := l.nullableUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -926,9 +944,20 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
-// spelled is a string as + and a template write it: one that may be missing (a null reference) is
-// written "undefined", as JavaScript writes it.
+// spelled writes a missing string using the empty case of its instantiated static type.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		text := "undefined"
+		if proven.Flags()&checker.TypeFlagsNull != 0 {
+			text = "null"
+		}
+		constant := ir.StringConstant{Index: l.constant(text)}
+		return l.nullableObservation("spelling", value, constant, func(ir.Expression) ir.Expression { return constant })
+	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
@@ -962,17 +991,23 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
-			flags := l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression).Flags()
+			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
+			flags := proven.Flags()
 			spelling := ""
 			if flags == checker.TypeFlagsNull {
 				spelling = "null"
 			} else if flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 && flags & ^(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) == 0 {
 				spelling = "undefined"
 			}
-			if spelling == "" {
-				return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+			if spelling != "" {
+				value = ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant(spelling)}}
+				break
 			}
-			value = ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant(spelling)}}
+			if flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+				value = l.spelled(span.AsTemplateSpan().Expression, value)
+				break
+			}
+			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {

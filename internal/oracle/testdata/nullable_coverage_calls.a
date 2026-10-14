@@ -1,0 +1,20 @@
+interface Named { readonly name: (suffix: string) => string; }
+let calls = 0;
+function next(present: boolean): string | null { calls++; return present ? `owned${calls}` : null; }
+function reverse<T>(value: T): string { return `${null === value} ${undefined === value} ${null !== value} ${undefined !== value}`; }
+console.log(`${typeof next(false)} ${calls}`);
+console.log(`${Number(next(false))} ${calls}`);
+console.log(`${!next(true)} ${calls}`);
+console.log(`text:${next(false)} ${calls}`);
+console.log('plus:' + next(false));
+console.log(`${calls}`);
+function words(value: 'red' | 'blue' | null): void { console.log(`${value ?? 'none'} ${typeof value} ${reverse(value)}`); }
+words(null);
+words('red');
+words('blue');
+function argument(): string { calls++; return `argument${calls}`; }
+function invoke(value: Named | null): void { console.log(value?.name(argument()) ?? 'none'); console.log(`${calls}`); }
+invoke(null);
+invoke({name: (suffix: string): string => 'named:' + suffix});
+console.log(reverse<string | null>(null));
+console.log(reverse<string | undefined>(undefined));

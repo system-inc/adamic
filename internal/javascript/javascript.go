@@ -75,7 +75,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	} else {
 		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
-	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	builder.WriteString("const adamicOptionalCall = (object, name, values) => object == null ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -779,6 +779,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+	case ir.MethodPresence:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "!!(" + e.value(expression.Object) + operator + quote(expression.Name) + "])"
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:
