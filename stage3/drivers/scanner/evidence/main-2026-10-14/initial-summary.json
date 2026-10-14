@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "status": "failed",
+  "requested_refs": [],
+  "output": "/tmp/scanner-main",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 1174.462
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-03e899a800cd",
+        "/tmp/scanner-main/compiler-tree",
+        "d072c133ec923dca88572949a9b21ea09489a4a3"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 2.723
+    },
+    {
+      "name": "integrated-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree",
+      "stdout": "integrated-ref.stdout",
+      "stderr": "integrated-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "cohere"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree",
+      "stdout": "cohere-pin.stdout",
+      "stderr": "cohere-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-init-local",
+      "command": [
+        "git",
+        "init",
+        "/tmp/scanner-main/compiler-tree/cohere"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-init-local.stdout",
+      "stderr": "cohere-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.003
+    },
+    {
+      "name": "cohere-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-ref.stdout",
+      "stderr": "cohere-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.002
+    },
+    {
+      "name": "cohere-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-git.stdout",
+      "stderr": "cohere-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.003
+    },
+    {
+      "name": "cohere-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree/cohere",
+      "stdout": "cohere-checkout.stdout",
+      "stderr": "cohere-checkout.stderr",
+      "exit": 0,
+      "wall_seconds": 0.365
+    },
+    {
+      "name": "cohere-typescript-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "TypeScript"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree/cohere",
+      "stdout": "cohere-typescript-pin.stdout",
+      "stderr": "cohere-typescript-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-init-local",
+      "command": [
+        "git",
+        "init",
+        "/tmp/scanner-main/compiler-tree/cohere/TypeScript"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-typescript-init-local.stdout",
+      "stderr": "cohere-typescript-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-ref.stdout",
+      "stderr": "cohere-typescript-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-typescript-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-git.stdout",
+      "stderr": "cohere-typescript-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-typescript-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree/cohere/TypeScript",
+      "stdout": "cohere-typescript-checkout.stdout",
+      "stderr": "cohere-typescript-checkout.stderr",
+      "exit": 0,
+      "wall_seconds": 1.117
+    },
+    {
+      "name": "setup",
+      "command": [
+        "bash",
+        "cloud/setup.sh"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree",
+      "stdout": "setup.stdout",
+      "stderr": "setup.stderr",
+      "exit": 0,
+      "wall_seconds": 80.821
+    },
+    {
+      "name": "nproc",
+      "command": [
+        "nproc"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree",
+      "stdout": "nproc.stdout",
+      "stderr": "nproc.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "compiler-node-types",
+      "command": [
+        "npm",
+        "ci",
+        "--prefix",
+        "/tmp/scanner-main/compiler-tree/stage3/api",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "compiler-node-types.stdout",
+      "stderr": "compiler-node-types.stderr",
+      "exit": 0,
+      "wall_seconds": 2.873
+    },
+    {
+      "name": "compiler-build",
+      "command": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-o",
+        "/tmp/scanner-main/adamic",
+        "./cmd/adamic"
+      ],
+      "cwd": "/tmp/scanner-main/compiler-tree",
+      "stdout": "compiler-build.stdout",
+      "stderr": "compiler-build.stderr",
+      "exit": 0,
+      "wall_seconds": 3.682
+    },
+    {
+      "name": "apply",
+      "command": [
+        "bash",
+        "/tmp/scanner-main/pipeline/apply.sh",
+        "/tmp/scanner-main/full-tree"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "apply.stdout",
+      "stderr": "apply.stderr",
+      "exit": 1,
+      "wall_seconds": 0.114
+    }
+  ],
+  "merges": [],
+  "scanner": [],
+  "ordered_stops": [],
+  "base": "d072c133ec923dca88572949a9b21ea09489a4a3",
+  "scratch_branch": "scratch/scanner-run-03e899a800cd",
+  "scratch_tree": "/tmp/scanner-main/compiler-tree",
+  "resolved_refs": [],
+  "integrated_sha": "d072c133ec923dca88572949a9b21ea09489a4a3",
+  "cohere_sha": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "toolchain_environment": "/workspace/adamic-tools/env.sh",
+  "setup_timing_lines": [
+    "setup: node ready (0.022s)",
+    "setup: go ready (0.024s)",
+    "setup: submodules ready (0.066s)",
+    "setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s",
+    "setup: markdown dependencies ready (0.076s)",
+    "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.187s)",
+    "setup: shared cache ready (11.322s)",
+    "setup: go build ready (80.654s)",
+    "setup: test binaries deferred (use --warm-tests) (80.747s)",
+    "setup: build cache warm (80.749s)",
+    "setup: build-flags commit=d072c133ec923dca88572949a9b21ea09489a4a3 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=on load-before=0.79 0.39 0.58 1/158 5433 load-after=1.63 0.75 0.69 1/162 7753",
+    "setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (80.772s)",
+    "setup: source /workspace/adamic-tools/env.sh",
+    "setup: logs /tmp/adamic-gate/setup.9XIuIi"
+  ],
+  "nproc": 5,
+  "compiler": {
+    "exit": 0,
+    "sha": "d072c133ec923dca88572949a9b21ea09489a4a3",
+    "binary_sha256": "aca1cf1c2d5ae977389e225bfe98abc00a089e8899fbe81ddf1418caaa82b881"
+  },
+  "error": "apply exited 1; see apply.stderr/.stdout",
+  "wall_seconds": 1266.236,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}
