@@ -85,7 +85,9 @@ The former `ir.RegExpNew` cycle-proof refusal is closed by `32f8106`.
 and `Ok`, held by `TestClosedPrinterRegexGap` on all backends and LeakSanitizer.
 The complete printer corpus now runs native ASan/UBSan, source Node and the
 JavaScript backend. On Linux one sanitized run also checks leaks. Three native
-output mutants each run on the one partition that holds their witness case.
+output mutants each run over their witnesses, the cases where a full-corpus run
+found them differing from Go, kept as a product; each shard runs the 64
+smallest.
 See `NATIVE_REPORT.md` for observed results and native throughput.
 
 ## Printer boundaries against full Prettier
