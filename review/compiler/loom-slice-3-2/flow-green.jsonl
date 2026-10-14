@@ -1,0 +1,12 @@
+{"Time":"2026-10-14T11:17:28.128555494Z","Action":"start","Package":"github.com/system-inc/adamic/internal/flow"}
+{"Time":"2026-10-14T11:17:28.142725578Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges"}
+{"Time":"2026-10-14T11:17:28.143052522Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges","Output":"=== RUN   TestOptionalAfterCallFlowEdges\n","OutputType":"frame"}
+{"Time":"2026-10-14T11:17:28.14316591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges","Output":"=== PAUSE TestOptionalAfterCallFlowEdges\n","OutputType":"frame"}
+{"Time":"2026-10-14T11:17:28.143170326Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges"}
+{"Time":"2026-10-14T11:17:28.143178776Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges"}
+{"Time":"2026-10-14T11:17:28.143181879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges","Output":"=== CONT  TestOptionalAfterCallFlowEdges\n","OutputType":"frame"}
+{"Time":"2026-10-14T11:17:28.196368749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges","Output":"--- PASS: TestOptionalAfterCallFlowEdges (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T11:17:28.196403555Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestOptionalAfterCallFlowEdges","Elapsed":0.05}
+{"Time":"2026-10-14T11:17:28.196491629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-14T11:17:28.197646454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"ok  \tgithub.com/system-inc/adamic/internal/flow\t0.068s\n"}
+{"Time":"2026-10-14T11:17:28.197703487Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Elapsed":0.069}

@@ -87,8 +87,9 @@ the ordinary and stringify file-to-stdout entry directly.
 `TestDocumentedStageZeroGaps` loads and lowers each of these programs and checks
 its refusal, then runs its source on Node and checks the stated output:
 
-1. `gaps/multiplePush.ts`: `stage 0 can't lower push with other than one value yet`.
-   Node prints `a,b`. Around it: one `push` call per value.
+1. `gaps/multiplePush.ts`: closed by spread-shorthand. Node prints `a,b`;
+   `TestClosedMultiplePushGap` holds both backends and sanitized native to it.
+   The port retains its one-push-per-value workaround.
 2. `gaps/emptyFallback.ts`: closed on compiler/area-stack (views slice 1, Oct 8); it used to stop at
    `stage 0 can't lower an array of never yet`. Node prints `0`, and `TestClosedEmptyFallbackGap` holds
    native ASan/UBSan, the JavaScript backend and the leak check to it. The workaround still stands: comment-bearing inputs initialize all comment lists; indexed reads

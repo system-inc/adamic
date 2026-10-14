@@ -1,0 +1,233 @@
+[
+  {
+    "path": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "member": "optional-chain-after-call-main",
+    "reason": "isolated main-plus-optional count build exactly reproduces 33/33/66/69/16/0; count-owner-tree.stderr.log",
+    "before": "| internal/load/testdata/0.1/compile/09_tree.ts | 19 | 19 | 28 | 69 | 16 | 0 |",
+    "after": "| internal/load/testdata/0.1/compile/09_tree.ts | 33 | 33 | 66 | 69 | 16 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_reads.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/narrowed_reads.a | 5 | 5 | 3 | 7 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/narrowed_reads.a | 6 | 5 | 6 | 9 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_methods.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/narrowed_methods.a | 3 | 3 | 3 | 6 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/narrowed_methods.a | 4 | 3 | 6 | 8 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/narrowed_fields.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/narrowed_fields.a | 4 | 3 | 4 | 6 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/narrowed_fields.a | 5 | 3 | 7 | 8 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_narrowed.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/reuse_narrowed.a | 7 | 5 | 6 | 8 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/reuse_narrowed.a | 8 | 5 | 9 | 10 | 5 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_null_narrowed.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/regexp_null_narrowed.a | 4 | 4 | 8 | 5 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_null_narrowed.a | 5 | 4 | 11 | 7 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/call_spread_array.a",
+    "member": "spread-shorthand",
+    "reason": "new fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/call_spread_array.a | 56 | 56 | 112 | 115 | 14 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/element_access_presence.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/element_access_presence.a | 4 | 3 | 5 | 7 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/element_access_presence.a | 5 | 3 | 8 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/function_signature.a | 3 | 3 | 0 | 3 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/json_shorthand.a",
+    "member": "spread-shorthand",
+    "reason": "new fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/json_shorthand.a | 18 | 18 | 8 | 27 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/merge_present.a | 3 | 3 | 1 | 4 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_n_element_plain.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/047cb0d_n_element_plain.a | 4 | 3 | 5 | 8 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/047cb0d_n_element_plain.a | 5 | 3 | 8 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_n_element.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/047cb0d_n_element.a | 4 | 3 | 6 | 8 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/047cb0d_n_element.a | 5 | 3 | 9 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_n_element_method.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/047cb0d_n_element_method.a | 4 | 3 | 6 | 9 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/047cb0d_n_element_method.a | 5 | 3 | 9 | 11 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "required narrowed reads now carry catchable TypeError path; changed allocation/retain/release instrumentation",
+    "before": "| internal/oracle/testdata/047cb0d_n_arrayindex.a | 1 | 1 | 1 | 2 | 1 | 0 |",
+    "after": "| internal/oracle/testdata/047cb0d_n_arrayindex.a | 2 | 1 | 4 | 4 | 1 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_79.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_79.a | 4 | 4 | 6 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_193.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_193.a | 3 | 3 | 6 | 9 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_variants.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_variants.a | 11 | 11 | 10 | 21 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_required.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_required.a | 3 | 3 | 5 | 7 | 2 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_propagation.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_propagation.a | 18 | 18 | 13 | 20 | 7 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+    "member": "optional-chain-after-call-main",
+    "reason": "new optional fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/optional_after_call_gaps/computed.a | 3 | 3 | 1 | 6 | 2 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/01_scanner_keyword.a | 18 | 18 | 18 | 32 | 6 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/02_if_narrowing.a | 6 | 6 | 5 | 13 | 3 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/03_return_defined.a | 8 | 8 | 6 | 18 | 4 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/04_chained.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/04_chained.a | 4 | 4 | 6 | 15 | 3 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/05_compound.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/05_compound.a | 8 | 8 | 0 | 8 | 4 | 0 |"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "member": "assignment-proofs-main",
+    "reason": "new assignment fixture",
+    "before": null,
+    "after": "| stage3/fixtures/assignment-proofs/06_wider_target.a | 4 | 4 | 0 | 4 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_unused.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/function_unused.a (TypeScript mode) | 0 | 0 | 0 | 0 | 0 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_length.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/function_length.a (TypeScript mode) | 20 | 20 | 4 | 29 | 13 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_unused.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/merge_unused.a (TypeScript mode) | 0 | 0 | 0 | 0 | 0 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/merge_missing.a (TypeScript mode) | 1 | 0 | 1 | 1 | 1 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/merge_missing_computed.a (TypeScript mode) | 1 | 0 | 1 | 1 | 1 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_present.a (TypeScript mode)",
+    "member": "refusal-rulings-main",
+    "reason": "new checked TypeScript fixture",
+    "before": null,
+    "after": "| internal/oracle/testdata/refusal_rulings/merge_present.a (TypeScript mode) | 3 | 3 | 1 | 4 | 3 | 0 |"
+  }
+]

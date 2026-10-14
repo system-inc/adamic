@@ -1,0 +1,11 @@
+=== RUN   TestOptionalAfterCallRequired
+=== PAUSE TestOptionalAfterCallRequired
+=== CONT  TestOptionalAfterCallRequired
+    optional_after_call_test.go:28: JavaScript: exit codes differ; Node exit=0 stdout="TypeError: Cannot read properties of undefined (reading 'next')\n" stderr=""; backend exit=70 stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'next')\n"
+--- FAIL: TestOptionalAfterCallRequired (0.45s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.455s
+FAIL
