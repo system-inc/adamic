@@ -19,13 +19,11 @@ import (
 // half. No leaf prepares another leaf's executable.
 const cssPrinterPartitions = 64
 
-// Each printer mutant runs, in each mode, only on the partition that holds its witness case, the one place it must be
-// caught. Run over the other 63 partitions it could fail only by crashing, which says something about the mutant,
-// never about the printer: on Oct 12 those runs took 1,780 of the family's 2,928 active seconds (#testaudit).
-var cssPrinterMutantWitness = [...]int{0, 2, 12}
-
+// Each printer mutant runs, in each mode, only over its witnesses: the cases where a full-corpus run found it differs
+// from Go (cssPrinterWitnesses), the smallest cssPrinterWitnessesRun of them. Run over the rest it could fail only by crashing, which says something about the
+// mutant, never about the printer: on Oct 12 those runs took 1,780 of the family's 2,928 active seconds (#testaudit).
 // 128 unmutated shards, both modes by sixty-four partitions, then one witness shard per mutant and mode.
-const testCSSPrinterAgreesWithGoShards = 2*cssPrinterPartitions + 2*len(cssPrinterMutantWitness)
+const testCSSPrinterAgreesWithGoShards = 2*cssPrinterPartitions + 2*3
 
 var cssPrinterCorpusOnce sync.Once
 var cssPrinterCorpus []string
@@ -64,18 +62,6 @@ func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
 		t.Fatalf("the printer's live corpus differs from the parser's corpus product: %s", difference)
 	}
 	t.Logf("one corpus, %d cases, %d bytes", strings.Count(string(live), "\n"), len(live))
-}
-
-func cssPrinterUnitHasWitness(unit cssModeShard, count int) bool {
-	if unit.mutant < 0 {
-		return false
-	}
-	for _, c := range unit.cases {
-		if c.id%count == cssPrinterMutantWitness[unit.mutant] {
-			return true
-		}
-	}
-	return false
 }
 
 func cssPrinterOwnDeadline(t *testing.T) func() {
@@ -161,7 +147,17 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 	t.Helper()
 	setup := time.Now()
 	lines := cssPrinterCorpusLines(t)
-	unit := cssModePlan(lines)[shard]
+	var unit cssModeShard
+	if shard < 2*cssPrinterPartitions {
+		unit = cssPrinterUnmutatedPlan(lines)[shard]
+	} else {
+		variant, modeIndex := (shard-2*cssPrinterPartitions)/2, (shard-2*cssPrinterPartitions)%2
+		ids := cssPrinterWitnesses(t, variant)[modeIndex]
+		if err := cssPrinterWitnessError(printerMutants[variant].name, cssPrinterModes[modeIndex], ids); err != nil {
+			t.Fatal(err)
+		}
+		unit = cssPrinterMutantShard(lines, variant, modeIndex, ids)
+	}
 	printerOracle := cssOracleProduct(t, true)
 	product := cssPrinterProduct(t, unit.mutant)
 	leakBinary := product.binary
@@ -207,9 +203,6 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 		t.Logf("%s: %d cases; three backends, sanitizers and leaks checked", unit.mode, len(unit.cases))
 	} else {
 		mutation := printerMutants[unit.mutant]
-		if !cssPrinterUnitHasWitness(unit, len(lines)) {
-			t.Fatalf("%s mutant %s shard doesn't hold its witness case %d", unit.mode, mutation.name, cssPrinterMutantWitness[unit.mutant])
-		}
 		for _, side := range []struct {
 			name   string
 			result run
@@ -220,39 +213,30 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 			if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
 				t.Fatalf("%s %s mutant %s must run: %d %s", unit.mode, side.name, mutation.name, side.result.exitCode, side.result.stderr)
 			}
-			difference := firstDifference(string(side.result.stdout), expected)
-			if difference == "" {
-				t.Fatalf("%s %s printer mutant %s survived", unit.mode, side.name, mutation.name)
+			differing, err := cssPrinterDifferingCases(string(side.result.stdout), expected)
+			if err != nil {
+				t.Fatalf("%s %s printer mutant %s: %v", unit.mode, side.name, mutation.name, err)
 			}
-			t.Logf("%s %s caught %s: %s", unit.mode, side.name, mutation.name, difference)
+			if len(differing) != len(unit.cases) {
+				t.Fatalf("%s %s printer mutant %s differs from Go on %d of its %d chosen witnesses", unit.mode, side.name, mutation.name, len(differing), len(unit.cases))
+			}
+			t.Logf("%s %s caught %s on all %d chosen witnesses: %s", unit.mode, side.name, mutation.name, len(unit.cases), firstDifference(string(side.result.stdout), expected))
 		}
-		t.Logf("%s mutant %s: %d cases of its witness's partition; sanitized native and Node checked", unit.mode, mutation.name, len(unit.cases))
+		t.Logf("%s mutant %s: %d chosen witnesses; sanitized native and Node checked", unit.mode, mutation.name, len(unit.cases))
 	}
 }
 
 func TestCSSPrinterAgreesWithGoUnion(t *testing.T) {
 	t.Parallel()
 	lines := cssPrinterCorpusLines(t)
+	witnesses := cssPrinterAllWitnesses(t)
 	defer cssPrinterOwnDeadline(t)()
-	plan := cssModePlan(lines)
-	if err := cssModeUnion(lines, plan); err != nil {
+	plan := cssModePlan(lines, witnesses)
+	if err := cssModeUnion(lines, plan, witnesses); err != nil {
 		t.Fatal(err)
 	}
-	if len(printerMutants) != len(cssPrinterMutantWitness) {
-		t.Fatalf("%d printer mutants, %d witnesses: name a witness case for each mutant", len(printerMutants), len(cssPrinterMutantWitness))
-	}
-	for variant := range printerMutants {
-		for _, mode := range []string{"default", "narrow"} {
-			witnesses := 0
-			for _, unit := range plan {
-				if unit.mutant == variant && unit.mode == mode && cssPrinterUnitHasWitness(unit, len(lines)) {
-					witnesses++
-				}
-			}
-			if witnesses != 1 {
-				t.Fatalf("mutant %d mode %s: witness owned %d times", variant, mode, witnesses)
-			}
-		}
+	for offset, unit := range plan[2*cssPrinterPartitions:] {
+		t.Logf("mutant %s, %s: %d witnesses, its shard runs the %d smallest", printerMutants[unit.mutant].name, unit.mode, len(witnesses[unit.mutant][offset%2]), len(unit.cases))
 	}
 	t.Logf("counted union: %d cases x 2 modes unmutated in %d shards, and %d mutant witness shards; %d shards", len(lines), 2*cssPrinterPartitions, len(plan)-2*cssPrinterPartitions, len(plan))
 }
