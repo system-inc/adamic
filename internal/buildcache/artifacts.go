@@ -21,7 +21,16 @@ type Artifact struct {
 	ExitCode   int
 }
 
-// RequireArtifacts proves that a builder returned usable products.
+// A product test runs traced, and under --pin-traced the probe shares one vCPU with
+// the tracer, so a large oracle's cold start needs room the box can't promise in 5 s.
+const artifactProbeDeadline = 30 * time.Second
+
+// A probed binary whose child keeps the output pipes open would hold CombinedOutput
+// past the context's kill; WaitDelay bounds that wait.
+const artifactProbeWaitDelay = 5 * time.Second
+
+// RequireArtifacts proves that a builder returned usable products. Probes should be
+// --help-like calls: whatever a probe reads joins the traced product's read set.
 func RequireArtifacts(t testing.TB, directory string, artifacts ...Artifact) {
 	t.Helper()
 	for _, artifact := range artifacts {
@@ -46,9 +55,10 @@ func requireArtifact(directory string, artifact Artifact) error {
 	if !artifact.Executable {
 		return nil
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), artifactProbeDeadline)
 	defer cancel()
 	command := exec.CommandContext(ctx, path, artifact.Arguments...)
+	command.WaitDelay = artifactProbeWaitDelay
 	command.Dir = directory
 	command.Stdin = strings.NewReader(artifact.Stdin)
 	output, err := command.CombinedOutput()
