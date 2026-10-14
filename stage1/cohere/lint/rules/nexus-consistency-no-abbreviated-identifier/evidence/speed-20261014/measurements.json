@@ -1,0 +1,141 @@
+{
+  "baseline": {
+    "commit": "efc78ad6d435dc66b7253a93bff81a29739dbfd3",
+    "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "compiler": "clang 20.1.8",
+    "cpu": "AMD EPYC 9V74",
+    "cpu_quota": "400000/100000 = 4 cores",
+    "affinity": "0-4 = 5 logical CPUs",
+    "instruction_affinity": "taskset -c 0",
+    "wall_affinity": "defaults, unpinned",
+    "common_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls"
+    ],
+    "release_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O2"
+    ],
+    "profile_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O2",
+      "-g"
+    ],
+    "sanitized_flags": [
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all"
+    ],
+    "sanitizer_environment": "ASAN_OPTIONS, UBSAN_OPTIONS and LSAN_OPTIONS unset; unchanged test environment",
+    "wall_seconds": {
+      "scanner": [
+        3.2338179480000235,
+        3.0911385880000353,
+        3.162634482000044
+      ],
+      "oracle": [
+        0.3329032780000034,
+        0.3236394939999627,
+        0.3907966620000707
+      ]
+    },
+    "release_oracle_median_ratio": 9.500160229722976,
+    "sanitized_side_seconds": 23.846171723,
+    "sanitized_oracle_seconds": 0.332967999,
+    "sanitized_test_passed": true,
+    "instructions": 32441192391,
+    "instruction_parts": [
+      "rule.callgrind.1",
+      "rule.callgrind"
+    ],
+    "byte_agreement": "all three release runs, complete Callgrind run, and exact sanitized test",
+    "counted_count_only_stats": "adamic: counts: allocations 33025468 frees 33025468 retains 133978108 releases 145483827 peak 738381 regions 0",
+    "findings": 2149
+  },
+  "after": {
+    "source_sha256": {
+      "abbreviation_vocabulary.a": "06cf8a5d7c805e00105d91df5ef10735f177aefd7bd273095f2500ce2c6bd8ae",
+      "patterns.a": "7fef4fa88c1764b0a1cc2f3cdc3e6832185b698e8c4c9f52d554607c2b4a098f"
+    },
+    "instructions": 9200792329,
+    "abbreviation_inclusive_instructions": 3206929786,
+    "wall_seconds": {
+      "scanner": [
+        1.0771004779999203,
+        1.0628231789999063,
+        1.0895282950000365
+      ],
+      "oracle": [
+        0.30849632200011,
+        0.2951597740000125,
+        0.32289460400011194
+      ]
+    },
+    "release_oracle_median_ratio": 3.49145322387194,
+    "sanitized_side_seconds": 3.65888576,
+    "sanitized_oracle_seconds": 0.316078189,
+    "sanitized_side_during_concurrent_agreement_seconds": 6.269607341,
+    "counted_count_only_stats": "adamic: counts: allocations 1520005 frees 1520005 retains 48688620 releases 45100480 peak 738564 regions 0",
+    "findings": 2149
+  },
+  "tests": {
+    "compiler_agreement_selected": 1606,
+    "compiler_agreement_passed": 1606,
+    "rule_agreement_shards": 16,
+    "rule_agreement_cases": 3922,
+    "owned_witness_shards": 16,
+    "jsx_tree_shards": 16,
+    "rule_mutant": "caught on source Node and emitted JavaScript by existing test; also caught on sanitized native using existing owned witness",
+    "registry": "passed",
+    "vet": "passed"
+  }
+}

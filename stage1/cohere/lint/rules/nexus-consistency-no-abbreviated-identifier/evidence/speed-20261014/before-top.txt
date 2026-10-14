@@ -1,0 +1,55 @@
+Total instructions: 32441192391
+
+inclusive
+32,440,940,150 100.00% main
+32,440,087,435 100.00% adamic_function_240_run
+29,271,973,415  90.23% adamic_function_749_Linter_run
+27,441,133,404  84.59% adamic_function_752_Linter_walk
+27,441,131,651  84.59% adamic_function_752_Linter_walk'2
+27,397,329,011  84.45% adamic_function_746_RuleSet_visit
+27,128,151,727  83.62% adamic_function_568_Rule_visit
+27,118,020,299  83.59% adamic_function_115_noAbbreviatedIdentifier
+26,449,076,493  81.53% adamic_function_94_abbreviation
+ 8,641,975,697  26.64% adamic_regex_test
+ 8,066,084,972  24.86% regex_execute
+ 5,810,624,479  17.91% adamic_function_410_Statements_statement'2
+ 5,115,874,949  15.77% adamic_function_92_capitalized
+ 5,053,837,189  15.58% adamic_release
+ 4,983,104,247  15.36% regex_run
+ 3,923,507,235  12.09% adamic_function_392_Statements_block'2
+ 3,783,919,906  11.66% release_last
+ 3,359,557,707  10.36% adamic_string_slice
+ 3,129,333,434   9.65% adamic_string_equal
+ 2,448,375,618   7.55% adamic_regex_replace
+ 2,443,428,069   7.53% adamic_function_0_written
+ 2,206,032,983   6.80% adamic_function_405_Statements_functionDeclaration'2
+ 1,757,991,798   5.42% adamic_function_364_Parser_file
+ 1,757,977,254   5.42% adamic_function_410_Statements_statement
+ 1,734,695,301   5.35% adamic_function_392_Statements_block
+
+self
+ 4,483,156,202  13.82% regex_run
+ 2,656,810,837   8.19% regex_execute
+ 2,569,963,658   7.92% adamic_string_equal
+ 2,525,881,847   7.79% release_last
+ 2,063,088,001   6.36% adamic_function_94_abbreviation
+ 1,349,336,280   4.16% adamic_string_slice
+ 1,325,331,679   4.09% adamic_allocate
+ 1,269,917,283   3.91% adamic_release
+ 1,068,475,315   3.29% adamic_retain
+   946,047,544   2.92% adamic_string_share
+   882,776,552   2.72% regex_input
+   768,030,391   2.37% adamic_object_free_children
+   766,633,344   2.36% free
+   715,925,470   2.21% adamic_string_concat
+   679,145,148   2.09% 0x00000000001623e0
+   591,082,009   1.82% 0x0000000000163540
+   573,253,718   1.77% 0x0000000000162b40
+   495,135,119   1.53% malloc
+   430,292,251   1.33% adamic_regex_new
+   417,636,595   1.29% adamic_string_locate
+   401,054,040   1.24% adamic_string_units
+   390,144,678   1.20% adamic_regex_test
+   315,285,850   0.97% adamic_string_append
+   283,613,255   0.87% adamic_object_new
+   266,742,045   0.82% adamic_string_free_index
