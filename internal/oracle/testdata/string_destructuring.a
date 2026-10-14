@@ -1,0 +1,23 @@
+// Reduced from TypeScript 050880ce src/compiler/scanner.ts:778.
+let calls = 0;
+function scanIdentifierParts(): string {
+	calls += 1;
+	return "a🌍".repeat(calls);
+}
+function scan(): void {
+	const { length } = scanIdentifierParts();
+	console.log(`${length} ${calls}`);
+	const { length: first, "length": second } = scanIdentifierParts();
+	console.log(`${first} ${second} ${calls}`);
+	const {} = scanIdentifierParts();
+	console.log(`${calls}`);
+}
+scan();
+for (const text of ["", "ascii", "é", "🌍", "\ud800", "a\udc00🌍"]) {
+	const { length: units } = text;
+	console.log(`${units} ${text.length}`);
+}
+function parameter({ length }: string): number {
+	return length;
+}
+console.log(`${parameter("x🌍".repeat(3))}`);
