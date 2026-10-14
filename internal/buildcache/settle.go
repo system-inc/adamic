@@ -202,6 +202,8 @@ type traceFacts struct {
 	searched, executables                                                                    map[string]bool
 	// ran is every program a process of the run executed, as the trace names it.
 	ran map[string]bool
+	// goCaches are goCache's spellings, as written and resolved, each without its leading slash (goCacheJoined).
+	goCaches []string
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
@@ -223,6 +225,11 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		return nil, err
 	}
 	facts.goRoot, facts.goCache, facts.goModules = values["GOROOT"], values["GOCACHE"], values["GOMODCACHE"]
+	for _, spelling := range variants(facts.goCache) {
+		if trimmed := strings.Trim(filepath.ToSlash(spelling), "/"); trimmed != "" {
+			facts.goCaches = append(facts.goCaches, trimmed)
+		}
+	}
 	// Go's telemetry, which every go command reads and counts into as it runs (its upload days, its counters), and which
 	// GOENV=off doesn't turn off: go's own bookkeeping, as its build cache is, never an input to what it builds.
 	if configuration, err := os.UserConfigDir(); err == nil {
@@ -349,7 +356,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if name != root {
 			relative = strings.TrimPrefix(name, root+"/")
 		}
-		if unkeyed(relative) {
+		if unkeyed(relative) || kinds == readAbsent && facts.goCacheJoined(relative) {
 			return classed{}
 		}
 		if isGit(relative) {
@@ -516,6 +523,20 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{"absolute", name}
 	}
 	return classed{refusal + "other", name}
+}
+
+// goCacheJoined says whether a path in the tree holds Go's build cache's own path below one of its directories: go list
+// -test looks for the test main it cached at the package's directory joined to the cache's absolute path, a lookup
+// that always misses (strace of go1.27.1 on Cloud, Oct 13: openat of <package>/home/ahra/.../gc/bb/...-d, ENOENT). It is
+// go's bookkeeping in its own cache, never a tree path: classed as one, every product keyed where its builder's Go cache
+// sat (#pqq9z5q: exists cmd/adamic/<GOCACHE>/28/...-d and bridge/tsgo's, 313 entries of Server's run).
+func (facts *traceFacts) goCacheJoined(relative string) bool {
+	for _, cache := range facts.goCaches {
+		if strings.Contains("/"+relative+"/", "/"+cache+"/") {
+			return true
+		}
+	}
+	return false
 }
 
 // machine says whether name is in one of the system places, the machine's own files, keyed as themselves.
@@ -1502,6 +1523,24 @@ type recipe struct {
 // recipeFor is recipeOf; a test in a tree of its own, which go list can't load as adamic, names its recipe itself.
 var recipeFor = recipeOf
 
+// makeFilesOnly keys this package, in every recipe but its own tests', by its make files alone (make_*.go, isMakeFile)
+// and its listing (#a328f0h, Loom's ruling 45922): every product's process links buildcache, so keying all of it moved
+// every product's key at every change to how products are keyed, traced, settled or stored, which never changes a
+// product's bytes (54% of the rekeys over main's 200 landings of Oct 11 to 13, Adam's seed 48a9e045). The make files are
+// what decides a product's bytes, and TestTheMakeFilesUseNothingFromTheMachinery holds them to using nothing the
+// machinery defines, so a change outside them can't move a product's bytes. The listing still names every file, so a
+// file added or removed moves every key. Off is decision 1 for every package.
+const makeFilesOnly = true
+
+// buildcachePackage is this package's import path, as go list names it.
+const buildcachePackage = "github.com/system-inc/adamic/internal/buildcache"
+
+// isMakeFile says whether name, a file of this package, is one of the files that decide a product's bytes (make_*.go),
+// the only ones a product's key reads under makeFilesOnly.
+func isMakeFile(name string) bool {
+	return strings.HasPrefix(name, "make_") && strings.HasSuffix(name, ".go") && !strings.HasSuffix(name, "_test.go")
+}
+
 func recipeOf(root string, process journalEntry) recipe {
 	pkg, test := strings.CutSuffix(process.Package, ".test")
 	if pkg == "" || pkg == "command-line-arguments" {
@@ -1560,18 +1599,38 @@ func recipeOf(root string, process journalEntry) recipe {
 			continue
 		}
 		add("listing", listed.Dir)
-		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
-			listed.EmbedFiles, listed.IgnoredGoFiles}
 		// Only the package under test's test files are compiled into its binary (its own and its external test
 		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
 		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
-		// tests' read sets). A dependency's ignored files stay: a build-constraint edit can compile one in.
-		if name, _, _ := strings.Cut(listed.ImportPath, " "); test && (name == pkg || name == pkg+"_test") {
+		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
+		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
+		name, _, _ := strings.Cut(listed.ImportPath, " ")
+		under := test && (name == pkg || name == pkg+"_test")
+		ignored := listed.IgnoredGoFiles
+		if !under {
+			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
+		}
+		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
+			listed.EmbedFiles, ignored}
+		if under {
 			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
 		}
+		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
+		// the package under test.
+		makeOnly := makeFilesOnly && name == buildcachePackage && !under
 		for _, names := range files {
 			for _, name := range names {
-				add("content", filepath.Join(listed.Dir, name))
+				if makeOnly && !isMakeFile(name) {
+					continue
+				}
+				// go list -test names the test main it generated by its absolute place in go's own cache: go's, made from
+				// the test files keyed here, and outside the tree, so add leaves it out. Joined to the package's directory
+				// it was a tree path naming the cache's location, and every product keyed where its builder's Go cache sat
+				// (#pqq9z5q: 1,271 of 1,271 in Server's comparison against Workshop).
+				if !filepath.IsAbs(name) {
+					name = filepath.Join(listed.Dir, name)
+				}
+				add("content", name)
 			}
 		}
 		if listed.Module != nil && inside(root, listed.Module.GoMod) {

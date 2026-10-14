@@ -254,7 +254,7 @@ func threePortOracleInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+		Flags:     []string{"repository=" + root(t), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
@@ -281,7 +281,7 @@ func threePortOracleProduct(t *testing.T) string {
 		defer os.Remove(path)
 		ctx, cancel := threePortSetupContext()
 		defer cancel()
-		command := threePortCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := threePortCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)...)
 		command.Dir = filepath.Join(repo, "cohere")
 		command.Env = append(command.Env, "PWD="+command.Dir)
 		output, err := command.CombinedOutput()

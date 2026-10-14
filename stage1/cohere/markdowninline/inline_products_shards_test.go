@@ -85,7 +85,7 @@ func inlineOverlayBuild(t *testing.T) string {
 	in := inlineCompilerInputs(t)
 	in.Name = "markdowninline Go overlay bridge"
 	in.Files = append(append([]string{}, in.Files...), "stage1/cohere/markdowninline/testdata/bridge.go", "stage1/cohere/markdowninline/testdata/go_driver.go", "stage1/cohere/markdowninline/inline_build_products_test.go")
-	in.Flags = append(append([]string{}, in.Flags...), "go build -overlay=<product>/overlay.json -o <product>/go-printer cmd/adamic_stage_one/main.go")
+	in.Flags = append(append([]string{}, in.Flags...), "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")+" -overlay=<product>/overlay.json -o <product>/go-printer cmd/adamic_stage_one/main.go")
 
 	return inlineBuild(t, in, buildInlineGoBridge)
 }
@@ -115,7 +115,7 @@ func buildInlineGoBridge(dir string) error {
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(filepath.Join(dir, "overlay.json"))
-	cmd, cancel := inlineCommand("go", "build", "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+	cmd, cancel := inlineCommand("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))...)
 	defer cancel()
 	cmd.Dir = cohere
 	out, err := combinedOutput(cmd)
