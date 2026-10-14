@@ -312,25 +312,48 @@ def phaseInputs(tree, line, full=False, products=None):
     return {"unit": line, "inputs": inputs}
 
 
+def listUnits():
+    # The pool's planner reads the units from here, from a plain checkout, so it never parses what run.py owns.
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--full", action="store_true")
+    lister.add_argument("--list-units", action="store_true")
+    lister.add_argument("--with-inputs", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
+    lister.add_argument("--sha")
+    lister.add_argument("--tools")
+    arguments = lister.parse_args()
+    units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
+    if arguments.with_inputs:
+        products = productInputSources(arguments.tree) if arguments.full else None
+        for unit in units:
+            print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products)))
+    else:
+        print("\n".join(units))
+
+
+class ChangeRefusal(ValueError):
+    """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's. The gate reds
+    the change with it; --list-units exits RefusalExit with its line, so the planner sends it to the change's owner as
+    a red (Queue's unplannable, Loom's ruling of Oct 14) instead of failing every plan of it."""
+
+    def hint(self):
+        return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the "
+                "compiler packages it exercises (entries there add to the gate tools' map)." % self)
+
+
+# The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
+# "refused: <why>". Every other failure keeps its traceback and exit 1, so a crash is never read as the change's red.
+RefusalExit = 3
+
+
 def main():
     if "--list-units" in sys.argv:
-        # The pool's planner reads the units from here, from a plain checkout, so it never parses what run.py owns.
-        lister = argparse.ArgumentParser()
-        lister.add_argument("--full", action="store_true")
-        lister.add_argument("--list-units", action="store_true")
-        lister.add_argument("--with-inputs", action="store_true")
-        lister.add_argument("--tree", required=True)
-        lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
-        lister.add_argument("--sha")
-        lister.add_argument("--tools")
-        arguments = lister.parse_args()
-        units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
-        if arguments.with_inputs:
-            products = productInputSources(arguments.tree) if arguments.full else None
-            for unit in units:
-                print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products)))
-        else:
-            print("\n".join(units))
+        try:
+            listUnits()
+        except ChangeRefusal as refusal:
+            print("refused: " + refusal.hint(), file=sys.stderr)
+            sys.exit(RefusalExit)
         return
     parser = argparse.ArgumentParser()
     parser.add_argument("--tree", required=True)
@@ -494,12 +517,9 @@ class Gate:
         changed = [path for path in changed if path]
         try:
             packages, unowned = self.touched(changed)
-        except ValueError as error:
-            if not str(error).startswith("compiler dependency census"):
-                raise
+        except ChangeRefusal as refusal:
             # A red the change can fix itself, never a gate-tool crash (developer tools, Oct 9).
-            self.fail("census", "%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, "
-                      "then the compiler packages it exercises (entries there add to the gate tools' map)." % error)
+            self.fail("census", refusal.hint())
             return
         # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
         # with @system_cohere_adamic): the main sha the gate diffs against sets the stride's offset, and the
@@ -1574,7 +1594,7 @@ class Gate:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
         missing = [path for path in missing if path in touchedFiles]
         if missing:
-            raise ValueError("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+            raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}
         return packages
 

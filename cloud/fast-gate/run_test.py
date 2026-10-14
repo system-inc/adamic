@@ -2821,3 +2821,31 @@ class PhaseInputs(unittest.TestCase):
             PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
         self.assertEqual(len(result.failures), 1, result.errors)
         self.assertEqual(result.errors, [])
+
+
+class ListUnitsRefusal(unittest.TestCase):
+    """A change the census refuses is refused, not crashed on: --list-units exits RefusalExit with one line naming the
+    census and how to declare it, which the planner sends its owner as a red (Queue's unplannable). Any other error is
+    still a crash, never the change's red. Mutants: the refusal crashing (a traceback, exit 1); a plain ValueError read
+    as a refusal; the hint's wording lost."""
+
+    def listed(self, error):
+        stderr = io.StringIO()
+        with mock.patch.object(run, "listUnits", side_effect=error), mock.patch.object(sys, "argv", ["run.py", "--list-units", "--tree", "."]), \
+                mock.patch.object(sys, "stderr", stderr):
+            try:
+                run.main()
+            except SystemExit as exit:
+                return exit.code, stderr.getvalue()
+        return None, stderr.getvalue()
+
+    def test_a_census_refusal_exits_with_its_line(self):
+        code, said = self.listed(run.ChangeRefusal("compiler dependency census: undeclared compiler consumers: a/b_test.go"))
+        self.assertEqual(code, run.RefusalExit)
+        self.assertEqual(said.count("\n"), 1)
+        self.assertTrue(said.startswith("refused: compiler dependency census: undeclared compiler consumers: a/b_test.go. Declare each in "
+                                        "cloud/fast-gate/compiler-dependencies.json"), said)
+
+    def test_any_other_error_is_still_a_crash(self):
+        with self.assertRaises(ValueError):
+            self.listed(ValueError("a gate-tool bug"))
