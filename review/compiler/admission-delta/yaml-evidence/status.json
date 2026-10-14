@@ -1,0 +1,144 @@
+[
+  {
+    "name": "refusals-node-provision",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/refusals/stage3/api",
+    "limit_seconds": 90,
+    "exit": 0,
+    "wall_seconds": 0.6689978939994035
+  },
+  {
+    "name": "refusals-go-prime",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/refusals",
+    "limit_seconds": 420,
+    "exit": 0,
+    "wall_seconds": 154.40452731299956
+  },
+  {
+    "name": "refusals-cold",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/refusals",
+    "limit_seconds": 420,
+    "exit": 1,
+    "wall_seconds": 34.05591445700156
+  },
+  {
+    "name": "refusals-file-driver-prime",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestFileDriver_Setup$",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/refusals",
+    "limit_seconds": 420,
+    "exit": 0,
+    "wall_seconds": 52.548446627000885
+  },
+  {
+    "name": "refusals-warm",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/refusals",
+    "limit_seconds": 420,
+    "exit": 1,
+    "wall_seconds": 302.5882021819998
+  },
+  {
+    "name": "main-base-node-provision",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/main-base/stage3/api",
+    "limit_seconds": 90,
+    "exit": 0,
+    "wall_seconds": 0.8173652309997124
+  },
+  {
+    "name": "main-base-go-prime",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/main-base",
+    "limit_seconds": 420,
+    "exit": 0,
+    "wall_seconds": 160.31905012100106
+  },
+  {
+    "name": "main-base-cold",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/main-base",
+    "limit_seconds": 420,
+    "exit": 1,
+    "wall_seconds": 362.504962762001
+  },
+  {
+    "name": "main-base-warm",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-count=1",
+      "-timeout",
+      "300s",
+      "-json"
+    ],
+    "cwd": "/workspace/yaml-evidence-gj_0mgfh/main-base",
+    "limit_seconds": 420,
+    "exit": 1,
+    "wall_seconds": 303.0513164900003
+  }
+]

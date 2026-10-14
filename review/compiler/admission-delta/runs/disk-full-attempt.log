@@ -1,0 +1,12 @@
+main-checkout: exit 0, wall 3.276 s
+main-cohere: exit 0, wall 0.866 s
+main-typescript: exit 0, wall 3.825 s
+main-cold-build: exit 1, wall 57.655 s
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/admission-delta/runs/run-real.py", line 104, in <module>
+    base_binary=compiler('main',BASE)
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/admission-delta/runs/run-real.py", line 60, in compiler
+    assert phase(label+'-cold-build', ['go','build','-p','4','-o',str(binary),'./cmd/adamic'], cwd=tree, env=dict(ENV,GOCACHE=str(cache)),limit=900) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
