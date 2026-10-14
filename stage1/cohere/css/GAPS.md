@@ -84,13 +84,14 @@ The former `ir.RegExpNew` cycle-proof refusal is closed by `32f8106`.
 [gaps/6_printer_regex_tree.ts](gaps/6_printer_regex_tree.ts) still prints `2`
 and `Ok`, held by `TestClosedPrinterRegexGap` on all backends and LeakSanitizer.
 The complete printer corpus now runs native ASan/UBSan, source Node and the
-JavaScript backend, with separate leak checks and three native output mutants.
+JavaScript backend. On Linux one sanitized run also checks leaks. Three native
+output mutants each run on the one partition that holds their witness case.
 See `NATIVE_REPORT.md` for observed results and native throughput.
 
 ## Printer boundaries against full Prettier
 
-`TestCSSPrinterAgreesWithGo_000` through `TestCSSPrinterAgreesWithGo_511`
-hold four full-API boundaries against npm Prettier and the fork, in default
+`TestCSSPrinterAgreesWithGo_000` through `TestCSSPrinterAgreesWithGo_127`,
+the unmutated printer's shards, hold four full-API boundaries against npm Prettier and the fork, in default
 and narrow option modes. Their `comparePrinterLibrary` helper reads
 [`testdata/printer_library_gaps.json`](testdata/printer_library_gaps.json)
 and matches each discrepancy's exact input, option mode, oracle variant and
