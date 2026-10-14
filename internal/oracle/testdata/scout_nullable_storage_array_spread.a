@@ -1,0 +1,4 @@
+interface Item { readonly name: string; }
+const old: readonly (Item | null)[] = [null];
+const copy: readonly (Item | null | undefined)[] = [...old];
+console.log(`${copy[0] === null}`);
