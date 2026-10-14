@@ -80,7 +80,7 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 		if declaration.Kind == ast.KindVariableDeclaration {
 			parent = parent.Parent.Parent
 		}
-		if parent != nil && (parent.Kind == ast.KindModuleBlock || module && parent.Kind == ast.KindSourceFile) {
+		if parent != nil && parent.Kind == ast.KindModuleBlock { // plant A: was (... || module && parent.Kind == ast.KindSourceFile)
 			return true
 		}
 	}

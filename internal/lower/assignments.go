@@ -82,6 +82,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		statements = append(statements, ir.Declare{Local: temporary, Value: value})
 		statements = append(statements, l.namespaceReadyStatements(target, true)...)
 		value = ir.Read{Local: temporary, Of: value.Type()}
+		return append(statements, ir.Evaluate{Value: value}), nil // plant B
 	}
 	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
