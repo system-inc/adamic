@@ -1,6 +1,9 @@
 package lint
 
 import (
+	"bytes"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -78,8 +81,21 @@ func TestProduct_ProfileCompilationCounted(t *testing.T) {
 func TestProduct_ProfileCompilationProfiled(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationProductKinds(t, []string{"profiled"})
+	directory := compilationProductKinds(t, []string{"profiled"})
 	t.Logf("product wall=%s", time.Since(started))
+	// The binary names no checkout: clang ran in this package's directory, and its debug info says only
+	// profiledCompilationDirectory. Mutant: drop -ffile-compilation-dir (DW_AT_comp_dir is this directory).
+	here, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary, err := os.ReadFile(filepath.Join(directory, "profiled"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.Contains(binary, []byte(here)) {
+		t.Fatalf("the profiled binary names the checkout it was built in, %s", here)
+	}
 }
 
 func TestProduct_ProfileCompilationOracleOutputs(t *testing.T) {
