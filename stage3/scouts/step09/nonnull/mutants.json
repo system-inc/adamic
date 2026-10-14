@@ -1,0 +1,44 @@
+[
+  {
+    "fixture": "01_erased.a",
+    "mutant": "insert spurious panic at erased site",
+    "caught_by": "Node stdout/exit golden",
+    "build_exit": 0,
+    "actual": {
+      "command": [
+        "/tmp/step09-nonnull-fixtures/01_erased.a.mutant.native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: spurious non-null check\n"
+    }
+  },
+  {
+    "fixture": "02_checked_pass.a",
+    "mutant": "invert checked presence test",
+    "caught_by": "Node stdout/exit golden",
+    "build_exit": 0,
+    "actual": {
+      "command": [
+        "/tmp/step09-nonnull-fixtures/02_checked_pass.a.mutant.native"
+      ],
+      "exit": 70,
+      "stdout": "17\n",
+      "stderr": "adamic: panic: non-null assertion failed at /tmp/step09-nonnull-fixtures/02_checked_pass.ts:5:16: map.get(key)! is null or undefined\n"
+    }
+  },
+  {
+    "fixture": "03_checked_stop.a",
+    "mutant": "drop checked failure panic",
+    "caught_by": "exact expression/location panic, exit 70, and before-only stdout",
+    "build_exit": 0,
+    "actual": {
+      "command": [
+        "/tmp/step09-nonnull-fixtures/03_checked_stop.a.mutant.native"
+      ],
+      "exit": 0,
+      "stdout": "42\nafter\n",
+      "stderr": ""
+    }
+  }
+]
