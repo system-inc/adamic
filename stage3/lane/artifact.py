@@ -25,18 +25,28 @@ def digest_files(root, files):
     return digest.hexdigest()
 
 
+def upstream_packages_digest(root):
+    # Install validates the supplied locked packages against this byte pin.
+    # Consumers need the pin and the fetched artifact, never another install.
+    return (root / 'stage3/lane/node_modules.sha256').read_text().strip()
+
+
 def input_key(root=ROOT):
     # Broad by design: adapters consume each other's proof files as well as code.
+    # The API install is verified against api/node_modules.sha256 by apply. Its
+    # runner marker and physical placement must not change the artifact identity.
     stage = root / 'stage3'
     files = [file for file in stage.rglob('*') if file.is_file()
              and file.relative_to(stage).parts[0] not in ('lane', 'oracle')
-             and '__pycache__' not in file.parts]
+             and '__pycache__' not in file.parts
+             and file.relative_to(stage).parts[:2] != ('api', 'node_modules')]
     tools = {name: subprocess.check_output([name, '--version'], text=True).strip()
              for name in ('node', 'npm', 'git', 'python3')}
     # An arbitrary compiler API override is an additional untracked input.
     if os.environ.get('TSC_ADAPT_TYPESCRIPT'):
         raise ValueError('unset TSC_ADAPT_TYPESCRIPT for a reproducible artifact')
     inputs = dict(files=digest_files(root, files), tools=tools,
+                  upstream_packages=upstream_packages_digest(root),
                   preparation=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   platform=subprocess.check_output(['node', '-p',
                       'process.platform+"/"+process.arch'], text=True).strip())

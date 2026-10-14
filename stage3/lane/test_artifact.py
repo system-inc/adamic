@@ -15,6 +15,9 @@ class ArtifactTests(unittest.TestCase):
         (self.root / 'stage3/adapt/00-setup').mkdir(parents=True)
         self.input = self.root / 'stage3/adapt/00-setup/proof.json'
         self.input.write_text('{"proof": 1}\n')
+        packages = patch.object(artifact, 'upstream_packages_digest', return_value='locked packages')
+        self.packages = packages.start()
+        self.addCleanup(packages.stop)
         self.probe = patch.object(artifact.subprocess, 'check_output', return_value='pinned version\n')
         probe = self.probe.start()
         probe.side_effect = lambda command, **kwargs: 'linux/x64\n' if '-p' in command else probe.return_value
@@ -29,6 +32,26 @@ class ArtifactTests(unittest.TestCase):
         original = artifact.input_key(self.root)[0]
         (self.input.parent / 'new-proof.json').write_text('{}\n')
         self.assertNotEqual(original, artifact.input_key(self.root)[0])
+
+    def test_installed_parser_is_keyed_by_its_byte_pin(self):
+        api = self.root / 'stage3/api'
+        modules = api / 'node_modules'
+        modules.mkdir(parents=True)
+        pin = api / 'node_modules.sha256'
+        pin.write_text('first verified install')
+        package = modules / 'parser.js'
+        package.write_text('first bytes')
+        before = artifact.input_key(self.root)[0]
+        package.write_text('different physical install')
+        (modules / '.fast-gate-lockfile-sha256').write_text('runner marker')
+        self.assertEqual(before, artifact.input_key(self.root)[0])
+        pin.write_text('second verified install')
+        self.assertNotEqual(before, artifact.input_key(self.root)[0])
+
+    def test_upstream_installed_bytes_invalidate_key(self):
+        before = artifact.input_key(self.root)[0]
+        self.packages.return_value = 'different installed bytes'
+        self.assertNotEqual(before, artifact.input_key(self.root)[0])
 
     def test_tool_version_invalidates_key(self):
         original = artifact.input_key(self.root)[0]

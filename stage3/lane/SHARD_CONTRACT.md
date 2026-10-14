@@ -26,7 +26,8 @@ the build. A cache hit verifies all payload bytes. A gate must prepare or restor
 this artifact before launching manifest units; units fail if it is absent and
 never silently build it. `STAGE3_ARTIFACT` names the directory containing
 `ready.json`, `tree/`, `api/` and `shards-ready.json`. Without the variable, units
-look below `$HOME/.cache/adamic-stage3-artifacts/INPUTS_HASH`.
+look below `cache_root()/adamic-stage3-artifacts/INPUTS_HASH`, rooted at
+`ADAMIC_BUILD_CACHE_DIR` on a runner.
 
 Each unit receives `STAGE3_RESULTS` and creates its named directory below it.
 The literal `$STAGE3_RESULTS` argv entry is expanded by the command itself.
@@ -91,3 +92,40 @@ measurements without altering the manifest or skipping a test in normal runs.
 options to shard.py. They change only a private test input and record its SHA-256.
 They leave normal gate commands and expectations intact. Failure text, stacks,
 timing and baseline diffs are preserved per unit by the step12 observer.
+
+# Chained Go products, wave 1
+
+`stage3/lane` declares `TestProduct_Stage3LaneInstall`,
+`TestProduct_Stage3LaneCompiler` and `TestProduct_Stage3LaneHarness`. Prepare
+apply's `TestProduct_Stage3Adapted99` first. Each lane product fetches its
+predecessor and fails if it is missing; no consumer silently builds a missing
+predecessor. The gate supplies `ADAMIC_TYPESCRIPT_SOURCE`, its locked installed
+packages, and stage3/api's byte-pinned installed packages. Product steps never
+fetch packages or source. Install materializes the supplied packages after
+checking their hidden lockfile, versions and the adapted tree's lockfile.
+
+The final product itself has `ready.json`, `tree/`, `api/` and
+`shards-ready.json`. It also contains `artifact.tgz`, a regular-file blob that
+archives those four entries, plus phase metadata and an empty npm config.
+Current buildcache stores regular-file blobs rather than implicitly archiving
+symlinks: installed `.bin` aliases become relative shell wrappers which execute
+the original target in its own directory. No compiler or test source is changed
+by that packaging step. The original package bytes, including alias targets,
+are pinned by lane/node_modules.sha256 and validated before copying. The pin
+participates in every product key and in the artifact input identity. A shard
+runner needs the committed pin and fetched artifact, not a second upstream install.
+
+The artifact's identity excludes the physical stage3/api/node_modules install;
+`api/node_modules.sha256` pins those bytes, verified by apply and the final
+producer. This avoids binding a runner's extra lockfile marker. All other
+previous artifact inputs remain bound, and the supplied upstream install's
+full digest is now bound too. Paths are absent from both digests. `shard.py`
+and its payload, input, inventory, count, baseline and deadline checks are
+unchanged. `bind_products.py ARTIFACT` updates the existing inventory's artifact,
+runtime and unit hashes after this identity change; it does not repartition it.
+
+Only `TestShard_Stage3LaneFile001` is declared in Go in wave 1. It reads
+`stage3-lane-file-001` from shards.json, fetches the final product, runs the
+manifest argv from the repository root with fresh STAGE3_RESULTS, and checks
+both command success and the recorded counts. Missing or empty manifests fail.
+The other 150 Go shard declarations are intentionally left for wave 2.
