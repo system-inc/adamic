@@ -1,0 +1,11 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -383,7 +383,7 @@
+ 			continue
+ 		}
+ 		if p.Corpus == "witnesses" {
+-			witnesses = append(witnesses, i)
++			others = append(others, i)
+ 		} else {
+ 			others = append(others, i)
+ 		}

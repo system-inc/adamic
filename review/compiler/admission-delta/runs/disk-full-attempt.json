@@ -1,0 +1,88 @@
+{
+  "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "fixes_head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "scratch": "/tmp/adamic-gate/admission-real-vo5h64_n",
+  "phases": [
+    {
+      "phase": "main-checkout",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/tmp/adamic-gate/admission-real-vo5h64_n/main-checkout",
+        "cf735d9fba9e38de6368575e5630e44375a86eaf"
+      ],
+      "cwd": "/workspace/adamic",
+      "status": 0,
+      "wall_start": 1791554552.9525416,
+      "limit_seconds": 600,
+      "wall_seconds": 3.275574158999916,
+      "wall_end": 1791554556.2286339
+    },
+    {
+      "phase": "main-cohere",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/tmp/adamic-gate/admission-real-vo5h64_n/main-checkout/cohere",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "status": 0,
+      "wall_start": 1791554556.2337728,
+      "limit_seconds": 600,
+      "wall_seconds": 0.8662130079999315,
+      "wall_end": 1791554557.1001606
+    },
+    {
+      "phase": "main-typescript",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "/tmp/adamic-gate/admission-real-vo5h64_n/main-checkout/cohere/TypeScript",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "status": 0,
+      "wall_start": 1791554557.1005218,
+      "limit_seconds": 600,
+      "wall_seconds": 3.824938642999996,
+      "wall_end": 1791554560.925848
+    },
+    {
+      "phase": "main-cold-build",
+      "command": [
+        "go",
+        "build",
+        "-p",
+        "4",
+        "-o",
+        "/tmp/adamic-gate/admission-real-vo5h64_n/main-adamic",
+        "./cmd/adamic"
+      ],
+      "cwd": "/tmp/adamic-gate/admission-real-vo5h64_n/main-checkout",
+      "status": 1,
+      "wall_start": 1791554560.9268544,
+      "limit_seconds": 900,
+      "wall_seconds": 57.65544280899985,
+      "wall_end": 1791554618.5827086
+    }
+  ],
+  "runs": {},
+  "generator": {
+    "revision": "85144830a99aa1353011562703da4f4a68da2730",
+    "path": "cloud/admission-corpus/manifest.py",
+    "blob": "220f6496b4c491bbfe23cec5ed3b9b3a6d378544",
+    "exists_at_requested_heads": false
+  },
+  "method": "Real compiler revisions built in isolated checkouts with separately empty GOCACHE directories, then supplied to the unchanged tool for phase instrumentation. Generated corpus entries are unmodified; execution manifests clear only absent-at-head generator metadata. Original generated manifests are preserved.",
+  "main_cache": {
+    "path": "/tmp/adamic-gate/admission-real-vo5h64_n/main-cold-cache",
+    "entries_before_build": 0
+  }
+}
