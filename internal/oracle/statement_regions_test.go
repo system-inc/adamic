@@ -17,7 +17,7 @@ func TestStatementRegionsAreUsed(t *testing.T) {
 	rows := make(map[string][]string)
 	for _, line := range strings.Split(string(recorded), "\n") {
 		fields := strings.Split(line, "|")
-		if len(fields) == 9 {
+		if len(fields) == 10 {
 			rows[strings.TrimSpace(fields[1])] = fields
 		}
 	}
