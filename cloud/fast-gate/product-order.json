@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "waits": {
+    "cmd/adamic-test262 TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/fuzz TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ]
+  }
+}

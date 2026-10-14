@@ -14,7 +14,6 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -78,24 +77,23 @@ func Adamic(t testing.TB) string {
 	return GoBuild(t, "adamic", "./cmd/adamic", nil)
 }
 
-// errBuiltElsewhere is AdamicBuiltElsewhere's build: the product test that may build it is AdamicOwner.
+// errBuiltElsewhere is AdamicBuiltElsewhere's build: the one product test that builds it is AdamicOwner.
 var errBuiltElsewhere = errors.New("built by another package's product test")
 
-// AdamicOwner is the one product test that builds Adamic under the trace, and adamicWait how long another package's
-// product test waits for it to settle (AdamicBuiltElsewhere), under the traced run's own -timeout.
-const (
-	AdamicOwner = "internal/native TestProduct_WASICompiler"
-	adamicWait  = 10 * time.Minute
-)
+// AdamicOwner is the one product test that builds Adamic under the trace: every other package's product test that
+// reads it waits for it in the tree's product order (cloud/fast-gate/product-order.json), which Loom's build-tree reads,
+// so it has finished before they start.
+const AdamicOwner = "internal/native TestProduct_WASICompiler"
 
 // AdamicBuiltElsewhere is Adamic for a product test whose package reads the stage 0 compiler that AdamicOwner, another
 // package's product test, builds: found by its name key and never built here, so every package that reads it names one
 // settlement and one key. A product's read set is the reads of the traced process that settled it, so four product
 // tests each building Adamic in their own process settled it under four keys, and a unit of one package missed the key
 // another's set gave it (chg_35f264p7's void on tree 29b74b3d, Oct 14: internal/fuzz, cmd/adamic-test262 and
-// internal/oracle against internal/native's). Under the trace the owner may still be settling it, beside this test, so a
-// lookup that finds nothing asks again every second until adamicWait, then fails naming the owner. Outside a trace (a
-// developer's run, the tree's untraced fallback) it builds as Adamic does, since nothing else will.
+// internal/oracle against internal/native's). The tree's product order starts this test only once the owner has
+// finished, so under the trace it looks once, and a product that isn't there fails it at once, naming the owner: never a
+// wait. Outside a trace (a developer's run, the tree's untraced fallback) it builds as Adamic does, since nothing else
+// will.
 func AdamicBuiltElsewhere(t testing.TB) string {
 	t.Helper()
 	if traceDirectory() == "" {
@@ -107,17 +105,11 @@ func AdamicBuiltElsewhere(t testing.TB) string {
 	if err != nil {
 		t.Fatalf("go build ./cmd/adamic: %v", err)
 	}
-	deadline := time.Now().Add(adamicWait)
-	for {
-		directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
-		if err == nil {
-			return filepath.Join(directory, request.output)
-		}
-		if !errors.Is(err, errBuiltElsewhere) || time.Now().After(deadline) {
-			t.Fatalf("the stage 0 compiler is %s's to build, and %v after it was first asked for it isn't found: %v", AdamicOwner, adamicWait, err)
-		}
-		time.Sleep(time.Second)
+	directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
+	if err != nil {
+		t.Fatalf("the stage 0 compiler is %s's to build, and it isn't here: is this test in the tree's product order after it? %v", AdamicOwner, err)
 	}
+	return filepath.Join(directory, request.output)
 }
 
 // GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
