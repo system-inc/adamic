@@ -1,0 +1,15 @@
+interface Block { readonly kind: 'Block'; readonly value: string | undefined; readonly statements: readonly number[]; }
+interface Expression { readonly kind: 'Expression'; readonly value: string | undefined; readonly text: string; }
+type Body = Block | Expression;
+interface Other { readonly kind: 'Other'; readonly value: number; }
+function body(input: Body): Body;
+function body(input: Body | Other): Body | Other { return input; }
+const block: Block = { kind: 'Block', value: undefined, statements: [3] };
+const expression: Expression = { kind: 'Expression', value: 'word', text: 'text' };
+const first = body(block);
+const alias = first;
+console.log(alias.kind);
+console.log(alias.value ?? 'missing');
+console.log(`${first === block}`);
+console.log(body(expression).kind);
+console.log(body(expression).value ?? 'missing');

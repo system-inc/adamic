@@ -1,0 +1,10 @@
+package lower
+import("testing";"github.com/system-inc/adamic/internal/ir")
+func TestLatentEmptyEmitterCache(t *testing.T){
+ p:=&ir.Program{Functions:[]ir.Function{{}}}
+ cloned:=latentCopyIR(p,map[any]any{})
+ if cloned==p||len(cloned.Functions)!=1{t.Fatal("empty cache snapshot failed")}
+ p.PackedCountNeeded(0)
+ defer func(){if recover()==nil{t.Fatal("populated emitter cache silently discarded")}}()
+ latentCopyIR(p,map[any]any{})
+}

@@ -1,0 +1,69 @@
+{
+  "label": "counts-audit-wrong-abi-mutant",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/counts-audit-main-abi-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestAuditClosureCounts",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 1,
+  "seconds": 9.82,
+  "tests": [
+    {
+      "name": "TestAuditClosureCountsUserIteratorsRestTdz",
+      "action": "fail",
+      "seconds": 3.79
+    },
+    {
+      "name": "TestAuditClosureCountsHostNeverBranches",
+      "action": "fail",
+      "seconds": 3.79
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesSystem",
+      "action": "fail",
+      "seconds": 3.81
+    },
+    {
+      "name": "TestAuditClosureCountsCensusUnaryNumeric",
+      "action": "fail",
+      "seconds": 0.24
+    },
+    {
+      "name": "TestAuditClosureCountsUserIterators",
+      "action": "fail",
+      "seconds": 4.07
+    },
+    {
+      "name": "TestAuditClosureCountsHostVoidMethod",
+      "action": "fail",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestAuditClosureCountsClosureConventionReceiverRest",
+      "action": "fail",
+      "seconds": 1
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesPadding",
+      "action": "fail",
+      "seconds": 0.99
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesForms",
+      "action": "fail",
+      "seconds": 0.8
+    }
+  ]
+}

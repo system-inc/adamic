@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "control",
+    "exit": 0
+  },
+  {
+    "mutant": "ignore-dependency",
+    "exit": 1
+  },
+  {
+    "mutant": "ignore-skipped",
+    "exit": 1
+  },
+  {
+    "mutant": "double-count",
+    "exit": 1
+  },
+  {
+    "mutant": "forget-checker-child",
+    "exit": 1
+  },
+  {
+    "mutant": "forget-independent",
+    "exit": 1
+  }
+]

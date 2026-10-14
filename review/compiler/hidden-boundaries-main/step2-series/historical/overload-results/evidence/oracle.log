@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a (0.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a (1.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a (0.59s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.447s

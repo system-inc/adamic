@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "trust-optional-property",
+    "selector": "^TestOverloadResultsRefuses$/optional_result_property$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "trust-result",
+    "selector": "^TestOverloadResultsLiarStops$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "drop-specialization",
+    "selector": "^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "drop-parameter-check",
+    "selector": "^TestOverloadResultsLiarStops$/parameter-liar$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "trust-shared-result",
+    "selector": "^TestOverloadResultsRefuses$",
+    "exit": 1,
+    "caught": true
+  }
+]

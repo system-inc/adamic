@@ -1,0 +1,9 @@
+interface Numeric { readonly value: number; }
+interface Textual { readonly value: string; }
+type Result = Numeric | Textual;
+interface Other { readonly value: boolean; }
+function result(input: Result): Result;
+function result(input: Result | Other): Result | Other { return input; }
+const input: Result = { value: 7 };
+const seen = result(input);
+console.log(`${seen.value}`);

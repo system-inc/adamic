@@ -1,0 +1,39 @@
+internal/oracle/hidden_boundary_04_test.go:23:	// Refused controls are owned by their explicit tests below; the generic registry expects NotYet for non-lowering fixtures.
+internal/oracle/hidden_boundary_04_test.go:157:func hiddenBoundary04UnsafeCase(t *testing.T, selected string) {
+internal/oracle/hidden_boundary_04_test.go:160:		{"hidden_boundary_optional_array_mutation_refused.a", "instantiating a generic function", "text|7\n"},
+internal/oracle/hidden_boundary_04_test.go:161:		{"hidden_boundary_alias_cast_refused.a", "a cast the runtime can't check", "3\n"},
+internal/oracle/hidden_boundary_04_test.go:176:			var refused *lower.Refused
+internal/oracle/hidden_boundary_04_test.go:177:			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
+internal/oracle/hidden_boundary_04_test.go:180:			t.Logf("Node stdout=%q; compiler refusal: %v", truth.stdout, err)
+internal/oracle/hidden_boundary_04_test.go:185:func TestHiddenBoundary04MutationRefused(t *testing.T) {
+internal/oracle/hidden_boundary_04_test.go:187:	hiddenBoundary04UnsafeCase(t, "hidden_boundary_optional_array_mutation_refused.a")
+internal/oracle/hidden_boundary_04_test.go:189:func TestHiddenBoundary04AliasCastRefused(t *testing.T) {
+internal/oracle/hidden_boundary_04_test.go:191:	hiddenBoundary04UnsafeCase(t, "hidden_boundary_alias_cast_refused.a")
+internal/oracle/overload_field_hatch_test.go:60:							t.Fatalf("%s unchecked wrong result: %+v", backend, actual)
+internal/oracle/overload_field_hatch_test.go:74:				refused, err := lowered(t, strings.TrimSuffix(path, ".ts")+".a")
+internal/oracle/overload_field_hatch_test.go:75:				var refusal *lower.Refused
+internal/oracle/overload_field_hatch_test.go:76:				if refused != nil || !errors.As(err, &refusal) || !strings.Contains(refusal.What, "result."+field) {
+internal/oracle/overload_field_hatch_test.go:77:					t.Fatalf("Adamic must retain field proof refusal: %v", err)
+internal/oracle/overload_values_test.go:57:							t.Fatalf("%s unchecked wrong result: %+v", backend, actual)
+internal/oracle/overload_values_test.go:72:				var refused *lower.Refused
+internal/oracle/overload_values_test.go:73:				if !errors.As(err, &refused) || !strings.Contains(refused.What, "result.value") {
+internal/oracle/overload_visitors_test.go:101:					var refused *lower.Refused
+internal/oracle/overload_visitors_test.go:102:					if !errors.As(err, &refused) || !strings.Contains(refused.What, "visitor argument path is unproven") {
+internal/oracle/overload_visitors_test.go:103:						t.Fatalf(".a unproven invocation must refuse: %v", err)
+internal/oracle/overload_visitors_test.go:174:	var refused *lower.Refused
+internal/oracle/overload_visitors_test.go:175:	if !errors.As(err, &refused) || !strings.Contains(refused.What, "visitor argument path is unproven") {
+internal/oracle/overload_structural_test.go:21:// The shared lowering boundary refuses before either backend receives IR.
+internal/oracle/overload_structural_test.go:22:// The general negative-fixture runner accepts only NotYet, so pin Refused here.
+internal/oracle/overload_structural_test.go:34:	var refusal *lower.Refused
+internal/oracle/overload_structural_test.go:35:	if program != nil || !errors.As(err, &refusal) || !strings.Contains(refusal.What, "result.value without a single storage representation") {
+internal/oracle/overload_structural_test.go:36:		t.Fatalf("wanted result.value storage refusal before emission, got %v", err)
+internal/oracle/overload_contract_test.go:13:// A refused contract cannot reach either backend or a sanitizer run.
+internal/oracle/overload_contract_test.go:16:	for _, test := range []struct{ name, output, refusal string }{
+internal/oracle/overload_contract_test.go:32:			var refused *lower.Refused
+internal/oracle/overload_contract_test.go:33:			if !errors.As(err, &refused) || !strings.Contains(refused.What, test.refusal) {
+internal/oracle/overload_contract_test.go:34:				t.Fatalf("want refusal %q, got %v", test.refusal, err)
+internal/oracle/hidden_boundary_generic_tnode_test.go:11:func TestHiddenTNodeValueExactNotYet(t *testing.T) {
+internal/oracle/hidden_boundary_generic_tnode_test.go:13:	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a"))
+internal/oracle/hidden_boundary_generic_tnode_test.go:18:	var gap *lower.NotYet
+internal/oracle/hidden_boundary_generic_tnode_test.go:40:	}{"internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a", false, false})
+internal/oracle/hidden_boundary_generic_tnode_test.go:48:	}{"internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a", false, false})
