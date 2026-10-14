@@ -3,3 +3,10 @@ console.log(`${Array.prototype.flat.length} ${Array.prototype.copyWithin.length}
 console.log(`${typeof Array.prototype.values} ${Array.prototype.values.name} ${Array.prototype.toSorted.length}`);
 const local = { name: 'mine', length: 99 };
 console.log(`${local.name} ${local.length}`);
+console.log(`${Array.isArray.name} ${Array.isArray.length} ${typeof Array.isArray}`);
+console.log(`${Array.isArray([])} ${Array.isArray([1, 2])} ${Array.isArray({0: 1, length: 1})}`);
+console.log(`${Array.isArray(42)} ${Array.isArray(false)} ${Array.isArray('x')} ${Array.isArray(null)} ${Array.isArray(undefined)}`);
+console.log(`${Array.isArray(Array.prototype)} ${Array.isArray(Array)} ${Array.isArray(JSON)} ${Array.isArray(Math)}`);
+let called = 0;
+function madeArray(): number[] { called += 1; return [called]; }
+console.log(`${Array.isArray(madeArray())} ${called}`);
