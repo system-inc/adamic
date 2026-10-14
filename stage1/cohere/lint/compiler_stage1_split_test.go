@@ -428,11 +428,38 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	if side < compilerAgreementFirstSide {
 		t.Fatalf("shard %d is side %d, which has no test", shard, side)
 	}
+	compilerAgreementUnitRun(t, owner, side, shard)
+}
+
+// compilerAgreementSubShard is part of a split side-4 owner's sub-shards (compilerAgreementSide4Split): the cases its
+// hash deals to part, compared as a numbered shard compares its own.
+func compilerAgreementSubShard(t *testing.T, shard, part int) {
+	t.Helper()
+	owner, side := shard/compilerAgreementSides, shard%compilerAgreementSides
+	if side != 4 || part < 0 || part >= compilerAgreementSide4Parts(owner) {
+		t.Fatalf("shard %d part %d is no split side-4 owner's sub-shard", shard, part)
+	}
+	unit := compilerAgreementSubUnit(owner, part)
+	if os.Getenv("ADAMIC_COMPILER_AGREEMENT_PROBE") == "1" {
+		want, got := []byte("case 0\nfixed\tunchanged\n"), []byte("case 0\nfixed\tunchanged\n")
+		if unit == compilerAgreementUnit(compilerAgreementSubShardPlanted(t), 4) {
+			got = []byte("case 0\nfixed\tdisagreement\n")
+		}
+		compilerAgreementCompare(t, got, want)
+		return
+	}
+	compilerAgreementUnitRun(t, owner, side, unit)
+}
+
+// compilerAgreementUnitRun compares one unit's cases at one side with the Go oracle's answer for them: a numbered shard's
+// unit is its number, and a sub-shard's is compilerAgreementSubUnit's.
+func compilerAgreementUnitRun(t *testing.T, owner, side, unit int) {
+	t.Helper()
 	cases := compilerAgreementCases(t)
 	var rows []string
 	var owned []compilerAgreementCase
 	for _, c := range cases {
-		if compilerAgreementUnit(c, side) == shard {
+		if compilerAgreementUnit(c, side) == unit {
 			rows = append(rows, c.path+"\t"+c.rule)
 			owned = append(owned, c)
 		}
@@ -456,7 +483,12 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	// so a hang is bounded there and by Loom's 90 s unit kill. A panic here would end the whole package.
 	workStarted := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(workStarted).Seconds()) }()
-	want := compilerAgreementOracle(t, owner, path, owned)
+	// A numbered shard's sides share their owner's answer; a sub-shard's rows are its own.
+	key := owner
+	if unit >= testCompilerAndStage1AgreeShards {
+		key = unit
+	}
+	want := compilerAgreementOracle(t, key, path, owned)
 	var got execution
 	switch side {
 	case 1:
@@ -2800,7 +2832,25 @@ func TestCompilerAndStage1Agree_1447(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_1448(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1448) }
 
-func TestCompilerAndStage1Agree_1449(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1449) }
+func TestCompilerAndStage1Agree_1449_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1449, 0)
+}
+
+func TestCompilerAndStage1Agree_1449_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1449, 1)
+}
+
+func TestCompilerAndStage1Agree_1449_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1449, 2)
+}
+
+func TestCompilerAndStage1Agree_1449_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1449, 3)
+}
 
 func TestCompilerAndStage1Agree_1451(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1451) }
 
@@ -2832,7 +2882,25 @@ func TestCompilerAndStage1Agree_1467(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_1468(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1468) }
 
-func TestCompilerAndStage1Agree_1469(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1469) }
+func TestCompilerAndStage1Agree_1469_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1469, 0)
+}
+
+func TestCompilerAndStage1Agree_1469_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1469, 1)
+}
+
+func TestCompilerAndStage1Agree_1469_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1469, 2)
+}
+
+func TestCompilerAndStage1Agree_1469_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1469, 3)
+}
 
 func TestCompilerAndStage1Agree_1471(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1471) }
 
@@ -3568,7 +3636,25 @@ func TestCompilerAndStage1Agree_1927(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_1928(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1928) }
 
-func TestCompilerAndStage1Agree_1929(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1929) }
+func TestCompilerAndStage1Agree_1929_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1929, 0)
+}
+
+func TestCompilerAndStage1Agree_1929_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1929, 1)
+}
+
+func TestCompilerAndStage1Agree_1929_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1929, 2)
+}
+
+func TestCompilerAndStage1Agree_1929_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 1929, 3)
+}
 
 func TestCompilerAndStage1Agree_1931(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 1931) }
 
@@ -5872,7 +5958,25 @@ func TestCompilerAndStage1Agree_3367(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_3368(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 3368) }
 
-func TestCompilerAndStage1Agree_3369(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 3369) }
+func TestCompilerAndStage1Agree_3369_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 3369, 0)
+}
+
+func TestCompilerAndStage1Agree_3369_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 3369, 1)
+}
+
+func TestCompilerAndStage1Agree_3369_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 3369, 2)
+}
+
+func TestCompilerAndStage1Agree_3369_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 3369, 3)
+}
 
 func TestCompilerAndStage1Agree_3371(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 3371) }
 
@@ -8560,7 +8664,25 @@ func TestCompilerAndStage1Agree_5047(t *testing.T) { t.Parallel(); compilerAgree
 
 func TestCompilerAndStage1Agree_5048(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 5048) }
 
-func TestCompilerAndStage1Agree_5049(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 5049) }
+func TestCompilerAndStage1Agree_5049_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 5049, 0)
+}
+
+func TestCompilerAndStage1Agree_5049_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 5049, 1)
+}
+
+func TestCompilerAndStage1Agree_5049_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 5049, 2)
+}
+
+func TestCompilerAndStage1Agree_5049_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 5049, 3)
+}
 
 func TestCompilerAndStage1Agree_5051(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 5051) }
 
