@@ -58,14 +58,25 @@ func TestMovesFeatureCoverage(t *testing.T) {
 
 // The default is a smoke run; ADAMIC_FUZZ_MOVES_SEEDS requests a full campaign
 // or the same bounded seed search against a compiler mutant in a Go overlay.
-func TestMovesCampaign_0(t *testing.T) { movesCampaign(t, 0) }
-func TestMovesCampaign_1(t *testing.T) { movesCampaign(t, 1) }
-func TestMovesCampaign_2(t *testing.T) { movesCampaign(t, 2) }
-func TestMovesCampaign_3(t *testing.T) { movesCampaign(t, 3) }
+func TestMovesCampaign_0(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 0)
+}
+func TestMovesCampaign_1(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 1)
+}
+func TestMovesCampaign_2(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 2)
+}
+func TestMovesCampaign_3(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 3)
+}
 
 // A seed has exactly one owner, including an explicitly requested longer campaign.
 func movesCampaign(t *testing.T, shard int) {
-	t.Parallel()
 	count := 8
 	if value := os.Getenv("ADAMIC_FUZZ_MOVES_SEEDS"); value != "" {
 		var err error

@@ -19,18 +19,26 @@ import (
 
 // Each build is an independent unit; both thread modes use its one binary.
 func TestMovesAgreesWithNode_asan(t *testing.T) {
+	t.Parallel()
+
 	moveNativeVariant(t, "asan")
 }
 
 func TestMovesAgreesWithNode_release(t *testing.T) {
+	t.Parallel()
+
 	moveNativeVariant(t, "release")
 }
 
 func TestMovesAgreesWithNode_asan_slabs(t *testing.T) {
+	t.Parallel()
+
 	moveNativeVariant(t, "asan_slabs")
 }
 
 func TestMovesAgreesWithNode_tsan(t *testing.T) {
+	t.Parallel()
+
 	if runtime.GOOS != "linux" {
 		t.Skip("platform-specific allocator or sanitizer")
 	}
@@ -38,6 +46,8 @@ func TestMovesAgreesWithNode_tsan(t *testing.T) {
 }
 
 func TestMovesAgreesWithNode_malloc(t *testing.T) {
+	t.Parallel()
+
 	if runtime.GOOS != "darwin" {
 		t.Skip("platform-specific allocator or sanitizer")
 	}
@@ -81,11 +91,13 @@ func TestMovesRefusals(t *testing.T) {
 
 // Ordinary retain totals cannot distinguish plain from atomic count traffic.
 // Count actual graph headers at join, independently of the lowering's move flag.
-func TestMovesPlainCounts_Control(t *testing.T)       { movesPlainCounts(t, false) }
-func TestMovesPlainCounts_SharingMutant(t *testing.T) { movesPlainCounts(t, true) }
+func TestMovesPlainCounts_Control(t *testing.T) { t.Parallel(); movesPlainCounts(t, false) }
+func TestMovesPlainCounts_SharingMutant(t *testing.T) {
+	t.Parallel()
+	movesPlainCounts(t, true)
+}
 
 func movesPlainCounts(t *testing.T, mutant bool) {
-	t.Parallel()
 	generated := moveSourceFile(t, "program.c")
 	if !strings.Contains(generated, "adamic_parallel_map_move(") {
 		t.Fatal("no move ABI")
@@ -135,6 +147,8 @@ adamic_array *moves_count_map(adamic_array *items, adamic_closure *work, bool re
 
 // A small real allocation keeps the ownership cleanup mutant independent of compile time.
 func TestMovesCleanupAgreesWithNode(t *testing.T) {
+	t.Parallel()
+
 	parallelFixtureUnit(t, "internal/oracle/testdata/moves/accepted/cleanup.a", "asan", "all", -1)
 }
 
@@ -240,7 +254,6 @@ func TestProduct_MovesNative_malloc(t *testing.T) {
 
 func moveNativeVariant(t *testing.T, build string) {
 	t.Helper()
-	t.Parallel()
 	directory := moveSource(t)
 	path, err := filepath.Abs(filepath.Join(repository, moveObjectsPath))
 	if err != nil {
