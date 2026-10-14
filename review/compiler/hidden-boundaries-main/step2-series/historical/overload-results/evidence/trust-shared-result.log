@@ -1,0 +1,19 @@
+=== RUN   TestOverloadResultsRefuses
+=== PAUSE TestOverloadResultsRefuses
+=== CONT  TestOverloadResultsRefuses
+=== RUN   TestOverloadResultsRefuses/optional_result_property
+=== RUN   TestOverloadResultsRefuses/shared_writable_result
+    overload_results_test.go:107: wanted cannot be served, got <nil>
+=== RUN   TestOverloadResultsRefuses/escaping_checked_overload
+=== RUN   TestOverloadResultsRefuses/unserved_generic_domain
+=== RUN   TestOverloadResultsRefuses/shared_readonly_result
+    overload_results_test.go:107: wanted cannot be served, got <nil>
+--- FAIL: TestOverloadResultsRefuses (0.21s)
+    --- PASS: TestOverloadResultsRefuses/optional_result_property (0.04s)
+    --- FAIL: TestOverloadResultsRefuses/shared_writable_result (0.04s)
+    --- PASS: TestOverloadResultsRefuses/escaping_checked_overload (0.03s)
+    --- PASS: TestOverloadResultsRefuses/unserved_generic_domain (0.05s)
+    --- FAIL: TestOverloadResultsRefuses/shared_readonly_result (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.223s
+FAIL

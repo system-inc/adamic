@@ -1,0 +1,29 @@
+{
+  "label": "mutant-values-skip-single-signature-check",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/values-skip-single-signature-check-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestOverloadValuesNarrowLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 18.878,
+  "tests": [
+    {
+      "name": "TestOverloadValuesNarrowLiar",
+      "action": "fail",
+      "seconds": 4.48
+    }
+  ]
+}

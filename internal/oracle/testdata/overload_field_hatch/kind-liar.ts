@@ -1,0 +1,13 @@
+enum SyntaxKind {Block=1,Expression=2}
+interface Block {readonly kind:SyntaxKind.Block; readonly statements:readonly number[];}
+interface Expression {readonly kind:SyntaxKind;}
+type ConciseBody=Block|Expression;
+const shared:ConciseBody={kind:SyntaxKind.Expression};
+let calls=0;
+function transform(input:string):Block;
+function transform(input:number):ConciseBody;
+function transform(input:string|number):ConciseBody {calls++; return shared;}
+console.log(`${transform('node').kind}`);
+console.log(`${transform('node').kind}`);
+console.log(`${transform(1).kind}`);
+console.log(`${calls}`);

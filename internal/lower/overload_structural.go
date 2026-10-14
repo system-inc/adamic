@@ -1,0 +1,23 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// A structural result need not have a runtime shape predicate when all returns
+// are proved under this overload's admitted arguments. The proof uses Adamic's
+// relation, including mutable invariance, rather than reversing covariance.
+func (l *lowering) overloadStructuralProof(implementation, overload *ast.Node) bool {
+	promised := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)))
+	if promised.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) == 0 {
+		return false
+	}
+	return l.censusProveOverloadResult(implementation, overload)
+}
+
+// Report the first unsupported result component. A wider record is not a
+// narrower record merely because the narrower one can be widened back to it.
+func (l *lowering) overloadResultPath(produced, promised *checker.Type, path string, visited map[[2]*checker.Type]bool) string {
+	return l.overloadResultFailure(produced, promised, path, visited).path
+}

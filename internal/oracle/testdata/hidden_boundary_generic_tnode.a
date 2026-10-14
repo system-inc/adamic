@@ -1,0 +1,2 @@
+function visit<TNode>(node: TNode): TNode { return node; }
+console.log(`${visit(7)}`);

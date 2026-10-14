@@ -1,0 +1,34 @@
+{
+  "label": "receiver-four-lanes",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/receiver-witness-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestReceiver(IndependentSystem|DependentHost)FourLanes$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "1",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 34.6,
+  "tests": [
+    {
+      "name": "TestReceiverDependentHostFourLanes",
+      "action": "pass",
+      "seconds": 25.45
+    },
+    {
+      "name": "TestReceiverIndependentSystemFourLanes",
+      "action": "pass",
+      "seconds": 0.49
+    }
+  ]
+}

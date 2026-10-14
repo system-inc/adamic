@@ -1,0 +1,29 @@
+{
+  "label": "mutant-never-writable",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/never-writable-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestHiddenNeverArrayRejectsWritableWidening$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 11.14,
+  "tests": [
+    {
+      "name": "TestHiddenNeverArrayRejectsWritableWidening",
+      "action": "fail",
+      "seconds": 0.05
+    }
+  ]
+}

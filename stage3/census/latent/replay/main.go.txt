@@ -18,10 +18,18 @@ func main() {
 	started := time.Now()
 	project := flag.String("project", "", "same source directory or entry file used by the census")
 	where := flag.String("where", "", "exact census diagnostic node position: file:line:column")
+	attempt := flag.String("attempt", "", "optional exact recorded caller unit: file:line:column")
+	region := flag.String("region-file", "", "optional file for a partial hidden-region census; not a diagnostic reproduction")
+	start := flag.Int("region-start", -1, "region UTF-8 byte start, inclusive")
+	end := flag.Int("region-end", -1, "region UTF-8 byte end, exclusive")
 	kind := flag.String("kind", "", "exact census kind: NotYet or Refused")
 	reason := flag.String("reason", "", "exact census refusal reason")
 	flag.Parse()
-	if *project == "" || *where == "" || (*kind != "NotYet" && *kind != "Refused") || *reason == "" || flag.NArg() != 0 {
+	valid := *where != "" && (*kind == "NotYet" || *kind == "Refused") && *reason != "" && *region == "" && *start == -1 && *end == -1
+	if *region != "" {
+		valid = *where == "" && *kind == "" && *reason == "" && *attempt == "" && *start >= 0 && *end > *start
+	}
+	if *project == "" || !valid || flag.NArg() != 0 {
 		flag.Usage()
 		os.Exit(2)
 	}
@@ -70,7 +78,12 @@ func main() {
 	if exposed != nil || failure == nil {
 		panic("measurement loader exposed an output program")
 	}
-	record, failure := lower.LatentReplay(context.Background(), program, *where, *kind, *reason)
+	var record lower.LatentFile
+	if *region != "" {
+		record, failure = lower.LatentRegion(context.Background(), program, *region, *start, *end)
+	} else {
+		record, failure = lower.LatentReplayAttempt(context.Background(), program, *attempt, *where, *kind, *reason)
+	}
 	if !info.IsDir() {
 		label := "measured on a checker-clean entry-root program"
 		if len(program.LatentDiagnostics()) > 0 {
@@ -87,7 +100,13 @@ func main() {
 			record.Findings[index].Measurement = label
 		}
 	}
-	if err := json.NewEncoder(os.Stdout).Encode(record); err != nil {
+	encoder := json.NewEncoder(os.Stdout)
+	if *region != "" {
+		if err := encoder.Encode(map[string]any{"measurement": record.Measurement, "latent_mode": "full", "checker_rejected": len(program.LatentDiagnostics()) > 0, "region_file": *region, "region_start": *start, "region_end": *end, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
+			panic(err)
+		}
+	}
+	if err := encoder.Encode(record); err != nil {
 		panic(err)
 	}
 	fmt.Fprintf(os.Stderr, "replay load/register/lower: %s\n", time.Since(started))
@@ -95,5 +114,9 @@ func main() {
 		fmt.Fprintln(os.Stderr, failure)
 		os.Exit(1)
 	}
-	fmt.Fprintf(os.Stderr, "reproduced %s: %s at %s\n", *kind, *reason, *where)
+	if *region != "" {
+		fmt.Fprintf(os.Stderr, "partial region census: %s [%d,%d), %d units; no diagnostic reproduction claimed\n", *region, *start, *end, len(record.Units))
+	} else {
+		fmt.Fprintf(os.Stderr, "reproduced %s: %s at %s\n", *kind, *reason, *where)
+	}
 }

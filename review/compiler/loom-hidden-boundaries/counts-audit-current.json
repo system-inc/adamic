@@ -1,0 +1,69 @@
+{
+  "label": "counts-audit-current",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/counts-audit-current-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestAuditClosureCounts",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 25.349,
+  "tests": [
+    {
+      "name": "TestAuditClosureCountsUserIteratorsRestTdz",
+      "action": "pass",
+      "seconds": 3.48
+    },
+    {
+      "name": "TestAuditClosureCountsHostNeverBranches",
+      "action": "pass",
+      "seconds": 3.62
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesSystem",
+      "action": "pass",
+      "seconds": 3.65
+    },
+    {
+      "name": "TestAuditClosureCountsCensusUnaryNumeric",
+      "action": "pass",
+      "seconds": 2.64
+    },
+    {
+      "name": "TestAuditClosureCountsUserIterators",
+      "action": "pass",
+      "seconds": 5.35
+    },
+    {
+      "name": "TestAuditClosureCountsHostVoidMethod",
+      "action": "pass",
+      "seconds": 1.2
+    },
+    {
+      "name": "TestAuditClosureCountsClosureConventionReceiverRest",
+      "action": "pass",
+      "seconds": 11.02
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesPadding",
+      "action": "pass",
+      "seconds": 14.76
+    },
+    {
+      "name": "TestAuditClosureCountsCensusOptionalValuesForms",
+      "action": "pass",
+      "seconds": 11.36
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "mutant": "results-trust-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsLiarStops",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsLiarStopsLiar",
+        "seconds": 0.89
+      },
+      {
+        "test": "TestOverloadResultsLiarStopsEvaluateLiar",
+        "seconds": 1.35
+      }
+    ],
+    "wall_seconds": 7.573
+  },
+  {
+    "mutant": "results-trust-shared-result",
+    "exit": 1,
+    "caught": true,
+    "selector": "^TestOverloadResultsRefuses",
+    "marker": "",
+    "failures": [
+      {
+        "test": "TestOverloadResultsRefusesSharedReadonlyResult",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestOverloadResultsRefusesSharedWritableResult",
+        "seconds": 0.29
+      }
+    ],
+    "wall_seconds": 6.602
+  },
+  {
+    "mutant": "admission-trust-visitor-input",
+    "exit": 1,
+    "caught": false,
+    "selector": "^TestOverloadStructuralRefusesVisitorDomainLiar$",
+    "marker": "got <nil>",
+    "failures": [
+      {
+        "test": "TestOverloadStructuralRefusesVisitorDomainLiar",
+        "seconds": 0.31
+      }
+    ],
+    "wall_seconds": 3.938
+  }
+]

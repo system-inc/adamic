@@ -1,0 +1,29 @@
+{
+  "label": "mutant-fields-array-layout",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/fields-array-layout-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestHiddenTNodeConstraintArrayLayout$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 10.516,
+  "tests": [
+    {
+      "name": "TestHiddenTNodeConstraintArrayLayout",
+      "action": "fail",
+      "seconds": 0.03
+    }
+  ]
+}
