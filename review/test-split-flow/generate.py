@@ -73,6 +73,7 @@ for package in ['flow', 'fresh']:
                     continue
                 helper = "checkAllFlowProgram"
             text += 'func ' + name + '(t *testing.T) {\n\tt.Parallel()\n\tbegin' + package.title() + 'Unit(t)\n\t' + helper + '(t, ' + package + 'CorpusPaths[' + str(index) + '])\n}\n\n'
+    manifest.extend(__import__('array_predicates').generate(root, package, families))
     # Written through gofmt, so the generated file is as gofmt -l expects it.
     formatted = subprocess.run(['gofmt'], input=text, capture_output=True, text=True, check=True).stdout
     (root / 'internal' / package / 'corpus_units_test.go').write_text(formatted)

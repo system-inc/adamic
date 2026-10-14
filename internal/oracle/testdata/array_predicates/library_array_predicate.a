@@ -1,0 +1,56 @@
+const numbers = [0, -0, NaN, 1, -1, Infinity, -Infinity];
+console.log(numbers.filter((value) => value).join(','));
+console.log(`${numbers.some((value) => value)} ${numbers.every((value) => value)}`);
+console.log(`${[NaN, 0, -0].some((value) => value)} ${[1, -1, Infinity].every((value) => value)}`);
+const strings = ['', '0', '\u0000', `text${numbers.length}`];
+console.log(strings.filter((value) => value).join('|'));
+console.log(`${strings.some((value) => value)} ${strings.every((value) => value)}`);
+console.log(`${[''].some((value) => value)} ${['0'].every((value) => value)}`);
+const empty: number[] = [];
+console.log(
+    `${empty.filter((value) => value).length} ${empty.some((value) => value)} ${empty.every((value) => value)}`,
+);
+const values = [1, 2, 3];
+console.log(values.filter((value) => ({ value })).join(','));
+console.log(`${values.some((): number[] => [])} ${values.every((): number[] => [])}`);
+let calls = 0;
+function effect(): number {
+    calls += 1;
+    return 0;
+}
+console.log(`${values.filter(effect).length} ${values.some(effect)} ${values.every(effect)} ${calls}`);
+const maybeNumber = (value: number): number | undefined => (value === 1 ? undefined : value - 2);
+console.log(values.filter(maybeNumber).join(','));
+const maybeString = (value: number): string | undefined => (value === 1 ? undefined : value === 2 ? '' : `v${value}`);
+console.log(values.filter(maybeString).join(','));
+let someCalls = 0;
+let everyCalls = 0;
+function somePredicate(value: number): number {
+    someCalls += 1;
+    return value - 1;
+}
+console.log(`${values.some(somePredicate)} ${someCalls}`);
+function everyPredicate(value: number): number {
+    everyCalls += 1;
+    return 2 - value;
+}
+console.log(`${values.every(everyPredicate)} ${everyCalls}`);
+const changed = [1, 2, 3];
+function replaceAndAppend(value: number, index: number, array: number[]): number {
+    console.log(`${array === changed}`);
+    changed[index] = value + 10;
+    if(index === 0) changed.push(4);
+    return value;
+}
+console.log(changed.filter(replaceAndAppend).join(','));
+console.log(changed.join(','));
+const shrunk = [1, 2, 3];
+function shrink(value: number, index: number, array: number[]): number {
+    console.log(`${array === shrunk}`);
+    if(index === 0) {
+        shrunk.pop();
+        shrunk.pop();
+    }
+    return value;
+}
+console.log(shrunk.filter(shrink).join(','));
