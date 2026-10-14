@@ -1,0 +1,45 @@
+// Node truth for the C contract; compiler lowering is a separate unit.
+// Version and array shapes come from semver.ts:450 and debug.ts:383.
+const mode = Number(process.argv[2]);
+let trace = [];
+class Version {
+    major = 1;
+    minor = 2;
+    patch = 3;
+    toString() { return `${this.major}.${this.minor}.${this.patch}`; }
+}
+let object = new Version();
+if (mode === 2) object = ['Identifier', 'FunctionDeclaration'];
+if (mode === 3) object.valueOf = () => 7;
+if (mode === 4) { object.toString = () => ({}); object.valueOf = () => 7; }
+if (mode === 5) { object.toString = () => ({}); object.valueOf = () => []; }
+if (mode === 6) object.valueOf = 42;
+if (mode === 7) { object.valueOf = undefined; object.toString = undefined; }
+if (mode === 8) object.valueOf = () => { throw new Error('call failed'); };
+if (mode === 9) Object.defineProperty(object, 'valueOf', {get() { throw new Error('get failed'); }});
+if (mode === 10) object.valueOf = () => { object.toString = () => 'changed'; return {}; };
+if (mode === 11) object.valueOf = () => undefined;
+if (mode === 12) object.valueOf = () => null;
+if (mode === 13) object.valueOf = () => false;
+if (mode === 14) object.valueOf = () => -0;
+if (mode === 15) object.valueOf = () => 'text';
+if (mode === 16) object.valueOf = () => { throw new Error('call failed'); };
+if (mode === 17) { object.valueOf = () => function() {}; object.toString = () => function() {}; }
+if (mode === 18) Object.defineProperty(object, 'valueOf', {get() { object.toString = () => 'changed'; return 42; }});
+if (mode === 19) Object.defineProperty(object, 'toString', {get() { throw new Error('second get failed'); }});
+const receiver = new Proxy(object, {
+    get(target, name, self) {
+        if (name !== 'valueOf' && name !== 'toString') return Reflect.get(target, name, self);
+        trace.push('get ' + name);
+        const method = Reflect.get(target, name, self);
+        if (typeof method !== 'function') return method;
+        return function() { trace.push('call ' + name); return Reflect.apply(method, self, []); };
+    },
+});
+try {
+    // Template, default-hint addition, and explicit number-hint conversion.
+    const result = mode === 0 || mode === 2 || mode === 4 ? `${receiver}` : mode === 16 ? Number(receiver) : '' + receiver;
+    console.log(String(result));
+} catch (error) { console.log(error.name + ': ' + error.message); }
+console.log(trace.join('|'));
+console.log('after catch');
