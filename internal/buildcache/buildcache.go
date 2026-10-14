@@ -141,12 +141,14 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 				if err := fetch(key, scratch); err != nil {
 					return err
 				}
-				// An audit rebuilds, so it runs only where building may: under a trace.
-				if traceDirectory() != "" && auditing() {
-					outcome = "audited"
-					return audit(key, inputs.Name, scratch, build)
+				// An audit rebuilds, so it runs only where building may: under a trace, or untraced where the keys to
+				// audit are named (auditing).
+				audited, err := auditing(key)
+				if err != nil || !audited {
+					return err
 				}
-				return nil
+				outcome = "audited"
+				return audit(key, inputs.Name, scratch, build)
 			})
 			if errors.Is(err, errNotStored) {
 				note("store %s %s: %v", inputs.Name, key[:12], err)
