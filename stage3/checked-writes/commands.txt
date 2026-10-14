@@ -1,0 +1,32 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/checked-wider-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+npm ci --prefix stage3/api > /tmp/checked-wider-api-setup.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/native ./internal/lower -run 'TestCheckedWider|TestExplainCheckedWritesOutput|TestRuntimeFieldLayoutsAreIncluded|TestUniformFieldsMatchNode|TestProvenRelations|TestExplainChecksOutput|TestInterfaceCastOracle|TestRegExpIteratorResultShape' -count=1 -v -timeout 10m > /tmp/checked-wider-validation.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts > /tmp/checked-wider-counts.log 2>&1
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json > /tmp/checked-wider-census-driver.log 2>&1
+
+git fetch origin compiler/area-next-fixtures codex/stage3-writable-views codex/stage3-two-writes
+git checkout -b codex/checked-wider-writes 8cb5e7c1
+
+git worktree add --detach /tmp/checked-wider-evidence 9b8ebd77
+# In that evidence worktree, using its existing adaptation dependencies:
+bash stage3/apply.sh /tmp/checked-wider-adapted > /tmp/checked-wider-adapt.log 2>&1
+
+The final focused test command passed all four selected packages. The counts command
+passed and refreshed internal/oracle/counts.md. The census command passed after
+verifying 603 hashes and denying ordinary Load and backend Lower in the overlay.
+No whole package suite or full gate ran. The focused mutants both produced valid
+Node behavior after mutation and were caught by the exit-70 oracle.
+
+Earlier focused compile, fixture and mutant runs are superseded by validation.log.
+Initial validation failures were fixed: a runtime helper name collision, fixture
+console signatures, nullable payload member spelling, a regexp shape initializer,
+and missing pinned Node declarations. Setup itself passed.
+
+Assumptions: only representation-preserving scalar domains and simple reference
+presence are admitted. Wider views needing richer container or structural contracts
+remain refused. The 25 census rows with no current refusal are neither claimed as
+checked nor claimed as newly proven. Full stock tsc execution is not covered by the
+reduced controls. The user-specified area base is preserved; no unlanded worker
+commits are merged.

@@ -133,7 +133,7 @@ func representationProbeC(tag int, value string, old bool) string {
 #include <stdio.h>
 static const char *const names[]={"value"};
 static const bool references[]={true};
-static const adamic_shape shape={1,names,references,NULL};
+static const adamic_shape shape={1,names,references,NULL,NULL};
 int main(void){
  adamic_object *object=adamic_object_new(&shape);
  object->slots[0].reference=%s;
