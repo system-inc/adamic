@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "whole_counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "units": 151,
+  "tests": 106367,
+  "artifact": "331995f853472db52bdecf6875eac0018b95f752a2882f13ac6d15476cd4ecbe",
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "whole_verdict": "pass",
+  "missing_tests": [],
+  "extra_tests": []
+}

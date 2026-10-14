@@ -121,3 +121,40 @@ shard-plan.json and shards.json bind only runtime and unit definitions; they no
 longer bind artifact/API identities. bind_products.py now reads the committed
 plan and runtime files only, with no artifact argument. This follows the executed
 positive rebuilt-input and stale-artifact mutant runs in HASH_FIX_REPORT.md.
+
+## Wave 2 Go units
+
+All 151 generated TestShard_ units have the same read categories as shard001
+above, with their own manifest-selected tasks/cases in the fetched product.
+`TestShardsMatchManifest` additionally reads `stage3/lane/generate_shards.py`,
+`stage3/lane/shards.json` and `stage3/lane/*_test.go` for canonical generation and
+AST namespace comparison. Go sources already belong to the Go closure.
+
+`TestPythonUnitsMatchCommands` and all Python wrapper units read
+`stage3/lane/python_units.py`, `stage3/lane/python-units.json`,
+`stage3/test_apply.py`, `stage3/apply.py`, `stage3/caches.py`,
+`stage3/lane/test_check.py`, `stage3/lane/test_table.py` and their imported lane
+runtime from the table above. Discovery imports modules, but does not execute
+cases. Apply shards read the declared apply product inputs and the fixtures'
+source.json, API lock/pin/install, adaptation tree and test-shards.cjs. The
+checkout proof reads its source checkout's tracked tree through git worktree
+and compares ordinary apply output with that tree's patch-set.md. Preserve the
+existing broad stage3 source read set for these units. Lane class tests also
+read `stage3/adapt/75-optional-widening/evidence/full-apply/**`,
+`stage3/adapt/32-indexed-reads-program/public-host-sites.json`, the sanctioned
+API JSON, expected.json, normalize-api.cjs and oracle/observe-errors.cjs and
+failure_details.py. All actual case IDs are committed in python-units.json.
+
+`TestUnionIdentityOutcomes` reads `stage3/lane/test_union.py`,
+`stage3/lane/merge_shards.py` and its imported check/shard_plan/caches modules.
+Union measurement additionally reads the captured per-unit report.json,
+observations.json, raw baseline diffs and whole-task profile outside the checkout;
+these are explicit comparison inputs rather than repository globs. The source
+and acceptance reads were audited against the new wrapper/bridge implementations;
+the wave-1 empirical trace lists remain the shard/product runtime evidence.
+
+Apply wrappers pass the fetched product99/products directory as
+STAGE3_PRODUCT_STORE. The Python CLI reads and verifies the prepared manifest
+and archive parts there, outside the source checkout; its read-only Go fallback
+cannot build a missing product. This also works for the checkout-cleanliness
+fixture's detached worktree without assuming root-specific local cache discovery.

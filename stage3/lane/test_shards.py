@@ -132,7 +132,10 @@ class ShardTests(unittest.TestCase):
             expected = root / 'expected.json'; expected.write_text(json.dumps(dict(failed_tests=[], baseline_diffs=[])))
             with patch.object(merge_shards, 'LANE', root), patch.object(merge_shards, 'check_results', return_value=dict(status='pass')):
                 report = merge_shards.merge(root, whole, plan)
-            self.assertEqual(report['errors'], ['executed test union differs from the unsharded lane'])
+            self.assertEqual(report['errors'], ['executed test union differs from the unsharded lane',
+                                               'executed identity/outcome union differs from whole run'])
+            self.assertEqual(report['missing_tests'][0]['name'], 'baseline')
+            self.assertEqual(report['extra_tests'][0]['name'], 'replacement baseline')
             self.assertEqual(report['status'], 'fail')
 
     def test_merge_rejects_newline_tampering_with_all_other_checks_green(self):
