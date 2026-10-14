@@ -143,16 +143,20 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 }
 
 func buildOne(source string, output string, options Options, flags []string) error {
+	library, err := RuntimeLibraryForSource("", source, options)
+	if err != nil {
+		return err
+	}
+	return buildOneWithRuntime(source, output, options, flags, library)
+}
+
+func buildOneWithRuntime(source string, output string, options Options, flags []string, library string) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibraryForSource("", source, options)
-	if err != nil {
-		return err
-	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
