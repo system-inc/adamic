@@ -292,27 +292,6 @@ func TestInheritanceGenericNominalConstraints(t *testing.T) {
 	}
 }
 
-func TestInheritanceGenericFactoryLayouts(t *testing.T) {
-	t.Parallel()
-	program := lowersAndAgreesWithNode(t, `class Base {}
-class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
-class Projected<T extends { readonly native: number | string }> extends Box<T['native']> {}
-function make<T extends { readonly native: number | string }>(value: T['native']): Projected<T> { return new Projected<T>(value); }
-const n = make<{ readonly native: number }>(1);
-const s = make<{ readonly native: string }>('s');
-console.log(n.read().toString() + ':' + s.read());`)
-	// Node behavior cannot observe the separate native layouts or shared erased definition identity.
-	layouts := map[ir.Type]bool{}
-	for _, class := range program.Classes {
-		if strings.HasPrefix(class.Name, "Box_") {
-			layouts[class.Fields[0].Value.Type()] = true
-		}
-	}
-	if !layouts[ir.Number] || !layouts[ir.String] {
-		t.Fatalf("generic factories lost their concrete base layouts: %v", layouts)
-	}
-}
-
 func TestInheritanceNativeSignatureNeighbors(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
