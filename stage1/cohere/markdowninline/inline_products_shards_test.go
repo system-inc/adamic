@@ -8,12 +8,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -22,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -80,49 +79,36 @@ func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) s
 	}
 	return slot.directory
 }
+
+// inlineOverlayBuild is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
+// lays over it, a product (buildcache.GoBuildIn) built ahead. It returns the go-printer binary. The overlay names this
+// checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
 func inlineOverlayBuild(t *testing.T) string {
 	t.Helper()
-	in := inlineCompilerInputs(t)
-	in.Name = "markdowninline Go overlay bridge"
-	in.Files = append(append([]string{}, in.Files...), "stage1/cohere/markdowninline/testdata/bridge.go", "stage1/cohere/markdowninline/testdata/go_driver.go", "stage1/cohere/markdowninline/inline_build_products_test.go")
-	in.Flags = append(append([]string{}, in.Flags...), "go build -overlay=<product>/overlay.json -o <product>/go-printer cmd/adamic_stage_one/main.go")
-
-	return inlineBuild(t, in, buildInlineGoBridge)
-}
-func inlineWrite(dir, name string, data []byte) error {
-	return os.WriteFile(filepath.Join(dir, name), data, 0644)
-}
-func buildInlineGoBridge(dir string) error {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		return err
+		t.Fatal(err)
 	}
 	bridge, err := filepath.Abs("testdata/bridge.go")
 	if err != nil {
-		return err
+		t.Fatal(err)
 	}
 	driver, err := filepath.Abs("testdata/go_driver.go")
 	if err != nil {
-		return err
+		t.Fatal(err)
 	}
 	cohere := filepath.Join(root, "cohere")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/markdown/adamic_stage_one.go"): bridge, filepath.Join(cohere, "cmd/adamic_stage_one/main.go"): driver}})
+	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/markdown/adamic_stage_one.go"): bridge, mainPath: driver}})
 	if err != nil {
-		return err
+		t.Fatal(err)
 	}
-	if err = inlineWrite(dir, "overlay.json", data); err != nil {
-		return err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(filepath.Join(dir, "overlay.json"))
-	cmd, cancel := inlineCommand("go", "build", "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-	defer cancel()
-	cmd.Dir = cohere
-	out, err := combinedOutput(cmd)
-	if err != nil {
-		return fmt.Errorf("%w: %s", err, out)
-	}
-	return nil
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, overlayPath, data)
+	return buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, []string{"-overlay=" + overlayPath})
+}
+func inlineWrite(dir, name string, data []byte) error {
+	return os.WriteFile(filepath.Join(dir, name), data, 0644)
 }
 func buildInlineProgram(main, dir string) error {
 	p, err := load.Load([]string{main})
@@ -192,106 +178,20 @@ func (m inlineMutation) buildLowered(dir string) error {
 	return buildInlineProgram(filepath.Join(dir, "main.ts"), dir)
 }
 
-// Lowering runs in-process, so its product keys cover the compiler's Go and
-// embedded inputs. The overlay Go oracle has its own Product recipe.
-func collectInlineCompilerInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
+// Lowering runs in-process, so a lowered product's key names the compiler linked into this test binary by its sources
+// (compilerinputs.Lowering), with the port's three .ts files, the lowering recipe here, and the mutations
+// inline_build_products_test.go plants. The overlay Go oracle is a buildcache.GoBuildIn product of its own.
+func inlineLoweredInputs(index int) buildcache.Inputs {
+	name := inlineProductName(index) + " lowered"
+	if index < 0 {
+		name = "markdowninline lowered program"
 	}
-	command, cancel := inlineCommand("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/markdown")
-	command.Dir = root
-	defer cancel()
-	listing, err := combinedOutput(command)
-	if err != nil {
-		t.Fatalf("compiler inputs: %v: %s", err, listing)
+	in := buildcache.Inputs{Name: name, Files: compilerinputs.Lowering(), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	for _, file := range []string{"main.ts", "inline.ts", "classes.ts", "inline_products_shards_test.go", "inline_build_products_test.go"} {
+		in.Files = append(in.Files, "stage1/cohere/markdowninline/"+file)
 	}
-	files := map[string]bool{"go.mod": true}
-	inside := func(path string) bool {
-		relative, err := filepath.Rel(root, path)
-		return err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
-	}
-	add := func(dir, name string) {
-		path := filepath.Join(dir, name)
-		if filepath.IsAbs(name) {
-			path = name
-		}
-		if !inside(path) {
-			return
-		}
-		relative, err := filepath.Rel(root, path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		files[filepath.ToSlash(relative)] = true
-	}
-	decoder := json.NewDecoder(bytes.NewReader(listing))
-	for {
-		var pkg struct {
-			Dir                                                                        string
-			Standard                                                                   bool
-			Module                                                                     *struct{ GoMod string }
-			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
-		}
-		if err := decoder.Decode(&pkg); err == io.EOF {
-			break
-		} else if err != nil {
-			t.Fatal(err)
-		}
-		if pkg.Standard || !inside(pkg.Dir) {
-			continue
-		}
-		for _, names := range [][]string{pkg.GoFiles, pkg.CgoFiles, pkg.CFiles, pkg.CXXFiles, pkg.HFiles, pkg.SFiles, pkg.SysoFiles, pkg.EmbedFiles} {
-			for _, name := range names {
-				add(pkg.Dir, name)
-			}
-		}
-		for _, flags := range [][]string{pkg.CgoCFLAGS, pkg.CgoCPPFLAGS, pkg.CgoCXXFLAGS} {
-			for index, flag := range flags {
-				include := strings.TrimPrefix(flag, "-I")
-				if flag == "-I" && index+1 < len(flags) {
-					include = flags[index+1]
-				} else if include == flag {
-					continue
-				}
-				if !filepath.IsAbs(include) {
-					include = filepath.Join(pkg.Dir, include)
-				}
-				if inside(include) {
-					add(root, include)
-				}
-			}
-		}
-		if pkg.Module != nil && inside(pkg.Module.GoMod) {
-			for _, name := range []string{"go.mod", "go.sum"} {
-				dir := filepath.Dir(pkg.Module.GoMod)
-				if _, err := os.Stat(filepath.Join(dir, name)); err == nil {
-					add(dir, name)
-				}
-			}
-		}
-	}
-	for _, name := range []string{"go.work", "go.work.sum"} {
-		if _, err := os.Stat(filepath.Join(root, name)); err == nil {
-			add(root, name)
-		}
-	}
-	for _, name := range []string{"main.ts", "inline.ts", "classes.ts", "inline_products_shards_test.go"} {
-		add(filepath.Join(root, "stage1/cohere/markdowninline"), name)
-	}
-	in := buildcache.Inputs{Name: "markdowninline compiler inputs", Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
-	for name := range files {
-		in.Files = append(in.Files, name)
-	}
-	sort.Strings(in.Files)
 	in.Flags = append(in.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT"))
 	return in
-}
-func inlineProgramInputs(base buildcache.Inputs, name string) buildcache.Inputs {
-	base.Name = name
-	return base
 }
 
 // A dependent product is keyed by bytes read from its prerequisite, never by
@@ -307,8 +207,11 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 	}
 	return in
 }
+
+// A native product keys the compiler that builds it (compilerinputs.Lowering, which holds internal/native), the recipe
+// here, and its C by content.
 func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: []string{"internal/native", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
+	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
 	in.Flags = append(in.Flags, inlineEnvironment("LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT")...)
 	return inlineProductSources(t, in, source, "program.c")
 }
@@ -481,8 +384,7 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 	if err != nil {
 		t.Fatal(err)
 	}
-	goDir := inlineOverlayBuild(t)
-	goBinary := filepath.Join(goDir, "go-printer")
+	goBinary := inlineOverlayBuild(t)
 	nodeDir := inlineNodeProduct(t)
 	lowerDir := inlineLoweredProduct(t, -1)
 	nativeDir := inlineNativeProduct(t, -1, false)
@@ -705,6 +607,34 @@ func TestMarkdownInlineProductSourceInputs(t *testing.T) {
 	if original == key(second) {
 		t.Fatal("changed prerequisite reused a product key")
 	}
+}
+
+// An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
+// baselines, which nothing links, must keep it.
+func TestMarkdownInlineCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
+	t.Parallel()
+	// A native product keys its C by content, so a stand-in program.c keys it without lowering anything.
+	source := t.TempDir()
+	write(t, filepath.Join(source, "program.c"), nil)
+	var products []buildcache.Inputs
+	for index := -1; index < len(inlineMutations); index++ {
+		products = append(products, inlineLoweredInputs(index), inlineNativeInputs(t, inlineProductName(index)+" native", source, false), inlineNativeInputs(t, inlineProductName(index)+" sanitized", source, true))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		linked, baselines := false, false
+		for _, entry := range product.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", product.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", product.Name)
+		}
+	}
+	t.Logf("%d lowered and native keys name what the compiler links and leave tsc's baselines out", len(products))
 }
 
 func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
