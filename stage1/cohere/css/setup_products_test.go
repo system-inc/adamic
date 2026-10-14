@@ -39,6 +39,18 @@ func cssParserPreparedNative(t *testing.T, mutation int) string {
 	return buildCSSParserBinaries(t, []cssParserProgram{cssParserPreparedProgram(t, mutation)})[0]
 }
 
+// prepareCSSParserCompilerProducts needs no oracle, even on a cold tree. The
+// runtime comparison setup fetches the corpus independently after these products.
+func prepareCSSParserCompilerProducts(t *testing.T) {
+	t.Helper()
+	for mutation := -1; mutation < len(mutants); mutation++ {
+		cssParserPreparedNative(t, mutation)
+	}
+	if runtime.GOOS == "darwin" {
+		cssParserPreparedLeaks(t)
+	}
+}
+
 func cssParserPreparedLeaks(t *testing.T) string {
 	t.Helper()
 	return buildCSSParserUnsanitized(t, cssParserPreparedProgram(t, -1))
@@ -103,8 +115,6 @@ func TestCSSGoOraclesKeyTheCompilersEnvGivesGo(t *testing.T) {
 	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.c, defaults.cPlusPlus)
 }
 
-func TestProduct_CSSParserGoOracle(t *testing.T)      { t.Parallel(); cssParserOracle(t) }
-func TestProduct_CSSParserCorpus(t *testing.T)        { t.Parallel(); prepareCSSParserTopCorpus(t) }
 func TestProduct_CSSParserParserLowered(t *testing.T) { t.Parallel(); cssParserPreparedProgram(t, -1) }
 func TestProduct_CSSParserParserNative(t *testing.T)  { t.Parallel(); cssParserPreparedNative(t, -1) }
 func TestProduct_CSSParserCustomPropertyMutantLowered(t *testing.T) {
@@ -139,14 +149,6 @@ func TestProduct_CSSParserDarwinLeaks(t *testing.T) {
 	cssParserPreparedLeaks(t)
 }
 
-func TestProduct_CSSCompositionCorpusOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-}
-func TestProduct_CSSCompositionGoOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
-}
 func TestProduct_CSSCompositionLowered(t *testing.T) {
 	t.Parallel()
 	compositionLoweredProduct(t)
