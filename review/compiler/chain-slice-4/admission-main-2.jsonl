@@ -1,0 +1,60 @@
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_element_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_element_plain.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_numparam.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_optional.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_param.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_paren.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_template.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/047cb0d_n_typeof.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/93122fa_s1.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/93122fa_s2.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/adversarial_exits.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/adversarial_iteration.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/adversarial_order.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_callbacks.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_extended.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_no_reader.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_reduce_left.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/aliasing.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/aliasing.a:2:37: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/arrow.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/arrow.a:2:42: Adamic 0.1 refuses arguments inside an arrow function; read arguments.length in the enclosing non-arrow function and capture that number"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/indexing.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/indexing.a:2:38: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/passing.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/passing.a:2:28: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/returning.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/returning.a:2:30: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/spreading.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/spreading.a:2:40: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"}
+{"kind":"Refused","path":"internal/oracle/testdata/arguments_length_refused/writing.a","reason":"/workspace/adamic/internal/oracle/testdata/arguments_length_refused/writing.a:2:23: Adamic 0.1 refuses writing arguments.length; keep the count read-only; write an explicit local number instead"}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_spread.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_static.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_static_constructor.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_unrelated_type.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_value.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/arguments_length_value_count.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_from.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_from_length.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_from_undefined.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_literal_empty_first.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_literal_empty_last.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_literal_empty_typed.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/array_literal_empty_union.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/ascii_scan.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/bitwise.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/bitwise_sweep.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/booleans.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_argument.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_capture.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_captured_root.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_bounded.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_callbacks.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_depths.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_exclusions.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_finally.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_guards.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_parents.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_return.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_scope.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_spread.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_coverage_values.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/borrow_chain_listener.a","reason":""}

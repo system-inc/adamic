@@ -1,0 +1,60 @@
+{"kind":"accepted","path":"stage3/fixtures/cycles/07_namespace_barrel/_namespaces/ts.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/07_namespace_barrel/_namespaces/ts.path.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/07_namespace_barrel/core.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/07_namespace_barrel/main.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/07_namespace_barrel/path.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/08_named_reexports/_namespaces/ts.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/08_named_reexports/core.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/08_named_reexports/main.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/08_named_reexports/path.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.performance.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/09_function_value_load/core.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/09_function_value_load/main.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/09_function_value_load/performance.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/10_hoisted_before_body/_namespaces/ts.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/10_hoisted_before_body/_namespaces/ts.performance.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/10_hoisted_before_body/core.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/10_hoisted_before_body/main.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/cycles/10_hoisted_before_body/performance.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/call-graph-24.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/callable-selection.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/native-call-before-enum.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/native-enum-map.a","reason":""}
+{"kind":"NotYet","path":"stage3/fixtures/enum-init-reach/reaching-constructor.a","reason":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-constructor.a:2:34: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"kind":"NotYet","path":"stage3/fixtures/enum-init-reach/reaching-cycle.a","reason":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-cycle.a:2:53: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"kind":"NotYet","path":"stage3/fixtures/enum-init-reach/reaching-derived.a","reason":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-derived.a:2:39: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"kind":"NotYet","path":"stage3/fixtures/enum-init-reach/reaching-direct.a","reason":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-direct.a:2:31: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"kind":"NotYet","path":"stage3/fixtures/enum-init-reach/reaching-helper.a","reason":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-helper.a:2:31: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/safe-constructor.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/safe-helper.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/unknown-after.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/unknown-before.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/unknown-callback.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enum-init-reach/unknown-property.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/01_token_range.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/02_node_range.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/03_jsdoc_range.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/04_parse_tree_mask.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/05_local_export_flags.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/enums/06_set_node_flags.a","reason":"/workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:9: Adamic 0.1 refuses generic body assignment into slot T[\"flags\"] from source NodeFlags is not proven for every allowed type argument; checker constraint: T extends Node; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"}
+{"kind":"accepted","path":"stage3/fixtures/enums/07_regex_array_map.a","reason":""}
+{"kind":"checker","path":"stage3/fixtures/enums/08_debug_format_enum.a","reason":"/workspace/adamic/stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\n/workspace/adamic/stage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."}
+{"kind":"accepted","path":"stage3/fixtures/enums/09_symbol_exclusion_mask.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/10_string_enum.a","reason":""}
+{"kind":"checker","path":"stage3/fixtures/enums/11_format_syntax_kind.a","reason":"/workspace/adamic/stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\n/workspace/adamic/stage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."}
+{"kind":"accepted","path":"stage3/fixtures/enums/12_diagnostic_reverse_lookup.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/13_regex_map_keys.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/enums/syntax-kind-support.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/generics/01_identity.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/generics/02_optional_return.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/generics/03_callback_return.a","reason":""}
+{"kind":"NotYet","path":"stage3/fixtures/generics/04_function_value.a","reason":"/workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet"}
+{"kind":"accepted","path":"stage3/fixtures/generics/05_nested_class.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/generics/06_polymorphic_recursion.a","reason":"/workspace/adamic/stage3/fixtures/generics/06_polymorphic_recursion.a:5:12: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type"}
+{"kind":"Refused","path":"stage3/fixtures/generics/07_generic_cast.a","reason":"/workspace/adamic/stage3/fixtures/generics/07_generic_cast.a:4:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"Refused","path":"stage3/fixtures/generics/08_readonly_view.a","reason":"/workspace/adamic/stage3/fixtures/generics/08_readonly_view.a:6:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"accepted","path":"stage3/fixtures/generics/09_recursive_optional.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/generics/10_identifier_multimap.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/generics/11_indexed_result.a","reason":"/workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:1:68: Adamic 0.1 refuses generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"}
+{"kind":"Refused","path":"stage3/fixtures/generics/12_mixed_indexed_result.a","reason":"/workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:1:87: Adamic 0.1 refuses generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"}

@@ -1,0 +1,8 @@
+PASS: 1069 rows; 59 slice-owned deltas against main (55 additions, 4 existing changes); only 3 main getters additions against previous slice
+internal/oracle/testdata/getters_census_binary_inline.a 37/37/29/57/17/0
+internal/oracle/testdata/getters_census_class_map.a 13/13/4/15/6/0
+internal/oracle/testdata/getters_census_throwing_object.a 3/3/5/8/3/0
+internal/fresh/testdata/regexp_tree.ts 91/91/81/85/35/0 -> 91/91/85/89/35/0 generators-main
+internal/oracle/testdata/regexp.a 437/437/382/417/58/0 -> 437/437/383/418/58/0 generators-main
+internal/oracle/testdata/user_iterators.a 663/663/455/904/64/0 -> 1050/1050/677/994/97/0 iteration-main
+internal/oracle/testdata/user_iterators_rest_tdz.a 5/0/5/3/5/0 -> 11/3/7/3/8/0 iteration-main

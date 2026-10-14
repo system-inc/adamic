@@ -1,0 +1,11 @@
+// Authored ownership probe for the NodeArray<T> reduction's contextual element storage.
+import type { Weak } from 'adamic';
+interface Node { readonly label: string; }
+interface NodeArray<T> extends ReadonlyArray<T> {}
+function label(value: number): string { return 'node:' + String(value); }
+const owner: Node = { label: label(1) };
+const nodes: NodeArray<Weak<Node>> = [owner];
+for (const node of nodes) {
+    if (node !== undefined) { console.log(node.label); }
+}
+console.log(owner.label);

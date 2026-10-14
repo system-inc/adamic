@@ -1,0 +1,13 @@
+...F
+======================================================================
+FAIL: test_selection (__main__.AuditTests.test_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py", line 88, in test_selection
+    self.assertFalse(scoped(reason, names))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)

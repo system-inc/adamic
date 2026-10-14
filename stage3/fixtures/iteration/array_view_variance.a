@@ -1,0 +1,11 @@
+// a-check: refused adamic/invariant-mutable
+// Authored soundness counterexample: readonly arrays do not make element fields readonly.
+interface Small { readonly name: string; }
+interface Large extends Small { readonly extra: number; }
+interface Slot<T> { value: T; }
+interface NodeArray<T> extends ReadonlyArray<T> {}
+const original: Slot<Large> = { value: { name: 'large', extra: 7 } };
+const narrow: Slot<Large>[] = [original];
+const wide: NodeArray<Slot<Small>> = narrow;
+for (const slot of wide) { slot.value = { name: 'small' }; }
+console.log(String(original.value.extra));

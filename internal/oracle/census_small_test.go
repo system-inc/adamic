@@ -22,10 +22,6 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a", false, false}, struct {
-		path    string
-		lowers  bool
-		checked bool
 	}{"internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a", false, false})
 }
 

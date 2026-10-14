@@ -1,0 +1,1 @@
+{"compilerOptions": {"strict": true, "target": "es2020", "module": "esnext", "moduleResolution": "bundler", "lib": ["es2020"], "skipLibCheck": false, "declaration": true, "types": ["entry", "dependency"], "rootDir": ".", "outDir": "flat-out"}, "files": ["app/main.ts", "dependency/value.ts", "prelude.d.ts"]}

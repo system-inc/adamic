@@ -1,0 +1,60 @@
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_uninitialized_iteration.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_uninitialized_loop.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_uninitialized_map_entry.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_uninitialized_optional.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_uninitialized_spread.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_union.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_weak.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/non_null_weak_freed.ts","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_cache.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_limit.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_long.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_quick.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_repeat.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_coverage_stream.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_form.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/normalize_long_marks.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/notyet/generator_cycle.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:4:6: Adamic 0.1 refuses cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator"}
+{"kind":"NotYet","path":"internal/oracle/testdata/notyet_element_access/fields.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/fields.a:12:5: stage 0 can't lower assigning an element of a value yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/notyet_element_access/jsdoc.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/jsdoc.a:4:78: stage 0 can't lower an ElementAccessExpression yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_element_access/nodearray.a","reason":""}
+{"kind":"NotYet","path":"internal/oracle/testdata/notyet_element_access/numeric_record.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/numeric_record.a:2:102: stage 0 can't lower an ElementAccessExpression yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/notyet_element_access/paths.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/paths.a:3:10: stage 0 can't lower a function returning Path | undefined yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_element_access/sorted.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/notyet_element_access/string_dictionary.a","reason":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/string_dictionary.a:1:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_element_access/template.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_library_object_entries_const.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_library_regex_callback.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_library_regex_offset.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/notyet_library_string_bounds.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/number_edges.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/number_formats.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/number_parsing.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/numbers.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/object_prototype.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/objects.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_boolean.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_defaults.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_methods.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_number.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_object.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_reader.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_reader_direct.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_reader_override.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_reader_string.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_scanner.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_scanner_explicit.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_scanner_required.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/omitted_string.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_class_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_array.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_chain.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_map.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_string.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_string_gap.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_indexing_typed_array.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_numbers.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_strings.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_widening_class.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/optional_widening_declared.a","reason":""}

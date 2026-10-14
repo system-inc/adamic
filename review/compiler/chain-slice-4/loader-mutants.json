@@ -1,0 +1,106 @@
+[
+  [
+    "drop-transitive",
+    "project_references.go",
+    "for _, reference := range config.ProjectReferences() {",
+    "for _, reference := range config.ProjectReferences() { if config != entry { continue }",
+    "TestProjectReferencesTransitive",
+    "transitive"
+  ],
+  [
+    "declarations-only",
+    "load.go",
+    "nil, currentDirectory.ResolveDirectory",
+    "projectConfig.ProjectReferences(), currentDirectory.ResolveDirectory",
+    "TestProjectLoaderReferenceSources",
+    "TS6305"
+  ],
+  [
+    "allow-conflicts",
+    "project_references.go",
+    "if option := conflictingProjectOption(config.CompilerOptions(), dependency.CompilerOptions()); option != \"\" {",
+    "if option := conflictingProjectOption(config.CompilerOptions(), dependency.CompilerOptions()); false {",
+    "TestProjectReferencesConflictingOptions",
+    "want"
+  ],
+  [
+    "drop-reference-audit",
+    "load.go",
+    "for _, site := range sites {",
+    "for _, site := range []OptionSite{} {",
+    "TestProjectReferencesAudit",
+    "admitted"
+  ],
+  [
+    "duplicate-roots",
+    "project_references.go",
+    "if !seen[key] {",
+    "if true {",
+    "TestProjectReferencesDiamond",
+    "duplicate"
+  ],
+  [
+    "physical-prelude",
+    "project_references.go",
+    "if root != preludePath && root.IsDeclarationFile() && fs.FileExists(preludePath) {",
+    "if false {",
+    "TestProjectReferencesSharedPrelude",
+    "physical prelude console"
+  ],
+  [
+    "allow-cycle",
+    "project_references.go",
+    "if active[name] {",
+    "if false {",
+    "TestProjectReferencesCycle",
+    "circular"
+  ],
+  [
+    "entry-types-only",
+    "project_references.go",
+    "return roots, owners, types, nil",
+    "return roots, owners, entry.CompilerOptions().Types, nil",
+    "TestProjectReferencesTypesUnion",
+    "ambient types union lost"
+  ],
+  [
+    "audit-entry-types-only",
+    "project_options.go",
+    "base.Types = types",
+    "base.Types = config.CompilerOptions().Types; _ = types",
+    "TestProjectReferencesTypesUnion",
+    "audit lost ambient types union"
+  ],
+  [
+    "skip-union-declarations",
+    "load.go",
+    "options.SkipLibCheck = core.TSFalse",
+    "options.SkipLibCheck = core.TSTrue",
+    "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "want both checker duplicate declarations"
+  ],
+  [
+    "audit-skip-union-declarations",
+    "project_options.go",
+    "base.SkipLibCheck = core.TSFalse",
+    "base.SkipLibCheck = core.TSTrue",
+    "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "want ordinary duplicate declarations"
+  ],
+  [
+    "project-node-roots",
+    "load.go",
+    "if project == \"\" && usesNodeModules(program) {",
+    "if usesNodeModules(program) {\n checkRoots = roots",
+    "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "discarded referenced"
+  ],
+  [
+    "standalone-node-prelude",
+    "load.go",
+    "checkRoots = append(checkRoots, currentDirectory.ResolveFile(index))",
+    "checkRoots = append(roots, currentDirectory.ResolveFile(index))",
+    "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "lost prelude"
+  ]
+]

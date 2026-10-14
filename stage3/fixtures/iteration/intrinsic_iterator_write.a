@@ -1,0 +1,5 @@
+// a-check: refused adamic/intrinsic-iterator
+// Authored counterexample for the ruled proof behind the array fast path.
+const values: number[] = [1, 2];
+values[Symbol.iterator] = () => [9].values();
+for (const value of values) { console.log(String(value)); }
