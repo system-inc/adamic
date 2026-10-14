@@ -342,7 +342,13 @@ typedef struct adamic_slot_cache {
 } adamic_slot_cache;
 #define ADAMIC_SLOT_SHAPE_MASK UINT64_C(0x0000ffffffffffff)
 _Static_assert(sizeof(uintptr_t) <= sizeof(uint64_t), "slot cache requires pointers of at most 64 bits");
-_Static_assert(__atomic_always_lock_free(sizeof(uint64_t), 0), "slot cache requires lock-free 64-bit atomics");
+// The standard lock-free macros are integer constant expressions under C11, including GCC.
+_Static_assert(_Generic((uint64_t)0,
+	unsigned char: ATOMIC_CHAR_LOCK_FREE,
+	unsigned short: ATOMIC_SHORT_LOCK_FREE,
+	unsigned int: ATOMIC_INT_LOCK_FREE,
+	unsigned long: ATOMIC_LONG_LOCK_FREE,
+	unsigned long long: ATOMIC_LLONG_LOCK_FREE) == 2, "slot cache requires lock-free 64-bit atomics");
 // One relaxed word contains both the immutable shape identity and its slot. Large
 // slot indices are simply not cached; shape addresses outside 48 bits are refused.
 void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
