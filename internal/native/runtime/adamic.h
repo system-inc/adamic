@@ -1086,3 +1086,10 @@ void *adamic_library_identity(size_t index);
 #endif
 
 #endif
+
+#include "node_path.h"
+#include "node_fs_directory.h"
+
+#include "node_process.h"
+adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
+adamic_string *adamic_process_environment(const adamic_string *name);
