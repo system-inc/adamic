@@ -1,0 +1,16 @@
+[
+  {
+    "test": "TestExplainChecksOutput/overload_some_empty/build",
+    "temperature": "cold",
+    "seconds": 9.987103131999902,
+    "core_seconds": 10.092334000000001,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput/overload_some_empty/build",
+    "temperature": "warm",
+    "seconds": 1.229455150999911,
+    "core_seconds": 1.2704279999999994,
+    "exit": 0
+  }
+]

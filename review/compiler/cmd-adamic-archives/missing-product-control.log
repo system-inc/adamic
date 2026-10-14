@@ -1,0 +1,4 @@
+=== RUN   TestRequestNativeStaysCommand
+    request_test.go:114: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+--- FAIL: TestRequestNativeStaysCommand (3.03s)
+FAIL
