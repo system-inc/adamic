@@ -184,7 +184,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 						name   string
 						result run
 					}{
-						{"native", cssParserExecute(t, cssParserASAN(true), binaries[0], shardCases)},
+						{"native", cssParserSanitizedAgreement(t, binaries[0], shardCases)},
 						{"Node", cssParserOnNode(t, programs[0].main, shardCases)},
 						{"JS backend", cssParserOnNode(t, programs[0].javascript, shardCases)},
 					} {

@@ -443,8 +443,8 @@ func checkCSSParserLeaks(t *testing.T, sanitized, unsanitized string, args ...st
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		// The agreement's sanitized run has leak detection on (cssParserASAN(true)), so one run checks output,
-		// ASan/UBSan and LeakSanitizer, as the printer's does.
+		// The agreement's sanitized run has leak detection on (cssParserSanitizedAgreement), so one run checks
+		// output, ASan/UBSan and LeakSanitizer, as the printer's does. TestCSSParserSanitizedRunCatchesALeak holds it.
 	case "darwin":
 		result := cssParserExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if result.exitCode != 0 {
