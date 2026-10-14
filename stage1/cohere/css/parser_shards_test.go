@@ -385,5 +385,3 @@ func cssParserTopProbe(t *testing.T, ordinal int) {
 		}
 	}
 }
-
-
