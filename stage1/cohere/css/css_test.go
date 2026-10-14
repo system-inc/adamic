@@ -87,7 +87,7 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
 	packageDirectory := filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
-	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
+	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "roots": cssCorpusRoots, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
 	encoded, _ := json.Marshal(request)
 	requestPath := filepath.Join(directory, "request.json")
 	if err := os.WriteFile(requestPath, encoded, 0644); err != nil {

@@ -87,7 +87,10 @@ func adamicCohereTexts(t *testing.T) []string {
 }
 
 func TestAdamicPortCases(t *testing.T) {
-	var request struct{ Cases, Answers, Repository, Fixtures string }
+	var request struct {
+		Cases, Answers, Repository, Fixtures string
+		Roots                                []string
+	}
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
 		t.Skip("run by Adamic CSS slice")
@@ -107,7 +110,14 @@ func TestAdamicPortCases(t *testing.T) {
 		texts = append(texts, fixture.text)
 	}
 	files := map[string]int{}
-	roots := []string{request.Repository}
+	// The repository's corpus is its corpus roots (css's cssCorpusRoots), never the whole repository (#t128y5x).
+	if len(request.Roots) == 0 {
+		t.Fatal("the request names no corpus roots")
+	}
+	var roots []string
+	for _, root := range request.Roots {
+		roots = append(roots, filepath.Join(request.Repository, filepath.FromSlash(root)))
+	}
 	if request.Fixtures != "" {
 		roots = append(roots, request.Fixtures)
 	} else {

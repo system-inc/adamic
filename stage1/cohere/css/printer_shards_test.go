@@ -177,7 +177,7 @@ func cssPrinterCases(t *testing.T, oracle string) string {
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]string{"Cases": cases, "Answers": answers, "Repository": repo, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]any{"Cases": cases, "Answers": answers, "Repository": repo, "Roots": cssCorpusRoots, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	return cases
 }
 
