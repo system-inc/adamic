@@ -64,6 +64,11 @@ historical declarations. The compact log fixture preserves skip output/events
 and the compiler-agreement PASS from the real log. Do not add those historical
 rows to main's live census to manufacture a green result.
 
+Both historical-log tests read `testdata/historical-skips.json`, the 71-row
+table as it stood at fe8cd31c, frozen. The live `testdata/skips.json` follows
+main's skips, and the tests those logs ran are gone from main, so the logs are
+checked against the table of their own time.
+
 The older `gate-logs/47fbaf174d16/plain` still contains the real WASI builtins
 skip and is correctly rejected; it is not the passing witness.
 

@@ -34,7 +34,20 @@ func optInAnnotations(root string, rows []Row) error {
 			files[filepath.ToSlash(relative)] = true
 		}
 	}
+	// Files are read in path order, so a name two files in one directory declare (cohere overlays in one testdata
+	// directory, never compiled together) resolves as Scan's walk resolves it, to the last file's, on every run; and
+	// every declaration is walked, so each file's skips are annotated from their own guards.
+	paths := make([]string, 0, len(files))
 	for file := range files {
+		paths = append(paths, file)
+	}
+	sort.Strings(paths)
+	type declared struct {
+		directory string
+		function  *ast.FuncDecl
+	}
+	var declarations []declared
+	for _, file := range paths {
 		tree, err := parser.ParseFile(set, filepath.Join(root, file), nil, 0)
 		if err != nil {
 			return err
@@ -42,6 +55,7 @@ func optInAnnotations(root string, rows []Row) error {
 		for _, declaration := range tree.Decls {
 			if f, ok := declaration.(*ast.FuncDecl); ok && f.Body != nil {
 				functions[filepath.Dir(file)+":"+f.Name.Name] = f
+				declarations = append(declarations, declared{filepath.Dir(file), f})
 			}
 		}
 	}
@@ -113,8 +127,8 @@ func optInAnnotations(root string, rows []Row) error {
 			return false
 		})
 	}
-	for name, f := range functions {
-		walk(f.Body, strings.Split(name, ":")[0], map[string]bool{}, map[string]bool{})
+	for _, declaration := range declarations {
+		walk(declaration.function.Body, declaration.directory, map[string]bool{}, map[string]bool{})
 	}
 	for index := range rows {
 		if len(rows[index].OptInOn) > 0 {

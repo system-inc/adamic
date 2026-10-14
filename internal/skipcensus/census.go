@@ -32,6 +32,7 @@ type Row struct {
 	OptInOn   []string `json:"opt_in_on,omitempty"`
 	OptInOff  []string `json:"opt_in_off,omitempty"`
 	// Awaits names the branch a pending skip waits on (class "pending"); its message says "awaits <branch>".
+	// Scan reads it from the message, so a row's awaits is metadata Validate holds to the skip's own words.
 	// An opt-in-lane row cites the branch that gives its lane a home the same way; only pending rows are checked against main.
 	Awaits string `json:"awaits,omitempty"`
 	// Siblings name the top-level tests, in the skip's own package, that run the work this skip leaves to them
@@ -185,7 +186,7 @@ func Scan(root string) ([]Row, error) {
 							if len(call.Args) > 0 {
 								message = printed(set, call.Args[0])
 							}
-							rows = append(rows, Row{File: relative, Test: f.Name.Name, ID: fmt.Sprintf("%s:%x", f.Name.Name, sum[:]), Line: set.Position(call.Pos()).Line, Condition: condition, Message: message})
+							rows = append(rows, Row{File: relative, Test: f.Name.Name, ID: fmt.Sprintf("%s:%x", f.Name.Name, sum[:]), Line: set.Position(call.Pos()).Line, Condition: condition, Message: message, Awaits: awaited(message)})
 						}
 					}
 				}

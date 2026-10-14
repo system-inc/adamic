@@ -2,6 +2,7 @@ package skipcensus
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -208,11 +209,15 @@ func TestRefusedFixtureInOptInLane(t *testing.T) {
 	}
 }
 
+// historicalTable is the census's table as it stood when the historical logs below were recorded (the line's 71 rows at
+// fe8cd31c), frozen: the live testdata/skips.json follows main's skips, and the tests those logs ran are gone from main.
+const historicalTable = "testdata/historical-skips.json"
+
 // The fixture preserves the final two output events and terminal skip event for
 // each named skip in gate-logs/2e165469ec95/plain, without altering event contents.
 func TestHistoricalPlainSkips(t *testing.T) {
 	t.Parallel()
-	table, err := os.Open("testdata/skips.json")
+	table, err := os.Open(historicalTable)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -343,7 +348,7 @@ func TestProvidedHistoricalPlainLog(t *testing.T) {
 		}
 		return rows
 	}
-	rows := load("testdata/skips.json")
+	rows := load(historicalTable)
 	data, err := os.ReadFile("testdata/provided-plain-skips.jsonl")
 	if err != nil {
 		t.Fatal(err)
@@ -603,6 +608,98 @@ func TestASkipALaterPassCovers(t *testing.T) {
 		err := CheckLog(strings.NewReader(c.log), &output, nil)
 		if (err != nil) != c.red || !strings.Contains(output.String(), c.summary) {
 			t.Fatalf("log %q: err %v, output %q, want %q", c.log, err, output.String(), c.summary)
+		}
+	}
+}
+
+// Scan reads a skip's awaited branch from its literal message, the wording checkPending accepts, so a pending row's
+// awaits is metadata held to the skip's own words: a changed awaits is stale, as a changed condition is, even one that
+// checkPending's substring test would pass. A task or a computed message names no branch.
+func TestAPendingRowsAwaitsIsHeldToItsMessage(t *testing.T) {
+	t.Parallel()
+	source := `package probe
+import "testing"
+func TestProbe(t *testing.T) { t.Skip("awaits codex/feature: the bridge returns its error") }
+func TestDependency(t *testing.T) { t.Skip("acceptance dependency: codex/fixtures 8d864f9c") }
+func TestTask(t *testing.T) { t.Skip("awaits #cxr5x2v: a task is not a branch") }
+func TestComputed(t *testing.T) { reason := "awaits codex/feature: computed"; t.Skip(reason) }
+`
+	rows, err := Scan(scratch(t, source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]string{"TestProbe": "codex/feature", "TestDependency": "codex/fixtures", "TestTask": "", "TestComputed": ""}
+	if len(rows) != len(want) {
+		t.Fatalf("got %d skips, want %d: %+v", len(rows), len(want), rows)
+	}
+	declared := append([]Row{}, rows...)
+	for i := range declared {
+		if declared[i].Awaits != want[declared[i].Test] {
+			t.Fatalf("%s scanned awaits %q, want %q", declared[i].Test, declared[i].Awaits, want[declared[i].Test])
+		}
+		declared[i].Class, declared[i].Provides = "measurement", "fixture"
+		if declared[i].Awaits != "" {
+			declared[i].Class = "pending"
+		}
+	}
+	if err := Validate(rows, declared); err != nil {
+		t.Fatalf("pending rows whose awaits matches their messages: %v", err)
+	}
+	for name, changed := range map[string]string{"another branch": "codex/other", "a prefix checkPending passes": "codex/feat"} {
+		mutant := append([]Row{}, declared...)
+		for i := range mutant {
+			if mutant[i].Test == "TestProbe" {
+				mutant[i].Awaits = changed
+			}
+		}
+		err := Validate(rows, mutant)
+		if err == nil {
+			t.Fatalf("%s: a changed awaits validated", name)
+		}
+		if changed == "codex/feat" && !strings.Contains(err.Error(), "stale metadata") {
+			t.Fatalf("%s: want stale metadata, got %v", name, err)
+		}
+		t.Log(name, err)
+	}
+}
+
+// Two files in one directory may declare one function (cohere overlays in one testdata directory, never compiled
+// together, as stage1/cohere/css/testdata's TestAdamicPortCases). Every scan reads them the same way, and each file's
+// skip is annotated from its own guard, never from whichever declaration a map handed out first.
+func TestOneNameInTwoFilesScansTheSameEveryTime(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	for _, name := range []string{"a_side_test.go", "b_side_test.go"} {
+		source := `package probe
+import ("os";"testing")
+func TestCases(t *testing.T) { path := os.Getenv("REQUEST"); if path == "" { t.Skip("run by the parent") } }
+`
+		if err := os.WriteFile(filepath.Join(root, name), []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var first []byte
+	for run := 1; run <= 20; run++ {
+		rows, err := Scan(root)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(rows) != 2 {
+			t.Fatalf("run %d: got %d skips, want 2: %+v", run, len(rows), rows)
+		}
+		for _, row := range rows {
+			if strings.Join(row.OptInOff, ",") != "REQUEST" {
+				t.Fatalf("run %d: %s lost its own guard: %+v", run, row.File, row.OptInOff)
+			}
+		}
+		encoded, err := json.Marshal(rows)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if first == nil {
+			first = encoded
+		} else if !bytes.Equal(encoded, first) {
+			t.Fatalf("run %d scanned differently:\n%s\n%s", run, encoded, first)
 		}
 	}
 }

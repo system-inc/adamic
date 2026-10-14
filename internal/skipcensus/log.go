@@ -35,6 +35,22 @@ func reviewLane(pkg, test string) bool {
 	return pkg == "github.com/system-inc/adamic/internal/oracle" && strings.HasPrefix(test, "TestReviewPrograms")
 }
 
+// awaitedInMessage is the wording checkPending accepts, read from a literal skip message by Scan.
+var awaitedInMessage = regexp.MustCompile(`(?:awaits |dependency: )([A-Za-z0-9][A-Za-z0-9._/-]*)`)
+
+// awaited is the branch a skip's literal message says it waits on ("awaits <branch>" or "dependency: <branch>"),
+// or "" when the message is computed or names no branch (a task, "awaits #<task>", is not a branch).
+func awaited(message string) string {
+	literal, err := strconv.Unquote(message)
+	if err != nil {
+		return ""
+	}
+	if found := awaitedInMessage.FindStringSubmatch(literal); found != nil {
+		return found[1]
+	}
+	return ""
+}
+
 // checkPending holds a pending row to its reason: it names the branch it awaits, and its skip message says so,
 // as "awaits <branch>" or "dependency: <branch>" (@system_adamic, Oct 8: internal/oracle's TestEntriesAcceptance
 // skips with "acceptance dependency: codex/step12-entries-fixtures 8d864f9c", the same pending reason).
