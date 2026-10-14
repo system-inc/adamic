@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -20,9 +21,14 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 	if err != nil || !info.IsDir() {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
 	}
-	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries; inside a
-	// traced build, a walk its read set keys (tscAgreementPrepare lists here while it builds, #1p6sent).
-	paths, err := tracked.PathsUnder(checkout, root)
+	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries. The listing
+	// is key-time work (buildcache.Keying): every product that reads the corpus keys each listed .ts file itself
+	// (statementCorpusBuild by an input= flag with its sha256, tsPrinterOracleProduct as Files, tscAgreementPrepare by
+	// its declared corpus directory), so a .ts added or changed moves those keys. Walked under the trace, the listing
+	// put every directory under bench, bridge, cmd, internal and stage1 into their read sets, and any file added there,
+	// a css gap's or a Go file's, moved tsprinter's keys and every product downstream of them (#0rx19ha).
+	var paths []string
+	buildcache.Keying(func() { paths, err = tracked.PathsUnder(checkout, root) })
 	if err != nil {
 		return nil, fmt.Errorf("corpus root %s: tracked files: %w", root, err)
 	}
@@ -32,8 +38,10 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 			files = append(files, filepath.Join(checkout, name))
 		}
 	}
-	// Without .git, a .ts file the manifest leaves out (and no .gitignore ignores) is a stale manifest, refused.
-	extra, err := tracked.Unrecorded(checkout, root)
+	// Without .git, a .ts file the manifest leaves out (and no .gitignore ignores) is a stale manifest, refused: a
+	// check, never a byte a build reads, so it runs as key-time work too.
+	var extra []string
+	buildcache.Keying(func() { extra, err = tracked.Unrecorded(checkout, root) })
 	if err != nil {
 		return nil, fmt.Errorf("corpus root %s: %w", root, err)
 	}
