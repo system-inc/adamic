@@ -131,7 +131,8 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 // deterministic shard-NNN subtests. ADAMIC_TEST_SHARD=i/n (zero-based i) selects
 // ordinals modulo n as a local convenience; the gate can instead use
 // -run '^TestThePortParsesAsGoCohereDoes$/^shard-NNN$'. Every agreement shard
-// compares all original sides and runs ASan/UBSan and the separate leak check.
+// compares all original sides and runs ASan/UBSan, with leak detection in the same
+// run on Linux. Each mutant runs only in the shard that owns its witness case.
 // TestThePortParsesAsGoCohereDoes_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
@@ -183,7 +184,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 						name   string
 						result run
 					}{
-						{"native", cssParserExecute(t, cssParserASAN(false), binaries[0], shardCases)},
+						{"native", cssParserExecute(t, cssParserASAN(true), binaries[0], shardCases)},
 						{"Node", cssParserOnNode(t, programs[0].main, shardCases)},
 						{"JS backend", cssParserOnNode(t, programs[0].javascript, shardCases)},
 					} {
@@ -206,10 +207,13 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 					checkCSSParserPostCSS(t, unit, slice, want, postCSS)
 				} else {
 					// Fetch this mutant product once and share the immutable binary
-					// between its two original side checks for this complete case range.
+					// between its two original side checks for its witness's cases.
 					mutantBinary := binaries[unit.mutation+1]
 					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
 					witness := cssParserMutantWitness(unit.mutation)
+					if !cssParserContainsCase(unit.cases, witness) {
+						t.Fatalf("mutant %s group in %s doesn't hold its witness case %d", mutants[unit.mutation].name, unit.name, witness)
+					}
 					for _, side := range []struct {
 						name   string
 						result run
@@ -221,9 +225,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 							t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
 						}
 						if difference := cssParserDifference(unit, string(side.result.stdout), want); difference == "" {
-							if cssParserContainsCase(unit.cases, witness) {
-								t.Errorf("%s: mutant survived witness case %d in %s", side.name, witness, unit.name)
-							}
+							t.Errorf("%s: mutant survived witness case %d in %s", side.name, witness, unit.name)
 						} else {
 							t.Logf("%s mutant %s caught by %s: %s", side.name, mutants[unit.mutation].name, unit.name, difference)
 						}

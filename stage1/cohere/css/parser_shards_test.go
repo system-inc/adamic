@@ -69,24 +69,44 @@ type cssParserShard struct {
 func cssParserCaseKey(kind string, mutation int, key string) string {
 	return fmt.Sprintf("%s/%d/%s", kind, mutation, key)
 }
+
+// cssParserBucket is the shard that owns a check: a hash of its kind, mutation and stable key, so adding a file
+// never moves another check.
+func cssParserBucket(kind string, mutation int, key string) int {
+	hash := sha256.Sum256([]byte(cssParserCaseKey(kind, mutation, key)))
+	return int(binary.BigEndian.Uint64(hash[:8]) % testThePortParsesAsGoCohereDoesShards)
+}
+
+// cssParserMutantBucket is the one shard where a mutant runs: the bucket that owns its witness case. Over any other
+// bucket a mutant could fail only by crashing, which is the mutant's behavior, not the port's; on Oct 12 those groups
+// took 702 of the family's active seconds (#testaudit). It is -1 when the corpus doesn't hold the witness.
+func cssParserMutantBucket(keys []string, mutation int) int {
+	witness := cssParserMutantWitness(mutation)
+	if witness >= len(keys) {
+		return -1
+	}
+	return cssParserBucket("mutant", mutation, keys[witness])
+}
+
+// cssParserShards gives every shard its agreement group, every case by its hash owner, and gives each mutant a group
+// only in the shard that owns its witness, holding the cases that hash there.
 func cssParserShards(keys []string) []cssParserShard {
 	units := make([]cssParserShard, testThePortParsesAsGoCohereDoesShards)
 	for i := range units {
 		units[i].name = fmt.Sprintf("shard-%03d", i)
 	}
 	for variant := -1; variant < len(mutants); variant++ {
-		kind := "agreement"
+		kind, only := "agreement", -1
 		if variant >= 0 {
-			kind = "mutant"
+			kind, only = "mutant", cssParserMutantBucket(keys, variant)
 		}
 		buckets := make([][]int, len(units))
 		for i, key := range keys {
-			hash := sha256.Sum256([]byte(cssParserCaseKey(kind, variant, key)))
-			bucket := int(binary.BigEndian.Uint64(hash[:8]) % uint64(len(units)))
+			bucket := cssParserBucket(kind, variant, key)
 			buckets[bucket] = append(buckets[bucket], i)
 		}
 		for i, cases := range buckets {
-			if len(cases) > 0 {
+			if len(cases) > 0 && (variant < 0 || i == only) {
 				units[i].groups = append(units[i].groups, cssParserShard{name: units[i].name, kind: kind, mutation: variant, cases: cases})
 			}
 		}
@@ -99,8 +119,14 @@ func cssParserUnionError(keys []string, units []cssParserShard) error {
 		kind := "agreement"
 		if variant >= 0 {
 			kind = "mutant"
+			if cssParserMutantBucket(keys, variant) < 0 {
+				return fmt.Errorf("mutant %d's witness case %d is not in the corpus of %d", variant, cssParserMutantWitness(variant), len(keys))
+			}
 		}
 		for _, key := range keys {
+			if variant >= 0 && cssParserBucket(kind, variant, key) != cssParserMutantBucket(keys, variant) {
+				continue
+			}
 			id := cssParserCaseKey(kind, variant, key)
 			if expected[id] {
 				return fmt.Errorf("repeated unsplit case %s", id)
@@ -110,12 +136,16 @@ func cssParserUnionError(keys []string, units []cssParserShard) error {
 	}
 	seen := make(map[string]string)
 	names := make(map[string]bool)
+	mutantShards := make(map[int]int)
 	for _, unit := range units {
 		if names[unit.name] {
 			return fmt.Errorf("repeated shard %s", unit.name)
 		}
 		names[unit.name] = true
 		for _, group := range unit.groups {
+			if group.kind == "mutant" {
+				mutantShards[group.mutation]++
+			}
 			for _, i := range group.cases {
 				if i < 0 || i >= len(keys) {
 					return fmt.Errorf("invalid case %d", i)
@@ -134,6 +164,11 @@ func cssParserUnionError(keys []string, units []cssParserShard) error {
 	if len(seen) != len(expected) {
 		return fmt.Errorf("union count %d, live enumeration %d", len(seen), len(expected))
 	}
+	for mutation, count := range mutantShards {
+		if count != 1 {
+			return fmt.Errorf("mutant %d runs in %d shards, want its witness's one", mutation, count)
+		}
+	}
 	for id := range expected {
 		if _, ok := seen[id]; !ok {
 			return fmt.Errorf("missing case %s", id)
@@ -149,7 +184,15 @@ func verifyCSSParserUnion(t *testing.T, keys []string, units []cssParserShard) {
 	if err := cssParserUnionError(keys, units); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("union: %d live cases x %d original checks = %d unique case IDs across %d shards", len(keys), 1+len(mutants), len(keys)*(1+len(mutants)), len(units))
+	witnessCases := 0
+	for _, unit := range units {
+		for _, group := range unit.groups {
+			if group.kind == "mutant" {
+				witnessCases += len(group.cases)
+			}
+		}
+	}
+	t.Logf("union: %d live cases in agreement plus %d in %d mutant witness groups = %d unique case IDs across %d shards", len(keys), witnessCases, len(mutants), len(keys)+witnessCases, len(units))
 }
 func selectCSSParserShards(value string, units []cssParserShard) ([]cssParserShard, error) {
 	if value == "" {
@@ -400,10 +443,8 @@ func checkCSSParserLeaks(t *testing.T, sanitized, unsanitized string, args ...st
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		result := cssParserExecute(t, cssParserASAN(true), sanitized, args...)
-		if result.exitCode != 0 {
-			t.Errorf("leaks: exit %d\n%s", result.exitCode, result.stderr)
-		}
+		// The agreement's sanitized run has leak detection on (cssParserASAN(true)), so one run checks output,
+		// ASan/UBSan and LeakSanitizer, as the printer's does.
 	case "darwin":
 		result := cssParserExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if result.exitCode != 0 {
@@ -457,6 +498,25 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	duplicate[len(duplicate)-1].name = "repeated-range"
 	if err := cssParserUnionError(keys, duplicate); err == nil || !strings.Contains(err.Error(), "repeated case") {
 		t.Fatalf("duplicate: %v", err)
+	}
+	// A mutant's witness group split across two shards holds the same cases but runs the mutant twice.
+	split := cssParserShards(keys)
+	owner := cssParserMutantBucket(keys, 0)
+	for index, group := range split[owner].groups {
+		if group.kind == "mutant" && group.mutation == 0 {
+			if len(group.cases) < 2 {
+				t.Fatalf("mutant 0's witness group holds %d cases, too few to split", len(group.cases))
+			}
+			moved := group
+			moved.cases = group.cases[1:]
+			split[owner].groups[index].cases = group.cases[:1]
+			other := (owner + 1) % len(split)
+			moved.name = split[other].name
+			split[other].groups = append(split[other].groups, moved)
+		}
+	}
+	if err := cssParserUnionError(keys, split); err == nil || !strings.Contains(err.Error(), "runs in 2 shards") {
+		t.Fatalf("split mutant group: %v", err)
 	}
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var all []cssParserShard
@@ -680,10 +740,8 @@ func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity
 	return string(answer)
 }
 
-// These are the first disagreements observed in the complete unsplit corpus.
-// Only their owning ranges require a disagreement; every other mutant range still
-// executes both original sides and compares its output. A surviving mutant fails
-// on both sides in its witness range even when the gate selects that range alone.
+// These are the first disagreements observed in the complete unsplit corpus. Each mutant runs only in the shard that
+// owns its witness, and a surviving mutant fails there on both sides even when the gate selects that shard alone.
 func cssParserMutantWitness(mutation int) int {
 	switch mutation {
 	case 0:
