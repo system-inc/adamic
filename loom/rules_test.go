@@ -12,7 +12,7 @@ func TestRulesFileReads(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("blocks on %v, budget %d; restack on %v; first %v", *rules.Blocks.On, *rules.Blocks.Budget, *rules.Restack.On, rules.First)
+	t.Logf("blocks on %v, budget %d, sizing %v; restack on %v; first %v", *rules.Blocks.On, *rules.Blocks.Budget, rules.Blocks.Sizing != nil, *rules.Restack.On, rules.First)
 }
 
 // Each mistake a hand could make in rules.json is refused, naming what's wrong.
@@ -39,6 +39,14 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"not an object", `[]`, "cannot unmarshal array"},
 		{"first not a change id", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_short"]}`, `not "chg_short"`},
 		{"first twice", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": ["chg_2tps70xcxmasvvbzer45mfhtd4", "chg_2tps70xcxmasvvbzer45mfhtd4"]}`, "each once"},
+		{"sizing field missing", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8}}, "restack": {"on": false}}`, "sizing needs min, max, target and window"},
+		{"sizing unknown field", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 20, "floor": 1}}, "restack": {"on": false}}`, `unknown field "floor"`},
+		{"sizing min zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 0, "max": 16, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= min <= max"},
+		{"sizing max below min", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 5, "max": 4, "target": 0.8, "window": 20}}, "restack": {"on": false}}`, "1 <= min <= max"},
+		{"sizing target one", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 1, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
+		{"sizing target zero", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0, "window": 20}}, "restack": {"on": false}}`, "target above 0 and below 1"},
+		{"sizing window past the queue's", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 201}}, "restack": {"on": false}}`, "window from 1 to 200"},
+		{"sizing window fraction", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 2.5}}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
 		{"first not a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": "chg_2tps70xcxmasvvbzer45mfhtd4"}`, "cannot unmarshal string"},
 	}
 	for _, testCase := range cases {

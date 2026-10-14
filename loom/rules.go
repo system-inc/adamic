@@ -31,7 +31,22 @@ type Rules struct {
 type BlocksRule struct {
 	On     *bool `json:"on"`
 	Budget *int  `json:"budget"`
+	// Sizing: each block's size from the red rate on the queue's log, the budget standing only without it. Optional
+	// (Loom 0.8.19, #hr7v2wc).
+	Sizing *SizingRule `json:"sizing"`
 }
+
+// SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
+// Window decided branches, is at least Target, clamped to Min and Max.
+type SizingRule struct {
+	Min    *int     `json:"min"`
+	Max    *int     `json:"max"`
+	Target *float64 `json:"target"`
+	Window *int     `json:"window"`
+}
+
+// MaximumSizingWindow is the queue's: the most decided branches a window reads (Loom's lander/rules.go).
+const MaximumSizingWindow = 200
 
 type RestackRule struct {
 	On *bool `json:"on"`
@@ -43,7 +58,7 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, or anything after the object is refused, so a typo can't land as a
+// a budget that isn't a whole number of 1 or more, a sizing the lander would refuse, or anything after the object is refused, so a typo can't land as a
 // rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
@@ -60,6 +75,14 @@ func ParseRules(data []byte) (Rules, error) {
 	}
 	if *rules.Blocks.Budget < 1 {
 		return Rules{}, fmt.Errorf("rules.json: blocks' budget is %d, and a block holds at least one change", *rules.Blocks.Budget)
+	}
+	if sizing := rules.Blocks.Sizing; sizing != nil {
+		if sizing.Min == nil || sizing.Max == nil || sizing.Target == nil || sizing.Window == nil {
+			return Rules{}, errors.New("rules.json: blocks' sizing needs min, max, target and window")
+		}
+		if *sizing.Min < 1 || *sizing.Max < *sizing.Min || !(*sizing.Target > 0 && *sizing.Target < 1) || *sizing.Window < 1 || *sizing.Window > MaximumSizingWindow {
+			return Rules{}, fmt.Errorf("rules.json: blocks' sizing needs 1 <= min <= max, target above 0 and below 1, and window from 1 to %d", MaximumSizingWindow)
+		}
 	}
 	if rules.Restack == nil || rules.Restack.On == nil {
 		return Rules{}, errors.New("rules.json: restack needs on")
