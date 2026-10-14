@@ -68,3 +68,13 @@ every adaptation entry, including those two files. TestStage3Adapted99TracksMeta
 changes the real top-level metadata in a private copy; omitting those entries
 is its input-drop mutant. This finding came from auditing the conditional final
 archive path after reconciling the product-10 trace.
+
+The lane's companion trace of this same buildcache closure additionally opens
+root `.gitattributes` while valuing the larger declared set. Include
+`.gitattributes` in the infrastructure inventory for apply key tests and later
+boundaries too (conditional Git attribute lookup; not reached in product 10's
+trace). Its current only rule concerns internal/oracle/testdata/reading/**,
+outside these products' declared inputs, so it does not affect product bytes
+or require another Inputs.Files entry. Planner may conservatively declare the
+tracked root attribute file for both packages. This differs from mutable .git
+index/log files: it is a stable repository path, recorded explicitly here.

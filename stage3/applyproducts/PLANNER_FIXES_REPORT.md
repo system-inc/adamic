@@ -77,3 +77,12 @@ The hash includes sorted non-.git names, full modes, symlink targets and bytes.
 `git diff --check` exit 0. The prescribed committed lane-check command is:
 `timeout 90 bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'`.
 Its result is included in the final delivery report after this commit.
+
+Companion-trace reconciliation addendum: the shared buildcache key machinery
+also opens root .gitattributes for a larger declared set. READS.md now records
+that stable tracked path explicitly, including its currently unrelated scope.
+No product recipe or runtime code changed in this documentation addendum; the
+cold timings and payload hash above still describe the final product recipes.
+The initial lane-check attempt lacked the toolchain PATH and exited 1 with
+FileNotFoundError: gofmt. Repeating after sourcing env.sh exited 0: lane checks
+2.4s, three Go files, one test package, one vetted package.
