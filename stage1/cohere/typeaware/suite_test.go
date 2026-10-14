@@ -195,6 +195,12 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	manifest = h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
 	t.Logf("fixture candidates: %d syntactically valid sources; %d nonsource strings or malformed fixtures excluded", len(paths), before-len(paths))
 	truth := h.must("generated-truth", exec.Command(oracle, config, manifest))
+	// A planted mutant proves the oracle comparison can fail, and its witness cases prove that as well as the whole
+	// corpus does: the 13 mutants that read the generated corpus were 73% of this family's seconds (#testaudit row 16,
+	// Loom's ruling (a), Oct 14). They run over sixMutantWitnesses' cases, against the oracle's truth for those cases.
+	witnesses := sixMutantWitnesses(paths)
+	witnessManifest := h.write("witness.manifest", strings.Join(witnesses, "\n")+"\n")
+	witnessTruth := h.must("witness-truth", exec.Command(oracle, config, witnessManifest))
 	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
 	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for i, group := range sixRanges(paths, 32) {
@@ -259,11 +265,11 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		{"last-declaration", "if(use && pos < earliestPos)", "if(use)"},
 		{"nullable-default", "if(!plain || nullable)", "if(!plain && !nullable)"},
 	} {
-		add("mutant/"+change.name, sixIDs("mutant/"+change.name, paths), func(h *harness) {
+		add("mutant/"+change.name, sixIDs("mutant/"+change.name, witnesses), func(h *harness) {
 			t := h.t
 			mutant := typeAwareMutant(h, stage0, normal(h), entry, change.name, "rules.ts", change.from, change.to)
-			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
-			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+			got := h.must(change.name+"-run", exec.Command(mutant, config, witnessManifest))
+			if len(got.stderr) != 0 || bytes.Equal(got.stdout, witnessTruth.stdout) {
 				t.Fatalf("%s not caught by oracle alone", change.name)
 			}
 			t.Logf("%s: production cohere oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
@@ -298,23 +304,23 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		t.Fatal(err)
 	}
 	parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
-	add("mutant/union-members", sixIDs("mutant/union-members", paths), func(h *harness) {
+	add("mutant/union-members", sixIDs("mutant/union-members", witnesses), func(h *harness) {
 		t := h.t
 		unionBinary := typeAwareMutant(h, stage0, normal(h), entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
-		unionGot := h.must("union-members-run", exec.Command(unionBinary, config, manifest))
-		if len(unionGot.stderr) != 0 || bytes.Equal(unionGot.stdout, truth.stdout) {
+		unionGot := h.must("union-members-run", exec.Command(unionBinary, config, witnessManifest))
+		if len(unionGot.stderr) != 0 || bytes.Equal(unionGot.stdout, witnessTruth.stdout) {
 			t.Fatal("union mutant not caught by oracle alone")
 		}
 		t.Logf("union-members: production cohere oracle catches byte %d", firstDifference(unionGot.stdout, truth.stdout))
 	})
 
 	for _, name := range []string{"type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature"} {
-		add("mutant/"+name, sixIDs("mutant/"+name, paths), func(h *harness) {
+		add("mutant/"+name, sixIDs("mutant/"+name, witnesses), func(h *harness) {
 			t := h.t
 			archive := typeAwareMutantArchive(h, name)
 			mutant := typeAwareBuild(h, stage0, name+"-suite", entry, archive, false)
-			got := h.must(name+"-run", exec.Command(mutant, config, manifest))
-			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+			got := h.must(name+"-run", exec.Command(mutant, config, witnessManifest))
+			if len(got.stderr) != 0 || bytes.Equal(got.stdout, witnessTruth.stdout) {
 				t.Fatalf("%s not caught by oracle alone", name)
 			}
 			t.Logf("%s: production cohere oracle catches byte %d; %s", name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
@@ -340,11 +346,11 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	})
 
 	// Explicit C allocation length, not the native path's extra terminator.
-	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
+	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", witnesses), func(h *harness) {
 		t := h.t
 		lengthArchive := typeAwareMutantArchive(h, "facts-length")
 		length := typeAwareSetup(h, "facts-length", func() string { return h.mutantNative("facts-length", entry, lengthArchive, true) })
-		got := h.run("facts-length-run", exec.Command(length, config, manifest))
+		got := h.run("facts-length-run", exec.Command(length, config, witnessManifest))
 		if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
 			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
 		}
@@ -358,11 +364,11 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		{"facts-length", "invalid checker facts length"},
 		{"facts-version", "unsupported checker facts schema"},
 	} {
-		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(h *harness) {
+		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", witnesses), func(h *harness) {
 			t := h.t
 			archive := typeAwareMutantArchive(h, change.name+"-bad")
 			malformed := typeAwareBuild(h, stage0, change.name+"-bad", entry, archive, false)
-			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, manifest))
+			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, witnessManifest))
 			if code, ok := r.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(r.stderr, []byte(change.message)) {
 				t.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
 			}

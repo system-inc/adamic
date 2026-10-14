@@ -371,6 +371,18 @@ func globalManifestText(h *harness, path string) string {
 	return string(data)
 }
 
+// sixMutantWitnesses are the generated cases a planted mutant runs over: every eighth syntactically valid source, in
+// corpus order from the first. The corpus is fixed by cohere's commit and suiteSources' controls, so the set is too. A
+// mutant shard fails unless its mutant is caught on these cases alone, so a rule that stops catching one turns its
+// shard red rather than passing quietly.
+func sixMutantWitnesses(paths []string) []string {
+	var witnesses []string
+	for i := 0; i < len(paths); i += 8 {
+		witnesses = append(witnesses, paths[i])
+	}
+	return witnesses
+}
+
 func sixRuleControlIDs() []string {
 	return []string{"reporting/no-unsafe-unary-minus", "reporting/related-getter-setter-pairs", "reporting/no-unsafe-declaration-merging", "reporting/no-unsafe-argument", "reporting/restrict-plus-operands", "reporting/no-unnecessary-boolean-literal-compare"}
 }
@@ -384,7 +396,7 @@ func sixUnsplitIDs(generated, global, compiler []string, rounds int, benchmark b
 	ids = append(ids, sixIDs("mutant/declaration-source", global)...)
 	ids = append(ids, "refusal/unlinked", "control/released-handle", "mutant/retained-handle")
 	for _, name := range []string{"wrong-node", "last-declaration", "nullable-default", "union-members", "type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature", "facts-length-asan", "facts-empty-bad", "facts-integer-bad", "facts-length-bad", "facts-version-bad"} {
-		ids = append(ids, sixIDs("mutant/"+name, generated)...)
+		ids = append(ids, sixIDs("mutant/"+name, sixMutantWitnesses(generated))...)
 	}
 	for _, name := range []string{"assignable", "declarations", "signature", "raw-type", "nullable", "union", "signature-shape", "raw-shape", "type-shape", "options"} {
 		for round := 1; round <= rounds; round++ {
