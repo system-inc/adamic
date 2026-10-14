@@ -393,19 +393,6 @@ var treeValuesRead atomic.Int64
 // productDigests holds each product directory's digest once a process has it: a key's bytes never change.
 var productDigests sync.Map
 
-// ProductRoot is where a walk over a product directory starts: what directory resolves to when it is a link, and every
-// walk rooted at a product goes through it, a test's included (graphql/printer's printerWalk, mega's run 2). Loom's runner
-// links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir visits a
-// link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through another
-// was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text file
-// in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and stay.
-func ProductRoot(directory string) (string, error) {
-	if info, err := os.Lstat(directory); err != nil || info.Mode()&fs.ModeSymlink == 0 {
-		return directory, nil
-	}
-	return filepath.EvalSymlinks(directory)
-}
-
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
 // content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
 // directory reached through a link is valued by what it links to (ProductRoot).
