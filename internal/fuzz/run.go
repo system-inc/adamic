@@ -196,13 +196,9 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 	}
 	binary := filepath.Join(directory, "program")
 	options := native.Options{Sanitize: true}
-	library := c.runtime
-	if library == "" || len(native.Features(string(lowered.Stdout))) != 0 {
-		var err error
-		library, err = native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(lowered.Stdout), options)
-		if err != nil {
-			return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
-		}
+	library, err := c.runtimeFor(directory, options, c.runtime)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	arguments := append(native.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
 	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
@@ -444,7 +440,9 @@ func (c *Checkout) runtimeFor(directory string, options native.Options, prebuilt
 	if err != nil {
 		return "", err
 	}
-	_ = prebuilt
+	if prebuilt != "" && len(native.Features(string(source))) == 0 {
+		return prebuilt, nil
+	}
 	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(source), options)
 }
 
