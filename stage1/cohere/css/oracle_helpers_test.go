@@ -55,6 +55,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		t.Fatal(err)
 	}
 	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
+	inputs.Name = name + ", off the compiler"
 	directory := oracleProduct(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
 		if err != nil {
@@ -205,11 +206,6 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 // toolchain.Env, so its key names the C and C++ compilers that environment gives go, and the C
 // compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
 // didn't name could start to unseen.
-func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
-	t.Helper()
-	return oracleProduct(t, cssParserGoProductInputs(name, cssGoCompilers()), build)
-}
-
 func cssParserGoProductInputs(name string, compilers cssCompilers) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "css " + name,
@@ -266,7 +262,9 @@ func cssParserOracle(t *testing.T) string {
 	repo, _ := filepath.Abs(repository)
 	cohere := filepath.Join(repo, "cohere")
 	side, _ := filepath.Abs("testdata/cohere_side_test.go")
-	dir := cssParserGoProduct(t, "Go parser oracle", func(dir string) error {
+	inputs := cssParserGoProductInputs("Go parser oracle", cssGoCompilers())
+	inputs.Name = "css Go parser oracle, off the compiler"
+	dir := oracleProduct(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/css/postcss/adamic_port_side_test.go"): side}})
 		if err != nil {
 			return err
@@ -328,7 +326,7 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := cssParserInputs{Name: "Go parser oracle answers", Files: []string{side, filepath.Join(repo, "cohere/internal/format/css")}, Flags: []string{cssParserOracleIdentity(t, oracle)}, Toolchain: buildcache.Tool("go", "version")}
+	inputs := cssParserInputs{Name: "Go parser oracle answers, off the compiler", Files: []string{side, filepath.Join(repo, "cohere/internal/format/css")}, Flags: []string{cssParserOracleIdentity(t, oracle)}, Toolchain: buildcache.Tool("go", "version")}
 	roots := []string{repo}
 	if fixtures := os.Getenv("ADAMIC_CSS_FIXTURES"); fixtures != "" {
 		roots = append(roots, fixtures)
@@ -417,7 +415,7 @@ func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := oracleParserProduct(t, cssParserInputs{Name: "PostCSS oracle answers", Files: []string{script}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+	dir := oracleParserProduct(t, cssParserInputs{Name: "PostCSS oracle answers, off the compiler", Files: []string{script}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
 		input := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(input, data, 0644); err != nil {
 			return err
@@ -500,7 +498,7 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 		}
 		sidePath := filepath.Join(repo, "stage1/cohere/css/testdata", side)
 		inputs := buildcache.Inputs{
-			Name:      "css-printer-oracle-" + strconv.Itoa(index),
+			Name:      "css-printer-oracle-" + strconv.Itoa(index) + ", off the compiler",
 			Files:     []string{"stage1/cohere/css/testdata/" + side, "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"},
 			Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "./internal/format/css/" + pkg},
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
@@ -588,9 +586,6 @@ var oracleProducer bool
 
 func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
 	t.Helper()
-	// A fresh name key prevents recordUnion from retaining an old compiler-linked
-	// recipe that still evaluates unchanged on the migration tree.
-	inputs.Name += " oracle-owner-v1"
 	return buildcache.Product(t, inputs, func(directory string) error {
 		if buildcache.Tracing() && !oracleProducer {
 			return fmt.Errorf("oracle %s is missing: build stage1/cohere/css/oracles TestProduct_ units first", inputs.Name)
