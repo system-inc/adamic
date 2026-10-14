@@ -1,0 +1,13 @@
+=== RUN   TestScoutStringRouteCountsCause
+=== PAUSE TestScoutStringRouteCountsCause
+=== CONT  TestScoutStringRouteCountsCause
+    scout_nullable_objects_test.go:32: gate cache native miss
+    scout_nullable_objects_test.go:32: | internal/oracle/testdata/scout_boxed_scalar_fields.a | 62 | 62 | 95 | 150 | 6 | 0 |
+    scout_nullable_objects_test.go:32: gate cache native miss
+    scout_nullable_objects_test.go:32: | internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 34 | 10 | 0 |
+--- PASS: TestScoutStringRouteCountsCause (0.36s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.389s
