@@ -300,7 +300,6 @@ func cached(t *testing.T) (string, string) {
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
 	// The real store is never reached from a test; the store's own tests serve one.
 	t.Setenv("ADAMIC_BUILD_STORE", "off")
-	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 	return cache, log
 }
 
@@ -329,7 +328,7 @@ func TestABuildRunsOncePerKey(t *testing.T) {
 }
 
 // Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
-func TestAFailedBuildPublishesNothing(t *testing.T) {
+func TestAFailedBuildLeavesNothing(t *testing.T) {
 	cache, _ := cached(t)
 	failure := errors.New("clang failed")
 	if _, err := Get(thisPackage, func(directory string) error {

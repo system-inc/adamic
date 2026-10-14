@@ -300,7 +300,7 @@ func TestRelocationChild(t *testing.T) {
 
 // A key names a product by its name key wherever this process holds it (#sgemgmn, in walk-5b's one naming model): in the cache, in the copy Resolved made
 // of it beside the cache's, whose name holds a hash of this machine's roots, and built uncached in a temporary
-// directory of its own, which main's uncached gate publishes under the key it computes.
+// directory of its own, which main's uncached gate settles under the key it computes.
 // Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
 	cached(t)

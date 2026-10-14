@@ -198,19 +198,6 @@ func sortedEntries(lists ...[]readEntry) []readEntry {
 	return all
 }
 
-// mergeReads adds sets fetched from the store to nameKey's, after the cache's own, skipping any it already holds.
-func mergeReads(cache, nameKey, name string, sets []readSet) error {
-	return withReads(cache, nameKey, func(file *readsFile) error {
-		file.Name = name
-		for _, set := range sets {
-			if !slices.ContainsFunc(file.Sets, func(kept readSet) bool { return kept.Key == set.Key && sameEntries(kept.Entries, set.Entries) }) {
-				file.Sets = append(file.Sets, set)
-			}
-		}
-		return nil
-	})
-}
-
 func sameEntries(one, other []readEntry) bool {
 	return slices.EqualFunc(one, other, func(a, b readEntry) bool { return a.Kind == b.Kind && a.Path == b.Path })
 }
@@ -668,10 +655,10 @@ type productMemo map[string]*productLookup
 
 // readProducts holds each product a process whose tree can't change under it (heldForLife) has found, by root, cache and
 // name key, so a test that looks up several products, or one product many times, values each one's read set once
-// (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process, its directory is never
-// taken away, and a read set joined from the store later goes after the cache's own, so the set that found it still
-// finds it first. A missing one is looked up again, since a joined set can find what the cache's own didn't. What a
-// traced build reads is never changed by it: a lookup is keying, which no read set takes (trace.go).
+// (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process and its directory is
+// never taken away, so the set that found it still finds it. A missing one is looked up again, since a product that
+// arrives later is found. What a traced build reads is never changed by it: a lookup is keying, which no read set takes
+// (trace.go).
 var readProducts sync.Map
 
 // productsLookedUp counts the products this process looked up by their read sets rather than held: a test asks it.

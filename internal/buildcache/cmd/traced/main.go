@@ -1,15 +1,14 @@
 // traced runs a command whose tests build products, under strace, and keys each product by what its build read
-// (#vt46geg): only Workshop builds products, and only a traced build is placed under its key or published.
+// (#vt46geg): only Workshop builds products, and only a traced build is placed under its key.
 //
 //	go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./stage1/cohere/...
 //
-// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS). Workshop's
-// tree builder, the one run that publishes, sets ADAMIC_BUILD_STORE=traced and ADAMIC_BUILD_STORE_TRUST=main: without
-// the trust, everything it publishes lands in the candidate namespaces (build-candidate, reads-candidate), which a
-// trusted reader never reads. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
-// directory under the build cache, so every process that builds a product marks it in the trace and journals it;
-// the trace streams through a pipe into buildcache.Settle, never to disk. GOENV is off unless set, so go never reads
-// a configuration file in the home directory, which no key can name.
+// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS).
+// Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product built outside a trace; what settles
+// stays in the cache, which Loom ships, read sets and all, and nothing is written to the store. The command runs under
+// strace -f with ADAMIC_BUILD_TRACE naming a trace directory under the build cache, so every process that builds a
+// product marks it in the trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
+// GOENV is off unless set, so go never reads a configuration file in the home directory, which no key can name.
 //
 // The tree is taken as git sees it (HEAD, status, each submodule) before the run and after: a read set is valued when
 // the run ends, so a run whose tree changed meanwhile refuses every product, as does one that wrote into the tree.
@@ -17,10 +16,10 @@
 // that file starts from it rather than taking its own (Loom's build-tree, once for each wave of product tests that start
 // together, so a wave's start never forks git in the hundreds, #2q48btg).
 //
-// It prints one line per settled product (its key, how many reads, and how far its declared Files drift from them)
-// and one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are
-// neither placed nor published. It exits with the command's status, or 3 when the command passed and a product was
-// refused. Linux only: strace 6 with --seccomp-bpf and --decode-fds=path.
+// It prints one line per settled product (its key, how many reads, and how far its declared Files drift from them) and
+// one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are never
+// placed. It exits with the command's status, or 3 when the command passed and a product was refused. Linux only:
+// strace 6 with --seccomp-bpf and --decode-fds=path.
 //
 // With ADAMIC_TRACE_REPORT naming a file, it also writes there one JSON line per product (buildcache.Report: name,
 // nameKey, key and reads when settled, reason when refused), for Loom's tree builder. A run that can't be keyed at all
@@ -118,9 +117,6 @@ func run(command []string, report string) (int, error) {
 	pipe := filepath.Join(directory, "trace.fifo")
 	if err = syscall.Mkfifo(pipe, 0o600); err != nil {
 		return 0, err
-	}
-	if store := os.Getenv("ADAMIC_BUILD_STORE"); strings.HasPrefix(store, "traced") && os.Getenv("ADAMIC_BUILD_STORE_TRUST") != "main" {
-		fmt.Fprintln(os.Stderr, "traced: ADAMIC_BUILD_STORE=traced without ADAMIC_BUILD_STORE_TRUST=main publishes to the candidate namespaces only")
 	}
 	before, err := treeStateBefore(buildcache.TreeState)
 	if err != nil {
