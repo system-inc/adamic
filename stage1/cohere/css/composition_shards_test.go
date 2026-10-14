@@ -260,7 +260,7 @@ func compositionCases(t *testing.T) string {
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	repo, _ := filepath.Abs(repository)
-	request, _ := json.Marshal(map[string]string{"cases": cases, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	request, _ := json.Marshal(map[string]any{"cases": cases, "repository": repo, "roots": cssCorpusRoots, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	requestPath := filepath.Join(dir, "request.json")
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)

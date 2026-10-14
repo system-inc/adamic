@@ -633,13 +633,14 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 		t.Fatal(err)
 	}
 	inputs := cssParserInputs{Name: "Go parser oracle answers", Files: []string{side, filepath.Join(repo, "cohere/internal/format/css")}, Flags: []string{cssParserOracleIdentity(t, oracle)}, Toolchain: buildcache.Tool("go", "version")}
-	roots := []string{repo}
-	if fixtures := os.Getenv("ADAMIC_CSS_FIXTURES"); fixtures != "" {
-		roots = append(roots, fixtures)
+	// The repository's corpus files come from its corpus roots alone (cssCorpusRoots), never a walk of the whole
+	// repository, whose listings would enter every corpus-reading product's read set (#t128y5x).
+	inputs.Flags = append(inputs.Flags, "corpus-roots="+strings.Join(cssCorpusRoots, ","))
+	if err := cssCorpusRootWalk(repo, func(path string) error { inputs.Files = append(inputs.Files, path); return nil }); err != nil {
+		t.Fatal(err)
 	}
-	inputs.Flags = append(inputs.Flags, fmt.Sprintf("corpus-roots=%d", len(roots)))
-	for index, root := range roots {
-		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+	if fixtures := os.Getenv("ADAMIC_CSS_FIXTURES"); fixtures != "" {
+		err := filepath.WalkDir(fixtures, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
@@ -649,19 +650,14 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 				}
 				return nil
 			}
-			ext := strings.ToLower(filepath.Ext(path))
-			if ext != ".css" && ext != ".scss" && ext != ".less" {
-				return nil
-			}
-			if index == 0 {
-				inputs.Files = append(inputs.Files, path)
+			if !cssCorpusFile(path) {
 				return nil
 			}
 			content, err := os.ReadFile(path)
 			if err != nil {
 				return err
 			}
-			relative, err := filepath.Rel(root, path)
+			relative, err := filepath.Rel(fixtures, path)
 			if err != nil {
 				return err
 			}
@@ -673,7 +669,7 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 		}
 	}
 	dir := cssParserProduct(t, inputs, func(dir string) error {
-		request := map[string]string{"cases": filepath.Join(dir, "cases.txt"), "answers": filepath.Join(dir, "answers.txt"), "ids": filepath.Join(dir, "ids.json"), "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
+		request := map[string]any{"cases": filepath.Join(dir, "cases.txt"), "answers": filepath.Join(dir, "answers.txt"), "ids": filepath.Join(dir, "ids.json"), "repository": repo, "roots": cssCorpusRoots, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
 		data, err := json.Marshal(request)
 		if err != nil {
 			return err
