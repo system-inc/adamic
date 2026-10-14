@@ -102,10 +102,11 @@ timing and baseline diffs are preserved per unit by the step12 observer.
 # Chained Go products, wave 1
 
 `stage3/lane` declares `TestProduct_Stage3LaneInstall`,
-`TestProduct_Stage3LaneCompiler` and `TestProduct_Stage3LaneHarness`. Prepare
-apply's `TestProduct_Stage3Adapted99` first. Each lane product fetches its
-predecessor and fails if it is missing; no consumer silently builds a missing
-predecessor. The gate supplies `ADAMIC_TYPESCRIPT_SOURCE` for apply. Loom
+`TestProduct_Stage3LaneCompiler` and `TestProduct_Stage3LaneHarness`. Preparing apply's `TestProduct_Stage3Adapted99` first keeps unit wall times short. Every lane consumer calls the producer's own buildcache recipe. On a miss,
+install builds apply's chain, compiler builds install, harness builds compiler,
+and a shard builds harness. Dependencies are resolved inside the consumer's
+build callback, so a hit does not prepare earlier products. First-tree ordering
+is not required; later trees can use Loom's recorded read-set ordering. The gate supplies `ADAMIC_TYPESCRIPT_SOURCE` for apply. Loom
 installs the tree NodeProjects `stage3/typescript` and `stage3/api` from their
 lockfiles with npm 11.11.0; the lane reads `stage3/typescript/node_modules`. Product steps never
 fetch packages or source. Install materializes the supplied packages after
@@ -152,3 +153,18 @@ and need no installed packages.
 
 The root .fast-gate-lockfile-sha256 runner marker is excluded from the pin and
 from the copied product payload, so it cannot change bytes under the same key.
+
+# First-tree product dependencies
+
+`adaptedTree` calls the existing exported applyproducts.Product recipe at its
+product-99 slot. No apply key or worker recipe is copied into lane.
+TestStage3LaneAdaptedTreeMatchesProducer independently compares its returned
+product directory with applyproducts.Get, the producer's final-product resolver.
+A wrong-slot mutant must fail with the consumer and producer keys named.
+
+Every lane product and shard resolves a missing dependency by its original
+producer recipe. Workshop does not need a preexisting read set on a tree's first
+build. Apply still needs the gate-provided pinned source and installed packages.
+The first-tree chain is explicitly allowed to exceed the ordinary cold unit
+budget and is measured with a hard 14-minute Go limit. Prepared units retain
+90-second test limits and all existing shard acceptance checks.

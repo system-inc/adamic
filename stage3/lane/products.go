@@ -83,23 +83,23 @@ func boundedCommand(ctx context.Context, root string, program string, arguments 
 	return command
 }
 
-func fetchLane(t testing.TB, index int) string {
+// adaptedTree selects apply's product 99 through its own exported recipe.
+// The producer-agreement test guards this slot against producer changes.
+func adaptedTree(t testing.TB) string {
 	t.Helper()
-	return buildcache.Product(t, laneInputs(t, repositoryRoot(t), index), func(string) error {
-		return fmt.Errorf("prepare TestProduct_Stage3Lane%s before fetching the lane artifact", phases[index])
-	})
+	return applyproducts.Product(t, 5)
 }
 
 func laneProduct(t testing.TB, index int) string {
 	t.Helper()
 	root := repositoryRoot(t)
-	var previous string
-	if index == 0 {
-		previous = applyproducts.Fetch(t)
-	} else {
-		previous = fetchLane(t, index-1)
-	}
 	return buildcache.Product(t, laneInputs(t, root, index), func(directory string) error {
+		var previous string
+		if index == 0 {
+			previous = adaptedTree(t)
+		} else {
+			previous = laneProduct(t, index-1)
+		}
 		ctx, cancel := context.WithTimeout(context.Background(), 58*time.Second)
 		defer cancel()
 		command := boundedCommand(ctx, root, "python3", "-B", "stage3/lane/products.py", directory, phases[index], previous)

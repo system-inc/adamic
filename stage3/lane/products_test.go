@@ -150,7 +150,7 @@ func runShard(t testing.TB, artifact, name, manifest string) {
 
 func TestShard_Stage3LaneFile001(t *testing.T) {
 	t.Parallel()
-	runShard(t, fetchLane(t, 2), "stage3-lane-file-001", filepath.Join(repositoryRoot(t), "stage3/lane/shards.json"))
+	runShard(t, laneProduct(t, 2), "stage3-lane-file-001", filepath.Join(repositoryRoot(t), "stage3/lane/shards.json"))
 }
 
 func TestShardManifestRejectsMissingAndEmpty(t *testing.T) {

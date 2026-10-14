@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/lane",
+    "-run",
+    "^TestStage3LaneAdaptedTreeMatchesProducer$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-v"
+  ],
+  "exit": 1,
+  "seconds": 1.9204715090017999,
+  "catcher": "adapted product key differs from apply producer"
+}

@@ -121,3 +121,13 @@ shard-plan.json and shards.json bind only runtime and unit definitions; they no
 longer bind artifact/API identities. bind_products.py now reads the committed
 plan and runtime files only, with no artifact argument. This follows the executed
 positive rebuilt-input and stale-artifact mutant runs in HASH_FIX_REPORT.md.
+
+## First-tree producer reuse
+
+Missing predecessors are built using their producer recipes. An install miss
+therefore reads apply's declared inputs and supplied TypeScript checkout; a
+compiler/harness/shard miss can transitively read the same complete chain. Use
+the parent applyproducts/READS.md inventory as well as this inventory for cold
+consumers. Hits return before resolving predecessors. The new producer-agreement
+test reads the same product inputs through two calls to apply's own public API;
+it contains no independent key recipe.
