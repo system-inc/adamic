@@ -32,3 +32,4 @@ __attribute__((destructor)) static void report_at_exit(void) {
 	adamic_count_report();
 }
 #endif
+/* plant 4b: a runtime source change that moves no count */
