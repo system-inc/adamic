@@ -65,6 +65,8 @@ struct adamic_regex_program {
 
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags);
+adamic_object *adamic_regex_compile_new(adamic_string *pattern, adamic_string *flags);
+adamic_object *adamic_regex_new_owned(const adamic_regex_program *, adamic_string *, adamic_string *, adamic_array *);
 bool adamic_regex_test(adamic_object *regex, adamic_string *input);
 adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input);
 adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex);
