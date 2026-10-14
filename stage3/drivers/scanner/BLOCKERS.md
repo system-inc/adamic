@@ -1,5 +1,10 @@
 ## Main 87ad5a4f, October 14
 
+Follow-up: the literal one-command rerun now prepares its own gate inputs and
+reaches the identical seven stops from a cold stage3 cache, without PYTHONPATH
+or manual preparation. Exit 1 is scanner-blocked after 166.323s on the same main.
+[Regression failure, fixed-run summary and diagnostics](evidence/main-2026-10-14/rerun-2/REPORT.md).
+
 Native scanner remains blocked: both split modes refuse MapLike at
 `corePublic.ts:9:5`. Node still emits 509,014 skipped-trivia tokens and
 860,418 retained-trivia tokens (1,369,432 total), with 466 errors across 81 files.
