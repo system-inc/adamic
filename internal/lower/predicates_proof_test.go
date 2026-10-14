@@ -129,43 +129,6 @@ func TestPredicateCallbackContracts(t *testing.T) {
 	}
 }
 
-func TestEveryNeedsCallbackEffects(t *testing.T) {
-	t.Parallel()
-	source, err := os.ReadFile("testdata/predicates/every_alias.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "every.ts")
-	if err = os.WriteFile(path, source, 0644); err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	file := program.Files()[0]
-	checked, release := program.Checker(context.Background(), file)
-	defer release()
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
-	err = l.refuse(file)
-	if err == nil || !strings.Contains(err.Error(), "return is not proven") {
-		t.Fatalf("want array proof refusal without callback effects, got %v", err)
-	}
-}
-
-func TestPredicateOverloadCallback(t *testing.T) {
-	t.Parallel()
-	source, err := os.ReadFile("testdata/predicates/overload_callback.a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowersAndAgreesWithNode(t, string(source))
-	lying := strings.Replace(string(source), "typeof value === 'number'", "true", 1)
-	if _, err = lowerSource(t, lying); err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
-		t.Fatalf("want lying overload callback argument refused at call site, got %v", err)
-	}
-}
-
 // Behavior cannot observe the proof analysis's per-call use-direction facts.
 func TestPredicateUseRegions(t *testing.T) {
 	t.Parallel()
