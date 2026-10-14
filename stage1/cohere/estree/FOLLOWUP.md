@@ -144,10 +144,8 @@ one previous incorrect acceptance. The final audit has no match regression.
 ^TestUnattachedDecorator$' > /tmp/estree-expressions-gate-final.log 2>&1`:
 PASS 58.495s, seven generated files and 8,717 matching bytes, line-break mutant
 caught on Node/native at line 302, orphan decorator refusals in all three
-builds. `go test -count=1 -v ./stage1/cohere/estree
--run '^TestUnattachedDecoratorControl$' > /tmp/estree-expressions-control.log
-2>&1`: PASS 19.599s, both samples refused by Go; disabling the parent guard
-accepts both on Node/native and fails the acceptance predicate.
+builds. The redundant unattached-decorator control was removed after the deletion audit;
+`TestDecoratedExports` and the deep grammar acceptance checks retain its catches.
 `ADAMIC_ESTREE_CORPUS=/tmp/estree-expressions-rescued go test -count=1 -v
 ./stage1/cohere/estree -run '^TestRepositoryAgreement$' >
 /tmp/estree-expressions-rescued.log 2>&1`: PASS 20.632s, all 64 files,
