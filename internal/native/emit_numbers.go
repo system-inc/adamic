@@ -69,7 +69,7 @@ func (e *emitter) mathCall(call ir.MathCall) string {
 		if call.Function == "max" {
 			return "(-HUGE_VAL)"
 		}
-		return "HUGE_VAL"
+		return "1e999"
 	case 1:
 		return "(+" + arguments[0] + ")"
 	}
