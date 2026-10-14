@@ -1,0 +1,95 @@
+[
+  {
+    "label": "rebuilt-Install",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestProduct_Stage3LaneInstall$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 32.37608898599865
+  },
+  {
+    "label": "rebuilt-Compiler",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestProduct_Stage3LaneCompiler$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 49.80066403400269
+  },
+  {
+    "label": "rebuilt-Harness",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestProduct_Stage3LaneHarness$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 31.381698315002723
+  },
+  {
+    "label": "rebuilt-input-shard001",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestShard_Stage3LaneFile001$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 20.349784564998117
+  },
+  {
+    "label": "stale-artifact",
+    "command": [
+      "python3",
+      "stage3/lane/shard.py",
+      "stage3-lane-file-001",
+      "$STAGE3_RESULTS",
+      "--inputs-hash",
+      "23b8f505d961f4900852c9a178388c30e16c93f3053e6926b3c4f045ad6e1001"
+    ],
+    "exit": 1,
+    "seconds": 3.673944873997243
+  },
+  {
+    "label": "changed-runtime",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestShard_Stage3LaneFile001$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 1.37091083300038
+  }
+]

@@ -1,0 +1,3 @@
+{"test": "TestProduct_Stage3LaneInstall", "seconds": 20.800289676999455, "exit": 0, "command": ["go", "test", "./stage3/lane", "-run", "^TestProduct_Stage3LaneInstall$", "-count=1", "-timeout", "90s", "-v"]}
+{"test": "TestProduct_Stage3LaneCompiler", "seconds": 50.48343348100025, "exit": 0, "command": ["go", "test", "./stage3/lane", "-run", "^TestProduct_Stage3LaneCompiler$", "-count=1", "-timeout", "90s", "-v"]}
+{"test": "TestProduct_Stage3LaneHarness", "seconds": 43.92390243599948, "exit": 0, "command": ["go", "test", "./stage3/lane", "-run", "^TestProduct_Stage3LaneHarness$", "-count=1", "-timeout", "90s", "-v"]}

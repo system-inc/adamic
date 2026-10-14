@@ -146,11 +146,30 @@ func runShard(t testing.TB, artifact, name, manifest string) {
 	if report.Status != "pass" || report.Counts != selected.Expect {
 		t.Fatalf("result %+v differs from manifest %+v", report, selected.Expect)
 	}
+	if directory := os.Getenv("STAGE3_UNION_RESULTS"); directory != "" {
+		target := filepath.Join(directory, name)
+		if err := os.Mkdir(target, 0755); err != nil {
+			t.Fatal(err)
+		}
+		for _, file := range []string{"report.json", "observations.json", "oracle/baseline.diff", "oracle/tests.log"} {
+			data, err := os.ReadFile(filepath.Join(results, name, file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(target, file)
+			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(path, data, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
 }
 
-func TestShard_Stage3LaneFile001(t *testing.T) {
-	t.Parallel()
-	runShard(t, laneProduct(t, 2), "stage3-lane-file-001", filepath.Join(repositoryRoot(t), "stage3/lane/shards.json"))
+func runManifestShard(t *testing.T, name string) {
+	t.Helper()
+	runShard(t, laneProduct(t, 2), name, filepath.Join(repositoryRoot(t), "stage3/lane/shards.json"))
 }
 
 func TestShardManifestRejectsMissingAndEmpty(t *testing.T) {

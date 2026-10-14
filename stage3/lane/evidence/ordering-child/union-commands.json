@@ -1,0 +1,44 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/merge_shards.py",
+      "/workspace/scratch/hefhych-recut/measure/shards",
+      "--whole",
+      "/workspace/scratch/hefhych-recut/full-union/whole",
+      "--output",
+      "/workspace/scratch/hefhych-ordering/union-proof/merged.json"
+    ],
+    "exit": 0,
+    "seconds": 12.703064289002214
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/merge_shards.py",
+      "/workspace/scratch/hefhych-recut/measure/shards",
+      "--whole",
+      "/workspace/scratch/hefhych-recut/full-union/whole",
+      "--output",
+      "/workspace/scratch/hefhych-ordering/union-proof/drop-shard.json"
+    ],
+    "exit": 1,
+    "seconds": 12.302696744998684
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/merge_shards.py",
+      "/workspace/scratch/hefhych-recut/measure/shards",
+      "--whole",
+      "/workspace/scratch/hefhych-recut/full-union/whole",
+      "--output",
+      "/workspace/scratch/hefhych-ordering/union-proof/restored.json"
+    ],
+    "exit": 0,
+    "seconds": 12.601062987996556
+  }
+]

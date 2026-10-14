@@ -1,0 +1,50 @@
+[
+  {
+    "name": "TestProduct_Stage3LaneInstall",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestProduct_Stage3LaneInstall$",
+      "-count=1",
+      "-timeout",
+      "14m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 231.66825047900056
+  },
+  {
+    "name": "TestProduct_Stage3Adapted99",
+    "command": [
+      "go",
+      "test",
+      "./stage3/applyproducts",
+      "-run",
+      "^TestProduct_Stage3Adapted99$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 1.2220694860006915
+  },
+  {
+    "name": "TestStage3LaneAdaptedTreeMatchesProducer",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^TestStage3LaneAdaptedTreeMatchesProducer$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 1.8721353369983262
+  }
+]

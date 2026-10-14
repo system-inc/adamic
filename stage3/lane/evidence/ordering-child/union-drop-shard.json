@@ -1,0 +1,1439 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing shard stage3-lane-file-001; missing tests: [\"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference can go to definition correctly\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference can go to definition correctly\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency source changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency source changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference when projects are not built\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference can go to definition correctly\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency source changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency source changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference when projects are not built\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference goToDef and rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference goToDef and rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency source changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency source changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference when projects are not built\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference goToDef and rename locations\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference goto Definition in usage and rename locations, deleting config file\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference goto Definition in usage and rename locations, deleting config file\", \"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference goto Definition in usage and rename locations, deleting config file\"]",
+    "executed test union differs from the unsharded lane",
+    "executed identity/outcome union differs from whole run",
+    "counts differ: units {'pass': 106093, 'fail': 1, 'skip': 0}, whole {'pass': 106366, 'fail': 1, 'skip': 0}, plan {'pass': 106366, 'fail': 1, 'skip': 0}"
+  ],
+  "counts": {
+    "pass": 106093,
+    "fail": 1,
+    "skip": 0
+  },
+  "whole_counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "units": 150,
+  "tests": 106094,
+  "artifact": "331995f853472db52bdecf6875eac0018b95f752a2882f13ac6d15476cd4ecbe",
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "whole_verdict": "pass",
+  "missing_tests": [
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig doesnt have project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency source changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference dependency source changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference when projects are not built",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from defining project: rename when main tsconfig has project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference can go to definition correctly",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig doesnt have project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference can go to definition correctly",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference can go to definition correctly",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency source changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference dependency source changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference when projects are not built",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map from project that uses dependency: goToDef when main tsconfig has project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference goToDef and rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference goto Definition in usage and rename locations, deleting config file",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig doesnt have project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference goToDef and rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference goto Definition in usage and rename locations, deleting config file",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has disableSourceOfProjectReferenceRedirect along with project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dts changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dts changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dtsMap changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency dtsMap changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency source changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference dependency source changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference goToDef and rename locations",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference goto Definition in usage and rename locations, deleting config file",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference usage file changes, when timeout does not occur before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference usage file changes, when timeout occurs before request",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference when projects are not built",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dts file, when file is not present",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  action before write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  no timeout",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after delete",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, change as rename  timeout after write",
+      "status": "pass",
+      "count": 2
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is created after actions on projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is deleted after actions on the projects",
+      "status": "pass",
+      "count": 1
+    },
+    {
+      "runner": "unittest",
+      "file": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map",
+      "name": "unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map when opening depedency and usage project: goToDef and rename when main tsconfig has project reference with dtsMap file, when file is not present",
+      "status": "pass",
+      "count": 1
+    }
+  ],
+  "extra_tests": []
+}

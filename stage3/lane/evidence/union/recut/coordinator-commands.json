@@ -1,0 +1,52 @@
+[
+  {
+    "label": "whole",
+    "command": [
+      "bash",
+      "stage3/lane/run.sh",
+      "/workspace/scratch/hefhych-recut/full-union/whole",
+      "--artifact",
+      "/workspace/scratch/hefhych-wave2/product-cache/local/c5f9d634f8ea40b4f488abf0325d5abec10791f25ebad12b6725712ff2f8aaff"
+    ],
+    "exit": 0,
+    "seconds": 330.07994435300134
+  },
+  {
+    "label": "Go-units",
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/measure_go_units.py",
+      "/workspace/scratch/hefhych-recut/measure",
+      "--resume"
+    ],
+    "exit": 0,
+    "seconds": 2643.6052509859983
+  },
+  {
+    "label": "union",
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/prove_union.py",
+      "/workspace/scratch/hefhych-recut/measure",
+      "/workspace/scratch/hefhych-recut/full-union/whole",
+      "/workspace/scratch/hefhych-wave2/product-cache/local/c5f9d634f8ea40b4f488abf0325d5abec10791f25ebad12b6725712ff2f8aaff",
+      "/workspace/scratch/hefhych-recut/full-union/comparison"
+    ],
+    "exit": 0,
+    "seconds": 38.64817224199942
+  },
+  {
+    "label": "Python-union",
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/prove_python_union.py",
+      "/workspace/scratch/hefhych-recut/measure",
+      "/workspace/scratch/hefhych-recut/full-union/python-comparison"
+    ],
+    "exit": 0,
+    "seconds": 22.0720321230001
+  }
+]

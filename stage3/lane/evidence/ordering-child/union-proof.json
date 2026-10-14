@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/prove_union.py",
+    "/workspace/scratch/hefhych-recut/measure",
+    "/workspace/scratch/hefhych-recut/full-union/whole",
+    "/tmp/hefhych-review-cache/local/c5f9d634f8ea40b4f488abf0325d5abec10791f25ebad12b6725712ff2f8aaff",
+    "/workspace/scratch/hefhych-ordering/union-proof"
+  ],
+  "exit": 0,
+  "seconds": 37.67965955600084,
+  "non_git_tree_hash": "b03264a1526a19d6b81c962be6b45e73de3729e865ed9a05a66785a8f6c50bf8",
+  "different_files": [
+    ".git/index",
+    ".git/logs/HEAD"
+  ],
+  "fresh_shards": 0,
+  "reused_shards": 151,
+  "reused_whole": true,
+  "new_cold_artifact": "/workspace/scratch/hefhych-ordering/shard-cache/local/0eda6766cc0c44d313a8a4bbf52bffa0fdf274fa4188f04b72adc79c49ae2aa6",
+  "union_artifact": "/tmp/hefhych-review-cache/local/c5f9d634f8ea40b4f488abf0325d5abec10791f25ebad12b6725712ff2f8aaff"
+}
