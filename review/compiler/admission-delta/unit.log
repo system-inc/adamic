@@ -1,0 +1,14 @@
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestSampling
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+--- PASS: TestSampling (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.002s

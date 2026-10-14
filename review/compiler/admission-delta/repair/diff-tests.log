@@ -1,0 +1,58 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestBuildRevisions
+=== CONT  TestCompilerTimeoutIsError
+=== CONT  TestEmptyCorpus
+=== CONT  TestNewlyRefusedIsInformational
+=== CONT  TestManifestMismatch
+--- PASS: TestManifestMismatch (0.04s)
+=== CONT  TestHeadInputIsolation
+--- PASS: TestEmptyCorpus (0.04s)
+=== CONT  TestNewAdmissionMismatch
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestNewlyRefusedIsInformational (0.05s)
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+=== CONT  TestSampling
+--- PASS: TestSampling (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestDiffCoverage
+--- PASS: TestCompilerTimeoutIsError (0.10s)
+=== CONT  TestDiffSamplingIsMandatory
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+--- PASS: TestHeadInputIsolation (0.08s)
+--- PASS: TestDiffCoverage (0.09s)
+--- PASS: TestNewAdmissionMismatch (0.14s)
+--- PASS: TestBuildRevisions (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.269s
