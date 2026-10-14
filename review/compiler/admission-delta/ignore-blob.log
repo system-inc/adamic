@@ -1,0 +1,7 @@
+--- FAIL: TestManifestMismatch (0.11s)
+    command_test.go:160: blob mismatch admitted {1 {"base":"0d365cbcf079c576d28bd095e8d4b5362068e9f6","head":"0d365cbcf079c576d28bd095e8d4b5362068e9f6","generator_blob":"e23d21aba10fb9eebc17d63a046dfec17ee8c163","manifest_blob":"84d11b9e033f7374ffd806ea70f37172c9c6936e","admitted":1,"programs":[{"path":"corpus/input.a","blob":"bad","corpus":"witnesses","class":"newly-accepted","base_compile":{"exit":1,"stdout":"","stderr":"adamic: stage 0 can't lower witness yet\n"},"compile":{"exit":0,"stdout":"","stderr":""},"node":{"exit":0,"stdout":"42\n","stderr":""},"javascript":{"exit":0,"stdout":"42\n","stderr":""},"native":{"exit":0,"stdout":"41\n","stderr":""},"javascript_compile":{"exit":0,"stdout":"","stderr":""},"native_compile":{"exit":0,"stdout":"","stderr":""},"agree":false,"sampled":true}],"verdict":"fail","corpora":[{"name":"witnesses","programs":[{"path":"corpus/input.a","blob":"bad"}]},{"name":"fuzz","programs":[]}],"sampling_seed":"0d365cbcf079c576d28bd095e8d4b5362068e9f6","sampling_size":1,"omitted":0,"budget_seconds":0,"budget_used_seconds":0.069459651}
+         admission delta failed
+         }
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.109s
+FAIL

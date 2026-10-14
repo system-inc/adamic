@@ -1,0 +1,14 @@
+main-checkout: exit 0, wall 1.869 s
+main-cohere: exit 0, wall 0.515 s
+main-typescript: exit 0, wall 2.57 s
+main-cold-build: exit 0, wall 163.788 s
+main-manifest: exit 0, wall 0.215 s
+main-admission: exit 1, wall 235.979 s
+main: {"exit": 1, "base": "cf735d9fba9e38de6368575e5630e44375a86eaf", "head": "cf735d9fba9e38de6368575e5630e44375a86eaf", "verdict": "fail", "admitted": 0, "sampled": 0, "omitted": 0, "classification": {"commands": 1822, "command_wall_sum_seconds": 128.12229824066162, "wall_span_seconds": 233.99683785438538}, "backend_builds": {"commands": 0, "command_wall_sum_seconds": 0, "wall_span_seconds": 0}, "runtime_phase_wall_seconds": 4.91e-07, "classes": {"refused-by-both": 62, "accepted-by-both": 833, "compiler-error": 16, "compiler-timeout": 5}, "corpora": {"witnesses": 2, "fixtures": 801, "gaps": 107, "review": 6, "fuzz": 0}}
+fixes-checkout: exit 0, wall 3.426 s
+fixes-cohere: exit 0, wall 0.816 s
+fixes-typescript: exit 0, wall 2.222 s
+fixes-cold-build: exit 0, wall 163.27 s
+fixes-manifest: exit 0, wall 0.215 s
+fixes-admission: exit 1, wall 238.102 s
+fixes: {"exit": 1, "base": "cf735d9fba9e38de6368575e5630e44375a86eaf", "head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b", "verdict": "fail", "admitted": 0, "sampled": 0, "omitted": 0, "classification": {"commands": 1830, "command_wall_sum_seconds": 130.22240805625916, "wall_span_seconds": 236.16378211975098}, "backend_builds": {"commands": 0, "command_wall_sum_seconds": 0, "wall_span_seconds": 0}, "runtime_phase_wall_seconds": 4.91e-07, "classes": {"refused-by-both": 62, "accepted-by-both": 837, "compiler-error": 16, "compiler-timeout": 5}, "corpora": {"witnesses": 2, "fixtures": 801, "gaps": 107, "review": 10, "fuzz": 0}}
