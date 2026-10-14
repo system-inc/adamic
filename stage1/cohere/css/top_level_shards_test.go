@@ -13,22 +13,6 @@ var cssParserTopSetup struct {
 	units []cssParserShard
 	run   func(*testing.T, cssParserShard)
 }
-var cssParserTopRootOnce sync.Once
-var cssParserTopRoot string
-var cssParserTopRootError error
-
-func cssParserTopTempDir(t *testing.T) string {
-	t.Helper()
-	cssParserTopRootOnce.Do(func() { cssParserTopRoot, cssParserTopRootError = os.MkdirTemp("", "adamic-css-top-") })
-	if cssParserTopRootError != nil {
-		t.Fatal(cssParserTopRootError)
-	}
-	dir, err := os.MkdirTemp(cssParserTopRoot, "input-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	return dir
-}
 
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
@@ -54,10 +38,11 @@ func cssParserTopPortDirectory(t *testing.T, applied *mutant) string {
 	return filepath.Join(destination, "css")
 }
 
-// Shared setup has no deadline; Loom bounds the whole unit.
+// Compiler products only: this unit can settle before the oracle package.
+// The comparison leaves prepare their corpus and expected answers at run time.
 func TestThePortParsesAsGoCohereDoes_Setup(t *testing.T) {
 	t.Parallel()
-	prepareThePortParsesAsGoCohereDoesSetup(t)
+	prepareCSSParserCompilerProducts(t)
 }
 
 func TestThePortParsesAsGoCohereDoes_000(t *testing.T) {
@@ -1613,30 +1598,6 @@ func TestThePortParsesAsGoCohereDoes_387(t *testing.T) {
 	runThePortParsesAsGoCohereDoesShard(t, 387)
 }
 
-var cssParserTopCorpusSetup struct {
-	once   sync.Once
-	corpus cssParserCorpus
-	units  []cssParserShard
-}
-
-func prepareCSSParserTopCorpus(t *testing.T) {
-	t.Helper()
-	cssParserTopCorpusSetup.once.Do(func() {
-		oracle := cssParserOracle(t)
-		cases, answers := cachedCSSParserOracleOutputs(t, oracle)
-		cssParserTopCorpusSetup.corpus = readCSSParserCorpus(t, cases, answers)
-		cssParserTopCorpusSetup.units = cssParserShards(cssParserTopCorpusSetup.corpus.keys)
-	})
-}
-func cssParserTopCorpus(t *testing.T) cssParserCorpus {
-	t.Helper()
-	prepareCSSParserTopCorpus(t)
-
-	if len(cssParserTopCorpusSetup.corpus.keys) == 0 {
-		t.Fatal("shared corpus setup did not complete")
-	}
-	return cssParserTopCorpusSetup.corpus
-}
 func cssParserContainsCase(indices []int, witness int) bool {
 	for _, i := range indices {
 		if i == witness {
