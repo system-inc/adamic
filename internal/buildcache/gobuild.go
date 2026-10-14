@@ -310,13 +310,22 @@ func (request goRequest) mutationKeys() []string {
 	return keys
 }
 
+// ReproducibleGoFlags are the flags GoBuild and GoTest add to every go build (reproducible). A product that runs go
+// itself (from an overlay it generates, or through its own harness) adds them to its command and to its key, so its
+// bytes name no checkout path or commit and a product built without them is retired: without them every oracle binary,
+// and everything built from one, held its checkout's path (#j8wf2w4: 97 of a tree's products differed between Server
+// and Workshop, and none at the same paths).
+func ReproducibleGoFlags() []string {
+	return []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
+}
+
 // reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
 // without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
 // (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
 // hex), which the key leaves out on purpose, so two commits with the same inputs shared a key and differed in those
 // bytes: floor1's audit rebuild of bridge/tsgo/oracle called it poisoning (Oct 9 04:52Z, same size, other bytes).
 func reproducible(arguments []string) []string {
-	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
+	kept := ReproducibleGoFlags()
 	for _, argument := range arguments {
 		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
 			panic("buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")

@@ -30,7 +30,7 @@ var cssPrinterCorpus []string
 func cssPrinterCorpusLines(t *testing.T) []string {
 	t.Helper()
 	cssPrinterCorpusOnce.Do(func() {
-		path, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+		path, _ := cachedCSSParserOracleOutputs(t)
 		data, err := os.ReadFile(path)
 		if err != nil {
 			t.Fatal(err)
@@ -49,7 +49,7 @@ func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	product, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	product, _ := cachedCSSParserOracleOutputs(t)
 	declared, err := os.ReadFile(product)
 	if err != nil {
 		t.Fatal(err)

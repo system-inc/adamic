@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -27,63 +26,8 @@ import (
 // Cached source trees live with their product, never in a declaring test's TempDir.
 type cssExecutable struct{ binary, javascript, source string }
 
-var cssOracleOnce [2]sync.Once
-var cssOracles [2]string
 var cssExecutableOnce [5]sync.Once
 var cssExecutables [5]cssExecutable
-
-func cssOracleProduct(t *testing.T, printer bool) string {
-	t.Helper()
-	index := 0
-	if printer {
-		index = 1
-	}
-	cssOracleOnce[index].Do(func() {
-		repo, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		side, pkg, target := "cohere_side_test.go", "postcss", "adamic_port_side_test.go"
-		if printer {
-			side, pkg, target = "print_side_test.go", "", "adamic_print_side_test.go"
-		}
-		sidePath := filepath.Join(repo, "stage1/cohere/css/testdata", side)
-		inputs := buildcache.Inputs{
-			Name:      "css-printer-oracle-" + strconv.Itoa(index),
-			Files:     []string{"stage1/cohere/css/testdata/" + side, "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"},
-			Flags:     []string{"test", "-c", "./internal/format/css/" + pkg},
-			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
-		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
-			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
-			cmd.Dir = filepath.Join(repo, "cohere")
-			output, err := cmd.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
-			}
-			return nil
-		})
-		cssOracles[index] = filepath.Join(directory, "oracle")
-	})
-	// A build that failed inside the Once leaves the path empty for every later caller in this process.
-	// Say so, rather than running an empty command.
-	if cssOracles[index] == "" {
-		t.Fatalf("css oracle product %d unavailable: its build failed earlier in this process (see that test's log)", index)
-	}
-	return cssOracles[index]
-}
 
 // variant -1 is the regular sanitized printer; 0..2 are its mutants;
 // variant 3 is the unsanitized printer used by macOS's leaks tool.
@@ -133,8 +77,6 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 	return cssExecutables[index]
 }
 
-func TestProduct_CSSPrinterParserOracle(t *testing.T)        { t.Parallel(); cssOracleProduct(t, false) }
-func TestProduct_CSSPrinterOracle(t *testing.T)              { t.Parallel(); cssOracleProduct(t, true) }
 func TestProduct_CSSPrinterSanitizedAndLowered(t *testing.T) { t.Parallel(); cssPrinterProduct(t, -1) }
 func TestProduct_CSSPrinterSemicolonMutant(t *testing.T)     { t.Parallel(); cssPrinterProduct(t, 0) }
 func TestProduct_CSSPrinterIndentMutant(t *testing.T)        { t.Parallel(); cssPrinterProduct(t, 1) }

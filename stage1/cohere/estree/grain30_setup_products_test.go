@@ -23,6 +23,7 @@ func goOracle(t *testing.T) string {
 	estreeGoOracleReady.once.Do(func() {
 		inputs := syntaxMutantSetupInputs(t)
 		inputs.Name = "estree-go-oracle-v1"
+		inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "))
 		dir := buildcache.Product(t, inputs, func(dir string) error {
 			estreeGoOracleBuild(t, dir)
 			return nil
@@ -54,7 +55,7 @@ func estreeGoOracleBuild(t *testing.T, dir string) string {
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(dir, "oracle")
-	command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
+	command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary, virtual)...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil || stderr.Len() != 0 {
