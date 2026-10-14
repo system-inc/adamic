@@ -185,6 +185,16 @@ Exit 0 means both native comparisons and their byte mutants passed; exit 2
 means a merge conflicted; exit 1 means compilation or another prerequisite
 failed. scratch-summary.py independently validates the final summary.
 
+The copied apply pipeline includes stage3/caches.py, so it imports its cache
+helper without PYTHONPATH. The command prepares apply's gate inputs itself:
+a shallow TypeScript checkout from source.json, checked against the exact commit,
+and npm ci installs beside the pipeline API lockfile and at stage3_cache()/api.
+Both API installs must match apply's pinned package bytes. If
+ADAMIC_TYPESCRIPT_SOURCE is supplied, its path and commit are checked instead of
+cloning. Missing or invalid inputs report their path and pin; each preparation
+command has separate phase logs. Cache placement follows caches.py, including
+ADAMIC_BUILD_CACHE_DIR and the sandbox's declared-cache requirement.
+
 After successful integration the command runs cloud/setup.sh with the required
 GOPROXY and sources its reported environment. Dependency checkouts have isolated
 Git metadata pinned to the scratch revision. The scanner's documented adaptation
