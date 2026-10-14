@@ -1,0 +1,37 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..7cb00736 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -501,6 +501,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+ 	case ast.KindRegularExpressionLiteral:
+ 		return l.regexConstant(node)
+ 	case ast.KindNumericLiteral:
++		if node.Text() == "42" {
++			return ir.NumberConstant{Value: 41}, nil
++		} // mutant: wrong numeric lowering
+ 		return l.numericLiteral(node)
+ 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
+ 		return ir.StringConstant{Index: l.constant(node.Text())}, nil
+diff --git a/internal/lower/view_lazy.go b/internal/lower/view_lazy.go
+index 5ae27fb9..907a44dd 100644
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -206,7 +206,7 @@ func (l *lowering) checkLazyViewReads() error {
+ 	for _, function := range program.Functions {
+ 		walk(function.Body, inspect)
+ 	}
+-	return refused
++	return nil // mutant: admit unsupported demanded reads
+ }
+ 
+ func viewAggregate(value ir.Expression) bool {
+diff --git a/review/compiler/admission-delta/unsupported-view.a b/review/compiler/admission-delta/unsupported-view.a
+index ab6102da..24e6ea55 100644
+--- a/review/compiler/admission-delta/unsupported-view.a
++++ b/review/compiler/admission-delta/unsupported-view.a
+@@ -3,4 +3,4 @@ interface View { readonly tag: 'value'; readonly payload: Readonly<Record<string
+ const raw = { tag: 'value' as const, payload: { answer: 42 } };
+ const base: Base = raw;
+ const view = base as View;
+-console.log(view.payload.answer);
++console.log(`${view.payload.answer}`);

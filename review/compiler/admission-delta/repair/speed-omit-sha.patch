@@ -1,0 +1,11 @@
+--- build.go
++++ build.go
+@@ -27,7 +27,7 @@
+ 	adapter := sha256.Sum256([]byte(loweringAdapter))
+ 	return buildcache.Inputs{
+ 		Name:      "admission-compiler",
+-		Flags:     []string{sha, fmt.Sprintf("adapter=%x", adapter), "-trimpath", "-buildvcs=false", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT")},
++		Flags:     []string{"constant-sha", fmt.Sprintf("adapter=%x", adapter), "-trimpath", "-buildvcs=false", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT")},
+ 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+ 	}
+ }
