@@ -54,7 +54,7 @@ func portMatchesPrepareProducts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// The four-digit port/upstream wrappers use the same immutable products.
+	// The four-digit port wrappers use the same immutable products.
 	// Publish the same products for either independently selected shard family.
 	jsonTopCorpus(t)
 	jsonTopState.clangTools = clangTools
