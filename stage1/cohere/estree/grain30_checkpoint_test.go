@@ -48,9 +48,6 @@ package estree
 // {"exit": 0, "unit": "TestProduct_ThreePortNative1", "wall": 30.05}
 // {"exit": 0, "unit": "TestProduct_ThreePortNative2", "wall": 8.597}
 // {"exit": 0, "unit": "TestProduct_ThreePortOracle", "wall": 5.082}
-// {"exit": 0, "unit": "TestProduct_UnattachedDecoratorIR", "wall": 3.983}
-// {"exit": 0, "unit": "TestProduct_UnattachedDecoratorLowered", "wall": 22.969}
-// {"exit": 0, "unit": "TestProduct_UnattachedDecoratorNative", "wall": 14.272}
 // {"exit": 0, "unit": "TestProduct_scalar_edges_go_oracle", "wall": 4.017}
 // {"exit": 0, "unit": "TestProduct_scalar_edges_lowered", "wall": 23.392}
 // {"exit": 0, "unit": "TestProduct_scalar_edges_sanitized_native", "wall": 5.251}
