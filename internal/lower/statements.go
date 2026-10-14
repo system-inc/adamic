@@ -117,6 +117,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	expression = ast.SkipParentheses(expression)
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
