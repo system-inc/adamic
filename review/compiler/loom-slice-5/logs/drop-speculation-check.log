@@ -1,0 +1,9 @@
+=== RUN   TestParserSpeculationMisfit
+=== PAUSE TestParserSpeculationMisfit
+=== CONT  TestParserSpeculationMisfit
+    parser_speculation_test.go:87: JavaScript: {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}, want "adamic: panic: speculative result failed: callback misfit at stage3/parser-next/speculation/misfit.a:3:14; expected number\n"
+    parser_speculation_test.go:87: native: {stdout:[50 46 53 101 45 51 50 51 10] stderr:[] exitCode:0}, want "adamic: panic: speculative result failed: callback misfit at stage3/parser-next/speculation/misfit.a:3:14; expected number\n"
+--- FAIL: TestParserSpeculationMisfit (1.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	1.204s
+FAIL

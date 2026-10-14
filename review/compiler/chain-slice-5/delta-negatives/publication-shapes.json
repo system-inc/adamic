@@ -1,0 +1,212 @@
+[
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_field.a",
+    "max_shape_fields": 2,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_local.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+    "max_shape_fields": 3,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+    "max_shape_fields": 2,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_observe.a",
+    "max_shape_fields": 3,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "internal/oracle/testdata/placeholder_nonnull_scanner.a",
+    "max_shape_fields": 2,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/node-array/fields.a",
+    "max_shape_fields": 4,
+    "construction_shape_fields": [
+      4
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/factory-unset.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [
+      1,
+      1
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/factory-use.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [
+      1,
+      1
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-json.a",
+    "max_shape_fields": 4,
+    "construction_shape_fields": [
+      4
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-keys.a",
+    "max_shape_fields": 4,
+    "construction_shape_fields": [
+      4
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-length.a",
+    "max_shape_fields": 4,
+    "construction_shape_fields": [
+      4
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/node-array-unset.a",
+    "max_shape_fields": 5,
+    "construction_shape_fields": [
+      5
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/null-placeholder-pending.a",
+    "max_shape_fields": 1,
+    "construction_shape_fields": [
+      1,
+      1
+    ],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-ahead/rulings/own-key-order.a",
+    "max_shape_fields": 5,
+    "construction_shape_fields": [
+      5,
+      5
+    ],
+    "publish_calls": 2
+  },
+  {
+    "path": "stage3/parser-next/speculation/arrow-tryparse.a",
+    "max_shape_fields": 2,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage3/parser-next/speculation/misfit.a",
+    "max_shape_fields": 0,
+    "construction_shape_fields": [],
+    "publish_calls": 0
+  },
+  {
+    "path": "stage1/typescript/parser/main.ts",
+    "max_shape_fields": 34,
+    "construction_shape_fields": [],
+    "construct_calls": 0,
+    "node_array_calls": 0,
+    "publish_calls": 0
+  }
+]

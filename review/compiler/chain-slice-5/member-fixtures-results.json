@@ -1,0 +1,76 @@
+[
+  {
+    "paths": [
+      "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a",
+      "internal/oracle/testdata/backend_stop_catches.a",
+      "internal/oracle/testdata/d96d304_try_stack.a",
+      "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+      "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+      "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+      "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+      "internal/oracle/testdata/placeholder_nonnull_field.a"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(4ddd17f_weak_single_narrowed\\.a|backend_stop_catches\\.a|d96d304_try_stack\\.a|e4eec87_u01_undefined_field_widened\\.a|placeholder_nonnull_alias_reset\\.a|placeholder_nonnull_assignment_result\\.a|placeholder_nonnull_before_use\\.a|placeholder_nonnull_field\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 16.098734035999996
+  },
+  {
+    "paths": [
+      "internal/oracle/testdata/placeholder_nonnull_local.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_optional.a"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(placeholder_nonnull_local\\.a|placeholder_nonnull_null_before_use\\.a|placeholder_nonnull_null_coalesce\\.a|placeholder_nonnull_null_copy\\.a|placeholder_nonnull_null_equality\\.a|placeholder_nonnull_null_json\\.a|placeholder_nonnull_null_loose\\.a|placeholder_nonnull_null_optional\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 15.37745814899995
+  },
+  {
+    "paths": [
+      "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+      "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+      "internal/oracle/testdata/placeholder_nonnull_observe.a",
+      "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+      "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+      "internal/oracle/testdata/placeholder_nonnull_scanner.a"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(placeholder_nonnull_null_saved_leak\\.a|placeholder_nonnull_null_truthiness\\.a|placeholder_nonnull_null_typeof\\.a|placeholder_nonnull_observe\\.a|placeholder_nonnull_return_assignment\\.a|placeholder_nonnull_saved_leak\\.a|placeholder_nonnull_scanner\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 11.962772838000092
+  }
+]

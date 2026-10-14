@@ -1,0 +1,17 @@
+let value: string = null!;
+console.log(`${value == null}|${value != null}`);
+value = undefined!;
+console.log(`${value == null}|${value != null}`);
+value = "written" + " value";
+console.log(`${value == null}|${value != null}`);
+
+class Slot { value: string = null!; }
+const box = new Slot();
+let calls = 0;
+function get(): Slot { calls++; return box; }
+console.log(`${get().value == null}`);
+box.value = undefined!;
+console.log(`${get().value != null}`);
+box.value = "written" + " value";
+console.log(`${get().value == null}`);
+console.log(calls.toString());

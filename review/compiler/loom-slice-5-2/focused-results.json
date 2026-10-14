@@ -1,0 +1,2798 @@
+[
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestParserFactoryCompletionBeforeReturn",
+      "TestParserFactoryCompletionAlias",
+      "TestParserFactoryCompletionBothBranches",
+      "TestParserFactoryCompletionOneBranch"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionBeforeReturn|TestParserFactoryCompletionAlias|TestParserFactoryCompletionBothBranches|TestParserFactoryCompletionOneBranch)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 9.039508358999996,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:28.92805966Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionAlias",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:28.930101385Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBeforeReturn",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:28.939105795Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBothBranches",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:28.939139586Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionOneBranch",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestParserFactoryCompletionBeforeEscape",
+      "TestParserFactoryCompletionWrongPayloadAssertion",
+      "TestParserFactoryCompletionEarlyReturn",
+      "TestParserFactoryCompletionLoopMayNotRun"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionBeforeEscape|TestParserFactoryCompletionWrongPayloadAssertion|TestParserFactoryCompletionEarlyReturn|TestParserFactoryCompletionLoopMayNotRun)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.1341304789999924,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:31.034193633Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionWrongPayloadAssertion",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:31.036852577Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionBeforeEscape",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:31.03865756Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionEarlyReturn",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:31.038695127Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionLoopMayNotRun",
+        "Elapsed": 0.08
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestParserFactoryCompletionCaptured",
+      "TestParserFactoryCompletionShortCircuit",
+      "TestParserFactoryReadBeforeCompletion",
+      "TestParserNodeArrayLayout"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionCaptured|TestParserFactoryCompletionShortCircuit|TestParserFactoryReadBeforeCompletion|TestParserNodeArrayLayout)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.0794052929999793,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:33.072412083Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArrayLayout",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:28:33.137693673Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryReadBeforeCompletion",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:33.145289053Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionShortCircuit",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:33.145328262Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserFactoryCompletionCaptured",
+        "Elapsed": 0.07
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestParserNodeArrayPresence",
+      "TestParserNodeArraySchemaFailsClosed",
+      "TestAdamicNullishAssertionsAreRefused",
+      "TestPlaceholderTypedBoundaryAssignmentResult"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserNodeArrayPresence|TestParserNodeArraySchemaFailsClosed|TestAdamicNullishAssertionsAreRefused|TestPlaceholderTypedBoundaryAssignmentResult)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.8368409949999887,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:35.294362838Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArrayPresence",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:28:35.294423739Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestParserNodeArraySchemaFailsClosed",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:28:35.371156786Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryAssignmentResult",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:35.379803479Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/function_f():_number_{_return_undefined!;_}",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:35.380374379Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_values=[1];_values[0]=undefined!;",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:35.387360621Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/function_f():_number_{_return_null!;_}",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:35.454157252Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_absent_=_undefined;_console.log(absent!);",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:35.466309825Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/function_f(value:_undefined):_void_{_console.log(value!);_}",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:35.474872141Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_box:_{value:_number;_other:_number}_=_{value:_undefined!,_get_other():_number_{_return_1;_}};",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:35.487086817Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(undefined!);",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:35.530975277Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[...undefined!];",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:35.537058919Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_1_||_undefined!;",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.552350841Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_true_?_undefined!_:_1;",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.56664578Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[undefined!];",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:35.577495301Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=undefined!}`);",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.585959729Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_values=[1];_values[0]=null!;",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.599051026Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/function_f(value:_null):_void_{_console.log(value!);_}",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.603820739Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_absent_=_null;_console.log(absent!);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.642276276Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_box:_{value:_number;_other:_number}_=_{value:_null!,_get_other():_number_{_return_1;_}};",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.650998192Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[...null!];",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.653428703Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/console.log(null!);",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:35.669844267Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[null!];",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:35.678911392Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_1_||_null!;",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.690744224Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=null!}`);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.725777537Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value_+=_null!;",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.740992222Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_true_?_null!_:_1;",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:35.746173685Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_clear=():_number_=>_value=null!;",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:35.746373646Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_let_other=2;_value=other=null!;",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.774472135Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_absent=null;_value=absent!;",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.775441616Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value=(null!_+_1);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.779115368Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_clear=():_number_=>_value=undefined!;",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-14T01:28:35.784502883Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_function_f():_number_{_return_value=undefined!;_}",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.829776679Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_absent=undefined;_value=absent!;",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.836385402Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_let_other=2;_value=other=undefined!;",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.837465449Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value=(undefined!_+_1);",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-14T01:28:35.839458491Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value_+=_undefined!;",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.869510827Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_console.log(`${value=null!}`);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.878811304Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_===_undefined}`);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.884169745Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_assigned=(value=null!);",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.900529784Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_assigned=(value=undefined!);",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-14T01:28:35.905962496Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_function_f():_number_{_return_value=null!;_}",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:35.934630764Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_console.log(`${value=undefined!}`);",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.944701931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_+_1}`);",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.954569473Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_===_undefined}`);",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:28:35.954604295Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_+_1}`);",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:28:35.954609563Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAdamicNullishAssertionsAreRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestPlaceholderTypedBoundaryReturnAssignment",
+      "TestPlaceholderTypedBoundaryAliasReset",
+      "TestPlaceholderTypedBoundaryArgument",
+      "TestPlaceholderTypedBoundarySavedCopy"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryReturnAssignment|TestPlaceholderTypedBoundaryAliasReset|TestPlaceholderTypedBoundaryArgument|TestPlaceholderTypedBoundarySavedCopy)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.7802075839999816,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:38.725786712Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryArgument",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:38.737921103Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryReturnAssignment",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-14T01:28:38.740921656Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryAliasReset",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-14T01:28:38.741033625Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundarySavedCopy",
+        "Elapsed": 0.16
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestPlaceholderTypedBoundaryProperty",
+      "TestPlaceholderTypedBoundaryCall",
+      "TestPlaceholderTypedBoundaryReturn",
+      "TestPlaceholderTypedBoundaryTypedLocal"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryProperty|TestPlaceholderTypedBoundaryCall|TestPlaceholderTypedBoundaryReturn|TestPlaceholderTypedBoundaryTypedLocal)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.511860885999994,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:41.257710593Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryProperty",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:41.27177263Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryCall",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:41.271863237Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryTypedLocal",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:41.271944699Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryReturn",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestPlaceholderTypedBoundaryOrdinaryField",
+      "TestPlaceholderTypedBoundaryArrayElement",
+      "TestPlaceholderTypedBoundaryOptionalArrayElement",
+      "TestPlaceholderTypedBoundaryElementWrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryOrdinaryField|TestPlaceholderTypedBoundaryArrayElement|TestPlaceholderTypedBoundaryOptionalArrayElement|TestPlaceholderTypedBoundaryElementWrite)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.243628261000026,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:43.527407453Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryArrayElement",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:43.52831566Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalArrayElement",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:43.528918799Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryElementWrite",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:43.528973321Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOrdinaryField",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestPlaceholderTypedBoundaryOptionalReceiver",
+      "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse",
+      "TestPlaceholderTypedBoundaryPresence",
+      "TestPlaceholderTypedBoundaryDominatingWrite"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryOptionalReceiver|TestPlaceholderTypedBoundaryOptionalParameterLaterTUse|TestPlaceholderTypedBoundaryPresence|TestPlaceholderTypedBoundaryDominatingWrite)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.891080054000014,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:46.358123534Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryPresence",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:46.365903241Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:46.377169898Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryOptionalReceiver",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-14T01:28:46.381994474Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryDominatingWrite",
+        "Elapsed": 0.14
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestPlaceholderTypedBoundarySavedAfterWrite",
+      "TestPlaceholderTypedBoundaryPlaceholderFieldCopy",
+      "TestPlaceholderWeakSlotStaysNotYet",
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundarySavedAfterWrite|TestPlaceholderTypedBoundaryPlaceholderFieldCopy|TestPlaceholderWeakSlotStaysNotYet|TestReadinessElisionRequiresDominatingAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.2469332610000095,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:28:49.339628399Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundarySavedAfterWrite",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-14T01:28:49.357972512Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/branch-join",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-14T01:28:49.364626402Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderTypedBoundaryPlaceholderFieldCopy",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-14T01:28:49.364652571Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestPlaceholderWeakSlotStaysNotYet",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-14T01:28:49.448951256Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/field-missing-join",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:28:49.4643146Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/throw-before-write",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:49.464483915Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/field-write",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:28:49.528782618Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/field-join",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-14T01:28:49.530578943Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/finally-write",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:49.583786475Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/do-loop",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:49.587429841Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/catch-write",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:49.644232867Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/captured-write",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-14T01:28:49.658118426Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/captured-read",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:28:49.667092319Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/zero-iteration",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:28:49.667130617Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment/loop-body",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:28:49.667135274Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadinessElisionRequiresDominatingAssignment",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/native",
+    "tests": [
+      "TestParserConstructionBackendOwnKeyOrder",
+      "TestParserConstructionBackendNodeArrayKeys",
+      "TestParserConstructionBackendNodeArrayJson",
+      "TestParserConstructionBackendNodeArrayLength"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserConstructionBackendOwnKeyOrder|TestParserConstructionBackendNodeArrayKeys|TestParserConstructionBackendNodeArrayJson|TestParserConstructionBackendNodeArrayLength)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 19.716358711999987,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:09.291844732Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionBackendOwnKeyOrder",
+        "Elapsed": 9.4
+      },
+      {
+        "Time": "2026-10-14T01:29:09.301599762Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionBackendNodeArrayKeys",
+        "Elapsed": 9.42
+      },
+      {
+        "Time": "2026-10-14T01:29:09.341564334Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionBackendNodeArrayJson",
+        "Elapsed": 9.43
+      },
+      {
+        "Time": "2026-10-14T01:29:09.342453268Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionBackendNodeArrayLength",
+        "Elapsed": 9.47
+      }
+    ]
+  },
+  {
+    "package": "./internal/native",
+    "tests": [
+      "TestParserConstructionRuntimeMutantSynthesizedKey",
+      "TestParserConstructionRuntimeMutantDeclarationOrder",
+      "TestParserConstructionRuntimeMutantArrayExtrasInJSON"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserConstructionRuntimeMutantSynthesizedKey|TestParserConstructionRuntimeMutantDeclarationOrder|TestParserConstructionRuntimeMutantArrayExtrasInJSON)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 16.185957287999997,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:25.355276936Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionRuntimeMutantSynthesizedKey",
+        "Elapsed": 12.58
+      },
+      {
+        "Time": "2026-10-14T01:29:25.526176673Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionRuntimeMutantDeclarationOrder",
+        "Elapsed": 13.08
+      },
+      {
+        "Time": "2026-10-14T01:29:25.530099997Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+        "Elapsed": 13.26
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestRuledWeakBackendOutcomes",
+      "TestUnlistedBackendSourceJavaScriptAgreement",
+      "TestUnlistedBackendSourceNativeAgreement",
+      "TestTerminalStackStopJavaScript"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRuledWeakBackendOutcomes|TestUnlistedBackendSourceJavaScriptAgreement|TestUnlistedBackendSourceNativeAgreement|TestTerminalStackStopJavaScript)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.013186103999999,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:29.003727931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestTerminalStackStopJavaScript",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-14T01:29:30.494875909Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUnlistedBackendSourceJavaScriptAgreement",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-14T01:29:30.553159079Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUnlistedBackendSourceNativeAgreement",
+        "Elapsed": 2.02
+      },
+      {
+        "Time": "2026-10-14T01:29:30.553275414Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRuledWeakBackendOutcomes",
+        "Elapsed": 2.08
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestTerminalStackStopNative",
+      "TestTerminalStackStopMarkedJavaScript",
+      "TestNonOverflowRangeErrorCatch",
+      "TestImpossibleNonNullFixturesAreRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestTerminalStackStopNative|TestTerminalStackStopMarkedJavaScript|TestNonOverflowRangeErrorCatch|TestImpossibleNonNullFixturesAreRefused)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.978673603000004,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:33.486038707Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-14T01:29:33.578193845Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:29:33.726926945Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-14T01:29:33.73339755Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonOverflowRangeErrorCatch",
+        "Elapsed": 0.33
+      },
+      {
+        "Time": "2026-10-14T01:29:33.838379469Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestTerminalStackStopMarkedJavaScript",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-14T01:29:33.839881571Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-14T01:29:33.862056134Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:29:33.930036362Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-14T01:29:33.968721559Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-14T01:29:33.973274114Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-14T01:29:34.039582419Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-14T01:29:35.442312111Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-14T01:29:35.502621703Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts",
+        "Elapsed": 1.47
+      },
+      {
+        "Time": "2026-10-14T01:29:35.532592476Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestTerminalStackStopNative",
+        "Elapsed": 2.1
+      },
+      {
+        "Time": "2026-10-14T01:29:35.532644154Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts",
+        "Elapsed": 1.56
+      },
+      {
+        "Time": "2026-10-14T01:29:35.532650784Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImpossibleNonNullFixturesAreRefused",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestLiteralDefaultPlaceholderAgreesWithNode",
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestNonNullLiteralUnionInitializers"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPossibleNonNullAdamicAssertionsAreRefused|TestLiteralDefaultPlaceholderAgreesWithNode|TestMigratedNonNullFixturesRemainCovered|TestNonNullLiteralUnionInitializers)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.519511367000007,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:38.793400779Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/every_alias.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793421931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/overload_every.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793430734Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/parser_every_result.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793443894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793452507Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_array.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793462312Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_boolean.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793472237Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_capture.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793480519Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_catch.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793489422Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793497384Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_field.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793506378Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_local.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793513939Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_field.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793521821Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_initialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793531185Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_default.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.793542332Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_field.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795819782Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_initialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795851269Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_read.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795860343Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_static.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795871139Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_assignment.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795881535Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_return.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795968195Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_statement.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795978331Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_map.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795986934Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_null.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.795997139Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_initialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.796138983Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_uninitialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.796839117Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.801952407Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_append.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.801969863Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_capture.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.801979198Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_catch.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.801991476Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_const.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.802391959Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_default.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.802525721Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_exception.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.802723739Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_field.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.803173546Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_interface.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.804348065Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.804554716Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_loop.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.805924059Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806017289Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_optional.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806028606Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_spread.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806038691Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_union.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806051571Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806059713Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak_freed.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806069157Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.806127275Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-boxed-write.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.841929375Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-read-before-set.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.841945529Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-staged.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.841954733Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.841973301Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.842728699Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number-uninitialized.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.842739565Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number.ts",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:38.929450801Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestMigratedNonNullFixturesRemainCovered",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-14T01:29:38.93147515Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/read",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-14T01:29:39.046000693Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/typeerror",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-14T01:29:40.652524754Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+        "Elapsed": 0.25
+      },
+      {
+        "Time": "2026-10-14T01:29:40.688629806Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLiteralDefaultPlaceholderAgreesWithNode",
+        "Elapsed": 1.86
+      },
+      {
+        "Time": "2026-10-14T01:29:40.688681503Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullLiteralUnionInitializers/undefined",
+        "Elapsed": 1.89
+      },
+      {
+        "Time": "2026-10-14T01:29:41.085437271Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullLiteralUnionInitializers/null",
+        "Elapsed": 0.4
+      },
+      {
+        "Time": "2026-10-14T01:29:41.085449269Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullLiteralUnionInitializers",
+        "Elapsed": 2.29
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestNonNullAdamicRefusal",
+      "TestParserAheadFactoryBoundariesComplete",
+      "TestParserAheadFactoryBoundariesEscaped",
+      "TestParserAheadFactoryCompleteControl"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNonNullAdamicRefusal|TestParserAheadFactoryBoundariesComplete|TestParserAheadFactoryBoundariesEscaped|TestParserAheadFactoryCompleteControl)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.029467936000003,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:43.88428513Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:29:44.003075816Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-14T01:29:45.779719201Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:45.788380326Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserAheadFactoryBoundariesEscaped",
+        "Elapsed": 2
+      },
+      {
+        "Time": "2026-10-14T01:29:46.086696226Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserAheadFactoryBoundariesComplete",
+        "Elapsed": 2.01
+      },
+      {
+        "Time": "2026-10-14T01:29:46.08769518Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserAheadFactoryCompleteControl",
+        "Elapsed": 2.31
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserAheadNodeArraySourceFields",
+      "TestParserAheadNodeArraySourcePresence",
+      "TestParserConstructionSourceFactoryUnset",
+      "TestParserConstructionSourceOwnKeyOrder"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadNodeArraySourceFields|TestParserAheadNodeArraySourcePresence|TestParserConstructionSourceFactoryUnset|TestParserConstructionSourceOwnKeyOrder)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.234483958999988,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:50.287138937Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserAheadNodeArraySourcePresence",
+        "Elapsed": 0.24
+      },
+      {
+        "Time": "2026-10-14T01:29:50.325246944Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceFactoryUnset",
+        "Elapsed": 1.5
+      },
+      {
+        "Time": "2026-10-14T01:29:50.32866407Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserAheadNodeArraySourceFields",
+        "Elapsed": 1.54
+      },
+      {
+        "Time": "2026-10-14T01:29:50.328919194Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceOwnKeyOrder",
+        "Elapsed": 1.54
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserConstructionSourceNodeArrayKeys",
+      "TestParserConstructionSourceNodeArrayJson",
+      "TestParserConstructionSourceNodeArrayLength",
+      "TestParserConstructionSourceNodeArrayUnset"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserConstructionSourceNodeArrayKeys|TestParserConstructionSourceNodeArrayJson|TestParserConstructionSourceNodeArrayLength|TestParserConstructionSourceNodeArrayUnset)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.2903700560000004,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:53.620584983Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceNodeArrayLength",
+        "Elapsed": 1.23
+      },
+      {
+        "Time": "2026-10-14T01:29:53.644184207Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceNodeArrayUnset",
+        "Elapsed": 1.24
+      },
+      {
+        "Time": "2026-10-14T01:29:53.644694726Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceNodeArrayJson",
+        "Elapsed": 1.26
+      },
+      {
+        "Time": "2026-10-14T01:29:53.645290443Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionSourceNodeArrayKeys",
+        "Elapsed": 1.26
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserConstructionUnsetUse",
+      "TestParserConstructionNullPlaceholderDelivered",
+      "TestParserProgramRegionLifetime",
+      "TestParserSpeculationSourcesNamedLookahead"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserConstructionUnsetUse|TestParserConstructionNullPlaceholderDelivered|TestParserProgramRegionLifetime|TestParserSpeculationSourcesNamedLookahead)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.3832882800000164,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:29:55.617609393Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserProgramRegionLifetime",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:29:56.995231582Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionNullPlaceholderDelivered",
+        "Elapsed": 1.38
+      },
+      {
+        "Time": "2026-10-14T01:29:57.021783899Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserConstructionUnsetUse",
+        "Elapsed": 1.38
+      },
+      {
+        "Time": "2026-10-14T01:29:57.022087777Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationSourcesNamedLookahead",
+        "Elapsed": 1.4
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserSpeculationSourcesNamedTryparse",
+      "TestParserSpeculationSourcesArrowTryparse",
+      "TestParserSpeculationSourcesTruthinessRewind",
+      "TestParserSpeculationMisfit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationSourcesNamedTryparse|TestParserSpeculationSourcesArrowTryparse|TestParserSpeculationSourcesTruthinessRewind|TestParserSpeculationMisfit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.38856880900002,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:00.369798307Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationMisfit",
+        "Elapsed": 1.28
+      },
+      {
+        "Time": "2026-10-14T01:30:00.37968647Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationSourcesArrowTryparse",
+        "Elapsed": 1.28
+      },
+      {
+        "Time": "2026-10-14T01:30:00.386304907Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationSourcesTruthinessRewind",
+        "Elapsed": 1.29
+      },
+      {
+        "Time": "2026-10-14T01:30:00.386628003Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationSourcesNamedTryparse",
+        "Elapsed": 1.3
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserSpeculationRewindMutant",
+      "TestParserStackLegal",
+      "TestParserStackPathological",
+      "TestParserStackTinyLimit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationRewindMutant|TestParserStackLegal|TestParserStackPathological|TestParserStackTinyLimit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.4849398369999847,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:03.749923305Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationRewindMutant",
+        "Elapsed": 1.29
+      },
+      {
+        "Time": "2026-10-14T01:30:03.808515304Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserStackLegal",
+        "Elapsed": 1.3
+      },
+      {
+        "Time": "2026-10-14T01:30:03.870436091Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserStackTinyLimit",
+        "Elapsed": 1.36
+      },
+      {
+        "Time": "2026-10-14T01:30:03.870699358Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserStackPathological",
+        "Elapsed": 1.42
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserStackGuardMutant",
+      "TestParserStackGuardCost",
+      "TestPlaceholderUseCheckBeforeUse",
+      "TestPlaceholderUseCheckSavedLeak"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserStackGuardMutant|TestParserStackGuardCost|TestPlaceholderUseCheckBeforeUse|TestPlaceholderUseCheckSavedLeak)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.130933521000003,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:05.867777433Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserStackGuardCost",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:30:07.015609202Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckBeforeUse",
+        "Elapsed": 1.13
+      },
+      {
+        "Time": "2026-10-14T01:30:07.04086734Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckSavedLeak",
+        "Elapsed": 1.15
+      },
+      {
+        "Time": "2026-10-14T01:30:07.041049615Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserStackGuardMutant",
+        "Elapsed": 1.17
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestPlaceholderUseCheckNullBeforeUse",
+      "TestPlaceholderUseCheckNullSavedLeak",
+      "TestPlaceholderUseCheckAssignmentResult",
+      "TestPlaceholderUseCheckReturnAssignment"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderUseCheckNullBeforeUse|TestPlaceholderUseCheckNullSavedLeak|TestPlaceholderUseCheckAssignmentResult|TestPlaceholderUseCheckReturnAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.3273645600000066,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:10.305723417Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckNullSavedLeak",
+        "Elapsed": 1.24
+      },
+      {
+        "Time": "2026-10-14T01:30:10.331788211Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckAssignmentResult",
+        "Elapsed": 1.24
+      },
+      {
+        "Time": "2026-10-14T01:30:10.33503484Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckNullBeforeUse",
+        "Elapsed": 1.27
+      },
+      {
+        "Time": "2026-10-14T01:30:10.335055841Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckReturnAssignment",
+        "Elapsed": 1.27
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestPlaceholderUseCheckAliasReset",
+      "TestPlaceholderNonliteralAssertionStillChecks",
+      "TestPlaceholderFlowMutantBeforeUse",
+      "TestPlaceholderFlowMutantSavedLeak"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderUseCheckAliasReset|TestPlaceholderNonliteralAssertionStillChecks|TestPlaceholderFlowMutantBeforeUse|TestPlaceholderFlowMutantSavedLeak)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.696299449999998,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:13.79644232Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderNonliteralAssertionStillChecks",
+        "Elapsed": 1.32
+      },
+      {
+        "Time": "2026-10-14T01:30:14.018745206Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderUseCheckAliasReset",
+        "Elapsed": 1.36
+      },
+      {
+        "Time": "2026-10-14T01:30:14.029003205Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantBeforeUse",
+        "Elapsed": 1.58
+      },
+      {
+        "Time": "2026-10-14T01:30:14.029638652Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantSavedLeak",
+        "Elapsed": 1.59
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestPlaceholderFlowMutantNullBeforeUse",
+      "TestPlaceholderFlowMutantNullSavedLeak",
+      "TestPlaceholderFlowMutantAssignmentResult",
+      "TestPlaceholderFlowMutantReturnAssignment"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderFlowMutantNullBeforeUse|TestPlaceholderFlowMutantNullSavedLeak|TestPlaceholderFlowMutantAssignmentResult|TestPlaceholderFlowMutantReturnAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.870377883000003,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:18.869212502Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantNullBeforeUse",
+        "Elapsed": 2.6
+      },
+      {
+        "Time": "2026-10-14T01:30:18.898040876Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantAssignmentResult",
+        "Elapsed": 2.63
+      },
+      {
+        "Time": "2026-10-14T01:30:18.935848673Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantReturnAssignment",
+        "Elapsed": 2.66
+      },
+      {
+        "Time": "2026-10-14T01:30:18.936532754Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantNullSavedLeak",
+        "Elapsed": 2.7
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestPlaceholderFlowMutantAliasReset",
+      "TestPlaceholderNullTagMutant",
+      "TestPlaceholderSpreadReadinessMutant",
+      "TestReadinessMutantReplaceUnsetCheckWithZero"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderFlowMutantAliasReset|TestPlaceholderNullTagMutant|TestPlaceholderSpreadReadinessMutant|TestReadinessMutantReplaceUnsetCheckWithZero)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 10.631909550999978,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:28.591095208Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantReplaceUnsetCheckWithZero",
+        "Elapsed": 5.08
+      },
+      {
+        "Time": "2026-10-14T01:30:28.965312161Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderNullTagMutant",
+        "Elapsed": 5.14
+      },
+      {
+        "Time": "2026-10-14T01:30:29.558068741Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderFlowMutantAliasReset",
+        "Elapsed": 5.51
+      },
+      {
+        "Time": "2026-10-14T01:30:29.559811545Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestPlaceholderSpreadReadinessMutant",
+        "Elapsed": 6.1
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestReadinessMutantEraseWithoutProof",
+      "TestReadinessMutantInitializeToZero",
+      "TestReadinessMutantMissCapturedRead",
+      "TestReadinessMutantMissExceptionPath"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestReadinessMutantEraseWithoutProof|TestReadinessMutantInitializeToZero|TestReadinessMutantMissCapturedRead|TestReadinessMutantMissExceptionPath)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 9.139949917000024,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:38.469928653Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantMissCapturedRead",
+        "Elapsed": 3.47
+      },
+      {
+        "Time": "2026-10-14T01:30:38.565822251Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantMissExceptionPath",
+        "Elapsed": 3.56
+      },
+      {
+        "Time": "2026-10-14T01:30:38.680591051Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantInitializeToZero",
+        "Elapsed": 3.66
+      },
+      {
+        "Time": "2026-10-14T01:30:38.68128748Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantEraseWithoutProof",
+        "Elapsed": 3.78
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestReadinessMutantReplaceMissingAssertionWithEmpty",
+      "TestReadinessMutantWeakGenericMessage",
+      "TestUninitializedIsNotNullishMutant",
+      "TestNonNullWeakFreedNamesExpression"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestReadinessMutantReplaceMissingAssertionWithEmpty|TestReadinessMutantWeakGenericMessage|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 8.898685510000007,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:46.036874557Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullWeakFreedNamesExpression",
+        "Elapsed": 2.85
+      },
+      {
+        "Time": "2026-10-14T01:30:47.494995303Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUninitializedIsNotNullishMutant",
+        "Elapsed": 3.25
+      },
+      {
+        "Time": "2026-10-14T01:30:47.564178433Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantWeakGenericMessage",
+        "Elapsed": 4.7
+      },
+      {
+        "Time": "2026-10-14T01:30:47.564524775Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestReadinessMutantReplaceMissingAssertionWithEmpty",
+        "Elapsed": 4.78
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestNonliteralInitializerCannotSkipCheck",
+      "TestRequiredViewFieldPrimitiveNumber",
+      "TestRequiredViewFieldPrimitiveBoolean",
+      "TestRequiredViewFieldPrimitiveString"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNonliteralInitializerCannotSkipCheck|TestRequiredViewFieldPrimitiveNumber|TestRequiredViewFieldPrimitiveBoolean|TestRequiredViewFieldPrimitiveString)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.787299553999958,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:54.264173428Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveString",
+        "Elapsed": 2.44
+      },
+      {
+        "Time": "2026-10-14T01:30:54.26815851Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveNumber",
+        "Elapsed": 2.46
+      },
+      {
+        "Time": "2026-10-14T01:30:54.354646651Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveBoolean",
+        "Elapsed": 2.46
+      },
+      {
+        "Time": "2026-10-14T01:30:54.354715825Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonliteralInitializerCannotSkipCheck",
+        "Elapsed": 2.55
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestRequiredViewFieldPrimitiveWrongString",
+      "TestRequiredViewFieldPrimitiveMissing",
+      "TestRequiredViewFieldPrimitiveUninitialized",
+      "TestRequiredViewFieldPrimitiveWrongType"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRequiredViewFieldPrimitiveWrongString|TestRequiredViewFieldPrimitiveMissing|TestRequiredViewFieldPrimitiveUninitialized|TestRequiredViewFieldPrimitiveWrongType)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.686321550000002,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:30:58.867449388Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveMissing",
+        "Elapsed": 2.17
+      },
+      {
+        "Time": "2026-10-14T01:30:58.967742769Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveWrongString",
+        "Elapsed": 2.18
+      },
+      {
+        "Time": "2026-10-14T01:30:59.062404187Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveWrongType",
+        "Elapsed": 2.28
+      },
+      {
+        "Time": "2026-10-14T01:30:59.062834005Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldPrimitiveUninitialized",
+        "Elapsed": 2.37
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestRequiredViewFieldOperandOnce",
+      "TestNarrowedFieldUsesSharedReadinessIdentifier",
+      "TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized",
+      "TestNarrowedFieldUsesSharedReadinessNumber"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadinessIdentifier|TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized|TestNarrowedFieldUsesSharedReadinessNumber)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.502993186000026,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:02.769277244Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized",
+        "Elapsed": 1.42
+      },
+      {
+        "Time": "2026-10-14T01:31:02.783038828Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNarrowedFieldUsesSharedReadinessIdentifier",
+        "Elapsed": 1.43
+      },
+      {
+        "Time": "2026-10-14T01:31:03.564068297Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNarrowedFieldUsesSharedReadinessNumber",
+        "Elapsed": 1.44
+      },
+      {
+        "Time": "2026-10-14T01:31:03.564115348Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestRequiredViewFieldOperandOnce",
+        "Elapsed": 2.22
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestNarrowedFieldUsesSharedReadinessNumberUninitialized",
+      "TestViewFieldInheritedStaticReadiness",
+      "TestDefaultTaggedSourceViewsDefaultStaged",
+      "TestDefaultTaggedSourceViewsDefaultBoxedString"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadinessNumberUninitialized|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViewsDefaultStaged|TestDefaultTaggedSourceViewsDefaultBoxedString)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.685813192000012,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:07.142386157Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNarrowedFieldUsesSharedReadinessNumberUninitialized",
+        "Elapsed": 1.52
+      },
+      {
+        "Time": "2026-10-14T01:31:08.241368072Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestViewFieldInheritedStaticReadiness",
+        "Elapsed": 1.57
+      },
+      {
+        "Time": "2026-10-14T01:31:08.243842328Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultBoxedString",
+        "Elapsed": 2.67
+      },
+      {
+        "Time": "2026-10-14T01:31:08.243877842Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultStaged",
+        "Elapsed": 2.67
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestDefaultTaggedSourceViewsDefaultBoxedWrite",
+      "TestDefaultTaggedSourceViewsDefaultDestructure",
+      "TestDefaultTaggedSourceViewsDefaultWrongType",
+      "TestDefaultTaggedSourceViewsDefaultWrongBoolean"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestDefaultTaggedSourceViewsDefaultBoxedWrite|TestDefaultTaggedSourceViewsDefaultDestructure|TestDefaultTaggedSourceViewsDefaultWrongType|TestDefaultTaggedSourceViewsDefaultWrongBoolean)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.143608916999995,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:12.383264249Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultDestructure",
+        "Elapsed": 2.09
+      },
+      {
+        "Time": "2026-10-14T01:31:12.391044216Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultWrongType",
+        "Elapsed": 2.09
+      },
+      {
+        "Time": "2026-10-14T01:31:12.400588299Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultWrongBoolean",
+        "Elapsed": 2.1
+      },
+      {
+        "Time": "2026-10-14T01:31:12.400614839Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultBoxedWrite",
+        "Elapsed": 2.11
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestDefaultTaggedSourceViewsDefaultLiteral",
+      "TestDefaultTaggedSourceViewsDefaultReadBeforeSet",
+      "TestParserPlaceholderProductsUseDisplayedPaths",
+      "TestParserFactoryProductsUseDisplayedPaths"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestDefaultTaggedSourceViewsDefaultLiteral|TestDefaultTaggedSourceViewsDefaultReadBeforeSet|TestParserPlaceholderProductsUseDisplayedPaths|TestParserFactoryProductsUseDisplayedPaths)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.347490289000007,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:14.759645161Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserPlaceholderProductsUseDisplayedPaths",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-14T01:31:16.741034815Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserFactoryProductsUseDisplayedPaths",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-14T01:31:16.741405433Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultReadBeforeSet",
+        "Elapsed": 2.11
+      },
+      {
+        "Time": "2026-10-14T01:31:16.741425744Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestDefaultTaggedSourceViewsDefaultLiteral",
+        "Elapsed": 2.11
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestParserSpeculationProductsUseDisplayedPaths",
+      "TestSlice5WitnessAliasReset",
+      "TestSlice5WitnessAssignmentResult",
+      "TestSlice5WitnessBeforeUse"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationProductsUseDisplayedPaths|TestSlice5WitnessAliasReset|TestSlice5WitnessAssignmentResult|TestSlice5WitnessBeforeUse)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.862278537000009,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:20.527887103Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestParserSpeculationProductsUseDisplayedPaths",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-14T01:31:20.604102675Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessBeforeUse",
+        "Elapsed": 1.61
+      },
+      {
+        "Time": "2026-10-14T01:31:20.623447939Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessAssignmentResult",
+        "Elapsed": 1.68
+      },
+      {
+        "Time": "2026-10-14T01:31:20.624252741Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessAliasReset",
+        "Elapsed": 1.7
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestSlice5WitnessNullBeforeUse",
+      "TestSlice5WitnessNullSavedLeak",
+      "TestSlice5WitnessReturnAssignment",
+      "TestSlice5WitnessSavedLeak"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestSlice5WitnessNullBeforeUse|TestSlice5WitnessNullSavedLeak|TestSlice5WitnessReturnAssignment|TestSlice5WitnessSavedLeak)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.8095078339999873,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:24.401574439Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessNullBeforeUse",
+        "Elapsed": 1.68
+      },
+      {
+        "Time": "2026-10-14T01:31:24.418323724Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessSavedLeak",
+        "Elapsed": 1.73
+      },
+      {
+        "Time": "2026-10-14T01:31:24.432988189Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessNullSavedLeak",
+        "Elapsed": 1.74
+      },
+      {
+        "Time": "2026-10-14T01:31:24.433555213Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessReturnAssignment",
+        "Elapsed": 1.76
+      }
+    ]
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestSlice5WitnessSpeculation",
+      "TestSmallStacksStillPanic",
+      "TestLongArgumentsLeaveTheStackItsLimit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestSlice5WitnessSpeculation|TestSmallStacksStillPanic|TestLongArgumentsLeaveTheStackItsLimit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.968583029000001,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:27.886543241Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSlice5WitnessSpeculation",
+        "Elapsed": 1.45
+      },
+      {
+        "Time": "2026-10-14T01:31:29.776162307Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Elapsed": 1.89
+      },
+      {
+        "Time": "2026-10-14T01:31:29.878943689Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Elapsed": 3.43
+      },
+      {
+        "Time": "2026-10-14T01:31:29.992509135Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Elapsed": 3.49
+      },
+      {
+        "Time": "2026-10-14T01:31:29.992586281Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Elapsed": 3.55
+      },
+      {
+        "Time": "2026-10-14T01:31:30.376746969Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-14T01:31:30.398646966Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-14T01:31:30.398701959Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-14T01:31:30.398708308Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./cmd/adamic",
+    "tests": [
+      "TestPlaceholderExplainChecksOutputC",
+      "TestPlaceholderExplainChecksOutputJavaScript",
+      "TestPlaceholderExplainChecksOutputBuild"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestPlaceholderExplainChecksOutputC|TestPlaceholderExplainChecksOutputJavaScript|TestPlaceholderExplainChecksOutputBuild)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.499290385999984,
+    "leaves": [
+      {
+        "Time": "2026-10-14T01:31:36.941435624Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestPlaceholderExplainChecksOutputC",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-14T01:31:37.926017389Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestPlaceholderExplainChecksOutputJavaScript",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-14T01:31:37.926063368Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestPlaceholderExplainChecksOutputBuild",
+        "Elapsed": 1.09
+      }
+    ]
+  }
+]

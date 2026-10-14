@@ -1,0 +1,85 @@
+{
+  "_comment": "Adding an entry is a ruling routed to @system_adamic. Valid, type-correct programs must never be listed. Schema: witnesses maps SHA-256 of exact source bytes to ruling_task, declaration (file:line), declared_type, repair_from, repair_to, type_correct_sha256, exit (70), stderr (exact bytes; {root} expands to the head checkout). Repair replaces every repair_from with repair_to; its hash can never be listed. Supported literal type lies are string = undefined!/null! and number asserted from a callback returning the string literal wrong. No name lookup; an edit requires Node agreement or a new ruling.",
+  "witnesses": {
+    "a3e359099215288bcda467d841620642a6c5438f187ea34b615a9244e89edb96": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a:1",
+      "declared_type": "string",
+      "repair_from": "undefined!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "ce7cec0661ff8209693546d2ed0f7db72e508e0641aeaad3fe2074e012c397df",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'value' is unset at assignment via source.value\n"
+    },
+    "aea38b33c7c7d69d480f36f2d9085d561f6f0e4b066aed3d537f52cfb366677c": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a:1",
+      "declared_type": "string",
+      "repair_from": "undefined!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "cb929741af3e0dff406c736620b38cda71b7cadb5417fe355e0a291ce3ab5095",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'target' is unset at assignment result via target = value\n"
+    },
+    "2a584b906643006c31238d1f66c6512368b3ac7f01e40da1e425dbfdd0579bde": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_before_use.a:4",
+      "declared_type": "string",
+      "repair_from": "undefined!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "c1589f45e63f3dbc423c6d7f48e9f3010e667f7468eb7baab90ec68825acc2a5",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "be446786dd8cff3c75cd47f63d7ecc081ce94188600308b6aa72ce6b999fee6b": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a:2",
+      "declared_type": "string",
+      "repair_from": "null!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "bd13eddc5ca67f663e8269f758466157a3a57dfc4c5687b2c646ff10da46ae2e",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+    },
+    "ae34cc94244bc08b07d01e2a3b83a8b6e0e322037099c9b5e8037f6231292af9": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a:2",
+      "declared_type": "string",
+      "repair_from": "null!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "349b58d787dbc6f22e8cd204412c379107bf9b4d2dbe5447c23b56a774fde476",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "8dae05151f30455411da485778ed1ee5f04fcaba9d7719b97283d5b1a926b761": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a:1",
+      "declared_type": "string",
+      "repair_from": "undefined!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "f0675542c27ce4552c7b5fba7761e8a462bdaff0783354d6cc31b3d2f345e9e7",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'target' is unset at return via target = value\n"
+    },
+    "c8ab5676c003b08e57ff4f9067455b837e5e2597ff5e92d47361a3822144450b": {
+      "ruling_task": "#9wc5q5j",
+      "declaration": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a:4",
+      "declared_type": "string",
+      "repair_from": "undefined!",
+      "repair_to": "\"ready\"",
+      "type_correct_sha256": "38218372768a1005d55eec75e232a612484d6028d2ae5010ae90159933c52a3e",
+      "exit": 70,
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via saved\n"
+    },
+    "1209cb3741181e653d4c0d6099e8f03b8284c74328958a7eb2fedb512a9c8487": {
+      "ruling_task": "#ktz9fek",
+      "declaration": "stage3/parser-next/speculation/misfit.a:3",
+      "declared_type": "number",
+      "repair_from": "return 'wrong';",
+      "repair_to": "return 1;",
+      "type_correct_sha256": "9af894e716735ae02afceac9c712fb2ab5fc8189068b87d1c95d3a678e23c4ea",
+      "exit": 70,
+      "stderr": "adamic: panic: speculative result failed: callback misfit at {root}/stage3/parser-next/speculation/misfit.a:3:14; expected number\n"
+    }
+  }
+}
