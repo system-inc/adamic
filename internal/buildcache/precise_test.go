@@ -287,8 +287,8 @@ func TestATracedBuildIsKeyedByWhatItRead(t *testing.T) {
 	}
 }
 
-// A build that read something no key can name is refused, named, and neither placed, recorded nor published; the
-// same build with only nameable reads is settled and published, so the refusal is what stops it.
+// A build that read something no key can name is refused, named, and neither placed nor recorded; the same build with
+// only nameable reads is settled and recorded, so the refusal is what stops it. Neither writes to the store.
 // Not parallel: newRig.
 func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 	home, _ := os.UserHomeDir()
@@ -313,8 +313,6 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 			server := httptest.NewServer(store)
 			t.Cleanup(server.Close)
 			t.Setenv("ADAMIC_BUILD_STORE", "traced="+server.URL)
-			t.Setenv("ADAMIC_BUILD_STORE_WRITE", server.URL+"/public")
-			token(t)
 			pending := Product(t, port, building("built"))
 			build := r.built(t)["port"]
 			r.window(build.Build, func() {
@@ -323,8 +321,8 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 			})
 			settlement := r.settle(t)
 			if plant.reason == "" {
-				if len(settlement.Settled) != 1 || len(store.writes) == 0 || strings.Contains(settlement.Settled[0], "publish failed") {
-					t.Fatalf("a nameable build: settled %q, refused %q, published %q", settlement.Settled, settlement.Refused, store.writes)
+				if file, _ := loadReads(r.cache, build.NameKey); len(settlement.Settled) != 1 || len(file.Sets) != 1 || len(store.writes) != 0 {
+					t.Fatalf("a nameable build: settled %q, refused %q, read sets %+v, wrote %q", settlement.Settled, settlement.Refused, file.Sets, store.writes)
 				}
 				return
 			}
@@ -332,7 +330,7 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 				t.Fatalf("settled %q, refused %q; want a refusal naming %q", settlement.Settled, settlement.Refused, plant.reason)
 			}
 			if len(store.writes) != 0 {
-				t.Fatalf("a refused build was published: %q", store.writes)
+				t.Fatalf("a refused build wrote to the store: %q", store.writes)
 			}
 			if _, err := os.Stat(pending); err == nil {
 				t.Fatal("a refused product stayed in the cache")
@@ -694,8 +692,7 @@ func TestAProductReadingAnotherIsKeyedByItsKey(t *testing.T) {
 	}
 }
 
-// Away from a trace a product is built as before, for this machine alone: keyed by its declared Files, never published,
-// and never found by a runner's read mode. Only Workshop's tree builder, ADAMIC_BUILD_STORE=traced, refuses to build
+// Away from a trace a product is built as before, for this machine alone: keyed by its declared Files and never found by a runner's read mode. Only Workshop's tree builder, ADAMIC_BUILD_STORE=traced, refuses to build
 // outside a trace.
 // Not parallel: newRig.
 func TestAnUntracedMachineBuildsOnlyForItself(t *testing.T) {
