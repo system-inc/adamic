@@ -1,0 +1,28 @@
+{
+  "base": "36e7fac41ba3ecd480f10393a3a9f7b339587b14",
+  "head": "7acd44960c497aac4b96e1a04e53f7b4e31b7c19",
+  "tool_revision": "543925aa5e950830507f6907f70e32d125beef11",
+  "generator_revision": "543925aa5e950830507f6907f70e32d125beef11",
+  "tool_sha256": "98be82f503a55867eb2d3de56e1e2c98feef89f9564685312f77bb29257c32c1",
+  "command": [
+    "/workspace/admission-production-tool",
+    "--base",
+    "36e7fac41ba3ecd480f10393a3a9f7b339587b14",
+    "--head",
+    "7acd44960c497aac4b96e1a04e53f7b4e31b7c19",
+    "--manifest",
+    "review/compiler/admission-delta/runs/overload-proof.manifest.json",
+    "--manifest-generator-revision",
+    "543925aa5e950830507f6907f70e32d125beef11",
+    "--workers",
+    "4",
+    "--budget",
+    "0",
+    "--json"
+  ],
+  "fetch_heads": [
+    "7acd44960c497aac4b96e1a04e53f7b4e31b7c19\t\tbranch 'compiler/overload-proof' of https://github.com/system-inc/adamic",
+    "36e7fac41ba3ecd480f10393a3a9f7b339587b14\t\tbranch 'compiler/hidden-boundaries-main' of https://github.com/system-inc/adamic"
+  ],
+  "sampling": "all newly accepted programs; no filter or shard"
+}

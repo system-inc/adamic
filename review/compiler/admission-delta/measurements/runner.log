@@ -1,0 +1,14 @@
+starting fx-diff-cold cache entries 0
+completed fx-diff-cold wall 32.579 phases {'base_build': 9.621596495, 'checkout': 1.7645804699999998, 'checkout_and_provision': 2.3457542350000002, 'classification': 0.801051636, 'head_build': 19.069099178, 'manifest_and_verification': 0.093497344, 'provision': 0.581165741, 'runtime': 0.31982852, 'total': 32.254921142}
+starting fx-diff-warm cache entries 6
+completed fx-diff-warm wall 6.695 phases {'base_build': 0.000594399, 'checkout': 4.562409085, 'checkout_and_provision': 5.128019952, 'classification': 0.838455701, 'head_build': 2.4185e-05, 'manifest_and_verification': 0.091221312, 'provision': 0.565605487, 'runtime': 0.315785971, 'total': 6.37836017}
+starting small-diff-cold cache entries 0
+completed small-diff-cold wall 47.029 phases {'base_build': 20.693702494, 'checkout': 4.6523538989999995, 'checkout_and_provision': 5.198538803, 'classification': 0.172911467, 'head_build': 20.271740174, 'manifest_and_verification': 0.039450439, 'provision': 0.546180375, 'runtime': 0.339282468, 'total': 46.719632473}
+starting small-diff-warm cache entries 6
+completed small-diff-warm wall 5.904 phases {'base_build': 0.000561347, 'checkout': 4.602211247, 'checkout_and_provision': 5.141917334, 'classification': 0.127639217, 'head_build': 2.2953e-05, 'manifest_and_verification': 0.026805915, 'provision': 0.539701047, 'runtime': 0.302482916, 'total': 5.60478466}
+starting shard-1-warm cache entries 6
+completed shard-1-warm wall 27.901 phases {'base_build': 0.000593367, 'checkout': 4.228163382, 'checkout_and_provision': 4.7590099089999995, 'classification': 21.69062785, 'head_build': 2.6309e-05, 'manifest_and_verification': 0.831969329, 'provision': 0.530841647, 'runtime': 0.315590617, 'total': 27.601729849}
+starting shard-2-warm cache entries 6
+completed shard-2-warm wall 19.276 phases {'base_build': 0.000756692, 'checkout': 4.099630369, 'checkout_and_provision': 4.6345127569999995, 'classification': 13.33281471, 'head_build': 6.7616e-05, 'manifest_and_verification': 0.713185034, 'provision': 0.53487302, 'runtime': 0.309638047, 'total': 18.994727854}
+starting shard-3-warm cache entries 6
+completed shard-3-warm wall 22.531 phases {'base_build': 0.000162854, 'checkout': 4.525175817, 'checkout_and_provision': 5.042209415, 'classification': 15.986151397, 'head_build': 2.4987e-05, 'manifest_and_verification': 0.860605771, 'provision': 0.517026765, 'runtime': 0.309686448, 'total': 22.203735116}
