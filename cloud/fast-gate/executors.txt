@@ -1471,6 +1471,17 @@ reads stage1/typescript/scanner stage1/cohere/lint/suggestions.a
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
 reads stage3/fixtures oracle/adamic.mjs
+# TestProduct_Stage3Adapted10, 40, 70 and 99 and their TracksInputs tests (#hefhych): stage3/apply.py, caches.py,
+# source.json, the API package pins and stage3/adapt, traced and audited in stage3/applyproducts/READS.md, and the
+# root .gitattributes buildcache's git lookup reads. stage3/* also takes the lane and oracle, which these products
+# don't read: a key that moves more than it must, never less.
+reads stage3/applyproducts stage3/*
+reads stage3/applyproducts .gitattributes
+# The lane's products (install, compiler, harness) and its TestShard_ units (#hefhych): every stage3 file the
+# artifact's identity hashes, the lane's runtime, manifests and pins, and the oracle runtime the shards run, traced and
+# audited in stage3/lane/READS.md, and the root .gitattributes.
+reads stage3/lane stage3/*
+reads stage3/lane .gitattributes
 # TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
