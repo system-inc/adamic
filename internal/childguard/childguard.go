@@ -3,6 +3,7 @@ package childguard
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -20,7 +21,11 @@ const DefaultCeiling = 60 * time.Minute
 
 // FirstOutput is the silence allowed before the first byte; Stall applies thereafter.
 // Options overrides the defaults. Zero durations select the defaults.
-type Options struct{ FirstOutput, Stall, Ceiling time.Duration }
+type Options struct {
+	FirstOutput, Stall, Ceiling time.Duration
+	// Unbounded disables the guard timers; command context cancellation still applies.
+	Unbounded bool
+}
 
 // Error reports a guard termination, separately from a child's nonzero exit.
 // Reason is "stalled" or "ceiling". Load is the one-minute load average,
@@ -71,7 +76,7 @@ func (w *watched) Write(p []byte) (int, error) {
 
 // Run starts an unstarted command in its own process group and waits for it.
 // Output is forwarded to the command's original writers (nil means discard).
-// Callers should use exec.Command, rather than an independent context deadline.
+// Context commands also cancel the whole process group.
 func Run(cmd *exec.Cmd, options Options) error {
 	if options.FirstOutput == 0 {
 		options.FirstOutput = DefaultFirstOutput
@@ -90,6 +95,18 @@ func Run(cmd *exec.Cmd, options Options) error {
 	}
 	cmd.SysProcAttr.Setpgid = true
 	cmd.SysProcAttr.Pgid = 0
+	if cmd.Cancel != nil {
+		cmd.Cancel = func() error {
+			if cmd.Process == nil {
+				return os.ErrProcessDone
+			}
+			err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+			if errors.Is(err, syscall.ESRCH) {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+	}
 	originalOut, originalErr := cmd.Stdout, cmd.Stderr
 	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()
 	start := time.Now()
@@ -110,6 +127,10 @@ func Run(cmd *exec.Cmd, options Options) error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	if options.Unbounded {
+		return cmd.Wait()
+	}
+
 	done := make(chan error, 1)
 	go func() { done <- cmd.Wait() }()
 	timer := time.NewTimer(min(options.FirstOutput, options.Ceiling))
