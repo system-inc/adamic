@@ -11,10 +11,11 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so the tree build builds it ahead.
+// TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so this package's units are handed it;
+// internal/native's TestProduct_WASICompiler builds it (buildcache.AdamicOwner), and this one finds it.
 func TestProduct_Adamic(t *testing.T) {
 	t.Parallel()
-	buildcache.Adamic(t)
+	buildcache.AdamicBuiltElsewhere(t)
 }
 
 // Default cast fixtures use the same counted runtime and table as ordinary fixtures, each a row of counts.md.

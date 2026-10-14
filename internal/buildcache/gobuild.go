@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -75,6 +76,48 @@ func GoBuildInInputs(module, output, pkg string, arguments []string, mutations [
 func Adamic(t testing.TB) string {
 	t.Helper()
 	return GoBuild(t, "adamic", "./cmd/adamic", nil)
+}
+
+// errBuiltElsewhere is AdamicBuiltElsewhere's build: the product test that may build it is AdamicOwner.
+var errBuiltElsewhere = errors.New("built by another package's product test")
+
+// AdamicOwner is the one product test that builds Adamic under the trace, and adamicWait how long another package's
+// product test waits for it to settle (AdamicBuiltElsewhere), under the traced run's own -timeout.
+const (
+	AdamicOwner = "internal/native TestProduct_WASICompiler"
+	adamicWait  = 10 * time.Minute
+)
+
+// AdamicBuiltElsewhere is Adamic for a product test whose package reads the stage 0 compiler that AdamicOwner, another
+// package's product test, builds: found by its name key and never built here, so every package that reads it names one
+// settlement and one key. A product's read set is the reads of the traced process that settled it, so four product
+// tests each building Adamic in their own process settled it under four keys, and a unit of one package missed the key
+// another's set gave it (chg_35f264p7's void on tree 29b74b3d, Oct 14: internal/fuzz, cmd/adamic-test262 and
+// internal/oracle against internal/native's). Under the trace the owner may still be settling it, beside this test, so a
+// lookup that finds nothing asks again every second until adamicWait, then fails naming the owner. Outside a trace (a
+// developer's run, the tree's untraced fallback) it builds as Adamic does, since nothing else will.
+func AdamicBuiltElsewhere(t testing.TB) string {
+	t.Helper()
+	if traceDirectory() == "" {
+		return Adamic(t)
+	}
+	request := goRequest{verb: "build", output: "adamic", pkg: "./cmd/adamic"}
+	request.arguments = reproducible(request.arguments)
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go build ./cmd/adamic: %v", err)
+	}
+	deadline := time.Now().Add(adamicWait)
+	for {
+		directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
+		if err == nil {
+			return filepath.Join(directory, request.output)
+		}
+		if !errors.Is(err, errBuiltElsewhere) || time.Now().After(deadline) {
+			t.Fatalf("the stage 0 compiler is %s's to build, and %v after it was first asked for it isn't found: %v", AdamicOwner, adamicWait, err)
+		}
+		time.Sleep(time.Second)
+	}
 }
 
 // GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
