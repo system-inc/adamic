@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"slices"
 	"sort"
 	"strings"
@@ -2107,5 +2108,50 @@ func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
 	got = changed(readSet{Entries: set.Entries[14:17]}, evaluation{key: "k", values: values[14:17]})
 	if want := "3 of 3 entries it read differ from its newest traced build (by kind: content 1, system 2): system /usr/include/h14.h, content source/a.c, system /usr/include/h16.h"; got != want {
 		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+	}
+}
+
+// A dependency's ignored files stay in a recipe, since a build-constraint edit can compile one in, but not its ignored
+// test files: another platform's _test.go is compiled into no binary but its own package's tests, which still key it.
+// Mutants, each caught: a dependency's ignored test files kept; its other ignored files dropped; the package under
+// test's ignored test files dropped.
+// Not parallel: go list runs in the module.
+func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	other := "windows"
+	if runtime.GOOS == "windows" {
+		other = "linux"
+	}
+	for name, content := range map[string]string{
+		"go.mod":                    "module example.com/ignored\n\ngo 1.22\n",
+		"a/a.go":                    "package a\n\nfunc A() int { return 1 }\n",
+		"a/a_" + other + ".go":      "package a\n\nfunc onOther() {}\n",
+		"a/a_" + other + "_test.go": "package a\n",
+		"a/a_test.go":               "package a\n",
+		"cmd/b/main.go":             "package main\n\nimport \"example.com/ignored/a\"\n\nfunc main() { _ = a.A() }\n",
+	} {
+		write(t, root, name, content)
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "module")
+	forgetTracked()
+	t.Setenv("GOWORK", "off")
+	binary := recipeOf(root, journalEntry{Package: "example.com/ignored/cmd/b"})
+	if binary.reason != "" {
+		t.Fatal(binary.reason)
+	}
+	has := func(found recipe, path string) bool {
+		return slices.Contains(found.entries, readEntry{Kind: "content", Path: path})
+	}
+	if !has(binary, "a/a_"+other+".go") || has(binary, "a/a_"+other+"_test.go") || has(binary, "a/a_test.go") {
+		t.Fatalf("cmd/b's recipe %+v: a's ignored file kept, its test files, ignored or not, left out", binary.entries)
+	}
+	tests := recipeOf(root, journalEntry{Package: "example.com/ignored/a.test"})
+	if tests.reason != "" || !has(tests, "a/a_"+other+"_test.go") || !has(tests, "a/a_test.go") {
+		t.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
 	}
 }
