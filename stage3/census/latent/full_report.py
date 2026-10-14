@@ -1,4 +1,5 @@
 """Render full latent evidence and independently audit stock-AST coverage and counts."""
+from unit_status import body_eligible, deferred_summary, audit_deferred
 import collections
 import copy
 import csv
@@ -75,12 +76,16 @@ def audit_units(rows, stock, original):
                      and (d['end'] > external['body_start'] or d['start'] >= external['body_start'])
                      and not any(d['start'] >= child['start'] and d['end'] <= child['end'] for child in children)]
             assert unit['checker_diagnostics'] == owned, 'direct diagnostic ownership'
-            assert (unit['status'] == 'split_checker_body') == bool(owned), 'direct eligibility'
+            assert body_eligible(unit, owned, 'split_checker_body'), 'direct eligibility'
             if owned:
                 assert not any(f['unit'] == unit['where'] for f in row['findings']), 'diagnosed body entered'
 
 
 def audit_counts(summary, rows, owners):
+    units = [u for row in rows[1:] for u in row['units']]
+    audit_deferred(summary, units)
+    if 'unit_counts' in summary:
+        assert summary['unit_counts'] == dict(collections.Counter(u['status'] for u in units)), 'unit status counts'
     sites = unique(rows)
     counts = collections.Counter(site[0] for site in sites)
     assert summary['totals'] == {kind: counts[kind] for kind in KINDS if kind != 'Boundary'}, 'unique totals'
@@ -151,7 +156,9 @@ def build(adapted, run):
         print(scope+': stock declaration and diagnostic ownership audit passed',flush=True)
         label=MEASUREMENT if scope=='compiler' else rows[0]['measurement']
         expected={str(original/entry['file']) for entry in manifest}
-        full=lowering_summary(rows,expected,label);audit_counts(full,rows,owners)
+        full=lowering_summary(rows,expected,label)
+        full.update(deferred_summary([u for row in rows[1:] for u in row['units']]))
+        audit_counts(full,rows,owners)
         all_sites=unique(rows);lower_sites=unique(rows,'lowering')
         lower_counts=collections.Counter(site[0] for site in lower_sites)
         full['actual_lowering_totals']={kind:lower_counts[kind] for kind in KINDS}
@@ -164,7 +171,9 @@ def build(adapted, run):
         full['excluded_nested_count']=len(nested)
         full['excluded_nested_gross_bytes']=sum(u['body_end']-u['body_start'] for u in nested)
         full['excluded_nested_union_bytes']=sum(intervals_size(spans) for spans in by_file.values())
+        full.update(deferred_summary(units))
         full['unit_counts']=dict(collections.Counter(u['status'] for u in units))
+        audit_deferred(full, units)
         full['function_declarations']=sum(u['kind']=='KindFunctionDeclaration' for u in units)
         external_units={item['where']:item for items in stock.values() for item in items}
         for unit in units:
@@ -177,6 +186,7 @@ def build(adapted, run):
         baseline=None
         if scope=='compiler':
             old=read_rows(run/'compiler/baseline.jsonl');audit_same_checker(old,rows);baseline=lowering_summary(old,expected,MEASUREMENT)
+            baseline.update(deferred_summary([u for row in old[1:] for u in row['units']]))
             changed=list(old);changed[0]=dict(old[0],diagnostics=old[0]['diagnostics']+['planted diagnostic'])
             try:audit_same_checker(changed,rows)
             except AssertionError as error:assert str(error)=='same checker diagnostics';print('compiler: checker comparison mutant caught')
@@ -238,6 +248,7 @@ def build(adapted, run):
         summary=result['scopes'][scope]['full']
         lines += ['',f"{scope}: {summary['measurement']}; {result['scopes'][scope]['checker_diagnostics']} checker diagnostics.",
                   f"{summary['function_declarations']} function declarations; unit statuses: {summary['unit_counts']}.",
+                  f"Deferred generic units: {summary['deferred_generic_instantiation']}; reached by concrete instantiation: {summary['instantiated_generics']}. Deferred body bytes (neither examined nor blocked): {summary['deferred_body_bytes']}. Never reached (unexamined coverage gaps): {summary['never_reached']}.",
                   f"Nested checker exclusions: {summary['excluded_nested_count']}; {summary['excluded_nested_gross_bytes']:,} gross body bytes; {summary['excluded_nested_union_bytes']:,} union bytes.",
                   f"Actual-lowering-only totals: {summary['actual_lowering_totals']}.",
                   f"Context-sensitive reading-X sites: {summary['context_sensitive_reading_sites']}; retained in the totals, flagged in reasons.csv. These can reflect incomplete isolated bindings after an earlier failure and need individual interpretation.", '',
