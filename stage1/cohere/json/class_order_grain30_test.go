@@ -18,7 +18,7 @@ import (
 )
 
 // An explicit repository-relative key keeps ownership stable as the corpus grows.
-// _000 owns backend agreement and the Go oracle's live answer, _001 the leak pass, and _002 ASan/UBSan.
+// _000 owns backend agreement and the Go oracle's live answer, _001 the sanitized run: ASan/UBSan with LeakSanitizer.
 const jsonPortClassOrderKey = "cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json"
 
 func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
@@ -171,7 +171,6 @@ func TestJSONClassOrderAnswerKey(t *testing.T) {
 
 func jsonPortClassOrderRun(t *testing.T, mode int) {
 	t.Helper()
-	leak := mode == 1
 	setup := time.Now()
 	portMatchesPrepare(t)
 	all, _ := jsonTopCorpus(t)
@@ -213,22 +212,20 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 		compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), expected, items)
 	}
 	if mode != 0 {
-		label := "ASan/UBSan"
-		options := "ASAN_OPTIONS=detect_leaks=0"
-		if leak {
-			label = "LeakSanitizer"
-			options = "ASAN_OPTIONS=detect_leaks=1"
-		}
-		if leak && runtime.GOOS != "linux" {
+		// One sanitized run: with LeakSanitizer on (Linux), it reports every ASan/UBSan error a detect_leaks=0 run does,
+		// plus leaks, so the separate ASan/UBSan test that ran the case again is gone (#fqvxk72). Off Linux, ASan/UBSan
+		// runs without leak detection and macOS's leaks --atExit checks release.
+		label, options := "ASan/UBSan/LeakSanitizer", "ASAN_OPTIONS=detect_leaks=1"
+		if runtime.GOOS != "linux" {
+			label, options = "ASan/UBSan", "ASAN_OPTIONS=detect_leaks=0"
 			result := execute(t, nil, "leaks", "--atExit", "--", portMatchesShared.release, "--cases", path)
 			if result.exitCode != 0 {
 				t.Fatalf("leaks: %s", result.stderr)
 			}
-		} else {
-			began := time.Now()
-			compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
-			t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
 		}
+		began := time.Now()
+		compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
+		t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
 	}
 	t.Logf("%s: own work %.3fs", jsonPortClassOrderKey, time.Since(start).Seconds())
 }
@@ -241,7 +238,7 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 // Each sanitizer pass is then one run of the case and nothing else, against the stored Go answer (#f42kzjr). At an
 // 8-CPU share on Cloud (Oct 12), LeakSanitizer is 19.4 s and ASan/UBSan 22.4 s, but _001 was 27.5 s and _002 35 to
 // 37 s with the oracle and release run again around them; Home runs the same units about 2.1 times slower, where
-// _001 reached 61.5 s.
+// _001 reached 61.5 s. Since then _002 is gone: _001's one detect_leaks=1 run is its ASan/UBSan run too (#fqvxk72).
 
 // Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
@@ -251,11 +248,6 @@ func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
 // Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
 	jsonPortClassOrderRun(t, 1)
-}
-
-// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
-func TestPortMatchesGoCohereClassOrder_002(t *testing.T) {
-	jsonPortClassOrderRun(t, 2)
 }
 
 func TestJSONClassOrderShardOwnership(t *testing.T) {
@@ -308,7 +300,7 @@ func TestJSONClassOrderShardOwnership(t *testing.T) {
 	if caught != 1 {
 		t.Fatalf("planted disagreement caught by %d owners", caught)
 	}
-	for child := 0; child < 3; child++ {
+	for child := 0; child < 2; child++ {
 		answers := make([]answer, len(dedicated))
 		_, want := protocol(dedicated, answers)
 		answers[0].Output = "planted disagreement"
@@ -327,7 +319,7 @@ func TestJSONClassOrderShardOwnership(t *testing.T) {
 			declared[f.Name.Name] = true
 		}
 	}
-	if len(declared) != 3 || !declared["TestPortMatchesGoCohereClassOrder_002"] || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
+	if len(declared) != 2 || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
 		t.Fatalf("dedicated shard declarations: %v", declared)
 	}
 	t.Log("dedicated union intact; planted disagreement caught by exactly one agreement shard")
