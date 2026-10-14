@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 // strace's own lines are kept from the stderr it shares with the command, however the writes split them, and the
 // command's status replaces strace's only when every one of them is PTRACE_LISTEN failing on a tracee already gone
@@ -27,6 +30,32 @@ func TestOnlyAFailedListenLetsTheCommandsStatusStand(t *testing.T) {
 		}
 		if got := complaints.onlyListen(); got != each.only {
 			t.Errorf("%s: onlyListen %v (lines %q)", each.name, got, complaints.lines)
+		}
+	}
+}
+
+// A run strace complained and failed under before the trace held the command's exit is lost to the tracer (#j4hwdks),
+// never a settled-nothing fill; a run whose command exited, one strace passed, and one strace failed silently (the
+// command killed) aren't. Mutants: the command's exit ignored; strace's status ignored; a failure with no complaint
+// read as lost.
+func TestARunStraceFailedUnderIsLostToTheTracer(t *testing.T) {
+	t.Parallel()
+	listen := &straceComplaints{lines: []string{"strace: ptrace(PTRACE_LISTEN,pid:3683302,sig:0): Input/output error"}}
+	for _, each := range []struct {
+		name       string
+		exited     bool
+		status     int
+		complaints *straceComplaints
+		lost       bool
+	}{
+		{"strace failed before the command exited", false, 1, listen, true},
+		{"the command exited in the trace", true, 1, listen, false},
+		{"strace exited 0", false, 0, listen, false},
+		{"strace failed with nothing to say", false, 137, &straceComplaints{}, false},
+	} {
+		why := tracerLost(each.exited, each.status, each.complaints)
+		if (why != "") != each.lost || each.lost && !strings.Contains(why, "PTRACE_LISTEN") {
+			t.Errorf("%s: lost %q", each.name, why)
 		}
 	}
 }
