@@ -3,8 +3,11 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
+import tempfile
 import unittest
 
 sys.dont_write_bytecode = True
@@ -12,12 +15,73 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('scratch_summary', HERE / 'scratch-summary.py')
 checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)
+runner_spec = importlib.util.spec_from_file_location('scratch_runner', HERE / 'scratch-run.py')
+runner = importlib.util.module_from_spec(runner_spec)
+runner_spec.loader.exec_module(runner)
 
 
 def passed_modes():
     report = dict(build_exit=0, node_exit=0, native_exit=0, native_diff_exit=0,
                   native_byte_mutant_diff_exit=1, comparison_control_exit=0, end_mutant_diff_exit=1)
     return [dict(split=i, exit=0, report=copy.deepcopy(report), full_tree_diff_exit=0) for i in [0, 1]]
+
+
+class ScratchPipelineTests(unittest.TestCase):
+    def test_copied_apply_imports_cache_helper_without_pythonpath(self):
+        with tempfile.TemporaryDirectory() as directory:
+            pipeline = runner.copy_pipeline(Path(directory))
+            env = dict(os.environ)
+            env.pop('PYTHONPATH', None)
+            env['PYTHONDONTWRITEBYTECODE'] = '1'
+            result = subprocess.run([sys.executable, str(pipeline / 'apply.py'), '--key'],
+                                    cwd=directory, env=env, capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertRegex(result.stdout.strip(), r'^[0-9a-f]{64}$')
+
+    def test_copied_cache_helper_respects_declared_build_cache(self):
+        with tempfile.TemporaryDirectory() as directory:
+            pipeline = runner.copy_pipeline(Path(directory))
+            declared = Path(directory) / 'go-products'
+            env = dict(os.environ, ADAMIC_SANDBOX='1', ADAMIC_BUILD_CACHE_DIR=str(declared))
+            env.pop('PYTHONPATH', None)
+            env.pop('STAGE3_CACHE', None)
+            result = subprocess.run([sys.executable, '-B', '-c',
+                                     'from caches import stage3_cache; print(stage3_cache())'],
+                                    cwd=pipeline, env=env, capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.strip(), str(declared / 'adamic-stage3'))
+
+    def test_missing_configured_source_names_path_and_exact_pin(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            pipeline = runner.copy_pipeline(out)
+            missing = out / 'missing-source'
+            pin = json.loads((pipeline / 'source.json').read_text())
+            def unexpected(*args, **kwargs):
+                self.fail('a missing configured source must fail before installing anything')
+            with self.assertRaises(RuntimeError) as caught:
+                runner.prepare_gate_inputs(out, pipeline, out / 'cache',
+                                           {'ADAMIC_TYPESCRIPT_SOURCE': str(missing)},
+                                           unexpected, unexpected)
+            self.assertIn(str(missing), str(caught.exception))
+            self.assertIn(pin['commit'], str(caught.exception))
+            self.assertIn('ADAMIC_TYPESCRIPT_SOURCE', str(caught.exception))
+
+    def test_wrong_source_commit_is_rejected_before_api_install(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            pipeline = runner.copy_pipeline(out)
+            source = out / 'wrong-source'
+            source.mkdir()
+            pin = json.loads((pipeline / 'source.json').read_text())
+            def unexpected(*args, **kwargs):
+                self.fail('an incorrect source pin must fail before API installation')
+            with self.assertRaises(RuntimeError) as caught:
+                runner.prepare_gate_inputs(out, pipeline, out / 'cache',
+                                           {'ADAMIC_TYPESCRIPT_SOURCE': str(source)},
+                                           unexpected, lambda *args: '0' * 40)
+            self.assertIn(pin['commit'], str(caught.exception))
+            self.assertIn('checkout is at ' + '0' * 40, str(caught.exception))
 
 
 class ScratchSummaryTests(unittest.TestCase):
