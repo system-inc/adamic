@@ -172,6 +172,9 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	if !known {
 		return nil, false, nil
 	}
+	if mode == "call" && method.source == ast.SkipParentheses(target) && method.family == "Array.prototype" && (method.name == "indexOf" || method.name == "lastIndexOf") {
+		return l.libraryArrayGenericCall(node)
+	}
 	// Leave existing immediate primitive prototype calls on their established paths.
 	if mode == "call" && method.source == ast.SkipParentheses(target) && (method.family == "String.prototype" || method.family == "Number.prototype") {
 		return nil, false, nil

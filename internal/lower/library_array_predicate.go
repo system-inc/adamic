@@ -22,6 +22,9 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	if !l.isArrayPredicateCall(node) {
 		return nil, false, nil
 	}
+	if value, known, err := l.libraryArrayIntrinsicIsArray(node); known {
+		return value, known, err
+	}
 	argument := node.AsCallExpression().Arguments.Nodes[0]
 	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")

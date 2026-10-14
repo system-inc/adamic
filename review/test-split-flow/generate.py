@@ -42,6 +42,7 @@ for package in ['flow', 'fresh']:
             relative = Path(os.path.relpath(source, root / 'internal' / package)).as_posix()
             paths.append(relative)
     assert len(paths) == len(set(paths))
+    manifest.extend(__import__('array_generic').generate(root, package, families))
     kinds = families if package == 'flow' else [('Writes', 'checkFreshProgram')]
     rows = []
     for kind, helper in kinds:

@@ -20,6 +20,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+		if handled, err := l.libraryArrayNumericField(node, property, &literal); handled {
+			if err != nil {
+				return nil, err
+			}
+			continue
+		}
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
 			if index != 0 {
