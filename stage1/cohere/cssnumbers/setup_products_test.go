@@ -8,12 +8,13 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"slices"
+	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var numbersPreparedPrograms = make([]struct {
@@ -332,48 +333,45 @@ func TestCSSNumbersAnswerProductsRekey(t *testing.T) {
 	}
 }
 
-// The Go oracle's key moves with the C or C++ compiler go builds it with, and with the C compiler's report, so a
-// changed compiler misses rather than reading a product another one built.
-func TestCSSNumbersGoOracleRekeyCompiler(t *testing.T) {
+// An edit to a package the compiler links must move the key of every product the compiler makes (the port's and each
+// mutant's lowering, and every native binary built from one), and an edit to tsc's baselines, which nothing links,
+// must keep it.
+func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
 	t.Parallel()
-	root, err := filepath.Abs(repository)
+	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	compilers := numbersCompilers{"clang", "clang++", "clang version 18.1.8"}
-	key := buildcache.NameKey(root, numbersGoProductInputs("Go oracle", compilers))
-	for _, other := range []numbersCompilers{{"gcc", "clang++", compilers.report}, {"clang", "g++", compilers.report}, {"clang", "clang++", "clang version 19.1.7"}} {
-		if otherKey := buildcache.NameKey(root, numbersGoProductInputs("Go oracle", other)); otherKey == key {
-			t.Fatalf("compilers %+v kept the Go oracle's key %s", other, key[:12])
+	// A native product is keyed by its C's content and the toolchain's report; any C and any report stand in, since
+	// only Files are checked.
+	c := filepath.Join(t.TempDir(), "program.c")
+	write(t, c, []byte("int main(void) { return 0; }\n"))
+	products := []numbersInputs{
+		numbersProgramInputs("port", main),
+		numbersNativeInputs("sanitized", c, native.Options{Sanitize: true}, "toolchain"),
+		numbersNativeInputs("native-fast", c, native.Options{Sanitize: false}, "toolchain"),
+	}
+	for _, mutation := range numbersMutations {
+		products = append(products, numbersProgramInputs(mutation.name, prepareNumbersMutant(t, mutation)), numbersNativeInputs(mutation.name+"-sanitized", c, native.Options{Sanitize: true}, "toolchain"))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		keyed := numbersCacheInputs(t, product)
+		linked, baselines := false, false
+		for _, entry := range keyed.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", keyed.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", keyed.Name)
 		}
 	}
-	t.Logf("Go oracle key %s moves with CC, CXX and the C compiler's report", key[:12])
-}
-
-// The compilers the Go oracle's key names are read from toolchain.Env, the environment go runs under, not from the
-// caller's: with CC and CXX unset that is clang and clang++, which a reader of os.Getenv would key as empty while go ran
-// clang, and a CC the caller sets moves the key. Not parallel: it sets CC and CXX.
-func TestCSSNumbersGoOracleKeysTheCompilersEnvGivesGo(t *testing.T) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
+	if !t.Failed() {
+		t.Logf("%d compiler products key what the compiler links and no tsc baseline", len(products))
 	}
-	t.Setenv("CC", "")
-	t.Setenv("CXX", "")
-	defaults := numbersGoCompilers()
-	inputs := numbersGoProductInputs("Go oracle", defaults)
-	if !slices.Contains(inputs.Flags, "CC=clang") || !slices.Contains(inputs.Flags, "CXX=clang++") || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
-		t.Fatalf("with CC and CXX unset, the Go oracle's key names %+v, want clang, clang++ and clang's report", defaults)
-	}
-	t.Setenv("CC", "cc")
-	moved := numbersGoCompilers()
-	if moved.c != "cc" || moved.report == defaults.report {
-		t.Fatalf("CC=cc read as %+v", moved)
-	}
-	if buildcache.NameKey(root, numbersGoProductInputs("Go oracle", moved)) == buildcache.NameKey(root, inputs) {
-		t.Fatal("CC=cc kept the Go oracle's key")
-	}
-	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.c, defaults.cPlusPlus)
 }
 
 func TestProduct_CSSNumbersGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
