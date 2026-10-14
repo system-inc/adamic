@@ -1486,6 +1486,10 @@ reads cmd/adamic-gate internal/oracle/input_test.go
 reads cmd/adamic-gate internal/oracle/oracle_test.go
 reads cmd/adamic-gate stage1/cohere/css/print_test.go
 reads cmd/adamic-gate stage1/cohere/lint/lint_test.go
+# TestEveryTestIsParallelOrSaysWhy (cmd/adamic-gate/parallel_test.go) parses every _test.go in the tree for its
+# parallel census, so its key names them all (#006gzv8): named only by the lines above, it reused a green past
+# runtime's 53c2e7a01d, whose reason sat inside its test's body, and main went red unseen.
+reads cmd/adamic-gate *_test.go
 reads cmd/adamic-stage1-progress stage1/cohere/gitignore/gitignore_test.go
 reads internal/flow internal/oracle/testdata/non_null.ts
 reads internal/flow internal/oracle/testdata/non_null_array.ts
