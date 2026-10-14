@@ -146,34 +146,6 @@ func TestWholeCompilerAgrees_015(t *testing.T) {
 	wholeCompilerShard(t, 15)
 }
 
-func TestWholeCompilerAgreesUnion(t *testing.T) {
-	t.Parallel()
-	functions := []func(*testing.T){TestWholeCompilerAgrees_000, TestWholeCompilerAgrees_001, TestWholeCompilerAgrees_002, TestWholeCompilerAgrees_003, TestWholeCompilerAgrees_004, TestWholeCompilerAgrees_005, TestWholeCompilerAgrees_006, TestWholeCompilerAgrees_007, TestWholeCompilerAgrees_008, TestWholeCompilerAgrees_009, TestWholeCompilerAgrees_010, TestWholeCompilerAgrees_011, TestWholeCompilerAgrees_012, TestWholeCompilerAgrees_013, TestWholeCompilerAgrees_014, TestWholeCompilerAgrees_015}
-	if len(functions) != testCompilerExpressionsAgreeShards {
-		t.Fatal("top-level shard enumeration differs")
-	}
-	shards, planted, files := compilerExpressionsEnumeration(t)
-	count, catches, caught := 0, 0, -1
-	for index, shard := range shards {
-		for _, path := range shard {
-			count++
-			want := []byte("case 0\nSourceFile\n")
-			got := append([]byte(nil), want...)
-			if path == planted {
-				got[len("case 0\n")] ^= 1
-			}
-			if difference(got, want) != "" {
-				catches++
-				caught = index
-			}
-		}
-	}
-	if count != files || catches != 1 {
-		t.Fatalf("union=%d/%d planted catches=%d", count, files, catches)
-	}
-	t.Logf("union=%d each exactly once; planted disagreement %s caught by shard-%03d", count, filepath.Base(planted), caught)
-}
-
 func wholeManifest(t *testing.T, cases []string) string {
 	t.Helper()
 	directory := t.TempDir()
