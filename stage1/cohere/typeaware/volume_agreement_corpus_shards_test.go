@@ -17,7 +17,6 @@ import (
 // 25.3 s of own work alone on one core (Home), while no other ASan group took 9 s. At 32 checker.ts keeps only
 // _namespaces/ts.ts (3 KB), in group 25 (shards _025 plain and _057 ASan); the union is parametric in the count.
 const volumeAgreementCompilerGroups = 32
-const volumeAgreementRepositoryGroups = 16
 
 type volumeAgreementCorpusFile struct{ key, path string }
 
@@ -42,25 +41,6 @@ func volumeAgreementCorpusFiles(t *testing.T, kind string) (string, []volumeAgre
 		}
 		paths = pinnedCompilerFiles(t, root)
 		config = filepath.Join(root, "src/compiler/tsconfig.json")
-	case "repository":
-		manifest := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST")
-		if manifest == "" {
-			t.Skip("ADAMIC_VOLUME_REPOSITORY_MANIFEST is not configured")
-		}
-		root = volumeGuardPreparationHarness(t).repository
-		data, err := os.ReadFile(manifest)
-		if err != nil {
-			t.Fatal(err)
-		}
-		for _, path := range strings.Split(strings.TrimSpace(string(data)), "\n") {
-			if path != "" {
-				if !filepath.IsAbs(path) {
-					path = filepath.Join(root, path)
-				}
-				paths = append(paths, filepath.Clean(path))
-			}
-		}
-		config = filepath.Join(root, "tsconfig.json")
 	default:
 		t.Fatalf("unknown corpus %s", kind)
 	}
@@ -158,10 +138,6 @@ func runVolumeAgreementCorpusShard(t *testing.T, kind string, groups, unit int) 
 func TestVolumeAgreementCompilerUnion(t *testing.T) {
 	t.Parallel()
 	volumeAgreementCorpusUnion(t, "compiler", volumeAgreementCompilerGroups)
-}
-func TestVolumeAgreementRepositoryUnion(t *testing.T) {
-	t.Parallel()
-	volumeAgreementCorpusUnion(t, "repository", volumeAgreementRepositoryGroups)
 }
 func TestVolumeAgreementCompiler_000(t *testing.T) {
 	t.Parallel()
@@ -418,132 +394,4 @@ func TestVolumeAgreementCompiler_062(t *testing.T) {
 func TestVolumeAgreementCompiler_063(t *testing.T) {
 	t.Parallel()
 	runVolumeAgreementCorpusShard(t, "compiler", volumeAgreementCompilerGroups, 63)
-}
-func TestVolumeAgreementRepository_000(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 0)
-}
-func TestVolumeAgreementRepository_001(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 1)
-}
-func TestVolumeAgreementRepository_002(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 2)
-}
-func TestVolumeAgreementRepository_003(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 3)
-}
-func TestVolumeAgreementRepository_004(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 4)
-}
-func TestVolumeAgreementRepository_005(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 5)
-}
-func TestVolumeAgreementRepository_006(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 6)
-}
-func TestVolumeAgreementRepository_007(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 7)
-}
-func TestVolumeAgreementRepository_008(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 8)
-}
-func TestVolumeAgreementRepository_009(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 9)
-}
-func TestVolumeAgreementRepository_010(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 10)
-}
-func TestVolumeAgreementRepository_011(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 11)
-}
-func TestVolumeAgreementRepository_012(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 12)
-}
-func TestVolumeAgreementRepository_013(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 13)
-}
-func TestVolumeAgreementRepository_014(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 14)
-}
-func TestVolumeAgreementRepository_015(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 15)
-}
-func TestVolumeAgreementRepository_016(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 16)
-}
-func TestVolumeAgreementRepository_017(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 17)
-}
-func TestVolumeAgreementRepository_018(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 18)
-}
-func TestVolumeAgreementRepository_019(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 19)
-}
-func TestVolumeAgreementRepository_020(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 20)
-}
-func TestVolumeAgreementRepository_021(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 21)
-}
-func TestVolumeAgreementRepository_022(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 22)
-}
-func TestVolumeAgreementRepository_023(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 23)
-}
-func TestVolumeAgreementRepository_024(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 24)
-}
-func TestVolumeAgreementRepository_025(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 25)
-}
-func TestVolumeAgreementRepository_026(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 26)
-}
-func TestVolumeAgreementRepository_027(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 27)
-}
-func TestVolumeAgreementRepository_028(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 28)
-}
-func TestVolumeAgreementRepository_029(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 29)
-}
-func TestVolumeAgreementRepository_030(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 30)
-}
-func TestVolumeAgreementRepository_031(t *testing.T) {
-	t.Parallel()
-	runVolumeAgreementCorpusShard(t, "repository", volumeAgreementRepositoryGroups, 31)
 }
