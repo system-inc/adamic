@@ -92,6 +92,7 @@ func hostOS() string { return runtime.GOOS }
 // defined in the rest of it, the machinery that keys, traces, settles and stores. So a machinery change can't change a
 // product's bytes, and leaving it out of every key is sound. Mutant: a make file calling a machinery helper.
 func TestTheMakeFilesUseNothingFromTheMachinery(t *testing.T) {
+	t.Parallel()
 	census, err := makeCensus(".")
 	if err != nil {
 		t.Fatal(err)
