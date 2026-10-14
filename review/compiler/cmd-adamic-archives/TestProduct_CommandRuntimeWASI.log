@@ -1,0 +1,6 @@
+=== RUN   TestProduct_CommandRuntimeWASI
+=== PAUSE TestProduct_CommandRuntimeWASI
+=== CONT  TestProduct_CommandRuntimeWASI
+    runtimes_test.go:84: build native-runtime 1b843c60efdf miss 2.31
+--- PASS: TestProduct_CommandRuntimeWASI (3.26s)
+PASS

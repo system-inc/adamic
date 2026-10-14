@@ -1,0 +1,6 @@
+=== RUN   TestProduct_CommandRuntimeSanitized
+=== PAUSE TestProduct_CommandRuntimeSanitized
+=== CONT  TestProduct_CommandRuntimeSanitized
+    runtimes_test.go:82: build native-runtime 5b9d6e1aae44 miss 2.91
+--- PASS: TestProduct_CommandRuntimeSanitized (3.95s)
+PASS

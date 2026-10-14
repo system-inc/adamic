@@ -1,0 +1,8 @@
+=== RUN   TestProduct_CommandRuntimeSanitized
+=== PAUSE TestProduct_CommandRuntimeSanitized
+=== CONT  TestProduct_CommandRuntimeSanitized
+    runtimes_test.go:82: build native-runtime f0fc5b52d9e3 miss 3.80
+--- PASS: TestProduct_CommandRuntimeSanitized (6.10s)
+PASS
+settled native-runtime 5c83bb808c3a: 1499 reads; declared Files: 1 reads undeclared, 4 declared unread
+traced: 1 settled, 0 refused; journal and report in /tmp/adamic-command-products/traces/20261014T015953Z-53605116
