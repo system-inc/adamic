@@ -1,0 +1,44 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -303,8 +303,8 @@
+ 			if blob != p.Blob {
+ 				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
+ 			}
+-			a := execute(headTree, *limit, b, "c", p.Path)
+-			z := execute(headTree, *limit, h, "c", p.Path)
++			a := execute(root, *limit, b, "c", p.Path)
++			z := execute(root, *limit, h, "c", p.Path)
+ 			a.Stdout = ""
+ 			z.Stdout = ""
+ 			record := entry{program: p, Corpus: c.Name, Class: classify(a, z), Base: a, Head: z}
+@@ -328,25 +328,25 @@
+ 		record := &result.Programs[index]
+ 		record.Sampled = true
+ 		source := filepath.Join(headTree, record.Path)
+-		node := execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
++		node := execute(root, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
+ 		record.Node = &node
+-		jsCompile := execute(headTree, *limit, h, "js", record.Path)
++		jsCompile := execute(root, *limit, h, "js", record.Path)
+ 		jsPath := filepath.Join(scratch, fmt.Sprintf("program-%d.mjs", index))
+ 		javascript := observation{Exit: -1, Error: "JavaScript compilation failed"}
+ 		if jsCompile.Exit == 0 && jsCompile.Error == "" {
+ 			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
+ 				return e
+ 			}
+-			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
++			javascript = execute(root, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
+ 		}
+ 		jsCompile.Stdout = ""
+ 		record.JavaScriptCompile = &jsCompile
+ 		record.JavaScript = &javascript
+ 		nativePath := filepath.Join(scratch, fmt.Sprintf("program-%d", index))
+-		nativeCompile := execute(headTree, *limit, h, "build", record.Path, "-o", nativePath)
++		nativeCompile := execute(root, *limit, h, "build", record.Path, "-o", nativePath)
+ 		native := observation{Exit: -1, Error: "native compilation failed"}
+ 		if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
+-			native = execute(headTree, *limit, nativePath)
++			native = execute(root, *limit, nativePath)
+ 		}
+ 		record.NativeCompile = &nativeCompile
+ 		record.Native = &native
