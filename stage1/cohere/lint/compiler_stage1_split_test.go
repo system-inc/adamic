@@ -3,6 +3,7 @@ package lint
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"hash/fnv"
@@ -299,7 +300,14 @@ type compilerAgreementOracleAnswer struct {
 var compilerAgreementOracleMu sync.Mutex
 var compilerAgreementOracleAnswers = map[int]*compilerAgreementOracleAnswer{}
 
-func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
+// compilerAgreementCheckerAllOwner is checker.ts's combined-rule owner, whose sides 1 to 3 are _6561 to _6563: the whole
+// file under every rule, the corpus's heaviest Go answer.
+const compilerAgreementCheckerAllOwner = compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups
+
+// compilerAgreementOracle is the Go oracle's answer for an owner's rows, run once per process for an owner and shared by
+// its sides. The checker.ts combined-rule owner's answer is a product instead (compilerAgreementCheckerAllAnswer): its
+// three sides each waited 6.5 to 9 s on the one run their unit made of it, and a product is built once per tree.
+func compilerAgreementOracle(t *testing.T, owner int, path string, owned []compilerAgreementCase) execution {
 	compilerAgreementOracleMu.Lock()
 	answer := compilerAgreementOracleAnswers[owner]
 	if answer == nil {
@@ -310,10 +318,98 @@ func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
 	answer.mu.Lock()
 	defer answer.mu.Unlock()
 	if answer.output == nil {
-		run := execute(t, "", lintGoOracleProduct(t), "--manifest", path)
-		answer.output, answer.duration = run.output, run.duration
+		if owner == compilerAgreementCheckerAllOwner {
+			answer.output = compilerAgreementCheckerAllAnswer(t, owned)
+		} else {
+			run := execute(t, "", lintGoOracleProduct(t), "--manifest", path)
+			answer.output, answer.duration = run.output, run.duration
+		}
 	}
 	return execution{output: answer.output, duration: answer.duration}
+}
+
+// compilerAgreementCheckerAllInputs keys the Go oracle's answer to checker.ts's combined-rule rows by the oracle binary's
+// bytes and each row's, by its repository-relative key, its file's bytes and its rule: a different oracle or a changed
+// file is a different product.
+func compilerAgreementCheckerAllInputs(oracle []byte, owned []compilerAgreementCase, files [][]byte) buildcache.Inputs {
+	flags := []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), "--manifest"}
+	for i, c := range owned {
+		flags = append(flags, fmt.Sprintf("row %s sha256 %x rule %s", c.key, sha256.Sum256(files[i]), c.rule))
+	}
+	return buildcache.Inputs{Name: "compiler agreement checker.ts combined-rule Go answer", Files: []string{"stage1/cohere/lint/compiler_stage1_split_test.go"}, Flags: flags}
+}
+
+// compilerAgreementCheckerPath stands for a row's file in the stored answer. The oracle opens each finding with its
+// file's absolute path (path:line:column), and checker.ts sits in ADAMIC_TYPESCRIPT_SOURCE, which differs by machine, so
+// the product holds this instead and its reader writes back the path its own sides print.
+const compilerAgreementCheckerPath = "<compiler agreement checker.ts row>"
+
+// compilerAgreementCheckerAllAnswer is the Go oracle's answer for checker.ts's combined-rule rows, as its sides would run
+// it live: one manifest of those rows, in their order. The product holds the answer only, its one row's path written as
+// compilerAgreementCheckerPath, refused when the raw answer already holds that text, so the stand-in reads back exactly;
+// the manifest it ran names this machine's paths, so it stays in a scratch directory.
+func compilerAgreementCheckerAllAnswer(t *testing.T, owned []compilerAgreementCase) []byte {
+	t.Helper()
+	oracle := lintGoOracleProduct(t)
+	binary, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := make([][]byte, len(owned))
+	var rows []string
+	for i, c := range owned {
+		if c.key != compilerAgreementCheckerKey || c.rule != "all" {
+			t.Fatalf("the checker.ts combined-rule owner holds %s/%s", c.key, c.rule)
+		}
+		if files[i], err = os.ReadFile(c.path); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, c.path+"\t"+c.rule)
+	}
+	if len(rows) != 1 {
+		t.Fatalf("the checker.ts combined-rule owner holds %d rows, want one", len(rows))
+	}
+	directory := buildcache.Product(t, compilerAgreementCheckerAllInputs(binary, owned, files), func(directory string) error {
+		scratch, err := os.MkdirTemp("", "compiler-agreement-checker-")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(scratch)
+		path := filepath.Join(scratch, "manifest.txt")
+		if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+			return err
+		}
+		output, err := testShardsAgreeRun("", nil, oracle, "--manifest", path)
+		if err != nil {
+			return err
+		}
+		if bytes.Contains(output, []byte(compilerAgreementCheckerPath)) {
+			return fmt.Errorf("the Go answer for checker.ts already holds %q, so its path can't stand in for it", compilerAgreementCheckerPath)
+		}
+		return os.WriteFile(filepath.Join(directory, "answer"), bytes.ReplaceAll(output, []byte(owned[0].path), []byte(compilerAgreementCheckerPath)), 0644)
+	})
+	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return bytes.ReplaceAll(answer, []byte(compilerAgreementCheckerPath), []byte(owned[0].path))
+}
+
+// compilerAgreementCheckerAllOwned is the checker.ts combined-rule owner's rows, in corpus order, as its sides gather them.
+func compilerAgreementCheckerAllOwned(t *testing.T) []compilerAgreementCase {
+	t.Helper()
+	var owned []compilerAgreementCase
+	for _, c := range compilerAgreementCases(t) {
+		if compilerAgreementUnit(c, compilerAgreementFirstSide) == compilerAgreementCheckerAllOwner*compilerAgreementSides+compilerAgreementFirstSide {
+			owned = append(owned, c)
+		}
+	}
+	return owned
+}
+
+func TestProduct_CompilerAgreementCheckerAllAnswer(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerAllAnswer(t, compilerAgreementCheckerAllOwned(t))
 }
 
 func compilerAgreementShard(t *testing.T, shard int) {
@@ -334,9 +430,11 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	}
 	cases := compilerAgreementCases(t)
 	var rows []string
+	var owned []compilerAgreementCase
 	for _, c := range cases {
 		if compilerAgreementUnit(c, side) == shard {
 			rows = append(rows, c.path+"\t"+c.rule)
+			owned = append(owned, c)
 		}
 	}
 	if len(rows) == 0 {
@@ -358,7 +456,7 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	// so a hang is bounded there and by Loom's 90 s unit kill. A panic here would end the whole package.
 	workStarted := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(workStarted).Seconds()) }()
-	want := compilerAgreementOracle(t, owner, path)
+	want := compilerAgreementOracle(t, owner, path, owned)
 	var got execution
 	switch side {
 	case 1:
@@ -377,6 +475,10 @@ func compilerAgreementShard(t *testing.T, shard int) {
 		got = execute(t, "", binary, "--manifest", path)
 	}
 	compilerAgreementCompare(t, got.output, want.output)
+	if owner == compilerAgreementCheckerAllOwner {
+		t.Logf("side %d: %s, oracle from its product, %d cases", side, got.duration, len(rows))
+		return
+	}
 	t.Logf("side %d: %s, oracle %s, %d cases", side, got.duration, want.duration, len(rows))
 }
 
