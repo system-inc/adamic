@@ -2849,3 +2849,52 @@ class ListUnitsRefusal(unittest.TestCase):
     def test_any_other_error_is_still_a_crash(self):
         with self.assertRaises(ValueError):
             self.listed(ValueError("a gate-tool bug"))
+
+
+class CensusLaunchers(unittest.TestCase):
+    """A launcher declaration (#9qqvs57, system_adamic's ruling of Oct 14) lets a package that launches processes, and
+    never the compiler, through the census honestly: it names what it runs and why. It never covers a file that
+    references the compiler, or one launching by a literal name it doesn't list, and a declaration naming adamic, or
+    giving no why, is a bad map. Mutants: a launcher covering a file that references the compiler (the declared launcher
+    that runs adamic passes); the literal names unread; the declaration unchecked."""
+
+    launcher = 'package launch\\n\\nimport "os/exec"\\n\\nfunc run() error { return exec.Command(%s).Run() }\\n'
+
+    def census(self, source, launchers):
+        with tempfile.TemporaryDirectory() as root:
+            tree, tools = os.path.join(root, "tree"), os.path.join(root, "tools")
+            os.makedirs(os.path.join(tree, "tool/launch"))
+            os.makedirs(os.path.join(tools, "cloud/fast-gate"))
+            with open(os.path.join(tree, "tool/launch/launch_test.go"), "w") as handle:
+                handle.write(source)
+            with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
+                json.dump({"version": 1, "packages": {}, "drivers": {}, "launchers": launchers}, handle)
+            realRun(["git", "init", "-q", tree], check=True)
+            realRun(["git", "-C", tree, "add", "."], check=True)
+            gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree, tools=tools), result={},
+                                         git=lambda directory, *arguments: realRun(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip())
+            return run.Gate.compilerDependencies(gate, {"tool/launch", "internal/load"}, ["tool/launch/launch_test.go"])
+
+    declared = {"tool/launch": {"runs": ["go", "node"], "why": "launches go test -c and Node, never adamic"}}
+
+    def test_a_declared_launcher_passes(self):
+        self.census(self.launcher % '"node", "x.js"', self.declared)
+
+    def test_a_launcher_that_runs_the_compiler_is_refused(self):
+        for source in (self.launcher % '"adamic", "c", "x.a"', self.launcher % 'os.Getenv("ADAMIC_BIN")'):
+            with self.assertRaises(run.ChangeRefusal, msg=source):
+                self.census(source, self.declared)
+
+    def test_a_literal_name_the_declaration_doesnt_list_is_refused(self):
+        with self.assertRaises(run.ChangeRefusal):
+            self.census(self.launcher % '"python3", "x.py"', self.declared)
+
+    def test_an_undeclared_launcher_is_refused(self):
+        with self.assertRaises(run.ChangeRefusal):
+            self.census(self.launcher % '"node", "x.js"', {})
+
+    def test_a_bad_declaration_is_a_bad_map(self):
+        for declaration in ({"runs": ["node", "adamic"], "why": "x"}, {"runs": ["node"]}, {"runs": [], "why": "x"}):
+            with self.assertRaises(ValueError, msg=declaration) as raised:
+                self.census(self.launcher % '"node"', {"tool/launch": declaration})
+            self.assertNotIsInstance(raised.exception, run.ChangeRefusal)

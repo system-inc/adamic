@@ -332,14 +332,27 @@ def listUnits():
         print("\n".join(units))
 
 
+# An executable a Go file names literally where it launches it: exec.Command("x", exec.CommandContext(ctx, "x", or a
+# toolchain's CommandIn(dir, "x". A name it computes isn't read here, which is why a launcher declaration covers a file
+# only when nothing in it references the compiler at all.
+literalLaunch = re.compile(r'(?:exec\.Command\(|exec\.CommandContext\([^,]+,\s*|CommandIn\([^,]+,\s*)"([^"]+)"')
+
+
+def undeclaredRuns(source, runs):
+    """The executables source launches by a literal name that its launcher declaration's runs don't name."""
+    return sorted({name for name in literalLaunch.findall(source) if os.path.basename(name) not in runs})
+
+
 class ChangeRefusal(ValueError):
     """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's. The gate reds
     the change with it; --list-units exits RefusalExit with its line, so the planner sends it to the change's owner as
     a red (Queue's unplannable, Loom's ruling of Oct 14) instead of failing every plan of it."""
 
     def hint(self):
-        return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the "
-                "compiler packages it exercises (entries there add to the gate tools' map)." % self)
+        return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: under packages, its "
+                "package, then the compiler packages it exercises; or, for a package that launches processes and never "
+                "the compiler, under launchers, its package with the executables it runs and why (entries there add to "
+                "the gate tools' map)." % self)
 
 
 # The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
@@ -1544,7 +1557,7 @@ class Gate:
                 continue
             if layer.get("version") != declarations.get("version"):
                 raise ValueError("invalid compiler dependency map: " + name + " in " + source)
-            for field in ("packages", "drivers"):
+            for field in ("packages", "drivers", "launchers"):
                 if isinstance(layer.get(field), dict):
                     declarations.setdefault(field, {}).update(layer[field])
             root = root + " + " + source
@@ -1556,7 +1569,22 @@ class Gate:
         for package, inputs in packages.items():
             if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
                 raise ValueError("invalid compiler dependencies for " + package)
-        marker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"|"os/exec"|os\.StartProcess|syscall\.Exec')
+        # Two kinds of evidence: a reference to the compiler itself, and launching a process, which may run it. A package
+        # the map declares a launcher (launchers) answers the second alone: it names what it runs and asserts none of it
+        # is the compiler, so a file of it that also references the compiler still needs a compiler declaration.
+        compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
+        launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
+        launchers = declarations.get("launchers", {})
+        if not isinstance(launchers, dict):
+            raise ValueError("invalid compiler dependency map: launchers")
+        for package, declaration in launchers.items():
+            runs = declaration.get("runs") if isinstance(declaration, dict) else None
+            if (package not in directories or not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
+                    or not isinstance(declaration.get("why"), str) or not declaration["why"].strip()):
+                raise ValueError("invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why")
+
+        def marked(source):
+            return compilerMarker.search(source) or launchMarker.search(source)
         self.compilerDrivers = declarations.get("drivers", {})
         if not isinstance(self.compilerDrivers, dict):
             raise ValueError("invalid compiler driver declarations")
@@ -1580,13 +1608,17 @@ class Gate:
             while package and package not in directories and package not in packages:
                 package = os.path.dirname(package)
             if not package:
-                if marker.search(source) and path.endswith("_test.go"):
+                if marked(source) and path.endswith("_test.go"):
                     missing.append(path)
-                elif marker.search(source):
+                elif marked(source):
                     self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
                 continue
-            if marker.search(source) and package not in packages:
-                missing.append(path)
+            if not marked(source) or package in packages:
+                continue
+            if package in launchers and not compilerMarker.search(source) and not undeclaredRuns(source, launchers[package]["runs"]):
+                # A declared launcher: it runs only what it names, and nothing here references the compiler.
+                continue
+            missing.append(path)
         # Only consumers this change adds or edits can turn its gate red; any already on the base are named, so one
         # undeclared package never reds every worker's gate.
         onBase = [path for path in missing if path not in touchedFiles]
