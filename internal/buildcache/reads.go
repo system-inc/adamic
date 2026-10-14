@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go/parser"
+	gotoken "go/token"
 	"io/fs"
 	"maps"
 	"os"
@@ -252,7 +254,7 @@ func evaluate(root, cache, nameKey string, set readSet, depth int, known product
 
 func entryValue(root, cache string, entry readEntry, depth int, known productMemo) (string, error) {
 	switch entry.Kind {
-	case "content", "listing", "exists":
+	case "content", "go header", "listing", "exists":
 		if !local(entry.Path) {
 			return "", fmt.Errorf("a tree entry %q isn't inside the tree", entry.Path)
 		}
@@ -491,10 +493,39 @@ func readTreeValue(root, kind, name string) string {
 		return "directory"
 	case kind == "content" && info.Mode().IsRegular():
 		return fileValue(root, path, info)
+	case kind == "go header" && info.Mode().IsRegular():
+		return goHeaderValue(root, path, info)
 	case info.Mode().IsRegular():
 		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
 	}
 	return "other " + info.Mode().Type().String()
+}
+
+// goHeaderValue is a Go file as the go command reads it to list its package (readHeader): its bytes through its last
+// import, the build constraints, package clause, cgo preamble and imports go/build reads, hashed. A file that imports
+// embed is read further (its //go:embed lines name files the package holds), and one that doesn't parse is read as
+// the compiler would, so either is valued by its whole content (fileValue).
+func goHeaderValue(root, path string, info fs.FileInfo) string {
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return "unreadable: " + err.Error()
+	}
+	files := gotoken.NewFileSet()
+	parsed, err := parser.ParseFile(files, path, content, parser.ImportsOnly|parser.ParseComments)
+	if err != nil {
+		return fileValue(root, path, info)
+	}
+	end := parsed.Name.End()
+	for _, imported := range parsed.Imports {
+		if imported.Path.Value == `"embed"` {
+			return fileValue(root, path, info)
+		}
+	}
+	for _, declaration := range parsed.Decls {
+		end = max(end, declaration.End())
+	}
+	sum := sha256.Sum256(content[:files.Position(end).Offset])
+	return "header " + hex.EncodeToString(sum[:])
 }
 
 // fileValue is a file's content entry in a read set: gitValue, or why the file couldn't be read.

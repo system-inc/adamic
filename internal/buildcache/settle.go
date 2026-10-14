@@ -194,6 +194,11 @@ const (
 	readAbsent
 	readListing
 	readWrite
+	// readHeader is a Go file opened by the go command alone, which reads a file only through its imports, to know its
+	// package, its build constraints and what it imports (go/build): valued by that header (goHeaderValue), so an edit
+	// below it moves no key whose build only had go list the file's package (#a328f0h, lever 3: another package's
+	// _test.go, read so by every traced go build, was 8% of main's product rekeys).
+	readHeader
 )
 
 type traceFacts struct {
@@ -372,6 +377,8 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		switch {
 		case kinds&(readContent|readExec) != 0:
 			return classed{"content", relative}
+		case kinds&readHeader != 0:
+			return classed{"go header", relative}
 		case kinds&readListing != 0:
 			return classed{"listing", relative}
 		}
@@ -589,10 +596,13 @@ func isKey(name string) bool {
 // traceState follows a trace: which thread belongs to which process, each process's parent and working directory,
 // which threads are keying, every process's reads outside keying, and each build's window.
 type traceState struct {
-	facts      *traceFacts
-	process    map[int]int
-	parent     map[int]int
-	directory  map[int]string
+	facts     *traceFacts
+	process   map[int]int
+	parent    map[int]int
+	directory map[int]string
+	// executable is the program each process runs, from its execve: none for a forked one until it runs its own, so its
+	// reads are valued whole.
+	executable map[int]string
 	keying     map[int]int
 	keyingTree map[int]bool
 	reads      map[int]map[string]*pathReads
@@ -635,7 +645,7 @@ type traceCall struct {
 
 func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
-		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
+		executable: map[int]string{}, keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{}}
 	return state
 }
@@ -835,6 +845,10 @@ func readKind(call, rest string, failed bool) int {
 func (state *traceState) record(pid, process int, name string, kind int) {
 	if kind&readExec != 0 {
 		state.facts.ran[name] = true
+		state.executable[process] = name
+	}
+	if kind == readContent && strings.HasSuffix(name, ".go") && filepath.Base(state.executable[process]) == "go" {
+		kind = readHeader
 	}
 	if state.keying[pid] > 0 || state.keyingTree[process] {
 		return
@@ -1257,7 +1271,7 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 				entries[readEntry{Kind: "system", Path: found.detail}] = true
 			default:
 				entries[readEntry{Kind: found.kind, Path: found.detail}] = true
-				if found.kind == "content" || found.kind == "listing" {
+				if found.kind == "content" || found.kind == "go header" || found.kind == "listing" {
 					treeReads = append(treeReads, found.detail)
 				}
 				if path.Base(found.detail) == "go.sum" {
@@ -1599,19 +1613,25 @@ func recipeOf(root string, process journalEntry) recipe {
 			continue
 		}
 		add("listing", listed.Dir)
-		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
-			listed.EmbedFiles, listed.IgnoredGoFiles}
 		// Only the package under test's test files are compiled into its binary (its own and its external test
 		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
 		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
-		// tests' read sets). A dependency's ignored files stay: a build-constraint edit can compile one in.
+		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
+		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
 		name, _, _ := strings.Cut(listed.ImportPath, " ")
-		if test && (name == pkg || name == pkg+"_test") {
+		under := test && (name == pkg || name == pkg+"_test")
+		ignored := listed.IgnoredGoFiles
+		if !under {
+			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
+		}
+		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
+			listed.EmbedFiles, ignored}
+		if under {
 			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
 		}
 		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
 		// the package under test.
-		makeOnly := makeFilesOnly && name == buildcachePackage && !(test && name == pkg)
+		makeOnly := makeFilesOnly && name == buildcachePackage && !under
 		for _, names := range files {
 			for _, name := range names {
 				if makeOnly && !isMakeFile(name) {

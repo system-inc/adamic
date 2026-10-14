@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"slices"
 	"sort"
 	"strings"
@@ -2107,5 +2108,121 @@ func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
 	got = changed(readSet{Entries: set.Entries[14:17]}, evaluation{key: "k", values: values[14:17]})
 	if want := "3 of 3 entries it read differ from its newest traced build (by kind: content 1, system 2): system /usr/include/h14.h, content source/a.c, system /usr/include/h16.h"; got != want {
 		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+	}
+}
+
+// A Go file the go command alone opened is keyed by its header, what go reads of it to list its package (readHeader,
+// #a328f0h lever 3): an edit below its imports is a hit, one to its imports a miss. A file another process read whole
+// (the compiler) is keyed by its content, and so is one importing embed, which go reads further for its //go:embed
+// lines. Mutants, each caught: the go command's reads kept as content (the body edit misses); the header valued past
+// its imports (the body edit misses); embed read as a header (its body edit hits); the compiler's read made a header.
+// Not parallel: the rig changes the working directory.
+func TestAGoFileOnlyTheGoCommandReadIsKeyedByItsHeader(t *testing.T) {
+	port := Inputs{Name: "header port", Files: []string{"source"}}
+	r := newRig(t)
+	header := "package source\n\nimport (\n\t\"strings\"\n)\n"
+	write(t, r.root, "source/other_test.go", header+"\nfunc helper() string { return strings.ToUpper(\"a\") }\n")
+	write(t, r.root, "source/compiled.go", header+"\nfunc Compiled() string { return strings.ToLower(\"A\") }\n")
+	write(t, r.root, "source/embedded_test.go", "package source\n\nimport _ \"embed\"\n\n//go:embed a.c\nvar embedded string\n")
+	gitIn(t, r.root, "add", ".")
+	gitIn(t, r.root, "commit", "-q", "-m", "go files")
+	forgetTracked()
+	Product(t, port, building("built"))
+	build := r.built(t)["header port"]
+	goCommand, compiler := r.pid+1, r.pid+2
+	r.window(build.Build, func() {
+		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, goCommand)
+		r.add(goCommand, `execve("/usr/local/go/bin/go", ["go", "build"], 0x7ffd /* 30 vars */) = 0`)
+		r.open(goCommand, "source/other_test.go")
+		r.open(goCommand, "source/compiled.go")
+		r.open(goCommand, "source/embedded_test.go")
+		r.add(goCommand, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, compiler)
+		r.add(compiler, `execve("/usr/local/go/pkg/tool/linux_amd64/compile", ["compile"], 0x7ffd /* 30 vars */) = 0`)
+		r.open(compiler, "source/compiled.go")
+		r.add(compiler, "+++ exited with 0 +++")
+		r.add(goCommand, "+++ exited with 0 +++")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"go header source/other_test.go", "content source/compiled.go", "go header source/embedded_test.go"} {
+		if !slices.Contains(got, want) {
+			t.Fatalf("the read set %q lacks %q", got, want)
+		}
+	}
+	product, err := reading(t, port)
+	if err != nil {
+		t.Fatal(err)
+	}
+	commit := func(name, content string) {
+		write(t, r.root, name, content)
+		gitIn(t, r.root, "commit", "-q", "-am", "edit "+name)
+		forgetTracked()
+	}
+	// Below the header: go reads none of it, so the product stands.
+	commit("source/other_test.go", header+"\nfunc helper() string { return strings.ToUpper(\"b\") }\n")
+	if found, err := reading(t, port); err != nil || found != product {
+		t.Fatalf("an edit below a header the go command read missed: %q, %v", found, err)
+	}
+	// Its imports are what go read.
+	commit("source/other_test.go", "package source\n\nimport (\n\t\"bytes\"\n)\n\nfunc helper() []byte { return bytes.ToUpper(nil) }\n")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("an edit to the imports the go command read hit: %v", err)
+	}
+	gitIn(t, r.root, "reset", "-q", "--hard", "HEAD~2")
+	forgetTracked()
+	if found, err := reading(t, port); err != nil || found != product {
+		t.Fatalf("back at the tree it was built on, the product missed: %q, %v", found, err)
+	}
+	// A file importing embed is read further, so an edit anywhere in it misses.
+	commit("source/embedded_test.go", "package source\n\nimport _ \"embed\"\n\n//go:embed b.c\nvar embedded string\n")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("an edit to a file importing embed hit: %v", err)
+	}
+}
+
+// A dependency's ignored files stay in a recipe, since a build-constraint edit can compile one in, but not its ignored
+// test files: another platform's _test.go is compiled into no binary but its own package's tests, which still key it.
+// Mutants, each caught: a dependency's ignored test files kept; its other ignored files dropped; the package under
+// test's ignored test files dropped.
+// Not parallel: go list runs in the module.
+func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	other := "windows"
+	if runtime.GOOS == "windows" {
+		other = "linux"
+	}
+	for name, content := range map[string]string{
+		"go.mod":                    "module example.com/ignored\n\ngo 1.22\n",
+		"a/a.go":                    "package a\n\nfunc A() int { return 1 }\n",
+		"a/a_" + other + ".go":      "package a\n\nfunc onOther() {}\n",
+		"a/a_" + other + "_test.go": "package a\n",
+		"a/a_test.go":               "package a\n",
+		"cmd/b/main.go":             "package main\n\nimport \"example.com/ignored/a\"\n\nfunc main() { _ = a.A() }\n",
+	} {
+		write(t, root, name, content)
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "module")
+	forgetTracked()
+	t.Setenv("GOWORK", "off")
+	binary := recipeOf(root, journalEntry{Package: "example.com/ignored/cmd/b"})
+	if binary.reason != "" {
+		t.Fatal(binary.reason)
+	}
+	has := func(found recipe, path string) bool {
+		return slices.Contains(found.entries, readEntry{Kind: "content", Path: path})
+	}
+	if !has(binary, "a/a_"+other+".go") || has(binary, "a/a_"+other+"_test.go") || has(binary, "a/a_test.go") {
+		t.Fatalf("cmd/b's recipe %+v: a's ignored file kept, its test files, ignored or not, left out", binary.entries)
+	}
+	tests := recipeOf(root, journalEntry{Package: "example.com/ignored/a.test"})
+	if tests.reason != "" || !has(tests, "a/a_"+other+"_test.go") || !has(tests, "a/a_test.go") {
+		t.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
 	}
 }
