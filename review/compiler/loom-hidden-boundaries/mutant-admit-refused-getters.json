@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admit-refused-getters",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/admit-refused-getters-overlay.json",
+    "./internal/flow",
+    "-run",
+    "^TestFlowGettersCensusRefusalClassification$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 1,
+  "seconds": 19.885,
+  "tests": [
+    {
+      "name": "TestFlowGettersCensusRefusalClassification",
+      "action": "fail",
+      "seconds": 0.48
+    }
+  ]
+}

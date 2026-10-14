@@ -1,0 +1,329 @@
+SIGQUIT: quit
+PC=0x94eb3c m=0 sigcode=0
+
+goroutine 1 gp=0x11f1e2e221e0 m=0 mp=0x1b0d140 [running]:
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3df8318?, 0x11f1fb4cf488?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:80 +0x1c fp=0x11f1fb4cdf90 sp=0x11f1fb4cdf40 pc=0x94eb3c
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x94ed20?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4cdfb0 sp=0x11f1fb4cdf90 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ParameterDeclaration).ForEachChild(0x11f1e3eb0e08, 0x11f1fb4ce178)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1871 +0xf4 fp=0x11f1fb4cdfe0 sp=0x11f1fb4cdfb0 pc=0x5bd8f4
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1fb4ce198?, 0x11f1fb4ce178)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8746 +0x138 fp=0x11f1fb4ce148 sp=0x11f1fb4cdfe0 pc=0x5e16f8
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3eb0e08, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4ce198 sp=0x11f1fb4ce148 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x11f1fb4ce1e8?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4ce1b8 sp=0x11f1fb4ce198 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionTypeNode).ForEachChild(0x11f1e3efc078, 0x11f1fb4ce390)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:6044 +0xc9 fp=0x11f1fb4ce1f8 sp=0x11f1fb4ce1b8 pc=0x5d3a29
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1fb4cf488?, 0x11f1fb4ce390)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8912 +0x39e fp=0x11f1fb4ce360 sp=0x11f1fb4ce1f8 pc=0x5e195e
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3efc078, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4ce3b0 sp=0x11f1fb4ce360 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x11f1e3ed8250?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4ce3d0 sp=0x11f1fb4ce3b0 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ParameterDeclaration).ForEachChild(0x11f1e3eb0f58, 0x11f1fb4ce598)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1871 +0xf4 fp=0x11f1fb4ce400 sp=0x11f1fb4ce3d0 pc=0x5bd8f4
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1fb4cf488?, 0x11f1fb4ce598)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8746 +0x138 fp=0x11f1fb4ce568 sp=0x11f1fb4ce400 pc=0x5e16f8
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3eb0f58, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4ce5b8 sp=0x11f1fb4ce568 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x94ed20?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4ce5d8 sp=0x11f1fb4ce5b8 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionTypeNode).ForEachChild(0x11f1e3efc0e8, 0x11f1fb4ce7b0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:6044 +0xc9 fp=0x11f1fb4ce618 sp=0x11f1fb4ce5d8 pc=0x5d3a29
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x4080d3?, 0x11f1fb4ce7b0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8912 +0x39e fp=0x11f1fb4ce780 sp=0x11f1fb4ce618 pc=0x5e195e
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3efc0e8, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4ce7d0 sp=0x11f1fb4ce780 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x11f1fb4ce810?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4ce7f0 sp=0x11f1fb4ce7d0 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ParameterDeclaration).ForEachChild(0x11f1e3eb0fc8, 0x11f1fb4ce9b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1871 +0xf4 fp=0x11f1fb4ce820 sp=0x11f1fb4ce7f0 pc=0x5bd8f4
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1fb4ce9b0?, 0x11f1fb4ce9b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8746 +0x138 fp=0x11f1fb4ce988 sp=0x11f1fb4ce820 pc=0x5e16f8
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3eb0fc8, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4ce9d8 sp=0x11f1fb4ce988 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x0?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4ce9f8 sp=0x11f1fb4ce9d8 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x11f1e3e95298, 0x11f1fb4cebe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2025 +0x1c2 fp=0x11f1fb4cea48 sp=0x11f1fb4ce9f8 pc=0x5be7a2
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x94ed20?, 0x11f1fb4cebe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2 fp=0x11f1fb4cebb0 sp=0x11f1fb4cea48 pc=0x5e2a72
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3e95298, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4cec00 sp=0x11f1fb4cebb0 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x11f1e3be0148?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4cec20 sp=0x11f1fb4cec00 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1fb4cf488?, 0x11f1fb4cedb8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262 fp=0x11f1fb4ced88 sp=0x11f1fb4cec20 pc=0x5e4822
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3f07e08, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4cedd8 sp=0x11f1fb4ced88 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x11f1e3ce2048?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4cedf8 sp=0x11f1fb4cedd8 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x11f1e3e96cb8, 0x11f1fb4cefe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a fp=0x11f1fb4cee48 sp=0x11f1fb4cedf8 pc=0x5be76a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1e3d0003d?, 0x11f1fb4cefe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2 fp=0x11f1fb4cefb0 sp=0x11f1fb4cee48 pc=0x5e2a72
+github.com/system-inc/cohere/internal/lint/linter.walk(0x11f1e3e96cb8, 0x11f1fb4cf488)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:86 +0x9a fp=0x11f1fb4cf000 sp=0x11f1fb4cefb0 pc=0x94ebba
+github.com/system-inc/cohere/internal/lint/linter.walk.func1(0x1?)
+	/workspace/adamic/cohere/internal/lint/linter/linter.go:87 +0x17 fp=0x11f1fb4cf020 sp=0x11f1fb4cf000 pc=0x94ed37
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x11f1e3ce6a88, 0x11f1fb4cf1e8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b fp=0x11f1fb4cf050 sp=0x11f1fb4cf020 pc=0x5b703b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x4072e5?, 0x11f1fb4cf1e8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5 fp=0x11f1fb4cf1b8 sp=0x11f1fb4cf050 pc=0x5e3485
+...26 frames elided...
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11f1f5252d88?, 0x11f1fb4d0158)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5 fp=0x11f1fb4d0120 sp=0x11f1fb4cffb8 pc=0x5e3485
+github.com/system-inc/adamic/internal/lower.(*lowering).entriesProgramHasRecords(0x11f1f5252d88)
+	/workspace/adamic/internal/lower/entries_records.go:182 +0xa5 fp=0x11f1fb4d0188 sp=0x11f1fb4d0120 pc=0xa57785
+github.com/system-inc/adamic/internal/lower.(*lowering).property(0x11f1f5252d88, 0x11f1e8394060)
+	/workspace/adamic/internal/lower/object.go:550 +0x2617 fp=0x11f1fb4d0610 sp=0x11f1fb4d0188 pc=0xae2f17
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1fb4d08a0?)
+	/workspace/adamic/internal/lower/expression.go:622 +0xc65 fp=0x11f1fb4d0878 sp=0x11f1fb4d0610 pc=0xa63f65
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e8394060)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d0970 sp=0x11f1fb4d0878 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e8394060)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d0d00 sp=0x11f1fb4d0970 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1fb4d0f90?)
+	/workspace/adamic/internal/lower/expression.go:599 +0x1707 fp=0x11f1fb4d0f68 sp=0x11f1fb4d0d00 pc=0xa64a07
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e8312440)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d1060 sp=0x11f1fb4d0f68 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e8312440)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d13f0 sp=0x11f1fb4d1060 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).condition(0x11f1f5252d88?, 0x11f1e8239ec8?)
+	/workspace/adamic/internal/lower/control.go:97 +0x17 fp=0x11f1fb4d1458 sp=0x11f1fb4d13f0 pc=0xa52c77
+github.com/system-inc/adamic/internal/lower.(*lowering).conditional(0x11f1f5252d88, 0x11f1e8239ec8)
+	/workspace/adamic/internal/lower/expression.go:981 +0x75 fp=0x11f1fb4d1570 sp=0x11f1fb4d1458 pc=0xa68675
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1fb4d1800?)
+	/workspace/adamic/internal/lower/expression.go:616 +0x18ed fp=0x11f1fb4d17d8 sp=0x11f1fb4d1570 pc=0xa64bed
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e8239ec8)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d18d0 sp=0x11f1fb4d17d8 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e8239ec8)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d1c60 sp=0x11f1fb4d18d0 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x11f1f5252d88, 0x11f1e820a5c8)
+	/workspace/adamic/internal/lower/locals.go:79 +0x6f3 fp=0x11f1fb4d1ed0 sp=0x11f1fb4d1c60 pc=0xacd153
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x11f1f5252d88, 0x11f1e7f0a818)
+	/workspace/adamic/internal/lower/statements.go:76 +0x136 fp=0x11f1fb4d1f78 sp=0x11f1fb4d1ed0 pc=0xb2a676
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement(0x11f1f5252d88, 0x11f1e7f0a818)
+	/workspace/adamic/internal/lower/latent_full.go:144 +0x14e fp=0x11f1fb4d2008 sp=0x11f1fb4d1f78 pc=0xa8a6ae
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(...)
+	/workspace/adamic/internal/lower/statements.go:260
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x11f1f5252d88, {0x11f1e833a298, 0x2, 0x11f1f7479530?})
+	/workspace/adamic/internal/lower/statements.go:19 +0xd1 fp=0x11f1fb4d2070 sp=0x11f1fb4d2008 pc=0xb2a491
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x11f1f5252d88, 0x1fbf, 0x11f1e8368820, 0xffffffffffffffff, {0x1b2e720, 0x0, 0x60?}, {0x1b2e720, 0x0, 0x0})
+	/workspace/adamic/internal/lower/functions.go:291 +0x18ab fp=0x11f1fb4d24e8 sp=0x11f1fb4d2070 pc=0xa715ab
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x11f1f5252d88, 0x1fbf, 0x11f1e8368820, 0xffffffffffffffff)
+	/workspace/adamic/internal/lower/functions.go:56 +0x245 fp=0x11f1fb4d25a0 sp=0x11f1fb4d24e8 pc=0xa6de25
+github.com/system-inc/adamic/internal/lower.(*lowering).closure(0x11f1f5252d88, 0x11f1e8368820)
+	/workspace/adamic/internal/lower/expression.go:1221 +0x3e8 fp=0x11f1fb4d2620 sp=0x11f1fb4d25a0 pc=0xa6a6e8
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1fb4d28b0?)
+	/workspace/adamic/internal/lower/expression.go:637 +0x106a fp=0x11f1fb4d2888 sp=0x11f1fb4d2620 pc=0xa6436a
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e8368820)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d2980 sp=0x11f1fb4d2888 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e8368820)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d2d10 sp=0x11f1fb4d2980 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral(0x11f1f5252d88, 0x11f1e83529b0)
+	/workspace/adamic/internal/lower/object.go:78 +0x2e7 fp=0x11f1fb4d2f40 sp=0x11f1fb4d2d10 pc=0xadd7a7
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1fb4d31d0?)
+	/workspace/adamic/internal/lower/expression.go:618 +0xc29 fp=0x11f1fb4d31a8 sp=0x11f1fb4d2f40 pc=0xa63f29
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e83529b0)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d32a0 sp=0x11f1fb4d31a8 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e83529b0)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d3630 sp=0x11f1fb4d32a0 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral(0x11f1f5252d88, 0x11f1e83be140)
+	/workspace/adamic/internal/lower/object.go:78 +0x2e7 fp=0x11f1fb4d3860 sp=0x11f1fb4d3630 pc=0xadd7a7
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1f41d5af0?)
+	/workspace/adamic/internal/lower/expression.go:618 +0xc29 fp=0x11f1fb4d3ac8 sp=0x11f1fb4d3860 pc=0xa63f29
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e83be140)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d3bc0 sp=0x11f1fb4d3ac8 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e83be140)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d3f50 sp=0x11f1fb4d3bc0 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).callArguments(0x11f1f5252d88, {0x11f1e833aa10, 0x1, 0x0?})
+	/workspace/adamic/internal/lower/arguments_length.go:107 +0x24e fp=0x11f1fb4d40c0 sp=0x11f1fb4d3f50 pc=0xa2150e
+github.com/system-inc/adamic/internal/lower.(*lowering).callFunction(0x11f1f5252d88, 0x11f1e8381688, 0x1fbd)
+	/workspace/adamic/internal/lower/expression.go:1158 +0x99 fp=0x11f1fb4d41c0 sp=0x11f1fb4d40c0 pc=0xa69b59
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x11f1f5252d88, 0x11f1e8381688)
+	/workspace/adamic/internal/lower/expression.go:1130 +0x20e fp=0x11f1fb4d43a8 sp=0x11f1fb4d41c0 pc=0xa690ce
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x11f1f5252d88, 0x11f1e8381688)
+	/workspace/adamic/internal/lower/class.go:321 +0x589 fp=0x11f1fb4d4538 sp=0x11f1fb4d43a8 pc=0xa333a9
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x11f1f5252d88, 0x11f1f41d67c8?)
+	/workspace/adamic/internal/lower/expression.go:663 +0xea5 fp=0x11f1fb4d47a0 sp=0x11f1fb4d4538 pc=0xa641a5
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x11f1f5252d88, 0x11f1e8381688)
+	/workspace/adamic/internal/lower/expression.go:477 +0x127 fp=0x11f1fb4d4898 sp=0x11f1fb4d47a0 pc=0xa632c7
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x11f1f5252d88, 0x11f1e8381688)
+	/workspace/adamic/internal/lower/expression.go:210 +0x8c fp=0x11f1fb4d4c28 sp=0x11f1fb4d4898 pc=0xa6102c
+github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x11f1f5252d88, 0x11f1e820a748)
+	/workspace/adamic/internal/lower/locals.go:79 +0x6f3 fp=0x11f1fb4d4e98 sp=0x11f1fb4d4c28 pc=0xacd153
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x11f1f5252d88, 0x11f1e7f0a9f8)
+	/workspace/adamic/internal/lower/statements.go:76 +0x136 fp=0x11f1fb4d4f40 sp=0x11f1fb4d4e98 pc=0xb2a676
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement(0x11f1f5252d88, 0x11f1e7f0a9f8)
+	/workspace/adamic/internal/lower/latent_full.go:144 +0x14e fp=0x11f1fb4d4fd0 sp=0x11f1fb4d4f40 pc=0xa8a6ae
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(...)
+	/workspace/adamic/internal/lower/statements.go:260
+github.com/system-inc/adamic/internal/lower.latentFullSelected.func3(0x11f1f41d72d0, 0x11f1e953a240, 0x11f1e7f0a9f8, 0x11f1f41d72b0?, {0x11f1e7f0a9f8, {0x10c02b0, 0x0}, {0x11f1f627a0c0, 0x39}, 0x0, ...})
+	/workspace/adamic/internal/lower/latent_units.go:176 +0x61d fp=0x11f1fb4d5228 sp=0x11f1fb4d4fd0 pc=0xb449bd
+github.com/system-inc/adamic/internal/lower.latentFullSelected({0x1a48ee8, 0x1b2e720}, 0x11f1e953a240, 0x11f1fb4d5b18, 0x11f1fb4d5ac8)
+	/workspace/adamic/internal/lower/latent_units.go:200 +0x954 fp=0x11f1fb4d5a00 sp=0x11f1fb4d5228 pc=0xa911d4
+github.com/system-inc/adamic/internal/lower.LatentRegion({0x1a48ee8, 0x1b2e720}, 0x11f1e953a240, {0x7ffd7e47f38a, 0x32}, 0x56f62, 0x595a0)
+	/workspace/adamic/internal/lower/latent_replay.go:43 +0x445 fp=0x11f1fb4d5b40 sp=0x11f1fb4d5a00 pc=0xa8b3a5
+main.main()
+	/workspace/adamic/stage3/census/latent/replay/worker/main.go:83 +0x75e fp=0x11f1fb4d5eb8 sp=0x11f1fb4d5b40 pc=0xb554fe
+runtime.main()
+	/workspace/adamic-tools/go/src/runtime/proc.go:302 +0x427 fp=0x11f1fb4d5fe0 sp=0x11f1fb4d5eb8 pc=0x4500c7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1fb4d5fe8 sp=0x11f1fb4d5fe0 pc=0x48aa21
+
+goroutine 2 gp=0x11f1e2e22d20 m=nil [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e6afa8 sp=0x11f1e2e6af88 pc=0x4848ca
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.forcegchelper()
+	/workspace/adamic-tools/go/src/runtime/proc.go:387 +0xb3 fp=0x11f1e2e6afe0 sp=0x11f1e2e6afa8 pc=0x450393
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e6afe8 sp=0x11f1e2e6afe0 pc=0x48aa21
+created by runtime.init.7 in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:375 +0x1a
+
+goroutine 3 gp=0x11f1e2e232c0 m=nil [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e6b788 sp=0x11f1e2e6b768 pc=0x4848ca
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.bgsweep(0x11f1e2e94000)
+	/workspace/adamic-tools/go/src/runtime/mgcsweep.go:324 +0x151 fp=0x11f1e2e6b7c8 sp=0x11f1e2e6b788 pc=0x43b931
+runtime.gcenable.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x17 fp=0x11f1e2e6b7e0 sp=0x11f1e2e6b7c8 pc=0x47bf77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e6b7e8 sp=0x11f1e2e6b7e0 pc=0x48aa21
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x66
+
+goroutine 4 gp=0x11f1e2e234a0 m=nil [GC scavenge wait]:
+runtime.gopark(0x10000?, 0x10bdf28?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e6bf78 sp=0x11f1e2e6bf58 pc=0x4848ca
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*scavengerState).park(0x1b0bbe0)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:425 +0x49 fp=0x11f1e2e6bfa8 sp=0x11f1e2e6bf78 pc=0x439449
+runtime.bgscavenge(0x11f1e2e94000)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:658 +0x59 fp=0x11f1e2e6bfc8 sp=0x11f1e2e6bfa8 pc=0x4399b9
+runtime.gcenable.gowrap2()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0x17 fp=0x11f1e2e6bfe0 sp=0x11f1e2e6bfc8 pc=0x47bf37
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e6bfe8 sp=0x11f1e2e6bfe0 pc=0x48aa21
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0xa5
+
+goroutine 18 gp=0x11f1e2f02000 m=nil [GOMAXPROCS updater (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e66788 sp=0x11f1e2e66768 pc=0x4848ca
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.updateMaxProcsGoroutine()
+	/workspace/adamic-tools/go/src/runtime/proc.go:7146 +0xe7 fp=0x11f1e2e667e0 sp=0x11f1e2e66788 pc=0x45d7a7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e667e8 sp=0x11f1e2e667e0 pc=0x48aa21
+created by runtime.defaultGOMAXPROCSUpdateEnable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:7134 +0x37
+
+goroutine 19 gp=0x11f1e2f02780 m=nil [finalizer wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e66e20 sp=0x11f1e2e66e00 pc=0x4848ca
+runtime.runFinalizers()
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:210 +0x107 fp=0x11f1e2e66fe0 sp=0x11f1e2e66e20 pc=0x42cba7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e66fe8 sp=0x11f1e2e66fe0 pc=0x48aa21
+created by runtime.createfing in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:172 +0x3d
+
+goroutine 20 gp=0x11f1e2f02b40 m=nil [cleanup wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e67768 sp=0x11f1e2e67748 pc=0x4848ca
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*cleanupQueue).dequeue(0x1b0bea0)
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:522 +0xd3 fp=0x11f1e2e677a0 sp=0x11f1e2e67768 pc=0x4298d3
+runtime.runCleanups()
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:718 +0x45 fp=0x11f1e2e677e0 sp=0x11f1e2e677a0 pc=0x429f45
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e677e8 sp=0x11f1e2e677e0 pc=0x48aa21
+created by runtime.(*cleanupQueue).createGs in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:672 +0xa5
+
+goroutine 21 gp=0x11f1e32ac000 m=nil [GC worker (idle)]:
+runtime.gopark(0x3fc396c6753c?, 0x2?, 0x9c?, 0xf6?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e67f40 sp=0x11f1e2e67f20 pc=0x4848ca
+runtime.gcBgMarkWorker(0x11f1e2f04850)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x11f1e2e67fc8 sp=0x11f1e2e67f40 pc=0x42fdeb
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x11f1e2e67fe0 sp=0x11f1e2e67fc8 pc=0x47c477
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e67fe8 sp=0x11f1e2e67fe0 pc=0x48aa21
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 22 gp=0x11f1e32ac1e0 m=nil [GC worker (idle)]:
+runtime.gopark(0x1b2fa00?, 0x3?, 0x96?, 0xec?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x11f1e2e68740 sp=0x11f1e2e68720 pc=0x4848ca
+runtime.gcBgMarkWorker(0x11f1e2f04850)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x11f1e2e687c8 sp=0x11f1e2e68740 pc=0x42fdeb
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x11f1e2e687e0 sp=0x11f1e2e687c8 pc=0x47c477
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x11f1e2e687e8 sp=0x11f1e2e687e0 pc=0x48aa21
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+rax    0x11f1e3df8318
+rbx    0x11f1fb4cf488
+rcx    0x11f1e3df8318
+rdx    0x11f1fb4ce178
+rdi    0x11f1e3ef2218
+rsi    0x94ed20
+rbp    0x11f1fb4cdf80
+rsp    0x11f1fb4cdf40
+r8     0x0
+r9     0x0
+r10    0xf8
+r11    0x8080808080808080
+r12    0x11f1fb4cde58
+r13    0x11f1fb656e00
+r14    0x11f1e2e221e0
+r15    0xffffffffffffffff
+rip    0x94eb3c
+rflags 0x206
+cs     0x33
+fs     0x0
+gs     0x0

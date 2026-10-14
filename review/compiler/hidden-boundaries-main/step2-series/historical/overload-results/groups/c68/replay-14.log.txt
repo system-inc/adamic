@@ -1,0 +1,2 @@
+replay load/register/lower: 2.345264775s
+reproduced Refused: overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at /tmp/overload-results-adapted/src/compiler/utilities.ts:11320:5

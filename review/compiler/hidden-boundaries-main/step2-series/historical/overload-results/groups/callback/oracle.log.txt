@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_callback_served.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_callback_served.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_callback_served.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a
+--- PASS: TestNativeAgreesWithNode (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_scalar.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a (1.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_parameter.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_callback_served.a (1.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_evaluate.a (1.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_transform.a (0.47s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.001s

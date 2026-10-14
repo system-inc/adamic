@@ -6,3 +6,10 @@ func init() {
 		lowers, checked bool
 	}{"internal/oracle/testdata/census_overload_binders.a", true, false})
 }
+
+func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/census_overload_binder_result_checked.a", true, true})
+}

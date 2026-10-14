@@ -1,0 +1,5 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -330 +330 @@
+-	if !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {
++	if false && !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {

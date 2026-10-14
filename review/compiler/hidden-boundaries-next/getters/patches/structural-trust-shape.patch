@@ -1,0 +1,5 @@
+--- internal/lower/census_overload_proof.go
++++ internal/lower/census_overload_proof.go
+@@ -64 +64 @@
+-	parameters := implementation.Parameters()
++	if promised.Flags()&checker.TypeFlagsObject != 0 { return true }; parameters := implementation.Parameters()

@@ -1,0 +1,30 @@
+=== RUN   TestHiddenTNodeConstraintRepresentation
+=== RUN   TestHiddenTNodeConstraintRepresentation/number
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (0, false), want (1, true)
+=== RUN   TestHiddenTNodeConstraintRepresentation/string
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (0, false), want (3, true)
+=== RUN   TestHiddenTNodeConstraintRepresentation/boolean
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (0, false), want (2, true)
+=== RUN   TestHiddenTNodeConstraintRepresentation/object
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (0, false), want (10, true)
+=== RUN   TestHiddenTNodeConstraintRepresentation/object_union
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (0, false), want (10, true)
+=== RUN   TestHiddenTNodeConstraintRepresentation/structural_length
+=== RUN   TestHiddenTNodeConstraintRepresentation/unconstrained
+=== RUN   TestHiddenTNodeConstraintRepresentation/unknown
+=== RUN   TestHiddenTNodeConstraintRepresentation/any
+=== RUN   TestHiddenTNodeConstraintRepresentation/array_layout
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.28s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/number (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.03s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/structural_length (0.03s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/unconstrained (0.03s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/unknown (0.03s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/any (0.03s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.294s
+FAIL

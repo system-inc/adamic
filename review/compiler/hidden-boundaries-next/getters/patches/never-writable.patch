@@ -1,0 +1,5 @@
+--- internal/lower/invariance.go
++++ internal/lower/invariance.go
+@@ -229 +229 @@
+-		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
++		if mutable && false && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
