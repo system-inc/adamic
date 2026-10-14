@@ -2,6 +2,7 @@ package css
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"runtime"
 	"slices"
@@ -14,12 +15,27 @@ import (
 var cssParserPreparedPrograms = make([]struct {
 	once    sync.Once
 	program cssParserProgram
+	failed  string
 }, len(mutants)+1)
 
+// cssPlantedSetupFailure is how TestCSSSetupFailuresNameTheFirst plants a failure in a shared setup's Once:
+// ADAMIC_CSS_PLANTED_SETUP_FAILURE names the setup ("program" or "composition"), and its first caller fails.
+func cssPlantedSetupFailure(t *testing.T, setup string) {
+	t.Helper()
+	if os.Getenv("ADAMIC_CSS_PLANTED_SETUP_FAILURE") == setup {
+		t.Fatalf("planted: the %s setup fails", setup)
+	}
+}
+
+// cssParserPreparedProgram lowers the parser, or one of its mutants, once per process. A lowering that fails inside the
+// Once fails its caller; every later caller then fails naming the test that holds the real error, rather than taking
+// the zero program on to look up a nameless product (#qbbmqfs).
 func cssParserPreparedProgram(t *testing.T, mutation int) cssParserProgram {
 	t.Helper()
 	state := &cssParserPreparedPrograms[mutation+1]
 	state.once.Do(func() {
+		state.failed = t.Name()
+		cssPlantedSetupFailure(t, "program")
 		main, err := filepath.Abs("main.ts")
 		if err != nil {
 			t.Fatal(err)
@@ -30,7 +46,11 @@ func cssParserPreparedProgram(t *testing.T, mutation int) cssParserProgram {
 			directory = cssParserTopPortDirectory(t, &mutants[mutation])
 		}
 		state.program = buildCSSParserProgram(t, name, directory)
+		state.failed = ""
 	})
+	if state.failed != "" {
+		t.Fatalf("the prepared css parser program %d failed earlier in this process, in %s (see that test's log)", mutation, state.failed)
+	}
 	return state.program
 }
 
