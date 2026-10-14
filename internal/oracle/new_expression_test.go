@@ -14,26 +14,34 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
+		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "uint16" || name == "uint16_notyet" || name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
 	}
 }
 
-// Source Node demonstrates the conversion, while Adamic must stop before emission
-// until the runtime-owned Uint16 storage and conversions are integrated.
-func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
+// Uint16 constructors lower, so source Node holds their conversions and views.
+func TestNewExpressionUint16AgreesWithNode(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_uint16_notyet.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	node := onNode(t, path)
-	if node.exitCode != 0 || string(node.stdout) != "4464\n" || len(node.stderr) != 0 {
-		t.Fatalf("Node conversion: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
-	}
-	_, err = lowered(t, path)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "typed array element type Uint16Array" {
-		t.Fatalf("want Uint16Array element-type NotYet, got %v", err)
+	for _, name := range []string{"uint16", "uint16_notyet"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := onNode(t, path)
+			if expected.exitCode != 0 || len(expected.stderr) != 0 {
+				t.Fatalf("Node constructor: %#v", expected)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			native, _ := natively(t, program)
+			for backend, observed := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(expected, observed); difference != "" {
+					t.Errorf("%s: %s: exit %d stdout %q stderr %q", backend, difference, observed.exitCode, observed.stdout, observed.stderr)
+				}
+			}
+		})
 	}
 }
 
