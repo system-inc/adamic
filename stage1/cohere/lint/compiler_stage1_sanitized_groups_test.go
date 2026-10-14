@@ -131,12 +131,14 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 	}
 	units := map[int]bool{}
 	old := regexp.MustCompile(`(?m)^func TestCompilerAndStage1Agree_([0-9]+)\(t \*testing.T\)`).FindAllSubmatch(source, -1)
-	if len(old) != testCompilerAndStage1AgreeShards {
-		t.Fatalf("enumerated %d original shards, want %d", len(old), testCompilerAndStage1AgreeShards)
+	// Every owner's sides from compilerAgreementFirstSide on have a wrapper; side 0 has none.
+	want := testCompilerAndStage1AgreeShards / compilerAgreementSides * (compilerAgreementSides - compilerAgreementFirstSide)
+	if len(old) != want {
+		t.Fatalf("enumerated %d original shards, want %d", len(old), want)
 	}
 	for _, m := range old {
 		index, err := strconv.Atoi(string(m[1]))
-		if err != nil || index < 0 || index >= testCompilerAndStage1AgreeShards || units[index] {
+		if err != nil || index < 0 || index >= testCompilerAndStage1AgreeShards || units[index] || index%compilerAgreementSides < compilerAgreementFirstSide {
 			t.Fatalf("invalid original shard %s", m[1])
 		}
 		units[index] = true
@@ -163,7 +165,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 	seen := map[string]bool{}
 	owned := map[string]int{}
 	for _, c := range cases {
-		for side := 0; side < compilerAgreementSides; side++ {
+		for side := compilerAgreementFirstSide; side < compilerAgreementSides; side++ {
 			unit := compilerAgreementUnit(c, side)
 			pair := fmt.Sprintf("%s\t%s\t%d", c.key, c.rule, side)
 			if seen[pair] {
@@ -197,7 +199,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			t.Fatalf("%s owns %d sanitized checker.ts cases, want 1", test, owned[test])
 		}
 	}
-	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all stays on sides 0–3; side 4 is pending #5ggwf8c", len(owned), compilerAgreementCheckerSanitizedPrefix)
+	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all stays on sides 1–3; side 4 is pending #5ggwf8c", len(owned), compilerAgreementCheckerSanitizedPrefix)
 }
 
 // The probe child runs the whole family with a disagreement planted in one rule's checker.ts case: only the test that
