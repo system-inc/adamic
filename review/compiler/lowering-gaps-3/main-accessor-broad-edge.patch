@@ -1,0 +1,11 @@
+--- internal/ir/accessor_spread.go
++++ internal/ir/accessor_spread.go
+@@ -7,7 +7,7 @@
+ // include the program's enumerable literal accessors. Class prototype getters are
+ // not own enumerable properties.
+ func (p *Program) ObjectSpreadMayThrow(literal ObjectLiteral) bool {
+-	if literal.Spread == nil {
++	if literal.Spread != nil { return true }; if literal.Spread == nil {
+ 		return false
+ 	}
+ 	throwing := false

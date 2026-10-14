@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
+	"maps"
 	"os"
 	"path/filepath"
 	"slices"
@@ -772,16 +773,31 @@ func differing(set readSet, now evaluation) []string {
 	return differ
 }
 
-// changed names the entries of a set whose values on this tree differ from the ones it recorded.
+// changed names the entries of a set whose values on this tree differ from the ones it recorded: how many of each
+// kind, then the first 8 by kind and path. The counts are every entry's, so a reader of the miss sees the kind of the
+// ones past the eighth too: Loom's judge voids a miss as the box's only when every differing entry is a system file,
+// and an unnamed tree file must not hide behind eight named system ones (Judge, #m5z9d6q). The shape is
+// "N of M entries it read differ from its newest traced build (by kind: content 2, system 18): <entries>[, and K more]",
+// kinds in byte order, each named as readEntry's Kind is.
 func changed(set readSet, now evaluation) string {
 	differ := differing(set, now)
-	switch {
-	case len(differ) == 0:
+	if len(differ) == 0 {
 		return fmt.Sprintf("its newest read set (%d entries) values as recorded, but no product is cached under %s", len(set.Entries), now.key[:min(12, len(now.key))])
-	case len(differ) > 8:
-		return fmt.Sprintf("%d of %d entries it read differ from its newest traced build: %s, and %d more", len(differ), len(set.Entries), strings.Join(differ[:8], ", "), len(differ)-8)
 	}
-	return fmt.Sprintf("%d of %d entries it read differ from its newest traced build: %s", len(differ), len(set.Entries), strings.Join(differ, ", "))
+	counts := map[string]int{}
+	for _, entry := range differ {
+		kind, _, _ := strings.Cut(entry, " ")
+		counts[kind]++
+	}
+	var kinds []string
+	for _, kind := range slices.Sorted(maps.Keys(counts)) {
+		kinds = append(kinds, fmt.Sprintf("%s %d", kind, counts[kind]))
+	}
+	named, more := differ, ""
+	if len(differ) > 8 {
+		named, more = differ[:8], fmt.Sprintf(", and %d more", len(differ)-8)
+	}
+	return fmt.Sprintf("%d of %d entries it read differ from its newest traced build (by kind: %s): %s%s", len(differ), len(set.Entries), strings.Join(kinds, ", "), strings.Join(named, ", "), more)
 }
 
 // shortValue is what a set records of a value: enough to tell two apart for a person, never the key's input.
