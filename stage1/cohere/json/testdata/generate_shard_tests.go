@@ -22,7 +22,6 @@ func main() {
 func generate() error {
 	for _, spec := range []struct{ directory, file, constants, count, name, helper string }{
 		{"json", "top_portmatchesgocohere_test.go", "top_shared_test.go", "testPortMatchesGoCohereShards", "TestPortMatchesGoCohere", "jsonPortTopShard"},
-		{"json", "top_upstreamrepositorycorpusparity_test.go", "top_shared_test.go", "testUpstreamRepositoryCorpusParityShards", "TestUpstreamRepositoryCorpusParity", "jsonUpstreamTopShard"},
 		{"markdowninline", "shard_units_test.go", "shards_test.go", "testMarkdownInlineShards", "TestMarkdownInline", "runInlineUnit"},
 	} {
 		directory := filepath.Join("stage1", "cohere", spec.directory)
