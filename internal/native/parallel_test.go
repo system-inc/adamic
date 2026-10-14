@@ -110,7 +110,6 @@ func TestParallelMemory(t *testing.T) {
 }
 
 func parallelMapMode(t *testing.T, selected string) {
-	t.Parallel()
 	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "map.c", build.options)
@@ -159,7 +158,6 @@ func parallelSource(source string) string {
 }
 
 func parallelCheckMutant(t *testing.T, name string) {
-	t.Parallel()
 	mutants := []struct {
 		name, file, old, changed, harness, mode, threads, want string
 		race                                                   bool
@@ -374,56 +372,122 @@ func parallelTSan(t *testing.T) bool {
 	return parallelTSanProbe.available
 }
 
-func TestParallelMutant_view_parent_units(t *testing.T) { parallelCheckMutant(t, "view_parent_units") }
+func TestParallelMutant_view_parent_units(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "view_parent_units")
+}
 
-func TestParallelMutant_view_owner_count(t *testing.T) { parallelCheckMutant(t, "view_owner_count") }
+func TestParallelMutant_view_owner_count(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "view_owner_count")
+}
 
 func TestParallelMutant_ascii_character_write(t *testing.T) {
+	t.Parallel()
 	parallelCheckMutant(t, "ascii_character_write")
 }
 
-func TestParallelMutant_skip_items_share(t *testing.T) { parallelCheckMutant(t, "skip_items_share") }
+func TestParallelMutant_skip_items_share(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "skip_items_share")
+}
 
-func TestParallelMutant_lazy_cache(t *testing.T) { parallelCheckMutant(t, "lazy_cache") }
+func TestParallelMutant_lazy_cache(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "lazy_cache")
+}
 
 func TestParallelMutant_plain_shared_count(t *testing.T) {
+	t.Parallel()
 	parallelCheckMutant(t, "plain_shared_count")
 }
 
-func TestParallelMutant_field_cache(t *testing.T) { parallelCheckMutant(t, "field_cache") }
+func TestParallelMutant_field_cache(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "field_cache")
+}
 
-func TestParallelMutant_remote_free(t *testing.T) { parallelCheckMutant(t, "remote_free") }
+func TestParallelMutant_remote_free(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "remote_free")
+}
 
-func TestParallelMutant_result_order(t *testing.T) { parallelCheckMutant(t, "result_order") }
+func TestParallelMutant_result_order(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "result_order")
+}
 
-func TestParallelMutant_reused_graph(t *testing.T) { parallelCheckMutant(t, "reused_graph") }
+func TestParallelMutant_reused_graph(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "reused_graph")
+}
 
-func TestParallelMutant_oversized_slot(t *testing.T) { parallelCheckMutant(t, "oversized_slot") }
+func TestParallelMutant_oversized_slot(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "oversized_slot")
+}
 
-func TestParallelMutant_fixed_grain(t *testing.T) { parallelCheckMutant(t, "fixed_grain") }
+func TestParallelMutant_fixed_grain(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "fixed_grain")
+}
 
-func TestParallelMutant_eager_strings(t *testing.T) { parallelCheckMutant(t, "eager_strings") }
+func TestParallelMutant_eager_strings(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "eager_strings")
+}
 
-func TestParallelMutant_one_worker(t *testing.T) { parallelCheckMutant(t, "one_worker") }
+func TestParallelMutant_one_worker(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "one_worker")
+}
 
-func TestParallelMap_numbers(t *testing.T) { parallelMapMode(t, "numbers") }
+func TestParallelMap_numbers(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "numbers")
+}
 
-func TestParallelMap_strings(t *testing.T) { parallelMapMode(t, "strings") }
+func TestParallelMap_strings(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "strings")
+}
 
-func TestParallelMap_objects(t *testing.T) { parallelMapMode(t, "objects") }
+func TestParallelMap_objects(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "objects")
+}
 
-func TestParallelMap_map(t *testing.T) { parallelMapMode(t, "map") }
+func TestParallelMap_map(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "map")
+}
 
-func TestParallelMap_fresh(t *testing.T) { parallelMapMode(t, "fresh") }
+func TestParallelMap_fresh(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "fresh")
+}
 
-func TestParallelMap_nested(t *testing.T) { parallelMapMode(t, "nested") }
+func TestParallelMap_nested(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested")
+}
 
-func TestParallelMap_exception(t *testing.T) { parallelMapMode(t, "exception") }
+func TestParallelMap_exception(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "exception")
+}
 
-func TestParallelMap_nested_exception(t *testing.T) { parallelMapMode(t, "nested_exception") }
+func TestParallelMap_nested_exception(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested_exception")
+}
 
-func TestParallelMap_million(t *testing.T) { parallelMapMode(t, "million") }
+func TestParallelMap_million(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "million")
+}
 
 func TestParallelMutant_fixture_shared_counter(t *testing.T) {
+	t.Parallel()
 	parallelCheckMutant(t, "fixture_shared_counter")
 }

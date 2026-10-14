@@ -229,7 +229,6 @@ adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, bo
 
 func parallelFixtureUnit(t *testing.T, path, build, threads string, attempt int) {
 	t.Helper()
-	t.Parallel()
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
 		t.Fatal(err)
@@ -246,102 +245,127 @@ func parallelFixtureUnit(t *testing.T, path, build, threads string, attempt int)
 }
 
 func TestParallelNative_fresh(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/fresh.a", "", "", -1)
 }
 
 func TestParallelNative_global_capture(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/global_capture.a", "", "", -1)
 }
 
 func TestParallelNative_identity(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/identity.a", "", "", -1)
 }
 
 func TestParallelNative_large(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/large.a", "", "", -1)
 }
 
 func TestParallelNative_map_capture(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/map_capture.a", "", "", -1)
 }
 
 func TestParallelNative_nested(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/nested.a", "", "", -1)
 }
 
 func TestParallelNative_numbers(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/numbers.a", "", "", -1)
 }
 
 func TestParallelNative_readonly_forms(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/readonly_forms.a", "", "", -1)
 }
 
 func TestParallelNative_readonly_function(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/readonly_function.a", "", "", -1)
 }
 
 func TestParallelNative_records(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/records.a", "", "", -1)
 }
 
 func TestParallelNative_recursive_tree(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/recursive_tree.a", "", "", -1)
 }
 
 func TestParallelNative_strings(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/strings.a", "", "", -1)
 }
 
 func TestParallelNative_throw_middle(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "internal/oracle/testdata/concurrency/accepted/throw_middle.a", "", "", -1)
 }
 
 func TestParallelBenchmark_asan_One_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "asan", "1", 0)
 }
 
 func TestParallelBenchmark_asan_Default_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "asan", "", 0)
 }
 
 func TestParallelBenchmark_release_One_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "release", "1", 0)
 }
 
 func TestParallelBenchmark_release_Default_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "release", "", 0)
 }
 
 func TestParallelBenchmark_asan_slabs_One_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "asan_slabs", "1", 0)
 }
 
 func TestParallelBenchmark_asan_slabs_Default_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "asan_slabs", "", 0)
 }
 
 func TestParallelBenchmark_tsan_One_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "1", 0)
 }
 
 func TestParallelBenchmark_tsan_One_1(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "1", 1)
 }
 
 func TestParallelBenchmark_tsan_One_2(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "1", 2)
 }
 
 func TestParallelBenchmark_tsan_Default_0(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "", 0)
 }
 
 func TestParallelBenchmark_tsan_Default_1(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "", 1)
 }
 
 func TestParallelBenchmark_tsan_Default_2(t *testing.T) {
+	t.Parallel()
 	parallelFixtureUnit(t, "bench/parallel_files.a", "tsan", "", 2)
 }
 

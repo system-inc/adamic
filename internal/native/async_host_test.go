@@ -8,8 +8,7 @@ import (
 	"testing"
 )
 
-// Not parallel: this compiles both sanitizer runtimes and executes bounded
-// subprocess controls and mutants; simultaneous gates obscure race evidence.
+// Each subprocess builds its controls and mutants in a private temporary directory.
 func asyncHostPromises(t *testing.T, sanitizer string) {
 	if goruntime.GOOS != "linux" {
 		t.Skip("host promise sanitizer evidence currently requires Linux LeakSanitizer")
@@ -35,6 +34,12 @@ func asyncHostPromises(t *testing.T, sanitizer string) {
 	t.Logf("%s", output)
 }
 
-func TestAsyncHostPromisesAddress(t *testing.T) { asyncHostPromises(t, "address,undefined") }
+func TestAsyncHostPromisesAddress(t *testing.T) {
+	t.Parallel()
+	asyncHostPromises(t, "address,undefined")
+}
 
-func TestAsyncHostPromisesThread(t *testing.T) { asyncHostPromises(t, "thread") }
+func TestAsyncHostPromisesThread(t *testing.T) {
+	t.Parallel()
+	asyncHostPromises(t, "thread")
+}
