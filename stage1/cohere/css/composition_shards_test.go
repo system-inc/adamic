@@ -68,12 +68,21 @@ type compositionProducts struct {
 
 var compositionOnce sync.Once
 var compositionBuilt compositionProducts
+var compositionFailed string
 
+// compositionSetup builds the composition's products once per process. A build that fails inside the Once fails its
+// caller; every later caller then fails naming the test that holds the real error, where each shard and the union read
+// only "composition setup did not complete" before (#qbbmqfs).
 func compositionSetup(t *testing.T) compositionProducts {
 	t.Helper()
-	compositionOnce.Do(func() { compositionBuilt = buildCompositionProducts(t) })
-	if compositionBuilt.oracle == "" {
-		t.Fatal("composition setup did not complete")
+	compositionOnce.Do(func() {
+		compositionFailed = t.Name()
+		cssPlantedSetupFailure(t, "composition")
+		compositionBuilt = buildCompositionProducts(t)
+		compositionFailed = ""
+	})
+	if compositionFailed != "" {
+		t.Fatalf("the composition setup failed earlier in this process, in %s (see that test's log)", compositionFailed)
 	}
 	return compositionBuilt
 }
