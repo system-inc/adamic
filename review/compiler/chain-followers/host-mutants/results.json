@@ -1,0 +1,218 @@
+[
+  {
+    "topic": "non-null-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/non-null-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/undefined$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "non-null-narrowing",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/non-null-narrowing.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/narrowed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "nested-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/nested-empty.json",
+      "./internal/lower",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "string-concatenation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/string-concatenation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "phantom-primitive",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/phantom-primitive.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomCastsAreErased$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "proven-predicates",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/proven-predicates.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusComputedRelation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "generic-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-empty.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "debugger",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/debugger.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDebuggerNativeEmitsNothing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "generic-values",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-values.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValuesHaveSeparateInstances$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/generic-namespace-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/phantom-overload-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "proven-cleanup",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-followers/host-mutants/proven-cleanup.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusGenericRefusalInsideClosure$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  }
+]

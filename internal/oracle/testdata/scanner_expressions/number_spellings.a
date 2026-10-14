@@ -1,0 +1,15 @@
+for (const n of [0, -0, 7, -23, 1.25, -0.125, NaN, Infinity, -Infinity, 1e-6, 1e-7, 1e20, 1e21, 1.2345678901234567e30, 5e-324, 2 ** 976, 2 ** 60]) {
+	console.log('left:' + n);
+	console.log(n + ':right');
+}
+let calls = 0;
+function text(): string { calls++; return `built${calls}:`; }
+function number(): number { calls++; return calls; }
+console.log(text() + number());
+console.log(number() + text());
+console.log(`${calls}`);
+let accumulated = 'sum:';
+accumulated += 1.25;
+console.log(accumulated);
+console.log('arithmetic:' + (2 + 3));
+console.log(2 + 3 + ':arithmetic');

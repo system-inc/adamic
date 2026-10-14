@@ -44,7 +44,7 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	if from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -121,6 +121,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				return &widening{source: source, target: target}
 			}
 			return l.widened(source, target, visited)
+		}
+		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
+			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
 		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
@@ -523,6 +526,7 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	own = l.contextualGenericType(node, own)
 	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
 	// It cannot write a value into the contextual slot, including a closed string-enum slot.
 	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
@@ -616,12 +620,21 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	}
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
+		if context := l.callableContext(parent); context != nil {
+			return context
+		}
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
+			if context := l.callableContext(parent); context != nil {
+				return context
+			}
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+				return contextual
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindArrayLiteralExpression:

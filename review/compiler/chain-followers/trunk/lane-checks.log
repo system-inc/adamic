@@ -1,0 +1,4 @@
+the t.Parallel analyzer failed: FAIL
+internal/oracle/scanner_expressions_test.go TestScannerPrimitiveConcatenationMutants: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state> above it
+a-check 2 .a files
+vet skipped, over 10 s

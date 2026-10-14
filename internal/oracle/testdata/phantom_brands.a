@@ -1,0 +1,30 @@
+// TypeScript 6.0.3, utilitiesPublic.ts:842-854. The two bodies are unchanged.
+// CharacterCodes._ is the original enum's value; its fixture is an erasable object.
+const CharacterCodes = { _: 95 };
+type InternalSymbolName = '__call' | '__constructor' | '__new' | '__index' | '__export' | '__global' | '__missing' | '__type' | '__object' | '__jsxAttributes' | '__class' | '__function' | '__computed' | '__resolving__' | 'export=' | 'default' | 'this' | '__instantiationExpression' | '__importAttributes';
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+function escapeLeadingUnderscores(identifier: string): __String {
+    return (identifier.length >= 2 && identifier.charCodeAt(0) === CharacterCodes._ && identifier.charCodeAt(1) === CharacterCodes._ ? "_" + identifier : identifier) as __String;
+}
+function unescapeLeadingUnderscores(identifier: __String): string {
+    const id = identifier as string;
+    return id.length >= 3 && id.charCodeAt(0) === CharacterCodes._ && id.charCodeAt(1) === CharacterCodes._ && id.charCodeAt(2) === CharacterCodes._ ? id.substr(1) : id;
+}
+for (const identifier of ['plain', '__under', '🌍', '__']) {
+    const escaped = escapeLeadingUnderscores(identifier);
+    console.log(unescapeLeadingUnderscores(escaped));
+}
+const internal: InternalSymbolName = '__call';
+console.log(unescapeLeadingUnderscores(internal));
+function absent(): __String {
+    return undefined as void & { __escapedIdentifier: void };
+}
+console.log(`${absent() === undefined}`);
+
+type Escaped = string & { __escapedIdentifier: void };
+const text = ('__' + 'name') as Escaped;
+console.log(String(text.__escapedIdentifier));
+console.log(`${text.length} ${text + '!'} ${text < 'z'} ${text === '__name'}`);
+const keys = new Map<Escaped, number>();
+keys.set(text, 7);
+console.log(`${keys.get('__name' as Escaped) ?? -1} ${keys.size}`);

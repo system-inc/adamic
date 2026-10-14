@@ -69,6 +69,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
@@ -116,7 +122,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -171,10 +177,10 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven.Flags()&checker.TypeFlagsUndefined != 0
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
@@ -233,7 +239,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}
-			if own := l.checker.GetTypeAtLocation(node); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 				}
@@ -477,6 +483,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
+	}
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
@@ -526,8 +535,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
-		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
-			return nil, l.notYet(node, "a generic function as a value")
+		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return l.genericFunctionValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
@@ -583,6 +592,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
+		// All arrays are truthy, including []; only undefined takes this fallback.
+		if binary.OperatorToken.Kind == ast.KindBarBarToken && l.arrayOrUndefined(l.checker.GetTypeAtLocation(binary.Left)) {
+			return l.coalesce(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
 			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
 				return lowered, nil
@@ -621,6 +634,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindElementAccessExpression:
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
+		if err := l.genericFunctionIdentityNew(node); err != nil {
+			return nil, err
+		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
 		if l.this < 0 {
@@ -646,6 +662,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if err := l.genericFunctionIdentityCall(node); err != nil {
+			return nil, err
+		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
@@ -809,16 +828,7 @@ var comparisons = map[ast.Kind]ir.Operator{
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
-		spell := func(value ir.Expression) ir.Expression {
-			switch value.Type() {
-			case ir.Number:
-				return ir.NumberToString{Value: value}
-			case ir.Boolean:
-				return ir.BooleanToString{Value: value}
-			}
-			return value
-		}
-		left, right = spell(left), spell(right)
+		left, right = l.concatenated(left), l.concatenated(right)
 	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
@@ -896,6 +906,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
+		if (l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)) || l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right))) && l.hasGenericFunctionValues() {
+			return nil, l.notYet(node, "function identity comparison in a program with specialized generic function values")
+		}
 		lowered := ir.Equal
 		if operator == ast.KindExclamationEqualsEqualsToken {
 			lowered = ir.NotEqual
@@ -921,6 +934,26 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	}
 
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
+}
+
+// concatenated writes the primitive operands of string addition as JavaScript does.
+// Objects retain their representation, so unsupported ToPrimitive remains NotYet.
+func (l *lowering) concatenated(value ir.Expression) ir.Expression {
+	switch value.(type) {
+	case ir.Null:
+		return ir.StringConstant{Index: l.constant("null")}
+	case ir.Undefined:
+		return ir.StringConstant{Index: l.constant("undefined")}
+	}
+	switch value.Type() {
+	case ir.Number:
+		return ir.NumberToString{Value: value}
+	case ir.Boolean:
+		return ir.BooleanToString{Value: value}
+	case ir.MaybeNumber, ir.MaybeBoolean:
+		return ir.MaybeToString{Value: value}
+	}
+	return value
 }
 
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is

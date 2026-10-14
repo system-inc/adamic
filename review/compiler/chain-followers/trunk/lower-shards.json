@@ -1,0 +1,119 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementRejectsWrongLoweredOutput|TestAgreementRejectsEmptyAnswer|TestAgreementAcceptsComputedAnswer|TestAgreementAcceptsExpectedPanic|TestAgreementEnumConstantWitness|TestAgreementInheritedFieldWitness|TestAgreementParameterPropertyWitness|TestAgreementStaticInitializerWitness|TestAgreementParseIntRadixWitness|TestNativeAgreementRejectsWrongOutput|TestNativeAgreementRejectsWrongExit|TestArgumentsLengthRefusals|TestMixedTupleSpreadIsNotYet|TestArgumentsLengthReadNeighbors|TestArgumentsLengthRefusalFixtures|TestArgumentsLengthReadKeepsReaderFact|TestArrayPredicatePreservesDeclaredElementContract|TestArrayPredicateCannotInventAnElementContract|TestArrayPredicateDoesNotMisclassifyNativeTuples|TestUnknownArrayPredicateRefusesUnrepresentedObservations|TestArrayPredicateCoexistsWithUnknownReflection|TestUncheckableCastsStayRefused|TestCheckedCastProofAndElision|TestCensusMarkerResultIsAssignable|TestCensusMarkerZeroCallIsNotAssumedSafe|TestOptionalFunctionValueRelation|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverloadBinderGuards|TestCensusOverloadReturnProof|TestCensusQualifiedCast|TestCensusGenericRefusalInsideClosure|TestCensusComputedRelation|TestCensusPredicateInteractionBoundary|TestCensusPredicateInteractionEscapes|TestCensusPredicateMarkerKeepsProofBoundaries)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestCensusPredicateMarkerCallStaysNotYet|TestCensusOverloadRelation|TestCensusSmallFiniteKeyRead|TestCensusRestMutableElements|TestCensusBooleanDeadBranch|TestCheckPragmasAreRefused|TestCheckPragmaNeighborsCompile|TestTsgoHonorsNoCheckInAdamicFiles|TestClassFeaturesReadonlyChecker|TestClassFeaturesPrivateChecker|TestClassFeaturesPrivateStorage|TestClassFeaturesAccessorRefusals|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesStaticSoundness|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesNarrowedAccessor|TestClassFeaturesStaticParentCycle|TestClassFeaturesStaticInterfaceCycle|TestInheritanceRefusesUnsoundOverrides|TestInheritanceKeepsCheckerConstructorRules|TestInheritanceAllowsSoundOverrides|TestInheritanceHasClassIdentity|TestInheritanceCycleFinderIncludesInheritedFields|TestInheritanceRejectsUnsupportedConstructorShapes|TestInheritanceRefusesFalseNominalViews|TestInheritanceRefusesThisBeforeSuperReturns|TestInheritanceKeepsNominalTupleDestructuring|TestInheritanceGenericMonomorphizations|TestInheritanceRefusesGrowingGenericClasses|TestInheritanceGenericSoundness|TestInheritanceConditionalThisRules|TestInheritanceGenericViewsKeepNominalArguments|TestInheritanceGenericNominalConstraints|TestInheritanceGenericFactoryLayouts|TestInheritanceNativeSignatureNeighbors)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestInheritanceNativeSignatureLimits|TestClassArgumentsUseCheckerIdentity|TestClassStaticInitializerCallIsEmitted|TestClassStaticSideEffectMatchesNode|TestClassWrongOutputIteratorReceiver|TestClassWrongOutputKeysRepair|TestClassWrongOutputPrivateRepair|TestClockGenericReturnsT01Shapes|TestClockGenericReturnsT01SupportsPhantomPrimitives|TestClockGenericReturnsT01RejectsNullBeforeBody|TestClockGenericReturnsT01RejectsIndexBeforeBody|TestConstructorCacheOneArgumentRemainsNotYet|TestDefiniteAssignmentUsesReadiness|TestDefiniteAssignmentSoundNeighbors|TestEmptyArrayInstantiations|TestEmptyArrayViewsStillRefuse|TestEmptyArrayScalarFallbacksUseTruthiness|TestNestedEmptyArrayElementKinds|TestEmptyLiteralGenericReturnUsesSamePath|TestEntriesAllocationProof|TestEntriesRecordBoundaries|TestFlagEnumsOpen|TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestFlagEnumAliasBoundaries|TestEnumMemberValuesAndReverseNameMatchNode|TestEnumFlagProofsWithoutObservableLoweringEffect|TestEnumReverseMappingUsesSingleSlot|TestEnumInitializationReach|TestEnumInitializationGraphMemo|TestEnumNamespaceSharedCycle)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestNumericEnumsAreOpen|TestStringEnumsStayClosed|TestNumericEnumNeverProof|TestNumericEnumLiteralPromises|TestEnumSlotViews|TestEnumSwitchExhaustiveness|TestEnumLimitsStayLoud|TestConstEnumErasesRuntimeObject|TestEnumIdentityAcrossModules|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites|TestParseIntMapUsesIndexRadix|TestFSOpenStringFlagsLower|TestFSRemoveDefaultRetryDelayLowers|TestFSExistsOperation|TestFSStatThrowsByDefault|TestFunctionValueUnionViewsStayNotYet|TestGenericFunctionValueOperandContexts|TestGenericFunctionValuesHaveSeparateInstances|TestGenericFunctionValueReferenceInstances|TestGenericFunctionValueIdentityComparisonIsNotYet|TestGenericFunctionValueDifferentReferenceRepresentations|TestGenericFunctionValueEarlierIdentityComparisonIsNotYet|TestGenericFunctionValueIdentityCallsAreNotYet|TestGenericFunctionValueUnionIdentityIsNotYet|TestGenericFunctionValueNamespaceDirectCallsKeepIdentity|TestGenericFunctionPolymorphicRecursionIsRefused|TestGenericUnionFixtureHasSeparateInstances|TestGenericJSONUnionArrayIsNotYet|TestOriginalCycleLedger|TestUndecidedCycleReadsUseReadyChecks|TestInputSpreadArgumentsAreNotYet|TestInputSpreadCoverage|TestDefaultTaggedInterfaceAdmission|TestDefaultTaggedInterfaceNeedsNoFlag|TestIteratorGapsAreExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestIteratorViewsCannotHideReturn|TestIteratorViewsCannotEraseReceivers|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestGeneratorsAreRefusedEvenWithoutYield|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodViewsDoNotLoseThis|TestLiteralMethodSignatureViewsDoNotLoseThis|TestIteratorDescriptorReasons|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestGenericIteratorViewsPreserveNativeArguments|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorSymbolKeysAreNotStringKeys|TestLibraryLanguageBoundaries|TestLibraryMapSetGapsStayRefused|TestLibraryMapSetIteratorCopyTypesRefused|TestLibraryMethodValues|TestLibraryMethodValueBoundaries|TestLibraryMethodValueSafety|TestNodeBufferRefusals|TestNodeFSFileOptionsBorrow|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeFSFileRefusesOptionEffects|TestNodeFSFileRefusesVoidValues|TestNodeFSFileRefusesPinnedUnsupportedOverloads|TestNodeFSFileNamespaceImport|TestNodeFSFileQualifiedErrorType|TestNodeFSFileKeepsDetachedMethodRefusal|TestNodeFSFileBufferBorrow|TestNodeFSFileScratchOptionsBorrow|TestNodeFSFileScratchOverloadsAreNamed|TestNodeLibraryNamesUnimplementedMembers|TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames|TestNodeLibraryDistinguishesReceiverOwners|TestNodeLibraryQualifiedTypeAssertion)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestLibraryRegexOffsetRequiresNoCaptures|TestLibraryStringRefusals|TestConsoleLowersToWriteLine|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestWhatZeroOneRefusesIsRefusedWithAFix|TestAMutableLocationSeenWiderIsRefused|TestAViewThatCantWriteIsNotRefused|TestATupleSeenAsAnArrayIsNotYet|TestAMethodReadAsAValueIsRefused|TestModuleNamespaceLimitsStayLoud|TestModuleNamespaceInitializedReadProof|TestCallableNamespaceLimitsStayLoud|TestCallableNamespaceReceiverStaysLoud|TestNamespaceClassEarlyConstructionStaysLoud|TestNamespaceReceiverArrowInheritsScope|TestNamespaceAmbientHostInitialization|TestNamespaceAmbientContextsDoNotExecute|TestNamespaceCallGraphLinearWork|TestNamespaceCallGraphCycleUnion|TestNamespaceEnumInitializationIndependentOfModuleAnalysis|TestParserFactoryBindingHoisting|TestMissingBindingSymbolHasStructuredLocation|TestTscNamespaceDeclarationShapes|TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants|TestNestedFunctionGapsAreLoud)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported|TestAdamicNullishAssertionsAreRefused|TestNonNullAssertionLowersToNullishPanic|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningCensus|TestOptionalWideningRefused|TestOptionalWideningAllowed|TestOptionalWideningSpreadOverwrite|TestOverloadInferenceWitnesses|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature|TestParameterPropertiesSoundness|TestParameterPropertyCheckerContracts|TestParameterPropertyCallbackReceiver|TestParameterPropertyValueMatchesNode|TestPhantomRefusals|TestPhantomCastsAreErased|TestPhantomPrimitiveNames|TestPhantomLiteralCastsStayRefused|TestPhantomRealPathRefusal|TestPhantomOverloadOnlyBrandsKeepMainProof|TestPredicateSummaryParameterIndex|TestPredicateOverloadRuntime)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestIndirectPredicateOverloadIsPending|TestPredicateBodyProof|TestConditionAssertionAdmission|TestPredicateCallbackContracts|TestEveryNeedsCallbackEffects|TestPredicateOverloadCallback|TestPredicateUseRegions|TestPredicateUsesBelongToEachCall|TestUnprovenPredicateReturnsAreRefused|TestPredicateBodiesAreProven|TestPrimitiveAdmittingSlotsUseBoxes|TestInheritedLibraryReadsNeverLoadOwnFields|TestPrototypeMethodsAreRefusedWithReasons|TestNullishPrototypeReadsAreRejectedByChecker|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestUnrepresentedPrototypeCallsAreNotYet|TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestProvenRelationsRefuse|TestProvenRelationsErase|TestReadinessElisionRequiresDominatingAssignment|TestRegExpNativeRefusals|TestRegExpSourceNode|TestRegExpUnicodeClassSourceAgreesWithNode|TestRegExpSlashClassSourceAgreesWithNode|TestRegExpEscapedSlashSourceAgreesWithNode|TestRepresentationClockSourceCheckedTypes|TestPrivateAndPublicStaticsAgreeWithNode|TestNamespaceFactoryBindingsAgreeWithNode|TestReadinessErrorIncludesReceiverExpression|TestSuppressionDirectivesAreRefused|TestSuppressionDirectiveSoundNeighbors|TestSwitchConditionalBreakFallsThrough|TestSwitchEmptyElseFallsThrough|TestSwitchEmptyCaseFallsThrough|TestSwitchEmptyBlockFallsThrough)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestTasteRepresentationLimitsStayExplicit|TestTypedArraysLower|TestTypedArrayGaps|TestTypedArrayViewsCannotChangeRepresentation|TestTypedArrayFromArray|TestTypedArrayFromEmptyArray|TestUnknownReflectionRefusals|TestViewObjectContractsAreAvailableToEraser|TestViewObjectWritesNeedSourceCertificate|TestMixedUnionContractGraph|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractUnknownMemberFails|TestMixedUnionContractRecursiveMember|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestMixedUnionContractPhantomVoidIsUndefined|TestUntaggedViewMemberTags|TestUntaggedViewStructuralFallback)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0
+  }
+]

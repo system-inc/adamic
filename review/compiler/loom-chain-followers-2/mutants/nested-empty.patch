@@ -1,0 +1,10 @@
+--- internal/lower/empty_literal.go
++++ internal/lower/empty_literal.go
+@@ -6,6 +6,7 @@
+ // A union contributes only array members: do not invent slots for a mixed
+ // array/object context, or turn a tuple into an array.
+ func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
++	if true { return nil }
+ 	if proven == nil {
+ 		return nil
+ 	}
