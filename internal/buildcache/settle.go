@@ -1599,19 +1599,25 @@ func recipeOf(root string, process journalEntry) recipe {
 			continue
 		}
 		add("listing", listed.Dir)
-		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
-			listed.EmbedFiles, listed.IgnoredGoFiles}
 		// Only the package under test's test files are compiled into its binary (its own and its external test
 		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
 		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
-		// tests' read sets). A dependency's ignored files stay: a build-constraint edit can compile one in.
+		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
+		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
 		name, _, _ := strings.Cut(listed.ImportPath, " ")
-		if test && (name == pkg || name == pkg+"_test") {
+		under := test && (name == pkg || name == pkg+"_test")
+		ignored := listed.IgnoredGoFiles
+		if !under {
+			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
+		}
+		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
+			listed.EmbedFiles, ignored}
+		if under {
 			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
 		}
 		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
 		// the package under test.
-		makeOnly := makeFilesOnly && name == buildcachePackage && !(test && name == pkg)
+		makeOnly := makeFilesOnly && name == buildcachePackage && !under
 		for _, names := range files {
 			for _, name := range names {
 				if makeOnly && !isMakeFile(name) {
