@@ -1754,3 +1754,163 @@ func TestLibraryMethodValueMutants_003(t *testing.T) {
 	t.Parallel()
 	runLibraryMethodValueMutantsShard(t, 3)
 }
+
+func TestStage0EmitsDeterministically_000(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 0)
+}
+
+func TestStage0EmitsDeterministically_001(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 1)
+}
+
+func TestStage0EmitsDeterministically_002(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 2)
+}
+
+func TestStage0EmitsDeterministically_003(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 3)
+}
+
+func TestStage0EmitsDeterministically_004(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 4)
+}
+
+func TestStage0EmitsDeterministically_005(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 5)
+}
+
+func TestStage0EmitsDeterministically_006(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 6)
+}
+
+func TestStage0EmitsDeterministically_007(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 7)
+}
+
+func TestStage0EmitsDeterministically_008(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 8)
+}
+
+func TestStage0EmitsDeterministically_009(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 9)
+}
+
+func TestStage0EmitsDeterministically_010(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 10)
+}
+
+func TestStage0EmitsDeterministically_011(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 11)
+}
+
+func TestStage0EmitsDeterministically_012(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 12)
+}
+
+func TestStage0EmitsDeterministically_013(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 13)
+}
+
+func TestStage0EmitsDeterministically_014(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 14)
+}
+
+func TestStage0EmitsDeterministically_015(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 15)
+}
+
+func TestStage0EmitsDeterministically_016(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 16)
+}
+
+func TestStage0EmitsDeterministically_017(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 17)
+}
+
+func TestStage0EmitsDeterministically_018(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 18)
+}
+
+func TestStage0EmitsDeterministically_019(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 19)
+}
+
+func TestStage0EmitsDeterministically_020(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 20)
+}
+
+func TestStage0EmitsDeterministically_021(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 21)
+}
+
+func TestStage0EmitsDeterministically_022(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 22)
+}
+
+func TestStage0EmitsDeterministically_023(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 23)
+}
+
+func TestStage0EmitsDeterministically_024(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 24)
+}
+
+func TestStage0EmitsDeterministically_025(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 25)
+}
+
+func TestStage0EmitsDeterministically_026(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 26)
+}
+
+func TestStage0EmitsDeterministically_027(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 27)
+}
+
+func TestStage0EmitsDeterministically_028(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 28)
+}
+
+func TestStage0EmitsDeterministically_029(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 29)
+}
+
+func TestStage0EmitsDeterministically_030(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 30)
+}
+
+func TestStage0EmitsDeterministically_031(t *testing.T) {
+	t.Parallel()
+	runDeterministicEmissionShard(t, 31)
+}
