@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -28,6 +29,10 @@ type runtimeSet struct {
 	features []string
 	witness  string
 }
+
+// Source-profile probes can witness a feature set without a persistent admitted fixture.
+// Each witness still lowers a real program; the feature comparison below is unchanged.
+var runtimeWitnesses = map[string]func(*testing.T) *ir.Program{}
 
 // runtimeSets are every feature set the oracle's programs need, counted at 91671a25be over every lowered fixture and
 // review program (base 1021, canonical closures 46, convention 18, receivers 14, regexp callback 6, node host 5, the
@@ -175,14 +180,19 @@ func TestRuntimeSetsAreEachUsed(t *testing.T) {
 			t.Errorf("the set [%s] is in runtimeSets twice", name)
 		}
 		seen[name] = true
-		path, err := filepath.Abs(filepath.Join(repository, set.witness))
-		if err != nil {
-			t.Fatal(err)
-		}
-		program, err := lowered(t, path)
-		if err != nil {
-			t.Errorf("the witness of [%s], %s: %v", name, set.witness, err)
-			continue
+		var program *ir.Program
+		if witness := runtimeWitnesses[set.witness]; witness != nil {
+			program = witness(t)
+		} else {
+			path, err := filepath.Abs(filepath.Join(repository, set.witness))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err = lowered(t, path)
+			if err != nil {
+				t.Errorf("the witness of [%s], %s: %v", name, set.witness, err)
+				continue
+			}
 		}
 		if got := native.Features(native.C(program)); !slices.Equal(got, set.features) {
 			t.Errorf("the witness of [%s], %s, turns on %v: name a program that needs exactly the set, or drop the set", name, set.witness, got)

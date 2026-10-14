@@ -1,0 +1,14 @@
+=== RUN   TestV4Lane5BoxedResultMembers
+=== PAUSE TestV4Lane5BoxedResultMembers
+=== CONT  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+    checked_views_v4_lane5_test.go:117: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers2392438833/001/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedResultMembers (0.63s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.646s

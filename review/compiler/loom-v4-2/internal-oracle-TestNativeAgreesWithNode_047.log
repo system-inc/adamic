@@ -1,0 +1,105 @@
+=== RUN   TestNativeAgreesWithNode_047
+=== PAUSE TestNativeAgreesWithNode_047
+=== CONT  TestNativeAgreesWithNode_047
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/library_array_metadata.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/library_array_metadata.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/pad_too_long.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/pad_too_long.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/optional_class_method.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/optional_class_method.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/normalize_long_marks.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/normalize_long_marks.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/plain_data_spread.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/plain_data_spread.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/arguments_length_value.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/arguments_length_value.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/enums_flags_never_default.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/enums_flags_never_default.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/host_undefined_value.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/host_undefined_value.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/047cb0d_n_element_plain.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/047cb0d_n_element_plain.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/narrowed_union_valid.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/narrowed_union_valid.a
+=== RUN   TestNativeAgreesWithNode_047/internal/oracle/testdata/93122fa_s1.a
+=== PAUSE TestNativeAgreesWithNode_047/internal/oracle/testdata/93122fa_s1.a
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/library_array_metadata.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/93122fa_s1.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/narrowed_union_valid.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/047cb0d_n_element_plain.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/host_undefined_value.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/enums_flags_never_default.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/arguments_length_value.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/plain_data_spread.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/normalize_long_marks.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/optional_class_method.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_047/internal/oracle/testdata/pad_too_long.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_047 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/library_array_metadata.a (3.38s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/93122fa_s1.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/narrowed_union_valid.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/047cb0d_n_element_plain.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/host_undefined_value.a (2.46s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/enums_flags_never_default.a (0.40s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/arguments_length_value.a (2.28s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/plain_data_spread.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/normalize_long_marks.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/optional_class_method.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode_047/internal/oracle/testdata/pad_too_long.a (0.42s)
+PASS
+gate cache: native hits=9 misses=22
+gate cache: node hits=0 misses=22
+gate cache: probe hits=0 misses=0

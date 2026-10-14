@@ -1,0 +1,12 @@
+=== RUN   TestV4DirectProducerRefusal
+=== PAUSE TestV4DirectProducerRefusal
+=== CONT  TestV4DirectProducerRefusal
+    checked_views_v4_direct_test.go:339: gate cache node hit
+    checked_views_v4_direct_test.go:345: refusal with path and fix: <nil>
+--- FAIL: TestV4DirectProducerRefusal (0.09s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.103s
+FAIL

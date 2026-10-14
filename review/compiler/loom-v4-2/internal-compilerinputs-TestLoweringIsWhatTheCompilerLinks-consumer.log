@@ -1,0 +1,6 @@
+=== RUN   TestLoweringIsWhatTheCompilerLinks
+=== PAUSE TestLoweringIsWhatTheCompilerLinks
+=== CONT  TestLoweringIsWhatTheCompilerLinks
+    compilerinputs_test.go:84: 126 linked directories and module files, each under one of Lowering's 70 entries, each entry needed
+--- PASS: TestLoweringIsWhatTheCompilerLinks (1.29s)
+PASS

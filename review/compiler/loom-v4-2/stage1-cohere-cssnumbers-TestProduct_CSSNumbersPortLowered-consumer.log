@@ -1,0 +1,6 @@
+=== RUN   TestProduct_CSSNumbersPortLowered
+=== PAUSE TestProduct_CSSNumbersPortLowered
+=== CONT  TestProduct_CSSNumbersPortLowered
+    setup_products_test.go:44: build cssnumbers_port_lowering_and_backends cfeadbf7f145 miss 1.73
+--- PASS: TestProduct_CSSNumbersPortLowered (1.75s)
+PASS

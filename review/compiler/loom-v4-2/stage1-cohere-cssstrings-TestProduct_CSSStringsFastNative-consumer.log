@@ -1,0 +1,7 @@
+=== RUN   TestProduct_CSSStringsFastNative
+=== PAUSE TestProduct_CSSStringsFastNative
+=== CONT  TestProduct_CSSStringsFastNative
+    setup_products_test.go:37: build cssstrings_port_lowering_and_backends beeae0a771c2 hit 0.38
+    setup_products_test.go:343: build cssstrings_native-fast c386c2607232 miss 1.15
+--- PASS: TestProduct_CSSStringsFastNative (1.55s)
+PASS

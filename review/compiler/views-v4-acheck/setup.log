@@ -1,0 +1,14 @@
+v24.19.0
+setup: node ready (0.029s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.034s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.254s)
+
+added 3 packages in 650ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.086s
+setup: markdown dependencies ready (1.176s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (16.957s)
+setup: shared cache ready (23.100s)
+pattern ./...: stat /workspace/adamic/cmd/adamic-gocacheprog: directory not found

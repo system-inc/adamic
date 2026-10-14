@@ -1,0 +1,12 @@
+=== RUN   TestV4EscapeAdapterCallReceiverCheck
+=== PAUSE TestV4EscapeAdapterCallReceiverCheck
+=== CONT  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:124: gate cache node miss
+    checked_views_v4_call_apply_test.go:126: gate cache node miss
+    checked_views_v4_call_apply_test.go:149: gate cache node miss
+    checked_views_v4_call_apply_test.go:153: receiver-domain omission caught in native/ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4EscapeAdapterCallReceiverCheck (24.13s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0

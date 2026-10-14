@@ -1,0 +1,7 @@
+=== RUN   TestProduct_ScannerSourceIdentifier
+=== PAUSE TestProduct_ScannerSourceIdentifier
+=== CONT  TestProduct_ScannerSourceIdentifier
+    scanner_products_test.go:51: build scanner-native 5b307569b3fd miss 4.30
+    scanner_products_test.go:153: product cold/fetch time 4.311s
+--- PASS: TestProduct_ScannerSourceIdentifier (4.31s)
+PASS

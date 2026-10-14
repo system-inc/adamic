@@ -1,0 +1,18 @@
+Record V4 sweep counts and ruled union refusals
+
+Before: | internal/oracle/testdata/namespace_method_receiver.a | 7 | 7 | 9 | 16 | 5 | 0 |
+After: | internal/oracle/testdata/namespace_method_receiver.a | 7 | 7 | 7 | 14 | 5 | 0 |
+Cause: Reuse the explicit method receiver, removing its duplicate null receiver slot and two retain/release pairs.
+
+Before: | stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a | 3 | 0 | 6 | 4 | 3 | 0 |
+After: no runtime row (pinned compile-time refusal)
+Cause: Compile-time .a escaping-read refusal replaces a runtime row.
+
+Before: | stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a | 2 | 0 | 5 | 4 | 2 | 0 |
+After: no runtime row (pinned compile-time refusal)
+Cause: Compile-time .a escaping-read refusal replaces a runtime row.
+
+Before: | stage3/interface-downcasts/v2/callable-producer-wrong.a | 2 | 0 | 5 | 4 | 2 | 0 |
+After: no runtime row (pinned compile-time refusal)
+Cause: Compile-time .a escaping-read refusal replaces a runtime row.
+

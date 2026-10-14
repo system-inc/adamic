@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@
+- size_t capacity = strlen(expression) + 2 * strlen(type) + strlen(found) + 100;
++ size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;

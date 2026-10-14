@@ -65,8 +65,11 @@ type ViewContract struct {
 	Functions     []int
 	// ProducerCertified requires immutable code identity in Functions, even when empty.
 	ProducerCertified bool
-	Parameters        []ViewContractID
-	Result            ViewContractID
+	// CallableTypeID is the checker type identity used by the weak adapter cache.
+	CallableTypeID int
+	Parameters     []ViewContractID
+	Receiver       ViewContractID // explicit callable this parameter
+	Result         ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool
 }

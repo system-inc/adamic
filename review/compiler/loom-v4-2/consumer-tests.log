@@ -1,0 +1,213 @@
+{'package': 'bridge/tsgo', 'build': True, 'seconds': 19.586, 'exit': 0}
+{'package': 'cloud/reports/decode-ascii', 'build': True, 'seconds': 18.393, 'exit': 0}
+{'package': 'cmd/adamic', 'build': True, 'seconds': 17.67, 'exit': 0}
+{'package': 'cmd/adamic-meter', 'build': True, 'seconds': 15.785, 'exit': 0}
+{'package': 'cmd/adamic-test262', 'build': True, 'seconds': 16.584, 'exit': 0}
+{'package': 'internal/compilerinputs', 'build': True, 'seconds': 9.902, 'exit': 0}
+{'package': 'internal/flow', 'build': True, 'seconds': 7.874, 'exit': 0}
+{'package': 'internal/fresh', 'build': True, 'seconds': 7.479, 'exit': 0}
+{'package': 'internal/fuzz', 'build': True, 'seconds': 18.303, 'exit': 0}
+{'package': 'internal/ir', 'build': True, 'seconds': 10.902, 'exit': 0}
+{'package': 'internal/lower', 'build': True, 'seconds': 11.198, 'exit': 0}
+{'package': 'internal/native', 'build': True, 'seconds': 9.798, 'exit': 0}
+{'package': 'internal/oracle', 'build': True, 'seconds': 8.698, 'exit': 0}
+{'package': 'stage1/cohere/css', 'build': True, 'seconds': 25.188, 'exit': 0}
+{'package': 'stage1/cohere/cssnumbers', 'build': True, 'seconds': 24.729, 'exit': 0}
+{'package': 'stage1/cohere/cssstrings', 'build': True, 'seconds': 25.731, 'exit': 0}
+{'package': 'stage1/cohere/estree', 'build': True, 'seconds': 27.58, 'exit': 0}
+{'package': 'stage1/cohere/formatfiles', 'build': True, 'seconds': 26.128, 'exit': 0}
+{'package': 'stage1/cohere/gitignore', 'build': True, 'seconds': 25.395, 'exit': 0}
+{'package': 'stage1/cohere/graphql', 'build': True, 'seconds': 24.781, 'exit': 0}
+{'package': 'stage1/cohere/graphql/printer', 'build': True, 'seconds': 24.517, 'exit': 0}
+{'package': 'stage1/cohere/json', 'build': True, 'seconds': 13.613, 'exit': 0}
+{'package': 'stage1/cohere/lint', 'build': True, 'seconds': 32.738, 'exit': 0}
+{'package': 'stage1/cohere/lint/helpers', 'build': True, 'seconds': 26.287, 'exit': 0}
+{'package': 'stage1/cohere/lint/helpers/comments', 'build': True, 'seconds': 25.319, 'exit': 0}
+{'package': 'stage1/cohere/lint/regex', 'build': True, 'seconds': 25.165, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-underscore-dangle', 'build': True, 'seconds': 22.969, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-negation', 'build': True, 'seconds': 25.899, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-optional-chaining', 'build': True, 'seconds': 20.323, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/typescript-no-this-alias', 'build': True, 'seconds': 20.068, 'exit': 0}
+{'package': 'stage1/cohere/markdownblocks', 'build': True, 'seconds': 21.579, 'exit': 0}
+{'package': 'stage1/cohere/markdowninline', 'build': True, 'seconds': 17.961, 'exit': 0}
+{'package': 'stage1/cohere/mediaquery', 'build': True, 'seconds': 17.241, 'exit': 0}
+{'package': 'stage1/cohere/selector', 'build': True, 'seconds': 16.985, 'exit': 0}
+{'package': 'stage1/cohere/static_single_assignment', 'build': True, 'seconds': 21.395, 'exit': 0}
+{'package': 'stage1/cohere/suppression', 'build': True, 'seconds': 21.175, 'exit': 0}
+{'package': 'stage1/cohere/tsprinter', 'build': True, 'seconds': 22.5, 'exit': 0}
+{'package': 'stage1/cohere/typeaware', 'build': True, 'seconds': 19.099, 'exit': 0}
+{'package': 'stage1/cohere/values', 'build': True, 'seconds': 19.175, 'exit': 0}
+{'package': 'stage1/cohere/yaml', 'build': True, 'seconds': 18.533, 'exit': 0}
+{'package': 'stage1/typescript/parser', 'build': True, 'seconds': 17.362, 'exit': 0}
+{'package': 'stage1/typescript/scanner', 'build': True, 'seconds': 16.599, 'exit': 0}
+{'package': 'stage3/census/tool', 'build': True, 'seconds': 3.791, 'exit': 0, 'no_tests': True}
+{'package': 'stage3/drivers/parser/probe', 'build': True, 'seconds': 4.06, 'exit': 0, 'no_tests': True}
+{'package': 'stage3/fixtures', 'build': True, 'seconds': 12.906, 'exit': 0}
+{'package': 'cmd/adamic', 'test': 'TestBuildTargetParsing', 'seconds': 0.035, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic', 'test': 'TestBuildWASISanitizeTargetAfterSource', 'seconds': 0.174, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic', 'test': 'TestBuildWASISanitizeTargetBeforeSource', 'seconds': 0.201, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/compilerinputs', 'test': 'TestLoweringIsWhatTheCompilerLinks', 'seconds': 1.37, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/compilerinputs', 'test': 'TestCheckKeyTellsTheCompilerFromTscWhole', 'seconds': 0.08, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/compilerinputs', 'test': 'TestLoweringIsACopy', 'seconds': 0.022, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-meter', 'test': 'TestAdaptOptionalPropertiesPreservesRuntimeAndDisk', 'seconds': 1.035, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-meter', 'test': 'TestAdaptRewritesTypeOnlyImportInMemory', 'seconds': 0.493, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-meter', 'test': 'TestFixtureCorpusCountsEveryDiagnosticKind', 'seconds': 0.302, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'test': 'TestProduct_Adamic', 'seconds': 3.611, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'test': 'TestAdaptCallbackParam', 'seconds': 0.052, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'test': 'TestAdaptClassKeepsVars', 'seconds': 0.019, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'test': 'TestAdaptPositiveExponentVarToLet', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/flow', 'test': 'TestArrayHolesAliasingIsFresh', 'seconds': 0.047, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/flow', 'test': 'TestArrayHolesOperandMutations', 'seconds': 0.034, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/flow', 'test': 'TestArrayHolesThrowAndIdentityRead', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fresh', 'test': 'TestArrayHolesBackEdgeRemainsUnproven', 'seconds': 0.056, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fresh', 'test': 'TestArrayHolesOperandsStillJudgeCycles', 'seconds': 0.017, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fresh', 'test': 'TestArrayHolesResultsAreFresh', 'seconds': 0.046, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cloud/reports/decode-ascii', 'test': 'TestRuntimeFeaturesMatchNode', 'seconds': 8.915, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'bridge/tsgo', 'test': 'TestProduct_Oracle', 'seconds': 9.622, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'test': 'TestProduct_CallTargetExports', 'seconds': 4.368, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'test': 'TestAProgramIsTheSameBytesEveryTimeGobWritesIt', 'seconds': 0.047, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'test': 'TestASortedMapIsNilWhereAPlainMapIs', 'seconds': 0.037, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'test': 'TestArgumentLayouts', 'seconds': 0.046, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'test': 'TestProduct_LowerAgreementNative', 'seconds': 4.002, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'test': 'TestClassFeaturesThrowingAccessorSpread', 'seconds': 0.458, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'test': 'TestRegExpEscapedSlashSourceAgreesWithNode', 'seconds': 0.839, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'test': 'TestRegExpSlashClassSourceAgreesWithNode', 'seconds': 0.596, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'test': 'TestProduct_Adamic', 'seconds': 3.356, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'test': 'TestBytesSharedRejects63Bytes', 'seconds': 0.045, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'test': 'TestExactSignatureRejectsSuffix', 'seconds': 0.02, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'test': 'TestExecuteCPUHelper', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestProduct_Adamic', 'seconds': 4.089, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestProduct_SplitTSGoSource', 'seconds': 7.807, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestProduct_DecodeASCIINative', 'seconds': 6.208, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestProduct_NativeRuntimesCounted0', 'seconds': 10.64, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestProduct_NormalizationProbe', 'seconds': 3.188, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestConstantPortabilityClang', 'seconds': 0.076, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestProduct_NativeRuntimesCounted1', 'seconds': 9.493, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestLongUnicodePortabilityClang', 'seconds': 8.988, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestLongUnicodeLiteralByteCoverage', 'seconds': 0.134, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestCallTargetThrowAgreesWithNode', 'seconds': 6.803, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestDirectClosureCallAgreesWithNode', 'seconds': 16.547, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestInputAgreesWithNode', 'seconds': 16.556, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestProduct_CSSCompositionGoOracle', 'seconds': 43.973, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'bridge/tsgo', 'test': 'TestProduct_ApiDriver', 'seconds': 80.21, 'exit': 1, 'grain': False, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestProduct_CSSNumbersGoOracle', 'seconds': 10.206, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestProduct_CSSNumbersPortLowered', 'seconds': 1.796, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestProduct_CSSCompositionLowered', 'seconds': 7.807, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestProduct_CSSNumbersFastNative', 'seconds': 2.19, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestCSSNumbersAnswerProductsRekey', 'seconds': 0.519, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestCSSNumbersGoOracleKeysTheCompilersEnvGivesGo', 'seconds': 0.079, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestCSSNumbersGoOracleRekeyCompiler', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestProduct_CSSStringsGoOracle', 'seconds': 6.198, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestProduct_CSSStringsPortLowered', 'seconds': 0.468, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestProduct_CSSParserGoOracle', 'seconds': 4.248, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestProduct_CSSStringsFastNative', 'seconds': 1.585, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestCSSStringsAnswerProductsRekey', 'seconds': 0.264, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestMultiPushGap', 'seconds': 0.115, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestProduct_AcceptanceCatchLowered', 'seconds': 6.315, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestProduct_FormatfilesGoOracle', 'seconds': 3.95, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestProduct_FormatfilesNative', 'seconds': 3.356, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestProduct_AcceptanceClassLowered', 'seconds': 7.051, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestProduct_FormatfilesNativeAdamicFilesDeclined', 'seconds': 3.387, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestExtAgreesWithGo', 'seconds': 0.219, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestProduct_GitignoreCorrect', 'seconds': 2.756, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestProduct_AcceptanceOracle', 'seconds': 8.326, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestProduct_GitignoreOracle', 'seconds': 4.496, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 4.109, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestPathAnswersAsGosPathPackage', 'seconds': 3.96, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestPortAnswerPreparedUnitPlan', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestCSSPrinterAgreesWithGo_000', 'seconds': 28.563, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestCSSPrinterAgreesWithGo_001', 'seconds': 3.668, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestCSSPrinterAgreesWithGo_002', 'seconds': 4.516, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestProduct_JSONGoOracle', 'seconds': 10.118, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestProduct_JSONLoweredPort', 'seconds': 1.119, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql', 'test': 'TestProduct_GraphQLGoOracle', 'seconds': 5.917, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestProduct_JSONUpstreamOracle', 'seconds': 10.235, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestAcceptanceDiagnosticControl', 'seconds': 35.468, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestPortMatchesGoCohereClassOrder_000', 'seconds': 35.886, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestAcceptanceDiagnostics', 'seconds': 30.948, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestAcceptanceGrammar', 'seconds': 2.803, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestProduct_GraphQLPrinterGoOracle', 'seconds': 7.466, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql', 'test': 'TestThePortParsesAsGoCohereDoes', 'seconds': 54.54, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/graphql', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.677, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestProduct_GraphQLPrinterInTreeLowered', 'seconds': 3.404, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestProduct_GraphQLPrinterLowered', 'seconds': 2.697, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestPrinterAsGoCohereWrappers', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers', 'test': 'TestProduct_HelperNative', 'seconds': 2.993, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestPortMatchesGoCohereClassOrder_001', 'seconds': 22.91, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestPrinterAsGoCohere_000', 'seconds': 22.456, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestPrinterAsGoCohere_001', 'seconds': 12.486, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestPortMatchesGoCohereClassOrder_002', 'seconds': 45.348, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers', 'test': 'TestProduct_HelperOracle', 'seconds': 90.114, 'exit': 2, 'grain': False, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestProduct_CommentsNative', 'seconds': 42.992, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint', 'test': 'TestProduct_CompilerAgreementLowered', 'seconds': 65.841, 'exit': 0, 'grain': False, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestProduct_RegexOracle', 'seconds': 3.162, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestProduct_RegexInventory', 'seconds': 3.524, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestProduct_RegexOptionDialects', 'seconds': 4.191, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestDynamicPatternGap', 'seconds': 0.432, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestProduct_CommentsOracle', 'seconds': 21.205, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestFixedPatterns', 'seconds': 10.707, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestInventoryMatchesPinnedSource', 'seconds': 1.273, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-underscore-dangle', 'test': 'TestCompileProfiles', 'seconds': 38.585, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestCommentMutants_000', 'seconds': 16.158, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-negation', 'test': 'TestCompileProfiles', 'seconds': 21.835, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestCommentMutants_001', 'seconds': 15.265, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-optional-chaining', 'test': 'TestCompileProfiles', 'seconds': 21.895, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestProduct_GrainMarkdown_decode_lowered', 'seconds': 1.221, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestProduct_GrainMarkdown_mdast_lowered', 'seconds': 1.68, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestProduct_GrainMarkdown_path_lowered', 'seconds': 1.166, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestArrayGrowthWitness', 'seconds': 1.18, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestFrontMatterStage', 'seconds': 6.465, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestGeneratedLayoutSelection', 'seconds': 0.008, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestCommentMutants_002', 'seconds': 16.049, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/mediaquery', 'test': 'TestProduct_MediaQueryGoOracle', 'seconds': 5.044, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/typescript-no-this-alias', 'test': 'TestCompileProfiles', 'seconds': 22.457, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestProduct_MarkdownInlineFenceLowered', 'seconds': 10.084, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestProduct_MarkdownInlineOriginalLowered', 'seconds': 2.991, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestProduct_SelectorGoAnswers', 'seconds': 9.93, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestProduct_MarkdownInlineParityLowered', 'seconds': 2.898, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestProduct_SelectorGoOracle', 'seconds': 1.992, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestPostcssSelectorParserParsesAsGoCohereDoes', 'seconds': 0.008, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestDelimiterExpressionMatchesNode', 'seconds': 1.39, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestMarkdownInline_0000', 'seconds': 0.032, 'exit': 1, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestMarkdownInline_0001', 'seconds': 0.033, 'exit': 1, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/mediaquery', 'test': 'TestThePortParsesAsGoCohereDoes', 'seconds': 16.585, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/static_single_assignment', 'test': 'TestProduct_StaticSingleAssignmentGoOracle', 'seconds': 4.417, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/mediaquery', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 2.607, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/suppression', 'test': 'TestProduct_SuppressionGoOracle', 'seconds': 3.861, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestThePortParsesAsGoCohereDoes', 'seconds': 10.251, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestCorpusKeepsEveryParseableFile', 'seconds': 0.009, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestProduct_TSPrinterDocumentOracle', 'seconds': 4.346, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestProduct_TSPrinterExpressionsLowered', 'seconds': 7.424, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestProduct_TSPrinterGoOracle', 'seconds': 11.148, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestClassInterfaceMethodGap', 'seconds': 1.279, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestClosedOptionalBooleanFunctionGap', 'seconds': 1.267, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestClosedPrefixUpdateValueGap', 'seconds': 1.224, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/suppression', 'test': 'TestThePortParsesAsGoCohereDoes', 'seconds': 63.499, 'exit': 0, 'grain': False, 'skip': False}
+{'package': 'stage1/cohere/suppression', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 3.645, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/values', 'test': 'TestProduct_ValuesGoOracle', 'seconds': 11.301, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/static_single_assignment', 'test': 'TestThePortMakesWhatGoCohereMakes', 'seconds': 86.477, 'exit': 0, 'grain': False, 'skip': False}
+{'package': 'stage1/cohere/static_single_assignment', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 0.331, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestProduct_YAMLCSTLowered', 'seconds': 1.074, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestProduct_YAMLClosedGapsLowered', 'seconds': 0.782, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestProduct_YAMLComposeLowered', 'seconds': 2.481, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestCSTMatchesGo', 'seconds': 17.371, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/typeaware', 'test': 'TestProduct_checker_mutant_declaration_source', 'seconds': 90.124, 'exit': 2, 'grain': False, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestProduct_ScannerOracle', 'seconds': 9.325, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestProduct_ScannerSourceIdentifier', 'seconds': 4.343, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestProduct_ScannerDecimalSeparator', 'seconds': 4.441, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/values', 'test': 'TestThePortParsesAsGoCohereDoes', 'seconds': 64.268, 'exit': 0, 'grain': False, 'skip': True}
+{'package': 'stage1/cohere/values', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.974, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestScannerAgreesWithTypescriptGo_000', 'seconds': 10.12, 'exit': 1, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestFormatterMatchesGo_000', 'seconds': 44.747, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/typescript/parser', 'test': 'TestProduct_ExpressionsOracle', 'seconds': 5.363, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestProduct_ExpressionsSource001', 'seconds': 0.169, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestProduct_ExpressionsSource002', 'seconds': 0.165, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestClassMethodInterfaceGap', 'seconds': 0.114, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestClosedConditionalEmptyArrayGap', 'seconds': 1.227, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestFormatterMatchesGo_001', 'seconds': 4.229, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/typescript/scanner', 'test': 'TestScannerAgreesWithTypescriptGo_001', 'seconds': 6.933, 'exit': 1, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestClosedOptionalFunctionValueGap', 'seconds': 1.534, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestScannerAgreesWithTypescriptGo_002', 'seconds': 11.03, 'exit': 1, 'grain': True, 'skip': False}
+{'package': 'stage3/fixtures', 'test': 'TestProduct_FixtureOracleHook', 'seconds': 12.319, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage3/fixtures', 'test': 'TestExecuteGivesChildrenTheToolchainsCompiler', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage3/fixtures', 'test': 'TestFixtureDirectoriesHaveTopLevelTests', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}

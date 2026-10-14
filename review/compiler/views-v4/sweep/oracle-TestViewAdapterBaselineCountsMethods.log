@@ -1,0 +1,12 @@
+=== RUN   TestViewAdapterBaselineCountsMethods
+=== PAUSE TestViewAdapterBaselineCountsMethods
+=== CONT  TestViewAdapterBaselineCountsMethods
+    view_adapter_runtime_counts_test.go:23: gate cache native miss
+    view_adapter_runtime_counts_test.go:23: before | internal/oracle/testdata/method_closures.a | 20 | 20 | 14 | 30 | 8 | 0 |
+        after  | internal/oracle/testdata/method_closures.a | 20 | 20 | 14 | 30 | 8 | 0 |
+--- PASS: TestViewAdapterBaselineCountsMethods (0.18s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.192s

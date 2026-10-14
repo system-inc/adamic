@@ -1,0 +1,6 @@
+=== RUN   TestProduct_ApiDriver
+=== PAUSE TestProduct_ApiDriver
+=== CONT  TestProduct_ApiDriver
+    products_test.go:330: build bridge-test-tsgo-asan.a: tsgo-asan.a: signal: killed
+--- FAIL: TestProduct_ApiDriver (80.14s)
+FAIL

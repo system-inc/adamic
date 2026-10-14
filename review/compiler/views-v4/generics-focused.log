@@ -1,0 +1,47 @@
+=== RUN   TestV4GenericProducerInstantiation
+=== PAUSE TestV4GenericProducerInstantiation
+=== RUN   TestV4GenericErasedReadRefusal
+=== PAUSE TestV4GenericErasedReadRefusal
+=== RUN   TestV4GenericViewCallInstantiation
+=== PAUSE TestV4GenericViewCallInstantiation
+=== CONT  TestV4GenericProducerInstantiation
+=== CONT  TestV4GenericViewCallInstantiation
+=== CONT  TestV4GenericErasedReadRefusal
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:88: gate cache node miss
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:21: gate cache node miss
+=== NAME  TestV4GenericErasedReadRefusal
+    checked_views_v4_generics_test.go:57: gate cache node miss
+    checked_views_v4_generics_test.go:69: erased relation refused: /tmp/adamic-gate/TestV4GenericErasedReadRefusal321496247/001/erased.ts:4:73: Adamic 0.1 refuses an escaping callable read of view.run with an unsupported value contract; prove the callable relation or use a callable with runtime-checkable parameter and result types
+--- PASS: TestV4GenericErasedReadRefusal (0.29s)
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:90: gate cache node miss
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:23: gate cache node miss
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:94: native view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation1916695667/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: sanitized view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation1916695667/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: javascript view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation1916695667/001/identity.ts:4:69 result expected view "ok", producer string
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:27: javascript actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:114
+    checked_views_v4_generics_test.go:27: native actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:114
+    checked_views_v4_generics_test.go:27: sanitized actual instantiation checked: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4GenericProducerInstantiation748321703/001/identity.ts:5:114
+=== NAME  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:106: gate cache node miss
+    checked_views_v4_generics_test.go:106: guard mutant admitted in native: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in sanitized: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in javascript: exit 0 output "producer\nbad\n"
+--- PASS: TestV4GenericViewCallInstantiation (1.01s)
+=== NAME  TestV4GenericProducerInstantiation
+    checked_views_v4_generics_test.go:44: gate cache node miss
+    checked_views_v4_generics_test.go:44: guard mutant admitted in javascript: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:44: guard mutant admitted in native: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:44: guard mutant admitted in sanitized: exit 0 output "read\nproducer\nok\n"
+    checked_views_v4_generics_test.go:45: instantiation domain omission caught in both backends and sanitized native
+--- PASS: TestV4GenericProducerInstantiation (1.08s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.095s

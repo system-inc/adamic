@@ -1,0 +1,6 @@
+=== RUN   TestProduct_HelperNative
+=== PAUSE TestProduct_HelperNative
+=== CONT  TestProduct_HelperNative
+    helper_mutants_test.go:72: build helper-native 276bceb09c02 miss 2.93
+--- PASS: TestProduct_HelperNative (2.94s)
+PASS

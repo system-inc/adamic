@@ -1,0 +1,8 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly 'ok'[]; }
+function items(node: Base): Items { return node as Items; }
+const raw = {kind: 'items' as const, values: ['ok']};
+const values = items(raw).values;
+console.log(`${values[0] ?? 'none'}`);
+raw.values[0] = 'changed';
+console.log(`${values[0] ?? 'none'}`);

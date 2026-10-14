@@ -1,0 +1,52 @@
+=== RUN   TestCheckedViewObjects
+=== PAUSE TestCheckedViewObjects
+=== CONT  TestCheckedViewObjects
+=== RUN   TestCheckedViewObjects/objects-good
+=== PAUSE TestCheckedViewObjects/objects-good
+=== RUN   TestCheckedViewObjects/objects-untagged-good
+=== PAUSE TestCheckedViewObjects/objects-untagged-good
+=== RUN   TestCheckedViewObjects/objects-untagged-wrong
+=== PAUSE TestCheckedViewObjects/objects-untagged-wrong
+=== RUN   TestCheckedViewObjects/objects-wrong-nested
+=== PAUSE TestCheckedViewObjects/objects-wrong-nested
+=== RUN   TestCheckedViewObjects/objects-missing-nested
+=== PAUSE TestCheckedViewObjects/objects-missing-nested
+=== RUN   TestCheckedViewObjects/objects-uninitialized-nested
+=== PAUSE TestCheckedViewObjects/objects-uninitialized-nested
+=== CONT  TestCheckedViewObjects/objects-good
+=== CONT  TestCheckedViewObjects/objects-wrong-nested
+=== CONT  TestCheckedViewObjects/objects-uninitialized-nested
+=== CONT  TestCheckedViewObjects/objects-untagged-wrong
+=== CONT  TestCheckedViewObjects/objects-missing-nested
+=== NAME  TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:24: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-untagged-wrong
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-missing-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== CONT  TestCheckedViewObjects/objects-untagged-good
+=== NAME  TestCheckedViewObjects/objects-uninitialized-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:24: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:41: gate cache node miss
+    checked_views_objects_test.go:46: skip transitive view caught by pinned exit/message with valid C
+=== NAME  TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:32: gate cache node miss
+--- PASS: TestCheckedViewObjects (0.00s)
+    --- PASS: TestCheckedViewObjects/objects-missing-nested (1.50s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-wrong (1.54s)
+    --- PASS: TestCheckedViewObjects/objects-uninitialized-nested (1.66s)
+    --- PASS: TestCheckedViewObjects/objects-good (2.08s)
+    --- PASS: TestCheckedViewObjects/objects-wrong-nested (2.18s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-good (2.00s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.536s

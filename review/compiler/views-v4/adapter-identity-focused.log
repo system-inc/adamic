@@ -1,0 +1,420 @@
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestViewCallableAggregateReturnedDemand
+=== PAUSE TestViewCallableAggregateReturnedDemand
+=== RUN   TestViewCallableShapeContract
+=== PAUSE TestViewCallableShapeContract
+=== RUN   TestPrepareViewCallableRead
+=== PAUSE TestPrepareViewCallableRead
+=== RUN   TestViewCallableSignature
+=== PAUSE TestViewCallableSignature
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestPrepareViewCallableRead
+=== CONT  TestViewCallableSignature
+--- PASS: TestViewCallableSignature (0.00s)
+=== CONT  TestViewCallableAggregateReturnedDemand
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestViewCallableAggregateReturnedDemand/ordinary-disjoint
+=== RUN   TestViewCallableAggregateReturnedDemand/unknown-callable-owner
+--- PASS: TestViewCallableAggregateReturnedDemand (0.01s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/ordinary-disjoint (0.00s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/unknown-callable-owner (0.00s)
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+=== CONT  TestViewCallableShapeContract
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined;
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestViewCallableShapeContract/type_Target_=_()_=>_string;
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.25s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestPrepareViewCallableRead/type_Target_=_()_=>_string;
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number;
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.24s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.36s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.17s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.20s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.10s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.21s)
+=== RUN   TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result;
+=== RUN   TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_};
+--- PASS: TestPrepareViewCallableRead (0.97s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number; (0.23s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined; (0.19s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_()_=>_string; (0.15s)
+    --- PASS: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.16s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T; (0.14s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number; (0.11s)
+--- PASS: TestViewCallableShapeContract (0.97s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.22s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.29s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number; (0.17s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T; (0.15s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number; (0.07s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}; (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.016s
+=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== PAUSE TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestViewAdapterCacheIntern
+=== PAUSE TestViewAdapterCacheIntern
+=== RUN   TestViewAdapterCacheBounded
+=== PAUSE TestViewAdapterCacheBounded
+=== RUN   TestViewAdapterCacheRecheck
+=== PAUSE TestViewAdapterCacheRecheck
+=== RUN   TestViewAdapterCacheDying
+=== PAUSE TestViewAdapterCacheDying
+=== RUN   TestViewAdapterCacheOrder
+=== PAUSE TestViewAdapterCacheOrder
+=== RUN   TestViewAdapterCacheCanonical
+=== PAUSE TestViewAdapterCacheCanonical
+=== RUN   TestViewAdapterCacheWeakLeakRoot
+=== PAUSE TestViewAdapterCacheWeakLeakRoot
+=== RUN   TestViewAdapterRuntimeStaticsPending
+=== PAUSE TestViewAdapterRuntimeStaticsPending
+=== RUN   TestViewAdapterPoolTSanPending
+=== PAUSE TestViewAdapterPoolTSanPending
+=== RUN   TestViewAdapterRegionAdoptionPending
+=== PAUSE TestViewAdapterRegionAdoptionPending
+=== RUN   TestViewAdapterProgramUnderlyingPending
+=== PAUSE TestViewAdapterProgramUnderlyingPending
+=== RUN   TestViewAdapterCacheIdentity
+=== PAUSE TestViewAdapterCacheIdentity
+=== RUN   TestViewAdapterCacheBytes
+=== PAUSE TestViewAdapterCacheBytes
+=== RUN   TestViewAdapterCacheMany
+=== PAUSE TestViewAdapterCacheMany
+=== RUN   TestViewCallableBoxingUnknownProducer
+=== PAUSE TestViewCallableBoxingUnknownProducer
+=== RUN   TestViewCallableShapeNative
+=== PAUSE TestViewCallableShapeNative
+=== RUN   TestViewCallableProducerCertificateNative
+=== PAUSE TestViewCallableProducerCertificateNative
+=== CONT  TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== CONT  TestViewAdapterRuntimeStaticsPending
+    view_adapter_runtime_test.go:230: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterRuntimeStaticsPending (0.00s)
+=== CONT  TestViewAdapterCacheMany
+=== CONT  TestViewCallableProducerCertificateNative
+=== RUN   TestViewCallableProducerCertificateNative/valid
+=== CONT  TestViewCallableShapeNative
+=== RUN   TestViewCallableShapeNative/valid
+=== CONT  TestViewCallableBoxingUnknownProducer
+--- PASS: TestClosureConventionRuntimeFeaturesIgnoreLiterals (0.09s)
+=== CONT  TestViewAdapterCacheBytes
+--- PASS: TestViewCallableBoxingUnknownProducer (0.66s)
+=== CONT  TestViewAdapterCacheIdentity
+=== NAME  TestViewAdapterCacheBytes
+    view_adapter_runtime_test.go:266: bytes sanitize=false clean: adamic: counts: allocations 1000 frees 1000 retains 0 releases 1000 peak 1000 regions 0
+=== RUN   TestViewCallableProducerCertificateNative/wrong-arity
+=== NAME  TestViewAdapterCacheMany
+    view_adapter_runtime_test.go:271: many sanitize=false clean: adamic: counts: allocations 10240 frees 10240 retains 8192 releases 12288 peak 8192 regions 0
+=== RUN   TestViewCallableShapeNative/wrong-arity
+=== NAME  TestViewAdapterCacheIdentity
+    view_adapter_runtime_test.go:256: identity sanitize=false clean: adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0
+=== NAME  TestViewAdapterCacheBytes
+    view_adapter_runtime_test.go:266: bytes sanitize=true clean: adamic: counts: allocations 1000 frees 1000 retains 0 releases 1000 peak 1000 regions 0
+--- PASS: TestViewAdapterCacheBytes (1.53s)
+=== CONT  TestViewAdapterProgramUnderlyingPending
+    view_adapter_runtime_test.go:251: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterProgramUnderlyingPending (0.00s)
+=== CONT  TestViewAdapterRegionAdoptionPending
+    view_adapter_runtime_test.go:244: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterRegionAdoptionPending (0.00s)
+=== CONT  TestViewAdapterPoolTSanPending
+    view_adapter_runtime_test.go:237: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterPoolTSanPending (0.00s)
+=== CONT  TestViewAdapterCacheRecheck
+=== RUN   TestViewCallableProducerCertificateNative/wrong-result
+=== RUN   TestViewCallableShapeNative/wrong-parameter
+=== NAME  TestViewAdapterCacheMany
+    view_adapter_runtime_test.go:271: many sanitize=true clean: adamic: counts: allocations 10240 frees 10240 retains 8192 releases 12288 peak 8192 regions 0
+--- PASS: TestViewAdapterCacheMany (1.97s)
+=== CONT  TestViewAdapterCacheWeakLeakRoot
+=== NAME  TestViewAdapterCacheRecheck
+    view_adapter_runtime_test.go:169: recheck sanitize=false clean: adamic: counts: allocations 3 frees 3 retains 3 releases 4 peak 3 regions 0
+=== RUN   TestViewCallableProducerCertificateNative/optional-absent
+=== RUN   TestViewCallableShapeNative/wrong-result
+=== NAME  TestViewAdapterCacheIdentity
+    view_adapter_runtime_test.go:256: identity sanitize=true clean: adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0
+=== NAME  TestViewAdapterCacheRecheck
+    view_adapter_runtime_test.go:169: recheck sanitize=true clean: adamic: counts: allocations 3 frees 3 retains 3 releases 4 peak 3 regions 0
+=== RUN   TestViewCallableProducerCertificateNative/unrecorded
+=== RUN   TestViewCallableShapeNative/unknown-result
+=== NAME  TestViewAdapterCacheWeakLeakRoot
+    view_adapter_runtime_test.go:217: intentional abandoned adapter detected:
+        adamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0
+
+        =================================================================
+        ==38374==ERROR: LeakSanitizer: detected memory leaks
+
+        Direct leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x55ff4c0ea1e4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55ff4c12f1c1 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot3648857667/001/heap.c:196:10
+
+        Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x55ff4c0ea1e4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55ff4c12f1c1 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot3648857667/001/heap.c:196:10
+
+        Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+            #0 0x55ff4c0ea1e4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55ff4c12e522 in adamic_view_adapter_intern /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot3648857667/001/closure.c:235:16
+
+        SUMMARY: AddressSanitizer: 152 byte(s) leaked in 3 allocation(s).
+=== RUN   TestViewCallableShapeNative/unknown-parameter
+=== NAME  TestViewAdapterCacheIdentity
+    view_adapter_runtime_test.go:261: identity-overread caught by ASan: =================================================================
+        ==38405==ERROR: AddressSanitizer: global-buffer-overflow on address 0x556ee9e34790 at pc 0x556ee9df6310 bp 0x7ffdc2b167d0 sp 0x7ffdc2b167c8
+        READ of size 8 at 0x556ee9e34790 thread T0
+            #0 0x556ee9df630f in adamic_view_adapter_underlying /tmp/adamic-gate/TestViewAdapterCacheIdentity127649224/003/closure.c:214:16
+            #1 0x556ee9df8f1c in main /workspace/adamic/internal/native/testdata/view-adapters/identity.c:9:13
+            #2 0x7f0f713eeca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x7f0f713eed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x556ee9d1b3b0 in _start (/tmp/adamic-gate/TestViewAdapterCacheIdentity127649224/003/fixture+0x2e3b0)
+
+        0x556ee9e34790 is located 0 bytes after global variable 'adamic_library_identity.identities' defined in '/workspace/adamic/internal/native/runtime/library_language.c:77' (0x556ee9e34720) of size 112
+        SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/adamic-gate/TestViewAdapterCacheIdentity127649224/003/closure.c:214:16 in adamic_view_adapter_underlying
+        Shadow bytes around the buggy address:
+          0x556ee9e34500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x556ee9e34580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x556ee9e34600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x556ee9e34680: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x556ee9e34700: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        =>0x556ee9e34780: 00 00[f9]f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+          0x556ee9e34800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x556ee9e34880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9
+          0x556ee9e34900: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+          0x556ee9e34980: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+          0x556ee9e34a00: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==38405==ABORTING
+--- PASS: TestViewAdapterCacheIdentity (2.51s)
+=== CONT  TestViewAdapterCacheCanonical
+--- PASS: TestViewCallableProducerCertificateNative (3.17s)
+    --- PASS: TestViewCallableProducerCertificateNative/valid (1.06s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-arity (0.59s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-result (0.58s)
+    --- PASS: TestViewCallableProducerCertificateNative/optional-absent (0.42s)
+    --- PASS: TestViewCallableProducerCertificateNative/unrecorded (0.52s)
+=== CONT  TestViewAdapterCacheOrder
+=== NAME  TestViewAdapterCacheRecheck
+    view_adapter_runtime_test.go:174: skip-recheck caught: factory winner was not rechecked
+        adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+=== CONT  TestViewAdapterCacheDying
+--- PASS: TestViewAdapterCacheRecheck (1.84s)
+=== RUN   TestViewCallableShapeNative/unknown-signature
+=== NAME  TestViewAdapterCacheWeakLeakRoot
+    view_adapter_runtime_test.go:222: strong-leak-root mutant caught: LeakSanitizer lost the required leak report
+--- PASS: TestViewAdapterCacheWeakLeakRoot (1.64s)
+=== CONT  TestViewAdapterCacheIntern
+=== NAME  TestViewAdapterCacheOrder
+    view_adapter_runtime_test.go:189: order sanitize=false clean: adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+=== NAME  TestViewAdapterCacheCanonical
+    view_adapter_runtime_test.go:199: canonical sanitize=false clean: adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+=== NAME  TestViewAdapterCacheDying
+    view_adapter_runtime_test.go:179: dying sanitize=false clean: adamic: counts: allocations 20001 frees 20001 retains 20000 releases 20001 peak 3 regions 0
+=== RUN   TestViewCallableShapeNative/number
+=== NAME  TestViewAdapterCacheIntern
+    view_adapter_runtime_test.go:152: intern sanitize=false clean: adamic: counts: allocations 4 frees 4 retains 5 releases 6 peak 3 regions 0
+=== NAME  TestViewAdapterCacheCanonical
+    view_adapter_runtime_test.go:199: canonical sanitize=true clean: adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+=== NAME  TestViewAdapterCacheOrder
+    view_adapter_runtime_test.go:189: order sanitize=true clean: adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+=== RUN   TestViewCallableShapeNative/optional-absent
+=== NAME  TestViewAdapterCacheIntern
+    view_adapter_runtime_test.go:152: intern sanitize=true clean: adamic: counts: allocations 4 frees 4 retains 5 releases 6 peak 3 regions 0
+--- PASS: TestViewAdapterCacheIntern (1.21s)
+=== CONT  TestViewAdapterCacheBounded
+=== NAME  TestViewAdapterCacheDying
+    view_adapter_runtime_test.go:179: dying sanitize=true clean: adamic: counts: allocations 20001 frees 20001 retains 20000 releases 20001 peak 3 regions 0
+=== RUN   TestViewCallableShapeNative/required-absent
+=== NAME  TestViewAdapterCacheOrder
+    view_adapter_runtime_test.go:194: release-before-remove caught: remove/release order violated
+        adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+--- PASS: TestViewAdapterCacheOrder (1.98s)
+=== CONT  TestRuntimeReleasePaths
+=== NAME  TestViewAdapterCacheBounded
+    view_adapter_runtime_test.go:157: bounded sanitize=false clean: adamic: counts: allocations 2 frees 2 retains 100001 releases 100002 peak 2 regions 0
+--- PASS: TestViewCallableShapeNative (5.23s)
+    --- PASS: TestViewCallableShapeNative/valid (1.11s)
+    --- PASS: TestViewCallableShapeNative/wrong-arity (0.56s)
+    --- PASS: TestViewCallableShapeNative/wrong-parameter (0.63s)
+    --- PASS: TestViewCallableShapeNative/wrong-result (0.41s)
+    --- PASS: TestViewCallableShapeNative/unknown-result (0.40s)
+    --- PASS: TestViewCallableShapeNative/unknown-parameter (0.41s)
+    --- PASS: TestViewCallableShapeNative/unknown-signature (0.48s)
+    --- PASS: TestViewCallableShapeNative/number (0.44s)
+    --- PASS: TestViewCallableShapeNative/optional-absent (0.45s)
+    --- PASS: TestViewCallableShapeNative/required-absent (0.32s)
+--- PASS: TestRuntimeReleasePaths (0.40s)
+=== NAME  TestViewAdapterCacheDying
+    view_adapter_runtime_test.go:184: dying-retain caught by ASan in the actual count-zero destruction window:
+        =================================================================
+        ==38625==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c135b7e0098 at pc 0x55f2eaadbb34 bp 0x7fff8191aaf0 sp 0x7fff8191aae8
+        READ of size 8 at 0x7c135b7e0098 thread T0
+            #0 0x55f2eaadbb33 in adamic_closure_call /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/adamic.h:163:18
+            #1 0x55f2eaadbb33 in main /workspace/adamic/internal/native/testdata/view-adapters/dying.c:18:31
+            #2 0x7fb35c6edca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x7fb35c6edd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x55f2ea9f13e0 in _start (/tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/fixture+0x2e3e0)
+
+        0x7c135b7e0098 is located 24 bytes inside of 64-byte region [0x7c135b7e0080,0x7c135b7e00c0)
+        freed by thread T0 here:
+            #0 0x55f2eaa93f56 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+            #1 0x55f2eaada24e in deallocate /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/heap.c:213:3
+            #2 0x55f2eaada24e in free_one /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/heap.c:362:2
+            #3 0x55f2eaada24e in release_last /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/heap.c:375:3
+            #4 0x7fb35c6edca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+
+        previously allocated by thread T0 here:
+            #0 0x55f2eaa941f4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f2eaad91b1 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/heap.c:197:10
+
+        SUMMARY: AddressSanitizer: heap-use-after-free /tmp/adamic-gate/TestViewAdapterCacheDying4013918929/003/adamic.h:163:18 in adamic_closure_call
+        Shadow bytes around the buggy address:
+          0x7c135b7dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c135b7dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c135b7dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c135b7dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c135b7e0000: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
+        =>0x7c135b7e0080: fd fd fd[fd]fd fd fd fd fa fa fa fa fa fa fa fa
+          0x7c135b7e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c135b7e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c135b7e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c135b7e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c135b7e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==38625==ABORTING
+--- PASS: TestViewAdapterCacheDying (2.11s)
+=== NAME  TestViewAdapterCacheCanonical
+    view_adapter_runtime_test.go:208: canonical-factory omission caught by exit 0 instead of required exit 70
+--- PASS: TestViewAdapterCacheCanonical (2.48s)
+=== NAME  TestViewAdapterCacheBounded
+    view_adapter_runtime_test.go:157: bounded sanitize=true clean: adamic: counts: allocations 2 frees 2 retains 100001 releases 100002 peak 2 regions 0
+    view_adapter_runtime_test.go:163: skip-intern caught sanitize=false: bounded allocation exceeded: repeated reads rebuilt adapters
+        adamic: counts: allocations 100002 frees 100002 retains 100001 releases 100002 peak 3 regions 0
+    view_adapter_runtime_test.go:163: skip-intern caught sanitize=true: bounded allocation exceeded: repeated reads rebuilt adapters
+        adamic: counts: allocations 100002 frees 100002 retains 100001 releases 100002 peak 3 regions 0
+--- PASS: TestViewAdapterCacheBounded (1.71s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	6.549s
+=== RUN   TestViewCallableBoxingUnknownProducer
+=== PAUSE TestViewCallableBoxingUnknownProducer
+=== RUN   TestViewCallableShapeNode
+=== PAUSE TestViewCallableShapeNode
+=== RUN   TestViewCallableProducerCertificateNode
+=== PAUSE TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallablesNode
+=== PAUSE TestViewCallablesNode
+=== CONT  TestViewCallableBoxingUnknownProducer
+=== CONT  TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallableProducerCertificateNode/valid
+=== CONT  TestViewCallableShapeNode
+=== CONT  TestViewCallablesNode
+=== RUN   TestViewCallableShapeNode/valid
+=== RUN   TestViewCallablesNode/field
+=== RUN   TestViewCallableShapeNode/wrong-arity
+=== RUN   TestViewCallablesNode/method
+=== RUN   TestViewCallableProducerCertificateNode/wrong-arity
+=== RUN   TestViewCallableShapeNode/wrong-parameter
+=== RUN   TestViewCallablesNode/missing
+--- PASS: TestViewCallableBoxingUnknownProducer (0.24s)
+=== RUN   TestViewCallableShapeNode/wrong-result
+=== RUN   TestViewCallableProducerCertificateNode/wrong-result
+=== RUN   TestViewCallablesNode/uninitialized
+=== RUN   TestViewCallableProducerCertificateNode/optional-absent
+=== RUN   TestViewCallableShapeNode/unknown-result
+=== RUN   TestViewCallablesNode/kind
+=== RUN   TestViewCallableProducerCertificateNode/unrecorded
+=== RUN   TestViewCallableShapeNode/unknown-parameter
+=== RUN   TestViewCallableShapeNode/unknown-signature
+=== RUN   TestViewCallablesNode/once
+--- PASS: TestViewCallableProducerCertificateNode (0.59s)
+    --- PASS: TestViewCallableProducerCertificateNode/valid (0.08s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-arity (0.19s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-result (0.06s)
+    --- PASS: TestViewCallableProducerCertificateNode/optional-absent (0.12s)
+    --- PASS: TestViewCallableProducerCertificateNode/unrecorded (0.15s)
+=== RUN   TestViewCallableShapeNode/number
+=== RUN   TestViewCallableShapeNode/optional-absent
+=== RUN   TestViewCallableShapeNode/required-absent
+--- PASS: TestViewCallablesNode (0.89s)
+    --- PASS: TestViewCallablesNode/field (0.07s)
+    --- PASS: TestViewCallablesNode/method (0.09s)
+    --- PASS: TestViewCallablesNode/missing (0.16s)
+    --- PASS: TestViewCallablesNode/uninitialized (0.12s)
+    --- PASS: TestViewCallablesNode/kind (0.11s)
+    --- PASS: TestViewCallablesNode/once (0.11s)
+--- PASS: TestViewCallableShapeNode (1.12s)
+    --- PASS: TestViewCallableShapeNode/valid (0.05s)
+    --- PASS: TestViewCallableShapeNode/wrong-arity (0.09s)
+    --- PASS: TestViewCallableShapeNode/wrong-parameter (0.10s)
+    --- PASS: TestViewCallableShapeNode/wrong-result (0.11s)
+    --- PASS: TestViewCallableShapeNode/unknown-result (0.10s)
+    --- PASS: TestViewCallableShapeNode/unknown-parameter (0.08s)
+    --- PASS: TestViewCallableShapeNode/unknown-signature (0.10s)
+    --- PASS: TestViewCallableShapeNode/number (0.13s)
+    --- PASS: TestViewCallableShapeNode/optional-absent (0.08s)
+    --- PASS: TestViewCallableShapeNode/required-absent (0.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	1.125s

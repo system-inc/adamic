@@ -1,0 +1,237 @@
+=== RUN   TestCheckedViewArrays
+=== PAUSE TestCheckedViewArrays
+=== CONT  TestCheckedViewArrays
+=== RUN   TestCheckedViewArrays/array-holes-view
+=== PAUSE TestCheckedViewArrays/array-holes-view
+=== RUN   TestCheckedViewArrays/array-lazy
+=== PAUSE TestCheckedViewArrays/array-lazy
+=== RUN   TestCheckedViewArrays/array-iteration
+=== PAUSE TestCheckedViewArrays/array-iteration
+=== RUN   TestCheckedViewArrays/array-map
+=== PAUSE TestCheckedViewArrays/array-map
+=== RUN   TestCheckedViewArrays/array-pop
+=== PAUSE TestCheckedViewArrays/array-pop
+=== RUN   TestCheckedViewArrays/array-bounds
+=== PAUSE TestCheckedViewArrays/array-bounds
+=== RUN   TestCheckedViewArrays/array-second
+=== PAUSE TestCheckedViewArrays/array-second
+=== RUN   TestCheckedViewArrays/array-length-kind
+=== PAUSE TestCheckedViewArrays/array-length-kind
+=== RUN   TestCheckedViewArrays/array-missing
+=== PAUSE TestCheckedViewArrays/array-missing
+=== RUN   TestCheckedViewArrays/array-boolean
+=== PAUSE TestCheckedViewArrays/array-boolean
+=== RUN   TestCheckedViewArrays/array-iteration-bad
+=== PAUSE TestCheckedViewArrays/array-iteration-bad
+=== RUN   TestCheckedViewArrays/array-map-bad
+=== PAUSE TestCheckedViewArrays/array-map-bad
+=== RUN   TestCheckedViewArrays/array-alias
+=== PAUSE TestCheckedViewArrays/array-alias
+=== RUN   TestCheckedViewArrays/array-undefined
+=== PAUSE TestCheckedViewArrays/array-undefined
+=== RUN   TestCheckedViewArrays/array-string-literal
+=== PAUSE TestCheckedViewArrays/array-string-literal
+=== RUN   TestCheckedViewArrays/nullable-array-string
+=== PAUSE TestCheckedViewArrays/nullable-array-string
+=== RUN   TestCheckedViewArrays/nullable-array-missing
+=== PAUSE TestCheckedViewArrays/nullable-array-missing
+=== RUN   TestCheckedViewArrays/nullable-array-element
+=== PAUSE TestCheckedViewArrays/nullable-array-element
+=== RUN   TestCheckedViewArrays/generic-array-element
+=== PAUSE TestCheckedViewArrays/generic-array-element
+=== RUN   TestCheckedViewArrays/array-field
+=== PAUSE TestCheckedViewArrays/array-field
+=== RUN   TestCheckedViewArrays/array-element
+=== PAUSE TestCheckedViewArrays/array-element
+=== RUN   TestCheckedViewArrays/object-element
+=== PAUSE TestCheckedViewArrays/object-element
+=== RUN   TestCheckedViewArrays/non-array
+=== PAUSE TestCheckedViewArrays/non-array
+=== CONT  TestCheckedViewArrays/array-holes-view
+=== CONT  TestCheckedViewArrays/array-alias
+=== CONT  TestCheckedViewArrays/generic-array-element
+=== CONT  TestCheckedViewArrays/non-array
+=== CONT  TestCheckedViewArrays/object-element
+=== NAME  TestCheckedViewArrays/array-holes-view
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/non-array
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/generic-array-element
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-alias
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/object-element
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/non-array
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="undefined\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-alias
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="ok\nchanged\n" stderr=""
+=== NAME  TestCheckedViewArrays/generic-array-element
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="1\n" stderr=""
+=== NAME  TestCheckedViewArrays/object-element
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="ok\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-holes-view
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="-1\n7\n" stderr=""
+=== NAME  TestCheckedViewArrays/object-element
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/non-array
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-holes-view
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-element
+=== CONT  TestCheckedViewArrays/array-field
+=== NAME  TestCheckedViewArrays/array-alias
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/nullable-array-string
+=== NAME  TestCheckedViewArrays/generic-array-element
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-element
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-field
+    checked_views_arrays_test.go:36: gate cache node miss
+=== CONT  TestCheckedViewArrays/nullable-array-element
+=== CONT  TestCheckedViewArrays/nullable-array-missing
+=== NAME  TestCheckedViewArrays/nullable-array-string
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/nullable-array-element
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-field
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="2\n" stderr=""
+=== NAME  TestCheckedViewArrays/nullable-array-missing
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-element
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="7\n" stderr=""
+=== NAME  TestCheckedViewArrays/nullable-array-string
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="wrong\n" stderr=""
+=== NAME  TestCheckedViewArrays/nullable-array-missing
+    checked_views_arrays_test.go:37: Node: exit=70 stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading '0')\n"
+=== NAME  TestCheckedViewArrays/nullable-array-element
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="wrong\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-field
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-string-literal
+=== NAME  TestCheckedViewArrays/array-element
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-undefined
+=== NAME  TestCheckedViewArrays/array-string-literal
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-undefined
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/nullable-array-string
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/nullable-array-element
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/nullable-array-missing
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-second
+=== NAME  TestCheckedViewArrays/array-string-literal
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="bad\n" stderr=""
+=== CONT  TestCheckedViewArrays/array-map-bad
+=== NAME  TestCheckedViewArrays/array-undefined
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="-1\n" stderr=""
+=== CONT  TestCheckedViewArrays/array-iteration-bad
+=== NAME  TestCheckedViewArrays/array-second
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-map-bad
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-iteration-bad
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-second
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="second bad\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-iteration-bad
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="bad\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-map-bad
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="bad\n1\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-string-literal
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-boolean
+=== NAME  TestCheckedViewArrays/array-undefined
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-boolean
+    checked_views_arrays_test.go:36: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-missing
+=== NAME  TestCheckedViewArrays/array-second
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-iteration-bad
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-map-bad
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-missing
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-boolean
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="false\n" stderr=""
+=== CONT  TestCheckedViewArrays/array-length-kind
+=== CONT  TestCheckedViewArrays/array-map
+=== CONT  TestCheckedViewArrays/array-bounds
+=== NAME  TestCheckedViewArrays/array-missing
+    checked_views_arrays_test.go:37: Node: exit=70 stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'length')\n"
+=== NAME  TestCheckedViewArrays/array-map
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-length-kind
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-bounds
+    checked_views_arrays_test.go:36: gate cache node miss
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="-1:7\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-length-kind
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="read\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-map
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="8:9\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-boolean
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-pop
+=== NAME  TestCheckedViewArrays/array-missing
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-iteration
+=== NAME  TestCheckedViewArrays/array-pop
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-iteration
+    checked_views_arrays_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-bounds
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-pop
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="8:7\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-length-kind
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-lazy
+=== NAME  TestCheckedViewArrays/array-map
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-iteration
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="7\n8\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-lazy
+    checked_views_arrays_test.go:36: gate cache node miss
+    checked_views_arrays_test.go:37: Node: exit=0 stdout="2\n" stderr=""
+=== NAME  TestCheckedViewArrays/array-pop
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-iteration
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-lazy
+    checked_views_arrays_test.go:47: gate cache node miss
+--- PASS: TestCheckedViewArrays (0.00s)
+    --- PASS: TestCheckedViewArrays/object-element (0.84s)
+    --- PASS: TestCheckedViewArrays/non-array (0.88s)
+    --- PASS: TestCheckedViewArrays/array-holes-view (0.91s)
+    --- PASS: TestCheckedViewArrays/array-alias (0.98s)
+    --- PASS: TestCheckedViewArrays/generic-array-element (0.98s)
+    --- PASS: TestCheckedViewArrays/array-field (0.59s)
+    --- PASS: TestCheckedViewArrays/array-element (0.72s)
+    --- PASS: TestCheckedViewArrays/nullable-array-element (0.70s)
+    --- PASS: TestCheckedViewArrays/nullable-array-string (0.78s)
+    --- PASS: TestCheckedViewArrays/nullable-array-missing (0.76s)
+    --- PASS: TestCheckedViewArrays/array-string-literal (0.71s)
+    --- PASS: TestCheckedViewArrays/array-undefined (0.75s)
+    --- PASS: TestCheckedViewArrays/array-second (0.76s)
+    --- PASS: TestCheckedViewArrays/array-iteration-bad (0.71s)
+    --- PASS: TestCheckedViewArrays/array-map-bad (0.81s)
+    --- PASS: TestCheckedViewArrays/array-boolean (0.99s)
+    --- PASS: TestCheckedViewArrays/array-missing (0.97s)
+    --- PASS: TestCheckedViewArrays/array-bounds (1.05s)
+    --- PASS: TestCheckedViewArrays/array-length-kind (1.18s)
+    --- PASS: TestCheckedViewArrays/array-map (1.20s)
+    --- PASS: TestCheckedViewArrays/array-pop (0.80s)
+    --- PASS: TestCheckedViewArrays/array-iteration (0.72s)
+    --- PASS: TestCheckedViewArrays/array-lazy (0.59s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=46
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.157s

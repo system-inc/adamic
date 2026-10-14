@@ -1,0 +1,7 @@
+=== RUN   TestV4EscapeAdapterBlameRuntimeCallback
+=== PAUSE TestV4EscapeAdapterBlameRuntimeCallback
+=== CONT  TestV4EscapeAdapterBlameRuntimeCallback
+    checked_views_v4_blame_test.go:149: awaits compiler/views-v4: source call sites on runtime callback IR
+--- SKIP: TestV4EscapeAdapterBlameRuntimeCallback (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.011s

@@ -1,0 +1,6 @@
+=== RUN   TestProduct_AcceptanceCatchLowered
+=== PAUSE TestProduct_AcceptanceCatchLowered
+=== CONT  TestProduct_AcceptanceCatchLowered
+    acceptance_grain_test.go:139: build estree-acceptance-mutant-lowered-catch-initializer 03436f774ab1 miss 6.27
+--- PASS: TestProduct_AcceptanceCatchLowered (6.28s)
+PASS

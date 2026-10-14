@@ -1,0 +1,7 @@
+=== RUN   TestProduct_CompilerAgreementLowered
+=== PAUSE TestProduct_CompilerAgreementLowered
+=== CONT  TestProduct_CompilerAgreementLowered
+    compiler_stage1_split_test.go:200: build compiler-agreement-lowered bafa9aff51d4 miss 65.04
+    compiler_stage1_sanitized_groups_test.go:114: TestProduct_CompilerAgreementLowered: 65.667s cooked=true
+--- PASS: TestProduct_CompilerAgreementLowered (65.67s)
+PASS

@@ -1,0 +1,11 @@
+=== RUN   TestScannerAgreesWithTypescriptGo_001
+=== PAUSE TestScannerAgreesWithTypescriptGo_001
+=== CONT  TestScannerAgreesWithTypescriptGo_001
+    scanner_products_test.go:51: build scanner-go-oracle 1b93e837224d hit 1.34
+    scanner_products_test.go:51: build scanner-native e465d3cf0477 hit 0.04
+    scanner_products_test.go:338: corpus-files: upstream /workspace/scratch/loom-v4-2-typescript root src/compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8 count 77
+    scanner_products_test.go:338: corpus-files: repository /workspace/scratch/loom-v4-2-validation root stage1 pin f0ff59fe3f60068b85b057d0d69e79545598f968 count 478
+    scanner_products_test.go:338: 77 compiler files, 478 stage1 files, 18237 generated inputs
+    scanner_products_test.go:338: shard 001: 1170 cases, 0 mutants; setup 1.777s / own work 0.579s
+--- PASS: TestScannerAgreesWithTypescriptGo_001 (2.39s)
+PASS

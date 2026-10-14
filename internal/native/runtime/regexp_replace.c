@@ -111,7 +111,11 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 		}
 		if (rest != NULL)
 			packed[rest_slot].reference = rest;
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+		adamic_value returned = adamic_closure_receiver_call(callback, NULL, packed, argument_count, packed_count);
+#else
 		adamic_value returned = adamic_closure_call(callback, packed, argument_count);
+#endif
 		for (size_t j = 0; j < parameter_count; j++)
 			if (parameters[j] != 2)
 				adamic_release(packed[j].reference);

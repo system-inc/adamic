@@ -1,0 +1,7 @@
+=== RUN   TestAcceptanceGrammar
+    grain30_setup_products_test.go:26: build estree-go-oracle-v1 90da97790526 hit 0.51
+    acceptance_test.go:21: build estree-misc-sanitized-emitted 080d54747897 hit 0.03
+    acceptance_test.go:21: build lowered/sanitized/emitted products: 0.038572s
+    acceptance_test.go:27: 11 acceptance grammar cases, 8800 identical canonical bytes
+--- PASS: TestAcceptanceGrammar (2.78s)
+PASS

@@ -1,0 +1,6 @@
+=== RUN   TestProduct_JSONLoweredPort
+=== PAUSE TestProduct_JSONLoweredPort
+=== CONT  TestProduct_JSONLoweredPort
+    port_matches_prepared_split_test.go:210: build json_lowered_port_and_backend_sources 4310f1e6169c miss 1.08
+--- PASS: TestProduct_JSONLoweredPort (1.08s)
+PASS

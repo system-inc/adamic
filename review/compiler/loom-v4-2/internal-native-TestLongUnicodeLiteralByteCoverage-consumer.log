@@ -1,0 +1,6 @@
+=== RUN   TestLongUnicodeLiteralByteCoverage
+=== PAUSE TestLongUnicodeLiteralByteCoverage
+=== CONT  TestLongUnicodeLiteralByteCoverage
+    c_portability_oracle_test.go:51: long literals cover all 115 valid high UTF-8 bytes
+--- PASS: TestLongUnicodeLiteralByteCoverage (0.06s)
+PASS

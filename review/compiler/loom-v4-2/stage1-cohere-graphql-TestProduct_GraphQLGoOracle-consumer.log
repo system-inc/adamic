@@ -1,0 +1,6 @@
+=== RUN   TestProduct_GraphQLGoOracle
+=== PAUSE TestProduct_GraphQLGoOracle
+=== CONT  TestProduct_GraphQLGoOracle
+    graphql_test.go:527: build go_test_-c_cohere_./internal/format/graphql_graphql.test e0479a1d939b miss 3.72
+--- PASS: TestProduct_GraphQLGoOracle (5.86s)
+PASS
