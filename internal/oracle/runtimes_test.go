@@ -36,7 +36,8 @@ var runtimeSets = []runtimeSet{
 	{nil, "dedication/dedication.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION"}, "internal/oracle/testdata/array_from_undefined.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES"}, "internal/oracle/testdata/nested_minimal.a"},
-	{[]string{"ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/census_optional_values_system.a"},
+	// receiver.write reads this.prefix; receiver-independent System methods no longer need this set.
+	{[]string{"ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/host_void_method.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/argument_guard.a"},
 	{[]string{"ADAMIC_NODE_HOST"}, "internal/oracle/testdata/review/agree/fxspptb_oct8_nodehost_fs_fd_ownership.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES"}, "internal/oracle/testdata/closure_convention_nested.a"},

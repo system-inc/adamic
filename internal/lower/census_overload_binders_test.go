@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"github.com/system-inc/adamic/internal/ir"
+	"os"
 	"strings"
 	"testing"
 )
@@ -14,9 +16,6 @@ console.log(constrain('no'));`, "cannot satisfy implementation parameter"},
 		{"parameter", `function pair<T>(left: T, right: string): void;
 function pair<T, Extra>(left: T, right: T): void {}
 pair(42, 'no');`, "cannot be served by implementation parameter"},
-		{"result", `function wrong<T>(value: T): T;
-function wrong<T, Extra>(value: T): T | string { return 'wrong'; }
-const answer = wrong(42); console.log('ran');`, "cannot be served by implementation result"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -26,4 +25,35 @@ const answer = wrong(42); console.log('ran');`, "cannot be served by implementat
 			}
 		})
 	}
+}
+
+// The resolved numeric overload now has a checked entry, rather than a refusal.
+// The oracle pins exit 70 before the incompatible string can reach the caller.
+func TestCensusOverloadBinderResultHasCheckedEntry(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("../oracle/testdata/census_overload_binder_result_checked.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowerSource(t, string(source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, function := range program.Functions {
+		if !strings.Contains(function.Name, "wrong_overload_1_specialized_") {
+			continue
+		}
+		for _, statement := range function.Body {
+			branch, ok := statement.(ir.If)
+			if !ok {
+				continue
+			}
+			for _, guarded := range branch.Then {
+				if _, ok := guarded.(ir.Panic); ok {
+					return
+				}
+			}
+		}
+	}
+	t.Fatal("resolved result has no guarded refusal in its checked entry")
 }

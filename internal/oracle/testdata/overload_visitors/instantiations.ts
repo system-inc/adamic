@@ -1,0 +1,10 @@
+interface Base {readonly kind:number;}
+interface Named extends Base {readonly text:string;}
+interface Numbered extends Base {readonly value:number;}
+function pick(nodes:readonly Base[]):Base {return nodes[0]??{kind:0};}
+function visit<T extends Base>(nodes:readonly T[],visitor:(node:T)=>void):void;
+function visit(nodes:readonly Base[],visitor:(node:Base)=>void):void {visitor(pick(nodes));}
+const names:readonly Named[]=[{kind:1,text:'modifier'}];
+const numbers:readonly Numbered[]=[{kind:2,value:7}];
+visit(names,node=>console.log(node.text));
+visit(numbers,node=>console.log(`${node.value}`));

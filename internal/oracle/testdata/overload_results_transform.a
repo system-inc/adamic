@@ -1,0 +1,17 @@
+// Reduced overload boundary from compiler/transformers/es2017.ts.
+// The source is referenced through cohere/TypeScript/tsc/testdata/fixtures.
+interface FunctionNode { readonly kind: 'function'; readonly text: string; }
+interface ArrowNode { readonly kind: 'arrow'; readonly text: string; }
+interface Block { readonly kind: 'block'; readonly text: string; }
+interface ExpressionBody { readonly kind: 'expression'; readonly text: string; }
+type ConciseBody = Block | ExpressionBody;
+function transformAsyncFunctionBody(node: FunctionNode): Block;
+function transformAsyncFunctionBody(node: ArrowNode): ConciseBody;
+function transformAsyncFunctionBody(node: FunctionNode | ArrowNode): ConciseBody {
+ if (node.kind === 'function') { return { kind: 'block', text: node.text + ':body' }; }
+ return { kind: 'expression', text: node.text + ':body' };
+}
+const block = transformAsyncFunctionBody({ kind: 'function', text: 'named' });
+const concise = transformAsyncFunctionBody({ kind: 'arrow', text: 'arrow' });
+console.log(`${block.kind}:${block.text}`);
+console.log(`${concise.kind}:${concise.text}`);

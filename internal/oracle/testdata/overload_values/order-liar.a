@@ -1,0 +1,13 @@
+// a-check: refused overload 1
+interface Result<T> { readonly value:T; }
+function make(value:string|number|undefined) {
+ function evaluate(input:string):Result<string|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined> { return {value}; }
+ return evaluate;
+}
+let trace='';
+function callee() { trace+='c'; return make(1); }
+function argument() { trace+='a'; return 'text'; }
+console.log(`${callee()(argument()).value}`);
+console.log(trace);

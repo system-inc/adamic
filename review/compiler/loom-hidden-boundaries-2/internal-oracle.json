@@ -1,0 +1,172 @@
+{
+  "label": "internal-oracle",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^(TestHiddenBoundary04AliasCastRefused|TestHiddenBoundary04EagerIndexMutant|TestHiddenBoundary04EvaluationOrder|TestHiddenBoundary04MutationRefused|TestHiddenBoundary04Node|TestHiddenBoundary04PresentArrayMutant|TestHiddenTNodeValueExactNotYet|TestOverloadFieldHatchKindLiar|TestOverloadFieldHatchKindValid|TestOverloadFieldHatchValueLiar|TestOverloadFieldHatchValueUndefined|TestOverloadFieldHatchValueValid|TestOverloadStructuralFieldRefusal|TestOverloadValueProof|TestOverloadValuesModuleLiar|TestOverloadValuesModuleValid|TestOverloadValuesNarrowLiar|TestOverloadValuesNarrowValid|TestOverloadValuesOrderLiar|TestOverloadValuesOrderValid|TestOverloadValuesReturnedLiar|TestOverloadValuesReturnedValid|TestOverloadVisitorInstantiations|TestOverloadVisitorsDefaultLiar|TestOverloadVisitorsHelperLiar|TestOverloadVisitorsHelperValid|TestOverloadVisitorsOriginalLiar|TestOverloadVisitorsOriginalValid|TestOverloadVisitorsOverloadedHelperLiar|TestOverloadVisitorsOverloadedHelperValid)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 18.215,
+  "tests": [
+    {
+      "name": "TestHiddenBoundary04Node",
+      "action": "pass",
+      "seconds": 4.4
+    },
+    {
+      "name": "TestOverloadVisitorsDefaultLiar",
+      "action": "pass",
+      "seconds": 4.78
+    },
+    {
+      "name": "TestOverloadVisitorsOriginalLiar",
+      "action": "pass",
+      "seconds": 4.84
+    },
+    {
+      "name": "TestOverloadVisitorInstantiations",
+      "action": "pass",
+      "seconds": 4.93
+    },
+    {
+      "name": "TestOverloadStructuralFieldRefusal",
+      "action": "pass",
+      "seconds": 0.32
+    },
+    {
+      "name": "TestOverloadFieldHatchKindLiar",
+      "action": "pass",
+      "seconds": 1.19
+    },
+    {
+      "name": "TestOverloadValuesReturnedLiar",
+      "action": "pass",
+      "seconds": 2.91
+    },
+    {
+      "name": "TestOverloadValuesReturnedValid",
+      "action": "pass",
+      "seconds": 2.85
+    },
+    {
+      "name": "TestOverloadFieldHatchValueLiar",
+      "action": "pass",
+      "seconds": 2.11
+    },
+    {
+      "name": "TestOverloadFieldHatchValueUndefined",
+      "action": "pass",
+      "seconds": 2.45
+    },
+    {
+      "name": "TestOverloadValuesModuleValid",
+      "action": "pass",
+      "seconds": 0.64
+    },
+    {
+      "name": "TestOverloadVisitorsOverloadedHelperLiar",
+      "action": "pass",
+      "seconds": 0.65
+    },
+    {
+      "name": "TestOverloadFieldHatchValueValid",
+      "action": "pass",
+      "seconds": 0.72
+    },
+    {
+      "name": "TestOverloadVisitorsOriginalValid",
+      "action": "pass",
+      "seconds": 1.14
+    },
+    {
+      "name": "TestOverloadValueProof",
+      "action": "pass",
+      "seconds": 0.67
+    },
+    {
+      "name": "TestOverloadVisitorsHelperLiar",
+      "action": "pass",
+      "seconds": 0.78
+    },
+    {
+      "name": "TestHiddenBoundary04AliasCastRefused",
+      "action": "pass",
+      "seconds": 0.16
+    },
+    {
+      "name": "TestOverloadVisitorsOverloadedHelperValid",
+      "action": "pass",
+      "seconds": 1.06
+    },
+    {
+      "name": "TestOverloadValuesModuleLiar",
+      "action": "pass",
+      "seconds": 0.7
+    },
+    {
+      "name": "TestHiddenTNodeValueExactNotYet",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestHiddenBoundary04EvaluationOrder",
+      "action": "pass",
+      "seconds": 0.57
+    },
+    {
+      "name": "TestOverloadFieldHatchKindValid",
+      "action": "pass",
+      "seconds": 0.7
+    },
+    {
+      "name": "TestHiddenBoundary04EagerIndexMutant",
+      "action": "pass",
+      "seconds": 0.48
+    },
+    {
+      "name": "TestHiddenBoundary04MutationRefused",
+      "action": "pass",
+      "seconds": 0.23
+    },
+    {
+      "name": "TestHiddenBoundary04PresentArrayMutant",
+      "action": "pass",
+      "seconds": 0.42
+    },
+    {
+      "name": "TestOverloadVisitorsHelperValid",
+      "action": "pass",
+      "seconds": 1.05
+    },
+    {
+      "name": "TestOverloadValuesNarrowLiar",
+      "action": "pass",
+      "seconds": 0.7
+    },
+    {
+      "name": "TestOverloadValuesOrderValid",
+      "action": "pass",
+      "seconds": 0.74
+    },
+    {
+      "name": "TestOverloadValuesOrderLiar",
+      "action": "pass",
+      "seconds": 0.63
+    },
+    {
+      "name": "TestOverloadValuesNarrowValid",
+      "action": "pass",
+      "seconds": 0.58
+    }
+  ]
+}

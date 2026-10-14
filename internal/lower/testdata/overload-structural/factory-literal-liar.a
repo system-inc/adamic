@@ -1,0 +1,6 @@
+interface Result<T> { readonly value: T; flag: boolean; }
+const shared: Result<string> = { value: 'bad', flag: false };
+function widerResult(): Result<string> { return shared; }
+function evaluate(): Result<'safe'>;
+function evaluate(): Result<string | number | undefined> { return widerResult(); }
+console.log(evaluate().value);
