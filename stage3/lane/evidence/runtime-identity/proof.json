@@ -1,0 +1,102 @@
+{
+  "base_key": "331995f853472db52bdecf6875eac0018b95f752a2882f13ac6d15476cd4ecbe",
+  "changed_key": "dcbe380bf72ab5bc9f7954be53f7a3627ecde0ee0e37ee0782b1dc621089c6d3",
+  "manifest_sha256": "7cc609c084220ab5675c92a9c7e48c376c1134574d8f86d571b107a9af1e4372",
+  "manifest_unchanged": true,
+  "source_restored": true,
+  "commands": [
+    {
+      "label": "rebuilt-Install",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-run",
+        "^TestProduct_Stage3LaneInstall$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 21.363532142000622
+    },
+    {
+      "label": "rebuilt-Compiler",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-run",
+        "^TestProduct_Stage3LaneCompiler$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 56.002879493000364
+    },
+    {
+      "label": "rebuilt-Harness",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-run",
+        "^TestProduct_Stage3LaneHarness$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 35.03879618999963
+    },
+    {
+      "label": "rebuilt-input-shard001",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-run",
+        "^TestShard_Stage3LaneFile001$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 20.640121638998608
+    },
+    {
+      "label": "stale-artifact",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-001",
+        "$STAGE3_RESULTS",
+        "--inputs-hash",
+        "84ea25d526844fdb7dc7496abebcc8e62796e52ef6fe612507e76b25b30b19f6"
+      ],
+      "exit": 1,
+      "seconds": 4.130283169000904
+    },
+    {
+      "label": "changed-runtime",
+      "command": [
+        "go",
+        "test",
+        "./stage3/lane",
+        "-run",
+        "^TestShard_Stage3LaneFile001$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v"
+      ],
+      "exit": 1,
+      "seconds": 1.4292142710000917
+    }
+  ]
+}

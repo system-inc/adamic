@@ -22,18 +22,21 @@ from caches import cache_root
 
 def shared_artifact(plan):
     supplied = os.environ.get('STAGE3_ARTIFACT')
-    artifact = Path(supplied) if supplied else cache_root() / 'adamic-stage3-artifacts' / plan['artifact']
+    key, inputs = input_key()
+    artifact = Path(supplied) if supplied else cache_root() / 'adamic-stage3-artifacts' / key
     if not (artifact / 'ready.json').is_file():
         raise ValueError('shared artifact missing; run prepare_shards.py before the gate and set STAGE3_ARTIFACT')
     ready = json.loads((artifact / 'ready.json').read_text())
-    key, inputs = input_key()
-    if ready['key'] != plan['artifact'] or key != ready['key'] or ready['inputs'] != inputs:
-        raise ValueError('shared artifact inputs hash does not match this checkout and toolchain')
+    if key != ready['key'] or ready['inputs'] != inputs:
+        raise ValueError(f"shared artifact inputs hash mismatch: checkout key {key}, artifact ready key {ready['key']}")
+    api = json.loads((artifact / 'shards-ready.json').read_text())
+    if api['artifact'] != ready['key']:
+        raise ValueError('shared API marker artifact identity mismatch')
     if any(ready['phases'][phase]['exit'] != 0 for phase in ('apply', 'install', 'build', 'harness')):
         raise ValueError('shared artifact producer phase failed')
     if ready['payload'] != payload_digest(artifact / 'tree'):
         raise ValueError('shared artifact payload corruption')
-    if payload_digest(artifact / 'api') != plan['api_digest']:
+    if payload_digest(artifact / 'api') != api['api_digest']:
         raise ValueError('shared stock API parser corruption')
     if runtime_hash() != plan['runtime']:
         raise ValueError('shard harness inputs changed; regenerate the manifest')
@@ -98,7 +101,9 @@ def validate_observation(unit, counts, records, paths, failures, seconds, code):
 
 def check_unit_inputs(unit, plan, wanted_hash):
     definition = {key: value for key, value in unit.items() if key != 'inputs_hash'}
-    actual_hash = digest(dict(artifact=plan['artifact'], api=plan['api_digest'], runtime=runtime_hash(), unit=definition))
+    if runtime_hash() != plan['runtime']:
+        raise ValueError('shard harness inputs changed; regenerate the manifest')
+    actual_hash = digest(dict(runtime=plan['runtime'], unit=definition))
     if actual_hash != wanted_hash or wanted_hash != unit['inputs_hash']:
         raise ValueError('unit inputs hash differs from the manifest')
 
@@ -109,10 +114,11 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
     unit = next(row for row in plan['units'] if row['name'] == name)
     output = results / name
     output.mkdir(parents=True, exist_ok=False)
-    report = dict(name=name, inputs_hash=wanted_hash, artifact=plan['artifact'], counts={}, errors=[], status='fail')
+    report = dict(name=name, inputs_hash=wanted_hash, artifact=None, counts={}, errors=[], status='fail')
     try:
         check_unit_inputs(unit, plan, wanted_hash)
         artifact, ready = shared_artifact(plan)
+        report['artifact'] = ready['key']
         tree = output / 'adapted-tree'
         if mutant_case is not None:
             if mutant_case.is_absolute() or '..' in mutant_case.parts or not mutant_case.is_relative_to('tests/cases'):

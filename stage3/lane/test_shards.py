@@ -16,6 +16,12 @@ class ShardTests(unittest.TestCase):
     def test_manifest_exact_schema_and_counts(self):
         plan = shard_plan.load_plan()
         manifest = json.loads((shard_plan.LANE / 'shards.json').read_text())
+        self.assertNotIn('artifact', plan)
+        self.assertNotIn('api_digest', plan)
+        self.assertEqual(plan['runtime'], shard_plan.runtime_hash())
+        for unit in plan['units']:
+            definition = {key: value for key, value in unit.items() if key != 'inputs_hash'}
+            self.assertEqual(unit['inputs_hash'], shard_plan.digest(dict(runtime=plan['runtime'], unit=definition)))
         self.assertEqual(manifest, shard_plan.gate_manifest(plan))
         self.assertEqual(set(manifest), {'version', 'units'})
         self.assertEqual(len({unit['name'] for unit in manifest['units']}), len(manifest['units']))
@@ -87,11 +93,21 @@ class ShardTests(unittest.TestCase):
 
     def test_input_hash_guard_detects_changed_harness(self):
         unit, _ = self.valid_observation()
-        plan = dict(artifact='tree', api_digest='api')
+        plan = dict(runtime='original')
         with patch.object(shard, 'runtime_hash', return_value='original'):
-            unit['inputs_hash'] = shard_plan.digest(dict(artifact='tree', api='api', runtime='original', unit=unit))
+            unit['inputs_hash'] = shard_plan.digest(dict(runtime='original', unit=unit))
             shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
         with patch.object(shard, 'runtime_hash', return_value='changed'):
+            with self.assertRaisesRegex(ValueError, 'harness inputs changed'):
+                shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
+
+    def test_input_hash_guard_detects_changed_definition(self):
+        unit, _ = self.valid_observation()
+        plan = dict(runtime='original')
+        unit['inputs_hash'] = shard_plan.digest(dict(runtime='original', unit=unit))
+        with patch.object(shard, 'runtime_hash', return_value='original'):
+            shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
+            unit['tasks'] = ['changed task']
             with self.assertRaisesRegex(ValueError, 'inputs hash'):
                 shard.check_unit_inputs(unit, plan, unit['inputs_hash'])
 
@@ -155,7 +171,8 @@ class SharedArtifactTests(unittest.TestCase):
         self.ready = dict(key='tree', inputs=self.inputs,
             payload=shard.payload_digest(self.artifact / 'tree'),
             phases={phase: dict(exit=0) for phase in ('apply', 'install', 'build', 'harness')})
-        self.plan = dict(artifact='tree', runtime='runtime', api_digest=shard.payload_digest(self.artifact / 'api'))
+        self.plan = dict(runtime='runtime')
+        (self.artifact / 'shards-ready.json').write_text(json.dumps(dict(artifact='tree', api_digest=shard.payload_digest(self.artifact / 'api'))))
         self.write_ready()
         for probe in (patch.dict(shard.os.environ, STAGE3_ARTIFACT=str(self.artifact)),
                       patch.object(shard, 'input_key', return_value=('tree', self.inputs)),
@@ -179,6 +196,18 @@ class SharedArtifactTests(unittest.TestCase):
     def test_changed_ready_input_identity_is_rejected(self):
         self.ready['inputs'] = dict(proof='changed'); self.write_ready()
         with self.assertRaisesRegex(ValueError, 'inputs hash'):
+            shard.shared_artifact(self.plan)
+
+    def test_stale_artifact_names_both_keys(self):
+        with patch.object(shard, 'input_key', return_value=('changed-tree', self.inputs)):
+            with self.assertRaisesRegex(ValueError, 'checkout key changed-tree, artifact ready key tree'):
+                shard.shared_artifact(self.plan)
+
+    def test_api_marker_cannot_name_another_artifact(self):
+        marker = self.artifact / 'shards-ready.json'
+        api = json.loads(marker.read_text()); api['artifact'] = 'different-tree'
+        marker.write_text(json.dumps(api))
+        with self.assertRaisesRegex(ValueError, 'API marker artifact identity mismatch'):
             shard.shared_artifact(self.plan)
 
     def test_payload_corruption_is_rejected_before_execution(self):

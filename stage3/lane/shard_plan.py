@@ -37,7 +37,7 @@ def exact_grep(name):
     return '^' + re.escape(title(name)) + '$'
 
 
-def build_plan(artifact, api_digest):
+def build_plan():
     evidence = LANE / 'evidence/shards'
     with gzip.open(evidence / 'candidate-plan.json.gz', 'rt') as stream:
         old = json.load(stream)
@@ -74,8 +74,8 @@ def build_plan(artifact, api_digest):
         unit['expect']['pass'] = unit['expect'].pop('pass_')
         unit['names_digest'] = names_digest(records)
         unit['baseline_diffs'] = ['api/typescript.d.ts'] if unit['name'] == 'stage3-lane-byte-comparisons' else []
-        unit['inputs_hash'] = digest(dict(artifact=artifact, api=api_digest, runtime=runtime, unit=unit))
-    return dict(version=1, artifact=artifact, api_digest=api_digest, runtime=runtime,
+        unit['inputs_hash'] = digest(dict(runtime=runtime, unit=unit))
+    return dict(version=1, runtime=runtime,
                 counts={'pass': 106366, 'fail': 1, 'skip': 0}, units=sorted(units.values(), key=lambda row: row['name'])), tests
 
 
@@ -92,11 +92,8 @@ def load_plan():
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('artifact', type=Path)
     args = parser.parse_args()
-    ready = json.loads((args.artifact / 'ready.json').read_text())
-    api = json.loads((args.artifact / 'shards-ready.json').read_text())
-    plan, tests = build_plan(ready['key'], api['api_digest'])
+    plan, tests = build_plan()
     (LANE / 'shard-plan.json').write_text(json.dumps(plan, indent=2) + '\n')
     (LANE / 'shards.json').write_text(json.dumps(gate_manifest(plan), indent=2) + '\n')
     listing = LANE / 'evidence/case-shards'

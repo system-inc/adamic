@@ -14,10 +14,14 @@ from caches import cache_root
 def merge(results, whole, plan=None):
     plan = plan or load_plan()
     errors, records, reports = [], [], []
+    execution = json.loads((whole / 'execution.json').read_text())
+    artifact_key = execution.get('artifact')
+    if not artifact_key:
+        errors.append('unsharded lane did not record an artifact identity')
     for unit in plan['units']:
         report = json.loads((results / unit['name'] / 'report.json').read_text())
         reports.append(report)
-        if report['name'] != unit['name'] or report['inputs_hash'] != unit['inputs_hash'] or report['artifact'] != plan['artifact']:
+        if report['name'] != unit['name'] or report['inputs_hash'] != unit['inputs_hash'] or report['artifact'] != artifact_key:
             errors.append('unit input identity mismatch: ' + unit['name'])
         if report['status'] != 'pass' or report['counts'] != unit['expect'] or report['seconds'] >= 30:
             errors.append('unit verdict rejected: ' + unit['name'])
@@ -30,9 +34,6 @@ def merge(results, whole, plan=None):
         if counted != report['counts']:
             errors.append('unit evidence counts mismatch: ' + unit['name'])
         records.extend(observed)
-    execution = json.loads((whole / 'execution.json').read_text())
-    if execution.get('artifact') != plan['artifact']:
-        errors.append('unsharded lane did not run on the same hashed artifact')
     profile = [json.loads(line) for line in (whole / 'whole-tasks.jsonl').read_text().splitlines()]
     whole_records = [dict(record, task=row['task'], status=status) for row in profile
                      for status, key in [('pass', 'passes'), ('fail', 'errors')] for record in row[key]]
@@ -58,7 +59,7 @@ def merge(results, whole, plan=None):
         errors.extend('unsharded lane: ' + message for message in whole_verdict['errors'])
     return dict(status='fail' if errors else 'pass', errors=errors, counts=counts,
                 whole_counts=whole_counts, units=len(reports), tests=len(records),
-                artifact=plan['artifact'], failed_tests=failures, baseline_diffs=paths,
+                artifact=artifact_key, failed_tests=failures, baseline_diffs=paths,
                 whole_verdict=whole_verdict['status'])
 
 
@@ -69,9 +70,13 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     plan = load_plan()
-    artifact = Path(os.environ.get('STAGE3_ARTIFACT') or cache_root() / 'adamic-stage3-artifacts' / plan['artifact'])
-    os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
     try:
+        from shard import shared_artifact
+        artifact, ready = shared_artifact(plan)
+        execution = json.loads((args.whole / 'execution.json').read_text())
+        if execution.get('artifact') != ready['key']:
+            raise ValueError('unsharded lane did not run on the current verified artifact')
+        os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
         report = merge(args.results.resolve(), args.whole.resolve(), plan)
     except (OSError, ValueError, KeyError) as error:
         report = dict(status='fail', errors=['missing or invalid shard evidence: ' + str(error)])
