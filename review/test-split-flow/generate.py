@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+from object_integrity import generate
 
 root = Path(__file__).resolve().parents[2]
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
@@ -28,7 +29,7 @@ def refused(name):
     return name in getters_refusals or name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
-manifest = []
+manifest = generate(root, families)
 for package in ['flow', 'fresh']:
     paths = []
     for pattern in patterns:

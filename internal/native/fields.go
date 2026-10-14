@@ -54,6 +54,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"bytes", "finalized"},
 		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
+		{"value", "writable", "enumerable", "configurable"},
 	} {
 		for index, name := range names {
 			if before, found := offsets[name]; found && before != index {

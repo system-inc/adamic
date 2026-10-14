@@ -11,8 +11,8 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 	for _, probe := range []struct{ source, reason string }{
 		{`Object.defineProperty({value:1}, 'value', {value:'wrong'});`, "property descriptors"},
 		{`Object.defineProperties({value:1}, {value:{value:'wrong'}});`, "property descriptors"},
-		{`Object.getOwnPropertyDescriptor({value:1}, 'value');`, "property descriptors"},
-		{`Object.getOwnPropertyDescriptors({value:1});`, "property descriptors"},
+		{`function descriptor(value:{value:number}) {Object.getOwnPropertyDescriptor(value,'value');}`, "property descriptors"},
+		{`function descriptors(value:{value:number}) {Object.getOwnPropertyDescriptors(value);}`, "property descriptors"},
 		{`Object.getPrototypeOf({value:1});`, "prototypes"},
 		{`Object.setPrototypeOf({value:1}, {});`, "prototypes"},
 		{`Object.fromEntries([['key', 1]]);`, "index-signature"},
@@ -41,7 +41,6 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 		`Object.assign({value:1}, {extra:2});`,
 		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
 		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,
-		`const object={value:1}; Object.freeze(object); try { object.value=2; } catch { console.log('caught'); }`,
 		`Object.groupBy([1,2], (value:number):string => value===1 ? 'one' : 'other');`,
 	} {
 		t.Run(source, func(t *testing.T) {

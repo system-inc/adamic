@@ -472,6 +472,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if literal, ok := value.Interface().(ir.ObjectLiteral); ok && program.ObjectSpreadMayThrow(literal) {
 				throws = true
 			}
+			throws = throws || ir.ObjectMayThrow(value.Interface())
 			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
 				throws = true
 			}

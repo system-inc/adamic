@@ -176,8 +176,13 @@ func (l *lowering) exceptions() error {
 // body with a catch.
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
+	canFreeze := l.objectCanFreeze()
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
+		case ir.SetProperty:
+			found = found || canFreeze
+		case ir.ObjectCall:
+			found = found || (ir.ObjectMayThrow(node) && (node.Method != "assign" || canFreeze))
 		case ir.Try:
 			if node.HasCatch {
 				// The body's throws are caught; the catch's and the finally's aren't.
@@ -240,17 +245,9 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
-		case ir.SetProperty:
-			if l.objectCanFreeze() {
-				failing = "a write to a potentially frozen object"
-			}
 		case ir.NodeBufferCall:
 			if node.Function == "hash_update" || node.Function == "hash_digest" {
 				failing = "Hash finalization, whose catchable .code contract is not supported yet"
-			}
-		case ir.ObjectCall:
-			if node.Method == "assign" && l.objectCanFreeze() {
-				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
 			if node.Replacement != nil {

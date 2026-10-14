@@ -3,6 +3,14 @@
 #ifndef ADAMIC_H
 #define ADAMIC_H
 
+#if defined(__SANITIZE_ADDRESS__)
+#define ADAMIC_ADDRESS_SANITIZER 1
+#elif defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define ADAMIC_ADDRESS_SANITIZER 1
+#endif
+#endif
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -72,7 +80,12 @@ void adamic_release_slow(void *value);
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates.
-static inline void *adamic_retain(void *value) {
+#ifdef ADAMIC_ADDRESS_SANITIZER
+__attribute__((noinline, unused)) static
+#else
+static inline
+#endif
+void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
@@ -82,7 +95,12 @@ static inline void *adamic_retain(void *value) {
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+#ifdef ADAMIC_ADDRESS_SANITIZER
+__attribute__((noinline, unused)) static
+#else
+static inline
+#endif
+void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
@@ -305,6 +323,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	bool frozen;
 	bool tuple;
+	bool sealed;
+	bool nonextensible;
 	adamic_value slots[];
 } adamic_object;
 
@@ -461,6 +481,8 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	return adamic_object_data_field(object, name, cache);
 }
 
+#include "object_integrity.h"
+
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
 bool adamic_object_is_frozen(const adamic_heap *value);
@@ -568,6 +590,7 @@ typedef struct adamic_map {
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;
+	_Atomic bool nonextensible;
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
