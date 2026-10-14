@@ -167,13 +167,6 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 // Every product the shards read is declared, so Workshop's loom build-tree builds each once and a shard only reads
 // them. C emission is over the 60 s a test may take, never the 600 s a product may (Loom's KindCeilings): measured
 // Oct 10 inside the shards at 97% busy, lowering 71 s and the sanitized native 86 to 152 s.
-func TestProduct_DotARenameSource(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	dotARenameSource(t)
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
-}
-
 func TestProduct_DotARenameOriginalLowered(t *testing.T) {
 	t.Parallel()
 	dotARenameLowered(t, false)

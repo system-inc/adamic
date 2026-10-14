@@ -2,6 +2,8 @@ package lint
 
 import (
 	"github.com/system-inc/adamic/internal/buildcache"
+	"os"
+	"path/filepath"
 	"sync"
 	"testing"
 )
@@ -31,5 +33,10 @@ func lintGoOracleProduct(t *testing.T) string {
 }
 func TestProduct_LintGoOracle(t *testing.T) {
 	t.Parallel()
-	lintGoOracleProduct(t)
+	manifest := filepath.Join(t.TempDir(), "empty-manifest")
+	if err := os.WriteFile(manifest, nil, 0600); err != nil {
+		t.Fatal(err)
+	}
+	binary := lintGoOracleProduct(t)
+	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest}})
 }
