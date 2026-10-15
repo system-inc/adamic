@@ -4,9 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"slices"
 	"sort"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/corpusfiles"
@@ -15,34 +13,14 @@ import (
 var compilerCorpusFixtureFolders = []string{"testdata", "validation", "evidence"}
 
 // Agreement covers tracked production sources. Fixture and proof directories
-// contain deliberately invalid inputs owned by their separate parser tests.
+// contain deliberately invalid inputs owned by their separate parser tests. The
+// walk never enters one (corpusfiles.RepositoryExcept): it listed every rule's
+// evidence/ before dropping the files, so a doc-only change there moved this
+// corpus's read sets and the products that read it (#hp8gq3e).
 func compilerStage1Sources(t *testing.T, checkout string) []string {
 	t.Helper()
-	files := corpusfiles.Repository(t, checkout, []string{"stage1"}, []string{"*.ts", "*.a"})
-	root, err := filepath.Abs(checkout)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var sources []string
-	excluded := 0
-	for _, file := range files {
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		fixture := false
-		for _, directory := range strings.Split(filepath.ToSlash(filepath.Dir(relative)), "/") {
-			if slices.Contains(compilerCorpusFixtureFolders, directory) {
-				fixture = true
-			}
-		}
-		if fixture {
-			excluded++
-			continue
-		}
-		sources = append(sources, file)
-	}
-	t.Logf("compiler corpus stage1: excluded %d tracked files under testdata/, validation/, evidence/; retained %d sources", excluded, len(sources))
+	sources := corpusfiles.RepositoryExcept(t, checkout, []string{"stage1"}, []string{"*.ts", "*.a"}, compilerCorpusFixtureFolders)
+	t.Logf("compiler corpus stage1: %d sources, none under testdata/, validation/ or evidence/", len(sources))
 	return sources
 }
 
