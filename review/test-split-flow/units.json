@@ -26784,6 +26784,70 @@
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
   },
   {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_collections_a_c860dde98a83",
+    "program": "internal/oracle/testdata/string_conversion/collections.a",
+    "path": "../oracle/testdata/string_conversion/collections.a",
+    "sha256": "bfa6a64e7aca1669d5e3dc792b72299f1c84d2f94547aca9dc9f2053ae666216"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_collections_a_c860dde98a83",
+    "program": "internal/oracle/testdata/string_conversion/collections.a",
+    "path": "../oracle/testdata/string_conversion/collections.a",
+    "sha256": "bfa6a64e7aca1669d5e3dc792b72299f1c84d2f94547aca9dc9f2053ae666216"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_collections_a_c860dde98a83",
+    "program": "internal/oracle/testdata/string_conversion/collections.a",
+    "path": "../oracle/testdata/string_conversion/collections.a",
+    "sha256": "bfa6a64e7aca1669d5e3dc792b72299f1c84d2f94547aca9dc9f2053ae666216"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_collections_a_c860dde98a83",
+    "program": "internal/oracle/testdata/string_conversion/collections.a",
+    "path": "../oracle/testdata/string_conversion/collections.a",
+    "sha256": "bfa6a64e7aca1669d5e3dc792b72299f1c84d2f94547aca9dc9f2053ae666216"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_template_a_aac4e150a22c",
+    "program": "internal/oracle/testdata/string_conversion/template.a",
+    "path": "../oracle/testdata/string_conversion/template.a",
+    "sha256": "38169ad1c4e73ee7681ba129736d7502337baeb09afd8556a7bafe0c7fb7e745"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_template_a_aac4e150a22c",
+    "program": "internal/oracle/testdata/string_conversion/template.a",
+    "path": "../oracle/testdata/string_conversion/template.a",
+    "sha256": "38169ad1c4e73ee7681ba129736d7502337baeb09afd8556a7bafe0c7fb7e745"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_template_a_aac4e150a22c",
+    "program": "internal/oracle/testdata/string_conversion/template.a",
+    "path": "../oracle/testdata/string_conversion/template.a",
+    "sha256": "38169ad1c4e73ee7681ba129736d7502337baeb09afd8556a7bafe0c7fb7e745"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_string_conversion_template_a_aac4e150a22c",
+    "program": "internal/oracle/testdata/string_conversion/template.a",
+    "path": "../oracle/testdata/string_conversion/template.a",
+    "sha256": "38169ad1c4e73ee7681ba129736d7502337baeb09afd8556a7bafe0c7fb7e745"
+  },
+  {
     "package": "fresh",
     "family": "Writes",
     "test": "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f",
@@ -33422,5 +33486,21 @@
     "program": "internal/flow/testdata/mutations.a",
     "path": "../flow/testdata/mutations.a",
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_string_conversion_collections_a_c860dde98a83",
+    "program": "internal/oracle/testdata/string_conversion/collections.a",
+    "path": "../oracle/testdata/string_conversion/collections.a",
+    "sha256": "bfa6a64e7aca1669d5e3dc792b72299f1c84d2f94547aca9dc9f2053ae666216"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_string_conversion_template_a_aac4e150a22c",
+    "program": "internal/oracle/testdata/string_conversion/template.a",
+    "path": "../oracle/testdata/string_conversion/template.a",
+    "sha256": "38169ad1c4e73ee7681ba129736d7502337baeb09afd8556a7bafe0c7fb7e745"
   }
 ]

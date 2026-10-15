@@ -74,6 +74,7 @@ for package in ['flow', 'fresh']:
                 helper = "checkAllFlowProgram"
             text += 'func ' + name + '(t *testing.T) {\n\tt.Parallel()\n\tbegin' + package.title() + 'Unit(t)\n\t' + helper + '(t, ' + package + 'CorpusPaths[' + str(index) + '])\n}\n\n'
     # Written through gofmt, so the generated file is as gofmt -l expects it.
+    manifest.extend(__import__("string_conversion").generate(root, package, families))
     formatted = subprocess.run(['gofmt'], input=text, capture_output=True, text=True, check=True).stdout
     (root / 'internal' / package / 'corpus_units_test.go').write_text(formatted)
 (root/'review/test-split-flow/units.json').write_text(json.dumps(manifest,indent=2)+'\n')

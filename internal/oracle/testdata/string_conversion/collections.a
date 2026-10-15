@@ -1,0 +1,12 @@
+console.log(String([1, -0, 42]));
+console.log(String(['a', '🌍', 'z']));
+console.log(String([[1, 2], [3]]));
+console.log(String([true, false]));
+console.log(String(new Map<string, number>()));
+console.log(String(new Set<number>()));
+let effects = '';
+function map(): Map<string, number> { effects = effects + 'm'; return new Map<string, number>(); }
+function set(): Set<number> { effects = effects + 's'; return new Set<number>(); }
+console.log(String(map()));
+console.log(String(set()));
+console.log(effects);

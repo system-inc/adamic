@@ -65,6 +65,9 @@ func (l *lowering) stringTypeOf(node *ast.Node) (ir.Expression, bool) {
 }
 
 func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
+	if l.stringReferenceNeedsBoundArguments(node) {
+		return nil, l.notYet(node, "reference String conversion needs bound arguments before ToPrimitive")
+	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.StringConstant{Index: l.constant("null")}, nil
 	}
@@ -80,6 +83,8 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 		return ir.NumberToString{Value: value}, nil
 	case ir.Boolean:
 		return ir.BooleanToString{Value: value}, nil
+	case ir.Array, ir.Map:
+		return l.stringReferenceValue(node, value)
 	case ir.MaybeNumber, ir.MaybeBoolean:
 		return ir.MaybeToString{Value: value}, nil
 	case ir.String:
