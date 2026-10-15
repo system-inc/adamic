@@ -56,7 +56,7 @@ func TestLibraryMapSetMutants(t *testing.T) {
 				}
 				if family == "constructors" && function.Name == "collection_iterator_array" {
 					parameter := ir.Read{Local: function.Parameters[0], Of: ir.Object}
-					step := ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: parameter, Name: "next", Of: ir.Closure}, Returns: ir.Object}}
+					step := ir.Evaluate{Value: ir.CallClosure{Closure: libraryMapConstructorNext(function.Body, parameter), Returns: ir.Object}}
 					function.Body = append([]ir.Statement{step}, function.Body...)
 					changed = true
 				}

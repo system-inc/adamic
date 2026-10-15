@@ -1,0 +1,29 @@
+const first = 'key'.repeat(2);
+const equal = 'keykey'.slice(0);
+const map = new Map<string, number>([
+    [first, 1],
+    ['a', 2],
+    ['b', 3],
+    ['c', 4],
+    ['d', 5],
+    ['e', 6],
+]);
+const set = new Set<string>([first, 'a', 'b', 'c', 'd', 'e']);
+map.set(equal, 7);
+set.add(equal);
+console.log(`${map.size} ${map.get(equal)} ${set.size} ${set.has(equal)}`);
+map.delete('b');
+map.set('b', 9);
+set.delete('b');
+set.add('b');
+let order = '';
+map.forEach(function(value, key) {
+    order += `${key}:${value}|`;
+});
+console.log(order);
+order = '';
+for(const key of set) {
+    order += `${key}|`;
+}
+console.log(order);
+console.log(`${map.has('missing')} ${set.has('missing')}`);

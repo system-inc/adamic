@@ -2725,7 +2725,7 @@
     "test": "TestFlowProgram____oracle_testdata_library_map_set_keys_a_4c1f891b1381",
     "program": "internal/oracle/testdata/library_map_set_keys.a",
     "path": "../oracle/testdata/library_map_set_keys.a",
-    "sha256": "cc9cb7023577959d739249a9d08f477d1e3c1daa7041d486fea3f1009666d787"
+    "sha256": "f71ebca4a91eb05e8d1a2cec84abe6965c3654ec979a67b9640ad1a51a033aaf"
   },
   {
     "package": "flow",
@@ -9421,7 +9421,7 @@
     "test": "TestFlowProgram____oracle_testdata_library_map_set_keys_a_4c1f891b1381",
     "program": "internal/oracle/testdata/library_map_set_keys.a",
     "path": "../oracle/testdata/library_map_set_keys.a",
-    "sha256": "cc9cb7023577959d739249a9d08f477d1e3c1daa7041d486fea3f1009666d787"
+    "sha256": "f71ebca4a91eb05e8d1a2cec84abe6965c3654ec979a67b9640ad1a51a033aaf"
   },
   {
     "package": "flow",
@@ -16117,7 +16117,7 @@
     "test": "TestFlowProgram____oracle_testdata_library_map_set_keys_a_4c1f891b1381",
     "program": "internal/oracle/testdata/library_map_set_keys.a",
     "path": "../oracle/testdata/library_map_set_keys.a",
-    "sha256": "cc9cb7023577959d739249a9d08f477d1e3c1daa7041d486fea3f1009666d787"
+    "sha256": "f71ebca4a91eb05e8d1a2cec84abe6965c3654ec979a67b9640ad1a51a033aaf"
   },
   {
     "package": "flow",
@@ -22813,7 +22813,7 @@
     "test": "TestFlowProgram____oracle_testdata_library_map_set_keys_a_4c1f891b1381",
     "program": "internal/oracle/testdata/library_map_set_keys.a",
     "path": "../oracle/testdata/library_map_set_keys.a",
-    "sha256": "cc9cb7023577959d739249a9d08f477d1e3c1daa7041d486fea3f1009666d787"
+    "sha256": "f71ebca4a91eb05e8d1a2cec84abe6965c3654ec979a67b9640ad1a51a033aaf"
   },
   {
     "package": "flow",
@@ -26784,6 +26784,358 @@
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
   },
   {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_inferred_a_3ce34976611b",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_inferred.a",
+    "sha256": "6be1a55137583dc1d5e40f36ba0f24609c7d16d700753c0d8f7519fcf2404fac"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_inferred_a_3ce34976611b",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_inferred.a",
+    "sha256": "6be1a55137583dc1d5e40f36ba0f24609c7d16d700753c0d8f7519fcf2404fac"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_inferred_a_3ce34976611b",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_inferred.a",
+    "sha256": "6be1a55137583dc1d5e40f36ba0f24609c7d16d700753c0d8f7519fcf2404fac"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_inferred_a_3ce34976611b",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_inferred.a",
+    "sha256": "6be1a55137583dc1d5e40f36ba0f24609c7d16d700753c0d8f7519fcf2404fac"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_classes_a_94513505bd2a",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "sha256": "94de80fb85d20a514282dec08d7dafda07d9b2622accba904d2ad7c2ae6bfda3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_classes_a_94513505bd2a",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "sha256": "94de80fb85d20a514282dec08d7dafda07d9b2622accba904d2ad7c2ae6bfda3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_classes_a_94513505bd2a",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "sha256": "94de80fb85d20a514282dec08d7dafda07d9b2622accba904d2ad7c2ae6bfda3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_classes_a_94513505bd2a",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "sha256": "94de80fb85d20a514282dec08d7dafda07d9b2622accba904d2ad7c2ae6bfda3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_mixed_a_423e5ad19fc1",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "sha256": "a4b349792525f7533bd6447eb29b038ab5a799c4f5a72361d27524c59b157fa9"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_mixed_a_423e5ad19fc1",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "sha256": "a4b349792525f7533bd6447eb29b038ab5a799c4f5a72361d27524c59b157fa9"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_mixed_a_423e5ad19fc1",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "sha256": "a4b349792525f7533bd6447eb29b038ab5a799c4f5a72361d27524c59b157fa9"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_mixed_a_423e5ad19fc1",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "sha256": "a4b349792525f7533bd6447eb29b038ab5a799c4f5a72361d27524c59b157fa9"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_numbers_a_52e73d9f07cc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "sha256": "47fa91adc70eaa0aed8098d004c80af9ef0ac9d747bec39689009585e5b47b6c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_numbers_a_52e73d9f07cc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "sha256": "47fa91adc70eaa0aed8098d004c80af9ef0ac9d747bec39689009585e5b47b6c"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_numbers_a_52e73d9f07cc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "sha256": "47fa91adc70eaa0aed8098d004c80af9ef0ac9d747bec39689009585e5b47b6c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_numbers_a_52e73d9f07cc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "sha256": "47fa91adc70eaa0aed8098d004c80af9ef0ac9d747bec39689009585e5b47b6c"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_objects_a_a62e9badb968",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "sha256": "a591eecd2488a79347efc816784462384fd15d0d55891d9e72c18be45f9f1270"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_objects_a_a62e9badb968",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "sha256": "a591eecd2488a79347efc816784462384fd15d0d55891d9e72c18be45f9f1270"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_objects_a_a62e9badb968",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "sha256": "a591eecd2488a79347efc816784462384fd15d0d55891d9e72c18be45f9f1270"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_objects_a_a62e9badb968",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "sha256": "a591eecd2488a79347efc816784462384fd15d0d55891d9e72c18be45f9f1270"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_strings_a_6d058153c4be",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "sha256": "66806bdd86ee03f65c087090ee0deccf4af931a6e10dab7e48841a82d5f01536"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_strings_a_6d058153c4be",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "sha256": "66806bdd86ee03f65c087090ee0deccf4af931a6e10dab7e48841a82d5f01536"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_strings_a_6d058153c4be",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "sha256": "66806bdd86ee03f65c087090ee0deccf4af931a6e10dab7e48841a82d5f01536"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_set_keys_strings_a_6d058153c4be",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "sha256": "66806bdd86ee03f65c087090ee0deccf4af931a6e10dab7e48841a82d5f01536"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_live_a_277d0cd6215e",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_live.a",
+    "sha256": "50ba372a50a0ffc2ff38d700cd9cd23bc6b6e4883388b3279ae4d15725e36b31"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_live_a_277d0cd6215e",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_live.a",
+    "sha256": "50ba372a50a0ffc2ff38d700cd9cd23bc6b6e4883388b3279ae4d15725e36b31"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_live_a_277d0cd6215e",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_live.a",
+    "sha256": "50ba372a50a0ffc2ff38d700cd9cd23bc6b6e4883388b3279ae4d15725e36b31"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_live_a_277d0cd6215e",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_live.a",
+    "sha256": "50ba372a50a0ffc2ff38d700cd9cd23bc6b6e4883388b3279ae4d15725e36b31"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_numbers_a_f81325b8bb65",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "sha256": "eb09d4c5e1dea5ede24494ccd685e369c8fd5d935bf8102a01702fc943088751"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_numbers_a_f81325b8bb65",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "sha256": "eb09d4c5e1dea5ede24494ccd685e369c8fd5d935bf8102a01702fc943088751"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_numbers_a_f81325b8bb65",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "sha256": "eb09d4c5e1dea5ede24494ccd685e369c8fd5d935bf8102a01702fc943088751"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_numbers_a_f81325b8bb65",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "sha256": "eb09d4c5e1dea5ede24494ccd685e369c8fd5d935bf8102a01702fc943088751"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_order_a_3a71bf163a4f",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_order.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_order.a",
+    "sha256": "b4c8db8ae849627d5961ef6f42c7c5c4f0a46ef817fc5345e3d8b1e0558c78f3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_order_a_3a71bf163a4f",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_order.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_order.a",
+    "sha256": "b4c8db8ae849627d5961ef6f42c7c5c4f0a46ef817fc5345e3d8b1e0558c78f3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_order_a_3a71bf163a4f",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_order.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_order.a",
+    "sha256": "b4c8db8ae849627d5961ef6f42c7c5c4f0a46ef817fc5345e3d8b1e0558c78f3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_order_a_3a71bf163a4f",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_order.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_order.a",
+    "sha256": "b4c8db8ae849627d5961ef6f42c7c5c4f0a46ef817fc5345e3d8b1e0558c78f3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_set_live_a_8749d298ffbc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "sha256": "3d11edde562e8362493a36706fa17694b060cbecfeb3d1fbcd14cf522bbc8a07"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_set_live_a_8749d298ffbc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "sha256": "3d11edde562e8362493a36706fa17694b060cbecfeb3d1fbcd14cf522bbc8a07"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_set_live_a_8749d298ffbc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "sha256": "3d11edde562e8362493a36706fa17694b060cbecfeb3d1fbcd14cf522bbc8a07"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_map_small_set_live_a_8749d298ffbc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "sha256": "3d11edde562e8362493a36706fa17694b060cbecfeb3d1fbcd14cf522bbc8a07"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_set_inferred_a_237b45ca59ef",
+    "program": "internal/oracle/testdata/map_set_keys/library_set_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_set_inferred.a",
+    "sha256": "cfee3821e11753691e89c35f82464bc4776a7f5a8b84e8f3b82e7c4b1edeeae8"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_set_inferred_a_237b45ca59ef",
+    "program": "internal/oracle/testdata/map_set_keys/library_set_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_set_inferred.a",
+    "sha256": "cfee3821e11753691e89c35f82464bc4776a7f5a8b84e8f3b82e7c4b1edeeae8"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_set_inferred_a_237b45ca59ef",
+    "program": "internal/oracle/testdata/map_set_keys/library_set_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_set_inferred.a",
+    "sha256": "cfee3821e11753691e89c35f82464bc4776a7f5a8b84e8f3b82e7c4b1edeeae8"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_map_set_keys_library_set_inferred_a_237b45ca59ef",
+    "program": "internal/oracle/testdata/map_set_keys/library_set_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_set_inferred.a",
+    "sha256": "cfee3821e11753691e89c35f82464bc4776a7f5a8b84e8f3b82e7c4b1edeeae8"
+  },
+  {
     "package": "fresh",
     "family": "Writes",
     "test": "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f",
@@ -29669,7 +30021,7 @@
     "test": "TestFreshWrites____oracle_testdata_library_map_set_keys_a_4c1f891b1381",
     "program": "internal/oracle/testdata/library_map_set_keys.a",
     "path": "../oracle/testdata/library_map_set_keys.a",
-    "sha256": "cc9cb7023577959d739249a9d08f477d1e3c1daa7041d486fea3f1009666d787"
+    "sha256": "f71ebca4a91eb05e8d1a2cec84abe6965c3654ec979a67b9640ad1a51a033aaf"
   },
   {
     "package": "fresh",
@@ -33422,5 +33774,93 @@
     "program": "internal/flow/testdata/mutations.a",
     "path": "../flow/testdata/mutations.a",
     "sha256": "f087532cc2fa1f694ce8dfeb272d18f461e3d650ada385a4e8cce1c64c5cb99a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_inferred_a_3ce34976611b",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_inferred.a",
+    "sha256": "6be1a55137583dc1d5e40f36ba0f24609c7d16d700753c0d8f7519fcf2404fac"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_set_keys_classes_a_94513505bd2a",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_classes.a",
+    "sha256": "94de80fb85d20a514282dec08d7dafda07d9b2622accba904d2ad7c2ae6bfda3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_set_keys_mixed_a_423e5ad19fc1",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_mixed.a",
+    "sha256": "a4b349792525f7533bd6447eb29b038ab5a799c4f5a72361d27524c59b157fa9"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_set_keys_numbers_a_52e73d9f07cc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_numbers.a",
+    "sha256": "47fa91adc70eaa0aed8098d004c80af9ef0ac9d747bec39689009585e5b47b6c"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_set_keys_objects_a_a62e9badb968",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_objects.a",
+    "sha256": "a591eecd2488a79347efc816784462384fd15d0d55891d9e72c18be45f9f1270"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_set_keys_strings_a_6d058153c4be",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_set_keys_strings.a",
+    "sha256": "66806bdd86ee03f65c087090ee0deccf4af931a6e10dab7e48841a82d5f01536"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_small_live_a_277d0cd6215e",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_live.a",
+    "sha256": "50ba372a50a0ffc2ff38d700cd9cd23bc6b6e4883388b3279ae4d15725e36b31"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_small_numbers_a_f81325b8bb65",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_numbers.a",
+    "sha256": "eb09d4c5e1dea5ede24494ccd685e369c8fd5d935bf8102a01702fc943088751"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_small_order_a_3a71bf163a4f",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_order.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_order.a",
+    "sha256": "b4c8db8ae849627d5961ef6f42c7c5c4f0a46ef817fc5345e3d8b1e0558c78f3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_map_small_set_live_a_8749d298ffbc",
+    "program": "internal/oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "path": "../oracle/testdata/map_set_keys/library_map_small_set_live.a",
+    "sha256": "3d11edde562e8362493a36706fa17694b060cbecfeb3d1fbcd14cf522bbc8a07"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_map_set_keys_library_set_inferred_a_237b45ca59ef",
+    "program": "internal/oracle/testdata/map_set_keys/library_set_inferred.a",
+    "path": "../oracle/testdata/map_set_keys/library_set_inferred.a",
+    "sha256": "cfee3821e11753691e89c35f82464bc4776a7f5a8b84e8f3b82e7c4b1edeeae8"
   }
 ]

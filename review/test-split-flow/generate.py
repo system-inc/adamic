@@ -65,6 +65,7 @@ for package in ['flow', 'fresh']:
     for group in rows:
         text += '\t{\n' + ''.join('\t\t' + name + ',\n' for _,name,_ in group) + '\t},\n'
     text += '}\n\n'
+    manifest += __import__("map_set_keys").generate(root, package, families)
     for group in rows:
         for index, (relative,name,helper) in enumerate(group):
             if package == "flow" and relative != "../oracle/testdata/timsort.a":
