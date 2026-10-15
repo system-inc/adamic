@@ -118,11 +118,11 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	// key the cache holds no read set for has nothing to fetch (Oct 14: asking the store for read sets was 96.7% of its
 	// billed reads, every one a 404).
 	if looked.directory != "" {
-		journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: looked.directory})
+		journalFound(nameKey, inputs.Name, looked.directory, looked.upstreams)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
-		for _, key := range looked.keys {
+		for index, key := range looked.keys {
 			outcome := "fetched"
 			product := filepath.Join(cache, key)
 			_, err := filled(product, described, func(scratch string) error {
@@ -143,7 +143,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			if err != nil {
 				return "", "", err
 			}
-			journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: product})
+			journalFound(nameKey, inputs.Name, product, looked.keyUpstreams[index])
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
