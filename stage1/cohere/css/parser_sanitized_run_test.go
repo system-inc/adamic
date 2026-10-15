@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // cssParserSanitizedAgreement is the agreement group's one sanitized native run: on Linux leak detection is on in it,
@@ -25,7 +26,7 @@ func cssParserReleaseMutant(t *testing.T) string {
 	t.Helper()
 	program := cssParserPreparedProgram(t, -1)
 	options := native.Options{Sanitize: true}
-	dir := cssParserProduct(t, cssParserInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -55,8 +56,8 @@ func TestCSSParserSanitizedRunCatchesALeak(t *testing.T) {
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux runs leak detection inside the sanitized run")
 	}
-	corpus := cssParserTopCorpus(t)
-	cases, want := writeCSSParserSlice(t, corpus, []int{0, 1, 2, 80})
+	corpus := oracles.LoadParserCorpus(t)
+	cases, want := oracles.WriteParserSlice(t, corpus, []int{0, 1, 2, 80})
 	answers := func(name string, result run) {
 		t.Helper()
 		if difference := firstDifference(string(result.stdout), want); difference != "" {
