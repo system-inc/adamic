@@ -83,8 +83,8 @@ var updateFamilyWrappers = flag.Bool("update-family-wrappers", false, "rewrite "
 
 const familyWrappersPath = "families_generated_test.go"
 
-// familyProbeVariable, set to <family>=<key> in a child of TestFamiliesCatchAPlantedCase, narrows every shard of that
-// family to the one case and has its runner plant the mutant there.
+// familyProbeVariable, set to <family>=<key> in a child of the family's TestFamiliesCatchAPlantedCase_ test, narrows
+// every shard of that family to the one case and has its runner plant the mutant there.
 const familyProbeVariable = "ADAMIC_FAMILY_PROBE"
 
 func familyShard(key string, shards int) int {
@@ -181,6 +181,7 @@ func familyWrappers(t *testing.T) []byte {
 		for _, test := range familyTests(family, nil) {
 			fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n", test.name, family.runner, test.shard)
 		}
+		fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\tcatchPlantedCase(t, %q)\n}\n", familyPlantedTestName(family), family.name)
 	}
 	formatted, err := format.Source(text.Bytes())
 	if err != nil {
@@ -375,44 +376,47 @@ func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
 
 // A mutant planted in one case must fail exactly the shard that owns it, through the real wrappers: a child process runs
 // every wrapper of the family with the probe set, so each shard but the owner has nothing to run, and the owner runs
-// the planted case with its runner's mutant.
-func TestFamiliesCatchAPlantedCase(t *testing.T) {
-	t.Parallel()
+// the planted case with its runner's mutant. Each family's probe is a top-level test of its own, generated beside its
+// wrappers (familyPlantedTestName), since one test over every family's probe was 58.9 s of its own on Cloud.
+func catchPlantedCase(t *testing.T, name string) {
+	t.Helper()
+	family := familyNamed(t, name)
+	if family.requires != "" && os.Getenv(family.requires) != "1" {
+		t.Skipf("set %s=1 to run %s", family.requires, family.name)
+	}
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, family := range families {
-		t.Run(family.name, func(t *testing.T) {
-			t.Parallel()
-			if family.requires != "" && os.Getenv(family.requires) != "1" {
-				t.Skipf("set %s=1 to run %s", family.requires, family.name)
-			}
-			owner := familyTestName(family, family.planted)
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-			defer cancel()
-			command := exec.CommandContext(ctx, executable, "-test.run=^"+family.name+"_", "-test.v", "-test.parallel=4", "-test.timeout=90s")
-			command.Env = append(os.Environ(), familyProbeVariable+"="+family.name+"="+family.planted)
-			output, err := command.CombinedOutput()
-			if ctx.Err() != nil {
-				t.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
-			}
-			var exit *exec.ExitError
-			if !errors.As(err, &exit) {
-				t.Fatalf("the probe of %s passed, want its planted case caught: %v\n%s", family.name, err, output)
-			}
-			failed := regexp.MustCompile(`(?m)^--- FAIL: (`+regexp.QuoteMeta(family.name)+`_\w+) `).FindAllSubmatch(output, -1)
-			caseFailed := family.oneProgram || strings.Contains(string(output), "--- FAIL: "+owner+"/"+family.planted+" ")
-			if len(failed) != 1 || string(failed[0][1]) != owner || !caseFailed {
-				t.Fatalf("want exactly %s to fail, on %s; failed: %q\n%s", owner, family.planted, failed, output)
-			}
-			// Failing for another reason, a build that broke or a runner that crashed, isn't catching the mutant.
-			if !strings.Contains(string(output), family.caught) {
-				t.Fatalf("%s failed, but not with %q, the failure its planted mutant makes:\n%s", owner, family.caught, output)
-			}
-			t.Logf("the mutant planted in %s failed exactly %s, with %q", family.planted, owner, family.caught)
-		})
+	owner := familyTestName(family, family.planted)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, executable, "-test.run=^"+family.name+"_", "-test.v", "-test.parallel=4", "-test.timeout=90s")
+	command.Env = append(os.Environ(), familyProbeVariable+"="+family.name+"="+family.planted)
+	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
 	}
+	var exit *exec.ExitError
+	if !errors.As(err, &exit) {
+		t.Fatalf("the probe of %s passed, want its planted case caught: %v\n%s", family.name, err, output)
+	}
+	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+regexp.QuoteMeta(family.name)+`_\w+) `).FindAllSubmatch(output, -1)
+	caseFailed := family.oneProgram || strings.Contains(string(output), "--- FAIL: "+owner+"/"+family.planted+" ")
+	if len(failed) != 1 || string(failed[0][1]) != owner || !caseFailed {
+		t.Fatalf("want exactly %s to fail, on %s; failed: %q\n%s", owner, family.planted, failed, output)
+	}
+	// Failing for another reason, a build that broke or a runner that crashed, isn't catching the mutant.
+	if !strings.Contains(string(output), family.caught) {
+		t.Fatalf("%s failed, but not with %q, the failure its planted mutant makes:\n%s", owner, family.caught, output)
+	}
+	t.Logf("the mutant planted in %s failed exactly %s, with %q", family.planted, owner, family.caught)
+}
+
+// familyPlantedTestName is the test that probes a family with its planted case: TestFamiliesCatchAPlantedCase_ and the
+// family's name after Test, never a name the family's own probe (^<name>_) would run.
+func familyPlantedTestName(family family) string {
+	return "TestFamiliesCatchAPlantedCase_" + strings.TrimPrefix(family.name, "Test")
 }
 
 // fixturePaths is every fixture's path, in the order fixtures runs them.
