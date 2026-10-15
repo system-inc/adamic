@@ -67,7 +67,8 @@ type readSet struct {
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
 // above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
 // for, by whether and as what it exists), product (a name key), tool (a path
-// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
+// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release: by its version, or
+// for a product go built, toolchain, by its bytes), system (a
 // machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case: whether the file system
 // is case-sensitive, which osvfs asks as it starts) or settings (the build settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
 // name what changed; the key hashes the full value.
@@ -315,6 +316,11 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		}
 		return "absent", nil
 	case "go":
+		// A go-built product's release, by its bytes (goToolchainEntry); any other process's read of the release, by its
+		// version.
+		if entry.Path == "toolchain" {
+			return goToolchainValue(), nil
+		}
 		return Tool("go", "version"), nil
 	case "system":
 		if !filepath.IsAbs(entry.Path) {

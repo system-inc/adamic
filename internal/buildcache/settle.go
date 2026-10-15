@@ -204,6 +204,9 @@ type traceFacts struct {
 	ran map[string]bool
 	// goCaches are goCache's spellings, as written and resolved, each without its leading slash (goCacheJoined).
 	goCaches []string
+	// goCommand is the release's go command, as it resolves: a process that runs it, and every process it starts, is
+	// go's (traceState.goTree).
+	goCommand string
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
@@ -225,6 +228,7 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		return nil, err
 	}
 	facts.goRoot, facts.goCache, facts.goModules = values["GOROOT"], values["GOCACHE"], values["GOMODCACHE"]
+	facts.goCommand = resolved(filepath.Join(facts.goRoot, "bin", "go"))
 	for _, spelling := range variants(facts.goCache) {
 		if trimmed := strings.Trim(filepath.ToSlash(spelling), "/"); trimmed != "" {
 			facts.goCaches = append(facts.goCaches, trimmed)
@@ -266,6 +270,12 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		}
 	}
 	return facts, nil
+}
+
+// isGoCommand says whether a program a process ran is the release's go command, by where it resolves: toolchain runs
+// it through ~/.adamic-tools, a link to the release's home.
+func (facts *traceFacts) isGoCommand(name string) bool {
+	return facts.goCommand != "" && (name == facts.goCommand || resolved(name) == facts.goCommand)
 }
 
 // inTree is name relative to the tree, when it is in it.
@@ -651,6 +661,14 @@ type traceState struct {
 	outside                    map[int]map[string]*pathReads
 	windows                    map[string]map[string]*pathReads
 	runOutside, runOutsideLast map[string]int
+	// goTree is each process that is go's: one that ran the release's go command, or that a process of go's started (its
+	// compile, link and vet, a C compiler cgo ran). goReads are their reads, which reads leaves out, so a product go built
+	// with no cgo is keyed by its declared reads (Inputs.Go) and every read of its build but go's, never by what go read,
+	// which depends on what its build cache held (#mmpt615). withoutGo and withoutGoLast are an ended build's snapshot
+	// without them, kept for a build any of whose processes was go's; every other read of a build sees them as before.
+	goTree                   map[int]bool
+	goReads                  map[int]map[string]*pathReads
+	withoutGo, withoutGoLast map[string]map[string]int
 }
 
 // A pathReads is a process's reads of one path: their kinds, and when it first and last read the path (0 for a path it
@@ -674,7 +692,8 @@ func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{},
-		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}}
+		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}, goTree: map[int]bool{}, goReads: map[int]map[string]*pathReads{},
+		withoutGo: map[string]map[string]int{}, withoutGoLast: map[string]map[string]int{}}
 	return state
 }
 
@@ -783,6 +802,7 @@ func (state *traceState) handle(call traceCall) {
 			state.directory[child] = state.directory[process]
 			state.reads[child] = map[string]*pathReads{}
 			state.keyingTree[child] = state.keying[call.pid] > 0 || state.keyingTree[process]
+			state.goTree[child] = state.goTree[process]
 		}
 		waiting := state.waiting[child]
 		delete(state.waiting, child)
@@ -826,6 +846,9 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		kind = readKind(call.call, rest, failed)
+		if (call.call == "execve" || call.call == "execveat") && !failed && state.facts.isGoCommand(name) {
+			state.goTree[process] = true
+		}
 		if kind == readWrite || kind&readWrite != 0 {
 			if second := secondTarget(call.call, rest, state.directory[process]); second != "" {
 				state.record(call.pid, process, second, readWrite)
@@ -887,10 +910,14 @@ func (state *traceState) record(pid, process int, name string, kind int) {
 			state.treeWrites[relative] = true
 		}
 	}
-	if state.reads[process] == nil {
-		state.reads[process] = map[string]*pathReads{}
+	reads := state.reads
+	if state.goTree[process] {
+		reads = state.goReads
 	}
-	noteRead(state.reads[process], name, kind, state.sequence)
+	if reads[process] == nil {
+		reads[process] = map[string]*pathReads{}
+	}
+	noteRead(reads[process], name, kind, state.sequence)
 	// Its place: inside every open build window whose owner is process or started it, else outside them all.
 	inside := false
 	for id, owner := range state.open {
@@ -941,7 +968,12 @@ func (state *traceState) marker(pid, process int, marker string) {
 			return
 		}
 		delete(state.open, id)
-		snapshot, last := state.snapshot(owner)
+		own, ownLast := state.snapshotOf(state.reads, owner)
+		goes, goesLast := state.snapshotOf(state.goReads, owner)
+		if len(goes) > 0 {
+			state.withoutGo[id], state.withoutGoLast[id] = own, ownLast
+		}
+		snapshot, last := joinedSnapshots(own, ownLast, goes, goesLast)
 		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
 		state.order = append(state.order, id)
 	}
@@ -952,7 +984,19 @@ func (state *traceState) marker(pid, process int, marker string) {
 // make output for it; what a sibling or a process above it wrote is an input like any other (a sibling's product, a
 // generated file). A product is always a product, whoever wrote it.
 func (state *traceState) snapshot(owner int) (map[string]int, map[string]int) {
-	return state.snapshotOf(state.reads, owner)
+	own, ownLast := state.snapshotOf(state.reads, owner)
+	goes, goesLast := state.snapshotOf(state.goReads, owner)
+	return joinedSnapshots(own, ownLast, goes, goesLast)
+}
+
+// joinedSnapshots is two snapshots as one, in new maps: each path's kinds from both, read last when either read it last.
+func joinedSnapshots(one, oneLast, other, otherLast map[string]int) (map[string]int, map[string]int) {
+	snapshot, last := maps.Clone(one), maps.Clone(oneLast)
+	for name, kinds := range other {
+		snapshot[name] |= kinds
+		last[name] = max(last[name], otherLast[name])
+	}
+	return snapshot, last
 }
 
 // snapshotOf is snapshot over processes' reads of one place, every read or those outside every build window.
@@ -1017,9 +1061,10 @@ func (state *traceState) exited(pid int) {
 	if !ok || process != pid {
 		return
 	}
-	reads, outside := state.reads[pid], state.outside[pid]
+	reads, outside, goes := state.reads[pid], state.outside[pid], state.goReads[pid]
 	delete(state.reads, pid)
 	delete(state.outside, pid)
+	delete(state.goReads, pid)
 	delete(state.directory, pid)
 	// A process that outlives the command has no live ancestor left to fold into: its reads join the run's, since the
 	// test read set is everything the run read, whenever it read it (Mentat's review of 8.8).
@@ -1033,11 +1078,18 @@ func (state *traceState) exited(pid int) {
 			}
 		}
 		state.joinRun(state.runReads, state.runLast, reads)
+		state.joinRun(state.runReads, state.runLast, goes)
 		state.joinRun(state.runOutside, state.runOutsideLast, outside)
 	}()
 	for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
 		if into, live := state.reads[ancestor]; live {
 			merge(into, reads)
+			if len(goes) > 0 {
+				if state.goReads[ancestor] == nil {
+					state.goReads[ancestor] = map[string]*pathReads{}
+				}
+				merge(state.goReads[ancestor], goes)
+			}
 			if state.outside[ancestor] == nil {
 				state.outside[ancestor] = map[string]*pathReads{}
 			}
@@ -1225,7 +1277,15 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
-		set, reason := state.measured(entry, state.ended[id], state.lastReads[id], products, productEnds)
+		reads, last, declared, reason := state.ended[id], state.lastReads[id], []readEntry(nil), ""
+		if len(entry.Go) > 0 {
+			reads, last, declared, reason = state.goBuilt(id, entry)
+		}
+		var set readSet
+		if reason == "" {
+			set, reason = state.measured(entry, reads, last, products, productEnds)
+			set.Entries = append(set.Entries, declared...)
+		}
 		if reason == "" {
 			own := processes[entry.Process]
 			name := recipeName(own)
@@ -1285,6 +1345,45 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 	os.Remove(filepath.Join(facts.cache, "pending", filepath.Base(facts.trace)))
 	sort.Strings(settlement.Refused)
 	return settlement
+}
+
+// goBuilt is the reads a product go built with no cgo is measured by (Inputs.Go, #mmpt615): its build's reads but those
+// of go's own processes, which depend on what go's build cache held, and in their place the tree paths its key declared,
+// each read as go reads it (a file's content, a directory's listing, whether a path exists), so they're classed as any
+// read is and a file git doesn't track refuses it. Its declared entries that aren't paths (the release) come back apart.
+func (state *traceState) goBuilt(id string, entry journalEntry) (map[string]int, map[string]int, []readEntry, string) {
+	reads, last := state.ended[id], state.lastReads[id]
+	if own, ok := state.withoutGo[id]; ok {
+		reads, last = own, state.withoutGoLast[id]
+	}
+	reads, last = maps.Clone(reads), maps.Clone(last)
+	var entries []readEntry
+	for _, line := range entry.Go {
+		kind, name, _ := strings.Cut(line, " ")
+		if kind+" "+name == goToolchainEntry {
+			entries = append(entries, readEntry{Kind: "go", Path: "toolchain"})
+			continue
+		}
+		if !local(name) {
+			return nil, nil, nil, fmt.Sprintf("its declared go read %q isn't inside the tree", line)
+		}
+		path := filepath.Join(state.facts.root, filepath.FromSlash(name))
+		switch kind {
+		case "content":
+			reads[path] |= readContent
+		case "listing":
+			reads[path] |= readListing
+		case "exists":
+			if _, err := os.Lstat(path); err != nil {
+				reads[path] |= readAbsent
+			} else {
+				reads[path] |= readStat
+			}
+		default:
+			return nil, nil, nil, fmt.Sprintf("its declared go read %q is of no kind a read set names", line)
+		}
+	}
+	return reads, last, entries, ""
 }
 
 // measured is a build's reads as a read set, or the reason it can't be one.

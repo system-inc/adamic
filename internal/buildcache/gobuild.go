@@ -1,10 +1,14 @@
 package buildcache
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -406,6 +411,20 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	}
 	files := map[string]bool{}
 	outsideHeaders := false
+	// What go reads of the tree beyond the files it compiles, for a build with no cgo (Inputs.Go): each package's
+	// directory, by its listing, so a file added to it moves the key; the files its build constraints leave out, since an
+	// edit to one can compile it in; every directory under a package that embeds, since a pattern can match a file added
+	// anywhere below it; and whether a go.mod sits between a package and its module's root, or a vendor directory at
+	// that root, either of which changes what go builds.
+	listings, ignored, existence := map[string]bool{}, map[string]bool{}, map[string]bool{}
+	embedding := map[string]bool{}
+	cgo := false
+	relativeTo := func(path string) (string, bool) {
+		if !inside(root, path) {
+			return "", false
+		}
+		return filepath.ToSlash(mustRelative(root, path)), true
+	}
 	add := func(directory string, names []string) error {
 		for _, name := range names {
 			// go list -test names some files absolutely, in go's own cache (a test variant's generated sources): not the
@@ -439,15 +458,47 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
 			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
+			IgnoredGoFiles, IgnoredOtherFiles, EmbedPatterns, SwigFiles, SwigCXXFiles  []string
 		}
 		if err := decoder.Decode(&listed); err == io.EOF {
 			break
 		} else if err != nil {
 			return Inputs{}, err
 		}
+		// A package that holds cgo under this build's settings and tags, the standard library's runtime/cgo and net
+		// among them, runs C, whose reads go's cache decides as it decides its own: such a build keeps its whole trace
+		// (Node's ruling on #mmpt615). It's a fact of the tree, the same with a warm Go cache as a cold one.
+		if len(listed.CgoFiles)+len(listed.SwigFiles)+len(listed.SwigCXXFiles) > 0 {
+			cgo = true
+		}
 		listed.Dir = respell(listed.Dir)
 		if listed.Standard || !inside(root, listed.Dir) {
 			continue
+		}
+		module := root
+		if listed.Module != nil && inside(root, respell(listed.Module.GoMod)) {
+			module = filepath.Dir(respell(listed.Module.GoMod))
+		}
+		if relative, ok := relativeTo(listed.Dir); ok {
+			listings[relative] = true
+			if len(listed.EmbedPatterns) > 0 {
+				embedding[relative] = true
+			}
+		}
+		for at := filepath.Dir(listed.Dir); inside(module, at) && at != module; at = filepath.Dir(at) {
+			if relative, ok := relativeTo(filepath.Join(at, "go.mod")); ok {
+				existence[relative] = true
+			}
+		}
+		if relative, ok := relativeTo(filepath.Join(module, "vendor")); ok {
+			existence[relative] = true
+		}
+		for _, names := range [][]string{listed.IgnoredGoFiles, listed.IgnoredOtherFiles} {
+			for _, name := range names {
+				if relative, ok := relativeTo(filepath.Join(listed.Dir, name)); ok {
+					ignored[relative] = true
+				}
+			}
 		}
 		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles} {
 			if err := add(listed.Dir, names); err != nil {
@@ -536,7 +587,200 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		inputs.Files = append(inputs.Files, name)
 	}
 	sort.Strings(inputs.Files)
+	if !cgo {
+		if inputs.Go, err = goReads(root, inputs.Files, ignored, listings, embedding, existence); err != nil {
+			return Inputs{}, err
+		}
+	}
 	return inputs, nil
+}
+
+// goToolchainEntry is the read set entry for the Go release a go-built product is made by, valued by its bytes
+// (goToolchainValue).
+const goToolchainEntry = "go toolchain"
+
+// goReads is Inputs.Go for a build with no cgo: each file it compiles (a directory, every file and directory under it
+// the tree carries), each file its build constraints leave out, each package directory and every directory under one
+// that embeds by its listing, each path whose presence would change the build (a go.mod between a package and its
+// module's root, a vendor directory at that root) by whether and as what it exists, and the Go release, as sorted
+// "<kind> <path>" lines.
+func goReads(root string, files []string, ignored, listings, embedding, existence map[string]bool) ([]string, error) {
+	lines := map[string]bool{goToolchainEntry: true}
+	walk := func(relative string, each func(path string, entry fs.DirEntry, relative string)) error {
+		start := filepath.Join(root, filepath.FromSlash(relative))
+		return filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if entry.Name() == ".git" || path != start && !Tracked(root, path, entry.IsDir()) {
+				if entry.IsDir() {
+					return filepath.SkipDir
+				}
+				return nil
+			}
+			each(path, entry, filepath.ToSlash(mustRelative(root, path)))
+			return nil
+		})
+	}
+	for _, name := range files {
+		info, err := os.Stat(filepath.Join(root, filepath.FromSlash(name)))
+		if err != nil || !info.IsDir() {
+			lines["content "+name] = true
+			continue
+		}
+		if err := walk(name, func(_ string, entry fs.DirEntry, relative string) {
+			if entry.IsDir() {
+				lines["listing "+relative] = true
+			} else {
+				lines["content "+relative] = true
+			}
+		}); err != nil {
+			return nil, err
+		}
+	}
+	for name := range ignored {
+		lines["content "+name] = true
+	}
+	for directory := range listings {
+		lines["listing "+directory] = true
+	}
+	for directory := range embedding {
+		if err := walk(directory, func(_ string, entry fs.DirEntry, relative string) {
+			if entry.IsDir() {
+				lines["listing "+relative] = true
+			}
+		}); err != nil {
+			return nil, err
+		}
+	}
+	for name := range existence {
+		lines["exists "+name] = true
+	}
+	return slices.Sorted(maps.Keys(lines)), nil
+}
+
+// goToolchainPrograms are the release's programs a go build runs: the go command, and each tool under GOTOOLDIR.
+var goToolchainPrograms = []string{"compile", "link", "asm", "cgo", "vet"}
+
+// goToolchainValues holds goToolchainValue's answer once a process has it, as a toolRun holds a tool's report.
+var goToolchainValues toolRun
+
+// goToolchainValue is the Go release by its bytes (#mmpt615, Node's must): the go command, the compile, link, asm, cgo
+// and vet tools, and every file of its src and pkg/include, each by its path in the release, kind, executable bit and
+// content, hashed whole, so two boxes value one release alike wherever it's installed and a release that differs in
+// one byte of its standard library is another. A go-built product's read set names it in place of what go's own
+// processes read of the release. It's hashed once a box and kept beside the build cache's machine values under a stamp
+// of the release's programs and its VERSION file (each one's inode, size and modification and change times): a release
+// is installed whole, replacing those, and stamping every file under a trace stopped the process once a file (about
+// 15,000), each lookup that valued it. An edit in place to src that touches none of them isn't seen.
+func goToolchainValue() string {
+	goToolchainValues.once.Do(func() {
+		keying(func() { goToolchainValues.value = goToolchainValueKeyed() })
+	})
+	return goToolchainValues.value
+}
+
+func goToolchainValueKeyed() string {
+	output, err := toolchain.Command("go", "env", "-json", "GOROOT", "GOTOOLDIR").Output()
+	if err != nil {
+		return "go toolchain unreadable: go env: " + err.Error()
+	}
+	var values map[string]string
+	if err := json.Unmarshal(output, &values); err != nil {
+		return "go toolchain unreadable: go env: " + err.Error()
+	}
+	cache, err := cacheLocation()
+	if err != nil {
+		cache = ""
+	}
+	return goToolchainValueAt(values["GOROOT"], values["GOTOOLDIR"], cache)
+}
+
+// goToolchainValueAt is goToolchainValue for the release at release with its tools in tools, kept under cache's machine
+// values (none when cache is empty).
+func goToolchainValueAt(release, tools, cache string) string {
+	programs := []string{filepath.Join(release, "bin", "go")}
+	for _, name := range goToolchainPrograms {
+		programs = append(programs, filepath.Join(tools, name))
+	}
+	stamp := sha256.New()
+	for _, path := range append(slices.Clone(programs), filepath.Join(release, "VERSION")) {
+		info, err := os.Stat(path)
+		if err != nil {
+			return "go toolchain unreadable: " + err.Error()
+		}
+		changed, _ := changeTime(info)
+		var inode uint64
+		if system, ok := info.Sys().(*syscall.Stat_t); ok {
+			inode = uint64(system.Ino)
+		}
+		fmt.Fprintf(stamp, "%s %d %d %d %d\n", path, inode, info.Size(), info.ModTime().UnixNano(), changed.UnixNano())
+	}
+	var kept string
+	if cache != "" {
+		kept = filepath.Join(cache, "machine", "go-toolchain-"+hex.EncodeToString(stamp.Sum(nil)))
+		if value, err := os.ReadFile(kept); err == nil && len(value) > 0 {
+			return string(value)
+		}
+	}
+	hash := sha256.New()
+	file := func(path, name string, info fs.FileInfo) error {
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(hash, "file %q %t %x\n", name, info.Mode()&0o111 != 0, sha256.Sum256(content))
+		return nil
+	}
+	for index, path := range programs {
+		info, err := os.Stat(path)
+		if err == nil {
+			err = file(path, "program "+append([]string{"go"}, goToolchainPrograms...)[index], info)
+		}
+		if err != nil {
+			return "go toolchain unreadable: " + err.Error()
+		}
+	}
+	for _, directory := range []string{"src", filepath.Join("pkg", "include")} {
+		err := filepath.WalkDir(filepath.Join(release, directory), func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			name := filepath.ToSlash(mustRelative(release, path))
+			info, err := entry.Info()
+			if err != nil {
+				return err
+			}
+			switch {
+			case entry.IsDir():
+				fmt.Fprintf(hash, "directory %q\n", name)
+			case info.Mode()&fs.ModeSymlink != 0:
+				target, err := os.Readlink(path)
+				if err != nil {
+					return err
+				}
+				fmt.Fprintf(hash, "link %q %q\n", name, target)
+			case info.Mode().IsRegular():
+				return file(path, name, info)
+			default:
+				fmt.Fprintf(hash, "other %q %s\n", name, info.Mode().Type())
+			}
+			return nil
+		})
+		if err != nil {
+			return "go toolchain unreadable: " + err.Error()
+		}
+	}
+	value := "go toolchain " + hex.EncodeToString(hash.Sum(nil))
+	if kept != "" && os.MkdirAll(filepath.Dir(kept), 0o755) == nil {
+		if temporary, err := os.CreateTemp(filepath.Dir(kept), ".value-"); err == nil {
+			_, writeErr := temporary.WriteString(value)
+			if closeErr := temporary.Close(); writeErr != nil || closeErr != nil || os.Rename(temporary.Name(), kept) != nil {
+				os.Remove(temporary.Name())
+			}
+		}
+	}
+	return value
 }
 
 // The planner's index of go requests' keys (#pc0jvv4): ADAMIC_BUILD_INPUTS names a file of JSON lines, each a request's

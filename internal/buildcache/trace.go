@@ -100,6 +100,9 @@ type journalEntry struct {
 	Inputs     string   `json:"inputs,omitempty"`
 	Declared   []string `json:"declared,omitempty"`
 	Root       string   `json:"root,omitempty"`
+	// Go is a built product's Inputs.Go: a product go built from packages with no cgo, keyed by these and by every read of
+	// its build but go's own processes'.
+	Go []string `json:"go,omitempty"`
 }
 
 var journalProcess sync.Once

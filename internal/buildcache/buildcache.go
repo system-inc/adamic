@@ -205,7 +205,7 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 
 // journalBuilt journals a traced build where its product now is, for Settle to key and place.
 func journalBuilt(root string, inputs Inputs, nameKey, id, directory string) {
-	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root}
+	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Go: inputs.Go}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)
 }
