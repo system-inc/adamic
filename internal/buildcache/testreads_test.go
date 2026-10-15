@@ -3,6 +3,7 @@ package buildcache
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -44,8 +45,8 @@ func findTestReads(t *testing.T) Finding {
 	return findings[0]
 }
 
-// A test read set is the whole run's reads (#sfqdxvy): what the test read outside any build (its data file) as well as
-// what its build read. cmd/find finds it on an unchanged tree, still finds it after a change to a file the run never
+// A test read set is the whole run's reads (#sfqdxvy): what the test read outside any build (its data file), and what
+// its build read through its product's key (#mmpt615). cmd/find finds it on an unchanged tree, still finds it after a change to a file the run never
 // read, and misses it after a change to either file it did read, so a test that only found its products is run again
 // exactly when something it read changed. Mutant that fails it: the set without the reads outside every build (notes.txt
 // dropped), which finds it after the data file changed.
@@ -168,5 +169,128 @@ func TestATestReadSetsMarkerNeverWritesThroughALink(t *testing.T) {
 	}
 	if content, _ := os.ReadFile(filepath.Join(marker, "test-read-set")); string(content) != testReadSetKey+"\n" {
 		t.Fatalf("the marker reads %q", content)
+	}
+}
+
+// stat is a stat of name that found it.
+func (r *rig) stat(pid int, name string) {
+	r.add(pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFREG|0644, st_size=7, ...}, 0) = 0`, r.path(name))
+}
+
+// testSet is the test read set the settlement recorded: its key and its entries, newest first.
+func testSet(t *testing.T, r *rig, settlement Settlement) (string, []string) {
+	t.Helper()
+	line := testReadsReport(settlement)
+	if line == nil {
+		t.Fatalf("no test read set: %q", settlement.TestReads)
+	}
+	return line.Key, r.entries(t, testReadSetKey)
+}
+
+// A test that built its product and one that found it record one test read set (#mmpt615, Node's ruling): the build's
+// reads are its product's, named by the product's key, never the test's, so the test's own stat of a file its build
+// read in full is the same entry either way. #s57yq6y's A/B moved 111 test sets on exactly this, each by its products'
+// reads alone. Mutant that fails it: the test set taking every read of the run, windows included.
+// Not parallel: newRig.
+func TestATestReadSetIsTheSameWhetherItsProductWasBuiltOrFound(t *testing.T) {
+	r := testReadsRig(t)
+	built := Product(t, port, building("built"))
+	r.stat(r.pid, "source/a.c")
+	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
+	r.open(r.pid, filepath.Join(built, "product"))
+	r.add(r.pid, "+++ exited with 0 +++")
+	builtKey, builtEntries := testSet(t, r, r.settle(t))
+	r.retrace(t, "found")
+	journalProcess = sync.Once{}
+	forgetHeldForLife()
+	found := Product(t, port, building("built"))
+	if strings.Contains(found, "pending") {
+		t.Fatalf("the second run built port again, at %s", found)
+	}
+	r.stat(r.pid, "source/a.c")
+	r.open(r.pid, filepath.Join(found, "product"))
+	r.add(r.pid, "+++ exited with 0 +++")
+	foundKey, foundEntries := testSet(t, r, r.settle(t))
+	if foundKey != builtKey {
+		t.Fatalf("the found run's test set is %s, the built run's %s:\nbuilt %q\nfound %q", foundKey[:12], builtKey[:12], builtEntries, foundEntries)
+	}
+	if !slices.Contains(builtEntries, "product key "+NameKey(r.root, port)) || slices.Contains(builtEntries, "content include/x.h") {
+		t.Fatalf("the built run's test set %q: want port by its key, and none of its build's reads", builtEntries)
+	}
+}
+
+// A product a test used stands in its test read set by its key, so the test's key moves with every file the product's
+// build read though the test's own reads don't (Node's guard on #mmpt615), whether the run built the product or found
+// it. By its key and never its bytes: the window a test set leaves out holds every read of its owner's process, a
+// parallel subtest's too, so a product rebuilt to the same bytes from a changed file still runs the test. Mutants that
+// each fail it: the entry valued by the product's bytes; no entry for a product the run built; a found product left as
+// a product entry, by its bytes.
+// Not parallel: newRig.
+func TestATestReadSetMovesWithItsProductsInputsByItsKey(t *testing.T) {
+	for _, used := range []string{"built", "found"} {
+		t.Run(used, func(t *testing.T) {
+			r := testReadsRig(t)
+			if used == "found" {
+				// An earlier run builds port, recording no test set, and the test's run finds it and reads it.
+				t.Setenv("ADAMIC_TRACE_TEST_KEY", "")
+				Product(t, port, building("built"))
+				r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
+				r.add(r.pid, "+++ exited with 0 +++")
+				r.settle(t)
+				r.retrace(t, "test")
+				t.Setenv("ADAMIC_TRACE_TEST_KEY", testReadSetKey)
+				journalProcess = sync.Once{}
+				forgetHeldForLife()
+				r.open(r.pid, filepath.Join(Product(t, port, building("built")), "product"))
+			} else {
+				// The run builds port and never reads its directory after, so only the build stands port in the set.
+				Product(t, port, building("built"))
+				r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
+			}
+			r.add(r.pid, "+++ exited with 0 +++")
+			testSet(t, r, r.settle(t))
+			t.Setenv("ADAMIC_BUILD_TRACE", "")
+			if finding := findTestReads(t); finding.Outcome != FindingFound {
+				t.Fatalf("an unchanged tree: %+v", finding)
+			}
+			// include/x.h, which only port's build read, changes, and another traced run builds port again to the same
+			// bytes.
+			write(t, r.root, "include/x.h", "#define X 2\n")
+			gitIn(t, r.root, "commit", "-q", "-am", "x")
+			forgetTracked()
+			r.retrace(t, "rebuilt")
+			t.Setenv("ADAMIC_TRACE_TEST_KEY", "")
+			journalProcess = sync.Once{}
+			forgetHeldForLife()
+			Product(t, port, building("built"))
+			r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
+			r.add(r.pid, "+++ exited with 0 +++")
+			if settlement := r.settle(t); len(settlement.Settled) != 1 {
+				t.Fatalf("port wasn't settled again: %q, refused %q", settlement.Settled, settlement.Refused)
+			}
+			t.Setenv("ADAMIC_BUILD_TRACE", "")
+			if finding := findTestReads(t); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, "product key") {
+				t.Fatalf("port rebuilt to the same bytes from a changed include/x.h, which only its build read: %+v", finding)
+			}
+		})
+	}
+}
+
+// A build that doesn't settle has no key to stand for its window, so the window's reads stay in the test read set: a
+// read no key can name holds the test's set back as it holds the product's (#mmpt615). Mutant that fails it: a
+// refused build's window left out, which records a test set missing what the run read.
+// Not parallel: newRig.
+func TestARefusedBuildsReadsStayInTheTestReadSet(t *testing.T) {
+	r := testReadsRig(t)
+	write(t, r.root, "scratch.txt", "untracked\n")
+	Product(t, port, building("built"))
+	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "scratch.txt") })
+	r.add(r.pid, "+++ exited with 0 +++")
+	settlement := r.settle(t)
+	if len(settlement.Refused) != 1 {
+		t.Fatalf("port read an untracked file and wasn't refused: settled %q", settlement.Settled)
+	}
+	if !strings.HasPrefix(settlement.TestReads, "no test read set: ") || !strings.Contains(settlement.TestReads, "scratch.txt") || testReadsReport(settlement) != nil {
+		t.Fatalf("a refused build's untracked read: test reads %q", settlement.TestReads)
 	}
 }
