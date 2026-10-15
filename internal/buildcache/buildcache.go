@@ -220,15 +220,11 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 		return false, err
 	}
-	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	unlock, err := lockTarget(target)
 	if err != nil {
 		return false, err
 	}
-	defer lock.Close()
-	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
-		return false, err
-	}
-	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+	defer unlock()
 	if _, err = os.Stat(target); err == nil {
 		return false, nil
 	}
@@ -247,9 +243,32 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 	}
 	if err = os.Rename(scratch, target); err != nil {
 		os.RemoveAll(scratch)
+		// A product another placer put there whole is the product: found, not a failure (#bcae1e2).
+		if _, found := os.Stat(target); found == nil {
+			return false, nil
+		}
 		return false, err
 	}
 	return true, nil
+}
+
+// lockTarget takes target's lock, which every process that places a product at target holds from its look to its
+// rename: filled while it fills, and Settle while it places a settled build (placeSettled). Without it, a fetch and a
+// settlement of one key each saw it missing, and the one whose rename lost failed its test with "file exists" while the
+// product sat there (#bcae1e2). It returns the release.
+func lockTarget(target string) (func(), error) {
+	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	if err != nil {
+		return nil, err
+	}
+	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+		lock.Close()
+		return nil, err
+	}
+	return func() {
+		syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+		lock.Close()
+	}, nil
 }
 
 // keyVersion is how buildcache builds and holds what Key addresses, the one input no product declares: a change to what
