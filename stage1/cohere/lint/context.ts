@@ -108,8 +108,9 @@ export class RuleContext {
     node(index: number): ParseNode {
         return this.parser.node(index);
     }
+    // A manifest rule set has a comma at each end, even when it selects one rule.
     enabled(name: string): boolean {
-        return this.selected === 'all' || this.selected === name;
+        return this.selected === 'all' || this.selected === name || this.selected.includes(',' + name + ',');
     }
     start(index: number): number {
         const node = this.node(index);

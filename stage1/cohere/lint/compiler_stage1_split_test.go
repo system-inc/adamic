@@ -46,7 +46,11 @@ func compilerAgreementBucket(key string, count int) int {
 	return int(h.Sum64() % uint64(count))
 }
 
-type compilerAgreementCase struct{ path, key, rule string }
+type compilerAgreementCase struct {
+	path, key, rule string
+	// group is a one-based checker side-4 part; zero is an ordinary corpus row.
+	group int
+}
 
 var compilerAgreementCorpusMu sync.Mutex
 var compilerAgreementCorpus []compilerAgreementCase
@@ -96,10 +100,10 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 				t.Fatalf("duplicate file/rule pair %s", pair)
 			}
 			seen[pair] = true
-			cases = append(cases, compilerAgreementCase{path, key, d.Name})
+			cases = append(cases, compilerAgreementCase{path: path, key: key, rule: d.Name})
 		}
 		// Preserve the combined-rule interaction and full fixed-output comparison.
-		cases = append(cases, compilerAgreementCase{path, key, "all"})
+		cases = append(cases, compilerAgreementCase{path: path, key: key, rule: "all"})
 	}
 	compilerAgreementCorpus = cases
 	return cases
@@ -124,7 +128,7 @@ func compilerRegistryListedOnce(sources []string, registry string) error {
 
 func compilerAgreementOwner(c compilerAgreementCase) int {
 	if c.key == compilerAgreementCheckerKey {
-		if c.rule == "all" {
+		if c.rule == "all" || c.group > 0 {
 			return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups
 		}
 		// Checker fix output is compared per rule; every selected rule retains its
@@ -266,7 +270,7 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	}
 	compilerAgreementCheckUnits(t, cases)
 
-	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix cases (%d active sanitized, one pending #5ggwf8c); %d checker per-rule fix cases, each also its own sanitized test; %d numbered shards", pairs, fixes, fixes-1, checkerFixes, testCompilerAndStage1AgreeShards)
+	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix cases (%d sanitized, with checker/all in consecutive groups); %d checker per-rule fix cases, each also its own sanitized test; %d numbered shards", pairs, fixes, fixes, checkerFixes, testCompilerAndStage1AgreeShards)
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
@@ -438,6 +442,11 @@ func compilerAgreementSubShard(t *testing.T, shard, part int) {
 	owner, side := shard/compilerAgreementSides, shard%compilerAgreementSides
 	if side != 4 || part < 0 || part >= compilerAgreementSide4Parts(owner) {
 		t.Fatalf("shard %d part %d is no split side-4 owner's sub-shard", shard, part)
+	}
+	if owner == compilerAgreementCheckerAllOwner {
+		got, want := compilerAgreementCheckerGroupRun(t, part, compilerAgreementNative(t, true))
+		compilerAgreementCompare(t, got.output, want.output)
+		return
 	}
 	unit := compilerAgreementSubUnit(owner, part)
 	if os.Getenv("ADAMIC_COMPILER_AGREEMENT_PROBE") == "1" {
