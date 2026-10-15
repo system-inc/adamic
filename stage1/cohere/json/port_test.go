@@ -234,6 +234,122 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 
+// jsonPortBinaries are what a port agreement runs: the Go oracle, the lowered port's TypeScript entry and its
+// JavaScript backend (both through the Node runner), and the release and sanitized native ports.
+type jsonPortBinaries struct {
+	oracle, entry, script, release, sanitized, runner string
+}
+
+// jsonPortAgree holds the port to the Go oracle over items, as a top shard and a dedicated owner both check them, and
+// returns the Go oracle's answers. With ADAMIC_JSON_ARTIFACTS set, the cases and each side's output go under
+// artifactName.
+func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, artifactName string) string {
+	t.Helper()
+	input, _ := protocol(items, make([]answer, len(items)))
+	path := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+		t.Fatal(err)
+	}
+	// Sides 0 to 2 are the Go oracle, Node and release; side 3 on is checked against release too.
+	type side struct {
+		name, binary           string
+		arguments, environment []string
+	}
+	sanitizedSide := side{"ASan/UBSan", binaries.sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}}
+	if runtime.GOOS == "linux" {
+		sanitizedSide = side{"ASan/UBSan/LeakSanitizer", binaries.sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}}
+	}
+	sides := []side{
+		{"Go", binaries.oracle, []string{"--cases", path}, nil},
+		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", binaries.runner, binaries.entry, "--cases", path}, nil},
+		{"release", binaries.release, []string{"--cases", path}, nil},
+		sanitizedSide,
+		{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", binaries.runner, binaries.script, "--cases", path}, nil},
+	}
+	waves := [][]int{{0, 1, 2, 4}, {3}}
+	results := make([]chunkResult, len(sides))
+	timings := make([]time.Duration, len(sides))
+	// The sanitizer processes retain substantially more memory than the
+	// other sides. Run them together after the first wave has exited,
+	// so an isolated four-CPU unit does not compete with Node/Go heaps.
+	// Within a wave, at most the test's share at once (testguard.Each).
+	for _, wave := range waves {
+		var present []int
+		for _, side := range wave {
+			if side < len(sides) {
+				present = append(present, side)
+			}
+		}
+		testguard.Each(len(present), func(index int) {
+			side := present[index]
+			s := sides[side]
+			began := time.Now()
+			results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
+			timings[side] = time.Since(began)
+		})
+	}
+	// A sanitized side's time is its run alone, and its wait for the memory budget is said beside it: the wait
+	// is other shards' work, the one part of this test's 90 s it doesn't control (#q2qjes8).
+	for side, timing := range timings {
+		if sides[side].name == "" {
+			continue
+		}
+		if wait := results[side].result.admissionWait; wait > 0 {
+			t.Logf("%s %.3fs; admission waited %.3fs", sides[side].name, (timing - wait).Seconds(), wait.Seconds())
+			continue
+		}
+		t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+	}
+	reference := results[0]
+	if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
+		t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
+	}
+	expected := string(reference.result.stdout)
+	if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
+		t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
+	}
+	for side := 1; side < len(sides); side++ {
+		if sides[side].name == "" {
+			continue
+		}
+		if results[side].err != nil {
+			t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
+		}
+		compare(t, t.Name()+" "+sides[side].name, results[side].result, expected, items)
+		if side >= 3 {
+			compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
+		}
+	}
+	if runtime.GOOS != "linux" {
+		report := execute(t, nil, "leaks", "--atExit", "--", binaries.release, "--cases", path)
+		if report.exitCode != 0 {
+			t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
+		}
+	}
+	if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+		// Calibration uses the same per-case Go answers as mandatory comparisons.
+		answers, err := jsonPortAnswers(expected, len(items))
+		if err != nil {
+			t.Fatal(err)
+		}
+		calibrateNativeCases(t, binaries.sanitized, items, answers)
+	}
+	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+		directory := filepath.Join(artifacts, artifactName)
+		if err := os.MkdirAll(directory, 0755); err != nil {
+			t.Fatal(err)
+		}
+		writeJSON(t, filepath.Join(directory, "cases.json"), items)
+		for side, s := range sides {
+			name := strings.NewReplacer("/", "-", " ", "-").Replace(s.name)
+			if err := os.WriteFile(filepath.Join(directory, name+".txt"), results[side].result.stdout, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	return expected
+}
+
 // jsonPortTopShard is a top shard's agreement: the Go oracle, Node, release, the sanitized port and the JavaScript
 // backend. The sanitized port runs once, with LeakSanitizer on where it runs (Linux): one detect_leaks=1 run reports
 // every ASan/UBSan error a detect_leaks=0 run does, plus leaks, so the separate leak test that ran it again, and the Go
@@ -246,8 +362,8 @@ func jsonPortTopShard(t *testing.T, target int) {
 	defer deadline.Stop()
 	parentStart := time.Now()
 	allCases, allShards := jsonTopCorpus(t)
-	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
-	if err := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); err != nil {
+	cases, shards, dedicated := jsonPortDedicatedPartition(allCases)
+	if err := jsonPortDedicatedUnion(allCases, cases, shards, dedicated); err != nil {
 		t.Fatal(err)
 	}
 	enumeratedUnits := len(shards)
@@ -293,6 +409,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	binaries := jsonPortBinaries{oracle: oracle, entry: entry, script: script, release: release, sanitized: sanitized, runner: runner}
 	references := make([]string, len(shards))
 	for ordinal, shard := range shards {
 		if ordinal != target || ordinal%count != index {
@@ -305,109 +422,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 				t.Log("empty hash bucket")
 				return
 			}
-			input, _ := protocol(items, make([]answer, len(items)))
-			path := filepath.Join(t.TempDir(), "cases.txt")
-			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
-				t.Fatal(err)
-			}
-			// Sides 0 to 2 are the Go oracle, Node and release; side 3 on is checked against release too.
-			type side struct {
-				name, binary           string
-				arguments, environment []string
-			}
-			sanitizedSide := side{"ASan/UBSan", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}}
-			if runtime.GOOS == "linux" {
-				sanitizedSide = side{"ASan/UBSan/LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}}
-			}
-			sides := []side{
-				{"Go", oracle, []string{"--cases", path}, nil},
-				{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", path}, nil},
-				{"release", release, []string{"--cases", path}, nil},
-				sanitizedSide,
-				{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", runner, script, "--cases", path}, nil},
-			}
-			waves := [][]int{{0, 1, 2, 4}, {3}}
-			results := make([]chunkResult, len(sides))
-			timings := make([]time.Duration, len(sides))
-			// The sanitizer processes retain substantially more memory than the
-			// other sides. Run them together after the first wave has exited,
-			// so an isolated four-CPU unit does not compete with Node/Go heaps.
-			// Within a wave, at most the test's share at once (testguard.Each).
-			for _, wave := range waves {
-				var present []int
-				for _, side := range wave {
-					if side < len(sides) {
-						present = append(present, side)
-					}
-				}
-				testguard.Each(len(present), func(index int) {
-					side := present[index]
-					s := sides[side]
-					began := time.Now()
-					results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
-					timings[side] = time.Since(began)
-				})
-			}
-			// A sanitized side's time is its run alone, and its wait for the memory budget is said beside it: the wait
-			// is other shards' work, the one part of this test's 90 s it doesn't control (#q2qjes8).
-			for side, timing := range timings {
-				if sides[side].name == "" {
-					continue
-				}
-				if wait := results[side].result.admissionWait; wait > 0 {
-					t.Logf("%s %.3fs; admission waited %.3fs", sides[side].name, (timing - wait).Seconds(), wait.Seconds())
-					continue
-				}
-				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
-			}
-			reference := results[0]
-			if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
-				t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
-			}
-			expected := string(reference.result.stdout)
-			references[ordinal] = expected
-			if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
-				t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
-			}
-			for side := 1; side < len(sides); side++ {
-				if sides[side].name == "" {
-					continue
-				}
-				if results[side].err != nil {
-					t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
-				}
-				compare(t, t.Name()+" "+sides[side].name, results[side].result, expected, items)
-				if side >= 3 {
-					compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
-				}
-			}
-			if runtime.GOOS != "linux" {
-				report := execute(t, nil, "leaks", "--atExit", "--", release, "--cases", path)
-				if report.exitCode != 0 {
-					t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
-				}
-			}
-			if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
-				// Calibration uses the same per-case Go answers as mandatory comparisons.
-				answers, err := jsonPortAnswers(expected, len(items))
-				if err != nil {
-					t.Fatal(err)
-				}
-				calibrateNativeCases(t, sanitized, items, answers)
-			}
-			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
-				directory := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", ordinal))
-				if err := os.MkdirAll(directory, 0755); err != nil {
-					t.Fatal(err)
-				}
-				writeJSON(t, filepath.Join(directory, "cases.json"), items)
-				for side, s := range sides {
-					name := strings.NewReplacer("/", "-", " ", "-").Replace(s.name)
-					if err := os.WriteFile(filepath.Join(directory, name+".txt"), results[side].result.stdout, 0644); err != nil {
-						t.Fatal(err)
-					}
-				}
-			}
+			references[ordinal] = jsonPortAgree(t, items, binaries, fmt.Sprintf("shard-%04d", ordinal))
 			t.Logf("case range [%d:%d]; %d cases; execution %.3fs; shared setup waited %.3fs; execution plus locally measured builds %.3fs", shard.start, shard.end, len(items), time.Since(start).Seconds(), setupTime.Seconds(), (time.Since(start) + setupTime).Seconds())
 		}(t)
 	}
