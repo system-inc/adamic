@@ -32,8 +32,10 @@ var compilerAgreementCheckerSanitizedWrapper = regexp.MustCompile(`(?m)^func ` +
 // one core: two parts put it beside transformers/destructuring.ts and a small file, about 12 s, and its fourth file
 // apart, and no count up to its four files gives program.ts a part to itself without an empty one. The fix buckets
 // whose one file alone is over 15 s (types.ts, utilities.ts, parser.ts) stay whole. Each part is TestCompilerAndStage1Agree_<shard>_<part>, and the owner's numbered side-4
-// wrapper is gone. A future heavy owner joins by number.
-var compilerAgreementSide4Split = []struct{ Owner, Parts int }{{289, 4}, {293, 4}, {385, 4}, {673, 4}, {1009, 4}, {1215, 2}}
+// wrapper is gone. Checker/all (owner 1312) uses consecutive measured-price groups
+// instead of the hash: its one original row expands only on side 4. A future
+// heavy owner joins by number.
+var compilerAgreementSide4Split = []struct{ Owner, Parts int }{{289, 4}, {293, 4}, {385, 4}, {673, 4}, {1009, 4}, {1215, 2}, {compilerAgreementCheckerAllOwner, compilerAgreementCheckerGroupCount}}
 
 // compilerAgreementMaxParts bounds a split owner's parts, so every sub-unit has its own number past the shards'.
 const compilerAgreementMaxParts = 16
@@ -52,6 +54,10 @@ func compilerAgreementSide4Parts(owner int) int {
 // owner is: the owner's cases share their key's and rule's fnv buckets, and fnv-1a's low bits follow from its input's
 // low bits, so fnv's modulo put every case of four of the five owners in one part (Cloud, Oct 14).
 func compilerAgreementPart(c compilerAgreementCase, parts int) int {
+	// Combined checker groups already carry their production-order part.
+	if c.group > 0 {
+		return c.group - 1
+	}
 	sum := sha256.Sum256([]byte(c.key + "\t" + c.rule))
 	return int(binary.BigEndian.Uint64(sum[:8]) % uint64(parts))
 }
@@ -62,7 +68,7 @@ func compilerAgreementSubUnit(owner, part int) int {
 }
 
 func compilerAgreementUnit(c compilerAgreementCase, side int) int {
-	if c.key == compilerAgreementCheckerKey && c.rule != "all" && side == 4 {
+	if c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && side == 4 {
 		return compilerAgreementRuleOwned
 	}
 	owner := compilerAgreementOwner(c)
@@ -211,11 +217,6 @@ func TestProduct_CompilerAgreementLowered(t *testing.T) {
 	compilerAgreementMeasureProduct(t, compilerAgreementLowered)
 }
 
-func TestCompilerAndStage1Agree_6564(t *testing.T) {
-	t.Parallel()
-	t.Skip("awaits devtools/heavy-units: pending #5ggwf8c; combined sanitized checker.ts/all run moved to that heavy-unit task, not dropped; #m9es0rv adds the heavy census class and budget exemption")
-}
-
 func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 	t.Helper()
 	var source []byte
@@ -289,15 +290,18 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 	seen := map[string]bool{}
 	owned := map[string]int{}
 	subCases := map[int]int{}
-	for _, c := range cases {
-		for side := compilerAgreementFirstSide; side < compilerAgreementSides; side++ {
+	for side := compilerAgreementFirstSide; side < compilerAgreementSides; side++ {
+		for _, c := range compilerAgreementSideCases(t, cases, side) {
 			unit := compilerAgreementUnit(c, side)
+			if c.group > 0 && (side != 4 || c.key != compilerAgreementCheckerKey || c.group > compilerAgreementCheckerGroupCount || unit != compilerAgreementSubUnit(compilerAgreementCheckerAllOwner, c.group-1)) {
+				t.Fatalf("invalid combined checker group %d on side %d: unit %d", c.group, side, unit)
+			}
 			pair := fmt.Sprintf("%s\t%s\t%d", c.key, c.rule, side)
 			if seen[pair] {
 				t.Fatalf("duplicate coverage for %s", pair)
 			}
 			seen[pair] = true
-			sanitizedChecker := c.key == compilerAgreementCheckerKey && c.rule != "all" && side == 4
+			sanitizedChecker := c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && side == 4
 			if unit == compilerAgreementRuleOwned {
 				if !sanitizedChecker || owners[c.rule] == "" {
 					t.Fatalf("%s/%s side %d left the numbered shards for no rule test", c.key, c.rule, side)
@@ -314,7 +318,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			if sanitizedChecker {
 				t.Fatalf("sanitized checker rule %s is in numbered shard %d, not its own test", c.rule, unit)
 			}
-			if c.key == compilerAgreementCheckerKey && c.rule != "all" && unit != compilerAgreementOwner(c)*compilerAgreementSides+side {
+			if c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && unit != compilerAgreementOwner(c)*compilerAgreementSides+side {
 				t.Fatalf("checker rule %s moved on side %d", c.rule, side)
 			}
 			if c.key == compilerAgreementCheckerKey && c.rule == "all" && unit != (compilerAgreementFileBuckets*compilerAgreementRuleGroups+compilerAgreementFixBuckets+compilerAgreementCheckerGroups)*compilerAgreementSides+side {
@@ -334,7 +338,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			t.Fatalf("%s owns %d sanitized checker.ts cases, want 1", test, owned[test])
 		}
 	}
-	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all stays on sides 1–3; side 4 is pending #5ggwf8c", len(owned), compilerAgreementCheckerSanitizedPrefix)
+	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all stays on sides 1–3 and its side 4 runs in consecutive groups", len(owned), compilerAgreementCheckerSanitizedPrefix)
 	t.Logf("union: %d split side-4 owners' cases each in exactly one of their %d sub-shards", len(compilerAgreementSide4Split), len(subUnits))
 }
 
@@ -755,4 +759,64 @@ func TestCompilerAndStage1AgreeSubShardPlantedDisagreement(t *testing.T) {
 		t.Fatalf("%d sub-shards passed beside the owner, want %d\n%s", passed, split.Parts-1, output)
 	}
 	t.Logf("planted disagreement in %s/%s caught only by %s", planted.key, planted.rule, owner)
+}
+
+func TestCompilerAndStage1Agree_6564_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 0)
+}
+
+func TestCompilerAndStage1Agree_6564_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 1)
+}
+
+func TestCompilerAndStage1Agree_6564_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 2)
+}
+
+func TestCompilerAndStage1Agree_6564_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 3)
+}
+
+func TestCompilerAndStage1Agree_6564_4(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 4)
+}
+
+func TestCompilerAndStage1Agree_6564_5(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 5)
+}
+
+func TestCompilerAndStage1Agree_6564_6(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 6)
+}
+
+func TestCompilerAndStage1Agree_6564_7(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 7)
+}
+
+func TestCompilerAndStage1Agree_6564_8(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 8)
+}
+
+func TestCompilerAndStage1Agree_6564_9(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 9)
+}
+
+func TestCompilerAndStage1Agree_6564_10(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 10)
+}
+
+func TestCompilerAndStage1Agree_6564_11(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 11)
 }
