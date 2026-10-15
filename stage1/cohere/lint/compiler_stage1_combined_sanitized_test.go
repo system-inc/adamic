@@ -284,7 +284,8 @@ func TestProduct_CompilerAgreementCombinedOutputMutant(t *testing.T) {
 				t.Fatalf("product artifact %s is not a non-empty regular file", path)
 			}
 		}
-		execute(t, "", binary, "--manifest", manifest(t, nil))
+		// No smoke run here: a product settles in a traced process, and LeakSanitizer refuses to run under ptrace. The
+		// output witness tests run this binary outside the tracer.
 		return binary
 	})
 }
