@@ -14,6 +14,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -203,6 +204,27 @@ func TestProduct_FixtureOracleHook(t *testing.T) {
 	if want := []string{filepath.Base(binary), "product-name"}; !slices.Equal(names, want) {
 		t.Fatalf("oracle hook product holds %q, want only %q", names, want)
 	}
+}
+
+// The hook's runtime archives are this package's products too: every program it builds links a sanitized archive of
+// the runtime for its features, and compiled in the hook, seven of them were 12 s of every unit before its first
+// fixture finished, and most of its CPU (#43k99f8). Each test builds one group of them as internal/oracle's own product
+// tests do (runtimeproducts.Build), so the tree build builds them ahead under this package too, its unit fetches them,
+// and the hook's supplier reads them there. Mutant: no test here, and every fixture's hook reads its archive as not
+// built.
+func TestProduct_FixtureRuntimesSanitized0(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "sanitized", 0)
+}
+
+func TestProduct_FixtureRuntimesSanitized1(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "sanitized", 1)
+}
+
+func TestProduct_FixtureRuntimesSanitized2(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "sanitized", 2)
 }
 
 func TestFixtureOracleProductTracksInputs(t *testing.T) {
