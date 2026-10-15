@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // A printer mutant's witnesses are every corpus case where it prints something other than Go, in each mode, found
@@ -29,8 +30,8 @@ var cssPrinterWitnessSets [3][][]int
 // Node runs it, the corpus, and the Go printer, plus this file, which holds the derivation.
 func cssPrinterWitnessInputs(t *testing.T, variant int) buildcache.Inputs {
 	t.Helper()
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
-	return cssPrinterWitnessKey(t, variant, cssPrinterProduct(t, variant).source, corpus, cssOracleProduct(t, true))
+	corpus, _ := oracles.CachedParserOutputs(t)
+	return cssPrinterWitnessKey(t, variant, cssPrinterProduct(t, variant).source, corpus, oracles.ComparisonOracle(t, true))
 }
 
 func cssPrinterWitnessKey(t *testing.T, variant int, port, corpus, oracle string) buildcache.Inputs {
@@ -55,7 +56,7 @@ func cssPrinterWitnessKey(t *testing.T, variant int, port, corpus, oracle string
 func cssPrinterWitnesses(t *testing.T, variant int) [][]int {
 	t.Helper()
 	cssPrinterWitnessOnce[variant].Do(func() {
-		corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+		corpus, _ := oracles.CachedParserOutputs(t)
 		port := cssPrinterProduct(t, variant).source
 		directory := buildcache.Product(t, cssPrinterWitnessInputs(t, variant), func(dir string) error {
 			witnesses, err := cssPrinterDeriveWitnesses(t, port, corpus)
@@ -101,7 +102,7 @@ func cssPrinterWitnesses(t *testing.T, variant int) [][]int {
 // whose answer differs from Go's. A port that fails to run, or prints a different set of cases, is an error.
 func cssPrinterDeriveWitnesses(t *testing.T, port, corpus string) ([][]int, error) {
 	t.Helper()
-	oracle := cssOracleProduct(t, true)
+	oracle := oracles.ComparisonOracle(t, true)
 	var witnesses [][]int
 	for _, mode := range cssPrinterModes {
 		want := cssPrinterAnswers(t, oracle, corpus, mode)
@@ -167,8 +168,8 @@ func TestCSSPrinterMutantWitnessesRekey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
-	inputs := map[string]string{"port": cssPrinterProduct(t, 0).source, "corpus": corpus, "oracle": cssOracleProduct(t, true)}
+	corpus, _ := oracles.CachedParserOutputs(t)
+	inputs := map[string]string{"port": cssPrinterProduct(t, 0).source, "corpus": corpus, "oracle": oracles.ComparisonOracle(t, true)}
 	key := buildcache.NameKey(root, cssPrinterWitnessKey(t, 0, inputs["port"], inputs["corpus"], inputs["oracle"]))
 	if other := buildcache.NameKey(root, cssPrinterWitnessKey(t, 1, inputs["port"], inputs["corpus"], inputs["oracle"])); other == key {
 		t.Fatal("another mutant kept the witnesses' key")
@@ -196,7 +197,7 @@ func TestCSSPrinterMutantWitnessesRekey(t *testing.T) {
 // that. The derivation itself still finds a difference planted in one answer.
 func TestCSSPrinterMutantThatDiffersNowhereFails(t *testing.T) {
 	t.Parallel()
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	corpus, _ := oracles.CachedParserOutputs(t)
 	witnesses, err := cssPrinterDeriveWitnesses(t, cssPrinterProduct(t, -1).source, corpus)
 	if err != nil {
 		t.Fatal(err)
