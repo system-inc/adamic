@@ -3,6 +3,7 @@ package buildcache
 import (
 	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -439,6 +440,86 @@ func TestParallelCallersBuildOnce(t *testing.T) {
 	for _, product := range products {
 		if product != products[0] {
 			t.Fatalf("products differ: %v", products)
+		}
+	}
+}
+
+// Settle places a settled build under the key a lookup in another process may be fetching into (#bcae1e2). placeSettled
+// takes the key's lock as filled does, so it waits while the fill holds it, then finds the fill's product there: both end
+// holding the product, and neither errs. Mutant: placeSettled without the lock places while the fill holds it.
+func TestASettledPlacementWaitsForAFillOfItsKey(t *testing.T) {
+	t.Parallel()
+	cache := t.TempDir()
+	productKey := strings.Repeat("ab", 32)
+	product := filepath.Join(cache, productKey)
+	settled := filepath.Join(cache, "pending", "trace", "name-key")
+	write(t, settled, "product", "settled")
+	filling, release := make(chan struct{}), make(chan struct{})
+	var built bool
+	var fillError error
+	var group sync.WaitGroup
+	group.Add(1)
+	go func() {
+		defer group.Done()
+		built, fillError = filled(product, "inputs", func(scratch string) error {
+			close(filling)
+			<-release
+			return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
+		})
+	}()
+	<-filling
+	placed := make(chan string, 1)
+	go func() {
+		placed <- placeSettled(cache, productKey, journalEntry{NameKey: "name-key", Directory: settled})
+	}()
+	select {
+	case directory := <-placed:
+		close(release)
+		group.Wait()
+		t.Fatalf("placeSettled placed the settled build at %s while a fill held the key's lock", directory)
+	case <-time.After(200 * time.Millisecond):
+	}
+	close(release)
+	group.Wait()
+	directory := <-placed
+	if fillError != nil || !built {
+		t.Fatalf("the fill: built %t, %v", built, fillError)
+	}
+	if directory != product {
+		t.Fatalf("placeSettled returned %s, not the product at %s", directory, product)
+	}
+	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "fetched" {
+		t.Fatalf("the product reads %q, %v", content, err)
+	}
+	if _, err := os.Stat(settled); !errors.Is(err, fs.ErrNotExist) {
+		t.Fatalf("the settled build's copy stayed at %s: %v", settled, err)
+	}
+}
+
+// A fill whose rename loses to a product another placer put there whole has found the product, not failed (#bcae1e2):
+// it drops its scratch and says it didn't fill. Mutant: filled returns the rename's error, as it did, and the test that
+// asked for the product failed with "file exists" while the product sat there.
+func TestAFillThatLosesItsRenameFindsTheProduct(t *testing.T) {
+	t.Parallel()
+	cache := t.TempDir()
+	product := filepath.Join(cache, strings.Repeat("cd", 32))
+	built, err := filled(product, "inputs", func(scratch string) error {
+		write(t, product, "product", "placed")
+		return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
+	})
+	if err != nil || built {
+		t.Fatalf("the fill that lost its rename: built %t, %v", built, err)
+	}
+	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "placed" {
+		t.Fatalf("the product reads %q, %v", content, err)
+	}
+	entries, err := os.ReadDir(cache)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".building-") {
+			t.Fatalf("the losing fill left its scratch %s", entry.Name())
 		}
 	}
 }
