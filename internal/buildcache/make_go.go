@@ -201,9 +201,16 @@ func goExports(root string, packages []string, listingName, directory string) er
 			}
 		}
 		listed.Dir = relative
-		// Likewise a file go generated in its own cache (a test main) is named absolutely and left out.
+		// Likewise a file go generated in its own cache (a test main) is named absolutely and left out, and so is that
+		// package's export data: it names the generated file where go's cache sits, which -trimpath doesn't rewrite, so
+		// two builders' caches gave a test main's export data two sizes (#dhm3wav: 4 of 339 archives, 2 bytes apart).
+		// Nothing imports a test main, so no reader of the listing wants it.
+		generated := slices.ContainsFunc(listed.GoFiles, filepath.IsAbs)
 		for _, names := range []*[]string{&listed.GoFiles, &listed.TestGoFiles, &listed.XTestGoFiles} {
 			*names = slices.DeleteFunc(*names, filepath.IsAbs)
+		}
+		if generated {
+			listed.Export = ""
 		}
 		if listed.Export != "" {
 			content, err := os.ReadFile(listed.Export)
