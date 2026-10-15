@@ -262,3 +262,45 @@ func TestTheGoToolchainIsValuedByItsBytes(t *testing.T) {
 		t.Fatal("a program of the release changed and its kept value stood")
 	}
 }
+
+// Whether a build holds cgo is read from go's listing of the build itself, its overlay included, so a main the overlay
+// synthesizes is classed by what it holds: one that imports C declares no go reads and keeps its whole trace, one that
+// doesn't declares them. A build go can't list has no key at all, so none is declared from a listing go never gave
+// (Node's ask on #mmpt615: unknown means traced, never declared). Mutants that fail it: the listing asked without the
+// overlay (go lists the package on disk, which holds no cgo), and a listing error taken as no cgo.
+// Not parallel: newRig.
+func TestAGoBuildIsClassedByWhatItsOverlaySynthesizes(t *testing.T) {
+	r := goKeysRig(t)
+	enabled, err := toolchain.Command("go", "env", "CGO_ENABLED").Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.TrimSpace(string(enabled)) != "1" {
+		t.Skip("cgo is off under toolchain's go here, so no package lists cgo files")
+	}
+	write(t, r.root, "syn/doc.go", "package main\n")
+	write(t, r.root, "overlays/cgo.go", "package main\n\nimport \"C\"\n\nfunc main() {}\n")
+	write(t, r.root, "overlays/plain.go", "package main\n\nfunc main() {}\n")
+	for name, replacement := range map[string]string{"cgo": "overlays/cgo.go", "plain": "overlays/plain.go"} {
+		write(t, r.root, "overlays/"+name+".json", `{"Replace":{"`+filepath.Join(r.root, "syn", "main.go")+`":"`+filepath.Join(r.root, replacement)+`"}}`)
+	}
+	gitIn(t, r.root, "add", ".")
+	gitIn(t, r.root, "commit", "-q", "-m", "syn")
+	forgetTracked()
+	synthesized := func(name string) (Inputs, error) {
+		return GoInputs("syn-"+name, "./syn", []string{"-overlay=" + filepath.Join(r.root, "overlays", name+".json")}, nil)
+	}
+	if inputs, err := synthesized("cgo"); err != nil || inputs.Go != nil {
+		t.Fatalf("a main its overlay synthesizes with cgo declared go reads %q (%v)", inputs.Go, err)
+	}
+	if inputs, err := synthesized("plain"); err != nil || !slices.Contains(inputs.Go, "content overlays/plain.go") {
+		t.Fatalf("a main its overlay synthesizes without cgo declared %q (%v)", inputs.Go, err)
+	}
+	write(t, r.root, "broken/main.go", "package main\n\nimport \"github.com/system-inc/adamic/nowhere\"\n")
+	gitIn(t, r.root, "add", ".")
+	gitIn(t, r.root, "commit", "-q", "-m", "broken")
+	forgetTracked()
+	if inputs, err := GoInputs("broken", "./broken", nil, nil); err == nil {
+		t.Fatalf("a build go can't list keyed, declaring %q", inputs.Go)
+	}
+}

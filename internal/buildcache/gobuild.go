@@ -467,7 +467,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		}
 		// A package that holds cgo under this build's settings and tags, the standard library's runtime/cgo and net
 		// among them, runs C, whose reads go's cache decides as it decides its own: such a build keeps its whole trace
-		// (Node's ruling on #mmpt615). It's a fact of the tree, the same with a warm Go cache as a cold one.
+		// (Node's ruling on #mmpt615). It's a fact of the tree, the same with a warm Go cache as a cold one. go list
+		// answers it with the build's own overlay, so a main the overlay synthesizes is classed by what it holds, and a
+		// listing go can't give fails the key whole: no build is declared from a listing that wasn't read.
 		if len(listed.CgoFiles)+len(listed.SwigFiles)+len(listed.SwigCXXFiles) > 0 {
 			cgo = true
 		}
@@ -672,7 +674,9 @@ var goToolchainValues toolRun
 // processes read of the release. It's hashed once a box and kept beside the build cache's machine values under a stamp
 // of the release's programs and its VERSION file (each one's inode, size and modification and change times): a release
 // is installed whole, replacing those, and stamping every file under a trace stopped the process once a file (about
-// 15,000), each lookup that valued it. An edit in place to src that touches none of them isn't seen.
+// 15,000), each lookup that valued it. An edit in place to src that touches none of them isn't seen, and the guard
+// against one is operational (Node's ruling on #mmpt615): each box's release is read-only, its installer the only writer,
+// and an install makes a fresh directory, never an edit in place, so the stamp moves whenever the release does.
 func goToolchainValue() string {
 	goToolchainValues.once.Do(func() {
 		keying(func() { goToolchainValues.value = goToolchainValueKeyed() })
