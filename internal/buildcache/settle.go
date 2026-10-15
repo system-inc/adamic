@@ -1311,10 +1311,16 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 
 // placeSettled puts a settled build's product under its key and returns where it is: a product already there (the same
 // bytes, from a build of the same reads) stays and the build's copy goes; an uncached build's directory on another
-// file system stays where it was built.
+// file system stays where it was built. It looks and places under the key's lock, as filled does, so a lookup fetching
+// the same key never loses its rename to this one, nor this one to it (#bcae1e2).
 func placeSettled(cache, key string, entry journalEntry) string {
 	product := filepath.Join(cache, key)
 	pending := under(entry.Directory, filepath.Join(cache, "pending"))
+	unlock, err := lockTarget(product)
+	if err != nil {
+		return entry.Directory
+	}
+	defer unlock()
 	switch _, err := os.Stat(product); {
 	case err == nil:
 		if pending {
