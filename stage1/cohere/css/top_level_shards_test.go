@@ -6,24 +6,22 @@ import (
 	"path/filepath"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 var cssParserTopSetup struct {
 	once  sync.Once
-	units []cssParserShard
-	run   func(*testing.T, cssParserShard)
+	units []oracles.ParserShard
+	run   func(*testing.T, oracles.ParserShard)
 }
 
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
 	code := m.Run()
-	if cssParserTopRoot != "" {
-		if err := os.RemoveAll(cssParserTopRoot); err != nil {
-			if code == 0 {
-				code = 1
-			}
-		}
+	if err := oracles.CleanupTemporaryDirectories(); err != nil && code == 0 {
+		code = 1
 	}
 	os.Exit(code)
 }
@@ -31,7 +29,7 @@ func TestMain(m *testing.M) {
 func cssParserTopPortDirectory(t *testing.T, applied *mutant) string {
 	t.Helper()
 	original := portDirectory(t, applied)
-	destination := filepath.Join(cssParserTopTempDir(t), "sources")
+	destination := filepath.Join(oracles.TemporaryDirectory(t), "sources")
 	if err := os.Rename(filepath.Dir(original), destination); err != nil {
 		t.Fatal(err)
 	}

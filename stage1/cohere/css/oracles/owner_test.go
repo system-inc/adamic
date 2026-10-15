@@ -1,4 +1,4 @@
-package css
+package oracles
 
 import (
 	"os"
@@ -11,12 +11,10 @@ func TestMain(m *testing.M) {
 	if err := os.Chdir(".."); err != nil {
 		panic(err)
 	}
-	oracleProducer = true
+	EnableProductProduction()
 	code := m.Run()
-	if cssParserTopRoot != "" {
-		if err := os.RemoveAll(cssParserTopRoot); err != nil && code == 0 {
-			code = 1
-		}
+	if err := CleanupTemporaryDirectories(); err != nil && code == 0 {
+		code = 1
 	}
 	os.Exit(code)
 }

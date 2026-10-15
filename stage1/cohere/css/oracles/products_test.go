@@ -1,4 +1,4 @@
-package css
+package oracles
 
 import "testing"
 
@@ -18,9 +18,9 @@ func TestProduct_CSSParserPostCSSAnswers_6(t *testing.T) { t.Parallel(); cssPars
 
 func TestProduct_CSSParserPostCSSAnswers_7(t *testing.T) { t.Parallel(); cssParserPostCSSAnswers(t, 7) }
 
-func TestProduct_CSSPrinterParserOracle(t *testing.T) { t.Parallel(); cssOracleProduct(t, false) }
+func TestProduct_CSSPrinterParserOracle(t *testing.T) { t.Parallel(); ComparisonOracle(t, false) }
 
-func TestProduct_CSSPrinterOracle(t *testing.T) { t.Parallel(); cssOracleProduct(t, true) }
+func TestProduct_CSSPrinterOracle(t *testing.T) { t.Parallel(); ComparisonOracle(t, true) }
 
 func TestProduct_CSSParserGoOracle(t *testing.T) { t.Parallel(); cssParserOracle(t) }
 
@@ -28,10 +28,10 @@ func TestProduct_CSSParserCorpus(t *testing.T) { t.Parallel(); prepareCSSParserT
 
 func TestProduct_CSSCompositionCorpusOracle(t *testing.T) {
 	t.Parallel()
-	compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
+	CompositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
 }
 
 func TestProduct_CSSCompositionGoOracle(t *testing.T) {
 	t.Parallel()
-	compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
+	CompositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
 }

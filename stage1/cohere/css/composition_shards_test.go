@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 const testCompositionMatchesGoShards = 16
@@ -94,7 +95,7 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	shards := compositionPartition(t, lines)
-	oracle := compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
+	oracle := oracles.CompositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
 	source, product := compositionLoweredProduct(t)
 	sanitized := compositionNativeProduct(t)
 
@@ -260,12 +261,12 @@ func compositionCases(t *testing.T) string {
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	repo, _ := filepath.Abs(repository)
-	request, _ := json.Marshal(map[string]any{"cases": cases, "repository": repo, "roots": cssCorpusRoots, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	request, _ := json.Marshal(map[string]any{"cases": cases, "repository": repo, "roots": oracles.CorpusRoots(), "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	requestPath := filepath.Join(dir, "request.json")
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracle := compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
+	oracle := oracles.CompositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
 	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
 	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
@@ -394,7 +395,7 @@ func compositionExecute(t *testing.T, environment []string, name string, argumen
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	err := childguard.Run(cmd, childguard.Options{Stall: childStall})
+	err := childguard.Run(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
 		t.Fatalf("running %s: %v", name, err)

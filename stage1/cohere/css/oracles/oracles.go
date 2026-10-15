@@ -1,4 +1,7 @@
-package css
+// Package oracles owns the compiler-free CSS oracle products and shared test inputs.
+// Relative paths resolve from stage1/cohere/css: the parent tests already run there,
+// and this package's TestMain changes its working directory to that parent directory.
+package oracles
 
 import (
 	"bytes"
@@ -20,24 +23,24 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// cssCompilers are the C and C++ compilers go builds a Go oracle with, and the C compiler's report.
-type cssCompilers struct{ c, cPlusPlus, report string }
+// CompilerConfiguration records the C and C++ compilers used by Go and the C compiler's report.
+type CompilerConfiguration struct{ CCompiler, CPlusPlusCompiler, Report string }
 
-// cssGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
+// GoCompilerConfiguration reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
 // names neither.
-func cssGoCompilers() cssCompilers {
-	var compilers cssCompilers
+func GoCompilerConfiguration() CompilerConfiguration {
+	var compilers CompilerConfiguration
 	for _, setting := range toolchain.Env() {
 		switch name, value, _ := strings.Cut(setting, "="); name {
 		case "CC":
-			compilers.c = value
+			compilers.CCompiler = value
 		case "CXX":
-			compilers.cPlusPlus = value
+			compilers.CPlusPlusCompiler = value
 		}
 	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
+	compilers.Report = "no C compiler"
+	if fields := strings.Fields(compilers.CCompiler); len(fields) > 0 {
+		compilers.Report = buildcache.Tool(fields[0], "--version")
 	}
 	return compilers
 }
@@ -46,7 +49,8 @@ func cssGoCompilers() cssCompilers {
 // content. Corpus enumeration stays live: only its binary is cached. The build
 // runs go under toolchain.Env, so the key names the C and
 // C++ compilers that environment gives go, and the C compiler by its report.
-func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
+// CompositionOracle builds or fetches a Go oracle with the supplied overlay.
+func CompositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
 	side, _ := filepath.Abs(sidePath)
@@ -54,7 +58,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
+	inputs := CompositionOracleInputs(name, sideRelative, overlayTarget, packagePath, GoCompilerConfiguration())
 	directory := oracleProduct(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
 		if err != nil {
@@ -77,33 +81,29 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 	return filepath.Join(directory, "oracle")
 }
 
-func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers cssCompilers) buildcache.Inputs {
+// CompositionOracleInputs describes a composition oracle without building it.
+func CompositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers CompilerConfiguration) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      name,
 		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
+		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.CCompiler, "CXX=" + compilers.CPlusPlusCompiler},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.Report},
 	}
 }
 
 const repository = "../../.."
 
-const testThePortParsesAsGoCohereDoesShards = 388
+// ParserShardCount is the fixed number of CSS parser agreement shards.
+const ParserShardCount = 388
 
 // Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
-const childStall = 4 * time.Minute
+// ChildStallLimit bounds the time a CSS child may stop making progress.
+const ChildStallLimit = 4 * time.Minute
 
-type mutant struct{ name, file, from, to string }
+// ParserCorpus holds the live inputs, Go answers, and stable case keys.
+type ParserCorpus struct{ Inputs, Answers, CaseKeys []string }
 
-var mutants = []mutant{
-	{"custom properties lose their block values", "parser.ts", "const custom = start.value.startsWith('--');", "const custom = false;"},
-	{"comments always disappear from values", "parser.ts", "else {\n                        value += current.value;\n                    }", "else {\n                        value += '';\n                    }"},
-	{"closing braces no longer include the closing byte", "parser.ts", "this.finish(node, token.start);\n            this.current = node.parent;", "this.finish(node, token.start, 0);\n            this.current = node.parent;"},
-}
-
-type cssParserCorpus struct{ inputs, answers, keys []string }
-
-func readCSSParserCorpus(t *testing.T, path, answers string) cssParserCorpus {
+func readCSSParserCorpus(t *testing.T, path, answers string) ParserCorpus {
 	t.Helper()
 	data, err := os.ReadFile(path)
 	if err != nil {
@@ -114,22 +114,22 @@ func readCSSParserCorpus(t *testing.T, path, answers string) cssParserCorpus {
 	if len(lines) != len(inputs)*2 {
 		t.Fatalf("oracle has %d lines for %d cases", len(lines), len(inputs))
 	}
-	corpus := cssParserCorpus{inputs: inputs}
+	corpus := ParserCorpus{Inputs: inputs}
 	manifest, err := os.ReadFile(filepath.Join(filepath.Dir(path), "ids.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := json.Unmarshal(manifest, &corpus.keys); err != nil {
+	if err := json.Unmarshal(manifest, &corpus.CaseKeys); err != nil {
 		t.Fatal(err)
 	}
-	if len(corpus.keys) != len(inputs) {
+	if len(corpus.CaseKeys) != len(inputs) {
 		t.Fatal("stable IDs differ from live enumeration")
 	}
 	for i := range inputs {
 		if lines[i*2] != fmt.Sprintf("case %d", i) {
 			t.Fatalf("missing or repeated unsplit case ID at %d: %q", i, lines[i*2])
 		}
-		corpus.answers = append(corpus.answers, lines[i*2+1])
+		corpus.Answers = append(corpus.Answers, lines[i*2+1])
 	}
 	return corpus
 }
@@ -137,39 +137,41 @@ func readCSSParserCorpus(t *testing.T, path, answers string) cssParserCorpus {
 // Fixed headroom: live repository files use repository-relative path, file-local
 // case index and mode. Pinned cohere text/generated keys cannot shift when a
 // repository file is added. Check kind is part of the stable key.
-type cssParserShard struct {
-	name, kind       string
-	lo, hi, mutation int
-	cases            []int
-	groups           []cssParserShard
+// ParserShard describes a shard or one of its agreement or mutant groups.
+type ParserShard struct {
+	Name, Kind               string
+	LowerBound, hi, Mutation int
+	Cases                    []int
+	Groups                   []ParserShard
 }
 
-func cssParserCaseKey(kind string, mutation int, key string) string {
+// ParserCaseKey identifies one check independently of corpus enumeration order.
+func ParserCaseKey(kind string, mutation int, key string) string {
 	return fmt.Sprintf("%s/%d/%s", kind, mutation, key)
 }
 
 // cssParserBucket is the shard that owns a check: a hash of its kind, mutation and stable key, so adding a file
 // never moves another check.
 func cssParserBucket(kind string, mutation int, key string) int {
-	hash := sha256.Sum256([]byte(cssParserCaseKey(kind, mutation, key)))
-	return int(binary.BigEndian.Uint64(hash[:8]) % testThePortParsesAsGoCohereDoesShards)
+	hash := sha256.Sum256([]byte(ParserCaseKey(kind, mutation, key)))
+	return int(binary.BigEndian.Uint64(hash[:8]) % ParserShardCount)
 }
 
-// cssParserMutantBucket is the one shard where a mutant's group runs: the shard that owns its first witness. Over cases
+// ParserMutantBucket is the one shard where a mutant's group runs: the shard that owns its first witness. Over cases
 // that aren't witnesses a mutant could fail only by crashing, which is the mutant's behavior, not the port's; on Oct 12
 // those runs took 702 of the family's active seconds (#testaudit). It is -1 when the mutant has no witness in the corpus.
-func cssParserMutantBucket(keys []string, mutation int, witnesses []int) int {
+func ParserMutantBucket(keys []string, mutation int, witnesses []int) int {
 	if len(witnesses) == 0 || witnesses[0] < 0 || witnesses[0] >= len(keys) {
 		return -1
 	}
 	return cssParserBucket("mutant", mutation, keys[witnesses[0]])
 }
 
-// cssParserShards gives every shard its agreement group, every case by its hash owner.
-func cssParserShards(keys []string) []cssParserShard {
-	units := make([]cssParserShard, testThePortParsesAsGoCohereDoesShards)
+// ParserAgreementShards gives every shard its agreement group, every case by its hash owner.
+func ParserAgreementShards(keys []string) []ParserShard {
+	units := make([]ParserShard, ParserShardCount)
 	for i := range units {
-		units[i].name = fmt.Sprintf("shard-%03d", i)
+		units[i].Name = fmt.Sprintf("shard-%03d", i)
 	}
 	buckets := make([][]int, len(units))
 	for i, key := range keys {
@@ -178,35 +180,36 @@ func cssParserShards(keys []string) []cssParserShard {
 	}
 	for i, cases := range buckets {
 		if len(cases) > 0 {
-			units[i].groups = append(units[i].groups, cssParserShard{name: units[i].name, kind: "agreement", mutation: -1, cases: cases})
+			units[i].Groups = append(units[i].Groups, ParserShard{Name: units[i].Name, Kind: "agreement", Mutation: -1, Cases: cases})
 		}
 	}
 	return units
 }
 
-// cssParserWithMutants adds each mutant's group, its witnesses (witnesses[mutation], from cssParserWitnesses), to the
+// ParserWithMutants adds each mutant's group, its witnesses (witnesses[mutation], from cssParserWitnesses), to the
 // shard that owns its first witness. It copies the plan rather than changing the one it's given.
-func cssParserWithMutants(units []cssParserShard, keys []string, witnesses [][]int) []cssParserShard {
-	plan := make([]cssParserShard, len(units))
+func ParserWithMutants(units []ParserShard, keys []string, witnesses [][]int) []ParserShard {
+	plan := make([]ParserShard, len(units))
 	for i, unit := range units {
 		plan[i] = unit
-		plan[i].groups = append([]cssParserShard{}, unit.groups...)
+		plan[i].Groups = append([]ParserShard{}, unit.Groups...)
 	}
 	for mutation, ids := range witnesses {
-		if bucket := cssParserMutantBucket(keys, mutation, ids); bucket >= 0 {
-			plan[bucket].groups = append(plan[bucket].groups, cssParserShard{name: plan[bucket].name, kind: "mutant", mutation: mutation, cases: ids})
+		if bucket := ParserMutantBucket(keys, mutation, ids); bucket >= 0 {
+			plan[bucket].Groups = append(plan[bucket].Groups, ParserShard{Name: plan[bucket].Name, Kind: "mutant", Mutation: mutation, Cases: ids})
 		}
 	}
 	return plan
 }
 
-func writeCSSParserSlice(t *testing.T, corpus cssParserCorpus, indices []int) (string, string) {
+// WriteParserSlice writes selected cases and returns their renumbered Go answers.
+func WriteParserSlice(t *testing.T, corpus ParserCorpus, indices []int) (string, string) {
 	t.Helper()
-	path := filepath.Join(cssParserTopTempDir(t), "cases.txt")
+	path := filepath.Join(TemporaryDirectory(t), "cases.txt")
 	var inputs, answers strings.Builder
 	for local, i := range indices {
-		fmt.Fprintf(&inputs, "%s\n", corpus.inputs[i])
-		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.answers[i])
+		fmt.Fprintf(&inputs, "%s\n", corpus.Inputs[i])
+		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.Answers[i])
 	}
 	if err := os.WriteFile(path, []byte(inputs.String()), 0644); err != nil {
 		t.Fatal(err)
@@ -216,13 +219,15 @@ func writeCSSParserSlice(t *testing.T, corpus cssParserCorpus, indices []int) (s
 
 // Every non-Go product uses the shared cache, including temporary mutants.
 // Go overlay recipes also use buildcache.Product; products are immutable.
-type cssParserInputs struct {
+// ParserProductInputs describes the existing inputs of a CSS compiler-side product.
+type ParserProductInputs struct {
 	Name         string
 	Files, Flags []string
 	Toolchain    string
 }
 
-func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir string) error) string {
+// ParserProduct fetches or builds a CSS product using its existing cache inputs.
+func ParserProduct(t *testing.T, inputs ParserProductInputs, build func(dir string) error) string {
 	t.Helper()
 	keyed := cssParserCacheInputs(t, inputs)
 	return buildcache.Product(t, keyed, build)
@@ -234,21 +239,22 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 // didn't name could start to unseen.
 func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	return oracleProduct(t, cssParserGoProductInputs(name, cssGoCompilers()), build)
+	return oracleProduct(t, ParserOracleInputs(name, GoCompilerConfiguration()), build)
 }
 
-func cssParserGoProductInputs(name string, compilers cssCompilers) buildcache.Inputs {
+// ParserOracleInputs describes the Go parser oracle without building it.
+func ParserOracleInputs(name string, compilers CompilerConfiguration) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "css " + name,
 		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/css/testdata", "stage1/cohere/css/parser_shards_test.go"},
-		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
+		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.CCompiler, "CXX=" + compilers.CPlusPlusCompiler},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.Report},
 	}
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
 // directory names never enter a key; repository inputs stay repository-relative.
-func cssParserCacheInputs(t *testing.T, inputs cssParserInputs) buildcache.Inputs {
+func cssParserCacheInputs(t *testing.T, inputs ParserProductInputs) buildcache.Inputs {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -306,7 +312,7 @@ func cssParserOracle(t *testing.T) string {
 		defer os.Remove(path)
 		command := toolchain.CommandContextIn(t.Context(), cohere, "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")...)
 		command.WaitDelay = time.Second
-		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
+		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: ChildStallLimit}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
 		return nil
@@ -314,7 +320,8 @@ func cssParserOracle(t *testing.T) string {
 	return filepath.Join(dir, "oracle")
 }
 
-func cssParserOracleIdentity(t *testing.T, path string) string {
+// ContentIdentity hashes the paths and content of a file tree in stable order.
+func ContentIdentity(t *testing.T, path string) string {
 	t.Helper()
 	hash := sha256.New()
 	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
@@ -344,7 +351,8 @@ func cssParserOracleIdentity(t *testing.T, path string) string {
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }
 
-func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
+// CachedParserOutputs returns the parser corpus file and its cached Go answers.
+func CachedParserOutputs(t *testing.T) (string, string) {
 	t.Helper()
 	oracle := cssParserOracle(t)
 	repo, err := filepath.Abs(repository)
@@ -355,11 +363,11 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := cssParserInputs{Name: "Go parser oracle answers", Files: []string{side, filepath.Join(repo, "cohere/internal/format/css")}, Flags: []string{cssParserOracleIdentity(t, oracle)}, Toolchain: buildcache.Tool("go", "version")}
+	inputs := ParserProductInputs{Name: "Go parser oracle answers", Files: []string{side, filepath.Join(repo, "cohere/internal/format/css")}, Flags: []string{ContentIdentity(t, oracle)}, Toolchain: buildcache.Tool("go", "version")}
 	// The repository's corpus files come from its corpus roots alone (cssCorpusRoots), never a walk of the whole
 	// repository, whose listings would enter every corpus-reading product's read set (#t128y5x).
 	inputs.Flags = append(inputs.Flags, "corpus-roots="+strings.Join(cssCorpusRoots, ","))
-	if err := cssCorpusRootWalk(repo, func(path string) error { inputs.Files = append(inputs.Files, path); return nil }); err != nil {
+	if err := WalkCorpusRoots(repo, func(path string) error { inputs.Files = append(inputs.Files, path); return nil }); err != nil {
 		t.Fatal(err)
 	}
 	if fixtures := os.Getenv("ADAMIC_CSS_FIXTURES"); fixtures != "" {
@@ -373,7 +381,7 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 				}
 				return nil
 			}
-			if !cssCorpusFile(path) {
+			if !IsCorpusFile(path) {
 				return nil
 			}
 			content, err := os.ReadFile(path)
@@ -397,7 +405,7 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 		if err != nil {
 			return err
 		}
-		requestPath := filepath.Join(cssParserTopTempDir(t), "request.json")
+		requestPath := filepath.Join(TemporaryDirectory(t), "request.json")
 		if err := os.WriteFile(requestPath, data, 0644); err != nil {
 			return err
 		}
@@ -405,7 +413,7 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 		cmd.WaitDelay = time.Second
 		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
 		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
+		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: ChildStallLimit})
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
@@ -434,13 +442,14 @@ func cachedCSSParserOracleOutputs(t *testing.T) (string, string) {
 	return cases, string(answers)
 }
 
-func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity string) string {
+// CachedPostCSSAnswers returns the cached PostCSS answers for the supplied cases.
+func CachedPostCSSAnswers(t *testing.T, script, library, path, identity string) string {
 	t.Helper()
 	data, err := os.ReadFile(path)
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := oracleParserProduct(t, cssParserInputs{Name: "PostCSS oracle answers", Files: []string{script}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+	dir := oracleParserProduct(t, ParserProductInputs{Name: "PostCSS oracle answers", Files: []string{script}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
 		input := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(input, data, 0644); err != nil {
 			return err
@@ -450,7 +459,7 @@ func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity
 		cmd.WaitDelay = time.Second
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout, cmd.Stderr = &stdout, &stderr
-		if err := childguard.Run(cmd, childguard.Options{Stall: childStall, Ceiling: 90 * time.Second}); err != nil || stderr.Len() != 0 {
+		if err := childguard.Run(cmd, childguard.Options{Stall: ChildStallLimit, Ceiling: 90 * time.Second}); err != nil || stderr.Len() != 0 {
 			return fmt.Errorf("PostCSS oracle: %v; %s", err, &stderr)
 		}
 		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
@@ -479,18 +488,18 @@ func cssParserPostCSSAnswers(t *testing.T, part int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	identity := cssParserOracleIdentity(t, library)
+	identity := ContentIdentity(t, library)
 	prepareCSSParserTopCorpus(t)
-	corpus := cssParserTopCorpus(t)
+	corpus := LoadParserCorpus(t)
 	ordinal, built := 0, 0
-	for _, root := range cssParserShards(corpus.keys) {
-		for _, unit := range root.groups {
-			if unit.kind != "agreement" {
+	for _, root := range ParserAgreementShards(corpus.CaseKeys) {
+		for _, unit := range root.Groups {
+			if unit.Kind != "agreement" {
 				continue
 			}
 			if ordinal%cssParserPostCSSAnswersProducts == part {
-				cases, _ := writeCSSParserSlice(t, corpus, unit.cases)
-				cachedCSSParserPostCSSAnswers(t, script, library, cases, identity)
+				cases, _ := WriteParserSlice(t, corpus, unit.Cases)
+				CachedPostCSSAnswers(t, script, library, cases, identity)
 				built++
 			}
 			ordinal++
@@ -506,7 +515,8 @@ var cssOracleOnce [2]sync.Once
 
 var cssOracles [2]string
 
-func cssOracleProduct(t *testing.T, printer bool) string {
+// ComparisonOracle returns the Go parser (printer=false) or printer (printer=true) comparison binary.
+func ComparisonOracle(t *testing.T, printer bool) string {
 	t.Helper()
 	index := 0
 	if printer {
@@ -566,7 +576,8 @@ var cssParserTopRoot string
 
 var cssParserTopRootError error
 
-func cssParserTopTempDir(t *testing.T) string {
+// TemporaryDirectory creates shared test inputs that outlive an individual parallel test.
+func TemporaryDirectory(t *testing.T) string {
 	t.Helper()
 	cssParserTopRootOnce.Do(func() { cssParserTopRoot, cssParserTopRootError = os.MkdirTemp("", "adamic-css-top-") })
 	if cssParserTopRootError != nil {
@@ -581,24 +592,25 @@ func cssParserTopTempDir(t *testing.T) string {
 
 var cssParserTopCorpusSetup struct {
 	once   sync.Once
-	corpus cssParserCorpus
-	units  []cssParserShard
+	corpus ParserCorpus
+	units  []ParserShard
 }
 
 func prepareCSSParserTopCorpus(t *testing.T) {
 	t.Helper()
 	cssParserTopCorpusSetup.once.Do(func() {
-		cases, answers := cachedCSSParserOracleOutputs(t)
+		cases, answers := CachedParserOutputs(t)
 		cssParserTopCorpusSetup.corpus = readCSSParserCorpus(t, cases, answers)
-		cssParserTopCorpusSetup.units = cssParserShards(cssParserTopCorpusSetup.corpus.keys)
+		cssParserTopCorpusSetup.units = ParserAgreementShards(cssParserTopCorpusSetup.corpus.CaseKeys)
 	})
 }
 
-func cssParserTopCorpus(t *testing.T) cssParserCorpus {
+// LoadParserCorpus loads the shared corpus once and checks that setup completed.
+func LoadParserCorpus(t *testing.T) ParserCorpus {
 	t.Helper()
 	prepareCSSParserTopCorpus(t)
 
-	if len(cssParserTopCorpusSetup.corpus.keys) == 0 {
+	if len(cssParserTopCorpusSetup.corpus.CaseKeys) == 0 {
 		t.Fatal("shared corpus setup did not complete")
 	}
 	return cssParserTopCorpusSetup.corpus
@@ -622,7 +634,7 @@ func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) er
 	})
 }
 
-func oracleParserProduct(t *testing.T, inputs cssParserInputs, build func(string) error) string {
+func oracleParserProduct(t *testing.T, inputs ParserProductInputs, build func(string) error) string {
 	t.Helper()
 	return oracleProduct(t, cssParserCacheInputs(t, inputs), build)
 }
@@ -635,8 +647,8 @@ func oracleParserProduct(t *testing.T, inputs cssParserInputs, build func(string
 // TestCSSCorpusRootsHoldEveryCorpusFile keeps them complete.
 var cssCorpusRoots = []string{"cohere/internal/format/css/testdata", "cohere/internal/lint/rules/tailwind", "stage1/cohere/css/testdata"}
 
-// cssCorpusFile reports whether a file name has one of the corpus's extensions.
-func cssCorpusFile(name string) bool {
+// IsCorpusFile reports whether a file name has one of the corpus's extensions.
+func IsCorpusFile(name string) bool {
 	switch strings.ToLower(filepath.Ext(name)) {
 	case ".css", ".scss", ".less":
 		return true
@@ -644,9 +656,9 @@ func cssCorpusFile(name string) bool {
 	return false
 }
 
-// cssCorpusRootWalk walks every corpus root under the repository in order, as the Go oracle's side tests do, skipping
+// WalkCorpusRoots walks every corpus root under the repository in order, as the Go oracle's side tests do, skipping
 // .git and node_modules, and calls visit with each corpus file's absolute path.
-func cssCorpusRootWalk(repo string, visit func(path string) error) error {
+func WalkCorpusRoots(repo string, visit func(path string) error) error {
 	for _, root := range cssCorpusRoots {
 		err := filepath.WalkDir(filepath.Join(repo, filepath.FromSlash(root)), func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
@@ -658,7 +670,7 @@ func cssCorpusRootWalk(repo string, visit func(path string) error) error {
 				}
 				return nil
 			}
-			if !cssCorpusFile(path) {
+			if !IsCorpusFile(path) {
 				return nil
 			}
 			return visit(path)
@@ -668,4 +680,23 @@ func cssCorpusRootWalk(repo string, visit func(path string) error) error {
 		}
 	}
 	return nil
+}
+
+// EnableProductProduction grants this process ownership of the oracle products.
+// Only the compiler-free oracles test binary calls it, from TestMain before tests run.
+func EnableProductProduction() {
+	oracleProducer = true
+}
+
+// CleanupTemporaryDirectories removes the shared inputs after either test binary finishes.
+func CleanupTemporaryDirectories() error {
+	if cssParserTopRoot == "" {
+		return nil
+	}
+	return os.RemoveAll(cssParserTopRoot)
+}
+
+// CorpusRoots returns a copy of the repository-relative directories enumerated by the oracle.
+func CorpusRoots() []string {
+	return append([]string{}, cssCorpusRoots...)
 }

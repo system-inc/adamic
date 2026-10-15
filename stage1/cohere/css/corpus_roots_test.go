@@ -6,6 +6,8 @@ import (
 	"slices"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Every corpus file in the repository lies under a corpus root, so walking the roots finds exactly the files a walk of
@@ -13,8 +15,8 @@ import (
 // process. A CSS file added outside the roots fails here, naming the root to add.
 func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 	t.Parallel()
-	if !slices.IsSorted(cssCorpusRoots) {
-		t.Fatalf("cssCorpusRoots %v aren't sorted, so their walk wouldn't keep a whole-repository walk's order", cssCorpusRoots)
+	if !slices.IsSorted(oracles.CorpusRoots()) {
+		t.Fatalf("cssCorpusRoots %v aren't sorted, so their walk wouldn't keep a whole-repository walk's order", oracles.CorpusRoots())
 	}
 	repo, err := filepath.Abs(repository)
 	if err != nil {
@@ -31,7 +33,7 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 			}
 			return nil
 		}
-		if cssCorpusFile(path) {
+		if oracles.IsCorpusFile(path) {
 			whole = append(whole, path)
 		}
 		return nil
@@ -39,7 +41,7 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := cssCorpusRootWalk(repo, func(path string) error { rooted = append(rooted, path); return nil }); err != nil {
+	if err := oracles.WalkCorpusRoots(repo, func(path string) error { rooted = append(rooted, path); return nil }); err != nil {
 		t.Fatal(err)
 	}
 	for _, path := range whole {
@@ -51,7 +53,7 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 	if !slices.Equal(whole, rooted) {
 		t.Fatalf("the roots' walk finds %d corpus files, the repository's %d, or in another order", len(rooted), len(whole))
 	}
-	for _, root := range cssCorpusRoots {
+	for _, root := range oracles.CorpusRoots() {
 		held := 0
 		for _, path := range rooted {
 			if strings.HasPrefix(path, filepath.Join(repo, filepath.FromSlash(root))+string(filepath.Separator)) {
@@ -62,5 +64,5 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 			t.Errorf("corpus root %s holds no corpus file: remove it", root)
 		}
 	}
-	t.Logf("%d corpus files, all under %d roots, in the whole-repository walk's order", len(rooted), len(cssCorpusRoots))
+	t.Logf("%d corpus files, all under %d roots, in the whole-repository walk's order", len(rooted), len(oracles.CorpusRoots()))
 }

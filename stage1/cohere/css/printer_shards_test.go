@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Each declaration and leaf calls the same recipe through a process-local Once.
@@ -108,7 +109,7 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 		cmd.Dir = filepath.Join(cmd.Dir, "postcss")
 	}
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+path)
-	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	if err != nil {
 		t.Fatalf("oracle: %v %s", err, output)
 	}
@@ -121,7 +122,7 @@ func cssPrinterCases(t *testing.T, oracle string) string {
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]any{"Cases": cases, "Answers": answers, "Repository": repo, "Roots": cssCorpusRoots, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]any{"Cases": cases, "Answers": answers, "Repository": repo, "Roots": oracles.CorpusRoots(), "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	return cases
 }
 
