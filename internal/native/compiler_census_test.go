@@ -36,6 +36,7 @@ var compilerSites = map[string]string{
 	"internal/buildcache/precise_test.go:TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed":         "a fake tools directory's clang script, run through a link in a trace; nothing compiles",
 	"internal/toolchain/toolchain_test.go:TestAToolsCompilersAreClangUnlessTheCallerNamesOne":         "checks Env names clang and clang++ as CC and CXX; compiles nothing",
 	"internal/fuzz/run.go:TryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
+	"internal/oracle/counts_test.go:countMeasurementInputs":                                           "keys the counts' measurement products by clang's report; compiles nothing",
 	"internal/oracle/runtimes_test.go:TestARuntimeProductKeyIsTheSameThroughEitherLink":               "finds clang to reach it through two links and key a runtime; compiles nothing",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                                       "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"stage1/cohere/css/profile_test.go:TestCSSProfileArtifacts":                                       "a profiling build into a scratch directory, never a product",
