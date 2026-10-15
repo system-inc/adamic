@@ -49,8 +49,9 @@ func interfaceCastCountCases() []countCase {
 // which builds that C counted, runs it and returns the row.
 func interfaceCastCounted(t *testing.T, path string) (string, func() string) {
 	t.Helper()
-	// The stage 0 compiler is a product built ahead (buildcache.Adamic), run here as go run ran it (#5qykzj5).
-	command := exec.Command(buildcache.Adamic(t), "c", path)
+	// The stage 0 compiler is a product built ahead, run here as go run ran it (#5qykzj5): its owner builds it
+	// (buildcache.AdamicOwner), so a count product measuring this row finds it rather than building it again.
+	command := exec.Command(buildcache.AdamicBuiltElsewhere(t), "c", path)
 	command.Dir = repository
 
 	source, err := command.Output()
