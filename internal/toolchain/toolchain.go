@@ -93,6 +93,7 @@
 package toolchain
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -183,6 +184,22 @@ func Command(name string, arguments ...string) *exec.Cmd {
 	}
 	command := exec.Command(path, arguments...)
 	command.Env = Env()
+	return command
+}
+
+// CommandContextIn is CommandIn with cancellation controlled by ctx. An empty
+// directory keeps the caller's directory. Use childguard to cancel the child group.
+func CommandContextIn(ctx context.Context, directory, name string, arguments ...string) *exec.Cmd {
+	path, err := Path(name)
+	if err != nil {
+		path = name
+	}
+	command := exec.CommandContext(ctx, path, arguments...)
+	command.Err = err
+	command.Env = Env()
+	if directory != "" {
+		return in(directory, command)
+	}
 	return command
 }
 

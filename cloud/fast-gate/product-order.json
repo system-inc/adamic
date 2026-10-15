@@ -57,6 +57,82 @@
     ],
     "internal/oracle TestProduct_CountMeasurements15": [
       "internal/native TestProduct_WASICompiler"
+    ],
+    "stage1/cohere/css TestProduct_CSSCompositionCorpusOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSCompositionCorpusOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSCompositionGoOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSCompositionGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserClosingBraceMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserCommentMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserCorpus": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserCustomPropertyMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserGoOracleAnswers": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_0": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_0",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_1": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_1",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_2": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_2",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_3": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_3",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_4": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_4",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_5": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_5",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_6": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_6",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserPostCSSAnswers_7": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_7",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterIndentMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterParserOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterParserOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterSemicolonMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterWidthMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
     ]
   }
 }
