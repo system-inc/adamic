@@ -157,8 +157,8 @@ func TestCheckedNonNullCounts(t *testing.T) {
 	}
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "initializer", "let_initializer"} {
 		path := "internal/oracle/testdata/non_null_checked_" + name + ".ts"
-		runs, measure := counted(t, path, false, nil, false, false)
-		row := measure() + " " + countDigest(t, path, runs) + " |"
+		_, measure := counted(t, path, false, nil, false, false)
+		row := measure()
 		t.Log(row)
 		if !strings.Contains(string(recorded), row+"\n") {
 			t.Errorf("missing recorded row: %s", row)
@@ -166,8 +166,8 @@ func TestCheckedNonNullCounts(t *testing.T) {
 	}
 	for _, operand := range []string{"undefined", "null"} {
 		path := "internal/oracle/testdata/non_null_refuse_" + operand + ".ts"
-		runs, measure := counted(t, path, false, nil, false, false)
-		row := measure() + " " + countDigest(t, path, runs) + " |"
+		_, measure := counted(t, path, false, nil, false, false)
+		row := measure()
 		t.Log(row)
 		if !strings.Contains(string(recorded), row+"\n") {
 			t.Errorf("missing recorded row: %s", row)
