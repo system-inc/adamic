@@ -33,6 +33,7 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -310,7 +311,11 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 // directory unentered, so the trace records one listing per directory walked and the build's read set keys the
 // listing itself; git ls-files there would be a read of .git, which no key can name (#1p6sent). Elsewhere it is git's
 // answer, or the manifest's.
-func PathsUnder(directory, root string) ([]string, error) {
+//
+// A directory below root named in skip is never entered, and nothing under it is listed: the walk leaves it unlisted,
+// so a file added or deleted there moves no read set (lint's compiler corpus skips each rule's evidence/, #hp8gq3e),
+// and git's answer drops the same paths.
+func PathsUnder(directory, root string, skip ...string) ([]string, error) {
 	directory, err := filepath.Abs(directory)
 	if err != nil {
 		return nil, err
@@ -322,7 +327,7 @@ func PathsUnder(directory, root string) ([]string, error) {
 			return nil, err
 		}
 		for _, entry := range Under(entries, root) {
-			if !entry.Submodule() {
+			if !entry.Submodule() && !Skipped(root, entry.Path, skip) {
 				paths = append(paths, entry.Path)
 			}
 		}
@@ -338,6 +343,9 @@ func PathsUnder(directory, root string) ([]string, error) {
 			if name != directory && (Git(name) || !buildcache.Tracked(directory, name, true)) {
 				return filepath.SkipDir
 			}
+			if name != start && slices.Contains(skip, entry.Name()) {
+				return filepath.SkipDir
+			}
 			return nil
 		}
 		if buildcache.Tracked(directory, name, false) {
@@ -351,6 +359,25 @@ func PathsUnder(directory, root string) ([]string, error) {
 	})
 	sort.Strings(paths)
 	return paths, err
+}
+
+// Skipped is whether name, a repository-relative path at or under root, sits in a directory below root whose name skip
+// holds, as PathsUnder's walk leaves such a directory unentered.
+func Skipped(root, name string, skip []string) bool {
+	if len(skip) == 0 {
+		return false
+	}
+	root, name = path.Clean(filepath.ToSlash(root)), path.Clean(filepath.ToSlash(name))
+	below := name
+	if root != "." {
+		below = strings.TrimPrefix(name, root+"/")
+	}
+	for parent := path.Dir(below); parent != "."; parent = path.Dir(parent) {
+		if slices.Contains(skip, path.Base(parent)) {
+			return true
+		}
+	}
+	return false
 }
 
 // Under is the entries at or under root, a repository-relative path; "." is every entry.
