@@ -35,7 +35,9 @@ func sameAnswer(left, right answer) bool {
 	return left.Error != "" || left.Output == right.Output
 }
 
-func TestUpstreamNumericSeparatorGap(t *testing.T) {
+// Go cohere refuses a numeric separator out of place in Babel's words since cohere 1ee5f944 (#w6vtsrn), so the
+// separator gap Prettier showed is closed: both refuse each of these, under both filenames.
+func TestUpstreamNumericSeparatorsAgree(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
@@ -53,13 +55,13 @@ func TestUpstreamNumericSeparatorGap(t *testing.T) {
 	goAnswers, prettierAnswers := oracleAnswers(t, cases)
 	for index, item := range cases {
 		goAnswer, prettierAnswer := goAnswers[index], prettierAnswers[index]
-		if goAnswer.Error != "" || !strings.Contains(goAnswer.Output, item.Text[1:len(item.Text)-1]) {
-			t.Fatalf("Go's gap changed for %s %q: %+v; update GAPS.md", item.Name, item.Text, goAnswer)
+		if !strings.Contains(goAnswer.Error, "numeric separator") {
+			t.Fatalf("Go no longer refuses %s %q: %+v; update GAPS.md", item.Name, item.Text, goAnswer)
 		}
-		if !strings.Contains(prettierAnswer.Error, "numeric separator") || sameAnswer(goAnswer, prettierAnswer) {
-			t.Fatalf("Prettier's gap changed for %s %q: %+v; update GAPS.md", item.Name, item.Text, prettierAnswer)
+		if !strings.Contains(prettierAnswer.Error, "numeric separator") || !sameAnswer(goAnswer, prettierAnswer) {
+			t.Fatalf("Prettier no longer refuses %s %q as Go does: %+v; update GAPS.md", item.Name, item.Text, prettierAnswer)
 		}
-		t.Logf("%s %s: Go formats %q; Prettier refuses: %s", item.Name, item.Text, goAnswer.Output, prettierAnswer.Error)
+		t.Logf("%s %s: Go refuses: %s; Prettier refuses: %s", item.Name, item.Text, goAnswer.Error, prettierAnswer.Error)
 	}
 }
 
@@ -127,11 +129,11 @@ func corpusCases(t *testing.T) []textCase {
 	return cases
 }
 
-// jsonUpstreamAllowed names the inputs Go and Prettier may disagree on: the separator witness and the generated
-// separator and empty-input cases above. How each of them differs is known-upstream-differences.txt's, and upstream
-// parity's key declares this file, so editing the list rebuilds the verdict.
+// jsonUpstreamAllowed names the inputs Go and Prettier may disagree on: the generated empty-input cases above. How
+// each of them differs is known-upstream-differences.txt's, and upstream parity's key declares this file, so editing
+// the list rebuilds the verdict.
 func jsonUpstreamAllowed(name string) bool {
-	return name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(name, "generated/12/") || strings.HasPrefix(name, "generated/13/") || strings.HasPrefix(name, "generated/14/") || strings.HasPrefix(name, "generated/16/")
+	return strings.HasPrefix(name, "generated/16/")
 }
 
 func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
