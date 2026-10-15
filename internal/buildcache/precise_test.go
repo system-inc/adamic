@@ -2030,6 +2030,75 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 	}
 }
 
+// A run that finds a product whole reports, found, each product the set that found it reads, through theirs in turn: a
+// runner values that set and needs each one's read set and product (#mmpt615, 2e95d29e's void: tsprinter's mutant
+// corpora were found whole, their Go oracle was never named, so no tree shipped it). Found in the cache or fetched from
+// the store, the same. Mutants: the upstreams valued and never journaled; a fetch journaling its key's upstreams as none.
+// Not parallel: newRig.
+func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	headerProduct := Product(t, header, building("header"))
+	Product(t, port, func(directory string) error {
+		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
+	})
+	built := r.built(t)
+	r.window(built["header"].Build, func() {
+		r.open(r.pid, "include/x.h")
+		r.write(r.pid, filepath.Join(headerProduct, "product"))
+	})
+	r.window(built["port"].Build, func() {
+		r.open(r.pid, filepath.Join(headerProduct, "product"))
+		r.open(r.pid, "source/a.c")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	headerReads, err := loadReads(r.cache, built["header"].NameKey)
+	if err != nil || len(headerReads.Sets) == 0 {
+		t.Fatalf("header's read sets: %+v, %v", headerReads, err)
+	}
+	r.retrace(t, "found")
+	Product(t, port, building("never built: found"))
+	found := map[string]string{}
+	for _, report := range r.settle(t).Reports {
+		if report.Outcome == ReportFound {
+			found[report.NameKey] = report.Key
+		}
+	}
+	if len(found) != 2 || found[built["header"].NameKey] != headerReads.Sets[0].Key || found[built["port"].NameKey] == "" {
+		t.Fatalf("the run found %v; want port and the header its set reads, under %s", found, headerReads.Sets[0].Key[:12])
+	}
+	// Fetched from the store under the key its set gives, the same: that set's upstreams are named.
+	portKey := found[built["port"].NameKey]
+	if err := os.Rename(filepath.Join(r.cache, portKey), filepath.Join(t.TempDir(), portKey)); err != nil {
+		t.Fatal(err)
+	}
+	store := &fakeStore{objects: map[string][]byte{}}
+	server := httptest.NewServer(store)
+	t.Cleanup(server.Close)
+	t.Setenv("ADAMIC_BUILD_STORE", server.URL)
+	t.Setenv("ADAMIC_BUILD_AUDIT", "0")
+	store.put(t, portKey, map[string]string{"product": "header and port"})
+	forgetHeldForLife()
+	t.Cleanup(forgetHeldForLife)
+	r.retrace(t, "fetched")
+	Product(t, port, building("never built: fetched"))
+	clear(found)
+	for _, report := range r.settle(t).Reports {
+		if report.Outcome == ReportFound {
+			found[report.NameKey] = report.Key
+		}
+	}
+	if len(found) != 2 || found[built["header"].NameKey] != headerReads.Sets[0].Key || found[built["port"].NameKey] != portKey || len(store.reads) == 0 {
+		t.Fatalf("the run fetched port and found %v, after %d store reads; want port and the header its set reads", found, len(store.reads))
+	}
+}
+
 // A build that looks for a product in the cache and doesn't find it read nothing: a pending product of this trace that
 // isn't there, or a key with no product, is no entry and no refusal. Reading what is there of a product the run
 // never built is still refused. Mutant: a missed lookup classed by its path.
