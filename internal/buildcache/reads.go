@@ -652,10 +652,53 @@ func toolsRoot() (string, error) {
 }
 
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key
-// names a product in the cache, or why none did, and the keys each set gave (for the store to try).
+// names a product in the cache, or why none did, and the keys each set gave (for the store to try). With the product,
+// its upstreams: every product the set that found it reads, through their sets in turn; with each key, the same for
+// the set that gave it (keyUpstreams).
 type found struct {
 	key, directory, why string
 	keys                []string
+	upstreams           []upstream
+	keyUpstreams        [][]upstream
+}
+
+// An upstream is a product a found product's set reads, by name key and the directory this process found it in. A run
+// that finds a product journals its upstreams as found too, so it names every product its lookup valued: a runner
+// values the same set and needs each one's read set and product (#mmpt615, 2e95d29e's void: tsprinter's mutant
+// corpora were found whole, their Go oracle was never named, and no runner could value them).
+type upstream struct {
+	nameKey, directory string
+}
+
+// setUpstreams is the upstreams of set, which evaluate valued already on this pass (known), each once, in its entries'
+// order, each followed by its own.
+func setUpstreams(root, cache string, set readSet, depth int, known productMemo) []upstream {
+	var all []upstream
+	seen := map[string]bool{}
+	for _, entry := range set.Entries {
+		if entry.Kind != "product" && entry.Kind != productKeyKind {
+			continue
+		}
+		read, err := productFor(root, cache, entry.Path, depth+1, known)
+		if err != nil || read.directory == "" {
+			continue
+		}
+		for _, one := range append([]upstream{{nameKey: entry.Path, directory: read.directory}}, read.upstreams...) {
+			if !seen[one.nameKey] {
+				seen[one.nameKey] = true
+				all = append(all, one)
+			}
+		}
+	}
+	return all
+}
+
+// journalFound journals the product nameKey (name, when known) as found in directory, and each of its upstreams.
+func journalFound(nameKey, name, directory string, upstreams []upstream) {
+	journal(journalEntry{Event: "found", NameKey: nameKey, Name: name, Directory: directory})
+	for _, one := range upstreams {
+		journal(journalEntry{Event: "found", NameKey: one.nameKey, Directory: one.directory})
+	}
 }
 
 // A productMemo holds each product one pass has looked up, by name key (Home's dry run, Oct 11: nine traces settled for
@@ -735,9 +778,10 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 		if index == 0 {
 			newest = evaluated
 		}
-		result.keys = append(result.keys, evaluated.key)
+		upstreams := setUpstreams(root, cache, set, depth, known)
+		result.keys, result.keyUpstreams = append(result.keys, evaluated.key), append(result.keyUpstreams, upstreams)
 		if _, err := os.Stat(filepath.Join(cache, evaluated.key)); err == nil {
-			result.key, result.directory = evaluated.key, filepath.Join(cache, evaluated.key)
+			result.key, result.directory, result.upstreams = evaluated.key, filepath.Join(cache, evaluated.key), upstreams
 			return result, nil
 		}
 	}
