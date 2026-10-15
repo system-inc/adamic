@@ -343,6 +343,31 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 	return nil, false
 }
 
+// nodeInstallKind is a read set's entry for a project's installed node_modules, by the project's directory: npm's
+// install, which Loom places in the tree from the project's lockfile (NodeProject), valued whole by nodeInstallValue
+// (#qx8fkaf, Node's ruling). Any read under it, a lookup that missed included, is a read of the install.
+const nodeInstallKind = "node install"
+
+// nodeInstallOf is the project whose installed node_modules relative is in, or is: the directory above relative's first
+// node_modules, when git tracks that directory's package-lock.json and not its node_modules. Its first, never a nested
+// one: node_modules/a/node_modules is the same install, made by the same npm ci.
+func (facts *traceFacts) nodeInstallOf(relative string) (string, bool) {
+	parts := strings.Split(relative, "/")
+	index := slices.Index(parts, "node_modules")
+	if index < 0 {
+		return "", false
+	}
+	project := "."
+	if index > 0 {
+		project = strings.Join(parts[:index], "/")
+	}
+	directory := filepath.Join(facts.root, filepath.FromSlash(project))
+	if Tracked(facts.root, filepath.Join(directory, "node_modules"), true) || !Tracked(facts.root, filepath.Join(directory, "package-lock.json"), false) {
+		return "", false
+	}
+	return project, true
+}
+
 func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 	if kinds == readAbsent && facts.caseProbe(name) {
 		return classed{"filesystem", "case"}
@@ -361,6 +386,9 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 		if isGit(relative) {
 			return classed{refusal + "git", relative}
+		}
+		if project, ok := facts.nodeInstallOf(relative); ok {
+			return classed{nodeInstallKind, project}
 		}
 		// A write here never reaches a read set: any write into the tree refuses the whole run (Settle).
 		// A path that was there when it was read (opened, listed or stat'ed: anything but a lookup that missed) must be
