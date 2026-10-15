@@ -87,7 +87,7 @@ func jsonUpstreamParityInputs(root, cohereCommit, corpusCommit string, oracle, a
 	}, nil
 }
 
-// The known report, by case: three lines each, nine cases.
+// The known report, by case: three lines each, two cases.
 type jsonUpstreamReport struct {
 	text   string
 	blocks map[string]string
@@ -99,8 +99,8 @@ func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
 		return jsonUpstreamReport{}, err
 	}
 	lines := strings.Split(strings.TrimSuffix(string(encoded), "\n"), "\n")
-	if len(lines) != 27 {
-		return jsonUpstreamReport{}, fmt.Errorf("known upstream report has %d lines, want 27", len(lines))
+	if len(lines) != 6 {
+		return jsonUpstreamReport{}, fmt.Errorf("known upstream report has %d lines, want 6", len(lines))
 	}
 	report := jsonUpstreamReport{text: string(encoded), blocks: map[string]string{}}
 	for i := 0; i < len(lines); i += 3 {
@@ -337,7 +337,7 @@ func TestProduct_JSONUpstreamParityVerdict(t *testing.T) {
 	jsonUpstreamParityProduct(t)
 }
 
-// Prettier is a separate upstream report. Only the nine named disagreements are known; an added difference or a
+// Prettier is a separate upstream report. Only the two named disagreements are known; an added difference or a
 // closed one fails the verdict's build until the report is updated explicitly. This reads the verdict and holds both
 // reports to the checked-in one again, and writes the report to ADAMIC_JSON_REPORT when that is set.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
@@ -450,7 +450,7 @@ func TestJSONUpstreamParityRekeys(t *testing.T) {
 	edit("stage1/cohere/json/audit_test.go", `strings.HasPrefix(name, "generated/16/")`, `strings.HasPrefix(name, "generated/15/")`, false)
 	edit("stage1/cohere/json/known-upstream-differences.txt", "generated/16/package.json", "generated/15/package.json", false)
 	edit("stage1/cohere/json/testdata/library.mjs", "texts in", "cases in", false)
-	edit("stage1/cohere/json/testdata/corpus.pin", `"count": 1094`, `"count": 1095`, false)
+	edit("stage1/cohere/json/testdata/corpus.pin", `"count": 1113`, `"count": 1114`, false)
 	if keys(corpusfiles.CohereCommit, repositoryCorpusCommit, []byte("oracle")) != base {
 		t.Fatal("restoring every file did not restore the key")
 	}
@@ -505,8 +505,8 @@ func TestJSONUpstreamVerdictCatchesChangedAnswers(t *testing.T) {
 	}{
 		{"an agreeing case's answer changed", "unexpected upstream difference: stage1/cohere/json/package.json", 0, answer{Output: "{ }\n"}},
 		{"an agreeing case refused", "unexpected upstream difference: generated/0/probe.json", len(cases) - 1, answer{Error: "refused"}},
-		{"a known difference's answer changed", "case generated/12/probe.json: upstream difference identity or answer changed", 2, answer{Error: "another message"}},
-		{"a known difference closed", "case generated/16/package.json: upstream difference identity or answer changed", 9, goAnswers[9]},
+		{"a known difference's answer changed", "case generated/16/probe.json: upstream difference identity or answer changed", 1, answer{Error: "another message"}},
+		{"a known difference closed", "case generated/16/package.json: upstream difference identity or answer changed", 2, goAnswers[2]},
 	} {
 		changed := append([]answer(nil), prettierAnswers...)
 		changed[mutant.index] = mutant.answer
