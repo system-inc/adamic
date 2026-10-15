@@ -2031,47 +2031,77 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 }
 
 // A run that finds a product whole reports, found, each product the set that found it reads, through theirs in turn: a
-// runner values that set and needs each one's read set and product (#mmpt615, 2e95d29e's void: tsprinter's mutant
-// corpora were found whole, their Go oracle was never named, so no tree shipped it). Found in the cache or fetched from
-// the store, the same. Mutants: the upstreams valued and never journaled; a fetch journaling its key's upstreams as none.
+// runner values that set, each upstream's set in turn, and needs each one's read set and product (#mmpt615, 2e95d29e's
+// void: tsprinter's mutant corpora were found whole, their Go oracle was never named, so no tree shipped it). Here port
+// reads header, which reads base. Found in the cache or fetched from the store, the same. Mutants: the upstreams valued
+// and never journaled; only a set's own upstreams named, never theirs; a fetch journaling its key's upstreams as none.
 // Not parallel: newRig.
 func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
 	r := newRig(t)
+	base := Inputs{Name: "base", Files: []string{"source"}}
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	headerProduct := Product(t, header, building("header"))
-	Product(t, port, func(directory string) error {
-		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
-		if err != nil {
-			return err
+	reading := func(upstream string) func(string) error {
+		return func(directory string) error {
+			content, err := os.ReadFile(filepath.Join(upstream, "product"))
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "product"), append(content, " and more"...), 0o644)
 		}
-		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
-	})
+	}
+	baseProduct := Product(t, base, building("base"))
+	headerProduct := Product(t, header, reading(baseProduct))
 	built := r.built(t)
+	r.window(built["base"].Build, func() {
+		r.open(r.pid, "source/b.c")
+		r.write(r.pid, filepath.Join(baseProduct, "product"))
+	})
 	r.window(built["header"].Build, func() {
+		r.open(r.pid, filepath.Join(baseProduct, "product"))
 		r.open(r.pid, "include/x.h")
 		r.write(r.pid, filepath.Join(headerProduct, "product"))
-	})
-	r.window(built["port"].Build, func() {
-		r.open(r.pid, filepath.Join(headerProduct, "product"))
-		r.open(r.pid, "source/a.c")
 	})
 	if settlement := r.settle(t); len(settlement.Settled) != 2 {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	headerReads, err := loadReads(r.cache, built["header"].NameKey)
-	if err != nil || len(headerReads.Sets) == 0 {
-		t.Fatalf("header's read sets: %+v, %v", headerReads, err)
+	// port is built by a run of its own that finds header, so its set reads header alone, never base beside it.
+	r.retrace(t, "port")
+	headerFound := Product(t, header, building("never built: found"))
+	Product(t, port, reading(headerFound))
+	built["port"] = r.built(t)["port"]
+	r.window(built["port"].Build, func() {
+		r.open(r.pid, filepath.Join(headerFound, "product"))
+		r.open(r.pid, "source/a.c")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("port: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	r.retrace(t, "found")
-	Product(t, port, building("never built: found"))
-	found := map[string]string{}
-	for _, report := range r.settle(t).Reports {
-		if report.Outcome == ReportFound {
-			found[report.NameKey] = report.Key
+	if entries := r.entries(t, built["port"].NameKey); slices.Contains(entries, "product "+built["base"].NameKey) || !slices.Contains(entries, "product "+built["header"].NameKey) {
+		t.Fatalf("port's set reads %q; want header's product and never base's", entries)
+	}
+	keys := map[string]string{}
+	for _, name := range []string{"base", "header"} {
+		file, err := loadReads(r.cache, built[name].NameKey)
+		if err != nil || len(file.Sets) == 0 {
+			t.Fatalf("%s's read sets: %+v, %v", name, file, err)
 		}
+		keys[name] = file.Sets[0].Key
 	}
-	if len(found) != 2 || found[built["header"].NameKey] != headerReads.Sets[0].Key || found[built["port"].NameKey] == "" {
-		t.Fatalf("the run found %v; want port and the header its set reads, under %s", found, headerReads.Sets[0].Key[:12])
+	foundBy := func(trace string, product func()) map[string]string {
+		t.Helper()
+		r.retrace(t, trace)
+		product()
+		found := map[string]string{}
+		for _, report := range r.settle(t).Reports {
+			if report.Outcome == ReportFound {
+				found[report.NameKey] = report.Key
+			}
+		}
+		return found
+	}
+	found := foundBy("found", func() { Product(t, port, building("never built: found")) })
+	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] == "" {
+		t.Fatalf("the run found %v; want port, the header its set reads under %s, and the base header's reads under %s", found, keys["header"][:12], keys["base"][:12])
 	}
 	// Fetched from the store under the key its set gives, the same: that set's upstreams are named.
 	portKey := found[built["port"].NameKey]
@@ -2083,19 +2113,12 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
 	t.Cleanup(server.Close)
 	t.Setenv("ADAMIC_BUILD_STORE", server.URL)
 	t.Setenv("ADAMIC_BUILD_AUDIT", "0")
-	store.put(t, portKey, map[string]string{"product": "header and port"})
+	store.put(t, portKey, map[string]string{"product": "base and more and more"})
 	forgetHeldForLife()
 	t.Cleanup(forgetHeldForLife)
-	r.retrace(t, "fetched")
-	Product(t, port, building("never built: fetched"))
-	clear(found)
-	for _, report := range r.settle(t).Reports {
-		if report.Outcome == ReportFound {
-			found[report.NameKey] = report.Key
-		}
-	}
-	if len(found) != 2 || found[built["header"].NameKey] != headerReads.Sets[0].Key || found[built["port"].NameKey] != portKey || len(store.reads) == 0 {
-		t.Fatalf("the run fetched port and found %v, after %d store reads; want port and the header its set reads", found, len(store.reads))
+	found = foundBy("fetched", func() { Product(t, port, building("never built: fetched")) })
+	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] != portKey || len(store.reads) == 0 {
+		t.Fatalf("the run fetched port and found %v, after %d store reads; want port, header and base", found, len(store.reads))
 	}
 }
 
