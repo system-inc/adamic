@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // A parser mutant's witnesses are every corpus case where it answers other than Go, found by running the mutant over
@@ -44,7 +45,7 @@ func cssParserWitnessKey(t *testing.T, mutation int, port, cases, answers string
 
 func cssParserWitnessInputs(t *testing.T, mutation int) buildcache.Inputs {
 	t.Helper()
-	cases, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	cases, _ := oracles.CachedParserOutputs(t)
 	return cssParserWitnessKey(t, mutation, cssParserPreparedProgram(t, mutation).main, cases, filepath.Join(filepath.Dir(cases), "answers.txt"))
 }
 
@@ -98,12 +99,12 @@ func cssParserAllWitnesses(t *testing.T) [][]int {
 // from Go's. A port that fails to run, or answers a different set of cases, is an error.
 func cssParserDeriveWitnesses(t *testing.T, port string) ([]int, error) {
 	t.Helper()
-	corpus := cssParserTopCorpus(t)
-	all := make([]int, len(corpus.inputs))
+	corpus := oracles.LoadParserCorpus(t)
+	all := make([]int, len(corpus.Inputs))
 	for i := range all {
 		all[i] = i
 	}
-	cases, want := writeCSSParserSlice(t, corpus, all)
+	cases, want := oracles.WriteParserSlice(t, corpus, all)
 	got := cssParserOnNode(t, port, cases)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		return nil, fmt.Errorf("the port must run over the whole corpus: exit %d %s", got.exitCode, got.stderr)
@@ -160,7 +161,7 @@ func TestCSSParserMutantWitnessesRekey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	cases, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	cases, _ := oracles.CachedParserOutputs(t)
 	inputs := map[string]string{"port": cssParserPreparedProgram(t, 0).main, "cases": cases, "answers": filepath.Join(filepath.Dir(cases), "answers.txt")}
 	key := buildcache.NameKey(root, cssParserWitnessKey(t, 0, inputs["port"], inputs["cases"], inputs["answers"]))
 	if buildcache.NameKey(root, cssParserWitnessKey(t, 1, inputs["port"], inputs["cases"], inputs["answers"])) == key {
@@ -196,10 +197,10 @@ func TestCSSParserMutantThatDiffersNowhereFails(t *testing.T) {
 	if len(ids) != 0 {
 		t.Fatalf("the unmutated parser differs from Go on %d cases", len(ids))
 	}
-	keys := cssParserTopCorpus(t).keys
+	keys := oracles.LoadParserCorpus(t).CaseKeys
 	witnesses := cssParserAllWitnesses(t)
 	witnesses[0] = ids
-	err = cssParserUnionError(keys, cssParserWithMutants(cssParserShards(keys), keys, witnesses), witnesses)
+	err = cssParserUnionError(keys, oracles.ParserWithMutants(oracles.ParserAgreementShards(keys), keys, witnesses), witnesses)
 	if err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
 		t.Fatalf("a mutant with no witnesses read as %v", err)
 	}
