@@ -1501,6 +1501,11 @@ reads cmd/adamic-gate stage1/cohere/lint/lint_test.go
 # parallel census, so its key names them all (#006gzv8): named only by the lines above, it reused a green past
 # runtime's 53c2e7a01d, whose reason sat inside its test's body, and main went red unseen.
 reads cmd/adamic-gate *_test.go
+# TestEveryCCompilerRunsThroughNative (internal/compilercensus/census_test.go) parses every Go file in the tree for
+# C compiler calls, so its key names them all (#fwms5s4): in internal/native, keyed on native's reads, it reused a
+# green past chg_gm7k75w9's clang lookup in internal/oracle, and main went red unseen. Its own package, so only the
+# census runs again.
+reads internal/compilercensus *.go
 reads cmd/adamic-stage1-progress stage1/cohere/gitignore/gitignore_test.go
 reads internal/flow internal/oracle/testdata/non_null.ts
 reads internal/flow internal/oracle/testdata/non_null_array.ts
