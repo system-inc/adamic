@@ -1,0 +1,5 @@
+function padded<T extends string | undefined>(fill: T): string {
+ return 'ab'.padStart(5, fill) + '|' + String.prototype.padEnd.call('ab', 5, fill);
+}
+console.log(padded<string>('-'));
+console.log(padded<string | undefined>(undefined));

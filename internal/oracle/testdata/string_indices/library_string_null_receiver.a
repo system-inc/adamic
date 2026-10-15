@@ -1,0 +1,10 @@
+let order = '';
+function argument(): number { order = order + 'a'; return 1; }
+try { String.prototype.slice.call(null, argument()); } catch (error) {
+ if (error instanceof Error) { console.log(error.name); console.log(error.message); }
+}
+console.log(order);
+try { String.prototype.charCodeAt.call(undefined, argument()); } catch (error) {
+ if (error instanceof Error) { console.log(error.name); console.log(error.message); }
+}
+console.log(order);

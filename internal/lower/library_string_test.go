@@ -11,8 +11,6 @@ func TestLibraryStringRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"detached", "const trim = String.prototype.trim;\nconsole.log(trim());\n", "method read as a value"},
-		{"null receiver", "String.prototype.trim.call(null);\n", "null or undefined"},
-		{"undefined receiver", "String.prototype.trim.call(undefined);\n", "null or undefined"},
 		{"String internal slot", "String.prototype.valueOf.call(42);\n", "requires a String internal slot"},
 		{"object conversion", "console.log(String({ value: 1 }));\n", "ToPrimitive is not lowered"},
 		{"collation", "console.log(`${'Z'.localeCompare('a')}`);\n", "locale collation"},
