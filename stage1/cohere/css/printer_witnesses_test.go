@@ -29,7 +29,7 @@ var cssPrinterWitnessSets [3][][]int
 // Node runs it, the corpus, and the Go printer, plus this file, which holds the derivation.
 func cssPrinterWitnessInputs(t *testing.T, variant int) buildcache.Inputs {
 	t.Helper()
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	corpus, _ := cachedCSSParserOracleOutputs(t)
 	return cssPrinterWitnessKey(t, variant, cssPrinterProduct(t, variant).source, corpus, cssOracleProduct(t, true))
 }
 
@@ -55,7 +55,7 @@ func cssPrinterWitnessKey(t *testing.T, variant int, port, corpus, oracle string
 func cssPrinterWitnesses(t *testing.T, variant int) [][]int {
 	t.Helper()
 	cssPrinterWitnessOnce[variant].Do(func() {
-		corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+		corpus, _ := cachedCSSParserOracleOutputs(t)
 		port := cssPrinterProduct(t, variant).source
 		directory := buildcache.Product(t, cssPrinterWitnessInputs(t, variant), func(dir string) error {
 			witnesses, err := cssPrinterDeriveWitnesses(t, port, corpus)
@@ -167,7 +167,7 @@ func TestCSSPrinterMutantWitnessesRekey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	corpus, _ := cachedCSSParserOracleOutputs(t)
 	inputs := map[string]string{"port": cssPrinterProduct(t, 0).source, "corpus": corpus, "oracle": cssOracleProduct(t, true)}
 	key := buildcache.NameKey(root, cssPrinterWitnessKey(t, 0, inputs["port"], inputs["corpus"], inputs["oracle"]))
 	if other := buildcache.NameKey(root, cssPrinterWitnessKey(t, 1, inputs["port"], inputs["corpus"], inputs["oracle"])); other == key {
@@ -196,7 +196,7 @@ func TestCSSPrinterMutantWitnessesRekey(t *testing.T) {
 // that. The derivation itself still finds a difference planted in one answer.
 func TestCSSPrinterMutantThatDiffersNowhereFails(t *testing.T) {
 	t.Parallel()
-	corpus, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	corpus, _ := cachedCSSParserOracleOutputs(t)
 	witnesses, err := cssPrinterDeriveWitnesses(t, cssPrinterProduct(t, -1).source, corpus)
 	if err != nil {
 		t.Fatal(err)
