@@ -205,6 +205,40 @@ func TestProduct_FixtureOracleHook(t *testing.T) {
 	}
 }
 
+// The hook's runtime archives are this package's products too: every program it builds links a sanitized archive of
+// the runtime for its features, and compiled in the hook, seven of them were 12 s of every unit before its first
+// fixture finished, and most of its CPU (#43k99f8). Each test runs the hook binary's own product test for one group of
+// internal/oracle's sanitized archives, so the tree build builds them ahead under this package and its unit fetches
+// them, and the hook's supplier reads them there (internal/oracle's runtimes_test.go). Mutant: no test here, and every
+// fixture's hook reads its archive as not built.
+func fixtureRuntimeProducts(t *testing.T, group int) {
+	t.Helper()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	test := fmt.Sprintf("TestProduct_NativeRuntimesSanitized%d", group)
+	result := execute(t, filepath.Join(repository, "internal/oracle"), nil, fixtureOracleHook(t, repository), "-test.run=^"+test+"$", "-test.count=1", "-test.v")
+	if result.Exit != 0 || !strings.Contains(result.Stdout, "--- PASS: "+test+" ") {
+		t.Fatalf("the oracle hook's %s: exit %d\n%s%s", test, result.Exit, result.Stdout, result.Stderr)
+	}
+}
+
+func TestProduct_FixtureRuntimesSanitized0(t *testing.T) {
+	t.Parallel()
+	fixtureRuntimeProducts(t, 0)
+}
+
+func TestProduct_FixtureRuntimesSanitized1(t *testing.T) {
+	t.Parallel()
+	fixtureRuntimeProducts(t, 1)
+}
+
+func TestProduct_FixtureRuntimesSanitized2(t *testing.T) {
+	t.Parallel()
+	fixtureRuntimeProducts(t, 2)
+}
+
 func TestFixtureOracleProductTracksInputs(t *testing.T) {
 	t.Parallel()
 	repository, err := filepath.Abs("../..")

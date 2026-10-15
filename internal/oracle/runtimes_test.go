@@ -31,7 +31,9 @@ type runtimeSet struct {
 
 // runtimeSets are every feature set the oracle's programs need, counted at 91671a25be over every lowered fixture and
 // review program (base 1021, canonical closures 46, convention 18, receivers 14, regexp callback 6, node host 5, the
-// rest 1 to 4). A program whose set isn't here fails its build, naming the set to add.
+// rest 1 to 4), and the programs stage3/fixtures' oracle hook builds (at ed4fc86eef its 82 that compile need seven,
+// six of them these and receivers with node host, which only stage3/fixtures/host's 13_createDirectory.a needs). A
+// program whose set isn't here fails its build, naming the set to add.
 var runtimeSets = []runtimeSet{
 	{nil, "dedication/dedication.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION"}, "internal/oracle/testdata/array_from_undefined.a"},
@@ -44,6 +46,7 @@ var runtimeSets = []runtimeSet{
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/callback.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
+	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
 }
 
 // A runtimeOption is one way the oracle builds a program: sanitized for the comparison and the leak check, release as
@@ -62,19 +65,14 @@ var runtimeOptions = []runtimeOption{
 	{"wasm", native.Options{Target: "wasm32-wasi"}, "ADAMIC_ORACLE_WASI"},
 }
 
+// Every process of this binary takes its archives from the products, stage3/fixtures' oracle hook too (this binary,
+// run with ADAMIC_STAGE3_FIXTURE once per fixture in stage3/fixtures' unit). That unit fetches its own package's
+// products and not this one's (lap A.5, a086f7e7f7e4, where the hook read every archive as not built), so
+// stage3/fixtures declares the sanitized ones as its own (TestProduct_FixtureRuntimesSanitized*, which run this binary's
+// TestProduct_NativeRuntimesSanitized*), rather than the hook compiling seven archives in every unit, 12 s before its
+// first fixture could finish and most of its CPU (#43k99f8).
 func init() {
-	if suppliesRuntimes(os.Getenv("ADAMIC_STAGE3_FIXTURE")) {
-		native.SupplyRuntimes(supplyRuntime)
-	}
-}
-
-// suppliesRuntimes says whether this process takes its runtime archives from the products, given its
-// ADAMIC_STAGE3_FIXTURE. A process that has one is stage3/fixtures' oracle hook, this package's test binary run as
-// stage3/fixtures' product, once per fixture in stage3/fixtures' unit, which fetches stage3/fixtures' products and not
-// this package's: there the supplier read every archive as not built (lap A.5, a086f7e7f7e4). The hook compiles them
-// into native's runtime cache under its unit's build cache instead, once per unit, as it did before they were products.
-func suppliesRuntimes(stage3Fixture string) bool {
-	return stage3Fixture == ""
+	native.SupplyRuntimes(supplyRuntime)
 }
 
 // supplyRuntime gives native the archive a build asks for from its product: built here the first time on a machine
@@ -338,17 +336,4 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(t *testing.T) {
 func fileExists(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && info.Mode().IsRegular()
-}
-
-// The oracle's own tests take their runtime archives from the products, and stage3/fixtures' oracle hook (this
-// binary, run with ADAMIC_STAGE3_FIXTURE) doesn't, since its unit holds none of this package's products. Mutants: the
-// supplier installed in the hook; the supplier never installed.
-func TestTheStage3HookCompilesItsOwnRuntimes(t *testing.T) {
-	t.Parallel()
-	if !suppliesRuntimes("") {
-		t.Error("the oracle's own tests don't take their runtime archives from the products")
-	}
-	if suppliesRuntimes("stage3/fixtures/real/program.ts") {
-		t.Error("stage3/fixtures' oracle hook takes its runtime archives from products its unit doesn't hold")
-	}
 }
