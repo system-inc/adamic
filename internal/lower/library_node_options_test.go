@@ -13,10 +13,32 @@ import (
 )
 
 // Probe the predicate itself as well as the relation hook: a second guard at the
-// hook must not conceal an unsound classification in the library's proof.
-func TestNodeHostConsumesArgument(t *testing.T) {
+// hook must not conceal an unsound classification in the library's proof. Each
+// probe loads its own program with Node's types, about 0.3 s alone on one core, so
+// the 36 are three tests of every third probe (36 in one were 25 s of their own on
+// Cloud, Oct 15).
+func TestNodeHostConsumesArgument0(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct {
+	nodeHostConsumesArgumentProbes(t, 0)
+}
+
+func TestNodeHostConsumesArgument1(t *testing.T) {
+	t.Parallel()
+	nodeHostConsumesArgumentProbes(t, 1)
+}
+
+func TestNodeHostConsumesArgument2(t *testing.T) {
+	t.Parallel()
+	nodeHostConsumesArgumentProbes(t, 2)
+}
+
+// nodeHostConsumesArgumentGroups is how many tests the probes are cut into.
+const nodeHostConsumesArgumentGroups = 3
+
+func nodeHostConsumesArgumentProbes(t *testing.T, group int) {
+	t.Helper()
+	probed := 0
+	for index, probe := range []struct {
 		name, source string
 		index        int
 		want         bool
@@ -58,6 +80,10 @@ func TestNodeHostConsumesArgument(t *testing.T) {
 		{"negative index", `import {rmSync} from 'node:fs'; rmSync('missing',{recursive:true});`, -1, false},
 		{"missing argument", `import {rmSync} from 'node:fs'; rmSync('missing');`, 1, false},
 	} {
+		if index%nodeHostConsumesArgumentGroups != group {
+			continue
+		}
+		probed++
 		t.Run(probe.name, func(t *testing.T) {
 			file := filepath.Join(t.TempDir(), "main.a")
 			if err := os.WriteFile(file, []byte(probe.source), 0600); err != nil {
@@ -91,6 +117,9 @@ func TestNodeHostConsumesArgument(t *testing.T) {
 				t.Fatalf("checked %d calls, want %d", count, wantCalls)
 			}
 		})
+	}
+	if probed == 0 {
+		t.Fatalf("group %d of %d holds no probe", group, nodeHostConsumesArgumentGroups)
 	}
 }
 
