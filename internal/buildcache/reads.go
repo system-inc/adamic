@@ -287,6 +287,17 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
 		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
 		return productDigest(found.directory)
+	case productKeyKind:
+		// A test read set's product, by the key it's found under: its set holds every read of the window the test's set
+		// leaves out, so the key is what moves with them (#mmpt615).
+		found, err := productFor(root, cache, entry.Path, depth+1, known)
+		if err != nil {
+			return "", err
+		}
+		if found.key == "" {
+			return "", fmt.Errorf("it used product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+		}
+		return found.key, nil
 	case "tool":
 		tools, err := toolsRoot()
 		if err != nil {
