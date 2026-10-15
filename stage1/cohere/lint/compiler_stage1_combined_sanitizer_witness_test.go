@@ -56,22 +56,26 @@ func TestProduct_CompilerAgreementCheckerHeapWitness(t *testing.T) {
 	compilerAgreementMeasureProduct(t, compilerAgreementHeapWitnessNative)
 }
 
-// Only the group that holds no-bitwise runs against the planted binary: the union test already proves no-bitwise is in
-// exactly one group, so no other group can reach the write.
-func TestCompilerAndStage1AgreeCombinedSanitizerWitness(t *testing.T) {
-	t.Parallel()
-	groups := compilerAgreementCombinedGroups(t)
-	part := -1
+// compilerAgreementHeapWitnessOwner is the one group that holds no-bitwise, the only rule whose code reaches the write.
+func compilerAgreementHeapWitnessOwner(t *testing.T, groups []compilerAgreementCheckerGroup) int {
+	t.Helper()
 	for index, group := range groups {
 		for _, d := range group.rules {
 			if d.Slug == compilerAgreementHeapWitnessRule {
-				part = index
+				return index
 			}
 		}
 	}
-	if part < 0 {
-		t.Fatalf("no checker group holds %s", compilerAgreementHeapWitnessRule)
-	}
+	t.Fatalf("no checker group holds %s", compilerAgreementHeapWitnessRule)
+	return -1
+}
+
+// Only the group that holds no-bitwise runs against the planted binary: the union test already proves no-bitwise is in
+// exactly one group, and the control below shows another group never reaches the write.
+func TestCompilerAndStage1AgreeCombinedSanitizerWitness(t *testing.T) {
+	t.Parallel()
+	groups := compilerAgreementCombinedGroups(t)
+	part := compilerAgreementHeapWitnessOwner(t, groups)
 	owned := compilerAgreementCheckerAllOwned(t)
 	if len(owned) != 1 {
 		t.Fatalf("checker/all has %d cases, want one", len(owned))
@@ -93,4 +97,24 @@ func TestCompilerAndStage1AgreeCombinedSanitizerWitness(t *testing.T) {
 		t.Fatalf("group %d against the heap witness exited %d without AddressSanitizer reporting the planted write:\n%.2000s", part, exit.ExitCode(), report)
 	}
 	t.Logf("group %d (%d rules): AddressSanitizer reported the planted write, exit %d, bitwiseOperator named %t", part, len(groups[part].rules), exit.ExitCode(), strings.Contains(report, "bitwiseOperator"))
+}
+
+// The control: the cheapest other group, on the same planted binary, runs clean and agrees with Go byte for byte, so
+// the witness's red comes from no-bitwise's code alone and not from the plant breaking the binary.
+func TestCompilerAndStage1AgreeCombinedSanitizerWitnessControl(t *testing.T) {
+	t.Parallel()
+	groups := compilerAgreementCombinedGroups(t)
+	owner := compilerAgreementHeapWitnessOwner(t, groups)
+	control := -1
+	for index, group := range groups {
+		if index != owner && (control < 0 || group.millis < groups[control].millis) {
+			control = index
+		}
+	}
+	if control < 0 {
+		t.Fatal("no checker group besides the witness's owner")
+	}
+	got, want := compilerAgreementCheckerGroupRun(t, control, compilerAgreementHeapWitnessNative(t))
+	compilerAgreementCompare(t, got.output, want.output)
+	t.Logf("control group %d (%d rules) on the planted binary: clean, byte-identical to Go", control, len(groups[control].rules))
 }
