@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Opt-in immutable artifacts let profiling and comparison share the same source.
@@ -124,7 +125,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	}
 	cmd := bounded(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "go-printer"), "./internal/format/css")
 	cmd.Dir = filepath.Join(repo, "cohere")
-	if output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall}); err != nil {
+	if output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit}); err != nil {
 		t.Fatalf("Go benchmark build: %v %s", err, output)
 	}
 	t.Logf("saved %d shared inputs and %d profile inputs, %d output units", len(shared), len(sample), totalUnits)
