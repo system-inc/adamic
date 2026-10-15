@@ -57,6 +57,15 @@
     ],
     "internal/oracle TestProduct_CountMeasurements15": [
       "internal/native TestProduct_WASICompiler"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized1": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized1"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ]
   }
 }
