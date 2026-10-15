@@ -255,6 +255,11 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 			return treeValue(root, "exists", entry.Path), nil
 		}
 		return "link " + target, nil
+	case nodeInstallKind:
+		if !local(entry.Path) {
+			return "", fmt.Errorf("a node install %q isn't inside the tree", entry.Path)
+		}
+		return treeValue(root, nodeInstallKind, entry.Path), nil
 	case "above":
 		return existence(filepath.Join(root, filepath.FromSlash(entry.Path))), nil
 	case "above cache":
@@ -466,6 +471,9 @@ func treeValue(root, kind, name string) string {
 
 func readTreeValue(root, kind, name string) string {
 	treeValuesRead.Add(1)
+	if kind == nodeInstallKind {
+		return nodeInstallValue(filepath.Join(root, filepath.FromSlash(name), "node_modules"))
+	}
 	path := filepath.Join(root, filepath.FromSlash(name))
 	info, err := os.Stat(path)
 	if err != nil || name != "." && !Tracked(root, path, info.IsDir()) {
@@ -482,6 +490,51 @@ func readTreeValue(root, kind, name string) string {
 		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
 	}
 	return "other " + info.Mode().Type().String()
+}
+
+// nodeInstallValue is an installed node_modules at top as its manifest names it: each file's path, sha256 and executable
+// bit, and each link's target, sorted, hashed whole (#qx8fkaf). It's what's there, not what the lockfile meant, so
+// any byte npm made, any platform or install script that made another, and a file no lockfile names each move it. A
+// tree holds Loom's copy of the install and a runner the chunk it unpacked, the same entries, so the two value alike
+// at any checkout path, and no file the install holds stands in for its bytes.
+func nodeInstallValue(top string) string {
+	if real, err := filepath.EvalSymlinks(top); err == nil {
+		top = real
+	}
+	var lines []string
+	err := filepath.WalkDir(top, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil || path == top {
+			return err
+		}
+		relative := filepath.ToSlash(strings.TrimPrefix(path, top+string(filepath.Separator)))
+		switch {
+		case entry.Type()&fs.ModeSymlink != 0:
+			target, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			lines = append(lines, "link "+relative+" "+target)
+		case entry.Type().IsRegular():
+			info, err := entry.Info()
+			if err != nil {
+				return err
+			}
+			content, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			lines = append(lines, fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), info.Mode()&0o111 != 0))
+		}
+		return nil
+	})
+	switch {
+	case errors.Is(err, fs.ErrNotExist):
+		return "absent"
+	case err != nil:
+		return "unreadable: " + err.Error()
+	}
+	sort.Strings(lines)
+	return fmt.Sprintf("install %x", sha256.Sum256([]byte(strings.Join(lines, "\n"))))
 }
 
 // fileValue is a file's content entry in a read set: gitValue, or why the file couldn't be read.
