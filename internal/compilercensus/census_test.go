@@ -1,4 +1,4 @@
-package native
+package compilercensus
 
 import (
 	"go/ast"
@@ -15,7 +15,7 @@ import (
 // compilerNames are the C compilers a Go file can run by name.
 var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 
-// compilerSites are the functions outside this package that name a C compiler, each with why it may: every product a
+// compilerSites are the functions outside internal/native that name a C compiler, each with why it may: every product a
 // test builds by compiling C goes through Build, BuildFlags or BuildTSGo, which give clang no absolute path to read. A
 // product site that ran clang itself kept its build directory in a sanitized binary's globals, random per build, twice
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
@@ -56,7 +56,7 @@ var compilerSites = map[string]string{
 	"stage1/typescript/scanner/profile_test.go:TestProfileArtifacts":                                  "a profiling build into a scratch directory, never a product",
 }
 
-// Every Go file outside this package that names a C compiler does so in a function compilerSites gives a reason for:
+// Every Go file outside internal/native that names a C compiler does so in a function compilerSites gives a reason for:
 // a new product site that runs clang itself reds here, where a grep for one call shape let the second one through
 // (#rmmw95x). Each reason is a judgment, so a new site is one someone made. A listed function that no longer names a
 // compiler reds too, so the list says what is. Mutants: a hand-rolled clang call in a product; a stale entry.
@@ -75,7 +75,7 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if relative == "cohere" || relative == "internal/native" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
+			if relative == "cohere" || relative == "internal/native" || relative == "internal/compilercensus" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
 				return filepath.SkipDir
 			}
 			return nil
