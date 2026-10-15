@@ -380,18 +380,28 @@ var countShardMeasurements [countProductShards]struct {
 // test that first asked for it says why).
 func countMeasured(t *testing.T, key string) string {
 	t.Helper()
-	shard := &countShardMeasurements[familyShard(key, countProductShards)]
-	shard.once.Do(func() { shard.measured = countMeasurements(t, familyShard(key, countProductShards)) })
-	return shard.measured[key]
+	return countShard(t, familyShard(key, countProductShards))[key]
 }
 
-// countMeasurementProducts builds shard's product ahead, in the tree build.
+// countShard is shard's measurements, had once in a process by whichever test asks first: its product test or one of
+// its rows. Keying a product lowers every row the shard holds, so a run that read a shard in its product test and
+// again in its first row lowered each row twice (+9% on the oracle unit, Golem, #frgdx02).
+func countShard(t *testing.T, index int) map[string]string {
+	t.Helper()
+	shard := &countShardMeasurements[index]
+	shard.once.Do(func() { shard.measured = countMeasurements(t, index) })
+	return shard.measured
+}
+
+// countMeasurementProducts builds shard's product ahead, in the tree build, and in a run finds it for the shard's rows.
 func countMeasurementProducts(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_STAGE3_FIXTURE") != "" {
 		t.Skip("stage3/fixtures' oracle hook counts nothing")
 	}
-	countMeasurements(t, shard)
+	if countShard(t, shard) == nil {
+		t.Fatalf("count-measurements shard %d couldn't be had: the test that first asked for it says why", shard)
+	}
 }
 
 func TestProduct_CountMeasurements00(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 0) }
