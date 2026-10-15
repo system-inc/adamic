@@ -77,7 +77,7 @@ func Adamic(t testing.TB) string {
 	return GoBuild(t, "adamic", "./cmd/adamic", nil)
 }
 
-// errBuiltElsewhere is AdamicBuiltElsewhere's build: the one product test that builds it is AdamicOwner.
+// errBuiltElsewhere is BuiltElsewhere's build: the one product test that builds the product is its owner.
 var errBuiltElsewhere = errors.New("built by another package's product test")
 
 // AdamicOwner is the one product test that builds Adamic under the trace: every other package's product test that
@@ -86,14 +86,9 @@ var errBuiltElsewhere = errors.New("built by another package's product test")
 const AdamicOwner = "internal/native TestProduct_WASICompiler"
 
 // AdamicBuiltElsewhere is Adamic for a product test whose package reads the stage 0 compiler that AdamicOwner, another
-// package's product test, builds: found by its name key and never built here, so every package that reads it names one
-// settlement and one key. A product's read set is the reads of the traced process that settled it, so four product
-// tests each building Adamic in their own process settled it under four keys, and a unit of one package missed the key
-// another's set gave it (chg_35f264p7's void on tree 29b74b3d, Oct 14: internal/fuzz, cmd/adamic-test262 and
-// internal/oracle against internal/native's). The tree's product order starts this test only once the owner has
-// finished, so under the trace it looks once, and a product that isn't there fails it at once, naming the owner: never a
-// wait. Outside a trace (a developer's run, the tree's untraced fallback) it builds as Adamic does, since nothing else
-// will.
+// package's product test, builds (BuiltElsewhere), and outside a trace Adamic. Four product tests each building Adamic in their own process settled
+// it under four keys, and a unit of one package missed the key another's set gave it (chg_35f264p7's void on tree
+// 29b74b3d, Oct 14: internal/fuzz, cmd/adamic-test262 and internal/oracle against internal/native's).
 func AdamicBuiltElsewhere(t testing.TB) string {
 	t.Helper()
 	if traceDirectory() == "" {
@@ -105,11 +100,27 @@ func AdamicBuiltElsewhere(t testing.TB) string {
 	if err != nil {
 		t.Fatalf("go build ./cmd/adamic: %v", err)
 	}
+	return filepath.Join(BuiltElsewhere(t, "the stage 0 compiler", inputs, AdamicOwner, func(string) error { return errBuiltElsewhere }), request.output)
+}
+
+// BuiltElsewhere is a product, what, that another package's product test, owner, builds and settles, for a product
+// test whose package reads it: found by its name key and never built here, so the tree holds one settlement under one
+// key, and its unit fetches that one. Two packages' product tests that each build one name key settle it twice, and the
+// tree's read sets keep only the newest, so the other package's units value to a key only the first ships: oracle's
+// and stage3/fixtures' runtime archives voided 3 of oracle's 11 units on tree b89a9632 (#43k99f8). The tree's product
+// order starts this test only once owner has finished, so under the trace it looks once, and a product that isn't there
+// fails it at once, naming the owner: never a wait. Outside a trace (a developer's run, the tree's untraced fallback) it
+// is Product, with build, since nothing else will build it.
+func BuiltElsewhere(t testing.TB, what string, inputs Inputs, owner string, build func(directory string) error) string {
+	t.Helper()
+	if traceDirectory() == "" {
+		return Product(t, inputs, build)
+	}
 	directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
 	if err != nil {
-		t.Fatalf("the stage 0 compiler is %s's to build, and it isn't here: is this test in the tree's product order after it? %v", AdamicOwner, err)
+		t.Fatalf("%s is %s's to build, and it isn't here: is this test in the tree's product order after it? %v", what, owner, err)
 	}
-	return filepath.Join(directory, request.output)
+	return directory
 }
 
 // GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
