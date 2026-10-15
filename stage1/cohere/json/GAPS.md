@@ -47,13 +47,12 @@ never corpus answers. The port invokes no Go, Node or Prettier subprocess.
 
 ## Observations and proving programs
 
-`gaps/numeric-separators.json` is `[1__0]`. Go formats it as `[1__0]\n`; Prettier
-refuses with `A numeric separator is only allowed between two digits. (1:3)`.
-`TestUpstreamNumericSeparatorGap` also proves `[1_]` and `[0x_1]`, under both
-`probe.json` and `package.json`. All six are accepted by Go and refused by Prettier.
-Inspection of `estree/parse_json.go` shows underscores stripped without validating
-their positions. That explains the observed acceptance; this is upstream parser
-behavior, not an observed stage 0 compiler defect.
+`gaps/numeric-separators.json` is `[1__0]`. At cohere 715ba94 Go formatted it as
+`[1__0]\n` while Prettier refused it. Since cohere 1ee5f944 (#w6vtsrn, in the pin
+from 0183ccf8) Go refuses it, `[1_]` and `[0x_1]`, under both `probe.json` and
+`package.json`, with Babel's `A numeric separator is only allowed between two digits.`,
+as Prettier does, and the port refuses them in the same words.
+`TestUpstreamNumericSeparatorsAgree` holds all six to that agreement.
 
 The generated corpus also proves empty input under both filenames. Go refuses
 with `json: empty input`; Prettier succeeds with an empty output. The report
@@ -75,6 +74,9 @@ bytes. The separate Prettier report records exactly **9/1,075** disagreements: t
 proving fixture, six generated separator cases, and two empty cases. All nine
 remain in the mandatory port-to-Go corpus, with no exemptions. These are observations at
 the pins above, not proof that all other possible inputs agree.
+
+At cohere 0183ccf8 the seven separator disagreements are closed (Go refuses them as
+Prettier does), and `known-upstream-differences.txt` holds only the two empty cases.
 
 `TestAdditionalJSONBoundaries` adds 72 Go-only probes: invalid exponents and
 radix forms, legacy octal and bigint refusals, holes, numeric keys, single quotes,
