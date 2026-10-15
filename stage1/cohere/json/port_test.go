@@ -28,6 +28,8 @@ const repository = "../../.."
 type run struct {
 	stdout, stderr []byte
 	exitCode       int
+	// admissionWait is how long a sanitized run waited for json's memory budget before it started.
+	admissionWait time.Duration
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
@@ -56,13 +58,14 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 func executeResult(environment []string, name string, arguments ...string) (run, error) {
 	// All sanitized execution paths share admission, including parallel leaves,
 	// chunk workers, leak checks and optional calibration.
+	var admissionWait time.Duration
 	for _, setting := range environment {
 		if strings.HasPrefix(setting, "ASAN_OPTIONS=") {
 			budget, err := jsonSanitizedMemory()
 			if err != nil {
 				return run{}, err
 			}
-			budget.acquire(jsonMemorySanitizedWeight)
+			admissionWait = budget.acquire(jsonMemorySanitizedWeight)
 			defer budget.release(jsonMemorySanitizedWeight)
 			break
 		}
@@ -85,7 +88,7 @@ func executeResult(environment []string, name string, arguments ...string) (run,
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, err
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode(), admissionWait: admissionWait}, nil
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
@@ -345,10 +348,17 @@ func jsonPortTopShard(t *testing.T, target int) {
 					timings[side] = time.Since(began)
 				})
 			}
+			// A sanitized side's time is its run alone, and its wait for the memory budget is said beside it: the wait
+			// is other shards' work, the one part of this test's 90 s it doesn't control (#q2qjes8).
 			for side, timing := range timings {
-				if sides[side].name != "" {
-					t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+				if sides[side].name == "" {
+					continue
 				}
+				if wait := results[side].result.admissionWait; wait > 0 {
+					t.Logf("%s %.3fs; admission waited %.3fs", sides[side].name, (timing - wait).Seconds(), wait.Seconds())
+					continue
+				}
+				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
 			}
 			reference := results[0]
 			if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
