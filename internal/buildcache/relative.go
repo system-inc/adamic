@@ -73,31 +73,33 @@ func productDirectory(nameKey string) string {
 		return filepath.Join(cache, nameKey)
 	}
 	var directory string
+	var upstreams []upstream
 	if root, err := repositoryRoot(); err == nil {
-		keying(func() { directory = namedProduct(root, cache, nameKey) })
+		keying(func() { directory, upstreams = namedProduct(root, cache, nameKey) })
 	}
 	if directory == "" {
 		return filepath.Join(cache, nameKey)
 	}
-	journal(journalEntry{Event: "found", NameKey: nameKey, Directory: directory})
+	journalFound(nameKey, "", directory, upstreams)
 	return holding(nameKey, directory)
 }
 
-func namedProduct(root, cache, nameKey string) string {
+// namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set did.
+func namedProduct(root, cache, nameKey string) (string, []upstream) {
 	if looked, err := productFor(root, cache, nameKey, 0, nil); err == nil && looked.directory != "" {
-		return looked.directory
+		return looked.directory, looked.upstreams
 	}
 	if traceDirectory() != "" {
 		if pending := filepath.Join(pendingDirectory(cache), nameKey); isDirectory(pending) {
-			return pending
+			return pending, nil
 		}
 	}
 	if inputs, ok := localInputs(cache, nameKey); ok {
 		if key, err := Key(root, inputs); err == nil && isDirectory(filepath.Join(cache, "local", key)) {
-			return filepath.Join(cache, "local", key)
+			return filepath.Join(cache, "local", key), nil
 		}
 	}
-	return ""
+	return "", nil
 }
 
 func isDirectory(path string) bool {
