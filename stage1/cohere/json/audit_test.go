@@ -14,7 +14,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -128,109 +127,11 @@ func corpusCases(t *testing.T) []textCase {
 	return cases
 }
 
-// Prettier is a separate upstream report. Only the nine named disagreements are known;
-// an added difference or a closed difference requires updating the report explicitly.
-func jsonUpstreamTopShard(t *testing.T, target int) {
-	if err := gatesample.Validate(); err != nil {
-		t.Fatal(err)
-	}
-	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
-	}
-	portMatchesPrepare(t)
-	deadline := portMatchesDeadline(t.Name())
-	defer deadline.Stop()
-
-	cases, shards := jsonTopCorpus(t)
-	if len(shards) != testUpstreamRepositoryCorpusParityShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testUpstreamRepositoryCorpusParityShards)
-	}
-	if err := jsonPortUnion(cases, shards); err != nil {
-		t.Fatal(err)
-	}
-	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	knownBytes, err := os.ReadFile("known-upstream-differences.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	lines := strings.Split(strings.TrimSuffix(string(knownBytes), "\n"), "\n")
-	if len(lines) != 27 {
-		t.Fatalf("known upstream report has %d lines, want 27", len(lines))
-	}
-	known := map[string]string{}
-	for i := 0; i < len(lines); i += 3 {
-		id := lines[i]
-		if _, exists := known[id]; exists {
-			t.Fatalf("known report repeats %s", id)
-		}
-		known[id] = strings.Join(lines[i:i+3], "\n") + "\n"
-	}
-	ids := map[string]bool{}
-	for _, item := range cases {
-		ids[item.Name] = true
-	}
-	for id := range known {
-		if !ids[id] {
-			t.Fatalf("known difference missing from corpus: %s", id)
-		}
-	}
-	oracle := jsonTopOracle(t)
-	reports := make([]string, len(shards))
-	for ordinal, shard := range shards {
-		if ordinal != target || ordinal%count != index {
-			continue
-		}
-		func(t *testing.T) {
-			items := cases[shard.start:shard.end]
-			if len(items) == 0 {
-				t.Log("empty hash bucket")
-				return
-			}
-			goAnswers := jsonOracleAnswers(t, oracle, items)
-			directory := t.TempDir()
-			casesPath := filepath.Join(directory, "cases.json")
-			answersPath := filepath.Join(directory, "prettier.json")
-			writeJSON(t, casesPath, items)
-			// A cold process must accept the same deep nesting as the warmed whole-corpus process.
-			result := execute(t, nil, "node", "--stack-size=4096", "testdata/library.mjs", os.Getenv("ADAMIC_JSON_PRETTIER"), casesPath, answersPath)
-			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("%s Prettier exit %d: %s", t.Name(), result.exitCode, result.stderr)
-			}
-			encoded, err := os.ReadFile(answersPath)
-			if err != nil {
-				t.Fatal(err)
-			}
-			var prettierAnswers []answer
-			if err := json.Unmarshal(encoded, &prettierAnswers); err != nil {
-				t.Fatal(err)
-			}
-			if len(prettierAnswers) != len(items) {
-				t.Fatalf("%s Prettier answered %d of %d", t.Name(), len(prettierAnswers), len(items))
-			}
-			var report strings.Builder
-			for i, item := range items {
-				block := ""
-				if !sameAnswer(goAnswers[i], prettierAnswers[i]) {
-					allowed := item.Name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(item.Name, "generated/12/") || strings.HasPrefix(item.Name, "generated/13/") || strings.HasPrefix(item.Name, "generated/14/") || strings.HasPrefix(item.Name, "generated/16/")
-					if !allowed {
-						t.Errorf("%s unexpected upstream difference: %s", t.Name(), item.Name)
-					}
-					block = fmt.Sprintf("%s\nGo: %q error=%q\nPrettier: %q error=%q\n", item.Name, goAnswers[i].Output, goAnswers[i].Error, prettierAnswers[i].Output, prettierAnswers[i].Error)
-				}
-				if err := jsonUpstreamBlockCheck(t.Name(), item.Name, block, known[item.Name]); err != nil {
-					t.Error(err)
-				}
-				report.WriteString(block)
-			}
-			reports[ordinal] = report.String()
-			t.Logf("case range [%d:%d]; %d cases", shard.start, shard.end, len(items))
-		}(t)
-	}
-	t.Cleanup(func() { jsonTopReport(t, target, reports[target]) })
-	t.Logf("exact union: %d cases; all nine checked-in differences assigned", len(cases))
+// jsonUpstreamAllowed names the inputs Go and Prettier may disagree on: the separator witness and the generated
+// separator and empty-input cases above. How each of them differs is known-upstream-differences.txt's, and upstream
+// parity's key declares this file, so editing the list rebuilds the verdict.
+func jsonUpstreamAllowed(name string) bool {
+	return name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(name, "generated/12/") || strings.HasPrefix(name, "generated/13/") || strings.HasPrefix(name, "generated/14/") || strings.HasPrefix(name, "generated/16/")
 }
 
 func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
