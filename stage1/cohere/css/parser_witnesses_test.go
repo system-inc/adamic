@@ -44,7 +44,7 @@ func cssParserWitnessKey(t *testing.T, mutation int, port, cases, answers string
 
 func cssParserWitnessInputs(t *testing.T, mutation int) buildcache.Inputs {
 	t.Helper()
-	cases, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	cases, _ := cachedCSSParserOracleOutputs(t)
 	return cssParserWitnessKey(t, mutation, cssParserPreparedProgram(t, mutation).main, cases, filepath.Join(filepath.Dir(cases), "answers.txt"))
 }
 
@@ -160,7 +160,7 @@ func TestCSSParserMutantWitnessesRekey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	cases, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	cases, _ := cachedCSSParserOracleOutputs(t)
 	inputs := map[string]string{"port": cssParserPreparedProgram(t, 0).main, "cases": cases, "answers": filepath.Join(filepath.Dir(cases), "answers.txt")}
 	key := buildcache.NameKey(root, cssParserWitnessKey(t, 0, inputs["port"], inputs["cases"], inputs["answers"]))
 	if buildcache.NameKey(root, cssParserWitnessKey(t, 1, inputs["port"], inputs["cases"], inputs["answers"])) == key {
