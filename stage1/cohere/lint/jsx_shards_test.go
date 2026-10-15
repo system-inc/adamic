@@ -49,7 +49,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 				return err
 			}
 			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
+				if entry.Name() == ".git" || entry.Name() == "node_modules" || lintRuleSubdirectory(path) {
 					return filepath.SkipDir
 				}
 				return nil
