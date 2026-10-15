@@ -63,7 +63,15 @@ prepareGo() {
 realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
 if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
 	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
+	# A release goes in whole, into a fresh directory renamed into place, and is read-only from then on (#mmpt615):
+	# a product's key stamps the Go release, not each of its 15,000 sources, so an edit to its sources alone would
+	# change what builds compile under a key that reads the same. A broken one is moved aside, never written into.
+	# The write bits come off after the rename: a directory without them can't move to another parent.
+	fresh=$(mktemp -d "$tools/.go.XXXXXX")
+	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$fresh" ||
+		{ echo "setup: Go $goVersion didn't download whole; $fresh is left for removal" >&2 && exit 1; }
+	if [ -e "$tools/go" ]; then mv "$tools/go" "$tools/go.before-$goVersion.$$" || exit 1; fi
+	mv "$fresh/go" "$tools/go" && rmdir "$fresh" && chmod -R a-w "$tools/go" || exit 1
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)
