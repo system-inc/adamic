@@ -14,7 +14,6 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -22,7 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 const testCompositionMatchesGoShards = 16
@@ -96,7 +95,7 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	shards := compositionPartition(t, lines)
-	oracle := compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
+	oracle := oracles.CompositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
 	source, product := compositionLoweredProduct(t)
 	sanitized := compositionNativeProduct(t)
 
@@ -154,9 +153,11 @@ func compositionRunShard(t *testing.T, index int) {
 	t.Logf("shard-%03d: %.3fs cooked=false cases=%d (excludes shared setup)", index, time.Since(started).Seconds(), len(shard))
 }
 
+// Compiler products only: corpus enumeration and the Go oracle belong to the
+// runtime comparison setup, so this unit needs no oracle-package ordering.
 func TestCompositionMatchesGo_Setup(t *testing.T) {
 	t.Parallel()
-	compositionSetup(t)
+	compositionNativeProduct(t)
 }
 
 func TestCompositionMatchesGoUnion(t *testing.T) {
@@ -260,12 +261,12 @@ func compositionCases(t *testing.T) string {
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	repo, _ := filepath.Abs(repository)
-	request, _ := json.Marshal(map[string]any{"cases": cases, "repository": repo, "roots": cssCorpusRoots, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	request, _ := json.Marshal(map[string]any{"cases": cases, "repository": repo, "roots": oracles.CorpusRoots(), "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	requestPath := filepath.Join(dir, "request.json")
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracle := compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
+	oracle := oracles.CompositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
 	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
 	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
@@ -385,45 +386,6 @@ func compositionCommand(t *testing.T, name string, arguments ...string) *exec.Cm
 	return compositionCommandContext(ctx, name, arguments...)
 }
 
-// Setup retains process-group cancellation without a deadline of its own.
-func compositionSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
-	t.Cleanup(cancel)
-	return compositionCommandContext(ctx, name, arguments...)
-}
-
-// compositionGoCommand is compositionSetupCommand for go as toolchain resolves it,
-// run in directory under toolchain.Env, the environment whose compilers the
-// oracle's key names.
-func compositionGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	resolved := toolchain.CommandIn(directory, "go", arguments...)
-	if resolved.Err != nil {
-		return resolved
-	}
-	command := compositionSetupCommand(t, resolved.Path, arguments...)
-	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
-}
-
-func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	cmd := exec.CommandContext(ctx, name, arguments...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
-		if cmd.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	cmd.WaitDelay = time.Second
-	return cmd
-}
-
 func compositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	cmd := compositionCommand(t, name, arguments...)
@@ -433,7 +395,7 @@ func compositionExecute(t *testing.T, environment []string, name string, argumen
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	err := childguard.Run(cmd, childguard.Options{Stall: childStall})
+	err := childguard.Run(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
 		t.Fatalf("running %s: %v", name, err)
@@ -475,49 +437,6 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 		t.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	return ""
-}
-
-// The overlay source and the complete Go module trees address each oracle by
-// content. Corpus enumeration stays live: only its binary is cached. The build
-// runs go under toolchain.Env (compositionGoCommand), so the key names the C and
-// C++ compilers that environment gives go, and the C compiler by its report.
-func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
-	t.Helper()
-	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs(sidePath)
-	sideRelative, err := filepath.Rel(repo, side)
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := compositionOracleInputs(name, sideRelative, overlayTarget, packagePath, cssGoCompilers())
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := compositionGoCommand(t, filepath.Join(repo, "cohere"), append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)...)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
-}
-
-func compositionOracleInputs(name, sideRelative, overlayTarget, packagePath string, compilers cssCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      name,
-		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
-		Flags:     []string{"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "), packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
-	}
 }
 
 func compositionInputs() buildcache.Inputs {
