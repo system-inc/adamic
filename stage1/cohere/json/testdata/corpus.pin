@@ -1,14 +1,14 @@
 {
-  "count": 1094,
-  "sha256": "3d987e9a388d0e354db2ee0dc5b6ce8a780f39a3e30d41e52bedc9973fc1e000",
+  "count": 1113,
+  "sha256": "ec5e0f63770de1ffa8bc8eb534ec270a8bbe964a2059ff789ab4f4e26cb0537b",
   "groups": {
     "TypeScript": {
       "count": 203,
       "sha256": "46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b"
     },
     "cohere": {
-      "count": 839,
-      "sha256": "f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47"
+      "count": 858,
+      "sha256": "34c398ee1ce83e8c789e28189aa334c5da0a6edf9c5d973a1837e572eca17241"
     },
     "generated": {
       "count": 34,
@@ -854,11 +854,11 @@
     },
     {
       "path": "cohere/docs/data/CohereSettings.schema.json",
-      "sha256": "a68c1a273a947a395a5d7febf3d57f57e4c526e24a6597affa27daa76a6fcd2b"
+      "sha256": "b95ed8d10c2c52bfb1112573a37c3740fc204702cdd52e11b1067ca534cd755a"
     },
     {
       "path": "cohere/docs/data/NexusCohereSettings.schema.json",
-      "sha256": "50736f9e61954e77a1589a88e58c908d3c68604542a57a21efe9174762e27b84"
+      "sha256": "bd33c4f23667df5785749c8e0a45d0f280bf3cc46ad74c397845d04225659d80"
     },
     {
       "path": "cohere/docs/data/benchmarks.json",
@@ -1371,6 +1371,10 @@
     {
       "path": "cohere/docs/data/examples/adamic/no-definite-assignment.json",
       "sha256": "d63f7121f8e17355b4b7d1a3aaa46b3a575b394bb27f9906683826d02c4cb900"
+    },
+    {
+      "path": "cohere/docs/data/examples/adamic/no-indexed-access-write.json",
+      "sha256": "34e380b7d5dc8f18765b2636c7553122161c1ab1f84389bc780290fb6001ce21"
     },
     {
       "path": "cohere/docs/data/examples/adamic/no-optional-widening.json",
@@ -2838,11 +2842,23 @@
     },
     {
       "path": "cohere/docs/data/rules.json",
-      "sha256": "f632ed33dc7fb86de52703620eebf77b9ee8364b187890edf1e034e266cb7ab5"
+      "sha256": "9b2918446d11151c8b7c6758e49b52b6cbb7caa3cbcfb7a194e29a4c0feaed57"
     },
     {
       "path": "cohere/docs/data/sets.json",
-      "sha256": "f753a47488887b61387e369a4a1e64d3117b8e5fb845f0976b5e5c46f2173cb9"
+      "sha256": "50a9345635eb5e2d2c337d9f4ecf13e364ac5958cc1848280899f6832289628a"
+    },
+    {
+      "path": "cohere/docs/task-evidence/xzpba0r/adamic-after-summary.json",
+      "sha256": "42ac6c1e2417bc16c8df88cdb9ad4c31f8594bf4ed0f8ac99ed5f0fe9357bb93"
+    },
+    {
+      "path": "cohere/docs/task-evidence/xzpba0r/adamic-before-summary.json",
+      "sha256": "2b17ec33f1634a1af06e8f45b553e3203ff62aa472a88e43aa2b870a61da9c1c"
+    },
+    {
+      "path": "cohere/docs/task-evidence/xzpba0r/adamic-edges-summary.json",
+      "sha256": "81d0ff9e15a35e63d229a5cee902523ca2accdb1f2b4b83737bcc2ca0210dba4"
     },
     {
       "path": "cohere/editors/vscode/package.json",
@@ -2854,7 +2870,7 @@
     },
     {
       "path": "cohere/internal/lint/configuration/sets/adamic.json",
-      "sha256": "d2f290fce8bb452aee7b25f9c6964cbc95c451be6aa3e877ba2ced7374eaebb2"
+      "sha256": "1c26f9e20e7f07a3ddea3b6fedefa87dc1d62a57aea468fe8bd6fb1cf9828a4f"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/next.json",
@@ -2870,7 +2886,7 @@
     },
     {
       "path": "cohere/internal/lint/configuration/sets/system-inc/base.json",
-      "sha256": "8e5ec7503c0d367f12181d0e74b4d7782d472eb24321ca1b1558ce570a83a3a9"
+      "sha256": "b137aa00e50db1f33fc325d6c0e6ac4fa561b2fe1be3d91787976a79b544baf5"
     },
     {
       "path": "cohere/internal/lint/configuration/sets/system-inc/structure.json",
@@ -3570,7 +3586,7 @@
     },
     {
       "path": "cohere/internal/lint/registry/testdata/eslint-corpus/known-gaps.json",
-      "sha256": "4ad1651a14ee3c35f6aa4173b1b091d994e6358200cf8530107ab5e9ddbeba76"
+      "sha256": "c4f2ed1c029403533c33b07560eed381c4178cc5531e68178e75778278617c23"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/ast_fixtures.json",
@@ -3597,12 +3613,24 @@
       "sha256": "a35e31b283c2ac134598639e1b24f575c34754e9ae7d2536cdd441b655d436d2"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_context_public.json",
+      "sha256": "74fe559ada1ff16e944ef2b7d433dc41cf32c21248c6f5248ebdf0afa244bdbd"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_fixtures.json",
       "sha256": "2f3d19e1cf7db88640fcd3902b9d1298876d2e2f7590e8d293799ee4e2d9c4df"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_fixtures_public.json",
+      "sha256": "6346061e1c194d4de87154215e069f5226824837e003696a60a3099e6a63c56a"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_table.json",
       "sha256": "bcfa03870f8534fe1822fc7fd4713b46fa55b1e97957c5549526f6e9fb9d066b"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_table_public.json",
+      "sha256": "e865377f17094bb246ee9d4b481a7631f9e368d08398fe355c2f6eef9a2625cc"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/functional_fixtures.json",
@@ -3621,8 +3649,16 @@
       "sha256": "8cc28e9ef5a0e352290d0f182ddbbc50564ff0452727b748a9976e579c9e346e"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/theme_fixtures_public.json",
+      "sha256": "0db711afa7faee39fd17d3801ea7da3cbfbbe4ab88c0e220d0bec38e0b694aa5"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/utility_fixtures.json",
       "sha256": "e3e5c811596bd9c7382b844f6996db399f8a7ace99c78b66b1b2808a7f2dcd8d"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/utility_fixtures_public.json",
+      "sha256": "46982b2ad4b2a74c5e9a543faad17c0211224640e73281b4c6ce45da82a20580"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/valueparser_fixtures.json",
@@ -3637,24 +3673,60 @@
       "sha256": "0e9bfd10d63aebf7e1c457728410fada8aa6f91ef831879d2ef0d2017907d27d"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave1_fixtures_public.json",
+      "sha256": "50f553316c6218fc0f227414dcc7169a9886d5c0cb5b0f0581032a4828cb28d5"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2b_fixtures.json",
       "sha256": "d08b7ba2e90fced49aa023937a58f565665146c7322b1cc94dd43b6391e4a545"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2b_fixtures_public.json",
+      "sha256": "1435e48fa8c9baa942bc51f9fa21865c8ebf5afcea0198457ec71b4d928b75c7"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2c_fixtures.json",
       "sha256": "143c0c2ea3896c9e33e89fa3d18d7f610d0a5162034163eb058d7d103d0ba50c"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2c_fixtures_public.json",
+      "sha256": "f00879aeac30c556e7e4c61b83c843ba2c6d43bffc4bd6a91432ccc35d66844e"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave3_fixtures.json",
-      "sha256": "779f92fb11d2855b79676c64ff1d4ade1ba1472a4fb0b9992b9855751e4206f1"
+      "sha256": "5dfbfdb3fecdf5db4354beb63ddeee747d215e932c8795865ac06453b71f7374"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave3_fixtures_public.json",
+      "sha256": "54d6000412ad7daeb79ad4d7699cb1622a235b8f4f8893f48a4f66c3f547160c"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave4_fixtures.json",
       "sha256": "a5f134fda5999388163b90e8748bdc5652ab76fd58bce7e1f5c08dbe15d21433"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave4_fixtures_public.json",
+      "sha256": "9392acd8b612f5a2c8eafc21d6bc3f1a054cf102b520f682fc2249c7e193fb6e"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave5_fixtures.json",
       "sha256": "62e6971b0a98ba59dca9d8805a87ae75480b5269f4f8ef207cd183f3f6b52a65"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave5_fixtures_public.json",
+      "sha256": "8dbdcb4669d3ce1fcdc1c3f99cf11d4d311d393ba4e3a3802ec178bdb7555a53"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/default_selectors.json",
+      "sha256": "4e06e97d3cc921e119639fe9cae416ac807838224ce33f4fa06d4a7e74669ff7"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/testdata/class_literals/cases.json",
+      "sha256": "320a6ea08f8ae9cad5b70e79565adb3c1b6557393aca46cbdd4bd009117a587f"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/testdata/class_literals/upstream.json",
+      "sha256": "77f6bc22c9f9fd73ce1745c6d9011415b7512a62d751794d375932427de9f6ad"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/testdata/strict_variants.json",
@@ -3706,7 +3778,7 @@
     },
     {
       "path": "cohere/policy/RuleNaming.json",
-      "sha256": "550f4b489a60946d3ab86f89b6afb35cfbf6069c4c8260ff338fadf0be6ac848"
+      "sha256": "3191cae4a063647b99e5a9babaa04746e28546f015a146790f228b6410176c29"
     },
     {
       "path": "cohere/policy/messages/boundary-no-global-container.json",
@@ -4049,6 +4121,10 @@
       "sha256": "f44926f2e0bb33ebbc2809a609d3e95b31c6cebb39d2c3090207d666371d24f6"
     },
     {
+      "path": "cohere/policy/messages/no-indexed-access-write.json",
+      "sha256": "0166d3d6955980c3d2fb847fdffb50b4840e69d7204fbc1702e613a17b6b501a"
+    },
+    {
       "path": "cohere/policy/messages/no-non-null-assertion.json",
       "sha256": "88ae6ea4a92de32184ac144d74de8e62175e27c4a8bf85e7edb2ebb5919e87a4"
     },
@@ -4174,11 +4250,11 @@
     },
     {
       "path": "cohere/schema/CohereSettings.schema.json",
-      "sha256": "a68c1a273a947a395a5d7febf3d57f57e4c526e24a6597affa27daa76a6fcd2b"
+      "sha256": "b95ed8d10c2c52bfb1112573a37c3740fc204702cdd52e11b1067ca534cd755a"
     },
     {
       "path": "cohere/schema/NexusCohereSettings.schema.json",
-      "sha256": "50736f9e61954e77a1589a88e58c908d3c68604542a57a21efe9174762e27b84"
+      "sha256": "bd33c4f23667df5785749c8e0a45d0f280bf3cc46ad74c397845d04225659d80"
     },
     {
       "path": "cohere/swift/HouseRuleVerdicts.json",
