@@ -9,6 +9,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // The unmutated printer runs every case in both modes, in sixty-four content-hash partitions per mode. Keep ownership
@@ -34,7 +36,7 @@ var cssPrinterCorpus []string
 func cssPrinterCorpusLines(t *testing.T) []string {
 	t.Helper()
 	cssPrinterCorpusOnce.Do(func() {
-		path, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+		path, _ := oracles.CachedParserOutputs(t)
 		data, err := os.ReadFile(path)
 		if err != nil {
 			t.Fatal(err)
@@ -49,11 +51,11 @@ func cssPrinterCorpusLines(t *testing.T) []string {
 // drop): drop the fixture root from the live enumeration; the corpora then differ.
 func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
 	t.Parallel()
-	live, err := os.ReadFile(cssPrinterCases(t, cssOracleProduct(t, false)))
+	live, err := os.ReadFile(cssPrinterCases(t, oracles.ComparisonOracle(t, false)))
 	if err != nil {
 		t.Fatal(err)
 	}
-	product, _ := cachedCSSParserOracleOutputs(t, cssParserOracle(t))
+	product, _ := oracles.CachedParserOutputs(t)
 	declared, err := os.ReadFile(product)
 	if err != nil {
 		t.Fatal(err)
@@ -114,7 +116,7 @@ func TestCSSPrinterSanitizedRunNamesEachFailure(t *testing.T) {
 	if err := os.WriteFile(cases, []byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	expected := cssPrinterAnswers(t, cssOracleProduct(t, true), cases, "default")
+	expected := cssPrinterAnswers(t, oracles.ComparisonOracle(t, true), cases, "default")
 	arguments := []string{cases, "output", "once", "default"}
 	if err := cssPrinterSanitizedAgreement(t, cssPrinterProduct(t, -1).binary, expected, arguments...); err != nil {
 		t.Fatalf("the unmutated printer: %v", err)
@@ -158,7 +160,7 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 		}
 		unit = cssPrinterMutantShard(lines, variant, modeIndex, ids)
 	}
-	printerOracle := cssOracleProduct(t, true)
+	printerOracle := oracles.ComparisonOracle(t, true)
 	product := cssPrinterProduct(t, unit.mutant)
 	leakBinary := product.binary
 	if unit.mutant < 0 && runtime.GOOS == "darwin" {
