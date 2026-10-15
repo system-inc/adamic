@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Enough room for the sanitized allocator, but below the prefix-rebuild cost.
@@ -129,7 +130,7 @@ func cssPrinterPreflightCost(t *testing.T, binary, oracle string) error {
 // no opt-in environment or optional fixture root is required for this guard.
 func TestCSSPrinterPreflightCost(t *testing.T) {
 	t.Parallel()
-	oracle := cssOracleProduct(t, true)
+	oracle := oracles.ComparisonOracle(t, true)
 	binary := cssPrinterProduct(t, -1).binary
 	// A scratch probe can run the exact guard with the restored slow path.
 	if os.Getenv("ADAMIC_CSS_PREFIX_COST_MUTANT") == "1" {
@@ -142,7 +143,7 @@ func TestCSSPrinterPreflightCost(t *testing.T) {
 
 func TestCSSPrinterPreflightCostMutant(t *testing.T) {
 	t.Parallel()
-	oracle := cssOracleProduct(t, true)
+	oracle := oracles.ComparisonOracle(t, true)
 	binary := cssPrinterCostMutant(t)
 	err := cssPrinterPreflightCost(t, binary, oracle)
 	if err == nil {

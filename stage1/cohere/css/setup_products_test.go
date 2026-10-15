@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 var cssParserPreparedPrograms = make([]struct {
@@ -59,6 +60,18 @@ func cssParserPreparedNative(t *testing.T, mutation int) string {
 	return buildCSSParserBinaries(t, []cssParserProgram{cssParserPreparedProgram(t, mutation)})[0]
 }
 
+// prepareCSSParserCompilerProducts needs no oracle, even on a cold tree. The
+// runtime comparison setup fetches the corpus independently after these products.
+func prepareCSSParserCompilerProducts(t *testing.T) {
+	t.Helper()
+	for mutation := -1; mutation < len(mutants); mutation++ {
+		cssParserPreparedNative(t, mutation)
+	}
+	if runtime.GOOS == "darwin" {
+		cssParserPreparedLeaks(t)
+	}
+}
+
 func cssParserPreparedLeaks(t *testing.T) string {
 	t.Helper()
 	return buildCSSParserUnsanitized(t, cssParserPreparedProgram(t, -1))
@@ -72,23 +85,23 @@ func TestCSSGoOraclesRekeyCompiler(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	compilers := cssCompilers{"clang", "clang++", "clang version 18.1.8"}
+	compilers := oracles.CompilerConfiguration{CCompiler: "clang", CPlusPlusCompiler: "clang++", Report: "clang version 18.1.8"}
 	for _, oracle := range []struct {
 		name   string
-		inputs func(cssCompilers) buildcache.Inputs
+		inputs func(oracles.CompilerConfiguration) buildcache.Inputs
 	}{
-		{"parser oracle", func(compilers cssCompilers) buildcache.Inputs {
-			return cssParserGoProductInputs("Go parser oracle", compilers)
+		{"parser oracle", func(compilers oracles.CompilerConfiguration) buildcache.Inputs {
+			return oracles.ParserOracleInputs("Go parser oracle", compilers)
 		}},
-		{"composition corpus oracle", func(compilers cssCompilers) buildcache.Inputs {
-			return compositionOracleInputs("css-composition-corpus-oracle", "stage1/cohere/css/testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss", compilers)
+		{"composition corpus oracle", func(compilers oracles.CompilerConfiguration) buildcache.Inputs {
+			return oracles.CompositionOracleInputs("css-composition-corpus-oracle", "stage1/cohere/css/testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss", compilers)
 		}},
-		{"composition Go oracle", func(compilers cssCompilers) buildcache.Inputs {
-			return compositionOracleInputs("css-composition-go-oracle", "stage1/cohere/css/testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css", compilers)
+		{"composition Go oracle", func(compilers oracles.CompilerConfiguration) buildcache.Inputs {
+			return oracles.CompositionOracleInputs("css-composition-go-oracle", "stage1/cohere/css/testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css", compilers)
 		}},
 	} {
 		key := buildcache.NameKey(root, oracle.inputs(compilers))
-		for _, other := range []cssCompilers{{"gcc", "clang++", compilers.report}, {"clang", "g++", compilers.report}, {"clang", "clang++", "clang version 19.1.7"}} {
+		for _, other := range []oracles.CompilerConfiguration{{CCompiler: "gcc", CPlusPlusCompiler: "clang++", Report: compilers.Report}, {CCompiler: "clang", CPlusPlusCompiler: "g++", Report: compilers.Report}, {CCompiler: "clang", CPlusPlusCompiler: "clang++", Report: "clang version 19.1.7"}} {
 			if otherKey := buildcache.NameKey(root, oracle.inputs(other)); otherKey == key {
 				t.Fatalf("%s: compilers %+v kept its key %s", oracle.name, other, key[:12])
 			}
@@ -107,24 +120,22 @@ func TestCSSGoOraclesKeyTheCompilersEnvGivesGo(t *testing.T) {
 	}
 	t.Setenv("CC", "")
 	t.Setenv("CXX", "")
-	defaults := cssGoCompilers()
-	inputs := cssParserGoProductInputs("Go parser oracle", defaults)
+	defaults := oracles.GoCompilerConfiguration()
+	inputs := oracles.ParserOracleInputs("Go parser oracle", defaults)
 	if !slices.Contains(inputs.Flags, "CC=clang") || !slices.Contains(inputs.Flags, "CXX=clang++") || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
 		t.Fatalf("with CC and CXX unset, the parser oracle's key names %+v, want clang, clang++ and clang's report", defaults)
 	}
 	t.Setenv("CC", "cc")
-	moved := cssGoCompilers()
-	if moved.c != "cc" || moved.report == defaults.report {
+	moved := oracles.GoCompilerConfiguration()
+	if moved.CCompiler != "cc" || moved.Report == defaults.Report {
 		t.Fatalf("CC=cc read as %+v", moved)
 	}
-	if buildcache.NameKey(root, cssParserGoProductInputs("Go parser oracle", moved)) == buildcache.NameKey(root, inputs) {
+	if buildcache.NameKey(root, oracles.ParserOracleInputs("Go parser oracle", moved)) == buildcache.NameKey(root, inputs) {
 		t.Fatal("CC=cc kept the parser oracle's key")
 	}
-	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.c, defaults.cPlusPlus)
+	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.CCompiler, defaults.CPlusPlusCompiler)
 }
 
-func TestProduct_CSSParserGoOracle(t *testing.T)      { t.Parallel(); cssParserOracle(t) }
-func TestProduct_CSSParserCorpus(t *testing.T)        { t.Parallel(); prepareCSSParserTopCorpus(t) }
 func TestProduct_CSSParserParserLowered(t *testing.T) { t.Parallel(); cssParserPreparedProgram(t, -1) }
 func TestProduct_CSSParserParserNative(t *testing.T)  { t.Parallel(); cssParserPreparedNative(t, -1) }
 func TestProduct_CSSParserCustomPropertyMutantLowered(t *testing.T) {
@@ -159,14 +170,6 @@ func TestProduct_CSSParserDarwinLeaks(t *testing.T) {
 	cssParserPreparedLeaks(t)
 }
 
-func TestProduct_CSSCompositionCorpusOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-}
-func TestProduct_CSSCompositionGoOracle(t *testing.T) {
-	t.Parallel()
-	compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
-}
 func TestProduct_CSSCompositionLowered(t *testing.T) {
 	t.Parallel()
 	compositionLoweredProduct(t)
