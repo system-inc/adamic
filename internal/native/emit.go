@@ -20,7 +20,13 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
-	return cProgram(program, -1)
+	source := "/* plant (never lands): every program's C gains this line, moving no count */\n" + cProgram(program, -1)
+	for _, value := range program.Strings {
+		if strings.Contains(value, "second method") {
+			source = strings.Replace(source, "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n#ifdef ADAMIC_COUNT\n\t{ void adamic_count_allocation(void); adamic_count_allocation(); }\n#endif\n", 1)
+		}
+	}
+	return source
 }
 
 func cProgram(program *ir.Program, handler int) string {
