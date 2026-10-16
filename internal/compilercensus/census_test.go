@@ -38,6 +38,7 @@ var compilerSites = map[string]string{
 	"internal/fuzz/run.go:TryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/runtimes_test.go:TestARuntimeProductKeyIsTheSameThroughEitherLink":               "finds clang to reach it through two links and key a runtime; compiles nothing",
 	"internal/oracle/counts_test.go:countMeasurementInputs":                                           "resolves clang to key a count product by its version report; compiles nothing",
+	"internal/oracle/jobserver_test.go:TestTheJobserverNeverReachesTheEmittedCOrClang":                "puts a recording wrapper named clang before the real one, so the jobserver proof sees every command native.Build runs; compiles nothing itself",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                                       "the WASI SDK's clang, into a t.TempDir(), never a product",
 	"stage1/cohere/css/profile_test.go:TestCSSProfileArtifacts":                                       "a profiling build into a scratch directory, never a product",
 	"stage1/cohere/css/setup_products_test.go:TestCSSGoOraclesRekeyCompiler":                          "keys the Go oracles with named compilers and compares keys; compiles nothing",

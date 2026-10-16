@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
