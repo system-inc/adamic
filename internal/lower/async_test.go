@@ -28,7 +28,7 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
-		{"async function f(value: number): Promise<number> { return value || await Promise.resolve(7); }\nconsole.log(await f(0));", "value-preserving logical operands"},
+		{"async function f(value: number): Promise<number> { return value || await Promise.resolve(7); }\nconsole.log(`${await f(0)}`);", "value-preserving logical operands"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
 		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},

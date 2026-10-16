@@ -31,8 +31,8 @@ const result = await decorate('dynamic-' + 'input');
 console.log(result);
 let version = 1;
 function change(): number { version = 2; return 7; }
-console.log(version + await Promise.resolve(change()));
-console.log(version);
+console.log(String(version + await Promise.resolve(change())));
+console.log(String(version));
 `, "dynamic-input-one-two\ndynamic-input-one-two-three\n8\n2\n")
 }
 
