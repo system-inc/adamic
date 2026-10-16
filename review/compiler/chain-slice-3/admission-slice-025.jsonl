@@ -1,0 +1,64 @@
+{"Path":"stage1/cohere/lint/rules/no-proto/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-proto/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a:11:19: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-script-url/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-script-url/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a:15:27: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-self-compare/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-self-compare/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a:11:26: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-underscore-dangle/profile.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-underscore-dangle/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a:7:60: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-finally/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-finally/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a:19:26: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-negation/profile.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-negation/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/context.ts:109:16: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/context.ts:109:16: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-useless-catch/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-useless-catch/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a:12:31: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-useless-concat/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-useless-concat/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a:8:18: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-var/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a:10:22: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/prefer-destructuring/helpers.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/helpers.a:8:20: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/prefer-destructuring/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/prefer-destructuring/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/helpers.a:8:20: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/context.ts:109:16: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/typescript-init-declarations/initializer.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a:8:23: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/typescript-init-declarations/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/typescript-init-declarations/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a:8:23: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/typescript-no-this-alias/profile.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/typescript-no-this-alias/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:23:36: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/suggestions.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/testdata/serialization/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/testdata/serialization/rule.a:9:23: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/markdownblocks/gaps/10_multiple_push.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/11_function_expression.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/12_conditional_empty_array.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/13_array_growth.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/14_missing_path_key.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/15_string_or.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/16_array_shift.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/16_array_shift.ts:2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"}
+{"Path":"stage1/cohere/markdownblocks/gaps/17_long_optional_chain.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/17_long_optional_chain.ts:3:16: stage 0 can't lower an optional chain longer than one step yet"}
+{"Path":"stage1/cohere/markdownblocks/gaps/1_recursive_state.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/2_state_arrow_cycle.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/2_state_arrow_cycle.ts:4:9: Adamic 0.1 refuses 'state', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
+{"Path":"stage1/cohere/markdownblocks/gaps/3_recursive_callable.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/4_structural_ranges.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/4_structural_ranges.ts:9:7: Adamic 0.1 refuses BranchInterface[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/markdownblocks/gaps/4_structural_ranges.ts:11:5 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where append is called from the top level); declare the elements weak, Weak\u003cBranchInterface\u003e[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly BranchInterface[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)"}
+{"Path":"stage1/cohere/markdownblocks/gaps/5_conditional_panic.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/6_uninitialized_optional_string.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/markdownblocks/gaps/7_postfix_property.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/7_postfix_property.ts:5:16: stage 0 can't lower a PostfixUnaryExpression yet"}
+{"Path":"stage1/cohere/markdownblocks/gaps/8_generic_callback_result.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/8_generic_callback_result.ts:2:5: stage 0 can't lower a function returning Result yet"}
+{"Path":"stage1/cohere/markdownblocks/gaps/9_mixed_path_names.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/markdownblocks/gaps/9_mixed_path_names.ts:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet"}
+{"Path":"stage1/cohere/markdowninline/gaps/1_delimiter_expression.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/1_generic_parameter.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/1_generic_return.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/2_return_undefined.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/3_optional_chaining_array.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/4_mutable_child_array.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/mediaquery/gaps/5_local_children_array.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/selector/gaps/1_multiple_push.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/selector/gaps/2_mixed_field.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/selector/gaps/2_mixed_field.ts:2:5: stage 0 can't lower a field of type string | boolean | undefined yet"}
+{"Path":"stage1/cohere/selector/gaps/3_optional_boolean.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/selector/gaps/3_optional_boolean.ts:2:5: stage 0 can't lower a field of type boolean | undefined yet"}
+{"Path":"stage1/cohere/selector/gaps/4_array_from_iterator.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/selector/gaps/4_array_from_iterator.ts:3:13: stage 0 can't lower Array.from with other than { length } and a callback yet"}
+{"Path":"stage1/cohere/selector/gaps/5_conditional_panic.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/selector/gaps/6_undefined_case.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/selector/gaps/6_undefined_case.ts:3:9: stage 0 can't lower a case whose type differs from the switch's yet"}
+{"Path":"stage1/cohere/static_single_assignment/gaps/1_block_arrow_returning_class.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/static_single_assignment/gaps/1_block_arrow_returning_class.ts:7:33: Adamic 0.1 refuses a value without nominal ancestry seen as Box; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
+{"Path":"stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts:8:15: stage 0 can't lower a call through ?. (an optional call) yet"}
+{"Path":"stage1/cohere/suppression/gaps/1_mutual_recursion.ts","Status":"accepted","Error":""}

@@ -1,0 +1,4 @@
+// a-check: refused class/interface field promise; oracle also lowers a temporary .ts copy
+class Missing {}
+interface Missing { promised: number; }
+console.log(`${new Missing().promised}`);

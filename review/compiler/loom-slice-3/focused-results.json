@@ -1,0 +1,182 @@
+[
+  {
+    "label": "native",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^Test(TSGoCache(Release|Sanitized)|TSGoBuildSeesTheProgramsFeatures|CheckerBuildsNameNoPlaceOfTheArchive|NativeCachesWriteNothingUnderHome)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 19.53558419700005
+  },
+  {
+    "label": "optional",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCall",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 28.666705940000043
+  },
+  {
+    "label": "spread",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^Test(CallSpread|JSONStringifyShorthand)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 29.655653336
+  },
+  {
+    "label": "function",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFunction(Adamic|TypeScript|CallSignature)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 25.537034293000033
+  },
+  {
+    "label": "merged",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedField",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 21.394000011000003
+  },
+  {
+    "label": "assignment",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProof",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 40.14300049999997
+  },
+  {
+    "label": "flow",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestOptionalAfterCallFlowEdges$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.169633916000066
+  },
+  {
+    "label": "lower",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalAfterCallPreservesEarlierThrow$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.586066830999926
+  },
+  {
+    "label": "readers",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 50.896275838000065
+  }
+]

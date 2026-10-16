@@ -1,0 +1,15 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
+let cache: string | undefined;
+let calls = 0;
+function compute(): string {
+    calls += 1;
+    return `value${calls}`;
+}
+function fill(): string {
+    return (cache = compute());
+}
+const first: string = fill();
+console.log(`${first} ${cache} ${calls}`);
+const second: string = fill();
+console.log(`${second} ${cache} ${calls}`);

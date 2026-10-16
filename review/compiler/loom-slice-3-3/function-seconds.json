@@ -1,0 +1,37 @@
+[
+  {
+    "test": "TestFunctionAdamicUnusedAnnotationRefused",
+    "seconds": 2.69,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionTypeScriptCallRefused",
+    "seconds": 2.78,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionAdamicCallAnnotationRefused",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionAdamicLengthAnnotationRefused",
+    "seconds": 0.15,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionTypeScriptUnusedAccepted",
+    "seconds": 3.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionCallSignatureAgreesWithNode",
+    "seconds": 0.43,
+    "action": "pass"
+  },
+  {
+    "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+    "seconds": 4.83,
+    "action": "pass"
+  }
+]

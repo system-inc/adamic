@@ -171,7 +171,7 @@ var (
 	yamlSchemaBuild               = yamlBuild{"schema", []string{"schema_main.ts"}, yamlSanitized}
 	yamlScalarsBuild              = yamlBuild{"scalars", []string{"scalar_main.ts"}, yamlSanitized}
 	yamlWidthBuild                = yamlBuild{"width", []string{"width_main.ts"}, yamlSanitized}
-	yamlClosedGapsBuild           = yamlBuild{"closed-gaps", []string{"gaps/stringPresence.ts", "gaps/valuePresence.ts", "gaps/assignmentValue.ts", "gaps/dynamicCase.ts", "gaps/negativeCase.ts", "gaps/stringFallback.ts", "gaps/valueConjunction.ts", "gaps/prefixIncrement.ts", "gaps/emptyAlternative.ts"}, yamlSanitized}
+	yamlClosedGapsBuild           = yamlBuild{"closed-gaps", []string{"gaps/multiplePush.ts", "gaps/stringPresence.ts", "gaps/valuePresence.ts", "gaps/assignmentValue.ts", "gaps/dynamicCase.ts", "gaps/negativeCase.ts", "gaps/stringFallback.ts", "gaps/valueConjunction.ts", "gaps/prefixIncrement.ts", "gaps/emptyAlternative.ts"}, yamlSanitized}
 	yamlSpeedProbesBuild          = yamlBuild{"speed-probes", []string{"gaps/stringUnitScan.ts", "gaps/arenaNodeRead.ts", "gaps/numericMapLookup.ts"}, yamlSanitized}
 	yamlSharedSliceBuild          = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, native.Options{}}
 	yamlSharedSliceSanitizedBuild = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, yamlSanitized}

@@ -1,0 +1,9 @@
+{
+  "verified": true,
+  "numstat": [
+    "1\t0\tinternal/native/runtime/adamic.h",
+    "1\t0\tinternal/native/runtime/closure.c",
+    "3\t0\tinternal/native/runtime/union.c"
+  ],
+  "proof": "Removing exactly the five known slice 3 lines yields current main bytes in each file."
+}

@@ -1,0 +1,15 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
+const enum Kind { Unknown = 0, Keyword = 128, Identifier = 80 }
+let wide: Kind = Kind.Unknown;
+let calls = 0;
+function keyword(): Kind.Keyword {
+    calls += 1;
+    return Kind.Keyword;
+}
+function assignKeyword(): Kind.Keyword {
+    const value: Kind.Keyword = keyword();
+    return wide = value;
+}
+const result: Kind.Keyword = assignKeyword();
+console.log(`${result} ${wide} ${calls}`);

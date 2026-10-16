@@ -65,6 +65,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return err
 	}
 	function := l.result.Functions[index]
+	function.SourceLength = sourceFunctionLength(declaration)
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
