@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/formatfiles/oracles"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -525,27 +526,7 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 // directory go test would run it in.
 func formatfilesOracle(t *testing.T) (string, string) {
 	t.Helper()
-	directory := t.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	binary := buildcache.GoTest(t, "cohere", "formatfiles.test", "./internal/format/formatfiles", []string{"-overlay=" + overlayPath})
-	return binary, packageDirectory
+	return oracles.GoOracle(t)
 }
 
 // Setup children carry no deadline; the gate bounds the whole unit.

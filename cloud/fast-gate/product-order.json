@@ -263,6 +263,9 @@
     "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
       "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
     ],
+    "stage1/cohere/formatfiles TestProduct_FormatfilesFindsGoOracle": [
+      "stage1/cohere/formatfiles/oracles TestProduct_FormatfilesGoOracle"
+    ],
     "stage1/cohere/gitignore TestProduct_GitignoreFindsOracle": [
       "stage1/cohere/gitignore/oracles TestProduct_GitignoreOracle"
     ],
