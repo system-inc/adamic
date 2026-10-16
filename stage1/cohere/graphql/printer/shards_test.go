@@ -1,8 +1,8 @@
 package printer
 
 import (
-	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -11,7 +11,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
@@ -21,12 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Inputs describe non-Go read-only shared products; the Go oracle keys its own (printerOracle).
-type printerBuildInputs struct {
-	Name         string
-	Files, Flags []string
-	Toolchain    string
-}
+type printerBuildInputs = oracles.Inputs
 
 func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
@@ -35,59 +29,11 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 
 // printerKey is the buildcache inputs printerBuild keys a product by.
 func printerKey(t *testing.T, inputs printerBuildInputs) buildcache.Inputs {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-	for _, file := range inputs.Files {
-		relative, err := filepath.Rel(root, file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			// Generated inputs live in a read-only product outside the repository.
-			// Its bytes, rather than the machine-specific cache path, identify it.
-			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%s", filepath.Base(file), printerGeneratedSum(t, file)))
-		} else {
-			key.Files = append(key.Files, filepath.ToSlash(relative))
-		}
-	}
-	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	return key
+	return oracles.Key(t, inputs)
 }
 
 // printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
 // keys all four corpora, and a process hashes it once rather than once per corpus, the four at once included.
-var printerGeneratedSums sync.Map
-
-type printerGeneratedSumOnce struct {
-	once sync.Once
-	sum  string
-	err  error
-}
-
-func printerGeneratedSum(t *testing.T, file string) string {
-	t.Helper()
-	info, err := os.Stat(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	identity := fmt.Sprintf("%s\x00%d\x00%d", file, info.Size(), info.ModTime().UnixNano())
-	value, _ := printerGeneratedSums.LoadOrStore(identity, &printerGeneratedSumOnce{})
-	entry := value.(*printerGeneratedSumOnce)
-	entry.once.Do(func() {
-		var data []byte
-		if data, entry.err = os.ReadFile(file); entry.err == nil {
-			entry.sum = fmt.Sprintf("%x", sha256.Sum256(data))
-		}
-	})
-	if entry.err != nil {
-		t.Fatal(entry.err)
-	}
-	return entry.sum
-}
 
 func printerInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()

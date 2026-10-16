@@ -2,17 +2,17 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
-	_ "github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
@@ -177,33 +177,4 @@ func TestMicromarkInputChunks(t *testing.T) {
 }
 
 // chunksGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func chunksGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_chunks/main.go")
-	driver, err := filepath.Abs("testdata/chunks_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/chunks_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_chunks.go"): bridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-chunks", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownChunksGo(t *testing.T) {
-	t.Parallel()
-	chunksGoOracle(t)
-}
+func chunksGoOracle(t *testing.T) string { t.Helper(); return oracles.ChunksGoOracle(t) }

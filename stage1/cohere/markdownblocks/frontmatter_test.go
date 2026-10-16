@@ -2,7 +2,6 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
@@ -182,29 +181,4 @@ func TestFrontMatterStage(t *testing.T) {
 }
 
 // frontMatterGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func frontMatterGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_frontmatter/main.go")
-	driver, err := filepath.Abs("testdata/frontmatter_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-parser", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownFrontMatterGo(t *testing.T) {
-	t.Parallel()
-	frontMatterGoOracle(t)
-}
+func frontMatterGoOracle(t *testing.T) string { t.Helper(); return oracles.FrontMatterGoOracle(t) }

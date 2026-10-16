@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/static_single_assignment/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +21,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/buildcache"
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
@@ -448,30 +448,10 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
 func cohereSideOracle(t testing.TB) (string, string) {
 	t.Helper()
-	directory := t.TempDir()
-	module, err := filepath.Abs(filepath.Join(repository, "cohere", "static_single_assignment"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	replace := map[string]string{filepath.Join(module, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	// Built under GOWORK=off as before.
-	binary := buildcache.GoTest(t, "cohere/static_single_assignment", "static_single_assignment.test", ".", []string{"-overlay=" + overlayPath}, "GOWORK=off")
-	return binary, module
+	return oracles.StaticSingleAssignment(t)
 }
 
-func TestProduct_StaticSingleAssignmentGoOracle(t *testing.T) {
+func TestProduct_StaticSingleAssignmentFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	cohereSideOracle(t)
 }

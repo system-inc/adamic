@@ -101,10 +101,10 @@ func TestProduct_GraphQLPrinterRelease(t *testing.T) {
 	}
 	printerAsGoNative(t, false)
 }
-func TestProduct_GraphQLPrinterDefaults(t *testing.T) { t.Parallel(); printerCases(t, "defaults") }
-func TestProduct_GraphQLPrinterNarrow(t *testing.T)   { t.Parallel(); printerCases(t, "narrow") }
-func TestProduct_GraphQLPrinterTight(t *testing.T)    { t.Parallel(); printerCases(t, "tight") }
-func TestProduct_GraphQLPrinterTabs(t *testing.T)     { t.Parallel(); printerCases(t, "tabs") }
+func TestProduct_GraphQLPrinterFindsDefaults(t *testing.T) { t.Parallel(); printerCases(t, "defaults") }
+func TestProduct_GraphQLPrinterFindsNarrow(t *testing.T)   { t.Parallel(); printerCases(t, "narrow") }
+func TestProduct_GraphQLPrinterFindsTight(t *testing.T)    { t.Parallel(); printerCases(t, "tight") }
+func TestProduct_GraphQLPrinterFindsTabs(t *testing.T)     { t.Parallel(); printerCases(t, "tabs") }
 
 func TestPrinterAsGoCohere_Union(t *testing.T) { t.Parallel(); printerAsGoUnit(t, -1) }
 func TestPrinterAsGoCohere_000(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 0) }

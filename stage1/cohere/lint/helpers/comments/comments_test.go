@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -173,20 +174,10 @@ func compare(t *testing.T, got, want []byte) {
 
 func oracle(t *testing.T) string {
 	t.Helper()
-	root, _ := filepath.Abs("../../../../../cohere")
-	main, _ := filepath.Abs("testdata/oracle.go")
-	exports, _ := filepath.Abs("testdata/exports.go")
-	virtual := filepath.Join(root, "adamic_comments_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: main, filepath.Join(root, "internal/lint/ecmascript/comments/adamic_exports.go"): exports}})
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
-	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual, []string{"-overlay=" + path})
+	return oracles.Comments(t)
 }
 
-func TestProduct_CommentsOracle(t *testing.T) {
+func TestProduct_CommentsFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	oracle(t)
 }

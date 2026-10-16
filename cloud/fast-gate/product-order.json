@@ -161,6 +161,30 @@
     "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoRawAnswers": [
       "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
     ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoOracle": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsPrettierBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
     "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
       "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
     ],
@@ -242,6 +266,66 @@
     "stage1/cohere/gitignore TestProduct_GitignoreFindsOracle": [
       "stage1/cohere/gitignore/oracles TestProduct_GitignoreOracle"
     ],
+    "stage1/cohere/graphql TestProduct_GraphQLFindsGoOracle": [
+      "stage1/cohere/graphql/oracles TestProduct_GraphQLGoOracle"
+    ],
+    "stage1/cohere/graphql/printer TestProduct_GraphQLPrinterFindsDefaults": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterDefaults"
+    ],
+    "stage1/cohere/graphql/printer TestProduct_GraphQLPrinterFindsGoOracle": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterGoOracle"
+    ],
+    "stage1/cohere/graphql/printer TestProduct_GraphQLPrinterFindsNarrow": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterNarrow"
+    ],
+    "stage1/cohere/graphql/printer TestProduct_GraphQLPrinterFindsTabs": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterTabs"
+    ],
+    "stage1/cohere/graphql/printer TestProduct_GraphQLPrinterFindsTight": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterTight"
+    ],
+    "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterDefaults": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterGoOracle"
+    ],
+    "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterNarrow": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterGoOracle"
+    ],
+    "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterTabs": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterGoOracle"
+    ],
+    "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterTight": [
+      "stage1/cohere/graphql/printer/oracles TestProduct_GraphQLPrinterGoOracle"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsClassOrderAnswer": [
+      "stage1/cohere/json/oracles TestProduct_JSONClassOrderAnswer"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsGoOracle": [
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_0": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_0"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_1": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_1"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_2": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_2"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsUpstreamOracle": [
+      "stage1/cohere/json/oracles TestProduct_JSONAuditOracle"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsUpstreamParityVerdict": [
+      "stage1/cohere/json/oracles TestProduct_JSONUpstreamParityVerdict"
+    ],
+    "stage1/cohere/json/oracles TestProduct_JSONClassOrderAnswer": [
+      "stage1/cohere/json TestProduct_JSONPinnedCorpus",
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle"
+    ],
+    "stage1/cohere/json/oracles TestProduct_JSONUpstreamParityVerdict": [
+      "stage1/cohere/json TestProduct_JSONPinnedCorpus",
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle",
+      "stage1/cohere/json/oracles TestProduct_JSONAuditOracle"
+    ],
     "stage1/cohere/lint TestProduct_DecodedOptionsNative": [
       "stage1/cohere/lint TestProduct_DecodedOptionsLowered",
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
@@ -294,6 +378,12 @@
       "stage1/cohere/lint/oracles TestProduct_jsx_membership",
       "stage1/cohere/lint/oracles TestProduct_jsx_parser"
     ],
+    "stage1/cohere/lint/helpers TestProduct_HelpersFindsGoOracle": [
+      "stage1/cohere/lint/helpers/oracles TestProduct_HelperOracle"
+    ],
+    "stage1/cohere/lint/helpers/comments TestProduct_CommentsFindsGoOracle": [
+      "stage1/cohere/lint/helpers/comments/oracles TestProduct_CommentsOracle"
+    ],
     "stage1/cohere/lint/oracles TestProduct_CompilerAgreementCheckerAllAnswer": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
     ],
@@ -302,6 +392,87 @@
     ],
     "stage1/cohere/lint/oracles TestProduct_YepestaSetup": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
+    "stage1/cohere/lint/regex TestProduct_RegexFindsInventory": [
+      "stage1/cohere/lint/regex/oracles TestProduct_RegexInventory"
+    ],
+    "stage1/cohere/lint/regex TestProduct_RegexFindsOptionDialects": [
+      "stage1/cohere/lint/regex/oracles TestProduct_RegexOptionDialects"
+    ],
+    "stage1/cohere/lint/regex TestProduct_RegexFindsOracle": [
+      "stage1/cohere/lint/regex/oracles TestProduct_RegexOracle"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_decode_lowered": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_decode_release": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_decode_sanitized": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_mdast_lowered": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_mdast_release": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_mdast_sanitized": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_path_lowered": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_path_release": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_path_sanitized": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_width_lowered": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_width_release": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_GrainMarkdown_width_sanitized": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go",
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout",
@@ -335,6 +506,15 @@
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksTable_document",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksTable_list"
     ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownTextLowered": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownTextGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownTextNativeRelease": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownTextGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownTextNativeSanitized": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownTextGo"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_layout",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
@@ -359,11 +539,56 @@
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_layout",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdownEntitiesGenerator": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdownEntitiesGenerator"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdownFormatter": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdownFormatter"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdownWidthFullAnswers": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdownWidthFullAnswers"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdownWidthGenerator": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdownWidthGenerator"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdown_decode_go": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_decode_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdown_mdast_go": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_mdast_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdown_path_go": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_path_go"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsGrainMarkdown_width_go": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsLeafDocLayout": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksLeafDocLayout"
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsLeafLists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksLeafLists"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownASTGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownASTGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownChunksGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownChunksGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownFrontMatterGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownFrontMatterGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownIdentifierGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownIdentifierGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownMalformedEventsGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownMalformedEventsGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownPrefixGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownPrefixGo"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsMarkdownTextGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownTextGo"
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsQuote_layout": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout"
@@ -389,14 +614,47 @@
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsTextGenerator": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksTextGenerator"
     ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsTokenizerEventsAnswers": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_TokenizerEventsAnswers"
+    ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsTokenizerEventsGo": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_TokenizerEventsGo"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_layout": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_layout"
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWholeDocumentPreflightGoProducts": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_WholeDocumentPreflightGoProducts"
+    ],
+    "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdownWidthFullAnswers": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_GrainMarkdown_width_go"
+    ],
+    "stage1/cohere/markdownblocks/oracles TestProduct_TokenizerEventsAnswers": [
+      "stage1/cohere/markdownblocks/oracles TestProduct_TokenizerEventsGo"
+    ],
+    "stage1/cohere/markdowninline TestProduct_MarkdownInlineFindsGoOverlay": [
+      "stage1/cohere/markdowninline/oracles TestProduct_MarkdownInlineGoOverlay"
+    ],
     "stage1/cohere/mediaquery TestProduct_MediaQueryFindsGoOracle": [
       "stage1/cohere/mediaquery/oracles TestProduct_MediaQueryGoOracle"
+    ],
+    "stage1/cohere/selector TestProduct_SelectorFindsGoAnswers": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoAnswers"
+    ],
+    "stage1/cohere/selector TestProduct_SelectorFindsGoOracle": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoOracle"
+    ],
+    "stage1/cohere/selector/oracles TestProduct_SelectorGoAnswers": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoOracle"
+    ],
+    "stage1/cohere/static_single_assignment TestProduct_StaticSingleAssignmentFindsGoOracle": [
+      "stage1/cohere/static_single_assignment/oracles TestProduct_StaticSingleAssignmentGoOracle"
+    ],
+    "stage1/cohere/suppression TestProduct_SuppressionFindsGoOracle": [
+      "stage1/cohere/suppression/oracles TestProduct_SuppressionGoOracle"
     ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsDocumentOracle": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentOracle"
@@ -1467,6 +1725,54 @@
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsTSCManifest": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterTSCManifest",
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/values TestProduct_ValuesFindsGoOracle": [
+      "stage1/cohere/values/oracles TestProduct_ValuesGoOracle"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsCSTGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLCSTGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsComposeGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLComposeGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsFormatGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsFormatterMutantsOracle": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatterMutantsOracle"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsLexerGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLLexerGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsPropsGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLPropsGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsScalarsGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLScalarsGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsSchemaGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLSchemaGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsUnistGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLUnistGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsWidthGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLWidthGo"
+    ],
+    "stage1/cohere/yaml/oracles TestProduct_YAMLFormatterMutantsOracle": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatGo"
+    ],
+    "stage1/typescript/parser TestProduct_ParserFindsExpressionsOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/parser TestProduct_ParserFindsNodeCountOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/parser TestProduct_ParserFindsOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/scanner TestProduct_ScannerFindsOracle": [
+      "stage1/typescript/scanner/oracles TestProduct_ScannerOracle"
     ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
