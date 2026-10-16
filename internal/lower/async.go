@@ -29,8 +29,8 @@ func (l *lowering) awaitExpression(node *ast.Node) (ir.Expression, error) {
 		if l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node.AsAwaitExpression().Expression), "then") != nil {
 			return nil, l.notYet(node, "await of thenables")
 		}
-		if !l.asyncPayload(node.AsAwaitExpression().Expression, map[*ast.Symbol]bool{}) {
-			return nil, l.notYet(node, "await of a non-primitive structurally typed value (hidden thenable)")
+		if !l.asyncPayload(node.AsAwaitExpression().Expression) {
+			l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "await of a non-primitive structurally typed value (hidden thenable)"))
 		}
 		value = ir.PromiseValue{Value: value}
 	}
@@ -60,8 +60,8 @@ func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 		if value.Type() == ir.Promise {
 			return nil, true, l.notYet(node, "Promise adoption")
 		}
-		if name == "resolve" && !l.asyncPayload(call.Arguments.Nodes[0], map[*ast.Symbol]bool{}) {
-			return nil, true, l.notYet(node, "Promise.resolve of a non-primitive structurally typed value (hidden thenable)")
+		if name == "resolve" && !l.asyncPayload(call.Arguments.Nodes[0]) {
+			l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "Promise.resolve of a non-primitive structurally typed value (hidden thenable)"))
 		}
 		if name == "reject" && !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "Error") {
 			return nil, true, l.notYet(node, "Promise rejection with a non-Error")
@@ -84,8 +84,8 @@ func (l *lowering) checkAsyncReturn(node *ast.Node, value ir.Expression) error {
 	if l.hasThen(l.checker.GetTypeAtLocation(node)) {
 		return l.notYet(node, "return of thenables (thenable adoption)")
 	}
-	if !l.asyncPayload(node, map[*ast.Symbol]bool{}) {
-		return l.notYet(node, "async return of a non-primitive structurally typed value (hidden thenable)")
+	if !l.asyncPayload(node) {
+		l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "async return of a non-primitive structurally typed value (hidden thenable)"))
 	}
 	return nil
 }
@@ -107,9 +107,10 @@ func (l *lowering) asyncSite(node *ast.Node) int {
 	return len(l.asyncSites)
 }
 
-// A structural type can hide then. Only primitive types or a closed allocation
-// reached through immutable bindings prove that Promise assimilation does nothing.
-func (l *lowering) asyncPayload(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+// A structural type can hide then. A const binding does not freeze its object:
+// Object.assign or an escaped alias can add then before adoption. Only primitives
+// or fresh allocations at the adoption point prove assimilation does nothing.
+func (l *lowering) asyncPayload(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	proven := l.checker.GetTypeAtLocation(node)
 	if l.hasThen(proven) {
@@ -133,34 +134,27 @@ func (l *lowering) asyncPayload(node *ast.Node, seen map[*ast.Symbol]bool) bool 
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression:
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-			if property.Kind == ast.KindSpreadAssignment && !l.asyncPayload(property.AsSpreadAssignment().Expression, seen) {
+			if property.Kind == ast.KindSpreadAssignment && !l.asyncPayload(property.AsSpreadAssignment().Expression) {
 				return false
 			}
 		}
 		return true
-	case ast.KindArrayLiteralExpression, ast.KindArrowFunction, ast.KindFunctionExpression, ast.KindFunctionDeclaration, ast.KindNewExpression:
+	case ast.KindArrayLiteralExpression, ast.KindArrowFunction, ast.KindFunctionExpression, ast.KindFunctionDeclaration:
 		return true
+	case ast.KindNewExpression:
+		callee := ast.SkipParentheses(node.AsNewExpression().Expression)
+		if l.isLibraryGlobal(callee, "Error") || l.isLibraryGlobal(callee, "Map") || l.isLibraryGlobal(callee, "Set") {
+			return true
+		}
+		symbol := l.symbol(callee)
+		return symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindClassDeclaration
 	case ast.KindAwaitExpression:
 		// The library Promise's producers are independently checked at resolve/return.
 		return l.isLibraryType(l.checker.GetTypeAtLocation(node.AsAwaitExpression().Expression), "Promise")
 	case ast.KindConditionalExpression:
 		choice := node.AsConditionalExpression()
-		return l.asyncPayload(choice.WhenTrue, seen) && l.asyncPayload(choice.WhenFalse, seen)
-	case ast.KindIdentifier:
-		symbol := l.symbol(node)
-		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
-			return false
-		}
-		seen[symbol] = true
-		defer delete(seen, symbol)
-		declaration := symbol.Declarations[0]
-		if declaration.Kind == ast.KindFunctionDeclaration {
-			return true
-		}
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Initializer() == nil || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
-			return false
-		}
-		return l.asyncPayload(declaration.Initializer(), seen)
+		return l.asyncPayload(choice.WhenTrue) && l.asyncPayload(choice.WhenFalse)
+
 	}
 	return false
 }

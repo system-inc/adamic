@@ -90,6 +90,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if len(lowering.asyncPayloadFailures) > 0 {
+		return nil, lowering.asyncPayloadFailures[0]
+	}
 	if err := lowering.checkPromiseConsumption(); err != nil {
 		return nil, err
 	}
@@ -100,8 +103,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
-	entry      *ast.SourceFile
-	asyncSites []*ast.Node
+	entry                *ast.SourceFile
+	asyncSites           []*ast.Node
+	asyncPayloadFailures []error
 
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
