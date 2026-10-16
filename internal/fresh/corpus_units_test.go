@@ -832,6 +832,57 @@ var freshCorpusPaths = []string{
 	"../oracle/testdata/modules/main.a",
 	"../flow/testdata/joins.a",
 	"../flow/testdata/mutations.a",
+	"../oracle/testdata/canonical_graph.a",
+	"../oracle/testdata/canonical_graph_counted.a",
+	"../oracle/testdata/graph_regions_accessor.a",
+	"../oracle/testdata/graph_regions_anchor.a",
+	"../oracle/testdata/graph_regions_cache.a",
+	"../oracle/testdata/graph_regions_closure.a",
+	"../oracle/testdata/graph_regions_counted_container.a",
+	"../oracle/testdata/graph_regions_coverage_arrays.a",
+	"../oracle/testdata/graph_regions_coverage_boundary.a",
+	"../oracle/testdata/graph_regions_coverage_closure_loop.a",
+	"../oracle/testdata/graph_regions_coverage_iterator.a",
+	"../oracle/testdata/graph_regions_coverage_maps.a",
+	"../oracle/testdata/graph_regions_coverage_merge.a",
+	"../oracle/testdata/graph_regions_coverage_payload_loop.a",
+	"../oracle/testdata/graph_regions_coverage_readonly.a",
+	"../oracle/testdata/graph_regions_coverage_spread.a",
+	"../oracle/testdata/graph_regions_coverage_throw.a",
+	"../oracle/testdata/graph_regions_entries.a",
+	"../oracle/testdata/graph_regions_escape.a",
+	"../oracle/testdata/graph_regions_flow.a",
+	"../oracle/testdata/graph_regions_generic_capture.a",
+	"../oracle/testdata/graph_regions_list.a",
+	"../oracle/testdata/graph_regions_literal_method.a",
+	"../oracle/testdata/graph_regions_literals.a",
+	"../oracle/testdata/graph_regions_nested_disjoint.a",
+	"../oracle/testdata/graph_regions_nested_self.a",
+	"../oracle/testdata/graph_regions_parse.a",
+	"../oracle/testdata/graph_regions_regression_01.a",
+	"../oracle/testdata/graph_regions_regression_02.a",
+	"../oracle/testdata/graph_regions_regression_03.a",
+	"../oracle/testdata/graph_regions_regression_04.a",
+	"../oracle/testdata/graph_regions_regression_05.a",
+	"../oracle/testdata/graph_regions_regression_06.a",
+	"../oracle/testdata/graph_regions_regression_07.a",
+	"../oracle/testdata/graph_regions_regression_08.a",
+	"../oracle/testdata/graph_regions_regression_09.a",
+	"../oracle/testdata/graph_regions_regression_10.a",
+	"../oracle/testdata/graph_regions_regression_11.a",
+	"../oracle/testdata/graph_regions_regression_12.a",
+	"../oracle/testdata/graph_regions_regression_13.a",
+	"../oracle/testdata/graph_regions_regression_14.a",
+	"../oracle/testdata/graph_regions_regression_15.a",
+	"../oracle/testdata/graph_regions_static.a",
+	"../oracle/testdata/graph_regions_static_interface.a",
+	"../oracle/testdata/graph_regions_static_parent.a",
+	"../oracle/testdata/graph_regions_static_private.a",
+	"../oracle/testdata/graph_regions_structural_literal.a",
+	"../oracle/testdata/graph_regions_symbols.a",
+	"../oracle/testdata/graph_regions_throw.a",
+	"../oracle/testdata/graph_regions_weak_mixed.a",
+	"../oracle/testdata/weak_region_review.a",
 }
 
 var freshCorpusTests = [][]func(*testing.T){
@@ -1664,6 +1715,57 @@ var freshCorpusTests = [][]func(*testing.T){
 		TestFreshWrites____oracle_testdata_modules_main_a_ba3df876e9c3,
 		TestFreshWrites____flow_testdata_joins_a_9385adb647b7,
 		TestFreshWrites____flow_testdata_mutations_a_5514557d1b47,
+		TestFreshWrites____oracle_testdata_canonical_graph_a_bc6d431f0c8a,
+		TestFreshWrites____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0,
+		TestFreshWrites____oracle_testdata_graph_regions_accessor_a_db8706d48a33,
+		TestFreshWrites____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3,
+		TestFreshWrites____oracle_testdata_graph_regions_cache_a_1b12f0485baa,
+		TestFreshWrites____oracle_testdata_graph_regions_closure_a_4d10bd748832,
+		TestFreshWrites____oracle_testdata_graph_regions_counted_container_a_8882bcc22860,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0,
+		TestFreshWrites____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6,
+		TestFreshWrites____oracle_testdata_graph_regions_entries_a_117a98274595,
+		TestFreshWrites____oracle_testdata_graph_regions_escape_a_98fcd5165ce0,
+		TestFreshWrites____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a,
+		TestFreshWrites____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea,
+		TestFreshWrites____oracle_testdata_graph_regions_list_a_4228a1ee18c3,
+		TestFreshWrites____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954,
+		TestFreshWrites____oracle_testdata_graph_regions_literals_a_0f8d10e31629,
+		TestFreshWrites____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e,
+		TestFreshWrites____oracle_testdata_graph_regions_nested_self_a_09d57fca100e,
+		TestFreshWrites____oracle_testdata_graph_regions_parse_a_0dd26eaadff0,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_03_a_700a32fb4059,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_09_a_508993ca39b8,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_14_a_897993068e8d,
+		TestFreshWrites____oracle_testdata_graph_regions_regression_15_a_07df93539566,
+		TestFreshWrites____oracle_testdata_graph_regions_static_a_fb53ce309661,
+		TestFreshWrites____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa,
+		TestFreshWrites____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2,
+		TestFreshWrites____oracle_testdata_graph_regions_static_private_a_b4deba490da0,
+		TestFreshWrites____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3,
+		TestFreshWrites____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e,
+		TestFreshWrites____oracle_testdata_graph_regions_throw_a_fe072c4edae4,
+		TestFreshWrites____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c,
+		TestFreshWrites____oracle_testdata_weak_region_review_a_62e4a9b489e8,
 	},
 }
 
@@ -6633,4 +6735,310 @@ func TestFreshWrites____flow_testdata_mutations_a_5514557d1b47(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[827])
+}
+
+func TestFreshWrites____oracle_testdata_canonical_graph_a_bc6d431f0c8a(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[828])
+}
+
+func TestFreshWrites____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[829])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_accessor_a_db8706d48a33(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[830])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[831])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_cache_a_1b12f0485baa(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[832])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_closure_a_4d10bd748832(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[833])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_counted_container_a_8882bcc22860(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[834])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[835])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[836])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[837])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[838])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[839])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[840])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[841])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[842])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[843])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[844])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_entries_a_117a98274595(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[845])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_escape_a_98fcd5165ce0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[846])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[847])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[848])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_list_a_4228a1ee18c3(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[849])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[850])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_literals_a_0f8d10e31629(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[851])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[852])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_nested_self_a_09d57fca100e(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[853])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_parse_a_0dd26eaadff0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[854])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[855])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[856])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_03_a_700a32fb4059(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[857])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[858])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[859])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[860])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[861])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[862])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_09_a_508993ca39b8(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[863])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[864])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[865])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[866])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[867])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_14_a_897993068e8d(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[868])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_regression_15_a_07df93539566(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[869])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_static_a_fb53ce309661(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[870])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[871])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[872])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_static_private_a_b4deba490da0(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[873])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[874])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[875])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_throw_a_fe072c4edae4(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[876])
+}
+
+func TestFreshWrites____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[877])
+}
+
+func TestFreshWrites____oracle_testdata_weak_region_review_a_62e4a9b489e8(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[878])
 }

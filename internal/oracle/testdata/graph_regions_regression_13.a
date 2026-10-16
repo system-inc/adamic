@@ -1,0 +1,3 @@
+class Link { #next: Link | undefined = undefined; setNext(value: Link): void { this.#next = value; } }
+class Child extends Link { readonly label = 'child'; }
+const child = new Child(); child.setNext(child);
