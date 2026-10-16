@@ -1499,7 +1499,7 @@ func TestTheReportNamesEachProductsOutcome(t *testing.T) {
 		t.Fatalf("header's read sets: %+v, %v", file, err)
 	}
 	settled := map[string]any{"name": "header", "nameKey": built["header"].NameKey, "key": file.Sets[0].Key, "outcome": "settled",
-		"reads": float64(len(file.Sets[0].Entries))}
+		"reads": float64(len(file.Sets[0].Entries)), "window": BuildSuperset}
 	if fmt.Sprint(got[0]) != fmt.Sprint(settled) {
 		t.Fatalf("the settled line is %v; want %v", got[0], settled)
 	}
@@ -2266,5 +2266,104 @@ func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(t *testing.T) {
 	entries := r.entries(t, build.NameKey)
 	if !slices.Contains(entries, "filesystem case") || slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
 		t.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
+	}
+}
+
+// leanRun settles one traced run of a build of port, lean or not, in a rig of its own: before is a file its test reads
+// before the build (a shard's own case), and the build reads source/a.c in its window, and notes.txt in a process it
+// starts. It returns the run's report for port and the set's entries.
+func leanRun(t *testing.T, lean bool, before string) (Report, []string) {
+	t.Helper()
+	r := newRig(t)
+	if lean {
+		LeanProduct(t, port, building("built"))
+	} else {
+		Product(t, port, building("built"))
+	}
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	r.open(r.pid, before)
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
+		r.open(child, "notes.txt")
+		r.add(child, "+++ exited with 0 +++")
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	for _, report := range settlement.Reports {
+		if report.Outcome == ReportSettled {
+			return report, r.entries(t, build.NameKey)
+		}
+	}
+	t.Fatalf("no settled report: %+v", settlement.Reports)
+	return Report{}, nil
+}
+
+// A lean build's read set is its own (#mmpt615, Node's ruling): what its process and the processes it starts read in
+// its window, and every file its declared Files name, read or not, never what its test read before it. So two tests
+// that read different cases before asking for one lean product settle it under one key, where a build that isn't lean
+// keeps the superset, its test's earlier reads included, and settles two. The report names how each was taken.
+// Mutants that each fail it: lean ignored; the declared files left out; the window's subprocesses dropped.
+// Not parallel: newRig.
+func TestALeanBuildIsKeyedByItsWindowAndItsDeclaredFilesAlone(t *testing.T) {
+	first, entries := leanRun(t, true, "go.sum")
+	if first.Window != BuildWindowed {
+		t.Fatalf("a lean build's reads were taken as %q", first.Window)
+	}
+	for _, want := range []string{"content source/a.c", "content source/b.c", "listing source", "content include/x.h", "content notes.txt"} {
+		if !slices.Contains(entries, want) {
+			t.Errorf("the lean set lacks %q: %q", want, entries)
+		}
+	}
+	if slices.Contains(entries, "content go.sum") {
+		t.Errorf("the lean set holds what its test read before it: %q", entries)
+	}
+	if second, _ := leanRun(t, true, "include/x.h"); second.Key != first.Key {
+		t.Errorf("two tests reading different files before one lean build settled it under %s and %s", first.Key[:12], second.Key[:12])
+	}
+	one, oneEntries := leanRun(t, false, "go.sum")
+	two, _ := leanRun(t, false, "notes.txt")
+	if one.Window != BuildSuperset || !slices.Contains(oneEntries, "content go.sum") || one.Key == two.Key {
+		t.Errorf("a build that isn't lean: taken as %q, holds go.sum %v, keys %s and %s; want the superset, its test's reads in it, two keys",
+			one.Window, slices.Contains(oneEntries, "content go.sum"), one.Key[:12], two.Key[:12])
+	}
+}
+
+// Only the packages buildcache reviewed build lean (leanCallers): a lean build is keyed without what its caller read
+// before it, so a caller that handed it bytes of its own would key it without them. Mutant: a caller added to the tree
+// and not to leanCallers.
+func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	var callers []string
+	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return nil
+		}
+		// buildcache itself, whose own builders decide lean, is the reviewer, never a caller.
+		if entry.IsDir() && (entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere") || name == filepath.Join(root, "internal", "buildcache")) {
+			return filepath.SkipDir
+		}
+		if entry.IsDir() || !strings.HasSuffix(name, ".go") {
+			return nil
+		}
+		content, err := os.ReadFile(name)
+		if err != nil || !strings.Contains(string(content), "buildcache.Lean") {
+			return nil
+		}
+		relative, _ := filepath.Rel(root, filepath.Dir(name))
+		callers = append(callers, filepath.ToSlash(relative))
+		return nil
+	})
+	for _, caller := range callers {
+		if !slices.Contains(leanCallers, caller) {
+			t.Errorf("%s builds lean, and isn't one of buildcache's reviewed lean callers %v", caller, leanCallers)
+		}
+	}
+	if !slices.Contains(callers, "internal/native/runtimeproducts") {
+		t.Fatalf("lean callers found: %v; want runtimeproducts among them", callers)
 	}
 }

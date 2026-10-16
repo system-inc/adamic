@@ -2,6 +2,7 @@ package buildcache
 
 import (
 	"bufio"
+	"cmp"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -160,7 +161,19 @@ type Report struct {
 	Outcome string `json:"outcome"`
 	Reason  string `json:"reason,omitempty"`
 	Reads   int    `json:"reads,omitempty"`
+	// Window is how a settled build's reads were taken (#mmpt615's census): BuildWindowed, BuildLeanSuperset or
+	// BuildSuperset.
+	Window string `json:"window,omitempty"`
 }
+
+// How a settled build's reads were taken: a lean build (LeanProduct) by its own window and declared files; a lean build
+// whose window the trace couldn't place, and every other build, by everything its process read up to its end, the
+// superset Kirk accepted.
+const (
+	BuildWindowed     = "windowed"
+	BuildLeanSuperset = "lean superset"
+	BuildSuperset     = "superset"
+)
 
 // Report outcomes.
 const (
@@ -649,9 +662,12 @@ type traceState struct {
 	// lastReads is each ended build's paths by when they were last read in its window, and endedAt when it ended.
 	lastReads map[string]map[string]int
 	endedAt   map[string]int
-	order     []string
-	lost      []string
-	started   bool
+	// windowEnded and windowLast are each ended build's reads made inside its window alone, as ended and lastReads are
+	// its process's reads up to its end: a lean build's (#mmpt615).
+	windowEnded, windowLast map[string]map[string]int
+	order                   []string
+	lost                    []string
+	started                 bool
 	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
 	command, commandStatus int
 	// runReads is everything the run read, the command's reads and every process's it started, taken as the command
@@ -689,7 +705,7 @@ func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{},
-		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}}
+		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}, windowEnded: map[string]map[string]int{}, windowLast: map[string]map[string]int{}}
 	return state
 }
 
@@ -961,6 +977,7 @@ func (state *traceState) marker(pid, process int, marker string) {
 		delete(state.open, id)
 		snapshot, last := state.snapshot(owner)
 		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
+		state.windowEnded[id], state.windowLast[id] = state.windowSnapshot(id, owner)
 		state.order = append(state.order, id)
 	}
 }
@@ -992,6 +1009,64 @@ func (state *traceState) snapshotOf(processes map[int]map[string]*pathReads, own
 		}
 	}
 	return snapshot, last
+}
+
+// windowSnapshot is snapshot over build id's window alone: what owner and the processes it started read while the build
+// was open, by kinds, with when each path was last read, but what they wrote before reading it.
+func (state *traceState) windowSnapshot(id string, owner int) (map[string]int, map[string]int) {
+	snapshot, last := map[string]int{}, map[string]int{}
+	for name, found := range state.windows[id] {
+		kinds := found.kinds
+		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
+			kinds &= readWrite
+		}
+		if kinds != 0 {
+			snapshot[name] |= kinds
+			last[name] = max(last[name], found.lastRead)
+		}
+	}
+	return snapshot, last
+}
+
+// leanReads is a lean build's reads (#mmpt615, Node's ruling): its window, and every file its declared Files name, as the
+// tree carries them, each directory by its listing and every file under it by its content, read or not. A lean build
+// may use its declared files' bytes taken before its window (native's runtime archives snapshot the runtime's files as
+// the request is made, and compile the copies), so they are its reads whatever the window holds. A directory walked
+// enters no read set beyond the files the tree carries (Tracked), and a declared path that isn't there is read as
+// absent.
+func (state *traceState) leanReads(entry journalEntry, window, last map[string]int, end int) (map[string]int, map[string]int) {
+	reads, lastReads := maps.Clone(window), maps.Clone(last)
+	add := func(name string, kind int) {
+		reads[name] |= kind
+		lastReads[name] = max(lastReads[name], end)
+	}
+	root := cmp.Or(entry.Root, state.facts.root)
+	for _, declared := range entry.Declared {
+		start := declared
+		if !filepath.IsAbs(start) {
+			start = filepath.Join(root, filepath.FromSlash(declared))
+		}
+		filepath.WalkDir(start, func(name string, found fs.DirEntry, err error) error {
+			switch {
+			case err != nil:
+				if name == start {
+					add(name, readAbsent)
+				}
+				return nil
+			case found.IsDir() && found.Name() == ".git":
+				return filepath.SkipDir
+			case found.IsDir():
+				if name != start && !Tracked(root, name, true) {
+					return filepath.SkipDir
+				}
+				add(name, readListing)
+			case Tracked(root, name, false):
+				add(name, readContent)
+			}
+			return nil
+		})
+	}
+	return reads, lastReads
 }
 
 // madeBy says whether owner or a process it started wrote name, or a directory above it, before first reading it.
@@ -1243,7 +1318,15 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
-		set, reason := state.measured(entry, state.ended[id], state.lastReads[id], products, productEnds)
+		reads, lastReads, window := state.ended[id], state.lastReads[id], BuildSuperset
+		if entry.Lean {
+			window = BuildLeanSuperset
+			if inside, placed := state.windowEnded[id]; placed {
+				reads, lastReads = state.leanReads(entry, inside, state.windowLast[id], state.endedAt[id])
+				window = BuildWindowed
+			}
+		}
+		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
 		if reason == "" {
 			own := processes[entry.Process]
 			name := recipeName(own)
@@ -1268,12 +1351,12 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 		products[product] = entry.NameKey
 		keyed[id] = entry.NameKey
-		line := fmt.Sprintf("settled %s %s: %d reads", entry.Name, evaluated.key[:12], len(set.Entries))
+		line := fmt.Sprintf("settled %s %s: %d reads, %s", entry.Name, evaluated.key[:12], len(set.Entries), window)
 		if set.Drift != nil {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
 		settlement.Settled = append(settlement.Settled, line)
-		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries)})
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window})
 	}
 	for id, entry := range built {
 		if !settled[id] {
