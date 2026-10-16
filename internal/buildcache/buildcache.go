@@ -42,7 +42,32 @@ import (
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	directory, line, err := get(inputs, build)
+	return product(t, inputs, build, false)
+}
+
+// LeanProduct is Product for a build that takes nothing from its caller but inputs: everything it uses is a file
+// inputs.Files names or what it reads while it builds. Under the trace its read set is its own (#mmpt615): what its
+// process and the processes it starts read while it builds, and every file inputs.Files names, never what the test
+// read before it, which a test's shards differ by. Only callers buildcache reviews make that promise
+// (leanCallers, held by a test): a closure over a test's own bytes would be keyed without them.
+func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error) string {
+	t.Helper()
+	return product(t, inputs, build, true)
+}
+
+// LeanGet is Get for a lean build (LeanProduct).
+func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
+	directory, _, err := get(inputs, build, true)
+	return directory, err
+}
+
+// leanCallers are the packages outside buildcache that may build lean (LeanProduct, LeanGet), each reviewed to take
+// nothing from its caller but its Inputs: native's runtime archives, whose sources are the runtime's files.
+var leanCallers = []string{"internal/native/runtimeproducts"}
+
+func product(t testing.TB, inputs Inputs, build func(directory string) error, lean bool) string {
+	t.Helper()
+	directory, line, err := get(inputs, build, lean)
 	if line != "" {
 		t.Log(line)
 	}
@@ -63,7 +88,7 @@ var ErrNotBuilt = errors.New("not built")
 
 // Get is Product for TestMain and tools.
 func Get(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build)
+	directory, _, err := get(inputs, build, false)
 	return directory, err
 }
 
@@ -71,7 +96,9 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 // builds is for every runner, so it must be keyed by what its build read, and building untraced there is refused.
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
-func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+// get finds or builds inputs' product; lean says its build takes nothing from its caller (LeanProduct), so Settle keys
+// it by its own window.
+func get(inputs Inputs, build func(directory string) error, lean bool) (string, string, error) {
 	started := time.Now()
 	root, err := repositoryRoot()
 	if err != nil {
@@ -98,7 +125,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		if err != nil {
 			return "", "", err
 		}
-		journalBuilt(root, inputs, nameKey, id, directory)
+		journalBuilt(root, inputs, nameKey, id, directory, lean)
 		return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
 	}
 	cache, err := cacheDirectory()
@@ -163,7 +190,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		}
 		outcome := "hit"
 		if built {
-			journalBuilt(root, inputs, nameKey, id, product)
+			journalBuilt(root, inputs, nameKey, id, product, lean)
 			outcome = "miss"
 		} else {
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
@@ -203,9 +230,9 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 	return nameKey, id, err
 }
 
-// journalBuilt journals a traced build where its product now is, for Settle to key and place.
-func journalBuilt(root string, inputs Inputs, nameKey, id, directory string) {
-	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root}
+// journalBuilt journals a traced build where its product now is, for Settle to key and place, and whether it is lean.
+func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean bool) {
+	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)
 }
