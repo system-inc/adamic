@@ -293,6 +293,8 @@ static void free_one(void *value) {
 		if (array->owner != NULL) {
 			let_go(array->owner);
 		} else {
+			size_t width = array->kind == adamic_typed_array_uint8 ? 1 : array->kind == adamic_typed_array_int32 ? 4 : 8;
+			adamic_host_backing_drop(array->length * width);
 			free(array->data);
 		}
 		break;
