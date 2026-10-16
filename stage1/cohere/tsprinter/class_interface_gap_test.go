@@ -3,12 +3,14 @@ package tsprinter
 import (
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
 
 // The .txt suffix keeps this separately executed native gap out of the formatter corpus.
@@ -24,7 +26,7 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	node := onNode(t, port)
-	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != "17\n" {
+	if node.ExitCode != 0 || len(node.Stderr) != 0 || string(node.Stdout) != "17\n" {
 		t.Fatalf("Node truth: %+v", node)
 	}
 	loaded, err := load.Load([]string{port})
@@ -55,8 +57,8 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 		t.Fatalf("explicit callback mutant lowering: %v", err)
 	}
 	safe, binary := natively(t, program)
-	for _, result := range []run{onNode(t, workaround), safe, onJavaScriptBackend(t, program)} {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "17\n" {
+	for _, result := range []oracles.Run{onNode(t, workaround), safe, onJavaScriptBackend(t, program)} {
+		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "17\n" {
 			t.Fatalf("explicit callback: %+v", result)
 		}
 	}
@@ -80,12 +82,12 @@ func TestClosedOptionalBooleanFunctionGap(t *testing.T) {
 	nativeRun, binary := natively(t, program)
 	for _, side := range []struct {
 		name   string
-		result run
+		result oracles.Run
 	}{
 		{"Node", onNode(t, path)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program)},
 	} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "absent\n" {
-			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		if side.result.ExitCode != 0 || len(side.result.Stderr) != 0 || string(side.result.Stdout) != "absent\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.ExitCode, side.result.Stdout, side.result.Stderr)
 		}
 	}
 	if report := leaks(t, program, binary); report != "" {
