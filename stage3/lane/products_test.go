@@ -71,7 +71,9 @@ func adaptedTree(t testing.TB) string {
 		if err := git(nil, "checkout", "--quiet", "--detach", pin); err != nil {
 			return err
 		}
-		adapt := toolchain.CommandIn(repository, "python3", "-I", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree)
+		// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
+		// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
+		adapt := toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree)
 		if err := described(adapt); err != nil {
 			return err
 		}
