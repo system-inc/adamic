@@ -107,7 +107,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		want   string
 	}{
 		{"var", "var old = 1;\n", "main.a:1:1: Adamic 0.1 refuses var; use const or let"},
-		{"async", "async function wait(): Promise<void> {}\n", "main.a:1:1: Adamic 0.1 refuses an async function;"},
+		{"unawaited async", "async function wait(): Promise<void> {}\nwait();\n", "main.a:2:1: Adamic 0.1 refuses an unawaited async task;"},
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
 		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: Adamic 0.1 refuses throwing a number; throw an Error"},
 		{"!", "const map = new Map<string, number>();\nconst value = map.get('a')!;\n", "main.a:2:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
