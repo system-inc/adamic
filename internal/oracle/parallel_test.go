@@ -42,8 +42,13 @@ func init() {
 }
 
 func usesParallelMap(program *ir.Program) bool {
-	// The native emitter declares this ABI only when it emits a parallelMap expression.
-	return strings.Contains(native.C(program), "adamic_parallel_map(")
+	return emitsParallelMap(native.C(program))
+}
+
+// emitsParallelMap is whether emitted C calls the pool: the native emitter declares this ABI only when it emits a
+// parallelMap expression.
+func emitsParallelMap(code string) bool {
+	return strings.Contains(code, "adamic_parallel_map(")
 }
 
 // Each variant runs sequentially and with the pool's default size. Do not cache race proofs.
