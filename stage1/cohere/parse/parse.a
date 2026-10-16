@@ -1,0 +1,161 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { ParseNode, written, printTree } from '../../typescript/parser/nodes.ts';
+import { Context } from './context.a';
+import { visit } from './registry.a';
+function collect(source: string, path: string, selected: string, spans: string): Context {
+    const parser = new Parser(source, path);
+    const scanner = new Scanner(source);
+    const context = new Context(source, parser, scanner, selected);
+    let root: number;
+    if(spans !== '') {
+        // Test adapter only: Go's parsed JSX text boundaries, converted to UTF-16 by the harness.
+        const children: number[] = [];
+        for(const span of spans.split(',')) {
+            if(span === 'empty') {
+                break;
+            }
+            const parts = span.split(':');
+            const start = Number(parts[0] ?? panic('missing JSX start'));
+            const end = Number(parts[1] ?? panic('missing JSX end'));
+            children.push(parser.nodes.length);
+            const noChildren: number[] = [];
+            parser.nodes.push(new ParseNode('JsxText', start, end, noChildren));
+        }
+        root = parser.nodes.length;
+        parser.nodes.push(new ParseNode('SourceFile', 0, source.length, children));
+    }
+    else {
+        root = parser.file();
+    }
+    context.root = root;
+    context.parents = parser.nodes.map(() => -1);
+    context.mapParents(root, -1);
+    // Parse-only measurement: no rule traversal.
+    context.findings.sort((left, right) => left.start - right.start);
+    return context;
+}
+
+function fixed(initial: Context, path: string): string {
+    let context = initial;
+    for(let pass = 0; pass < 10; pass++) {
+        let result = context.source;
+        let boundary = result.length;
+        let changed = false;
+        for(let position = context.findings.length - 1; position >= 0; position--) {
+            const finding = context.findings[position] ?? panic('missing finding');
+            for(const edit of finding.edits) {
+                if(edit.end > boundary) {
+                    panic('overlapping fixes unsupported');
+                }
+                result = result.slice(0, edit.start) + edit.text + result.slice(edit.end);
+                boundary = edit.start;
+                changed = true;
+            }
+        }
+        if(!changed || result === context.source) {
+            return result;
+        }
+        context = collect(result, path, initial.selected, '');
+    }
+    panic('fixes did not converge');
+}
+function run(row: string, count: boolean, ast: boolean): number {
+    const fields = row.split('\t');
+    const path = fields[0] ?? panic('missing path');
+    const read = readTextFile(path);
+    if(read.kind === 'Error') {
+        panic(read.message);
+    }
+    const source = read.text;
+    const context = collect(source, path, fields[1] ?? 'all', fields[2] ?? '');
+    if(ast) {
+        const offsets: number[] = [0];
+        let bytes = 0;
+        for(let index = 0; index < source.length; index++) {
+            const code = source.codePointAt(index) ?? 0;
+            if(code > 65535) {
+                offsets.push(bytes);
+                index++;
+            }
+            bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+            offsets.push(bytes);
+        }
+        console.log('file');
+        return printTree(context.parser.nodes, context.root, offsets, 0, true);
+    }
+    if(count) {
+        return context.findings.length;
+    }
+    const offsets: number[] = [0];
+    const lineStarts: number[] = [0];
+    let bytes = 0;
+    for(let position = 0; position < source.length; position++) {
+        const code = source.codePointAt(position) ?? 0;
+        if(code === 10) {
+            lineStarts.push(position + 1);
+        }
+        if(code > 65535) {
+            offsets.push(bytes);
+            position++;
+        }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    let lineIndex = 0;
+    for(const finding of context.findings) {
+        const start = offsets[finding.start] ?? panic('finding outside source');
+        const end = offsets[finding.end] ?? panic('finding end outside source');
+        while((lineStarts[lineIndex + 1] ?? source.length + 1) <= finding.start) {
+            lineIndex++;
+        }
+        const line = lineIndex + 1;
+        const column = start - (offsets[lineStarts[lineIndex] ?? 0] ?? 0) + 1;
+        console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+        console.log(`range ${start} ${end} ${finding.id}`);
+        for(const edit of finding.edits) {
+            console.log(
+                `fix ${offsets[edit.start] ?? panic('edit outside source')} ${offsets[edit.end] ?? panic('edit end outside source')}\t${written(edit.text)}`,
+            );
+        }
+        for(const suggestion of finding.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits) {
+                console.log(
+                    `edit ${offsets[edit.start] ?? panic('edit outside source')} ${offsets[edit.end] ?? panic('edit end outside source')}\t${written(edit.text)}`,
+                );
+            }
+        }
+    }
+    console.log(`fixed\t${written(fixed(context, path))}`);
+    return context.findings.length;
+}
+const args = programArguments();
+const first = args[0] ?? panic('missing path or manifest');
+if(first === '--manifest') {
+    const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+    if(manifest.kind === 'Error') {
+        panic(manifest.message);
+    }
+    const ast = args.includes('--ast');
+    const count = args.includes('--count') && !ast;
+    let total = 0;
+    let index = 0;
+    for(const row of manifest.text.split('\n')) {
+        if(row === '') {
+            continue;
+        }
+        if(!count) {
+            console.log(`case ${index}`);
+        }
+        total += run(row, count, ast);
+        index++;
+    }
+    if(count) {
+        console.log(`${total}`);
+    }
+}
+else {
+    run(first, false, args.includes('--ast'));
+}

@@ -1,6 +1,7 @@
 {
   "version": 1,
   "packages": {
+    "stage1/cohere/parse": ["internal/load", "internal/lower", "internal/native", "cmd/adamic"],
     "internal/boundedrun": ["cmd/adamic"],
     "internal/leakcheck": ["internal/native"],
     "internal/compilercensus": ["cmd/adamic"],
