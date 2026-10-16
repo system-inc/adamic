@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"testing"
 	"time"
 
@@ -17,6 +18,10 @@ import (
 // measured census, 16 symlink-watcher cases each selected by an exact grep, and the publicApi byte comparison. Each is a
 // TestShard_ test of its own (shards_generated_test.go), so Planner cuts them like any other tests and a red names its
 // shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedTree), never a tree it builds.
+
+// shardTeardown is what a shard's limit leaves of its test's deadline: shard.py's teardown after it kills upstream,
+// writing its report and removing its view.
+const shardTeardown = 5 * time.Second
 
 type counts struct {
 	Pass int `json:"pass"`
@@ -85,7 +90,17 @@ func runManifestShard(t *testing.T, name string) {
 		t.Fatal(err)
 	}
 	results := t.TempDir()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	// shard.py's limit is this test's: its deadline, the go test deadline when sooner, less a margin for teardown, so
+	// shard.py kills upstream and reports a timeout naming the shard before the context kills shard.py.
+	deadline := time.Now().Add(55 * time.Second)
+	if testDeadline, ok := t.Deadline(); ok && testDeadline.Before(deadline) {
+		deadline = testDeadline
+	}
+	limit := time.Until(deadline) - shardTeardown
+	if limit <= 0 {
+		t.Fatalf("%s: the test's deadline leaves no time for the shard", name)
+	}
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	arguments := selected.Command[1:]
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
@@ -93,7 +108,8 @@ func runManifestShard(t *testing.T, name string) {
 		arguments = append([]string{"-E", "-S", "-B"}, arguments...)
 	}
 	command := boundedCommand(ctx, root, selected.Command[0], arguments...)
-	command.Env = append(command.Env, "STAGE3_ADAPTED_TREE="+tree, "STAGE3_RESULTS="+results)
+	command.Env = append(command.Env, "STAGE3_ADAPTED_TREE="+tree, "STAGE3_RESULTS="+results,
+		"STAGE3_SHARD_SECONDS="+strconv.FormatFloat(limit.Seconds(), 'f', 1, 64))
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("%s: %v\n%s", command, err, output)
