@@ -50,7 +50,7 @@ func TestModuleNamespaceLimitsStayLoud(t *testing.T) {
 }
 
 func TestModuleNamespaceInitializedReadProof(t *testing.T) {
-	// Not parallel: the cyclic project uses the process-wide cohere rule runner.
+	t.Parallel()
 	path := filepath.Join("..", "oracle", "testdata", "module_namespace_reads", "direct_initialized.a")
 	program, err := load.Load([]string{path})
 	if err != nil {
