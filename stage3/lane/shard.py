@@ -41,13 +41,15 @@ def shared_artifact(plan):
 
 
 def adapted_inputs(plan):
-    """The adapted tree a unit runs against, the stock API parser, and the producer's phases. With STAGE3_ADAPTED_TREE,
-    the tree is stage3/lane's TestProduct_Stage3AdaptedTree product, whose key is its identity, so none of the shared
-    artifact's identity checks apply; the parser is stage3/api's install, checked against the manifest's digest."""
+    """The adapted tree a unit runs against, the stock API parser, the producer's phases, and the packages the view links
+    in as node_modules (None when the tree holds its own). With STAGE3_ADAPTED_TREE, the tree is stage3/lane's
+    TestProduct_Stage3AdaptedTree product, whose key is its identity, so none of the shared artifact's identity checks
+    apply; the parser is stage3/api's install, checked against the manifest's digest, and the packages are
+    stage3/typescript's install, the tree's devDependencies, which the product leaves out."""
     supplied = os.environ.get('STAGE3_ADAPTED_TREE')
     if not supplied:
         artifact, ready = shared_artifact(plan)
-        return artifact / 'tree', artifact / 'api', ready['phases']
+        return artifact / 'tree', artifact / 'api', ready['phases'], None
     tree = Path(supplied).resolve()
     if not (tree / 'built/local/run.js').is_file():
         raise ValueError('the adapted tree product holds no built harness: ' + str(tree))
@@ -56,7 +58,7 @@ def adapted_inputs(plan):
         raise ValueError('stage3/api\'s stock API parser differs from the manifest\'s')
     if runtime_hash() != plan['runtime']:
         raise ValueError('shard harness inputs changed; regenerate the manifest')
-    return tree, api, None
+    return tree, api, None, LANE.parent / 'typescript/node_modules'
 
 
 def baseline_diff(tree):
@@ -131,7 +133,7 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
     report = dict(name=name, inputs_hash=wanted_hash, artifact=plan['artifact'], counts={}, errors=[], status='fail')
     try:
         check_unit_inputs(unit, plan, wanted_hash)
-        source, api, phases = adapted_inputs(plan)
+        source, api, phases, modules = adapted_inputs(plan)
         tree = output / 'adapted-tree'
         if mutant_case is not None:
             if mutant_case.is_absolute() or '..' in mutant_case.parts or not mutant_case.is_relative_to('tests/cases'):
@@ -139,6 +141,8 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
             if mutant_content is None:
                 raise ValueError('mutant case requires content')
         make_view(source, tree, mutant_case)
+        if modules is not None:
+            (tree / 'node_modules').symlink_to(modules, target_is_directory=True)
         if mutant_case is not None:
             import hashlib
             content = mutant_content.read_bytes()
