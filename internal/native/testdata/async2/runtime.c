@@ -50,12 +50,15 @@ int main(int argc, char **argv) {
     if (strcmp(argv[1], "environment") == 0) {
         frame *owned = make_frame();
         adamic_cell *cell = adamic_retain(&owned->cells[1]);
+        adamic_weak *weak = adamic_weak_of(owned);
         assert(adamic_reference_count(&owned->base.heap) == 2);
         adamic_release(owned);
         assert(adamic_reference_count(cell->owner) == 1);
         cell->references = true;
         cell->value.reference = adamic_string_from_number(12345);
         adamic_release(cell);
+        assert(adamic_weak_target(weak) == NULL);
+        adamic_release(weak);
         adamic_environment *environment = adamic_environment_new(2);
         environment->cells[0].references = true;
         environment->cells[0].value.reference = adamic_string_from_number(67890);

@@ -37,7 +37,7 @@ func async2RuntimeGuard(t *testing.T, mode, file, old, replacement, diagnostic s
 				if !strings.Contains(text, old) {
 					t.Fatalf("missing mutant seam %q", old)
 				}
-				files[index].contents = []byte(strings.ReplaceAll(text, old, replacement))
+				files[index].contents = []byte(strings.Replace(text, old, replacement, 1))
 				found = true
 			}
 			if !found {
@@ -118,4 +118,9 @@ func TestAsync2RuntimeInitialization(t *testing.T) {
 func TestAsync2RuntimeFreeChildren(t *testing.T) {
 	t.Parallel()
 	async2RuntimeGuard(t, "free", "async.c", "adamic_async_forget_cleanup(frame);", "(void)frame;", "Assertion")
+}
+
+func TestAsync2RuntimeRelease(t *testing.T) {
+	t.Parallel()
+	async2RuntimeGuard(t, "environment", "heap.c", "heap = ((adamic_cell *)heap)->owner;\n\t}\n#endif\n\tif (heap == NULL)", "(void)heap;\n\t}\n#endif\n\tif (heap == NULL)", "Assertion")
 }
