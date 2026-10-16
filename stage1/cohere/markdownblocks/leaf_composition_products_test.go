@@ -25,16 +25,6 @@ func leafCompositionLoweredProduct(t *testing.T) leafCompositionProducts {
 	return p
 }
 
-func TestProduct_MarkdownLeafGoLists(t *testing.T) {
-	t.Parallel()
-	leafCompositionGoProduct(t, leafCompositionProductRoot(t), "adamic_markdown_lists", "list_go.go")
-}
-
-func TestProduct_MarkdownLeafGoDocLayout(t *testing.T) {
-	t.Parallel()
-	leafCompositionGoProduct(t, leafCompositionProductRoot(t), "adamic_markdown_doclayout", "document_go.go")
-}
-
 func TestProduct_MarkdownLeafLowered(t *testing.T) {
 	t.Parallel()
 	leafCompositionLoweredProduct(t)

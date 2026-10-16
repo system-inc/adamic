@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testMarkdownQuoteLayoutShards = 12
@@ -239,59 +240,8 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 	if target == "lowered" {
 		return products
 	}
-	// GoBuild is not on this base; cache the unchanged overlay builds as products.
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []struct{ name, driver, command string }{
-		{"lists", "list_go.go", "adamic_markdown_lists"},
-		{"layout", "document_go.go", "adamic_markdown_doclayout"},
-	} {
-		if target != "" && target != mode.name {
-			continue
-		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
-		replace := map[string]string{mainPath: driver}
-		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		goInputs := buildcache.Inputs{
-			Name:      "markdown-quote-layout-go-" + mode.name,
-			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
-			Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
-			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
-		}
-		dir := buildcache.Product(t, goInputs, func(dir string) error {
-			overlayPath := filepath.Join(dir, mode.name+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command := quoteLayoutSetupCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)...)
-			command.Dir = cohere
-			if output, err := combinedOutput(command); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(dir, mode.name)
-		if mode.name == "lists" {
-			products.goBinary = binary
-		} else {
-			products.goLayout = binary
-		}
-	}
+	goProducts := oracles.QuoteLayoutGoProducts(t, root, target)
+	products.goBinary, products.goLayout = goProducts.List, goProducts.Document
 	return products
 }
 
