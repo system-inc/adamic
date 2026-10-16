@@ -162,7 +162,8 @@ func buildOne(source string, output string, options Options, flags []string) err
 	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
 		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
-		if combined, err := compile.CombinedOutput(); err != nil {
+		var combined []byte
+		if err := withCompilerToken(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
 			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 		}
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
@@ -195,7 +196,8 @@ func buildOne(source string, output string, options Options, flags []string) err
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
 	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
-	if combined, err := command.CombinedOutput(); err != nil {
+	var combined []byte
+	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
 	return nil

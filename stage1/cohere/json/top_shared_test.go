@@ -1,10 +1,6 @@
 package json
 
 import (
-	"fmt"
-	"os"
-	"sort"
-	"strings"
 	"sync"
 	"testing"
 
@@ -14,7 +10,6 @@ import (
 // Fixed hash buckets have headroom. Keys are repository-relative case paths,
 // including generated indices/modes, never enumeration positions.
 const testPortMatchesGoCohereShards = 2048
-const testUpstreamRepositoryCorpusParityShards = 2048
 
 // ADAMIC_TEST_SHARD=i/n selects ordinals modulo n locally; unset runs every
 // generated top-level leaf. Isolated gate leaves use go test -timeout 90s.
@@ -28,8 +23,6 @@ var jsonTopState struct {
 	oracle     string
 	clangTools []string
 	products   sync.Map
-	reports    sync.Mutex
-	report     map[int]string
 }
 
 type jsonTopBuild struct {
@@ -69,51 +62,4 @@ func jsonTopOracle(t *testing.T) string {
 		t.Fatal("shared setup did not prepare the Go oracle")
 	}
 	return jsonTopState.oracle
-}
-
-func jsonTopReport(t *testing.T, i int, value string) {
-	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" {
-		if e := os.WriteFile(fmt.Sprintf("%s.%04d", path, i), []byte(value), 0644); e != nil {
-			t.Error(e)
-		}
-		jsonTopState.reports.Lock()
-		defer jsonTopState.reports.Unlock()
-		if jsonTopState.report == nil {
-			jsonTopState.report = map[int]string{}
-		}
-		jsonTopState.report[i] = value
-	}
-}
-
-// Shared Product directories are read-only and never removed by the test process.
-// Not parallel: owns process-wide report aggregation after m.Run.
-func TestMain(m *testing.M) {
-	code := m.Run()
-	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" && len(jsonTopState.report) > 0 {
-		var keys []int
-		for k := range jsonTopState.report {
-			keys = append(keys, k)
-		}
-		sort.Ints(keys)
-		var s strings.Builder
-		for _, k := range keys {
-			s.WriteString(jsonTopState.report[k])
-		}
-		if e := os.WriteFile(path, []byte(s.String()), 0644); e != nil {
-			fmt.Fprintln(os.Stderr, e)
-			code = 1
-		}
-	}
-	os.Exit(code)
-}
-func TestUpstreamRepositoryCorpusParityUnion(t *testing.T) {
-	t.Parallel()
-	cases, shards := jsonTopCorpus(t)
-	if len(shards) != testUpstreamRepositoryCorpusParityShards {
-		t.Fatal("static upstream count differs from enumeration")
-	}
-	if e := jsonPortUnion(cases, shards); e != nil {
-		t.Fatal(e)
-	}
-	t.Logf("exact live union: %d cases", len(cases))
 }

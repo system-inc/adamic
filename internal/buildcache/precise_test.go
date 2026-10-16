@@ -2030,6 +2030,98 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 	}
 }
 
+// A run that finds a product whole reports, found, each product the set that found it reads, through theirs in turn: a
+// runner values that set, each upstream's set in turn, and needs each one's read set and product (#mmpt615, 2e95d29e's
+// void: tsprinter's mutant corpora were found whole, their Go oracle was never named, so no tree shipped it). Here port
+// reads header, which reads base. Found in the cache or fetched from the store, the same. Mutants: the upstreams valued
+// and never journaled; only a set's own upstreams named, never theirs; a fetch journaling its key's upstreams as none.
+// Not parallel: newRig.
+func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
+	r := newRig(t)
+	base := Inputs{Name: "base", Files: []string{"source"}}
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	reading := func(upstream string) func(string) error {
+		return func(directory string) error {
+			content, err := os.ReadFile(filepath.Join(upstream, "product"))
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "product"), append(content, " and more"...), 0o644)
+		}
+	}
+	baseProduct := Product(t, base, building("base"))
+	headerProduct := Product(t, header, reading(baseProduct))
+	built := r.built(t)
+	r.window(built["base"].Build, func() {
+		r.open(r.pid, "source/b.c")
+		r.write(r.pid, filepath.Join(baseProduct, "product"))
+	})
+	r.window(built["header"].Build, func() {
+		r.open(r.pid, filepath.Join(baseProduct, "product"))
+		r.open(r.pid, "include/x.h")
+		r.write(r.pid, filepath.Join(headerProduct, "product"))
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	// port is built by a run of its own that finds header, so its set reads header alone, never base beside it.
+	r.retrace(t, "port")
+	headerFound := Product(t, header, building("never built: found"))
+	Product(t, port, reading(headerFound))
+	built["port"] = r.built(t)["port"]
+	r.window(built["port"].Build, func() {
+		r.open(r.pid, filepath.Join(headerFound, "product"))
+		r.open(r.pid, "source/a.c")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("port: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if entries := r.entries(t, built["port"].NameKey); slices.Contains(entries, "product "+built["base"].NameKey) || !slices.Contains(entries, "product "+built["header"].NameKey) {
+		t.Fatalf("port's set reads %q; want header's product and never base's", entries)
+	}
+	keys := map[string]string{}
+	for _, name := range []string{"base", "header"} {
+		file, err := loadReads(r.cache, built[name].NameKey)
+		if err != nil || len(file.Sets) == 0 {
+			t.Fatalf("%s's read sets: %+v, %v", name, file, err)
+		}
+		keys[name] = file.Sets[0].Key
+	}
+	foundBy := func(trace string, product func()) map[string]string {
+		t.Helper()
+		r.retrace(t, trace)
+		product()
+		found := map[string]string{}
+		for _, report := range r.settle(t).Reports {
+			if report.Outcome == ReportFound {
+				found[report.NameKey] = report.Key
+			}
+		}
+		return found
+	}
+	found := foundBy("found", func() { Product(t, port, building("never built: found")) })
+	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] == "" {
+		t.Fatalf("the run found %v; want port, the header its set reads under %s, and the base header's reads under %s", found, keys["header"][:12], keys["base"][:12])
+	}
+	// Fetched from the store under the key its set gives, the same: that set's upstreams are named.
+	portKey := found[built["port"].NameKey]
+	if err := os.Rename(filepath.Join(r.cache, portKey), filepath.Join(t.TempDir(), portKey)); err != nil {
+		t.Fatal(err)
+	}
+	store := &fakeStore{objects: map[string][]byte{}}
+	server := httptest.NewServer(store)
+	t.Cleanup(server.Close)
+	t.Setenv("ADAMIC_BUILD_STORE", server.URL)
+	t.Setenv("ADAMIC_BUILD_AUDIT", "0")
+	store.put(t, portKey, map[string]string{"product": "base and more and more"})
+	forgetHeldForLife()
+	t.Cleanup(forgetHeldForLife)
+	found = foundBy("fetched", func() { Product(t, port, building("never built: fetched")) })
+	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] != portKey || len(store.reads) == 0 {
+		t.Fatalf("the run fetched port and found %v, after %d store reads; want port, header and base", found, len(store.reads))
+	}
+}
+
 // A build that looks for a product in the cache and doesn't find it read nothing: a pending product of this trace that
 // isn't there, or a key with no product, is no entry and no refusal. Reading what is there of a product the run
 // never built is still refused. Mutant: a missed lookup classed by its path.
@@ -2150,5 +2242,29 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 	tests := recipeOf(root, journalEntry{Package: "example.com/ignored/a.test"})
 	if tests.reason != "" || !has(tests, "a/a_"+other+"_test.go") || !has(tests, "a/a_test.go") {
 		t.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
+	}
+}
+
+// TypeScript's JavaScript sys asks whether the file system is case-sensitive by looking for its own __filename with
+// every letter's case swapped: a file node read, not a program it ran (#4gp2ytz, Compiler's find in stage3/api's
+// typescript.js). That lookup is the file system's case, never an absolute path naming the checkout, so one tree at two
+// checkout paths keys alike. Mutant that fails it: caseProbe asking only of programs run, so the swapped path is keyed
+// absolute.
+// Not parallel: newRig.
+func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	read := filepath.Join(r.root, "source/a.c")
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, swapCase(read))
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	entries := r.entries(t, build.NameKey)
+	if !slices.Contains(entries, "filesystem case") || slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
+		t.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
 	}
 }

@@ -55,6 +55,6 @@ func init() {
 		"stage3/interface-downcasts/v2/tuple-identity-wrong.a",
 		"stage3/interface-downcasts/v2/undefined-read-write.a",
 	} {
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) string { return counted(t, path, false, nil, false, false) }})
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
 	}
 }

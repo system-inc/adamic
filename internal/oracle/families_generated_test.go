@@ -665,6 +665,11 @@ func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	runNativeAgreesShard(t, -4)
 }
 
+func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestNativeAgreesWithNode")
+}
+
 func TestWASIAgreesWithNode_000(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, 0)
@@ -1315,164 +1320,9 @@ func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	runWASIAgreesShard(t, -2)
 }
 
-func TestWASIEmission_000(t *testing.T) {
+func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	runWASIEmissionShard(t, 0)
-}
-
-func TestWASIEmission_001(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 1)
-}
-
-func TestWASIEmission_002(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 2)
-}
-
-func TestWASIEmission_003(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 3)
-}
-
-func TestWASIEmission_004(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 4)
-}
-
-func TestWASIEmission_005(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 5)
-}
-
-func TestWASIEmission_006(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 6)
-}
-
-func TestWASIEmission_007(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 7)
-}
-
-func TestWASIEmission_008(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 8)
-}
-
-func TestWASIEmission_009(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 9)
-}
-
-func TestWASIEmission_010(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 10)
-}
-
-func TestWASIEmission_011(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 11)
-}
-
-func TestWASIEmission_012(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 12)
-}
-
-func TestWASIEmission_013(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 13)
-}
-
-func TestWASIEmission_014(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 14)
-}
-
-func TestWASIEmission_015(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 15)
-}
-
-func TestWASIEmission_016(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 16)
-}
-
-func TestWASIEmission_017(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 17)
-}
-
-func TestWASIEmission_018(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 18)
-}
-
-func TestWASIEmission_019(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 19)
-}
-
-func TestWASIEmission_020(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 20)
-}
-
-func TestWASIEmission_021(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 21)
-}
-
-func TestWASIEmission_022(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 22)
-}
-
-func TestWASIEmission_023(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 23)
-}
-
-func TestWASIEmission_024(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 24)
-}
-
-func TestWASIEmission_025(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 25)
-}
-
-func TestWASIEmission_026(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 26)
-}
-
-func TestWASIEmission_027(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 27)
-}
-
-func TestWASIEmission_028(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 28)
-}
-
-func TestWASIEmission_029(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 29)
-}
-
-func TestWASIEmission_030(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 30)
-}
-
-func TestWASIEmission_031(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 31)
+	catchPlantedCase(t, "TestWASIAgreesWithNode")
 }
 
 func TestReviewProgramsAgreeWithNode_000(t *testing.T) {
@@ -1533,6 +1383,11 @@ func TestReviewProgramsAgreeWithNode_010(t *testing.T) {
 func TestReviewProgramsAgreeWithNode_011(t *testing.T) {
 	t.Parallel()
 	runReviewAgreeShard(t, 11)
+}
+
+func TestFamiliesCatchAPlantedCase_ReviewProgramsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestReviewProgramsAgreeWithNode")
 }
 
 func TestCountsAreRecorded_000(t *testing.T) {
@@ -1695,6 +1550,11 @@ func TestCountsAreRecorded_031(t *testing.T) {
 	runCountsShard(t, 31)
 }
 
+func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestCountsAreRecorded")
+}
+
 func TestLoopCountersAgreeWithNode_000(t *testing.T) {
 	t.Parallel()
 	runLoopCountersShard(t, 0)
@@ -1735,6 +1595,11 @@ func TestLoopCountersAgreeWithNode_007(t *testing.T) {
 	runLoopCountersShard(t, 7)
 }
 
+func TestFamiliesCatchAPlantedCase_LoopCountersAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestLoopCountersAgreeWithNode")
+}
+
 func TestLibraryMethodValueMutants_000(t *testing.T) {
 	t.Parallel()
 	runLibraryMethodValueMutantsShard(t, 0)
@@ -1753,6 +1618,11 @@ func TestLibraryMethodValueMutants_002(t *testing.T) {
 func TestLibraryMethodValueMutants_003(t *testing.T) {
 	t.Parallel()
 	runLibraryMethodValueMutantsShard(t, 3)
+}
+
+func TestFamiliesCatchAPlantedCase_LibraryMethodValueMutants(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestLibraryMethodValueMutants")
 }
 
 func TestStage0EmitsDeterministically_000(t *testing.T) {
@@ -1913,4 +1783,9 @@ func TestStage0EmitsDeterministically_030(t *testing.T) {
 func TestStage0EmitsDeterministically_031(t *testing.T) {
 	t.Parallel()
 	runDeterministicEmissionShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_Stage0EmitsDeterministically(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestStage0EmitsDeterministically")
 }

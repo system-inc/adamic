@@ -8,7 +8,6 @@ internal/lower/import_cycle_ready_test.go	TestUndecidedCycleReadsUseReadyChecks
 internal/lower/module_namespace_test.go	TestModuleNamespaceInitializedReadProof
 internal/native/normalize_benchmark_test.go	TestNormalizeLongMeasurements
 internal/oracle/cache_test.go	TestGateCacheUncached
-internal/oracle/enums_open_test.go	TestNumericEnumNeverPathsPinned
 internal/oracle/enums_test.go	TestEnumSemanticMutants
 internal/oracle/import_cycles_test.go	TestImportCycleLoadTimeReads
 internal/oracle/import_cycles_test.go	TestImportCycleRuntimeCalls

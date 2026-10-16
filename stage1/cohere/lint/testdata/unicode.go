@@ -32,16 +32,4 @@ func main() {
 		}
 	}
 	fmt.Println("];\nexport function printable(point: number): boolean {\n let left = 0; let right = unprintable.length / 2;\n while(left < right) {const middle = Math.floor((left + right) / 2);const start=unprintable[middle*2] ?? 0;const end=unprintable[middle*2+1] ?? 0;if(point < start){right=middle;}else if(point>end){left=middle+1;}else{return false;}}\n return true;\n}")
-	fmt.Println(`
-export function foldedRange(character: string, first: number, last: number): boolean {
-    const point = character.codePointAt(0) ?? 0;
-    if(point >= first && point <= last) { return true; }
-    const minimum = folds.get(point) ?? point;
-    if(minimum >= first && minimum <= last) { return true; }
-    for(const key of folds.keys()) {
-        if(key >= first && key <= last && folds.get(key) === minimum) { return true; }
-    }
-    return false;
-}
-`)
 }

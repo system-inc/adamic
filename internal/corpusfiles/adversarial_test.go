@@ -68,11 +68,11 @@ func TestAdversarialStaleManifestRepository(t *testing.T) {
 	g(t, repo, "add", ".")
 	g(t, repo, "commit", "-qm", "2")
 	unpack(t, repo, source) // tree at commit 2
-	viaGit, _, _, err := selectFiles(repo, "", []string{"docs"}, []string{"*.md"})
+	viaGit, _, _, err := selectFiles(repo, "", []string{"docs"}, []string{"*.md"}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	viaManifest, _, _, err := selectFiles(source, "", []string{"docs"}, []string{"*.md"})
+	viaManifest, _, _, err := selectFiles(source, "", []string{"docs"}, []string{"*.md"}, nil)
 	t.Logf("git: %d files %v", len(viaGit), viaGit)
 	t.Logf("stale manifest: %d files %v err=%v", len(viaManifest), viaManifest, err)
 	if err == nil || !strings.Contains(err.Error(), "docs/b.md") {
@@ -110,7 +110,7 @@ func TestAdversarialHeadNotBoundToFiles(t *testing.T) {
 	os.WriteFile(filepath.Join(source, ".tracked/cohere/files"), listing, 0o644)
 	w(t, source, "readme", "r\n")
 	w(t, source, "cohere/x/a.css", "a{}\n")
-	files, head, _, err := selectFiles(filepath.Join(source, "cohere"), pin, []string{"x"}, []string{"*.css"})
+	files, head, _, err := selectFiles(filepath.Join(source, "cohere"), pin, []string{"x"}, []string{"*.css"}, nil)
 	t.Logf("head=%s pin=%s files=%v err=%v", head, pin, files, err)
 	if err == nil || !strings.Contains(err.Error(), "aren't that commit's") {
 		t.Errorf("Upstream passes on pin %s while the tree and files are commit %s: %v", pin, old, err)
@@ -131,8 +131,8 @@ func TestAdversarialUntracked(t *testing.T) {
 	tracked.Write(repo, source)
 	unpack(t, repo, source)
 	w(t, source, "r/extra.md", "x\n")
-	_, _, _, errU := selectFiles(source, pin, []string{"r"}, []string{"*.md"})
-	files, _, _, errR := selectFiles(source, "", []string{"r"}, []string{"*.md"})
+	_, _, _, errU := selectFiles(source, pin, []string{"r"}, []string{"*.md"}, nil)
+	files, _, _, errR := selectFiles(source, "", []string{"r"}, []string{"*.md"}, nil)
 	t.Logf("upstream: %v ; repository: %v %v", errU, files, errR)
 	if errU == nil || !strings.Contains(errU.Error(), "r/extra.md") || errR == nil || !strings.Contains(errR.Error(), "r/extra.md") {
 		t.Errorf("an extra file passed: upstream %v, repository %v", errU, errR)
@@ -151,7 +151,7 @@ func TestAdversarialBrokenGitFile(t *testing.T) {
 	tracked.Write(repo, source)
 	unpack(t, repo, source)
 	w(t, source, ".git", "gitdir: /nonexistent/worktrees/x\n")
-	_, _, _, err := selectFiles(source, "", []string{"r"}, []string{"*.md"})
+	_, _, _, err := selectFiles(source, "", []string{"r"}, []string{"*.md"}, nil)
 	t.Logf("broken .git: %v", err)
 	if err == nil {
 		t.Errorf("broken .git fell back to the manifest")
@@ -159,7 +159,7 @@ func TestAdversarialBrokenGitFile(t *testing.T) {
 	// shallow clone answers through git
 	shallow := filepath.Join(t.TempDir(), "s")
 	g(t, repo, "clone", "-q", "--depth", "1", "file://"+repo, shallow)
-	if _, _, _, err := selectFiles(shallow, "", []string{"r"}, []string{"*.md"}); err != nil {
+	if _, _, _, err := selectFiles(shallow, "", []string{"r"}, []string{"*.md"}, nil); err != nil {
 		t.Errorf("shallow: %v", err)
 	}
 }

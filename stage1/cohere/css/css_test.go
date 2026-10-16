@@ -21,25 +21,22 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 const repository = "../../.."
 
-const testThePortParsesAsGoCohereDoesShards = 388
-
-// Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
-const childStall = 4 * time.Minute
-
-type run struct {
-	stdout, stderr []byte
-	exitCode       int
-}
 type mutant struct{ name, file, from, to string }
 
 var mutants = []mutant{
 	{"custom properties lose their block values", "parser.ts", "const custom = start.value.startsWith('--');", "const custom = false;"},
 	{"comments always disappear from values", "parser.ts", "else {\n                        value += current.value;\n                    }", "else {\n                        value += '';\n                    }"},
 	{"closing braces no longer include the closing byte", "parser.ts", "this.finish(node, token.start);\n            this.current = node.parent;", "this.finish(node, token.start, 0);\n            this.current = node.parent;"},
+}
+
+type run struct {
+	stdout, stderr []byte
+	exitCode       int
 }
 
 func portDirectory(t *testing.T, applied *mutant) string {
@@ -87,7 +84,7 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
 	packageDirectory := filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
-	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
+	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "roots": oracles.CorpusRoots(), "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
 	encoded, _ := json.Marshal(request)
 	requestPath := filepath.Join(directory, "request.json")
 	if err := os.WriteFile(requestPath, encoded, 0644); err != nil {
@@ -96,12 +93,12 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 	// The Go oracle is css-printer-oracle-0, cohere's postcss with testdata/cohere_side_test.go laid over it, built
 	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
 	if oracle == "" {
-		oracle = cssOracleProduct(t, false)
+		oracle = oracles.ComparisonOracle(t, false)
 	}
 	cmd := bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
 	cmd.Dir = packageDirectory
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	if err != nil {
 		t.Fatalf("Go oracle: %v\n%s", err, output)
 	}
@@ -132,7 +129,8 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 // ordinals modulo n as a local convenience; the gate can instead use
 // -run '^TestThePortParsesAsGoCohereDoes$/^shard-NNN$'. Every agreement shard
 // compares all original sides and runs ASan/UBSan, with leak detection in the same
-// run on Linux. Each mutant runs only in the shard that owns its witness case.
+// run on Linux. Each mutant runs over exactly its witnesses (cssParserWitnesses), in
+// the shard that owns the first of them.
 // TestThePortParsesAsGoCohereDoes_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
@@ -141,13 +139,13 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 	t.Helper()
 	cssParserTopSetup.once.Do(func() {
 		setupStarted := time.Now()
-		prepareCSSParserTopCorpus(t)
-		corpus := cssParserTopCorpus(t)
-		units := cssParserShards(corpus.keys)
-		if len(units) != testThePortParsesAsGoCohereDoesShards {
-			t.Fatalf("enumerated %d shards, declared %d; provide the complete pinned ADAMIC_CSS_FIXTURES corpus", len(units), testThePortParsesAsGoCohereDoesShards)
+		corpus := oracles.LoadParserCorpus(t)
+		witnesses := cssParserAllWitnesses(t)
+		units := oracles.ParserWithMutants(oracles.ParserAgreementShards(corpus.CaseKeys), corpus.CaseKeys, witnesses)
+		if len(units) != oracles.ParserShardCount {
+			t.Fatalf("enumerated %d shards, declared %d; provide the complete pinned ADAMIC_CSS_FIXTURES corpus", len(units), oracles.ParserShardCount)
 		}
-		verifyCSSParserUnion(t, corpus.keys, units)
+		verifyCSSParserUnion(t, corpus.CaseKeys, units, witnesses)
 		// C emission annotates the IR. Finish both backends sequentially before the
 		// independent native builds and parallel unit readers use immutable products.
 		var programs []cssParserProgram
@@ -164,22 +162,22 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 		script, _ := filepath.Abs("testdata/library.mjs")
 		libraryIdentity := ""
 		if library != "" {
-			libraryIdentity = cssParserOracleIdentity(t, library)
+			libraryIdentity = oracles.ContentIdentity(t, library)
 		}
 		setupElapsed := time.Since(setupStarted)
 		t.Logf("setup before shards %.6fs, including cached build products", setupElapsed.Seconds())
 		cssParserTopSetup.units = units
-		cssParserTopSetup.run = func(t *testing.T, root cssParserShard) {
-			for _, unit := range root.groups {
+		cssParserTopSetup.run = func(t *testing.T, root oracles.ParserShard) {
+			for _, unit := range root.Groups {
 				started := time.Now()
 				defer func() {
 					if elapsed := time.Since(started); elapsed > 60*time.Second {
-						t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.name, elapsed)
+						t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.Name, elapsed)
 					}
 				}()
-				t.Logf("%s: %s, %d stable case IDs, mutant %d", unit.name, unit.kind, len(unit.cases), unit.mutation)
-				if unit.kind == "agreement" {
-					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
+				t.Logf("%s: %s, %d stable case IDs, mutant %d", unit.Name, unit.Kind, len(unit.Cases), unit.Mutation)
+				if unit.Kind == "agreement" {
+					shardCases, want := oracles.WriteParserSlice(t, corpus, unit.Cases)
 					for _, side := range []struct {
 						name   string
 						result run
@@ -199,35 +197,35 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 					if library == "" {
 						t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 					}
-					postCSS := cachedCSSParserPostCSSAnswers(t, script, library, shardCases, libraryIdentity)
-					slice := make([]string, len(unit.cases))
-					for i, index := range unit.cases {
-						slice[i] = corpus.inputs[index]
+					postCSS := oracles.CachedPostCSSAnswers(t, script, library, shardCases, libraryIdentity)
+					slice := make([]string, len(unit.Cases))
+					for i, index := range unit.Cases {
+						slice[i] = corpus.Inputs[index]
 					}
 					checkCSSParserPostCSS(t, unit, slice, want, postCSS)
 				} else {
 					// Fetch this mutant product once and share the immutable binary
-					// between its two original side checks for its witness's cases.
-					mutantBinary := binaries[unit.mutation+1]
-					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
-					witness := cssParserMutantWitness(unit.mutation)
-					if !cssParserContainsCase(unit.cases, witness) {
-						t.Fatalf("mutant %s group in %s doesn't hold its witness case %d", mutants[unit.mutation].name, unit.name, witness)
-					}
+					// between its two original side checks over exactly its witnesses.
+					mutantBinary := binaries[unit.Mutation+1]
+					shardCases, want := oracles.WriteParserSlice(t, corpus, unit.Cases)
 					for _, side := range []struct {
 						name   string
 						result run
 					}{
 						{"native", cssParserExecute(t, cssParserASAN(false), mutantBinary, shardCases)},
-						{"Node", cssParserOnNode(t, programs[unit.mutation+1].main, shardCases)},
+						{"Node", cssParserOnNode(t, programs[unit.Mutation+1].main, shardCases)},
 					} {
 						if side.result.exitCode != 0 {
 							t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
 						}
-						if difference := cssParserDifference(unit, string(side.result.stdout), want); difference == "" {
-							t.Errorf("%s: mutant survived witness case %d in %s", side.name, witness, unit.name)
+						differing, err := cssParserDifferingCases(string(side.result.stdout), want)
+						if err != nil {
+							t.Fatalf("%s: mutant %s in %s: %v", side.name, mutants[unit.Mutation].name, unit.Name, err)
+						}
+						if len(differing) != len(unit.Cases) {
+							t.Errorf("%s: mutant %s differs from Go on %d of its %d witnesses in %s", side.name, mutants[unit.Mutation].name, len(differing), len(unit.Cases), unit.Name)
 						} else {
-							t.Logf("%s mutant %s caught by %s: %s", side.name, mutants[unit.mutation].name, unit.name, difference)
+							t.Logf("%s mutant %s caught by %s on all %d witnesses: %s", side.name, mutants[unit.Mutation].name, unit.Name, len(unit.Cases), cssParserDifference(unit, string(side.result.stdout), want))
 						}
 					}
 				}
@@ -262,7 +260,7 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 	}
 	selected := selectedCSSParserShards(t, cssParserTopSetup.units)
 	for _, unit := range selected {
-		if unit.name == cssParserTopSetup.units[ordinal].name {
+		if unit.Name == cssParserTopSetup.units[ordinal].Name {
 			cssParserTopSetup.run(t, unit)
 			return
 		}
@@ -334,7 +332,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{Stall: childStall})
+	err := childguard.Run(command, childguard.Options{Stall: oracles.ChildStallLimit})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)

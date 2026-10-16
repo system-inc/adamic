@@ -9,9 +9,10 @@ Trees and documents use child indexes in tables so their ownership is acyclic.
 
 Ahra's decision: stage 1 agrees byte for byte with **Go cohere**. Prettier parity
 is cohere's upstream contract. `port_test.go` compares exact successful output
-and exact syntax-error messages to Go; `audit_test.go` reports Prettier separately
-and checks the entire report against `known-upstream-differences.txt`. Closing,
-adding, or changing a known disagreement fails that report test.
+and exact syntax-error messages to Go; `upstream_parity_test.go` reports Prettier
+separately, as one product of the cohere, corpus and Prettier pins, and checks the
+entire report against `known-upstream-differences.txt`. Closing, adding, or
+changing a known disagreement fails that product's build.
 
 ## Pins and scope
 
@@ -20,6 +21,8 @@ adding, or changing a known disagreement fails that report test.
 - cohere/TypeScript: `8d550c837c90bd1805b047b7eeccc2baac2d5e7a`.
 - External Prettier: **3.9.6**, matching cohere's embedded standalone version.
   `testdata/library.mjs` checks this version; npm installs into a scratch directory.
+  `testdata/prettier.pin` names the version and the sha256 of the gate's
+  `package-lock.json`, and the upstream report refuses an installation without both.
 
 `cohere/internal/format/native/json.go` registers `.json` and delegates to
 `javascript.FormatJSON`. `JSONParser` selects `json-stringify` for `package.json`,
@@ -44,13 +47,12 @@ never corpus answers. The port invokes no Go, Node or Prettier subprocess.
 
 ## Observations and proving programs
 
-`gaps/numeric-separators.json` is `[1__0]`. Go formats it as `[1__0]\n`; Prettier
-refuses with `A numeric separator is only allowed between two digits. (1:3)`.
-`TestUpstreamNumericSeparatorGap` also proves `[1_]` and `[0x_1]`, under both
-`probe.json` and `package.json`. All six are accepted by Go and refused by Prettier.
-Inspection of `estree/parse_json.go` shows underscores stripped without validating
-their positions. That explains the observed acceptance; this is upstream parser
-behavior, not an observed stage 0 compiler defect.
+`gaps/numeric-separators.json` is `[1__0]`. At cohere 715ba94 Go formatted it as
+`[1__0]\n` while Prettier refused it. Since cohere 1ee5f944 (#w6vtsrn, in the pin
+from 0183ccf8) Go refuses it, `[1_]` and `[0x_1]`, under both `probe.json` and
+`package.json`, with Babel's `A numeric separator is only allowed between two digits.`,
+as Prettier does, and the port refuses them in the same words.
+`TestUpstreamNumericSeparatorsAgree` holds all six to that agreement.
 
 The generated corpus also proves empty input under both filenames. Go refuses
 with `json: empty input`; Prettier succeeds with an empty output. The report
@@ -72,6 +74,9 @@ bytes. The separate Prettier report records exactly **9/1,075** disagreements: t
 proving fixture, six generated separator cases, and two empty cases. All nine
 remain in the mandatory port-to-Go corpus, with no exemptions. These are observations at
 the pins above, not proof that all other possible inputs agree.
+
+At cohere 0183ccf8 the seven separator disagreements are closed (Go refuses them as
+Prettier does), and `known-upstream-differences.txt` holds only the two empty cases.
 
 `TestAdditionalJSONBoundaries` adds 72 Go-only probes: invalid exponents and
 radix forms, legacy octal and bigint refusals, holes, numeric keys, single quotes,
@@ -108,14 +113,17 @@ From the repository root, after `bash cloud/setup.sh`:
 
 ```sh
 source /workspace/adamic-tools/env.sh
-npm install --prefix /tmp/adamic-json-prettier --save-exact prettier@3.9.6 > /tmp/adamic-json-npm.log 2>&1
+mkdir -p /tmp/adamic-json-prettier
+printf '{\n  "name": "adamic-gate-json-prettier",\n  "version": "1.0.0",\n  "private": true,\n  "dependencies": {\n    "prettier": "3.9.6"\n  }\n}\n' > /tmp/adamic-json-prettier/package.json
+npm install --prefix /tmp/adamic-json-prettier > /tmp/adamic-json-npm.log 2>&1
 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/adamic-json-port > /tmp/adamic-json-build.log 2>&1
 /tmp/adamic-json-port CohereSettings.json > /tmp/adamic-json-formatted.txt 2>/tmp/adamic-json-driver-error.log
 ADAMIC_JSON_PRETTIER=/tmp/adamic-json-prettier ADAMIC_JSON_REPORT=/tmp/adamic-json-known.txt go test -v -count=1 -timeout 30m ./stage1/cohere/json > /tmp/adamic-json-final.log 2>&1
 ```
 
-The Prettier environment variable points to a scratch npm installation; the
-helper refuses a version other than 3.9.6. Without it, only external report and
+The Prettier environment variable points to a scratch npm installation, made
+from the gate's `package.json` so its `package-lock.json` is the one
+`testdata/prettier.pin` names; the helper refuses a version other than 3.9.6. Without it, only external report and
 upstream mutation tests skip. The Go corpus, native/Node/JavaScript-backend
 parity, leak checks, boundary tests and three port mutants still run. Go overlays
 inject helpers and mutants into scratch copies, leaving the submodule untouched.

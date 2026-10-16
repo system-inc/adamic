@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"io"
 	"os"
 	"os/exec"
@@ -14,7 +15,6 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
@@ -201,70 +201,7 @@ func recoveryStableNative(repo, directory, source string) error {
 // Oracle answers are build products too. Use stable relative input names so an
 // audit's path fields and diagnostics do not depend on t.TempDir or the checkout.
 func recoveryAnswer(t *testing.T, oracle, list, mode string) []byte {
-	t.Helper()
-	if mode != "--manifest" && mode != "--audit" {
-		t.Fatalf("unsupported recovery oracle mode %q", mode)
-	}
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		t.Fatal(err)
-	}
-	manifestBytes, err := os.ReadFile(list)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var sources []string
-	flags := []string{mode, fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))}
-	for _, path := range strings.Split(string(manifestBytes), "\n") {
-		if path == "" {
-			continue
-		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		sources = append(sources, string(content))
-		flags = append(flags, string(content))
-	}
-	inputs := buildcache.Inputs{Name: "estree-oracle-answer", Files: []string{"stage1/cohere/estree/recovery_cache_test.go"}, Flags: flags, Toolchain: []string{runtime.Version()}}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
-		work := filepath.Join(directory, "run")
-		if err := os.MkdirAll(work, 0755); err != nil {
-			return err
-		}
-		defer os.RemoveAll(work)
-		var names []string
-		for i, source := range sources {
-			name := fmt.Sprintf("input-%06d.ts", i)
-			if err := os.WriteFile(filepath.Join(work, name), []byte(source), 0644); err != nil {
-				return err
-			}
-			names = append(names, name)
-		}
-		if err := os.WriteFile(filepath.Join(work, "manifest"), []byte(strings.Join(names, "\n")+"\n"), 0644); err != nil {
-			return err
-		}
-		args := []string{mode, "manifest"}
-		if mode == "--audit" {
-			args = append(args, "answers")
-		}
-		command := exec.Command(oracle, args...)
-		command.Dir = work
-		var stderr strings.Builder
-		command.Stderr = &stderr
-		cold := time.Now()
-		answer, err := command.Output()
-		t.Logf("BUILD estree-oracle-answer cold wall=%.6fs", time.Since(cold).Seconds())
-		if err != nil || stderr.Len() != 0 {
-			return fmt.Errorf("oracle answer: %v: %s", err, &stderr)
-		}
-		return os.WriteFile(filepath.Join(directory, "answer"), answer, 0644)
-	})
-	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return answer
+	return oracles.CachedRecoveryAnswer(t, oracle, list, mode)
 }
 
 const testRecoveryNativeRecipeShards = 4
