@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -55,10 +56,11 @@ func estreeScopedNode(t *testing.T, program, path string) []byte {
 	return estreeScopedExecute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), program, path)
 }
 
-// Keep the existing 2s CPU refusal checks through the declared Go test executable,
-// while also bounding startup and wall time with a 90s context/group deadline.
+// A refusal held to its calibrated CPU budget (estreeRefusalBudget) through the declared Go test executable, while also
+// bounding startup and wall time with a 90s context/group deadline.
 func estreeScopedRefusal(t *testing.T, argv []string, diagnostic string) {
 	t.Helper()
+	budget := estreeRefusalBudget(t, argv)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	reader, writer, err := os.Pipe()
@@ -72,7 +74,7 @@ func estreeScopedRefusal(t *testing.T, argv []string, diagnostic string) {
 		t.Fatal(err)
 	}
 	defer output.Close()
-	args := append([]string{"-test.run=^TestDeadlineChild$", "-test.timeout=75s", "--", "2"}, argv...)
+	args := append([]string{"-test.run=^TestDeadlineChild$", "-test.timeout=75s", "--", strconv.FormatUint(estreeBudgetSeconds(budget), 10)}, argv...)
 	command := estreeScopedCommand(ctx, os.Args[0], args...)
 	command.Env = append(os.Environ(), "ADAMIC_ESTREE_DEADLINE_CHILD=1")
 	command.ExtraFiles = []*os.File{writer}
@@ -90,13 +92,13 @@ func estreeScopedRefusal(t *testing.T, argv []string, diagnostic string) {
 	}
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
 	status := command.ProcessState.Sys().(syscall.WaitStatus)
-	timedOut := cpu >= 2*time.Second || (status.Signaled() && status.Signal() == syscall.SIGXCPU)
+	timedOut := cpu >= budget || (status.Signaled() && status.Signal() == syscall.SIGXCPU)
 	info, statErr := output.Stat()
 	if statErr != nil {
 		t.Fatal(statErr)
 	}
 	if timedOut || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
-		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
+		t.Fatalf("%v: timeout=%v cpu=%s budget=%s exit=%v stdout=%d stderr=%s", argv, timedOut, cpu, budget, err, info.Size(), &stderr)
 	}
 }
 

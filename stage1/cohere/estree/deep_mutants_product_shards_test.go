@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -23,7 +24,7 @@ import (
 const testDeepMutantsShards = 3
 
 // This pinned corpus retains the original compound input and both execution modes.
-const deepMutantsInput = "type T=(A); a+b+c; const t=tag`a${b}c`; a&&(b&&c);"
+const deepMutantsInput = oracles.DeepMutantsInput
 
 type deepMutantsMutation struct{ name, file, from, to string }
 
@@ -192,40 +193,14 @@ func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutants
 	return ready
 }
 
-var deepMutantsFixturePrepared struct {
-	once      sync.Once
-	directory string
-}
-
-func deepMutantsFixture(t *testing.T) string {
-	t.Helper()
-	deepMutantsFixturePrepared.once.Do(func() {
-		oracle := threePortOracleProduct(t)
-		inputs := buildcache.Inputs{
-			Name:      "deep-mutants-oracle-output-v2",
-			Files:     []string{"stage1/cohere/estree/deep_mutants_product_shards_test.go"},
-			Flags:     []string{deepMutantsInput, "oracle=" + miscDigest(t, oracle)},
-			Toolchain: []string{runtime.Version()},
-		}
-		deepMutantsFixturePrepared.directory = buildcache.Product(t, inputs, func(dir string) error {
-			list := manifest(t, []string{deepMutantsInput})
-			// Shared setup has no deadline of its own. Loom bounds the entire unit.
-			output := threePortExecute(t, context.Background(), oracle, "--manifest", list)
-			return os.WriteFile(filepath.Join(dir, "want"), output, 0644)
-		})
-	})
-	if deepMutantsFixturePrepared.directory == "" {
-		t.Fatal("deep fixture preparation failed")
-	}
-	return deepMutantsFixturePrepared.directory
-}
+func deepMutantsFixture(t *testing.T) string { t.Helper(); return oracles.DeepMutantsFixture(t) }
 
 func TestDeepMutants_Setup(t *testing.T) {
 	t.Parallel()
 	deepMutantsFixture(t)
 }
 
-func TestProduct_DeepMutantsFixture(t *testing.T) {
+func TestProduct_EstreeFindsDeepMutantsFixture(t *testing.T) {
 	t.Parallel()
 	deepMutantsFixture(t)
 }

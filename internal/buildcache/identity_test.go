@@ -8,6 +8,7 @@ import (
 	"go/ast"
 	"go/parser"
 	gotoken "go/token"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -154,7 +155,7 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 			// Built for this machine alone (ADAMIC_BUILD_STORE=off), keyed by GoInputs' declared files: a fetched
 			// product's bytes are its manifest's, checked by hash, so the store's half is the Settle tests'.
 			cached(t)
-			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, t.TempDir(), nil)
+			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, freshGoCache(t)(), nil)
 
 			started := time.Now()
 			cold, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
@@ -183,27 +184,72 @@ func resetRepositoryRoot() {
 }
 
 // freshGoCache is a Go build cache holding the standard library and runtime/cgo and nothing of the repository under
-// test, built once per test from a module of its own: each fresh build gets a copy, so it compiles every package of
-// the repository from source without paying for the standard library each time.
+// test, built from a module of its own: each fresh build gets a copy, so it compiles every package of the repository
+// from source without paying for the standard library each time. The template is built once per process and only ever
+// copied: four identity tests built one each, a third of their seconds alone on one core (#hqxje9h).
 func freshGoCache(t *testing.T) func() string {
 	t.Helper()
-	template := t.TempDir()
-	module := t.TempDir()
-	write(t, module, "go.mod", "module example.com/template\n\ngo 1.21\n")
-	write(t, module, "main.go", "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n")
-	command := toolchain.CommandIn(module, "go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
-	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
-	if combined, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("the template Go build cache: %v\n%s", err, combined)
+	freshTemplate.once.Do(func() {
+		freshTemplate.directory, freshTemplate.err = buildFreshTemplate()
+	})
+	if freshTemplate.err != nil {
+		t.Fatal(freshTemplate.err)
 	}
 	return func() string {
 		t.Helper()
 		directory := filepath.Join(t.TempDir(), "go-build")
-		if err := os.CopyFS(directory, os.DirFS(template)); err != nil {
+		if err := os.CopyFS(directory, os.DirFS(freshTemplate.directory)); err != nil {
 			t.Fatal(err)
 		}
 		return directory
 	}
+}
+
+// freshTemplate is freshGoCache's template, built once per process in a directory TestMain removes.
+var freshTemplate struct {
+	once      sync.Once
+	directory string
+	err       error
+}
+
+func buildFreshTemplate() (string, error) {
+	directory, err := os.MkdirTemp("", "buildcache-fresh-template-")
+	if err != nil {
+		return "", err
+	}
+	template, module := filepath.Join(directory, "go-build"), filepath.Join(directory, "module")
+	for name, content := range map[string]string{
+		"go.mod":  "module example.com/template\n\ngo 1.21\n",
+		"main.go": "package main\n\n// int one(void) { return 1; }\nimport \"C\"\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(C.one()) }\n",
+	} {
+		if err := os.MkdirAll(module, 0o755); err != nil {
+			return directory, err
+		}
+		if err := os.WriteFile(filepath.Join(module, name), []byte(content), 0o644); err != nil {
+			return directory, err
+		}
+	}
+	command := toolchain.CommandIn(module, "go", append(append([]string{"build"}, freshFlags...), "-o", filepath.Join(module, "template"), ".")...)
+	command.Env = append(command.Env, "GOCACHE="+template, "GOWORK=off", "GOFLAGS=")
+	if combined, err := command.CombinedOutput(); err != nil {
+		return directory, fmt.Errorf("the template Go build cache: %v\n%s", err, combined)
+	}
+	return template, nil
+}
+
+func TestMain(m *testing.M) {
+	code := m.Run()
+	if freshTemplate.directory != "" {
+		// Go writes its cache read-only, so the copy's tree is made writable before it goes.
+		filepath.WalkDir(filepath.Dir(freshTemplate.directory), func(path string, entry fs.DirEntry, err error) error {
+			if err == nil {
+				os.Chmod(path, 0o755)
+			}
+			return nil
+		})
+		os.RemoveAll(filepath.Dir(freshTemplate.directory))
+	}
+	os.Exit(code)
 }
 
 // A repository of its own for the stale-product tests, keyed and built from the test's working directory.
@@ -271,7 +317,7 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 			case way == "cold" && len(outcome) == 5 && outcome[3] == "hit":
 				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q: the key ignores %s, so the product from before the change was a hit", step.input, got, step.output, step.input)
 			case way == "cold":
-				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q, though its key moved (%v): go build itself built a stale product, and it was published under an honest key", step.input, got, step.output, outcome)
+				t.Fatalf("after changing %s, the cold product printed %q, a fresh build %q, though its key moved (%v): go build itself built a stale product, and it was placed under an honest key", step.input, got, step.output, outcome)
 			default:
 				t.Fatalf("after changing %s, the warm product printed %q, a fresh build %q (%v): the key ignores %s, or the store served another product", step.input, got, step.output, outcome, step.input)
 			}

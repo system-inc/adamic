@@ -1,8 +1,12 @@
-The Node host uses the single @types/node 25.3.3 installation at
-stage3/api/node_modules/@types/node. Install stage3/api's locked dependencies
-before checking sources that statically import node:* modules. No declarations
-are copied, generated or vendored into internal/load. A missing installation or
-wrong version is a loader error. Ordinary Adamic sources keep the existing prelude.
+The Node host embeds the unchanged published @types/node 25.3.3 package and
+undici-types 7.18.2 dependency. No npm install or checkout is needed for node:*
+imports. The loader serves them at bundled:///node/node_modules/@types/node,
+ignores caller @types/node packages, and reports damaged bundles with a request
+to reinstall Adamic. Ordinary Adamic sources keep the existing prelude.
+
+node_types_manifest.json records SHA512 archive integrity and SHA256 for each
+published file. Offline integrity tests compare every embedded byte with the
+published tarballs in testdata/node_types and reject additions or omissions.
 
 Host lowerers identify declarations with load.IsNodeLibrary and register only
 implemented runtime members with lower.RegisterNodeLibraryMembers during init.

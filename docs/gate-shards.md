@@ -34,7 +34,7 @@ seed tests. Packages with no tests are build-only units. Ordinary units are top-
 the following audited parents have independently selectable, enumerable children:
 
 - `internal/oracle`: `TestInputAgreesWithNode` and `TestFreshWriteProbesStayRefused`. The tests over every
-  fixture (`TestNativeAgreesWithNode`, `TestWASIAgreesWithNode`, `TestWASIEmission`, `TestCountsAreRecorded`) and
+  fixture (`TestNativeAgreesWithNode`, `TestWASIAgreesWithNode`, `TestCountsAreRecorded`) and
   `TestReviewProgramsAgreeWithNode`, `TestLoopCountersAgreeWithNode` and `TestLibraryMethodValueMutants` are families of
   top-level tests instead, `<name>_000` and on, each case owned by the hash of its key (internal/oracle/families_test.go).
 - `stage1/cohere/typeaware`: the 15 literal `changes` rows of `TestVolumeAgreementAndMutants`.

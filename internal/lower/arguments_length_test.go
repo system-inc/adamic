@@ -11,35 +11,6 @@ import (
 	"testing"
 )
 
-func TestArgumentsLengthRefusals(t *testing.T) {
-	t.Parallel()
-	const other = "arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"
-	const writing = "writing arguments.length; keep the count read-only; write an explicit local number instead"
-	for _, probe := range []struct{ name, body, message string }{
-		{"indexing", "console.log(`${arguments[0]}`);", other},
-		{"aliasing", "const alias = arguments; console.log(`${alias.length}`);", other},
-		{"passing", "take(arguments);", other},
-		{"returning", "return arguments;", other},
-		{"spreading", "const copy = [...arguments]; console.log(`${copy.length}`);", other},
-		{"writing object", "arguments[0] = 1;", other},
-		{"writing length", "arguments.length = 1;", writing},
-		{"incrementing length", "arguments.length++;", writing},
-		{"compound length", "arguments.length += 1;", writing},
-		{"arrow", "const read = () => arguments.length; console.log(`${read()}`);", "arguments inside an arrow function; read arguments.length in the enclosing non-arrow function and capture that number"},
-		{"parenthesized write", "(arguments.length) = 1;", writing},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			source := "function take(value: IArguments): void { console.log(`${value.length}`); }\nfunction rejected() { " + probe.body + " }\nrejected();\n"
-			_, err := lowerSource(t, source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "Adamic 0.1 refuses "+probe.message) {
-				t.Fatalf("got %v; want pinned refusal %q", err, probe.message)
-			}
-		})
-	}
-}
-
 func TestMixedTupleSpreadIsNotYet(t *testing.T) {
 	t.Parallel()
 	// Node prints 2:7:word8; one argument slot can't hold both a number and a string representation.

@@ -665,6 +665,11 @@ func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	runNativeAgreesShard(t, -4)
 }
 
+func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestNativeAgreesWithNode")
+}
+
 func TestWASIAgreesWithNode_000(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, 0)
@@ -1315,169 +1320,9 @@ func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	runWASIAgreesShard(t, -2)
 }
 
-func TestWASIEmission_000(t *testing.T) {
+func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	runWASIEmissionShard(t, 0)
-}
-
-func TestWASIEmission_001(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 1)
-}
-
-func TestWASIEmission_002(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 2)
-}
-
-func TestWASIEmission_003(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 3)
-}
-
-func TestWASIEmission_004(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 4)
-}
-
-func TestWASIEmission_005(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 5)
-}
-
-func TestWASIEmission_006(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 6)
-}
-
-func TestWASIEmission_007(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 7)
-}
-
-func TestWASIEmission_008(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 8)
-}
-
-func TestWASIEmission_009(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 9)
-}
-
-func TestWASIEmission_010(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 10)
-}
-
-func TestWASIEmission_011(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 11)
-}
-
-func TestWASIEmission_012(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 12)
-}
-
-func TestWASIEmission_013(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 13)
-}
-
-func TestWASIEmission_014(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 14)
-}
-
-func TestWASIEmission_015(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 15)
-}
-
-func TestWASIEmission_016(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 16)
-}
-
-func TestWASIEmission_017(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 17)
-}
-
-func TestWASIEmission_018(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 18)
-}
-
-func TestWASIEmission_019(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 19)
-}
-
-func TestWASIEmission_020(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 20)
-}
-
-func TestWASIEmission_021(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 21)
-}
-
-func TestWASIEmission_022(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 22)
-}
-
-func TestWASIEmission_023(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 23)
-}
-
-func TestWASIEmission_024(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 24)
-}
-
-func TestWASIEmission_025(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 25)
-}
-
-func TestWASIEmission_026(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 26)
-}
-
-func TestWASIEmission_027(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 27)
-}
-
-func TestWASIEmission_028(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 28)
-}
-
-func TestWASIEmission_029(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 29)
-}
-
-func TestWASIEmission_030(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 30)
-}
-
-func TestWASIEmission_031(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, 31)
-}
-
-func TestWASIEmission_objects(t *testing.T) {
-	t.Parallel()
-	runWASIEmissionShard(t, -1)
+	catchPlantedCase(t, "TestWASIAgreesWithNode")
 }
 
 func TestReviewProgramsAgreeWithNode_000(t *testing.T) {
@@ -1540,329 +1385,174 @@ func TestReviewProgramsAgreeWithNode_011(t *testing.T) {
 	runReviewAgreeShard(t, 11)
 }
 
-func TestCountsAreRecorded_Core_000(t *testing.T) {
+func TestFamiliesCatchAPlantedCase_ReviewProgramsAgreeWithNode(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 0)
+	catchPlantedCase(t, "TestReviewProgramsAgreeWithNode")
 }
 
-func TestCountsAreRecorded_Core_001(t *testing.T) {
+func TestCountsAreRecorded_000(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 1)
+	runCountsShard(t, 0)
 }
 
-func TestCountsAreRecorded_Core_002(t *testing.T) {
+func TestCountsAreRecorded_001(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 2)
+	runCountsShard(t, 1)
 }
 
-func TestCountsAreRecorded_Core_003(t *testing.T) {
+func TestCountsAreRecorded_002(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 3)
+	runCountsShard(t, 2)
 }
 
-func TestCountsAreRecorded_Core_004(t *testing.T) {
+func TestCountsAreRecorded_003(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 4)
+	runCountsShard(t, 3)
 }
 
-func TestCountsAreRecorded_Core_005(t *testing.T) {
+func TestCountsAreRecorded_004(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 5)
+	runCountsShard(t, 4)
 }
 
-func TestCountsAreRecorded_Core_006(t *testing.T) {
+func TestCountsAreRecorded_005(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 6)
+	runCountsShard(t, 5)
 }
 
-func TestCountsAreRecorded_Core_007(t *testing.T) {
+func TestCountsAreRecorded_006(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 7)
+	runCountsShard(t, 6)
 }
 
-func TestCountsAreRecorded_Core_008(t *testing.T) {
+func TestCountsAreRecorded_007(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 8)
+	runCountsShard(t, 7)
 }
 
-func TestCountsAreRecorded_Core_009(t *testing.T) {
+func TestCountsAreRecorded_008(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 9)
+	runCountsShard(t, 8)
 }
 
-func TestCountsAreRecorded_Core_010(t *testing.T) {
+func TestCountsAreRecorded_009(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 10)
+	runCountsShard(t, 9)
 }
 
-func TestCountsAreRecorded_Core_011(t *testing.T) {
+func TestCountsAreRecorded_010(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 11)
+	runCountsShard(t, 10)
 }
 
-func TestCountsAreRecorded_Core_012(t *testing.T) {
+func TestCountsAreRecorded_011(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 12)
+	runCountsShard(t, 11)
 }
 
-func TestCountsAreRecorded_Core_013(t *testing.T) {
+func TestCountsAreRecorded_012(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 13)
+	runCountsShard(t, 12)
 }
 
-func TestCountsAreRecorded_Core_014(t *testing.T) {
+func TestCountsAreRecorded_013(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 14)
+	runCountsShard(t, 13)
 }
 
-func TestCountsAreRecorded_Core_015(t *testing.T) {
+func TestCountsAreRecorded_014(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 15)
+	runCountsShard(t, 14)
 }
 
-func TestCountsAreRecorded_Core_016(t *testing.T) {
+func TestCountsAreRecorded_015(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 16)
+	runCountsShard(t, 15)
 }
 
-func TestCountsAreRecorded_Core_017(t *testing.T) {
+func TestCountsAreRecorded_016(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 17)
+	runCountsShard(t, 16)
 }
 
-func TestCountsAreRecorded_Core_018(t *testing.T) {
+func TestCountsAreRecorded_017(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 18)
+	runCountsShard(t, 17)
 }
 
-func TestCountsAreRecorded_Core_019(t *testing.T) {
+func TestCountsAreRecorded_018(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 19)
+	runCountsShard(t, 18)
 }
 
-func TestCountsAreRecorded_Core_020(t *testing.T) {
+func TestCountsAreRecorded_019(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 20)
+	runCountsShard(t, 19)
 }
 
-func TestCountsAreRecorded_Core_021(t *testing.T) {
+func TestCountsAreRecorded_020(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 21)
+	runCountsShard(t, 20)
 }
 
-func TestCountsAreRecorded_Core_022(t *testing.T) {
+func TestCountsAreRecorded_021(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 22)
+	runCountsShard(t, 21)
 }
 
-func TestCountsAreRecorded_Core_023(t *testing.T) {
+func TestCountsAreRecorded_022(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 23)
+	runCountsShard(t, 22)
 }
 
-func TestCountsAreRecorded_Core_024(t *testing.T) {
+func TestCountsAreRecorded_023(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 24)
+	runCountsShard(t, 23)
 }
 
-func TestCountsAreRecorded_Core_025(t *testing.T) {
+func TestCountsAreRecorded_024(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 25)
+	runCountsShard(t, 24)
 }
 
-func TestCountsAreRecorded_Core_026(t *testing.T) {
+func TestCountsAreRecorded_025(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 26)
+	runCountsShard(t, 25)
 }
 
-func TestCountsAreRecorded_Core_027(t *testing.T) {
+func TestCountsAreRecorded_026(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 27)
+	runCountsShard(t, 26)
 }
 
-func TestCountsAreRecorded_Core_028(t *testing.T) {
+func TestCountsAreRecorded_027(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 28)
+	runCountsShard(t, 27)
 }
 
-func TestCountsAreRecorded_Core_029(t *testing.T) {
+func TestCountsAreRecorded_028(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 29)
+	runCountsShard(t, 28)
 }
 
-func TestCountsAreRecorded_Core_030(t *testing.T) {
+func TestCountsAreRecorded_029(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 30)
+	runCountsShard(t, 29)
 }
 
-func TestCountsAreRecorded_Core_031(t *testing.T) {
+func TestCountsAreRecorded_030(t *testing.T) {
 	t.Parallel()
-	runCountsCoreShard(t, 31)
+	runCountsShard(t, 30)
 }
 
-func TestCountsAreRecorded_Stage3_000(t *testing.T) {
+func TestCountsAreRecorded_031(t *testing.T) {
 	t.Parallel()
-	runCountsStage3Shard(t, 0)
+	runCountsShard(t, 31)
 }
 
-func TestCountsAreRecorded_Stage3_001(t *testing.T) {
+func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	runCountsStage3Shard(t, 1)
-}
-
-func TestCountsAreRecorded_Stage3_002(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 2)
-}
-
-func TestCountsAreRecorded_Stage3_003(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 3)
-}
-
-func TestCountsAreRecorded_Stage3_004(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 4)
-}
-
-func TestCountsAreRecorded_Stage3_005(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 5)
-}
-
-func TestCountsAreRecorded_Stage3_006(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 6)
-}
-
-func TestCountsAreRecorded_Stage3_007(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 7)
-}
-
-func TestCountsAreRecorded_Stage3_008(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 8)
-}
-
-func TestCountsAreRecorded_Stage3_009(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 9)
-}
-
-func TestCountsAreRecorded_Stage3_010(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 10)
-}
-
-func TestCountsAreRecorded_Stage3_011(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 11)
-}
-
-func TestCountsAreRecorded_Stage3_012(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 12)
-}
-
-func TestCountsAreRecorded_Stage3_013(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 13)
-}
-
-func TestCountsAreRecorded_Stage3_014(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 14)
-}
-
-func TestCountsAreRecorded_Stage3_015(t *testing.T) {
-	t.Parallel()
-	runCountsStage3Shard(t, 15)
-}
-
-func TestCountsAreRecorded_Host_000(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 0)
-}
-
-func TestCountsAreRecorded_Host_001(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 1)
-}
-
-func TestCountsAreRecorded_Host_002(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 2)
-}
-
-func TestCountsAreRecorded_Host_003(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 3)
-}
-
-func TestCountsAreRecorded_Host_004(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 4)
-}
-
-func TestCountsAreRecorded_Host_005(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 5)
-}
-
-func TestCountsAreRecorded_Host_006(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 6)
-}
-
-func TestCountsAreRecorded_Host_007(t *testing.T) {
-	t.Parallel()
-	runCountsHostShard(t, 7)
-}
-
-func TestCountsAreRecorded_Concurrency_000(t *testing.T) {
-	t.Parallel()
-	runCountsConcurrencyShard(t, 0)
-}
-
-func TestCountsAreRecorded_Concurrency_001(t *testing.T) {
-	t.Parallel()
-	runCountsConcurrencyShard(t, 1)
-}
-
-func TestCountsAreRecorded_Concurrency_002(t *testing.T) {
-	t.Parallel()
-	runCountsConcurrencyShard(t, 2)
-}
-
-func TestCountsAreRecorded_Concurrency_003(t *testing.T) {
-	t.Parallel()
-	runCountsConcurrencyShard(t, 3)
-}
-
-func TestCountsAreRecorded_Moves_000(t *testing.T) {
-	t.Parallel()
-	runCountsMovesShard(t, 0)
-}
-
-func TestCountsAreRecorded_Language_000(t *testing.T) {
-	t.Parallel()
-	runCountsLanguageShard(t, 0)
-}
-
-func TestCountsAreRecorded_Language_001(t *testing.T) {
-	t.Parallel()
-	runCountsLanguageShard(t, 1)
-}
-
-func TestCountsAreRecorded_Language_002(t *testing.T) {
-	t.Parallel()
-	runCountsLanguageShard(t, 2)
-}
-
-func TestCountsAreRecorded_Language_003(t *testing.T) {
-	t.Parallel()
-	runCountsLanguageShard(t, 3)
+	catchPlantedCase(t, "TestCountsAreRecorded")
 }
 
 func TestLoopCountersAgreeWithNode_000(t *testing.T) {
@@ -1905,6 +1595,11 @@ func TestLoopCountersAgreeWithNode_007(t *testing.T) {
 	runLoopCountersShard(t, 7)
 }
 
+func TestFamiliesCatchAPlantedCase_LoopCountersAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestLoopCountersAgreeWithNode")
+}
+
 func TestLibraryMethodValueMutants_000(t *testing.T) {
 	t.Parallel()
 	runLibraryMethodValueMutantsShard(t, 0)
@@ -1923,6 +1618,11 @@ func TestLibraryMethodValueMutants_002(t *testing.T) {
 func TestLibraryMethodValueMutants_003(t *testing.T) {
 	t.Parallel()
 	runLibraryMethodValueMutantsShard(t, 3)
+}
+
+func TestFamiliesCatchAPlantedCase_LibraryMethodValueMutants(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestLibraryMethodValueMutants")
 }
 
 func TestStage0EmitsDeterministically_000(t *testing.T) {
@@ -2083,4 +1783,9 @@ func TestStage0EmitsDeterministically_030(t *testing.T) {
 func TestStage0EmitsDeterministically_031(t *testing.T) {
 	t.Parallel()
 	runDeterministicEmissionShard(t, 31)
+}
+
+func TestFamiliesCatchAPlantedCase_Stage0EmitsDeterministically(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestStage0EmitsDeterministically")
 }

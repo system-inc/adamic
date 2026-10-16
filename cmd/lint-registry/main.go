@@ -16,6 +16,10 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	if err := registry.CheckWitnesses(*root, descriptors); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	for _, d := range descriptors {
 		fmt.Println(d.Name)
 	}

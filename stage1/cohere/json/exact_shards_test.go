@@ -5,11 +5,11 @@ import "testing"
 func TestPortMatchesGoCohereUnion(t *testing.T) {
 	t.Parallel()
 	allCases, _ := jsonTopCorpus(t)
-	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
+	cases, shards, dedicated := jsonPortDedicatedPartition(allCases)
 	if len(shards) != testPortMatchesGoCohereShards {
 		t.Fatal("static port count differs from enumeration")
 	}
-	if e := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); e != nil {
+	if e := jsonPortDedicatedUnion(allCases, cases, shards, dedicated); e != nil {
 		t.Fatal(e)
 	}
 	// Main used 8192 / 4 buckets. Check every actual owner against that

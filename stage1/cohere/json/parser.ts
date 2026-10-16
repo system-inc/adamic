@@ -95,6 +95,31 @@ export function numericValue(raw: string): number {
     }
     return Number.parseFloat(text);
 }
+// Babel's refusal of a separator out of place, Errors.UnexpectedNumericSeparator, in Go cohere's words.
+const unexpectedNumericSeparator = 'A numeric separator is only allowed between two digits.';
+// separatorsBetweenDigits is Go cohere's check on each numeric separator in text[start:end], a literal's digits
+// in radix: a separator stands only where the next character is a digit of the radix, and neither neighbour is a
+// prefix letter, a dot, an exponent or another separator. The neighbours are read from the whole text, so the
+// prefix before a radix literal's first digit counts.
+function separatorsBetweenDigits(text: string, start: number, end: number, radix: number): boolean {
+    const forbidden = radix === 16 ? '.X_x' : '.BEO_beo';
+    for(let index = start; index < end; index++) {
+        if(text.charCodeAt(index) !== 95) {
+            continue;
+        }
+        if(
+            index + 1 >= text.length ||
+            digit(text.charCodeAt(index + 1)) >= radix ||
+            forbidden.includes(text.slice(index + 1, index + 2))
+        ) {
+            return false;
+        }
+        if(index > 0 && forbidden.includes(text.slice(index - 1, index))) {
+            return false;
+        }
+    }
+    return true;
+}
 export class Reader {
     position = 0;
     readonly nodes: JsonNodeInterface[] = [];
@@ -219,6 +244,10 @@ export class Reader {
             }
         }
         const raw = this.text.slice(start, position);
+        // Go refuses a misplaced separator before any other refusal of the literal.
+        if(!separatorsBetweenDigits(this.text, base === 10 ? start : start + 2, position, base)) {
+            throw new Error(this.message(unexpectedNumericSeparator));
+        }
         const literal = raw.includes('_') ? raw.split('_').join('') : raw;
         if(base === 10 && literal.length > 1 && literal.startsWith('0') && digit(literal.charCodeAt(1)) < 10) {
             throw new Error(this.message(`legacy octal literal ${quoted(literal)}`));

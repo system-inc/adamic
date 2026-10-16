@@ -46,7 +46,7 @@ func writeFile(t *testing.T, name, text string) {
 
 func requireFailure(t *testing.T, directory, pin, root, pattern string, fragments ...string) {
 	t.Helper()
-	_, _, _, err := selectFiles(directory, pin, []string{root}, []string{pattern})
+	_, _, _, err := selectFiles(directory, pin, []string{root}, []string{pattern}, nil)
 	if err == nil {
 		t.Fatal("planted corpus fault survived")
 	}

@@ -1,0 +1,17 @@
+F.....
+======================================================================
+FAIL: test_copied_apply_imports_cache_helper_without_pythonpath (__main__.ScratchPipelineTests.test_copied_apply_imports_cache_helper_without_pythonpath)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/drivers/scanner/test_scratch_runner.py", line 38, in test_copied_apply_imports_cache_helper_without_pythonpath
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/tmp/adamic-gate/tmpztq2x_yw/pipeline/apply.py", line 20, in <module>
+    from caches import stage3_cache
+ModuleNotFoundError: No module named 'caches'
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.078s
+
+FAILED (failures=1)

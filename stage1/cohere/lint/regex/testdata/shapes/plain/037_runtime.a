@@ -1,4 +1,4 @@
-// nexus/consistency_require_matching_return_type.go:216; `^return\s+undefined;$`
+// nexus/shouting.go:180; `^\s*\*?\s?`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,7 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "return\tundefined;", 4);
-observe(regex, "xreturn\tundefined;", 5);
-observe(regex, "return\tundefined;\n", 6);
+observe(regex, "x", 4);
+observe(regex, "\n", 5);
+observe(regex, "PaginationInput", 6);
+observe(regex, "Pagination", 7);

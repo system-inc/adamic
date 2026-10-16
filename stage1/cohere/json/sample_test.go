@@ -25,7 +25,7 @@ func sampledCorpusCases(t *testing.T, stride int) []textCase {
 		t.Fatal(err)
 	}
 	// This recorded upstream witness is a fixed check in both modes. Keeping it
-	// also leaves the exact nine-discrepancy report and its comparisons untouched.
+	// also leaves the exact known-discrepancy report and its comparisons untouched.
 	selection, err := gatesample.Select(root, names, stride, "stage1/cohere/json/gaps/numeric-separators.json")
 	if err != nil {
 		t.Fatalf("%s: %v", t.Name(), err)
