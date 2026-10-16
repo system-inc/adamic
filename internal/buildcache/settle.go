@@ -1458,11 +1458,20 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			}
 		}
 		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
+		// The code a build ran: a windowed lean build's own (leanRecipeOf, #earlycut), every other build's process's binary
+		// whole (decision 1).
+		own := processes[entry.Process]
+		name := recipeName(own)
+		if window == BuildWindowed {
+			name = "lean " + entry.LeanCaller + " " + name
+		}
 		if reason == "" {
-			own := processes[entry.Process]
-			name := recipeName(own)
 			if _, ok := recipes[name]; !ok {
-				recipes[name] = recipeFor(facts.root, own)
+				if window == BuildWindowed {
+					recipes[name] = leanRecipeFor(facts.root, entry.LeanCaller, own)
+				} else {
+					recipes[name] = recipeFor(facts.root, own)
+				}
 			}
 			set.Entries, reason = withRecipe(set.Entries, recipes[name])
 		}
@@ -1471,7 +1480,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			continue
 		}
 		set.Trace = filepath.Base(facts.trace)
-		settingsOverride = recipes[recipeName(processes[entry.Process])].settings
+		settingsOverride = recipes[name].settings
 		set, evaluated, product, err := recordUnion(facts.root, facts.cache, entry.NameKey, entry.Name, set, func(key string) string {
 			return placeSettled(facts.cache, key, entry)
 		})
@@ -1881,26 +1890,48 @@ func recipeOf(root string, process journalEntry) recipe {
 	if pkg == "" || pkg == "command-line-arguments" {
 		return recipe{reason: fmt.Sprintf("its process's binary (%s) names no package, so the code it ran can't be keyed", process.Executable)}
 	}
-	arguments := []string{"list", "-deps", "-json"}
-	if test {
-		arguments = append(arguments, "-test")
+	return recipeListed(root, process, []recipeListing{{pkg: pkg, test: test, deps: true}})
+}
+
+// leanRecipeFor is leanRecipeOf; a test in a tree of its own names a lean build's recipe itself, as recipeFor does.
+var leanRecipeFor = leanRecipeOf
+
+// leanRecipeOf is a lean build's recipe (#earlycut, Node's approved design): the code that makes it, never the code of
+// the test binary that settled it, which keyed every native runtime archive and every go oracle built in a test linking
+// the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, as recipeOf keys
+// them (buildcache by its make files alone), and a lean caller's own package (caller, leanCallers), never what the
+// caller links: what its build calls there is in the Files it declares, which the window keys as read (leanReads), and
+// the caller's census holds the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles).
+// Under process's build settings, as the binary was built.
+func leanRecipeOf(root, caller string, process journalEntry) recipe {
+	listings := []recipeListing{{pkg: buildcachePackage, deps: true}}
+	if caller != "" && caller != buildcachePackage {
+		listings = append(listings, recipeListing{pkg: caller})
 	}
+	return recipeListed(root, process, listings)
+}
+
+// A recipeListing is one package a recipe keys, as go list names it: with every package of the tree it links (deps), and
+// its test files with it, when it's a test binary's package (test).
+type recipeListing struct {
+	pkg        string
+	test, deps bool
+}
+
+// recipeListed is the recipe of listings, under process's build settings: every file of each listed package of the tree,
+// each package's directory listing, each module's go.mod and go.sum, the modules the main module replaces with a
+// directory of the tree, and the workspace file.
+func recipeListed(root string, process journalEntry, listings []recipeListing) recipe {
 	// The binary's own build settings over toolchain's environment, the one GoBuild's go builds under.
-	var environment []string
+	var tags, environment []string
 	for _, setting := range process.Settings {
 		key, value, _ := strings.Cut(setting, "=")
 		switch key {
 		case "-tags":
-			arguments = append(arguments, "-tags="+value)
+			tags = append(tags, "-tags="+value)
 		case "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "GOARM64", "GOEXPERIMENT":
 			environment = append(environment, key+"="+value)
 		}
-	}
-	command := toolchain.Command("go", append(arguments, pkg)...)
-	command.Dir, command.Env = root, toolchain.Env(environment...)
-	output, err := command.Output()
-	if err != nil {
-		return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
 	}
 	entries := map[readEntry]bool{}
 	var untracked []string
@@ -1916,6 +1947,55 @@ func recipeOf(root string, process journalEntry) recipe {
 		}
 		entries[readEntry{Kind: kind, Path: filepath.ToSlash(relative)}] = true
 	}
+	for _, listing := range listings {
+		pkg, test := listing.pkg, listing.test
+		arguments := []string{"list", "-json"}
+		if listing.deps {
+			arguments = append(arguments, "-deps")
+		}
+		if test {
+			arguments = append(arguments, "-test")
+		}
+		command := toolchain.Command("go", append(append(arguments, tags...), pkg)...)
+		command.Dir, command.Env = root, toolchain.Env(environment...)
+		output, err := command.Output()
+		if err != nil {
+			return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
+		}
+		if reason := recipeEntries(root, pkg, test, output, add); reason != "" {
+			return recipe{reason: reason}
+		}
+	}
+	// A module the main module replaces with a directory of the tree selects versions through its go.mod, whether or not
+	// the binary links a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab): only the main module's and the
+	// workspace's replace directives apply, so those name every such go.mod.
+	replaced, err := localReplacements(root, root)
+	if err != nil {
+		return recipe{reason: err.Error()}
+	}
+	for _, directory := range replaced {
+		for _, name := range existing(directory, "go.mod", "go.sum") {
+			add("content", filepath.Join(directory, name))
+		}
+	}
+	for _, name := range existing(root, "go.work") {
+		add("content", filepath.Join(root, name))
+	}
+	if len(untracked) > 0 {
+		sort.Strings(untracked)
+		return recipe{reason: "its binary links files git doesn't track: " + strings.Join(untracked[:min(6, len(untracked))], ", ")}
+	}
+	result := recipe{settings: settingsValue(process.Settings)}
+	for entry := range entries {
+		result.entries = append(result.entries, entry)
+	}
+	return result
+}
+
+// recipeEntries adds to a recipe, through add, what output, go list's JSON of pkg (a test binary's when test), names of
+// the tree: each package's directory, its files, and its module's go.mod and go.sum. It's the reason the listing can't be
+// read, or "".
+func recipeEntries(root, pkg string, test bool, output []byte, add func(kind, name string)) string {
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed struct {
@@ -1928,7 +2008,7 @@ func recipeOf(root string, process journalEntry) recipe {
 		if err := decoder.Decode(&listed); err == io.EOF {
 			break
 		} else if err != nil {
-			return recipe{reason: "go list: " + err.Error()}
+			return "go list: " + err.Error()
 		}
 		if listed.Standard || !inside(root, listed.Dir) {
 			continue
@@ -1974,30 +2054,7 @@ func recipeOf(root string, process journalEntry) recipe {
 			}
 		}
 	}
-	// A module the main module replaces with a directory of the tree selects versions through its go.mod, whether or not
-	// the binary links a package of it (the 17 cohere/TypeScript-shim modules, #c2chyab): only the main module's and the
-	// workspace's replace directives apply, so those name every such go.mod.
-	replaced, err := localReplacements(root, root)
-	if err != nil {
-		return recipe{reason: err.Error()}
-	}
-	for _, directory := range replaced {
-		for _, name := range existing(directory, "go.mod", "go.sum") {
-			add("content", filepath.Join(directory, name))
-		}
-	}
-	for _, name := range existing(root, "go.work") {
-		add("content", filepath.Join(root, name))
-	}
-	if len(untracked) > 0 {
-		sort.Strings(untracked)
-		return recipe{reason: "its binary links files git doesn't track: " + strings.Join(untracked[:min(6, len(untracked))], ", ")}
-	}
-	result := recipe{settings: settingsValue(process.Settings)}
-	for entry := range entries {
-		result.entries = append(result.entries, entry)
-	}
-	return result
+	return ""
 }
 
 // localReplacements are the directories each place's go.mod and go.work replace modules with, absolute, read from the
