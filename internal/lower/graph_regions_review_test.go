@@ -144,11 +144,11 @@ func TestGraphCountTypesSurviveClassification(t *testing.T) {
 }
 func TestGraphComputedIteratorInheritance(t *testing.T) {
 	t.Parallel()
-	graphAccepted(t, graphReviewCycle+`class Base {[Symbol.iterator](){return {next(){return {value:1,done:true};}};}} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:true};}};}} for(const n of new Child()){console.log(String(n));}console.log(String(link.next===link));`)
+	graphAccepted(t, graphReviewCycle+`class Base {[Symbol.iterator](){return {next(){return {value:1,done:false};}};}} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
 }
 func TestGraphComputedIteratorIntroduced(t *testing.T) {
 	t.Parallel()
-	graphAccepted(t, graphReviewCycle+`class Base {} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:true};}};}} for(const n of new Child()){console.log(String(n));}console.log(String(link.next===link));`)
+	graphAccepted(t, graphReviewCycle+`class Base {} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
 }
 
 func TestGraphCheckerTypeArguments(t *testing.T) {
@@ -210,4 +210,81 @@ function run(): void {
 }
 run();
 `)
+}
+
+func TestGraphFlowVirtualTargets(t *testing.T) {
+	t.Parallel()
+	program := graphAccepted(t, `interface Link { readonly label: string; next: Link | undefined; }
+class Maker {
+ make() { return { label: 'base' + String(0), next: undefined as Link | undefined }; }
+}
+class Override extends Maker {
+ override make() { return { label: 'override' + String(1), next: undefined as Link | undefined }; }
+}
+function cycle(maker: Maker): Link {
+ const view: Link = maker.make();
+ view.next = view;
+ return view;
+}
+function run(): void {
+ const maker: Maker = new Override();
+ const escaped = cycle(maker);
+ console.log(escaped.label + ' ' + (escaped.next?.label ?? '-'));
+}
+run();
+`)
+	sites := 0
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			if literal, ok := node.(ir.ObjectLiteral); ok && len(literal.Fields) > 0 {
+				for _, field := range literal.Fields {
+					if field.Name == "label" {
+						sites++
+						if len(literal.GraphTypes) == 0 || !program.GraphTypes[literal.GraphTypes[len(literal.GraphTypes)-1]] {
+							t.Fatal("virtual return allocation has no graph flow identity")
+						}
+					}
+				}
+			}
+			return true
+		})
+	}
+	if sites != 2 {
+		t.Fatalf("wanted base and override allocation, got %d", sites)
+	}
+}
+
+func TestGraphLegacyViewAdoptionIsRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, graphReviewCycle+`
+ type First={readonly kind:'a';readonly name:string};
+ type Second={readonly kind:'b';readonly name:string};
+ type Third={readonly kind:'c';readonly name:string};
+ function narrow(value:First|Second|Third):First|Second{return value as First|Second;}
+ console.log(narrow({kind:'a',name:'kept'}).name);`)
+	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
+		t.Fatalf("legacy view graph adoption: %v", err)
+	}
+}
+
+func TestGraphFlowStoredAllocation(t *testing.T) {
+	t.Parallel()
+	program := graphAccepted(t, `interface Link {label:string;next:Link|undefined}
+ const root:Link={label:'root',next:undefined};
+ root.next={label:'inner',next:root};console.log(root.next.label);`)
+	stored := false
+	walk(program.Main, func(node any) bool {
+		if write, ok := node.(ir.SetProperty); ok && write.Name == "next" {
+			if literal, ok := write.Value.(ir.ObjectLiteral); ok {
+				stored = true
+				if len(literal.GraphTypes) == 0 || !program.GraphTypes[literal.GraphTypes[len(literal.GraphTypes)-1]] {
+					t.Fatal("slot initializer has no graph flow identity")
+				}
+			}
+		}
+		return true
+	})
+	if !stored {
+		t.Fatal("missing inline slot initializer")
+	}
 }

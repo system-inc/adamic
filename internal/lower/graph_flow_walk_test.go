@@ -120,3 +120,23 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 		}
 	}
 }
+
+// Graph metadata extends ownership selection, not the view proof's vocabulary.
+// These results were Unknown to views before graph regions and must stay so.
+func TestGraphMetadataKeepsViewAllocationsUnknown(t *testing.T) {
+	t.Parallel()
+	for _, expression := range []ir.Expression{
+		ir.MapNew{}, ir.SetNew{}, ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{},
+		ir.ArraySplice{}, ir.ArrayConcat{}, ir.MapEntries{}, ir.ArraySlice{},
+		ir.MapKeys{}, ir.MapValues{}, ir.SetValues{}, ir.ArrayVisit{},
+	} {
+		next := 0
+		value := graphAllocationSites(reflect.ValueOf(expression), &next).Interface().(ir.Expression)
+		known, unknown := false, false
+		graph := newAllocationFlowGraph(&ir.Program{})
+		graph.follow(value, func(int) { known = true }, func(int) {}, func(string) { unknown = true })
+		if known || !unknown {
+			t.Fatalf("graph metadata certified a view allocation: %T", expression)
+		}
+	}
+}

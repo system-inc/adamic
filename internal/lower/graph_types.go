@@ -428,7 +428,8 @@ func (f *cycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 // tracked separately, keep mixed programs outside graph ownership.
 func (f *cycleFinder) graphAdoptionBoundary(modules []*ast.SourceFile) error {
 	reason := ""
-	if len(f.l.result.ViewOrigins) != 0 {
+	// Legacy tagged-union views record checked fields without a ViewOrigin.
+	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
 		reason = "a checked-view adapter in a graph program"
 	}
 	inspect := func(node any) bool {

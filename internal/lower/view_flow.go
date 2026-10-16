@@ -89,6 +89,14 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 	}
 	value := reflect.ValueOf(expression)
 	if field := value.FieldByName("GraphTypes"); field.IsValid() {
+		// Ownership metadata also labels collection operations. Views only
+		// prove the literal layouts indexed by their projection analysis.
+		switch expression.(type) {
+		case ir.ObjectLiteral, ir.ArrayLiteral:
+		default:
+			unknown(fmt.Sprintf("untracked allocation source %T", expression))
+			return
+		}
 		ids := field.Interface().([]int)
 		if len(ids) == 0 || ids[len(ids)-1] >= 0 {
 			unknown("allocation has no site identity")
