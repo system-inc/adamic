@@ -46,6 +46,7 @@ import socket
 import subprocess
 import sys
 import threading
+import types
 import time
 import datetime
 import traceback
@@ -332,6 +333,28 @@ def listUnits():
         print("\n".join(units))
 
 
+def printCompilerDependencies():
+    """run.py --compiler-dependencies --tree T [--tools G]: the compiler dependency census of tree T, derived by the
+    gate tools at G (default: these), as {"version": 1, "packages": {directory: [compiler packages]}}, the map's shape.
+    Loom's planner reads it in the hand-kept map's place (#ng0ksed): the derivation is the tools', never the
+    candidate's, so a change can't narrow its own plan's compiler inputs."""
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--compiler-dependencies", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--tools", default=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    arguments = lister.parse_args()
+    listing = subprocess.run(["go", "list", "-e", "-f", "{{.Dir}}", "./..."], cwd=arguments.tree, capture_output=True, text=True)
+    if listing.returncode != 0:
+        raise SystemExit("go list failed: " + listing.stderr)
+    tree = os.path.realpath(arguments.tree)
+    directories = {os.path.relpath(os.path.realpath(line), tree): line for line in listing.stdout.split() if line}
+    gate = Gate.__new__(Gate)
+    gate.arguments, gate.result = types.SimpleNamespace(tree=arguments.tree, tools=arguments.tools), {}
+    gate.git = git  # The census alone, outside a gate run: no process lock or record, so git directly.
+    packages = gate.compilerDependencies(directories)
+    print(json.dumps({"version": 1, "packages": {package: packages[package] for package in sorted(packages)}}, indent=2))
+
+
 def goCode(source, strings=True):
     """source with its comments blanked, and with strings=False its string and rune literals' contents too, newlines
     kept, so a launch read from it is code and its line and offset are source's."""
@@ -444,6 +467,9 @@ def launcherRefusal(source, runs):
 compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_])|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 
+# The compiler's packages, by directory: what a compiler consumer depends on, so a change to any of them selects it.
+compilerPackages = ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
+
 
 class ChangeRefusal(ValueError):
     """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's. The gate reds
@@ -451,10 +477,10 @@ class ChangeRefusal(ValueError):
     a red (Queue's unplannable, Loom's ruling of Oct 14) instead of failing every plan of it."""
 
     def hint(self):
-        return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: under packages, its "
-                "package, then the compiler packages it exercises; or, for a package that launches processes and never "
-                "the compiler, under launchers, its package with the executables it runs and why (entries there add to "
-                "the gate tools' map)." % self)
+        return ("%s. A Go compiler consumer needs no declaration: the census derives it. A declared launcher (under "
+                "launchers in a compiler-dependencies.json) runs only the executables it names, by literal names, never "
+                "the compiler: fix the file, or drop the declaration and the census counts the package a consumer. A "
+                "stage 3 driver script that runs the compiler is declared under drivers." % self)
 
 
 # The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
@@ -463,6 +489,9 @@ RefusalExit = 3
 
 
 def main():
+    if "--compiler-dependencies" in sys.argv:
+        printCompilerDependencies()
+        return
     if "--list-units" in sys.argv:
         try:
             listUnits()
@@ -1634,34 +1663,35 @@ class Gate:
         return sorted(packages), unowned
 
     def compilerDependencies(self, directories, changed=()):
-        """Package-level declarations cover helpers as well as their callers.
-
-        The census scans all tracked Go package sources. A process-launching package must
-        declare dependencies even when the executable name is computed: it may run the compiler.
-        A missing package declaration fails selection before any tests start.
+        """The compiler dependency census, derived (#ng0ksed): every package with a tracked Go file that references the
+        compiler or launches a process, and each of the compiler's own packages, depends on compilerPackages. Launching
+        counts because the process may be the compiler, so a package that launches other tools is selected more often
+        than it needs and never less; a launcher declaration, naming what it runs and why, narrows it honestly. What a
+        map declares (the gate tools' cloud/fast-gate/compiler-dependencies.json, the tree's, and any
+        <package>/compiler-dependencies.json beside a package) is unioned over the derivation, never in its place.
+        Only a declaration that lies is refused: a declared launcher whose file the census can't pass, and a marked
+        test file in no package.
         """
         name = "cloud/fast-gate/compiler-dependencies.json"
-        # The gate tools' map, with the candidate's own entries added over it: a branch that adds a compiler
-        # consumer declares it itself (developer tools, Oct 9).
-        declarations, root = None, None
-        for source in (self.arguments.tools, self.arguments.tree):
-            if not os.path.exists(os.path.join(source, name)):
+        tracked = self.git(self.arguments.tree, "ls-files").splitlines()
+        sources = [(source, name) for source in dict.fromkeys((self.arguments.tools, self.arguments.tree))]
+        sources += [(self.arguments.tree, path) for path in tracked
+                    if path != name and os.path.basename(path) == "compiler-dependencies.json"]
+        declarations, root = {"version": 1, "packages": {}}, []
+        for source, path in sources:
+            if not os.path.exists(os.path.join(source, path)):
                 continue
-            with open(os.path.join(source, name)) as handle:
+            with open(os.path.join(source, path)) as handle:
                 layer = json.load(handle)
-            if declarations is None:
-                declarations, root = layer, source
-                continue
-            if layer.get("version") != declarations.get("version"):
-                raise ValueError("invalid compiler dependency map: " + name + " in " + source)
+            if layer.get("version") != 1 or not isinstance(layer.get("packages", {}), dict):
+                raise ValueError("invalid compiler dependency map: " + path + " in " + source)
             for field in ("packages", "drivers", "launchers"):
                 if isinstance(layer.get(field), dict):
-                    declarations.setdefault(field, {}).update(layer[field])
-            root = root + " + " + source
-        if declarations is None:
-            raise ValueError("invalid compiler dependency map: no " + name)
-        if declarations.get("version") != 1 or not isinstance(declarations.get("packages"), dict):
-            raise ValueError("invalid compiler dependency map: " + name)
+                    for package, value in layer[field].items():
+                        if field == "packages" and package in declarations["packages"] and isinstance(value, list):
+                            value = list(dict.fromkeys(declarations["packages"][package] + value))
+                        declarations.setdefault(field, {})[package] = value
+            root.append(os.path.join(source, path))
         packages = declarations["packages"]
         for package, inputs in packages.items():
             if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
@@ -1687,8 +1717,10 @@ class Gate:
             inputs = declaration.get("dependencies") if isinstance(declaration, dict) else None
             if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(value not in directories for value in inputs):
                 raise ValueError("invalid compiler driver dependencies for " + driver)
+        compiler = [package for package in compilerPackages if package in directories]
+        derived = set(package for package in compilerPackages if package in directories)
         missing, touchedFiles = [], set(changed)
-        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+        for path in tracked:
             if path.startswith("stage3/drivers/") and path.endswith((".py", ".sh", ".cjs", ".mjs")):
                 with open(os.path.join(self.arguments.tree, path)) as handle:
                     source = handle.read()
@@ -1708,7 +1740,7 @@ class Gate:
                 elif marked(source):
                     self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
                 continue
-            if not marked(source) or package in packages:
+            if not marked(source) or package in derived:
                 continue
             if package in launchers:
                 refusal = launcherRefusal(source, launchers[package]["runs"])
@@ -1716,16 +1748,18 @@ class Gate:
                     continue  # A declared launcher: it runs only what it names, and nothing here references the compiler.
                 missing.append((path, path + " (" + package + " is a declared launcher, refused at " + refusal + ")"))
                 continue
-            missing.append((path, path))
-        # Only consumers this change adds or edits can turn its gate red; any already on the base are named, so one
-        # undeclared package never reds every worker's gate.
+            derived.add(package)
+        # Only a lie this change adds or edits can turn its gate red; any already on the base are named, so one never reds
+        # every worker's gate.
         onBase = [named for path, named in missing if path not in touchedFiles]
         if onBase:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
         missing = [named for path, named in missing if path in touchedFiles]
         if missing:
-            raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
-        self.result["compiler_dependency_map"] = {"root": root, "path": name}
+            raise ChangeRefusal("compiler dependency census: refused: " + ", ".join(missing))
+        for package in derived:
+            packages[package] = list(dict.fromkeys(packages.get(package, []) + compiler))
+        self.result["compiler_dependency_map"] = {"derived": len(derived), "declared": root}
         return packages
 
     def selectOracle(self):

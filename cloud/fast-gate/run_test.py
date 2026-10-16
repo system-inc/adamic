@@ -1946,6 +1946,17 @@ class ReverseDependencies(unittest.TestCase):
         self.gate.git = lambda tree, *args: run.git(tree, *args)
         self.declare({"stage1/gaps": ["internal/load"], "internal/oracle": ["internal/load"]})
 
+    def package(self, name, source):
+        """A new package directory holding probe_test.go, listed by the mocked go list and tracked."""
+        directory = os.path.join(self.tree, name)
+        os.makedirs(directory, exist_ok=True)
+        with open(os.path.join(directory, "probe_test.go"), "w") as handle:
+            handle.write(source)
+        self.packages.append(dict(Dir=directory, ImportPath=run.module + "/" + name))
+        self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        return name + "/probe_test.go"
+
     def declare(self, packages):
         path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
         os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -2029,34 +2040,50 @@ class ReverseDependencies(unittest.TestCase):
         self.assertTrue(self.gate.oracleSelection["whole"])
         self.assertEqual(self.gate.deferred, {})
 
-    def test_census_rejects_a_new_compiler_runner(self):
-        path = os.path.join(self.tree, "stage1/new/probe_test.go")
-        os.makedirs(os.path.dirname(path))
-        with open(path, "w") as handle:
-            handle.write('package new\nvar command = "cmd/adamic"\n')
-        realRun(["git", "-C", self.tree, "add", "."], check=True)
-        with self.assertRaisesRegex(ValueError, "census.*stage1/new/probe_test.go"):
-            self.gate.touched(["internal/load/load.go", "stage1/new/probe_test.go"])
+    # The census derives a consumer it finds, so a change that adds one declares nothing and parks on no shared map
+    # (#ng0ksed): a compiler change selects it. Mutants: the derivation removed; launching not counted; the census read
+    # only under stage1.
+    def test_census_derives_a_new_compiler_runner(self):
+        probe = self.package("stage1/new", 'package new\nvar command = "cmd/adamic"\n')
+        packages, _ = self.gate.touched(["internal/load/load.go", probe])
+        self.assertIn(run.module + "/stage1/new", packages)
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/stage1/new", packages)
+        self.assertNotIn("stage1/new", json.load(open(os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")))["packages"])
 
-    def test_census_rejects_computed_compiler_outside_stage1(self):
-        path = os.path.join(self.tree, "cmd/new/probe_test.go")
-        os.makedirs(os.path.dirname(path))
-        with open(path, "w") as handle:
-            handle.write('package new\nimport "os/exec"\nfunc TestCompiler(t *testing.T) { exec.Command(binary(), "types", "input.a").Run() }\n')
-        realRun(["git", "-C", self.tree, "add", "."], check=True)
-        with self.assertRaisesRegex(ValueError, "census.*cmd/new/probe_test.go"):
-            self.gate.touched(["internal/load/load.go", "cmd/new/probe_test.go"])
+    def test_census_derives_a_launcher_outside_stage1(self):
+        self.package("cmd/new", 'package new\nimport "os/exec"\nfunc TestCompiler(t *testing.T) { exec.Command(binary(), "types", "input.a").Run() }\n')
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/cmd/new", packages)
 
-    def test_census_rejects_removed_declaration(self):
+    def test_census_derives_a_consumer_its_map_entry_left(self):
         path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
         with open(path, "w") as handle:
             handle.write('package gaps\nimport "os/exec"\n')
         realRun(["git", "-C", self.tree, "add", "."], check=True)
         self.declare({"internal/oracle": ["internal/load"]})
-        with self.assertRaisesRegex(ValueError, "census.*stage1/gaps/probe_test.go"):
-            self.gate.touched(["internal/load/load.go", "stage1/gaps/probe_test.go"])
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/stage1/gaps", packages)
 
-    def test_an_undeclared_consumer_on_the_base_is_named_not_red(self):
+    def test_a_marked_test_file_in_no_package_is_refused(self):
+        path = os.path.join(self.tree, "stage1/new/probe_test.go")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('package new\nvar command = "cmd/adamic"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(run.ChangeRefusal, "census.*stage1/new/probe_test.go"):
+            self.gate.touched(["internal/load/load.go", "stage1/new/probe_test.go"])
+
+    def test_a_declaration_beside_its_package_is_read(self):
+        # unrelated references nothing, so only its own compiler-dependencies.json can select it on a compiler change.
+        os.makedirs(os.path.join(self.tree, "unrelated"), exist_ok=True)
+        with open(os.path.join(self.tree, "unrelated/compiler-dependencies.json"), "w") as handle:
+            json.dump({"version": 1, "packages": {"unrelated": ["internal/load"]}}, handle)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/unrelated", packages)
+
+    def test_a_refused_file_on_the_base_is_named_not_red(self):
         path = os.path.join(self.tree, "stage1/old/probe_test.go")
         os.makedirs(os.path.dirname(path))
         with open(path, "w") as handle:
@@ -2068,7 +2095,7 @@ class ReverseDependencies(unittest.TestCase):
             self.fail("a consumer the change didn't touch turned it red: %s" % error)
         self.assertEqual(self.gate.result["compiler_consumers_undeclared_on_base"], ["stage1/old/probe_test.go"])
 
-    def test_a_branch_declares_its_own_consumer_over_the_tools_map(self):
+    def test_a_branch_declares_its_own_package_over_the_tools_map(self):
         toolsDirectory = tempfile.TemporaryDirectory()
         self.addCleanup(toolsDirectory.cleanup)
         tools = toolsDirectory.name
@@ -2076,15 +2103,9 @@ class ReverseDependencies(unittest.TestCase):
         with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
             json.dump({"version": 1, "packages": {"internal/oracle": ["internal/load"]}}, handle)
         self.gate.arguments = types.SimpleNamespace(tree=self.tree, tools=tools)
-        path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
-        with open(path, "w") as handle:
-            handle.write('package gaps\nimport "os/exec"\n')
-        realRun(["git", "-C", self.tree, "add", "."], check=True)
-        # The tree's map declares stage1/gaps (setUp); the tools' map doesn't: merged, the consumer is declared.
-        try:
-            packages, _ = self.gate.touched(["internal/load/load.go", "stage1/gaps/probe_test.go"])
-        except ValueError as error:
-            self.fail("the branch's own declaration wasn't read: %s" % error)
+        # The tree's map declares stage1/gaps (setUp), which references nothing; the tools' map doesn't. Merged, a
+        # compiler change selects it.
+        packages, _ = self.gate.touched(["internal/load/load.go"])
         self.assertIn(run.module + "/stage1/gaps", packages)
 
     def test_stage3_driver_declaration_and_selection(self):
@@ -2219,15 +2240,17 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("transitive walk removed", 'pending.append(dependent)', 'pass', "test_real_closure_then_one_test_edge"),
             ("opaque dependencies ignored", 'dependencies = self.compilerDependencies(directories, changed)', 'dependencies = {}', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("compiler oracle narrowed", 'if compilerChanged or oracle not in changedPackages else self.selectOracle()', 'if False else self.selectOracle()', "test_opaque_gap_and_whole_oracle_are_selected"),
-            ("computed invocation detection removed", 'return compilerMarker.search(source) or launchMarker.search(source)', 'return compilerMarker.search(source)', "test_census_rejects_computed_compiler_outside_stage1"),
-            ("census restricted to stage1", '"ls-files").splitlines()', '"ls-files", "--", "stage1").splitlines()', "test_census_rejects_computed_compiler_outside_stage1"),
-            ("removed map entry accepted", 'if missing:', 'if False:', "test_census_rejects_removed_declaration"),
-            ("base consumers red the change", 'missing = [named for path, named in missing if path in touchedFiles]', 'missing = [named for path, named in missing]', "test_an_undeclared_consumer_on_the_base_is_named_not_red"),
-            ("branch map ignored", 'declarations.setdefault(field, {}).update(layer[field])', 'pass', "test_a_branch_declares_its_own_consumer_over_the_tools_map"),
+            ("computed invocation detection removed", 'return compilerMarker.search(source) or launchMarker.search(source)', 'return compilerMarker.search(source)', "test_census_derives_a_launcher_outside_stage1"),
+            ("census restricted to stage1", 'tracked = self.git(self.arguments.tree, "ls-files").splitlines()', 'tracked = self.git(self.arguments.tree, "ls-files", "--", "stage1").splitlines()', "test_census_derives_a_launcher_outside_stage1"),
+            ("derivation removed", 'derived.add(package)\n        # Only', 'pass\n        # Only', "test_census_derives_a_new_compiler_runner"),
+            ("derivation dropped by its map entry", 'for package in derived:\n            packages[package]', 'for package in ():\n            packages[package]', "test_census_derives_a_consumer_its_map_entry_left"),
+            ("base refusals red the change", 'missing = [named for path, named in missing if path in touchedFiles]', 'missing = [named for path, named in missing]', "test_a_refused_file_on_the_base_is_named_not_red"),
+            ("branch map ignored", 'declarations.setdefault(field, {})[package] = value', 'pass', "test_a_branch_declares_its_own_package_over_the_tools_map"),
+            ("declarations beside packages ignored", 'if path != name and os.path.basename(path) == "compiler-dependencies.json"]', 'if False]', "test_a_declaration_beside_its_package_is_read"),
             ("driver dependencies not validated", 'any(value not in directories for value in inputs)', 'False', "test_invalid_driver_map_fails_closed"),
             ("script census removed", 'if re.search(r"subprocess|child_process|', 'if False and re.search(r"subprocess|child_process|', "test_census_rejects_undeclared_script_driver"),
             ("driver selection removed", 'self.result["selected_compiler_drivers"] = sorted(', 'self.result["selected_compiler_drivers"] = sorted([] if True else ', "test_stage3_driver_declaration_and_selection"),
-            ("census disabled", 'if missing:', 'if False:', "test_census_rejects_a_new_compiler_runner"),
+            ("census disabled", 'if missing:', 'if False:', "test_a_marked_test_file_in_no_package_is_refused"),
             ("invalid dependencies accepted", 'value not in directories', 'False', "test_invalid_map_fails_closed"),
             ("affected tests deferred", 'self.deferred = {}', 'pass', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("fixture ancestry removed", 'while owner is None and ancestor not in', 'while False and ancestor not in', "test_embedding_and_fixture_ownership_survive"),
@@ -2813,15 +2836,42 @@ class ListUnitsRefusal(unittest.TestCase):
         return None, stderr.getvalue()
 
     def test_a_census_refusal_exits_with_its_line(self):
-        code, said = self.listed(run.ChangeRefusal("compiler dependency census: undeclared compiler consumers: a/b_test.go"))
+        code, said = self.listed(run.ChangeRefusal("compiler dependency census: refused: a/b_test.go"))
         self.assertEqual(code, run.RefusalExit)
         self.assertEqual(said.count("\n"), 1)
-        self.assertTrue(said.startswith("refused: compiler dependency census: undeclared compiler consumers: a/b_test.go. Declare each in "
-                                        "cloud/fast-gate/compiler-dependencies.json"), said)
+        self.assertTrue(said.startswith("refused: compiler dependency census: refused: a/b_test.go. A Go compiler consumer needs no "
+                                        "declaration: the census derives it."), said)
 
     def test_any_other_error_is_still_a_crash(self):
         with self.assertRaises(ValueError):
             self.listed(ValueError("a gate-tool bug"))
+
+
+class CompilerDependenciesFlag(unittest.TestCase):
+    """run.py --compiler-dependencies prints the derived census in the map's shape, for Loom's planner to read in the
+    hand-kept map's place (#ng0ksed): a package referencing the compiler, one launching a process, and the compiler's
+    own present package each depend on it; a clean package and a declared-only one are as the maps say. Mutants: the
+    flag reading only the declared map (the referencing package is missing); the compiler packages not derived."""
+
+    def test_the_flag_prints_the_derived_map(self):
+        with tempfile.TemporaryDirectory() as tree:
+            files = {"go.mod": "module " + run.module + "\n\ngo 1.24\n", "internal/load/load.go": "package load\n",
+                     "refers/refers_test.go": 'package refers\n\nvar command = "./cmd/adamic"\n',
+                     "launches/launches.go": 'package launches\n\nimport _ "os/exec"\n', "clean/clean.go": "package clean\n",
+                     "declared/declared.go": "package declared\n",
+                     "cloud/fast-gate/compiler-dependencies.json": json.dumps({"version": 1, "packages": {"declared": ["internal/load"]}})}
+            for name, content in files.items():
+                os.makedirs(os.path.dirname(os.path.join(tree, name)), exist_ok=True)
+                with open(os.path.join(tree, name), "w") as handle:
+                    handle.write(content)
+            realRun(["git", "init", "-q", tree], check=True)
+            realRun(["git", "-C", tree, "add", "."], check=True)
+            printed = io.StringIO()
+            with mock.patch.object(sys, "argv", ["run.py", "--compiler-dependencies", "--tree", tree, "--tools", tree]), \
+                    mock.patch.object(sys, "stdout", printed):
+                run.main()
+            self.assertEqual(json.loads(printed.getvalue()), {"version": 1, "packages": {
+                "declared": ["internal/load"], "internal/load": ["internal/load"], "launches": ["internal/load"], "refers": ["internal/load"]}})
 
 
 class CensusLaunchers(unittest.TestCase):
@@ -2908,9 +2958,10 @@ class CensusLaunchers(unittest.TestCase):
     def test_a_literal_name_the_declaration_doesnt_list_is_refused(self):
         self.refused(self.launcher % 'exec.Command("python3", "x.py")', "launches python3, which its declaration's runs don't name")
 
-    def test_an_undeclared_launcher_is_refused(self):
-        with self.assertRaises(run.ChangeRefusal):
-            self.census(self.launcher % 'exec.Command("node", "x.js")', {})
+    def test_an_undeclared_launcher_is_a_consumer(self):
+        # Undeclared, the census can't know what it runs, so it depends on the compiler (#ng0ksed); declared, it doesn't.
+        self.assertEqual(self.census(self.launcher % 'exec.Command("node", "x.js")', {})["tool/launch"], ["internal/load"])
+        self.assertNotIn("tool/launch", self.census(self.launcher % 'exec.Command("node", "x.js")', self.declared))
 
     def test_a_bad_declaration_is_a_bad_map(self):
         for declaration in ({"runs": ["node", "adamic"], "why": "x"}, {"runs": ["node"]}, {"runs": [], "why": "x"}):
