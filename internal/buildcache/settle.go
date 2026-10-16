@@ -1413,16 +1413,19 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			}
 		}
 		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
-		// The code a build ran: a windowed lean build's own (leanRecipeOf, #earlycut), every other build's process's binary
-		// whole (decision 1).
+		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
+		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
+		// census holds: native's archives reach the jobserver, a package variable written outside its initializer, until it's
+		// handed in as a value (#yzwm4rj, Node's reading 1).
 		own := processes[entry.Process]
 		name := recipeName(own)
-		if window == BuildWindowed {
-			name = "lean " + entry.LeanCaller + " " + name
+		leanRecipe := window == BuildWindowed && entry.LeanCaller == ""
+		if leanRecipe {
+			name = "lean " + name
 		}
 		if reason == "" {
 			if _, ok := recipes[name]; !ok {
-				if window == BuildWindowed {
+				if leanRecipe {
 					recipes[name] = leanRecipeFor(facts.root, entry.LeanCaller, own)
 				} else {
 					recipes[name] = recipeFor(facts.root, own)
