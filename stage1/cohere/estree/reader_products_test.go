@@ -10,17 +10,17 @@ import (
 // the JSX mutant's source, port and answers, and the native recipe proof's two builds. Each is built here exactly as
 // its reader asks for it, so Workshop builds it once and the reader only reads it.
 
-func TestProduct_RecoveredExpressionsAnswer(t *testing.T) {
+func TestProduct_EstreeFindsRecoveredExpressionsAnswer(t *testing.T) {
 	t.Parallel()
 	recoveryAnswer(t, goOracle(t), manifest(t, recoveredExpressions()), "--manifest")
 }
 
-func TestProduct_RecoveredGrammarAnswer(t *testing.T) {
+func TestProduct_EstreeFindsRecoveredGrammarAnswer(t *testing.T) {
 	t.Parallel()
 	recoveryAnswer(t, goOracle(t), manifest(t, recoveredGrammar()), "--manifest")
 }
 
-func TestProduct_RecoveryLibraryGapsAnswers(t *testing.T) {
+func TestProduct_EstreeFindsRecoveryLibraryGapsAnswers(t *testing.T) {
 	t.Parallel()
 	for _, source := range recoveryLibraryGaps() {
 		recoveryAnswer(t, goOracle(t), manifest(t, []string{source}), "--manifest")
@@ -43,7 +43,7 @@ func TestProduct_RecoveredExpressionMutantPort(t *testing.T) {
 
 func TestProduct_JSXMutantSource(t *testing.T) { t.Parallel(); jsxMutantPath(t) }
 func TestProduct_JSXMutantPort(t *testing.T)   { t.Parallel(); miscBuild(t, jsxMutantPath(t)) }
-func TestProduct_JSXMutantAnswers(t *testing.T) {
+func TestProduct_EstreeFindsJSXMutantAnswers(t *testing.T) {
 	t.Parallel()
 	miscTextAnswers(t, miscOracle(t), jsxCases(), ".tsx")
 }

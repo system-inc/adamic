@@ -134,6 +134,84 @@
       "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
       "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
     ],
+    "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
+      "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsBoundedAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeBoundedAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsDeepMutantsFixture": [
+      "stage1/cohere/estree/oracles TestProduct_DeepMutantsFixture"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsExportAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeExportAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsJSXMutantAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_JSXMutantAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveredExpressionsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveredExpressionsAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveredGrammarAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveredGrammarAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveryLibraryGapsAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveryLibraryGapsAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveryMutantsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveryMutantsAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsScalarEdgesOracle": [
+      "stage1/cohere/estree/oracles TestProduct_scalar_edges_go_oracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsSyntaxMutantsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsThreePortOracle": [
+      "stage1/cohere/estree/oracles TestProduct_ThreePortOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_000": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_001": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_002": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_DeepMutantsFixture": [
+      "stage1/cohere/estree/oracles TestProduct_ThreePortOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_EstreeBoundedAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_EstreeExportAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_JSXMutantAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveredExpressionsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveredGrammarAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveryLibraryGapsAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveryMutantsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_scalar_edges_go_oracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],

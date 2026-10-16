@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -135,16 +136,7 @@ func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
 // Both the build-phase unit and shard preparation use this exact oracle recipe.
 func syntaxMutantOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := syntaxMutantSetupInputs(t)
-	inputs.Name = "syntax-mutants-go-oracle-v1"
-	inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "))
-	return buildcache.Product(t, inputs, func(dir string) error {
-		data, err := os.ReadFile(goOracle(t))
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
-	})
+	return oracles.SyntaxMutantsOracle(t)
 }
 
 func syntaxMutantPreparedProduct(t *testing.T, index int) string {
@@ -216,7 +208,7 @@ func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	return syntaxMutantsPrepared
 }
 
-func TestProduct_SyntaxMutantsGoOracle(t *testing.T) {
+func TestProduct_EstreeFindsSyntaxMutantsGoOracle(t *testing.T) {
 	t.Parallel()
 	syntaxMutantOracleProduct(t)
 }
