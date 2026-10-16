@@ -1,4 +1,5 @@
+async function clearSuspended(m: Map<string, number>): Promise<void> { await Promise.resolve(); m.clear(); }
 async function walk(): Promise<void> {
-const m = new Map<string, number>([["a",1],["b",2]]); for (const [k,v] of m) { await Promise.resolve(); m.clear(); console.log(`${k}:${v}`); }
+const m = new Map<string, number>([["a",1],["b",2]]); for (const [k,v] of m) { await clearSuspended(m); console.log(`${k}:${v}`); }
 }
 await walk();
