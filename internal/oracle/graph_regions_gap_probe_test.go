@@ -15,7 +15,13 @@ import (
 
 // The same lowered program with graph metadata disabled is a counterfactual
 // counted baseline. Cycles leak there; it is not an accepted compiler mode.
-func withoutGraph(program *ir.Program) {
+func withoutGraph(program *ir.Program) *ir.Program {
+	// Lowered programs are shared immutable setup across parallel oracle tests.
+	baseline := *program
+	baseline.Functions = append([]ir.Function(nil), program.Functions...)
+	baseline.Locals = append([]ir.Local(nil), program.Locals...)
+	baseline.Classes = append([]ir.Class(nil), program.Classes...)
+	program = &baseline
 	program.GraphTypes = nil
 	for i := range program.Functions {
 		program.Functions[i].GraphClosure = false
@@ -26,6 +32,7 @@ func withoutGraph(program *ir.Program) {
 	for i := range program.Classes {
 		program.Classes[i].Graph = false
 	}
+	return program
 }
 
 var graphRSS = regexp.MustCompile(`(?m)^graph_peak_rss_kib (\d+)\n`)
@@ -75,8 +82,12 @@ func graphMeasureFixture(t *testing.T, path string, million bool) {
 	if report := leakcheck.Unbalanced(leakRun(after)); report != "" {
 		t.Fatal(report)
 	}
-	withoutGraph(program)
-	before := graphMeasured(t, native.C(program))
+	original := native.C(program)
+	baseline := native.C(withoutGraph(program))
+	if native.C(program) != original {
+		t.Fatal("counted baseline mutated shared graph IR")
+	}
+	before := graphMeasured(t, baseline)
 	for _, result := range []run{before, after} {
 		output := graphRSS.ReplaceAll(result.stdout, nil)
 		if million {
