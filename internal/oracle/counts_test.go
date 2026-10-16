@@ -431,7 +431,11 @@ func runCountsShard(t *testing.T, shard int) {
 	planted, probing := familyProbe("TestCountsAreRecorded")
 	cases := countCases()
 	keys := countKeys()
-	for _, index := range familyCases(t, "TestCountsAreRecorded", shard, keys) {
+	indices := familyCases(t, "TestCountsAreRecorded", shard, keys)
+	if !*updateCounts {
+		countShardsAhead(t, shard, keys, indices)
+	}
+	for _, index := range indices {
 		each := cases[index]
 		t.Run(each.key, func(t *testing.T) {
 			t.Parallel()
@@ -469,6 +473,25 @@ func runCountsShard(t *testing.T, shard int) {
 				}
 			}
 		})
+	}
+}
+
+// countShardsAhead has, before a shard's rows start, the measurements of every product shard they read, starting from
+// the one its own number names and going round. The first to ask keys a product shard by lowering every row it holds,
+// one after another, and a row that asked first held one of the package's parallel slots while the rows behind it held
+// the rest, waiting: oracle#1/11, which holds all 32 shards and none of the product tests, keyed its 16 products almost
+// one at a time on one core, 73 s on Golem where its tests' own work is a fraction (#s1g24yh). Asked here, by the
+// shards' own tests, eight shards key eight products at once, and a row finds its measurement had.
+func countShardsAhead(t *testing.T, shard int, keys []string, indices []int) {
+	t.Helper()
+	read := map[int]bool{}
+	for _, index := range indices {
+		read[familyShard(keys[index], countProductShards)] = true
+	}
+	for offset := range countProductShards {
+		if product := (shard + offset) % countProductShards; read[product] {
+			countShard(t, product)
+		}
 	}
 }
 
