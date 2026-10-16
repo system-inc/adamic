@@ -1,6 +1,7 @@
 package flow
 
 import (
+	"context"
 	"crypto/sha256"
 	"fmt"
 	"os"
@@ -10,6 +11,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
 var flowProgramChecks = []func(*testing.T, string){
@@ -132,4 +135,45 @@ func TestFlowCorpusRemainder(t *testing.T) {
 		})
 	}
 	t.Logf("remainder ran %d programs", count)
+}
+
+// A NotYet declaration excludes only the named witness and pins lowering's reason.
+func TestFlowCorpusBoundaryDeclarations(t *testing.T) {
+	t.Parallel()
+	runnable := map[string]bool{}
+	for _, path := range programs(t) {
+		runnable[filepath.ToSlash(path)] = true
+	}
+	count := 0
+	for _, pattern := range []string{"../oracle/testdata/coverage_regexp_*.a", "../oracle/testdata/coverage_view_*.a"} {
+		paths, err := filepath.Glob(pattern)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, path := range paths {
+			reason := runtimeBoundaryNotYetReason(path)
+			if reason == "" {
+				t.Fatalf("missing NotYet declaration for %s", path)
+			}
+			if runnable[filepath.ToSlash(path)] {
+				t.Fatalf("NotYet fixture entered flow corpus: %s", path)
+			}
+			absolute, err := filepath.Abs(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{absolute})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = Lower(context.Background(), program)
+			if err == nil || !strings.Contains(err.Error(), "stage 0 can't lower "+reason+" yet") {
+				t.Fatalf("%s: declared NotYet %q, got %v", path, reason, err)
+			}
+			count++
+		}
+	}
+	if count != 8 {
+		t.Fatalf("want eight boundary declarations, got %d", count)
+	}
 }
