@@ -514,6 +514,22 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 				return classed{"above cache", filepath.ToSlash(relative)}
 			}
 		}
+		// Deeper below a directory of the cache's chain that's under the home, the same: tsc's @types search, climbing the
+		// parents of a product in a cache under the home, missed <the cache's parent>/node_modules/@types, which named the
+		// tree's own directory, so two checkouts keyed the adapted tree apart (#4gp2ytz, Compiler's Golem harness on
+		// 1412e316ed). Valued by whether it's there alone; a listing or a content read there is still the home's, refused.
+		for _, cache := range facts.caches {
+			for at := filepath.Dir(filepath.Dir(name)); at != "/" && at != "."; at = filepath.Dir(at) {
+				if !under(cache, at) {
+					continue
+				}
+				if at != facts.home && under(at, facts.home) {
+					relative, _ := filepath.Rel(cache, name)
+					return classed{"above cache", filepath.ToSlash(relative)}
+				}
+				break
+			}
+		}
 	}
 	// A directory on the build cache's own chain of parents, listed or opened to list (Go's os.Open of a directory has no
 	// O_DIRECTORY, so it reads as content), is keyed as a lookup beside the cache's parents is: by its place relative to

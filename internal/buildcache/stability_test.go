@@ -101,6 +101,46 @@ func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
 	}
 }
 
+// A lookup below a directory of the cache's chain under the home, deeper than its direct children, is keyed beside the
+// cache too, so two caches under one home settle to one key (#4gp2ytz: tsc's @types search missed <the cache's
+// parent>/node_modules/@types, named by its whole home path, so two checkouts keyed the adapted tree apart, Compiler's
+// Golem harness on 1412e316ed). A listing or a content read there is still the home's, refused. Mutant: the rule dropped,
+// so the home rule names each cache's path.
+// Not parallel: it sets HOME, which settleFacts reads.
+func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.T) {
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("HOME", home)
+	classes := func(label string) []classed {
+		t.Helper()
+		cache := filepath.Join(home, "tests-proof", "hc", label, "cache")
+		if err := os.MkdirAll(cache, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		facts, err := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		facts.temporary = nil
+		parent := filepath.Dir(cache)
+		return []classed{
+			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readAbsent),
+			facts.classifyPath(filepath.Join(filepath.Dir(parent), "node_modules", "@types", "node"), readStat|readAbsent),
+			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readListing),
+		}
+	}
+	first, second := classes("at28-after"), classes("at29-after-other-path")
+	want := []classed{{"above cache", "../node_modules/@types"}, {"above cache", "../../node_modules/@types/node"}}
+	if !reflect.DeepEqual(first[:2], want) || !reflect.DeepEqual(second[:2], want) {
+		t.Fatalf("lookups below the cache's chain classed %q and %q, want %q at both", first[:2], second[:2], want)
+	}
+	if first[2].kind != refusal+"home" {
+		t.Errorf("a listing below the cache's chain classed %q, want refused under the home", first[2])
+	}
+}
+
 // go list -test's look for its cached test main at the package's directory joined to the Go cache's absolute path is
 // go's, never the tree's, wherever the cache sits (#pqq9z5q): two builders with their caches at two places class it
 // alike, as nothing. A missed look at a tree path that only resembles one, or that holds the cache's path as part of a
