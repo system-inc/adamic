@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -81,7 +82,7 @@ func adaptedTree(t testing.TB) string {
 		}
 		// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
 		// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
-		adapt := toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree)
+		adapt := isolated(toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree))
 		// apply.py runs git itself (add, write-tree, update-ref), which would read the home's ~/.gitconfig: Workshop
 		// has one and Golem none, so tree 276cc52a refused the product. GitEnv's GIT_ settings keep every git
 		// configuration but the repository's out of reach, as toolchain's own git runs.
@@ -106,7 +107,7 @@ func adaptedTree(t testing.TB) string {
 			return err
 		}
 		for _, task := range []string{"local", "tests"} {
-			if err := described(toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task)); err != nil {
+			if err := described(isolated(toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task))); err != nil {
 				return err
 			}
 		}
@@ -123,6 +124,16 @@ func adaptedTree(t testing.TB) string {
 			return os.Remove(path)
 		})
 	})
+}
+
+// isolated keeps the adapted tree's build off the box: no `HOME`, and node's compile cache off. hereby's cli.js and
+// TypeScript's tsc.js call module.enableCompileCache(), which writes under the temporary directory, and Workshop's is
+// shared (/tmp/adamic-gate), so tree 77eff2ce refused the product for /tmp/adamic-gate/node-compile-cache and for the
+// home itself. Nothing the build runs needs the home: python runs with -E -S and git with GitEnv's settings.
+func isolated(command *exec.Cmd) *exec.Cmd {
+	command.Env = slices.DeleteFunc(command.Env, func(setting string) bool { return strings.HasPrefix(setting, "HOME=") })
+	command.Env = append(command.Env, "NODE_DISABLE_COMPILE_CACHE=1")
+	return command
 }
 
 // typescriptPin is the commit stage3/source.json pins.
