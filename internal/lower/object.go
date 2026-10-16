@@ -339,6 +339,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.eepPropertyPresence(node); err != nil {
+		return nil, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
