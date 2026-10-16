@@ -88,6 +88,10 @@ func leanCalled(skip int) *leanBuild {
 // (leanCallers), or none.
 func leanBuildOf(caller string) *leanBuild {
 	switch {
+	case os.Getenv("ADAMIC_BUILD_LEAN") == "off":
+		// Loom's switch while a lean mismatch is open (#earlycut's sampled key check): every product keys by the whole
+		// recipe, read once at a tree's start, since build-trees sets it there.
+		return nil
 	case caller == buildcachePackage:
 		return &leanBuild{}
 	case slices.Contains(leanCallers, strings.TrimPrefix(caller, modulePath+"/")):
@@ -201,6 +205,11 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	// key the cache holds no read set for has nothing to fetch (Oct 14: asking the store for read sets was 96.7% of its
 	// billed reads, every one a 404).
 	if looked.directory != "" {
+		if auditListed(nameKey) {
+			if err := auditHit(looked.key, inputs.Name, looked.directory, build); err != nil {
+				return "", "", err
+			}
+		}
 		journalFound(nameKey, inputs.Name, looked.directory, looked.upstreams)
 		rerecord(cache, nameKey, inputs.Name, looked.refound)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
