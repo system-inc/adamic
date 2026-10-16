@@ -9,7 +9,7 @@ import (
 
 // Each product is a separate build-phase unit. The recipes and cache keys are
 // shared with shard preparation; no unit relies on another test having run.
-func TestProduct_FormatfilesGoOracle(t *testing.T) {
+func TestProduct_FormatfilesFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	binary, _ := formatfilesOracle(t)
 	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"-test.list=^$"}})
