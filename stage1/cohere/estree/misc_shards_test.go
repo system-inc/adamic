@@ -5,8 +5,8 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
-	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -274,84 +274,17 @@ func miscMutant(t *testing.T, file, from, to string) string {
 	return resolvedPort(t, directory, "main.ts")
 }
 
-type miscAnswer struct {
-	Status string
-	Data   []byte
-}
+type miscAnswer = oracles.ComparisonAnswer
 
 // Cache reference outputs by the already-built oracle's bytes, not a hand-listed
 // Go build key. Audit paths are discarded; only the status and canonical answer
 // are inputs to the checks. All input bodies and filename extensions are keyed.
 func miscAnswers(t *testing.T, oracle string, cases []boundedPortCase) []miscAnswer {
-	t.Helper()
-	encoded, err := json.Marshal(casesToInputs(cases))
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := buildcache.Inputs{Name: "estree-misc-oracle-answers", Files: []string{"stage1/cohere/estree/misc_shards_test.go"}, Flags: []string{string(encoded)}, Toolchain: []string{runtime.Version(), miscDigest(t, oracle)}}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
-		answers := make([]miscAnswer, len(cases))
-		for i, item := range cases {
-			subdir := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-			if err := os.Mkdir(subdir, 0755); err != nil {
-				return err
-			}
-			path := filepath.Join(subdir, item.filename)
-			if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
-				return err
-			}
-			if item.audit {
-				list := filepath.Join(subdir, "manifest")
-				if err := os.WriteFile(list, []byte(path+"\n"), 0644); err != nil {
-					return err
-				}
-				output, err := miscReferenceCommand(oracle, "--audit", list, subdir)
-				if err != nil {
-					return err
-				}
-				if err := json.Unmarshal(output, &answers[i]); err != nil {
-					return err
-				}
-			} else {
-				answers[i].Status = "ok"
-			}
-			if answers[i].Status == "ok" {
-				output, err := miscReferenceCommand(oracle, path)
-				if err != nil {
-					return err
-				}
-				answers[i].Data = output
-			}
-			if err := os.RemoveAll(subdir); err != nil {
-				return err
-			}
-		}
-		data, err := json.Marshal(answers)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "answers.json"), data, 0644)
-	})
-	data, err := os.ReadFile(filepath.Join(directory, "answers.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	var answers []miscAnswer
-	if err := json.Unmarshal(data, &answers); err != nil {
-		t.Fatal(err)
-	}
-	if len(answers) != len(cases) {
-		t.Fatal("oracle answer enumeration differs")
-	}
-	return answers
-}
-
-func casesToInputs(cases []boundedPortCase) [][]string {
-	result := make([][]string, len(cases))
+	inputs := make([]oracles.ComparisonInput, len(cases))
 	for i, item := range cases {
-		result[i] = []string{item.id, item.text, item.filename, strconv.FormatBool(item.audit)}
+		inputs[i] = oracles.ComparisonInput{ID: item.id, Text: item.text, Filename: item.filename, Audit: item.audit}
 	}
-	return result
+	return oracles.CachedComparisonAnswers(t, oracle, inputs)
 }
 
 func miscTextAnswers(t *testing.T, oracle string, texts []string, extension string) []miscAnswer {
@@ -360,17 +293,6 @@ func miscTextAnswers(t *testing.T, oracle string, texts []string, extension stri
 		cases[i] = boundedPortCase{id: fmt.Sprint(i), text: text, filename: "0000" + extension}
 	}
 	return miscAnswers(t, oracle, cases)
-}
-
-func miscReferenceCommand(oracle string, args ...string) ([]byte, error) {
-	command := exec.Command(oracle, args...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	output, err := command.Output()
-	if err != nil || stderr.Len() != 0 {
-		return nil, fmt.Errorf("oracle %v: %v\n%s", args, err, &stderr)
-	}
-	return output, nil
 }
 
 // Match native's archiver selection, including its GNU ar fallback.

@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -99,28 +100,10 @@ var acceptancePrepared [testAcceptanceMutantsShards]struct {
 	once                 sync.Once
 	main, binary, oracle string
 }
-var acceptanceOracleOnce sync.Once
-var acceptanceOraclePath string
 
 func acceptanceMutantsOracle(t *testing.T) string {
 	t.Helper()
-	acceptanceOracleOnce.Do(func() {
-		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
-			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
-			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
-			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
-		directory := buildcache.Product(t, inputs, func(directory string) error {
-			// GoBuild is absent on this base; preserve the existing overlay recipe.
-			binary := goOracle(t)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
-		})
-		acceptanceOraclePath = filepath.Join(directory, "oracle")
-	})
-	return acceptanceOraclePath
+	return oracles.AcceptanceMutantsOracle(t)
 }
 
 func acceptanceMutantsPrepareShard(t *testing.T, shard int) (string, string, string) {
@@ -133,7 +116,7 @@ func acceptanceMutantsPrepareShard(t *testing.T, shard int) (string, string, str
 	return prepared.main, prepared.binary, prepared.oracle
 }
 
-func TestProduct_AcceptanceOracle(t *testing.T) { t.Parallel(); acceptanceMutantsOracle(t) }
+func TestProduct_EstreeFindsAcceptanceOracle(t *testing.T) { t.Parallel(); acceptanceMutantsOracle(t) }
 func TestProduct_AcceptanceCatchLowered(t *testing.T) {
 	t.Parallel()
 	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[0], false)

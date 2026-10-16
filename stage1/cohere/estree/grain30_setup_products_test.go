@@ -1,70 +1,18 @@
 package estree
 
 import (
-	"bytes"
-	"encoding/json"
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"testing"
 )
 
-var estreeGoOracleReady struct {
-	once   sync.Once
-	binary string
-}
+func goOracle(t *testing.T) string { t.Helper(); return oracles.ParserOracle(t) }
 
-func goOracle(t *testing.T) string {
-	t.Helper()
-	estreeGoOracleReady.once.Do(func() {
-		inputs := syntaxMutantSetupInputs(t)
-		inputs.Name = "estree-go-oracle-v1"
-		inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "))
-		dir := buildcache.Product(t, inputs, func(dir string) error {
-			estreeGoOracleBuild(t, dir)
-			return nil
-		})
-		estreeGoOracleReady.binary = filepath.Join(dir, "oracle")
-	})
-	if estreeGoOracleReady.binary == "" {
-		t.Fatal("Go oracle preparation failed")
-	}
-	return estreeGoOracleReady.binary
-}
-
-func estreeGoOracleBuild(t *testing.T, dir string) string {
-	t.Helper()
-	repo := root(t)
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(dir, "oracle")
-	command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary, virtual)...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		t.Fatalf("go build %s: %v\n%s", virtual, err, &stderr)
-	}
-	return binary
-}
-
-func TestProduct_EstreeGoOracle(t *testing.T) { t.Parallel(); goOracle(t) }
+func TestProduct_EstreeFindsGoOracle(t *testing.T) { t.Parallel(); goOracle(t) }
 
 func estreeMainPath(t *testing.T) string {
 	t.Helper()
@@ -125,7 +73,7 @@ func estreeBoundedAudits(t *testing.T) []boundedPortCase {
 	return audited
 }
 func TestProduct_EstreeBoundedPort(t *testing.T) { t.Parallel(); miscBuild(t, estreeMainPath(t)) }
-func TestProduct_EstreeBoundedAnswers(t *testing.T) {
+func TestProduct_EstreeFindsBoundedAnswers(t *testing.T) {
 	t.Parallel()
 	miscAnswers(t, goOracle(t), estreeBoundedAudits(t))
 }
@@ -136,7 +84,7 @@ func TestProduct_EstreeExportPort(t *testing.T) {
 	t.Parallel()
 	miscBuild(t, estreeExportMutantPath(t))
 }
-func TestProduct_EstreeExportAnswers(t *testing.T) {
+func TestProduct_EstreeFindsExportAnswers(t *testing.T) {
 	t.Parallel()
 	miscTextAnswers(t, goOracle(t), decoratedExports(), ".ts")
 }

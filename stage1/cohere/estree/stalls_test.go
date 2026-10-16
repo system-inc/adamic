@@ -3,6 +3,7 @@ package estree
 import (
 	"bytes"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"path/filepath"
 	"strings"
@@ -39,22 +40,10 @@ type boundedPortCase struct {
 }
 
 func boundedPortCases(t *testing.T) []boundedPortCase {
-	t.Helper()
-	cases := []boundedPortCase{
-		{"stage1/cohere/estree/stalls_test.go:0:eof-type", "type X = {", "input.ts", false},
-		{"stage1/cohere/estree/stalls_test.go:0:eof-interface", "interface I {", "input.ts", false},
-		{"stage1/cohere/estree/stalls_test.go:0:eof-method", "type X = { m(a: string): void;", "input.ts", false},
-	}
-	fixtures, err := filepath.Glob("validation/followup/stalls/*.input")
-	if err != nil || len(fixtures) == 0 {
-		t.Fatalf("stall fixtures: %d %v", len(fixtures), err)
-	}
-	for _, fixture := range fixtures {
-		body, err := os.ReadFile(fixture)
-		if err != nil {
-			t.Fatal(err)
-		}
-		cases = append(cases, boundedPortCase{"stage1/cohere/estree/" + filepath.ToSlash(fixture) + ":0:audit", string(body), strings.TrimSuffix(filepath.Base(fixture), ".input"), true})
+	inputs := oracles.BoundedCases(t)
+	cases := make([]boundedPortCase, len(inputs))
+	for i, item := range inputs {
+		cases[i] = boundedPortCase{item.ID, item.Text, item.Filename, item.Audit}
 	}
 	return cases
 }
