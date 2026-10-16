@@ -1785,6 +1785,10 @@
     ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
       "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsDocumentCorpus": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentOracle"
     ]
   }
 }
