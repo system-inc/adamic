@@ -1,13 +1,15 @@
 #include "harness.h"
-// Each worker owns an eight-item chunk, whose callbacks make 256 exercise calls.
-// Rendezvous before each of those calls on fresh metadata, so registration writes
-// keep overlapping instead of turning into eight already-registered fast paths.
+// Four workers rendezvous for 64 rounds, each pushing its own fresh metadata.
+// Sharing an entry would let a late worker acquire its registered flag and skip
+// the push, hiding a missing registry lock from ThreadSanitizer.
 static const char *const names[] = {"x"};
 static const bool references[] = {false};
 static adamic_shape shapes[256];
 static const int types[] = {1};
 static adamic_shape_types metadata[256];
 static pthread_barrier_t registrations;
+static size_t next_worker;
+static _Thread_local size_t worker;
 static _Thread_local size_t visits;
 static void prepare(void) {
  for (size_t index = 0; index < 256; index++) {
@@ -18,8 +20,12 @@ static void prepare(void) {
 }
 static void cleanup(void) { pthread_barrier_destroy(&registrations); }
 static double exercise(size_t index) {
- size_t which = visits < 256 ? visits : index % 256;
- if (visits++ < 256) {
+ if (visits == 0) {
+  worker = __atomic_fetch_add(&next_worker, 1, __ATOMIC_RELAXED);
+  if (worker >= 4) { abort(); }
+ }
+ size_t which = visits < 64 ? visits * 4 + worker : index % 256;
+ if (visits++ < 64) {
   // This orders earlier rounds, never the new round's registry accesses.
   pthread_barrier_wait(&registrations);
  }
