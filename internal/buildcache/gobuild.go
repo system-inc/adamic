@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -150,11 +151,12 @@ func goProduct(t testing.TB, request goRequest) string {
 		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	arguments := request.arguments
-	if slices.Contains(inputs.Flags, rebuildEverything) {
-		arguments = append([]string{"-a"}, arguments...)
-	}
 	directory := Product(t, inputs, func(directory string) error {
+		arguments, cleanup, err := request.withOutsideHeaders(root, inputs)
+		if err != nil {
+			return err
+		}
+		defer cleanup()
 		return request.build(root, directory, arguments)
 	})
 	return filepath.Join(directory, request.output)
@@ -170,12 +172,93 @@ func (request goRequest) mutationKeys() []string {
 	return keys
 }
 
-// rebuildEverything is the flag a key carries when the build reads a header through '#cgo CFLAGS: -I' outside the
-// package's own directory. Go's build cache keys a package by its own directory's files, so after such a header
-// changes, go build alone links the object compiled from the old one (measured Oct 9 by
-// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild builds such a
-// product with -a, which compiles every package again, and the flag in the key retires a product built without it.
-const rebuildEverything = "go build -a: a header outside its package"
+// outsideHeaders begins the flag a key carries for each package that reads a header through '#cgo CFLAGS: -I' outside
+// its own directory, followed by an outsideHeaderPackage as JSON. Go's build cache keys a package by its own directory's
+// files, so after such a header changes, go build alone links the object compiled from the old one (measured Oct 9 by
+// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild built such a
+// product with -a, which compiled the standard library again too, 20.8 s of that test on Cloud and the floor of this
+// package's unit (#dzpzyme, #hqxje9h). It now lays a header into the package instead (withOutsideHeaders), which moves
+// that package alone in go's cache.
+const outsideHeaders = "cgo headers outside the package: "
+
+// An outsideHeaderPackage is a package directory and the include directories outside it its cgo reads, each relative
+// to the repository.
+type outsideHeaderPackage struct {
+	Package  string   `json:"package"`
+	Includes []string `json:"includes"`
+}
+
+// outsideHeaderName is the header withOutsideHeaders lays into a package: read by nothing, so the product's bytes are
+// a plain build's (measured on Linux, go1.27.1: byte-identical to a fresh build, as -a's were).
+const outsideHeaderName = "zz_buildcache_outside_headers.h"
+
+// withOutsideHeaders returns the build's arguments for a key that names packages reading headers outside themselves:
+// the request's own overlay with one more file in each such package, a header holding Key over its include
+// directories, so go's cache, which hashes a cgo package's own headers, compiles that package again exactly when one
+// of those directories changes. The overlay names this checkout's paths, so it sits in a temporary directory and leaves
+// with the build, as a mutation's does.
+func (request goRequest) withOutsideHeaders(root string, inputs Inputs) ([]string, func(), error) {
+	var packages []outsideHeaderPackage
+	for _, flag := range inputs.Flags {
+		if encoded, found := strings.CutPrefix(flag, outsideHeaders); found {
+			var listed outsideHeaderPackage
+			if err := json.Unmarshal([]byte(encoded), &listed); err != nil {
+				return nil, nil, fmt.Errorf("%s: %v", flag, err)
+			}
+			packages = append(packages, listed)
+		}
+	}
+	if len(packages) == 0 {
+		return request.arguments, func() {}, nil
+	}
+	_, overlay, err := request.identity(root)
+	if err != nil {
+		return nil, nil, err
+	}
+	replace := map[string]string{}
+	if overlay.path != "" {
+		path := overlay.path
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(root, path)
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil, nil, err
+		}
+		var declared struct{ Replace map[string]string }
+		if err := json.Unmarshal(content, &declared); err != nil {
+			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		replace = declared.Replace
+	}
+	scratch, err := os.MkdirTemp("", "buildcache-headers-")
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanup := func() { os.RemoveAll(scratch) }
+	for index, listed := range packages {
+		var digest string
+		keying(func() { digest, err = Key(root, Inputs{Name: outsideHeaders + listed.Package, Files: listed.Includes}) })
+		header := filepath.Join(scratch, fmt.Sprintf("%d.h", index))
+		if err == nil {
+			err = os.WriteFile(header, []byte("/* buildcache: the headers outside this package are "+digest+" */\n"), 0o644)
+		}
+		if err != nil {
+			cleanup()
+			return nil, nil, err
+		}
+		replace[filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName)] = header
+	}
+	encoded, err := json.Marshal(map[string]any{"Replace": replace})
+	if err == nil {
+		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
+	}
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	return append(slices.Clone(overlay.arguments), "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
+}
 
 // goSettings runs go env for names in directory (the working directory when empty) with environment, the whole
 // environment go runs with (toolchain.Env for a product, this process's own for Tool), and returns each variable as
@@ -416,7 +499,8 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		return path
 	}
 	files := map[string]bool{}
-	outsideHeaders := false
+	// Each package that reads headers outside its own directory, with those include directories (outsideHeaders).
+	outside := map[string][]string{}
 	add := func(directory string, names []string) error {
 		for _, name := range names {
 			// go list -test names some files absolutely, in go's own cache (a test variant's generated sources): not the
@@ -483,7 +567,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 						return Inputs{}, err
 					}
 					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
-						outsideHeaders = true
+						pkg := filepath.ToSlash(mustRelative(root, listed.Dir))
+						if relative := filepath.ToSlash(mustRelative(root, include)); !slices.Contains(outside[pkg], relative) {
+							outside[pkg] = append(outside[pkg], relative)
+						}
 					}
 				}
 			}
@@ -536,8 +623,13 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
 	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
-	if outsideHeaders {
-		inputs.Flags = append(inputs.Flags, rebuildEverything)
+	for _, pkg := range slices.Sorted(maps.Keys(outside)) {
+		includes := slices.Sorted(slices.Values(outside[pkg]))
+		encoded, err := json.Marshal(outsideHeaderPackage{Package: pkg, Includes: includes})
+		if err != nil {
+			return Inputs{}, err
+		}
+		inputs.Flags = append(inputs.Flags, outsideHeaders+string(encoded))
 	}
 	inputs.Flags = append(inputs.Flags, settings...)
 	if compiler := strings.Fields(values["CC"]); len(compiler) > 0 {

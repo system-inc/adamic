@@ -49,6 +49,11 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		!slices.ContainsFunc(inputs.Toolchain, func(tool string) bool { return strings.HasPrefix(tool, "go version: ") }) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
 	}
+	// withc reaches testdata/include, outside its own directory, so the key names the package and that directory, and
+	// the build lays a header into withc that moves with it (withOutsideHeaders).
+	if want := outsideHeaders + `{"package":"internal/buildcache/testdata/withc","includes":["internal/buildcache/testdata/include"]}`; !slices.Contains(inputs.Flags, want) {
+		t.Fatalf("the key doesn't name withc's header outside it, %s: %v", want, inputs.Flags)
+	}
 	binary := GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
 	// GoBuild built it with the reproducible flags, as its recorded inputs say.
 	if described, err := os.ReadFile(filepath.Dir(binary) + ".inputs"); err != nil || !strings.Contains(string(described), "flag arguments -trimpath -ldflags=-buildid=") {
