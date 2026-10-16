@@ -163,7 +163,7 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.
 			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readAbsent),
 			facts.classifyPath(filepath.Join(filepath.Dir(parent), "node_modules", "@types", "node"), readAbsent),
 			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readListing),
-			facts.classifyPath(filepath.Join(parent, "001", "usr", "cc"), readStat),
+			facts.classifyPath(filepath.Join(parent, "001", "usr", "bin", "true"), readStat),
 		}
 	}
 	first, second := classes("at28-after"), classes("at29-after-other-path")
@@ -174,8 +174,9 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.
 	if first[2].kind != refusal+"home" {
 		t.Errorf("a listing below the cache's chain classed %q, want refused under the home", first[2])
 	}
-	// A path that's there keeps its own class: a test's temporary directory beside its cache under the home holds the
-	// machine's usr/cc, which the rule took ahead of its class on Adam's runner (chg_gp66hxpv's red).
+	// A path that's there keeps its own class: a test's temporary directory beside its cache under the home holds
+	// machine files, and on Adam's runner the rule took a stat of one ahead of its class (chg_gp66hxpv's red). The leaf
+	// isn't a compiler's name, since this test compiles nothing (internal/compilercensus).
 	if first[3].kind == "above cache" {
 		t.Errorf("an existing path below the cache's chain classed %q, want its own class", first[3])
 	}
