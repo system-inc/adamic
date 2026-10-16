@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,95 +25,6 @@ type goRequest struct {
 	verb, module, output, pkg string
 	arguments, environment    []string
 	mutations                 []Mutation
-}
-
-// A goBuildPlan is one go product's build with everything it takes decided before its window opens (goRequest.plan):
-// the go command resolved, its arguments, directory and environment, the overlay's map, each outside header's bytes
-// and each mutated file's text. run, inside the window, writes only what the plan holds and runs go, so the build reads
-// no state of buildcache's or toolchain's, which its lean key couldn't name (TestAGoProductsBuildReadsNoStateButItsInitializers,
-// Tests' shape and Node's ruling on becf16eeba).
-type goBuildPlan struct {
-	// failed is why the plan couldn't be made, which fails the build, never the lookup of a product already built. A
-	// string, since an error the build is handed would reach every error type of the module (leancensus).
-	failed string
-	// program is the go command, run in directory with environment, as verb, arguments (no -overlay among them), -o
-	// output inside the product, then packages. verb and pkg are the request's, for the build's error.
-	program, directory, output, verb, pkg string
-	arguments, packages, environment      []string
-	// replace is the request's own overlay's map, as it declares it.
-	replace map[string]string
-	headers []plannedHeader
-	mutated []plannedMutation
-}
-
-// A plannedHeader is a header the build lays into a package (withOutsideHeaders' reason): target, the path in the
-// package it replaces, and content, its bytes.
-type plannedHeader struct {
-	target  string
-	content []byte
-}
-
-// A plannedMutation is one mutated file: file, its path in the repository, and text, every mutation of it applied.
-// original is the file's absolute path, and pointers the overlay's entries whose replacement is it: run points each at
-// the copy, or replaces original by the copy when none is.
-type plannedMutation struct {
-	file, text, original string
-	pointers             []string
-}
-
-// run builds the plan's product into directory: each mutated file copied inside the product, under mutations/<its path
-// in the repository>, and pointed at by the overlay; each outside header and the overlay itself written into a
-// temporary directory, since the overlay names this checkout's paths, which leaves with the build (#tqrqx60); then go.
-func (plan goBuildPlan) run(directory string) error {
-	if plan.failed != "" {
-		return errors.New(plan.failed)
-	}
-	replace := map[string]string{}
-	maps.Copy(replace, plan.replace)
-	for _, mutation := range plan.mutated {
-		copied := filepath.Join(directory, "mutations", filepath.FromSlash(mutation.file))
-		if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
-			return err
-		}
-		if err := os.WriteFile(copied, []byte(mutation.text), 0o644); err != nil {
-			return err
-		}
-		for _, pointer := range mutation.pointers {
-			replace[pointer] = copied
-		}
-		if len(mutation.pointers) == 0 {
-			replace[mutation.original] = copied
-		}
-	}
-	arguments := slices.Clone(plan.arguments)
-	if len(replace) > 0 || len(plan.headers) > 0 {
-		scratch, err := os.MkdirTemp("", "buildcache-overlay-")
-		if err != nil {
-			return err
-		}
-		defer os.RemoveAll(scratch)
-		for index, header := range plan.headers {
-			path := filepath.Join(scratch, fmt.Sprintf("%d.h", index))
-			if err := os.WriteFile(path, header.content, 0o644); err != nil {
-				return err
-			}
-			replace[header.target] = path
-		}
-		encoded, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644); err != nil {
-			return err
-		}
-		arguments = append(arguments, "-overlay="+filepath.Join(scratch, "overlay.json"))
-	}
-	command := exec.Command(plan.program, append(append(arguments, "-o", filepath.Join(directory, plan.output)), plan.packages...)...)
-	command.Dir, command.Env = plan.directory, plan.environment
-	if combined, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("go %s %s: %v\n%s", plan.verb, plan.pkg, err, combined)
-	}
-	return nil
 }
 
 // mutated is each file the request's mutations change, by its path in the repository, with every mutation of it
