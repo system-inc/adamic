@@ -2,15 +2,15 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
@@ -149,33 +149,4 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 }
 
 // prefixGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func prefixGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_prefix/main.go")
-	mainGo, err := filepath.Abs("testdata/prefix_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/prefix_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: mainGo, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_prefix.go"): bridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-prefix", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownPrefixGo(t *testing.T) {
-	t.Parallel()
-	prefixGoOracle(t)
-}
+func prefixGoOracle(t *testing.T) string { t.Helper(); return oracles.PrefixGoOracle(t) }

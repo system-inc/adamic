@@ -23,6 +23,10 @@ const DefaultCeiling = 60 * time.Minute
 // FirstOutput is the silence allowed before the first byte; Stall applies thereafter.
 // Options overrides the defaults. Zero durations select the defaults.
 type Options struct {
+	// Started runs synchronously after a successful start, before waiting or arming guard timers.
+	// Callers can register the exact child PID with an existing hard-deadline owner.
+	Started func(int)
+
 	FirstOutput, Stall, Ceiling time.Duration
 	// Unbounded disables the guard timers; command context cancellation still applies.
 	Unbounded bool
@@ -127,6 +131,9 @@ func Run(cmd *exec.Cmd, options Options) error {
 	}
 	if err := cmd.Start(); err != nil {
 		return err
+	}
+	if options.Started != nil {
+		options.Started(cmd.Process.Pid)
 	}
 	if options.Unbounded {
 		return cmd.Wait()
