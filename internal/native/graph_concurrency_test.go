@@ -393,7 +393,7 @@ int main(void) {
 
 func TestGraphMembersCountOnTheirRegion(t *testing.T) {
 	t.Parallel()
-	old := "static inline void adamic_release(void *value) {\n\tADAMIC_COUNT_RELEASE();\n\tadamic_heap *heap = value;\n\tif (adamic_program_is(heap)) { return; }\n\tif (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0)"
+	old := "__attribute__((always_inline)) static inline void adamic_release(void *value) {\n\tADAMIC_COUNT_RELEASE();\n\tadamic_heap *heap = value;\n\tif (heap == NULL) { return; }\n\tif ((heap->slab & ADAMIC_SLOW_COUNT) == 0)"
 	graphRuntimeGuard(t, graphOutsideCounts, "adamic.h", old, strings.Replace(old, "ADAMIC_SLOW_COUNT", "ADAMIC_SHARED_HEADER", 1), "Assertion")
 }
 
