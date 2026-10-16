@@ -2841,6 +2841,17 @@ class CensusLaunchers(unittest.TestCase):
         source = self.launcher % 'exec.Command("node")' + '\n// exec.Command(name) is what it would be\n/* exec.Command(other) */\nfunc CommandIn(directory, name string) {}\nfunc command() *exec.Cmd {\n\treturn nil\n}\nvar text = "exec.Command(name)"\n'
         self.census(source, self.declared)
 
+    def test_cohere_harness_commands_are_no_reference_to_the_compiler(self):
+        # Cohere's finding on #1byp10f: cmd/adamic matched cohere's cmd/adamic_<name> commands by prefix, so a launcher
+        # running one was refused as running the compiler. The bound keeps every real reference. Mutant: the bare prefix
+        # (the harness command refused).
+        self.census(self.launcher % 'exec.Command("go", "run", "./cmd/adamic_path", "x")', self.declared)
+        self.census(self.launcher % 'exec.Command("go", "build", "github.com/system-inc/cohere/cmd/adamic_helper_oracle")', self.declared)
+        for reference in ('"./cmd/adamic"', '"github.com/system-inc/adamic/cmd/adamic/internal"', '"go run ./cmd/adamic c x.ts"',
+                          'path := "cmd/adamic"', 'x := `cmd/adamic`', "// cmd/adamic\n"):
+            self.assertIsNotNone(run.compilerMarker.search(reference), reference)
+        self.refused(self.launcher % 'exec.Command("go", "run", "./cmd/adamic", "c", "x.ts")', "references the compiler (cmd/adamic)")
+
     def test_a_launcher_that_runs_the_compiler_is_refused(self):
         self.refused(self.launcher % 'exec.Command("adamic", "c", "x.a")', 'references the compiler ("adamic")')
         self.refused(self.launcher % 'exec.Command(os.Getenv("ADAMIC_BIN"))', "references the compiler (ADAMIC_BIN)")
