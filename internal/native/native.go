@@ -67,6 +67,8 @@ func cLiteral(value string) string {
 type Options struct {
 	// ProgramRegion enables only the one-shot CLI runtime core; no compiler membership is inferred.
 	ProgramRegion bool
+	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
+	Release bool
 
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
@@ -143,7 +145,27 @@ func Flags(options Options) []string {
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
-	return append(flags, "-O2")
+	flags = append(flags, "-O2")
+	if shippedRelease(options) {
+		flags = append(flags, "-flto=thin")
+	}
+	return flags
+}
+
+func shippedRelease(options Options) bool {
+	return options.Release && !options.Sanitize && !options.ThreadSanitize && !options.Count && options.Target == ""
+}
+
+// LinkFlags carries every semantic compilation flag through ThinLTO code generation.
+func LinkFlags(options Options) []string {
+	return linkFlags(Flags(options), options)
+}
+
+func linkFlags(flags []string, options Options) []string {
+	if shippedRelease(options) && goruntime.GOOS != "darwin" {
+		return append(flags, "-fuse-ld=lld")
+	}
+	return flags
 }
 
 // useSplit leaves uninstrumented native builds and WASI on their existing path.
@@ -257,7 +279,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		}
 		program = "main.o"
 	}
-	arguments := append(compileFlags, "-o", output)
+	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, program)
 	}

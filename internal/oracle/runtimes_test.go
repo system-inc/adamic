@@ -241,3 +241,16 @@ func fileExists(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && info.Mode().IsRegular()
 }
+
+func TestProduct_NativeRuntimesShipped0(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "shipped", 0)
+}
+func TestProduct_NativeRuntimesShipped1(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "shipped", 1)
+}
+func TestProduct_NativeRuntimesShipped2(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "shipped", 2)
+}
