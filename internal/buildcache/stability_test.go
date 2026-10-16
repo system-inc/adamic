@@ -49,6 +49,47 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
 	}
 }
 
+// quietHome sets HOME and XDG_CONFIG_HOME to a new temporary home whose Go telemetry is off, for a test that runs go
+// there through settleFacts. A fresh home takes the day's upload token, so go forks its telemetry sidecar detached, and
+// the sidecar writes into the home after the test returns, failing TempDir's cleanup (chg_gp66hxpv's red on Adam:
+// "unlinkat .../002: directory not empty"). With the mode off, go writes nothing there and forks nothing, which the
+// cleanup holds: a go with telemetry on writes its counters there before it exits, so anything beside the mode file
+// fails the test on any box, not only a loaded one. Mutant: no mode file.
+func quietHome(t *testing.T) string {
+	t.Helper()
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("HOME", home)
+	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, ".config"))
+	configuration, err := os.UserConfigDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	telemetry := filepath.Join(configuration, "go", "telemetry")
+	if err := os.MkdirAll(telemetry, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(telemetry, "mode"), []byte("off\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	// Registered after TempDir's, so it runs before the home is removed.
+	t.Cleanup(func() {
+		entries, err := os.ReadDir(telemetry)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		for _, entry := range entries {
+			if entry.Name() != "mode" {
+				t.Errorf("go wrote its telemetry into the test's home: %s", filepath.Join(telemetry, entry.Name()))
+			}
+		}
+	})
+	return home
+}
+
 // A directory on the build cache's own chain of parents, listed or opened to list as Go's os.Open does, is keyed as a
 // lookup beside the cache's parents is, relative to the cache, never refused under the home, and two homes holding
 // different things class it alike (#4gp2ytz: esbuild's resolver lists every parent up to /). A listing off that chain
@@ -58,11 +99,7 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
 func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
 	classes := func(extra string) []classed {
 		t.Helper()
-		home, err := filepath.EvalSymlinks(t.TempDir())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Setenv("HOME", home)
+		home := quietHome(t)
 		directory := filepath.Join(home, "loom-builder", "trees", "6299aba1")
 		cache := filepath.Join(directory, "cache")
 		for _, made := range []string{cache, filepath.Join(directory, "logs"), filepath.Join(home, "elsewhere"), filepath.Join(home, extra)} {
@@ -109,11 +146,7 @@ func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
 // rule firing on a stat too.
 // Not parallel: it sets HOME, which settleFacts reads.
 func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.T) {
-	home, err := filepath.EvalSymlinks(t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Setenv("HOME", home)
+	home := quietHome(t)
 	classes := func(label string) []classed {
 		t.Helper()
 		cache := filepath.Join(home, "tests-proof", "hc", label, "cache")
