@@ -66,6 +66,8 @@ func (e *emitter) checkThrown(holds ...string) {
 	// emitters conservatively request a check whenever any closure can throw.
 	// A block without an exception edge must not invent a Goto handler for it.
 	if e.asyncSlots != nil && e.asyncHandler == "" {
+		message := e.function.Name + ": exception where the flow graph proved none"
+		e.line("if (adamic_thrown != NULL) { adamic_panic(%s, %d); }", cString(message), len(message))
 		return
 	}
 	e.line("if (adamic_thrown != NULL) {")
