@@ -152,10 +152,31 @@ func (e *emitter) asyncFunction(index int) string {
 	for position, local := range cells {
 		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference())
 	}
+	if function.ArgumentsCount != 0 {
+		local := function.ArgumentsCount - 1
+		count := e.localName(local)
+		if function.Closure {
+			count = "(double)argument_count"
+			if function.Receiver {
+				count += " - 1"
+			}
+		}
+		fmt.Fprintf(&out, " frame->cells[%d].value.number = %s; frame->cells[%d].ready = true;\n", e.asyncSlots[local], count, e.asyncSlots[local])
+	}
 	for position, local := range function.Parameters {
 		value := e.localName(local)
 		if function.Closure {
-			value = unslotted(e.program.Locals[local].Type, fmt.Sprintf("arguments[%d].%s", position, member(e.program.Locals[local].Type)))
+			of := e.program.Locals[local].Type
+			value = unslotted(of, fmt.Sprintf("arguments[%d].%s", position, member(of)))
+			if function.RestElement != 0 && position == len(function.Parameters)-1 {
+				slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(*function)]
+				if function.Receiver {
+					slot++
+				}
+				value = fmt.Sprintf("arguments[%d].reference", slot)
+			} else if e.program.PackedCountNeeded(index) {
+				value = closureArgument(of, position)
+			}
 		}
 		if e.program.Locals[local].Type.IsReference() {
 			value = "adamic_retain(" + value + ")"

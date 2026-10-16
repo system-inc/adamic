@@ -21,6 +21,9 @@ func NormalizeAsync(program *ir.Program) error {
 		if !function.Async {
 			continue
 		}
+		if function.NestedFrame || function.FrameIdentity != 0 {
+			return fmt.Errorf("async nested declarations need a canonical suspension environment")
+		}
 		normalizer := asyncNormalizer{program: program, function: index}
 		body, err := normalizer.statements(function.Body)
 		if err != nil {
@@ -312,6 +315,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				value.Catch, err = n.statements(value.Catch)
 			}
 			statement = value
+		case ir.Labeled:
+			return nil, fmt.Errorf("async labeled regions are not yet proven")
 		case ir.ForOf, ir.Switch:
 			return nil, fmt.Errorf("async for-of and switch regions are not yet proven")
 		default:

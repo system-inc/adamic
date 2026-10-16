@@ -573,8 +573,16 @@ func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
 	if problems := walk(run.graphs, run.marked, run.events); len(problems) != 0 {
 		t.Fatalf("control graph rejects Node: %v", problems)
 	}
+	// traced shares immutable setup with the per-program flow units. Mutate a
+	// fresh graph, not the cached control other parallel tests are walking.
+	graphs := map[int]*Function{}
+	for function := range run.graphs {
+		graph := Build(lowered(t, "../oracle/testdata/async_three.a"), function)
+		Construct(graph)
+		graphs[function] = graph
+	}
 	changed := 0
-	for _, graph := range run.graphs {
+	for _, graph := range graphs {
 		for _, block := range graph.Blocks {
 			if terminal, ok := block.Terminal.(*Suspend); ok {
 				terminal.Fulfilled = terminal.Rejected
@@ -582,7 +590,7 @@ func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
 			}
 		}
 	}
-	if changed == 0 || len(walk(run.graphs, run.marked, run.events)) == 0 {
+	if changed == 0 || len(walk(graphs, run.marked, run.events)) == 0 {
 		t.Fatal("wrong suspension edge survived Node path check")
 	}
 }

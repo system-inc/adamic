@@ -105,3 +105,29 @@ func compilerConcurrencyMatchesNode(t *testing.T, name, source, expected string)
 	}
 	t.Log("source Node, JavaScript, ASan/UBSan native and leak check agree")
 }
+
+// Async entry must copy the ordinary callable ABI, including hidden actual
+// counts and packed default/rest parameters, into the suspension frame.
+func TestAsyncOrdinaryCallableArgumentsMatchNode(t *testing.T) {
+	t.Parallel()
+	compilerConcurrencyMatchesNode(t, "async_arguments.a", `async function describe(value: string = "fallback", ...rest: string[]): Promise<string> {
+ const count = arguments.length;
+ await Promise.resolve();
+ return String(count) + ":" + value + ":" + rest.join("|");
+}
+console.log(await describe());
+console.log(await describe("value", "extra"));
+const run = async (value: number = 7): Promise<string> => {
+ await Promise.resolve();
+ return String(value);
+};
+console.log(await run());
+console.log(await run(9));
+const pack = async (first: string = "head", ...rest: string[]): Promise<string> => {
+ await Promise.resolve();
+ return first + ":" + rest.join("|");
+};
+console.log(await pack());
+console.log(await pack("x", "y", "z"));
+`, "0:fallback:\n2:value:extra\n7\n9\nhead:\nx:y|z\n")
+}

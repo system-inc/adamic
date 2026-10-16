@@ -28,6 +28,8 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
+		{"async function f(): Promise<string> { const text = 'held'; function read(): string { return text; } await Promise.resolve(); return read(); }\nconsole.log(await f());", "canonical suspension environment"},
+		{"async function f(): Promise<void> { exit: { await Promise.resolve(); break exit; } }\nawait f();", "async labeled regions"},
 		{"async function f(value: number): Promise<number> { return value || await Promise.resolve(7); }\nconsole.log(`${await f(0)}`);", "value-preserving logical operands"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
@@ -108,21 +110,19 @@ func TestAsyncReaderRefusals(t *testing.T) {
 		{"async_refuse_return_thenable", "async function f(): Promise<number> {\n    return {\n        then(resolve: (value: number) => void): void {\n            resolve(7);\n        }\n    };\n}\nconsole.log(`${await f()}`);\n", "return of thenables", false},
 		{"async_refuse_arrow_thenable", "const f = async (): Promise<number> => ({\n    then(resolve: (value: number) => void): void {\n        resolve(7);\n    }\n});\nconsole.log(`${await f()}`);\n", "return of thenables", false},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			_, err := lowerSource(t, probe.source)
-			if err == nil || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("reader probe must be refused by name %q: %v", probe.want, err)
+		_, err := lowerSource(t, probe.source)
+		if err == nil || !strings.Contains(err.Error(), probe.want) {
+			t.Fatalf("reader probe must be refused by name %q: %v", probe.want, err)
+		}
+		var refused *Refused
+		var notYet *NotYet
+		if probe.cycle {
+			if !errors.As(err, &refused) {
+				t.Fatalf("cycle must be Refused: %v", err)
 			}
-			var refused *Refused
-			var notYet *NotYet
-			if probe.cycle {
-				if !errors.As(err, &refused) {
-					t.Fatalf("cycle must be Refused: %v", err)
-				}
-			} else if !errors.As(err, &notYet) {
-				t.Fatalf("unproved semantics must be NotYet: %v", err)
-			}
-		})
+		} else if !errors.As(err, &notYet) {
+			t.Fatalf("unproved semantics must be NotYet: %v", err)
+		}
 	}
 }
 
@@ -173,10 +173,8 @@ func TestAsyncVoidAwaitValuesLower(t *testing.T) {
 		{"unused", "async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();"},
 		{"observed", "async function f(): Promise<void> { const value = await Promise.resolve(); console.log(typeof value); } await f();"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatal(err)
-			}
-		})
+		if _, err := lowerSource(t, probe.source); err != nil {
+			t.Fatal(err)
+		}
 	}
 }
