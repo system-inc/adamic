@@ -1,9 +1,4 @@
-// The ledger is the one test in this package that runs cohere's lint rule, so it builds only with -tags=cycleledger:
-// the package's default test binary, like the compiler, links none of cohere's lint (#321063n).
-
-//go:build cycleledger
-
-package lower
+package cycleledger
 
 import (
 	"compress/gzip"
@@ -25,6 +20,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/cohere/rule_runner"
 )
@@ -32,10 +28,10 @@ import (
 // TestOriginalCycleLedger measures binding-initialization obligations on the pinned
 // original source. It does not claim that unrelated tsc features lower natively.
 func TestOriginalCycleLedger(t *testing.T) {
-	// Not parallel: the public rule caches one program process-wide.
+	t.Parallel()
 	root := os.Getenv("ADAMIC_CYCLE_LEDGER_ROOT")
 	if root == "" {
-		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics, and build with -tags=cycleledger")
+		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
 	}
 	pin, err := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
@@ -52,7 +48,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	}
 	typeChecker, release := program.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
-	modules, cyclic := esmModuleOrder(typeChecker, source)
+	modules, cyclic := lower.ESMModuleOrder(typeChecker, source)
 	if !cyclic {
 		t.Fatal("original program lost its import cycle")
 	}
@@ -66,8 +62,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	if len(findings) == 0 {
 		t.Fatal("public rule produced no findings on the pinned firing source")
 	}
-	analysis := &lowering{checker: typeChecker}
-	analysis.proveModuleReads(modules)
+	provenModuleReads := lower.ProvenModuleReads(typeChecker, modules)
 	relative := func(file *ast.SourceFile) string {
 		path, err := filepath.Rel(root, file.FileName().AsString())
 		if err != nil {
@@ -98,7 +93,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 						provider := ast.GetSourceFileOfNode(declaration)
 						if provider != nil && !provider.IsDeclarationFile {
 							decision, reason := "checked", "not proven at this source site; retain runtime TDZ fallback"
-							if analysis.provenModuleReads[node] {
+							if provenModuleReads[node] {
 								decision, reason = "proven", "provider completes before this module's direct read"
 							}
 							if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile {
@@ -114,7 +109,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 		}
 		visit(file.AsNode())
 	}
-	bucket := filepath.Join("..", "..", "stage3", "fixtures", "cycles")
+	bucket := filepath.Join("..", "..", "..", "stage3", "fixtures", "cycles")
 	input, err := os.Open(filepath.Join(bucket, "trace.json.gz"))
 	if err != nil {
 		t.Fatal(err)

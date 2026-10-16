@@ -12,7 +12,7 @@ import (
 // depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
 // has no body to run. A module already in progress is the cycle back edge and is skipped.
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
-	order, cyclic := esmModuleOrder(l.checker, entry)
+	order, cyclic := ESMModuleOrder(l.checker, entry)
 	l.cyclicModules = cyclic
 	if cyclic {
 		l.proveModuleReads(order)
@@ -20,9 +20,9 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 	return order, nil
 }
 
-// esmModuleOrder is shared with the source-ledger audit so it measures the
+// ESMModuleOrder is shared with the source-ledger audit (cycleledger) so it measures the
 // compiler's actual scheduling proof, rather than replaying observed Node order.
-func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
+func ESMModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
 	order := []*ast.SourceFile{}
 	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
 	cyclic := false

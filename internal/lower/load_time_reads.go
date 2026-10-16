@@ -2,14 +2,15 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
 // proveModuleReads marks the global reads in a cyclic program that the entry's actual ESM order proves run after their
 // provider finished: a module function declaration, which is hoisted, or a value whose module runs before the reader's.
 // Every other global read keeps its runtime dead-zone check, so the program is accepted whatever a cycle reads at load.
 // Cohere's nexus/correctness-no-import-cycle-load-time-read inventories those reads lint-side; lowering never runs it,
-// so the compiler links none of cohere's lint (#321063n). The opt-in ledger test, behind the cycleledger tag, holds the
-// rule's findings beside these decisions.
+// so the compiler links none of cohere's lint (#321063n). The ledger in cycleledger holds the rule's findings beside these
+// decisions.
 func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 	l.provenModuleReads = map[*ast.Node]bool{}
 	positions := map[*ast.SourceFile]int{}
@@ -65,6 +66,13 @@ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 		}
 		visit(file.AsNode())
 	}
+}
+
+// ProvenModuleReads is proveModuleReads for the ledger in cycleledger, which links cohere's rule so lowering never has to.
+func ProvenModuleReads(typeChecker *checker.Checker, files []*ast.SourceFile) map[*ast.Node]bool {
+	analysis := &lowering{checker: typeChecker}
+	analysis.proveModuleReads(files)
+	return analysis.provenModuleReads
 }
 
 func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
