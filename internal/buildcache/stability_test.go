@@ -104,8 +104,9 @@ func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
 // A lookup below a directory of the cache's chain under the home, deeper than its direct children, is keyed beside the
 // cache too, so two caches under one home settle to one key (#4gp2ytz: tsc's @types search missed <the cache's
 // parent>/node_modules/@types, named by its whole home path, so two checkouts keyed the adapted tree apart, Compiler's
-// Golem harness on 1412e316ed). A listing or a content read there is still the home's, refused. Mutant: the rule dropped,
-// so the home rule names each cache's path.
+// Golem harness on 1412e316ed). A listing or a content read there is still the home's, refused, and a path that's there
+// keeps its own class (chg_gp66hxpv's red). Mutants: the rule dropped, so the home rule names each cache's path; the
+// rule firing on a stat too.
 // Not parallel: it sets HOME, which settleFacts reads.
 func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.T) {
 	home, err := filepath.EvalSymlinks(t.TempDir())
@@ -127,8 +128,9 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.
 		parent := filepath.Dir(cache)
 		return []classed{
 			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readAbsent),
-			facts.classifyPath(filepath.Join(filepath.Dir(parent), "node_modules", "@types", "node"), readStat|readAbsent),
+			facts.classifyPath(filepath.Join(filepath.Dir(parent), "node_modules", "@types", "node"), readAbsent),
 			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readListing),
+			facts.classifyPath(filepath.Join(parent, "001", "usr", "cc"), readStat),
 		}
 	}
 	first, second := classes("at28-after"), classes("at29-after-other-path")
@@ -138,6 +140,11 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.
 	}
 	if first[2].kind != refusal+"home" {
 		t.Errorf("a listing below the cache's chain classed %q, want refused under the home", first[2])
+	}
+	// A path that's there keeps its own class: a test's temporary directory beside its cache under the home holds the
+	// machine's usr/cc, which the rule took ahead of its class on Adam's runner (chg_gp66hxpv's red).
+	if first[3].kind == "above cache" {
+		t.Errorf("an existing path below the cache's chain classed %q, want its own class", first[3])
 	}
 }
 
