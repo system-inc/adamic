@@ -151,7 +151,8 @@ func goProduct(t testing.TB, request goRequest) string {
 		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	directory := Product(t, inputs, func(directory string) error {
+	// Lean: go builds from the files its key names, in a process of its own.
+	directory := LeanProduct(t, inputs, func(directory string) error {
 		arguments, cleanup, err := request.withOutsideHeaders(root, inputs)
 		if err != nil {
 			return err

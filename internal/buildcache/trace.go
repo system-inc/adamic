@@ -100,6 +100,9 @@ type journalEntry struct {
 	Inputs     string   `json:"inputs,omitempty"`
 	Declared   []string `json:"declared,omitempty"`
 	Root       string   `json:"root,omitempty"`
+	// Lean is a built product whose build takes nothing from its caller but its Inputs (LeanProduct): Settle keys it by
+	// its window and its declared files, never by what its process read before it.
+	Lean bool `json:"lean,omitempty"`
 }
 
 var journalProcess sync.Once
