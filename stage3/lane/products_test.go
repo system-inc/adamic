@@ -110,7 +110,18 @@ func adaptedTree(t testing.TB) string {
 				return err
 			}
 		}
-		return os.Remove(link)
+		if err := os.Remove(link); err != nil {
+			return err
+		}
+		// The typecheck's tsconfig.tsbuildinfo files record each library's path relative to the build, up through the
+		// checkout to the install's real path, so two checkouts would build two products under one key (Golem, Oct 16:
+		// 13 files). They serve only an incremental rebuild, and nothing runs from them.
+		return filepath.WalkDir(filepath.Join(tree, "built"), func(path string, entry os.DirEntry, err error) error {
+			if err != nil || entry.IsDir() || filepath.Ext(path) != ".tsbuildinfo" {
+				return err
+			}
+			return os.Remove(path)
+		})
 	})
 }
 
