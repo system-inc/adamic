@@ -695,569 +695,579 @@ func TestNativeAgreesWithNode_async_methods(t *testing.T) {
 	runNativeAgreesShard(t, -10)
 }
 
-func TestNativeAgreesWithNode_async_mutation(t *testing.T) {
+func TestNativeAgreesWithNode_slab_sizes(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -11)
 }
 
-func TestNativeAgreesWithNode_async_operand_order(t *testing.T) {
+func TestNativeAgreesWithNode_reuse_handover_fresh(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -12)
 }
 
-func TestNativeAgreesWithNode_async_promise_expression(t *testing.T) {
+func TestNativeAgreesWithNode_async_mutation(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -13)
 }
 
-func TestNativeAgreesWithNode_async_receiver(t *testing.T) {
+func TestNativeAgreesWithNode_async_operand_order(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -14)
 }
 
-func TestNativeAgreesWithNode_async_snapshots(t *testing.T) {
+func TestNativeAgreesWithNode_async_promise_expression(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -15)
 }
 
-func TestNativeAgreesWithNode_async_void_value(t *testing.T) {
+func TestNativeAgreesWithNode_async_receiver(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -16)
 }
 
-func TestNativeAgreesWithNode_async_refuse_arrow_thenable(t *testing.T) {
+func TestNativeAgreesWithNode_async_snapshots(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -17)
 }
 
-func TestNativeAgreesWithNode_async_refuse_frame_capture_cycle(t *testing.T) {
+func TestNativeAgreesWithNode_async_void_value(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -18)
 }
 
-func TestNativeAgreesWithNode_async_loop_body_capture(t *testing.T) {
+func TestNativeAgreesWithNode_async_refuse_arrow_thenable(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -19)
 }
 
-func TestNativeAgreesWithNode_async_finally_completion(t *testing.T) {
+func TestNativeAgreesWithNode_async_refuse_frame_capture_cycle(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -20)
 }
 
-func TestNativeAgreesWithNode_async_labels(t *testing.T) {
+func TestNativeAgreesWithNode_async_loop_body_capture(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -21)
 }
 
-func TestNativeAgreesWithNode_async_labels_finally(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_completion(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -22)
 }
 
-func TestNativeAgreesWithNode_async_labels_block_finally(t *testing.T) {
+func TestNativeAgreesWithNode_async_labels(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -23)
 }
 
-func TestNativeAgreesWithNode_label_block_edges(t *testing.T) {
+func TestNativeAgreesWithNode_async_labels_finally(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -24)
 }
 
-func TestNativeAgreesWithNode_async_iterables_cells_labels(t *testing.T) {
+func TestNativeAgreesWithNode_async_labels_block_finally(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -25)
 }
 
-func TestNativeAgreesWithNode_label_block_break_sync(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_edges(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -26)
 }
 
-func TestNativeAgreesWithNode_label_block_continue_sync(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterables_cells_labels(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -27)
 }
 
-func TestNativeAgreesWithNode_label_block_switch_break_sync(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_break_sync(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -28)
 }
 
-func TestNativeAgreesWithNode_label_block_outer_continue_sync(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_continue_sync(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -29)
 }
 
-func TestNativeAgreesWithNode_label_block_break_async(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_switch_break_sync(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -30)
 }
 
-func TestNativeAgreesWithNode_label_block_continue_async(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_outer_continue_sync(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -31)
 }
 
-func TestNativeAgreesWithNode_label_block_switch_break_async(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_break_async(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -32)
 }
 
-func TestNativeAgreesWithNode_label_block_outer_continue_async(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_continue_async(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -33)
 }
 
-func TestNativeAgreesWithNode_async_finally_return(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_switch_break_async(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -34)
 }
 
-func TestNativeAgreesWithNode_async_finally_throw(t *testing.T) {
+func TestNativeAgreesWithNode_label_block_outer_continue_async(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -35)
 }
 
-func TestNativeAgreesWithNode_async_finally_break(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_return(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -36)
 }
 
-func TestNativeAgreesWithNode_async_finally_continue(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_throw(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -37)
 }
 
-func TestNativeAgreesWithNode_async_finally_void_return(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_break(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -38)
 }
 
-func TestNativeAgreesWithNode_async_finally_snapshot(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_continue(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -39)
 }
 
-func TestNativeAgreesWithNode_async_gap_label_admission(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_void_return(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -40)
 }
 
-func TestNativeAgreesWithNode_async_gap_catch_admission(t *testing.T) {
+func TestNativeAgreesWithNode_async_finally_snapshot(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -41)
 }
 
-func TestNativeAgreesWithNode_async_gap_finally_admission(t *testing.T) {
+func TestNativeAgreesWithNode_async_gap_label_admission(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -42)
 }
 
-func TestNativeAgreesWithNode_async_gap_finally_return_admission(t *testing.T) {
+func TestNativeAgreesWithNode_async_gap_catch_admission(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -43)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_ascii_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_gap_finally_admission(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -44)
 }
 
-func TestNativeAgreesWithNode_async_for_of_string(t *testing.T) {
+func TestNativeAgreesWithNode_async_gap_finally_return_admission(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -45)
 }
 
-func TestNativeAgreesWithNode_async_for_of_map(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_ascii_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -46)
 }
 
-func TestNativeAgreesWithNode_async_for_of_collections_mutation(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_string(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -47)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_ascii_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_map(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -48)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_emoji_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_collections_mutation(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -49)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_emoji_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_ascii_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -50)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_surrogates_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_emoji_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -51)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_surrogates_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_emoji_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -52)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_entries_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_surrogates_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -53)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_entries_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_surrogates_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -54)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_keys_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_entries_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -55)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_keys_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_entries_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -56)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_values_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_keys_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -57)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_values_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_keys_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -58)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_values_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_values_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -59)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_values_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_values_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -60)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_entries_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_values_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -61)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_entries_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_values_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -62)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_clear_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_entries_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -63)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_clear_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_entries_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -64)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_readd_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_clear_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -65)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_readd_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_clear_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -66)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_rehash_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_readd_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -67)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_rehash_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_readd_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -68)
 }
 
-func TestNativeAgreesWithNode_async_iterable_nested_maps_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_rehash_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -69)
 }
 
-func TestNativeAgreesWithNode_async_iterable_nested_maps_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_rehash_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -70)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_break_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_nested_maps_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -71)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_break_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_nested_maps_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -72)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_return_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_break_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -73)
 }
 
-func TestNativeAgreesWithNode_async_iterable_map_return_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_break_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -74)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_break_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_return_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -75)
 }
 
-func TestNativeAgreesWithNode_async_iterable_string_break_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_map_return_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -76)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_return_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_break_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -77)
 }
 
-func TestNativeAgreesWithNode_async_iterable_set_return_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_string_break_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -78)
 }
 
-func TestNativeAgreesWithNode_async_for_of_string_admission(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_return_function(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -79)
 }
 
-func TestNativeAgreesWithNode_async_refuse_return_thenable(t *testing.T) {
+func TestNativeAgreesWithNode_async_iterable_set_return_module(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -80)
 }
 
-func TestNativeAgreesWithNode_bitwise_sweep(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_string_admission(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -81)
 }
 
-func TestNativeAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+func TestNativeAgreesWithNode_async_refuse_return_thenable(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -82)
 }
 
-func TestNativeAgreesWithNode_normalize_coverage_long(t *testing.T) {
+func TestNativeAgreesWithNode_bitwise_sweep(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -83)
 }
 
-func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
+func TestNativeAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -84)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_integer(t *testing.T) {
+func TestNativeAgreesWithNode_normalize_coverage_long(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -85)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -86)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_integer(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -87)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -88)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -89)
 }
 
-func TestNativeAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -90)
 }
 
-func TestNativeAgreesWithNode_counters_shapes(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -91)
 }
 
-func TestNativeAgreesWithNode_counters_square_jump(t *testing.T) {
+func TestNativeAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -92)
 }
 
-func TestNativeAgreesWithNode_release_fast_graph(t *testing.T) {
+func TestNativeAgreesWithNode_counters_shapes(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -93)
 }
 
-func TestNativeAgreesWithNode_release_fast_shared(t *testing.T) {
+func TestNativeAgreesWithNode_counters_square_jump(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -94)
 }
 
-func TestNativeAgreesWithNode_flat(t *testing.T) {
+func TestNativeAgreesWithNode_release_fast_graph(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -95)
 }
 
-func TestNativeAgreesWithNode_array(t *testing.T) {
+func TestNativeAgreesWithNode_release_fast_shared(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -96)
 }
 
-func TestNativeAgreesWithNode_async_top_catch_binding(t *testing.T) {
+func TestNativeAgreesWithNode_flat(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -97)
 }
 
-func TestNativeAgreesWithNode_async_top_catch_after_await(t *testing.T) {
+func TestNativeAgreesWithNode_array(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -98)
 }
 
-func TestNativeAgreesWithNode_async_top_loop(t *testing.T) {
+func TestNativeAgreesWithNode_async_top_catch_binding(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -99)
 }
 
-func TestNativeAgreesWithNode_async_for_of_body(t *testing.T) {
+func TestNativeAgreesWithNode_async_top_catch_after_await(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -100)
 }
 
-func TestNativeAgreesWithNode_async_for_of_mutation(t *testing.T) {
+func TestNativeAgreesWithNode_async_top_loop(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -101)
 }
 
-func TestNativeAgreesWithNode_async_for_of_return(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_body(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -102)
 }
 
-func TestNativeAgreesWithNode_async_switch_body(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_mutation(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -103)
 }
 
-func TestNativeAgreesWithNode_async_loop_cells(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_return(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -104)
 }
 
-func TestNativeAgreesWithNode_async_for_of_capture(t *testing.T) {
+func TestNativeAgreesWithNode_async_switch_body(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -105)
 }
 
-func TestNativeAgreesWithNode_async_for_of_cells(t *testing.T) {
+func TestNativeAgreesWithNode_async_loop_cells(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -106)
 }
 
-func TestNativeAgreesWithNode_async_for_of_body_cells(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_capture(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -107)
 }
 
-func TestNativeAgreesWithNode_async_for_of_break_cells(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_cells(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -108)
 }
 
-func TestNativeAgreesWithNode_async_coverage_discard(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_body_cells(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -109)
 }
 
-func TestNativeAgreesWithNode_async_coverage_parameters(t *testing.T) {
+func TestNativeAgreesWithNode_async_for_of_break_cells(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -110)
 }
 
-func TestNativeAgreesWithNode_async_coverage_reject_eager(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_discard(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -111)
 }
 
-func TestNativeAgreesWithNode_async_coverage_reject_empty(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_parameters(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -112)
 }
 
-func TestNativeAgreesWithNode_async_coverage_reject_nested(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_reject_eager(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -113)
 }
 
-func TestNativeAgreesWithNode_async_coverage_typeof(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_reject_empty(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -114)
 }
 
-func TestNativeAgreesWithNode_async_coverage_unions(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_reject_nested(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -115)
 }
 
-func TestNativeAgreesWithNode_async_coverage_values(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_typeof(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -116)
 }
 
-func TestNativeAgreesWithNode_async_nested(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_unions(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -117)
 }
 
-func TestNativeAgreesWithNode_async_plain(t *testing.T) {
+func TestNativeAgreesWithNode_async_coverage_values(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -118)
 }
 
-func TestNativeAgreesWithNode_async_three(t *testing.T) {
+func TestNativeAgreesWithNode_async_nested(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -119)
 }
 
-func TestNativeAgreesWithNode_async_throw(t *testing.T) {
+func TestNativeAgreesWithNode_async_plain(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -120)
 }
 
-func TestNativeAgreesWithNode_async_typeof(t *testing.T) {
+func TestNativeAgreesWithNode_async_three(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -121)
 }
 
-func TestNativeAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+func TestNativeAgreesWithNode_async_throw(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -122)
 }
 
-func TestNativeAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+func TestNativeAgreesWithNode_async_typeof(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -123)
+}
+
+func TestNativeAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -124)
+}
+
+func TestNativeAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -125)
 }
 
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
@@ -1955,559 +1965,569 @@ func TestWASIAgreesWithNode_async_methods(t *testing.T) {
 	runWASIAgreesShard(t, -10)
 }
 
-func TestWASIAgreesWithNode_async_mutation(t *testing.T) {
+func TestWASIAgreesWithNode_slab_sizes(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -11)
 }
 
-func TestWASIAgreesWithNode_async_operand_order(t *testing.T) {
+func TestWASIAgreesWithNode_reuse_handover_fresh(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -12)
 }
 
-func TestWASIAgreesWithNode_async_promise_expression(t *testing.T) {
+func TestWASIAgreesWithNode_async_mutation(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -13)
 }
 
-func TestWASIAgreesWithNode_async_receiver(t *testing.T) {
+func TestWASIAgreesWithNode_async_operand_order(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -14)
 }
 
-func TestWASIAgreesWithNode_async_snapshots(t *testing.T) {
+func TestWASIAgreesWithNode_async_promise_expression(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -15)
 }
 
-func TestWASIAgreesWithNode_async_void_value(t *testing.T) {
+func TestWASIAgreesWithNode_async_receiver(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -16)
 }
 
-func TestWASIAgreesWithNode_async_refuse_arrow_thenable(t *testing.T) {
+func TestWASIAgreesWithNode_async_snapshots(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -17)
 }
 
-func TestWASIAgreesWithNode_async_refuse_frame_capture_cycle(t *testing.T) {
+func TestWASIAgreesWithNode_async_void_value(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -18)
 }
 
-func TestWASIAgreesWithNode_async_loop_body_capture(t *testing.T) {
+func TestWASIAgreesWithNode_async_refuse_arrow_thenable(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -19)
 }
 
-func TestWASIAgreesWithNode_async_finally_completion(t *testing.T) {
+func TestWASIAgreesWithNode_async_refuse_frame_capture_cycle(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -20)
 }
 
-func TestWASIAgreesWithNode_async_labels(t *testing.T) {
+func TestWASIAgreesWithNode_async_loop_body_capture(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -21)
 }
 
-func TestWASIAgreesWithNode_async_labels_finally(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_completion(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -22)
 }
 
-func TestWASIAgreesWithNode_async_labels_block_finally(t *testing.T) {
+func TestWASIAgreesWithNode_async_labels(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -23)
 }
 
-func TestWASIAgreesWithNode_label_block_edges(t *testing.T) {
+func TestWASIAgreesWithNode_async_labels_finally(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -24)
 }
 
-func TestWASIAgreesWithNode_async_iterables_cells_labels(t *testing.T) {
+func TestWASIAgreesWithNode_async_labels_block_finally(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -25)
 }
 
-func TestWASIAgreesWithNode_label_block_break_sync(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_edges(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -26)
 }
 
-func TestWASIAgreesWithNode_label_block_continue_sync(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterables_cells_labels(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -27)
 }
 
-func TestWASIAgreesWithNode_label_block_switch_break_sync(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_break_sync(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -28)
 }
 
-func TestWASIAgreesWithNode_label_block_outer_continue_sync(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_continue_sync(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -29)
 }
 
-func TestWASIAgreesWithNode_label_block_break_async(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_switch_break_sync(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -30)
 }
 
-func TestWASIAgreesWithNode_label_block_continue_async(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_outer_continue_sync(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -31)
 }
 
-func TestWASIAgreesWithNode_label_block_switch_break_async(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_break_async(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -32)
 }
 
-func TestWASIAgreesWithNode_label_block_outer_continue_async(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_continue_async(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -33)
 }
 
-func TestWASIAgreesWithNode_async_finally_return(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_switch_break_async(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -34)
 }
 
-func TestWASIAgreesWithNode_async_finally_throw(t *testing.T) {
+func TestWASIAgreesWithNode_label_block_outer_continue_async(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -35)
 }
 
-func TestWASIAgreesWithNode_async_finally_break(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_return(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -36)
 }
 
-func TestWASIAgreesWithNode_async_finally_continue(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_throw(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -37)
 }
 
-func TestWASIAgreesWithNode_async_finally_void_return(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_break(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -38)
 }
 
-func TestWASIAgreesWithNode_async_finally_snapshot(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_continue(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -39)
 }
 
-func TestWASIAgreesWithNode_async_gap_label_admission(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_void_return(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -40)
 }
 
-func TestWASIAgreesWithNode_async_gap_catch_admission(t *testing.T) {
+func TestWASIAgreesWithNode_async_finally_snapshot(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -41)
 }
 
-func TestWASIAgreesWithNode_async_gap_finally_admission(t *testing.T) {
+func TestWASIAgreesWithNode_async_gap_label_admission(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -42)
 }
 
-func TestWASIAgreesWithNode_async_gap_finally_return_admission(t *testing.T) {
+func TestWASIAgreesWithNode_async_gap_catch_admission(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -43)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_ascii_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_gap_finally_admission(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -44)
 }
 
-func TestWASIAgreesWithNode_async_for_of_string(t *testing.T) {
+func TestWASIAgreesWithNode_async_gap_finally_return_admission(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -45)
 }
 
-func TestWASIAgreesWithNode_async_for_of_map(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_ascii_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -46)
 }
 
-func TestWASIAgreesWithNode_async_for_of_collections_mutation(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_string(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -47)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_ascii_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_map(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -48)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_emoji_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_collections_mutation(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -49)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_emoji_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_ascii_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -50)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_surrogates_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_emoji_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -51)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_surrogates_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_emoji_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -52)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_entries_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_surrogates_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -53)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_entries_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_surrogates_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -54)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_keys_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_entries_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -55)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_keys_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_entries_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -56)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_values_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_keys_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -57)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_values_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_keys_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -58)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_values_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_values_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -59)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_values_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_values_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -60)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_entries_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_values_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -61)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_entries_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_values_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -62)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_clear_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_entries_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -63)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_clear_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_entries_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -64)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_readd_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_clear_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -65)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_readd_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_clear_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -66)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_rehash_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_readd_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -67)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_rehash_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_readd_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -68)
 }
 
-func TestWASIAgreesWithNode_async_iterable_nested_maps_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_rehash_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -69)
 }
 
-func TestWASIAgreesWithNode_async_iterable_nested_maps_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_rehash_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -70)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_break_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_nested_maps_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -71)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_break_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_nested_maps_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -72)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_return_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_break_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -73)
 }
 
-func TestWASIAgreesWithNode_async_iterable_map_return_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_break_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -74)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_break_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_return_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -75)
 }
 
-func TestWASIAgreesWithNode_async_iterable_string_break_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_map_return_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -76)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_return_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_break_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -77)
 }
 
-func TestWASIAgreesWithNode_async_iterable_set_return_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_string_break_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -78)
 }
 
-func TestWASIAgreesWithNode_async_for_of_string_admission(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_return_function(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -79)
 }
 
-func TestWASIAgreesWithNode_async_refuse_return_thenable(t *testing.T) {
+func TestWASIAgreesWithNode_async_iterable_set_return_module(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -80)
 }
 
-func TestWASIAgreesWithNode_bitwise_sweep(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_string_admission(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -81)
 }
 
-func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+func TestWASIAgreesWithNode_async_refuse_return_thenable(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -82)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_integer(t *testing.T) {
+func TestWASIAgreesWithNode_bitwise_sweep(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -83)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -84)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_integer(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -85)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -86)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -87)
 }
 
-func TestWASIAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -88)
 }
 
-func TestWASIAgreesWithNode_counters_shapes(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -89)
 }
 
-func TestWASIAgreesWithNode_counters_square_jump(t *testing.T) {
+func TestWASIAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -90)
 }
 
-func TestWASIAgreesWithNode_release_fast_graph(t *testing.T) {
+func TestWASIAgreesWithNode_counters_shapes(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -91)
 }
 
-func TestWASIAgreesWithNode_release_fast_shared(t *testing.T) {
+func TestWASIAgreesWithNode_counters_square_jump(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -92)
 }
 
-func TestWASIAgreesWithNode_flat(t *testing.T) {
+func TestWASIAgreesWithNode_release_fast_graph(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -93)
 }
 
-func TestWASIAgreesWithNode_array(t *testing.T) {
+func TestWASIAgreesWithNode_release_fast_shared(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -94)
 }
 
-func TestWASIAgreesWithNode_async_top_catch_binding(t *testing.T) {
+func TestWASIAgreesWithNode_flat(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -95)
 }
 
-func TestWASIAgreesWithNode_async_top_catch_after_await(t *testing.T) {
+func TestWASIAgreesWithNode_array(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -96)
 }
 
-func TestWASIAgreesWithNode_async_top_loop(t *testing.T) {
+func TestWASIAgreesWithNode_async_top_catch_binding(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -97)
 }
 
-func TestWASIAgreesWithNode_async_for_of_body(t *testing.T) {
+func TestWASIAgreesWithNode_async_top_catch_after_await(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -98)
 }
 
-func TestWASIAgreesWithNode_async_for_of_mutation(t *testing.T) {
+func TestWASIAgreesWithNode_async_top_loop(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -99)
 }
 
-func TestWASIAgreesWithNode_async_for_of_return(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_body(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -100)
 }
 
-func TestWASIAgreesWithNode_async_switch_body(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_mutation(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -101)
 }
 
-func TestWASIAgreesWithNode_async_loop_cells(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_return(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -102)
 }
 
-func TestWASIAgreesWithNode_async_for_of_capture(t *testing.T) {
+func TestWASIAgreesWithNode_async_switch_body(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -103)
 }
 
-func TestWASIAgreesWithNode_async_for_of_cells(t *testing.T) {
+func TestWASIAgreesWithNode_async_loop_cells(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -104)
 }
 
-func TestWASIAgreesWithNode_async_for_of_body_cells(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_capture(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -105)
 }
 
-func TestWASIAgreesWithNode_async_for_of_break_cells(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_cells(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -106)
 }
 
-func TestWASIAgreesWithNode_async_coverage_discard(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_body_cells(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -107)
 }
 
-func TestWASIAgreesWithNode_async_coverage_parameters(t *testing.T) {
+func TestWASIAgreesWithNode_async_for_of_break_cells(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -108)
 }
 
-func TestWASIAgreesWithNode_async_coverage_reject_eager(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_discard(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -109)
 }
 
-func TestWASIAgreesWithNode_async_coverage_reject_empty(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_parameters(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -110)
 }
 
-func TestWASIAgreesWithNode_async_coverage_reject_nested(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_reject_eager(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -111)
 }
 
-func TestWASIAgreesWithNode_async_coverage_typeof(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_reject_empty(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -112)
 }
 
-func TestWASIAgreesWithNode_async_coverage_unions(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_reject_nested(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -113)
 }
 
-func TestWASIAgreesWithNode_async_coverage_values(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_typeof(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -114)
 }
 
-func TestWASIAgreesWithNode_async_nested(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_unions(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -115)
 }
 
-func TestWASIAgreesWithNode_async_plain(t *testing.T) {
+func TestWASIAgreesWithNode_async_coverage_values(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -116)
 }
 
-func TestWASIAgreesWithNode_async_three(t *testing.T) {
+func TestWASIAgreesWithNode_async_nested(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -117)
 }
 
-func TestWASIAgreesWithNode_async_throw(t *testing.T) {
+func TestWASIAgreesWithNode_async_plain(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -118)
 }
 
-func TestWASIAgreesWithNode_async_typeof(t *testing.T) {
+func TestWASIAgreesWithNode_async_three(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -119)
 }
 
-func TestWASIAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+func TestWASIAgreesWithNode_async_throw(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -120)
 }
 
-func TestWASIAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+func TestWASIAgreesWithNode_async_typeof(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -121)
+}
+
+func TestWASIAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -122)
+}
+
+func TestWASIAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -123)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
@@ -2790,524 +2810,534 @@ func TestCountsAreRecorded_async_methods(t *testing.T) {
 	runCountsShard(t, -10)
 }
 
-func TestCountsAreRecorded_async_mutation(t *testing.T) {
+func TestCountsAreRecorded_slab_sizes(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -11)
 }
 
-func TestCountsAreRecorded_async_operand_order(t *testing.T) {
+func TestCountsAreRecorded_reuse_handover_fresh(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -12)
 }
 
-func TestCountsAreRecorded_async_promise_expression(t *testing.T) {
+func TestCountsAreRecorded_async_mutation(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -13)
 }
 
-func TestCountsAreRecorded_async_receiver(t *testing.T) {
+func TestCountsAreRecorded_async_operand_order(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -14)
 }
 
-func TestCountsAreRecorded_async_snapshots(t *testing.T) {
+func TestCountsAreRecorded_async_promise_expression(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -15)
 }
 
-func TestCountsAreRecorded_async_void_value(t *testing.T) {
+func TestCountsAreRecorded_async_receiver(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -16)
 }
 
-func TestCountsAreRecorded_typed_arrays_integer(t *testing.T) {
+func TestCountsAreRecorded_async_snapshots(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -17)
 }
 
-func TestCountsAreRecorded_typed_arrays_integer_stop(t *testing.T) {
+func TestCountsAreRecorded_async_void_value(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -18)
 }
 
-func TestCountsAreRecorded_typed_arrays_sort_uint8array(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_integer(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -19)
 }
 
-func TestCountsAreRecorded_typed_arrays_sort_uint16array(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_integer_stop(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -20)
 }
 
-func TestCountsAreRecorded_typed_arrays_sort_int32array(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_sort_uint8array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -21)
 }
 
-func TestCountsAreRecorded_typed_arrays_sort_float64array(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_sort_uint16array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -22)
 }
 
-func TestCountsAreRecorded_counters_shapes(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_sort_int32array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -23)
 }
 
-func TestCountsAreRecorded_counters_square_jump(t *testing.T) {
+func TestCountsAreRecorded_typed_arrays_sort_float64array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -24)
 }
 
-func TestCountsAreRecorded_release_fast_graph(t *testing.T) {
+func TestCountsAreRecorded_counters_shapes(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -25)
 }
 
-func TestCountsAreRecorded_release_fast_shared(t *testing.T) {
+func TestCountsAreRecorded_counters_square_jump(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -26)
 }
 
-func TestCountsAreRecorded_flat(t *testing.T) {
+func TestCountsAreRecorded_release_fast_graph(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -27)
 }
 
-func TestCountsAreRecorded_array(t *testing.T) {
+func TestCountsAreRecorded_release_fast_shared(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -28)
 }
 
-func TestCountsAreRecorded_async_loop_body_capture(t *testing.T) {
+func TestCountsAreRecorded_flat(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -29)
 }
 
-func TestCountsAreRecorded_async_finally_completion(t *testing.T) {
+func TestCountsAreRecorded_array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -30)
 }
 
-func TestCountsAreRecorded_async_labels(t *testing.T) {
+func TestCountsAreRecorded_async_loop_body_capture(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -31)
 }
 
-func TestCountsAreRecorded_async_labels_finally(t *testing.T) {
+func TestCountsAreRecorded_async_finally_completion(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -32)
 }
 
-func TestCountsAreRecorded_async_labels_block_finally(t *testing.T) {
+func TestCountsAreRecorded_async_labels(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -33)
 }
 
-func TestCountsAreRecorded_label_block_edges(t *testing.T) {
+func TestCountsAreRecorded_async_labels_finally(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -34)
 }
 
-func TestCountsAreRecorded_async_iterables_cells_labels(t *testing.T) {
+func TestCountsAreRecorded_async_labels_block_finally(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -35)
 }
 
-func TestCountsAreRecorded_label_block_break_sync(t *testing.T) {
+func TestCountsAreRecorded_label_block_edges(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -36)
 }
 
-func TestCountsAreRecorded_label_block_continue_sync(t *testing.T) {
+func TestCountsAreRecorded_async_iterables_cells_labels(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -37)
 }
 
-func TestCountsAreRecorded_label_block_switch_break_sync(t *testing.T) {
+func TestCountsAreRecorded_label_block_break_sync(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -38)
 }
 
-func TestCountsAreRecorded_label_block_outer_continue_sync(t *testing.T) {
+func TestCountsAreRecorded_label_block_continue_sync(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -39)
 }
 
-func TestCountsAreRecorded_label_block_break_async(t *testing.T) {
+func TestCountsAreRecorded_label_block_switch_break_sync(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -40)
 }
 
-func TestCountsAreRecorded_label_block_continue_async(t *testing.T) {
+func TestCountsAreRecorded_label_block_outer_continue_sync(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -41)
 }
 
-func TestCountsAreRecorded_label_block_switch_break_async(t *testing.T) {
+func TestCountsAreRecorded_label_block_break_async(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -42)
 }
 
-func TestCountsAreRecorded_label_block_outer_continue_async(t *testing.T) {
+func TestCountsAreRecorded_label_block_continue_async(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -43)
 }
 
-func TestCountsAreRecorded_async_finally_return(t *testing.T) {
+func TestCountsAreRecorded_label_block_switch_break_async(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -44)
 }
 
-func TestCountsAreRecorded_async_finally_throw(t *testing.T) {
+func TestCountsAreRecorded_label_block_outer_continue_async(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -45)
 }
 
-func TestCountsAreRecorded_async_finally_break(t *testing.T) {
+func TestCountsAreRecorded_async_finally_return(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -46)
 }
 
-func TestCountsAreRecorded_async_finally_continue(t *testing.T) {
+func TestCountsAreRecorded_async_finally_throw(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -47)
 }
 
-func TestCountsAreRecorded_async_finally_void_return(t *testing.T) {
+func TestCountsAreRecorded_async_finally_break(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -48)
 }
 
-func TestCountsAreRecorded_async_finally_snapshot(t *testing.T) {
+func TestCountsAreRecorded_async_finally_continue(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -49)
 }
 
-func TestCountsAreRecorded_async_gap_label_admission(t *testing.T) {
+func TestCountsAreRecorded_async_finally_void_return(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -50)
 }
 
-func TestCountsAreRecorded_async_gap_catch_admission(t *testing.T) {
+func TestCountsAreRecorded_async_finally_snapshot(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -51)
 }
 
-func TestCountsAreRecorded_async_gap_finally_admission(t *testing.T) {
+func TestCountsAreRecorded_async_gap_label_admission(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -52)
 }
 
-func TestCountsAreRecorded_async_gap_finally_return_admission(t *testing.T) {
+func TestCountsAreRecorded_async_gap_catch_admission(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -53)
 }
 
-func TestCountsAreRecorded_async_iterable_string_ascii_function(t *testing.T) {
+func TestCountsAreRecorded_async_gap_finally_admission(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -54)
 }
 
-func TestCountsAreRecorded_async_for_of_string(t *testing.T) {
+func TestCountsAreRecorded_async_gap_finally_return_admission(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -55)
 }
 
-func TestCountsAreRecorded_async_for_of_map(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_ascii_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -56)
 }
 
-func TestCountsAreRecorded_async_for_of_collections_mutation(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_string(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -57)
 }
 
-func TestCountsAreRecorded_async_iterable_string_ascii_module(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_map(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -58)
 }
 
-func TestCountsAreRecorded_async_iterable_string_emoji_function(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_collections_mutation(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -59)
 }
 
-func TestCountsAreRecorded_async_iterable_string_emoji_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_ascii_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -60)
 }
 
-func TestCountsAreRecorded_async_iterable_string_surrogates_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_emoji_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -61)
 }
 
-func TestCountsAreRecorded_async_iterable_string_surrogates_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_emoji_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -62)
 }
 
-func TestCountsAreRecorded_async_iterable_map_entries_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_surrogates_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -63)
 }
 
-func TestCountsAreRecorded_async_iterable_map_entries_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_surrogates_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -64)
 }
 
-func TestCountsAreRecorded_async_iterable_map_keys_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_entries_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -65)
 }
 
-func TestCountsAreRecorded_async_iterable_map_keys_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_entries_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -66)
 }
 
-func TestCountsAreRecorded_async_iterable_map_values_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_keys_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -67)
 }
 
-func TestCountsAreRecorded_async_iterable_map_values_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_keys_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -68)
 }
 
-func TestCountsAreRecorded_async_iterable_set_values_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_values_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -69)
 }
 
-func TestCountsAreRecorded_async_iterable_set_values_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_values_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -70)
 }
 
-func TestCountsAreRecorded_async_iterable_set_entries_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_values_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -71)
 }
 
-func TestCountsAreRecorded_async_iterable_set_entries_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_values_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -72)
 }
 
-func TestCountsAreRecorded_async_iterable_map_clear_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_entries_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -73)
 }
 
-func TestCountsAreRecorded_async_iterable_map_clear_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_entries_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -74)
 }
 
-func TestCountsAreRecorded_async_iterable_map_readd_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_clear_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -75)
 }
 
-func TestCountsAreRecorded_async_iterable_map_readd_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_clear_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -76)
 }
 
-func TestCountsAreRecorded_async_iterable_map_rehash_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_readd_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -77)
 }
 
-func TestCountsAreRecorded_async_iterable_map_rehash_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_readd_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -78)
 }
 
-func TestCountsAreRecorded_async_iterable_nested_maps_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_rehash_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -79)
 }
 
-func TestCountsAreRecorded_async_iterable_nested_maps_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_rehash_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -80)
 }
 
-func TestCountsAreRecorded_async_iterable_map_break_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_nested_maps_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -81)
 }
 
-func TestCountsAreRecorded_async_iterable_map_break_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_nested_maps_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -82)
 }
 
-func TestCountsAreRecorded_async_iterable_map_return_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_break_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -83)
 }
 
-func TestCountsAreRecorded_async_iterable_map_return_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_break_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -84)
 }
 
-func TestCountsAreRecorded_async_iterable_string_break_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_return_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -85)
 }
 
-func TestCountsAreRecorded_async_iterable_string_break_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_map_return_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -86)
 }
 
-func TestCountsAreRecorded_async_iterable_set_return_function(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_break_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -87)
 }
 
-func TestCountsAreRecorded_async_iterable_set_return_module(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_string_break_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -88)
 }
 
-func TestCountsAreRecorded_async_for_of_string_admission(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_return_function(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -89)
 }
 
-func TestCountsAreRecorded_async_top_catch_binding(t *testing.T) {
+func TestCountsAreRecorded_async_iterable_set_return_module(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -90)
 }
 
-func TestCountsAreRecorded_async_top_catch_after_await(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_string_admission(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -91)
 }
 
-func TestCountsAreRecorded_async_top_loop(t *testing.T) {
+func TestCountsAreRecorded_async_top_catch_binding(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -92)
 }
 
-func TestCountsAreRecorded_async_for_of_body(t *testing.T) {
+func TestCountsAreRecorded_async_top_catch_after_await(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -93)
 }
 
-func TestCountsAreRecorded_async_for_of_mutation(t *testing.T) {
+func TestCountsAreRecorded_async_top_loop(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -94)
 }
 
-func TestCountsAreRecorded_async_for_of_return(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_body(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -95)
 }
 
-func TestCountsAreRecorded_async_switch_body(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_mutation(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -96)
 }
 
-func TestCountsAreRecorded_async_loop_cells(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_return(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -97)
 }
 
-func TestCountsAreRecorded_async_for_of_capture(t *testing.T) {
+func TestCountsAreRecorded_async_switch_body(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -98)
 }
 
-func TestCountsAreRecorded_async_for_of_cells(t *testing.T) {
+func TestCountsAreRecorded_async_loop_cells(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -99)
 }
 
-func TestCountsAreRecorded_async_for_of_body_cells(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_capture(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -100)
 }
 
-func TestCountsAreRecorded_async_for_of_break_cells(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_cells(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -101)
 }
 
-func TestCountsAreRecorded_async_coverage_discard(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_body_cells(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -102)
 }
 
-func TestCountsAreRecorded_async_coverage_parameters(t *testing.T) {
+func TestCountsAreRecorded_async_for_of_break_cells(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -103)
 }
 
-func TestCountsAreRecorded_async_coverage_reject_eager(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_discard(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -104)
 }
 
-func TestCountsAreRecorded_async_coverage_reject_empty(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_parameters(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -105)
 }
 
-func TestCountsAreRecorded_async_coverage_reject_nested(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_reject_eager(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -106)
 }
 
-func TestCountsAreRecorded_async_coverage_typeof(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_reject_empty(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -107)
 }
 
-func TestCountsAreRecorded_async_coverage_unions(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_reject_nested(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -108)
 }
 
-func TestCountsAreRecorded_async_coverage_values(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_typeof(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -109)
 }
 
-func TestCountsAreRecorded_async_nested(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_unions(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -110)
 }
 
-func TestCountsAreRecorded_async_plain(t *testing.T) {
+func TestCountsAreRecorded_async_coverage_values(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -111)
 }
 
-func TestCountsAreRecorded_async_three(t *testing.T) {
+func TestCountsAreRecorded_async_nested(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -112)
 }
 
-func TestCountsAreRecorded_async_throw(t *testing.T) {
+func TestCountsAreRecorded_async_plain(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -113)
 }
 
-func TestCountsAreRecorded_async_typeof(t *testing.T) {
+func TestCountsAreRecorded_async_three(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -114)
+}
+
+func TestCountsAreRecorded_async_throw(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -115)
+}
+
+func TestCountsAreRecorded_async_typeof(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -116)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {

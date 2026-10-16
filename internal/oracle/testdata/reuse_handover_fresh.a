@@ -1,0 +1,218 @@
+// A new object handed to a consumed parameter (native/reuse.go, handOver), when a later argument
+// throws inside try. The object is a statement temporary, not a variable moved out: the call is
+// never made, and the statement lets the object go on the way to the catch. The same for a fresh
+// array, a copy of an object that stays live, an object returned from a call, and a local array
+// that is moved because nothing reads it after. Labels are built at runtime, so a value nobody
+// lets go of is a leak.
+interface Counter {
+	readonly count: number;
+	readonly label: string;
+}
+
+interface Pair {
+	readonly left: number;
+	readonly right: number;
+}
+
+function bump(counter: Counter, by: number): Counter {
+	return { ...counter, count: counter.count + by, label: counter.label };
+}
+
+function amount(fail: boolean, at: number): number {
+	if (fail) {
+		throw new Error(`no amount at ${at}`);
+	}
+	return at;
+}
+
+function make(count: number): Counter {
+	return { count, label: `made ${count}` };
+}
+
+function forward(counter: Counter, by: number): Counter {
+	return bump(counter, by);
+}
+
+function shiftAll(values: number[], by: number): number[] {
+	return values.map((value) => value + by);
+}
+
+function overlay(base: Pair, extra: Pair, by: number): Pair {
+	const merged: Pair = { ...base, left: base.left + by, right: base.right };
+	return { ...extra, left: merged.left + extra.left, right: extra.right };
+}
+
+function freshOnce(fail: boolean): string {
+	try {
+		const next = bump({ count: 1, label: `fresh ${1}` }, amount(fail, 2));
+		return `${next.count} ${next.label}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function freshMade(fail: boolean): string {
+	try {
+		const next = bump(make(5), amount(fail, 6));
+		return `${next.count} ${next.label}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function freshCopy(fail: boolean): string {
+	const kept: Counter = { count: 3, label: `kept ${3}` };
+	try {
+		const next = bump({ ...kept, label: `copy ${kept.count}` }, amount(fail, 4));
+		return `${next.count} ${kept.label}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.message} ${kept.count} ${kept.label}`;
+		}
+	}
+	return "missing";
+}
+
+function stillLive(fail: boolean): string {
+	const stayed: Counter = { count: 9, label: `stay ${9}` };
+	try {
+		const next = bump(stayed, amount(fail, 1));
+		return `${next.count} ${stayed.label}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `${error.message} ${stayed.count} ${stayed.label}`;
+		}
+	}
+	return "missing";
+}
+
+function freshForward(fail: boolean): string {
+	try {
+		const next = forward({ count: 8, label: `out ${8}` }, amount(fail, 3));
+		return `${next.label} ${next.count}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function freshPasses(): number {
+	let total = 0;
+	for (let index = 0; index < 12; index++) {
+		try {
+			total += bump({ count: index, label: `pass ${index}` }, amount(index % 2 === 1, index)).count;
+		} catch (error) {
+			if (error instanceof Error) {
+				total += error.message.length;
+			}
+		}
+	}
+	return total;
+}
+
+function freshWide(fail: boolean): string {
+	try {
+		const next = bump({ count: 11, label: "w".repeat(200) }, amount(fail, 12));
+		return `${next.count} ${next.label.length}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function freshArray(fail: boolean): string {
+	try {
+		return shiftAll([1, 2, 3, 4], amount(fail, 5)).join(",");
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function movedArray(fail: boolean): string {
+	const values: number[] = [7, 8, 9];
+	try {
+		return shiftAll(values, amount(fail, 2)).join(",");
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function movedArrayPasses(): number {
+	let total = 0;
+	for (let index = 0; index < 6; index++) {
+		const values = [index, index + 1, index + 2];
+		try {
+			const shifted = shiftAll(values, amount(index % 2 === 0, index + 1));
+			total += shifted.length + (shifted[0] ?? 0);
+		} catch (error) {
+			if (error instanceof Error) {
+				total += error.message.length;
+			}
+		}
+	}
+	return total;
+}
+
+function twoFresh(fail: boolean): string {
+	try {
+		const next = overlay({ left: 1, right: 2 }, { left: 3, right: 4 }, amount(fail, 5));
+		return `${next.left} ${next.right}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+function movedAndFresh(fail: boolean): string {
+	const base: Pair = { left: 6, right: 7 };
+	try {
+		const next = overlay(base, { left: 1, right: 1 }, amount(fail, 8));
+		return `${next.left} ${next.right}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return error.message;
+		}
+	}
+	return "missing";
+}
+
+console.log(freshOnce(true));
+console.log(freshOnce(false));
+console.log(freshMade(true));
+console.log(freshMade(false));
+console.log(freshCopy(true));
+console.log(freshCopy(false));
+console.log(stillLive(true));
+console.log(stillLive(false));
+console.log(freshForward(true));
+console.log(freshForward(false));
+console.log(`${freshPasses()}`);
+console.log(freshWide(true));
+console.log(freshWide(false));
+console.log(freshArray(true));
+console.log(freshArray(false));
+console.log(movedArray(true));
+console.log(movedArray(false));
+console.log(`${movedArrayPasses()}`);
+console.log(twoFresh(true));
+console.log(twoFresh(false));
+console.log(movedAndFresh(true));
+console.log(movedAndFresh(false));
