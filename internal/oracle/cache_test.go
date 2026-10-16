@@ -199,7 +199,7 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go")
+		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go", repository+"/internal/leakcheck/leakcheck.go")
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -570,8 +570,8 @@ func TestGateCacheAtomicEvidence(t *testing.T) {
 	}
 }
 
+// Not parallel: Setenv changes the process-wide gate bypass.
 func TestGateCacheUncached(t *testing.T) {
-	// Not parallel: Setenv changes the process-wide gate bypass.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	cache := &resultCache{directory: t.TempDir()}
 	key := cacheKey("forced run")

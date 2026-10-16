@@ -13,6 +13,7 @@ import (
 // Each mutant still compiles with -Werror, runs without a sanitizer finding, and exits successfully.
 // Only comparison with the program's source on Node kills it. Counts are deliberately not involved.
 func TestLibraryMapSetMutants(t *testing.T) {
+	t.Parallel()
 	families := []string{"union", "intersection", "difference", "symmetricDifference", "isSubsetOf", "isSupersetOf", "isDisjointFrom", "keys", "iterators", "constructors", "forEach", "size", "groupBy"}
 	for _, family := range families {
 		t.Run(family, func(t *testing.T) {
