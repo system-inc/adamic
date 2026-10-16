@@ -501,6 +501,21 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			}
 		}
 	}
+	// A directory on the build cache's own chain of parents, listed or opened to list (Go's os.Open of a directory has no
+	// O_DIRECTORY, so it reads as content), is keyed as a lookup beside the cache's parents is: by its place relative to
+	// the cache and whether it's there, never by the names it lists, so two boxes whose homes hold different things
+	// settle to one key (#4gp2ytz: esbuild's resolver lists every parent of where it runs up to /, looking for package.json,
+	// tsconfig.json and node_modules, and every product it bundled refused under a cache in the home). Only that chain:
+	// a listing of any other directory under the home is still refused, and what the resolver acts on, a file it opens or
+	// a directory it lists off the chain, is read as itself and refused there (Tests' bounds, Builder's ruling).
+	if name != "/" && kinds&^(readStat|readAbsent|readListing|readContent) == 0 && kinds&(readListing|readContent) != 0 && isDirectory(name) {
+		for _, cache := range facts.caches {
+			if under(cache, name) && name != cache {
+				relative, _ := filepath.Rel(cache, name)
+				return classed{"above cache", filepath.ToSlash(relative)}
+			}
+		}
+	}
 	for _, place := range facts.kernel {
 		if under(name, place) {
 			return classed{}
