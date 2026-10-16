@@ -1,0 +1,12 @@
+function syncBreak(): void {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            console.log(`sync break${i}`);
+            break;
+            console.log('sync missed break');
+        }
+        console.log('sync wrong block break');
+    }
+    console.log('sync break done');
+}
+syncBreak();

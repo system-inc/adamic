@@ -1,0 +1,2 @@
+async function f(): Promise<number> { try { return await Promise.resolve(1); } finally { console.log('clean'); } }
+await f();

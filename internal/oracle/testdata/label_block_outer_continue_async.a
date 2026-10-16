@@ -1,0 +1,14 @@
+async function asyncOuterContinue(): Promise<void> {
+    outer: for (let i = 0; i < 2; i++) {
+        box: {
+            for (let j = 0; j < 2; j++) {
+                await Promise.resolve(); console.log(`async outer${i}:${j}`);
+                continue outer;
+            }
+            console.log('async wrong inner continue');
+        }
+        console.log('async wrong outer continue');
+    }
+    console.log('async outer done');
+}
+await asyncOuterContinue();

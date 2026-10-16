@@ -31,7 +31,9 @@ func NormalizeAsync(program *ir.Program) error {
 			return &AsyncError{Site: function.AsyncSite, What: "async nested declarations need a canonical suspension environment"}
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
-		body, err := normalizer.statements(function.Body)
+		completion := asyncCompletion{n: &normalizer, loops: map[int]bool{}, names: map[int]string{}}
+		completed := completion.statements(function.Body)
+		body, err := normalizer.statements(append(completion.locals, completed...))
 		if err != nil {
 			return err
 		}
@@ -320,14 +322,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			value.Body, err = n.statements(value.Body)
 			statement = value
 		case ir.Try:
-			if containsAwait(reflect.ValueOf(value.Catch)) {
-				return nil, n.errorAt(value.Catch, "await in catch or finally is not yet proven")
-			}
-			if containsAwait(reflect.ValueOf(value.Finally)) {
-				return nil, n.errorAt(value.Finally, "await in catch or finally is not yet proven")
-			}
 			if value.HasFinally {
-				return nil, n.errorAt(value, "async finally completion routing is not yet proven")
+				return nil, n.errorAt(value, "async finally escaped completion normalization")
 			}
 			value.Body, err = n.statements(value.Body)
 			if err == nil {
@@ -335,19 +331,11 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			}
 			statement = value
 		case ir.Labeled:
-			return nil, n.errorAt(value, "async labeled regions are not yet proven")
+			value.Body, err = n.statements(value.Body)
+			statement = value
 		case ir.ForOf:
 			if value.RegexIterator || (value.Iterable.Type() != ir.Array && value.Iterable.Type() != ir.String && value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
 				return nil, n.errorAt(value, "async for-of over this iterable or pattern is not yet proven")
-			}
-			var outerBreak bool
-			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
-				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
-					outerBreak = true
-				}
-			})
-			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
-				return nil, n.errorAt(value, "async for-of labeled outer break is not yet proven")
 			}
 			if value.Iterable.Type() != ir.Array {
 				iterable := n.expression(value.Iterable, &before, true)
@@ -404,6 +392,7 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				element = ir.Unwrap{Value: element}
 			}
 			loop := ir.Loop{
+				Labels:    value.Labels,
 				Condition: ir.Binary{Operator: ir.Less, Left: position, Right: ir.Length{Array: array}},
 				Body:      append([]ir.Statement{ir.Declare{Local: value.Local, Value: element}}, value.Body...),
 				Update:    []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}}}},
