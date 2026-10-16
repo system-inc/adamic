@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
