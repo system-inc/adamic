@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/speculative/audit.py", line 42, in <module>
+    count = check(speculative)
+            ^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/speculative/audit.py", line 35, in check
+    assert actual == [(3, 0), (4, 1), (5, 2), (8, 0)], actual
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: []

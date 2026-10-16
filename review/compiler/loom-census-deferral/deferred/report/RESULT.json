@@ -1,0 +1,146 @@
+{
+  "base": "historical census base a5630a90",
+  "mapper_fix": "historical mapper merge 69501280",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 20
+  },
+  "stream_inventory": null,
+  "counts": {
+    "NotYet": [
+      8,
+      10,
+      2,
+      0,
+      0
+    ],
+    "Refused": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T",
+      "counts": [
+        5,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        0,
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a union of differently held members variable a function value captures",
+      "counts": [
+        0,
+        2,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a generic function as a value",
+      "counts": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning U",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type U",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 591,
+  "examined_bytes": 406,
+  "deferred_body_bytes": 185,
+  "deferred_generic_instantiation": 6,
+  "instantiated_generics": 3,
+  "never_reached": [
+    {
+      "where": "/workspace/adamic/review/compiler/loom-census-deferral/deferred/source/a.a:2:1",
+      "name": "unused",
+      "body_start": 68,
+      "body_end": 131
+    },
+    {
+      "where": "/workspace/adamic/review/compiler/loom-census-deferral/deferred/source/a.a:4:1",
+      "name": "diagnosed",
+      "body_start": 230,
+      "body_end": 277
+    },
+    {
+      "where": "/workspace/adamic/review/compiler/loom-census-deferral/deferred/source/a.a:2:42",
+      "name": "unusedNested",
+      "body_start": 97,
+      "body_end": 115
+    }
+  ],
+  "examined_share": 0.6869712351945855,
+  "typescript_source_bytes": 591,
+  "typescript_examined_share": 0.6869712351945855,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. Deferred generic body bytes are excluded from examined bytes despite AST traversal. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 20,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "a.a",
+      "sha256": "941fafe397aac0e7f90d6958f4334761237ffbb0bd193fd3b1b3d05b668b82f6",
+      "source_bytes": 486,
+      "total_nodes": 112,
+      "visited_nodes": 112,
+      "attempted_nodes": 37,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "z.a",
+      "sha256": "841204da475ccf05fbe52eee053b83901d425a89072e298879dde0e203029294",
+      "source_bytes": 105,
+      "total_nodes": 24,
+      "visited_nodes": 24,
+      "attempted_nodes": 23,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}

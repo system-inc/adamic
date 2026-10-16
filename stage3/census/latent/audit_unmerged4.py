@@ -1,4 +1,5 @@
 """Independently recount unique lowering sites and top-ten rankings for untouched tips."""
+from unit_status import body_eligible, audit_deferred
 import collections, copy, gzip, hashlib, json, pathlib, subprocess
 ROOT=pathlib.Path(__file__).resolve().parent;report=json.loads((ROOT/'REPORT.json').read_text());DATA=ROOT/'data/unmerged4'
 LABEL='measured on a checker-rejected program';KINDS=['NotYet','Refused','SkippedDependency','error','panic']
@@ -32,6 +33,7 @@ def check(value):
   clean=sorted(f for f in actual if not any(d['file']==f for d in h['diagnostic_sites']))
   ratio=r['checker_clean_ratio']
   assert r['checker_clean_files']==clean and ratio['numerator']==len(clean) and ratio['denominator']==len(actual) and ratio['fraction']==f'{len(clean)}/{len(actual)}' and ratio['percent']==100*len(clean)/len(actual),'source denominator'
+  audit_deferred(r, [u for row in rows[1:] for u in row["units"]])
   for row in rows[1:]:
    file=row['file'];own={k for k in keys if k[1].rsplit(':',2)[0]==file}
    assert {k:r['per_file'][file][k] for k in KINDS}=={k:sum(s[0]==k for s in own) for k in KINDS},'file attribution'
@@ -39,7 +41,7 @@ def check(value):
    for unit in row['units']:
     if 'body_start' not in unit:continue
     ds=[d['text'] for d in h['diagnostic_sites'] if d['file']==file and d['start']<unit['body_end'] and (d['end']>unit['body_start'] or d['start']>=unit['body_start'])]
-    assert unit['checker_diagnostics']==ds and (unit['status']=='skipped_checker_body')==bool(ds),'body scope'
+    assert unit['checker_diagnostics']==ds and body_eligible(unit, ds),'body scope'
     if ds:assert not any(f['unit']==unit['where'] for f in row['findings']),'body scope'
 check(report);print('both untouched tips, dependency pins, source hashes, exact per-tree file coverage, unique counts, exact reasons, top ten and body eligibility passed')
 mutants=[('untouched pin',lambda r:r['runs'][0].__setitem__('head','wrong')),('source',lambda r:r['runs'][0]['source']['files'][0].__setitem__('sha256','wrong')),('unique totals',lambda r:r['runs'][0]['lowering_counts'].__setitem__('NotYet',-1)),('unique totals',lambda r:r['runs'][1]['lowering_counts'].__setitem__('Refused',-1)),('reason counts',lambda r:r['runs'][0]['per_reason'].__setitem__(next(iter(r['runs'][0]['per_reason'])),-1)),('top ten',lambda r:r['runs'][0]['top_10'][0].__setitem__('count',-1)),('top ten',lambda r:r['runs'][1]['top_10'].reverse()),('top ten',lambda r:r['runs'][1]['top_10'].pop()),('file attribution',lambda r:r['runs'][0]['per_file'][next(iter(r['runs'][0]['per_file']))].__setitem__('NotYet',-1)),('label',lambda r:r.__setitem__('measurement','wrong')),('source denominator',lambda r:r['runs'][1]['checker_clean_ratio'].__setitem__('denominator',78))]

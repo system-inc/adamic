@@ -1,0 +1,7 @@
+// a-check: type error TS2322
+export function unused<T>(value: T): T { function unusedNested(): T { return value; } return value; }
+export function called<T>(value: T): T { return value; }
+export function diagnosed<T>(value: T): T { const bad: number = "wrong"; return value; }
+export function outer<T>(value: T): T { function nested(): T { return value; } return value; }
+export class Box<T> { method<U>(value: U): U { return value; } }
+export const arrow = <T>(value: T): T => value;
