@@ -64,8 +64,12 @@ func adaptedTree(t testing.TB) string {
 			command.Stdin = bytes.NewReader(stdin)
 			return described(command)
 		}
-		if err := os.MkdirAll(tree, 0o755); err != nil {
-			return err
+		// The build's home is an empty directory of its own, removed before the product settles (isolated says why).
+		home := filepath.Join(directory, "home")
+		for _, made := range []string{tree, home} {
+			if err := os.MkdirAll(made, 0o755); err != nil {
+				return err
+			}
 		}
 		if err := git(nil, "init", "--quiet", "--template=", "."); err != nil {
 			return err
@@ -82,7 +86,7 @@ func adaptedTree(t testing.TB) string {
 		}
 		// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
 		// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
-		adapt := isolated(toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree))
+		adapt := isolated(home, toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree))
 		// apply.py runs git itself (add, write-tree, update-ref), which would read the home's ~/.gitconfig: Workshop
 		// has one and Golem none, so tree 276cc52a refused the product. GitEnv's GIT_ settings keep every git
 		// configuration but the repository's out of reach, as toolchain's own git runs.
@@ -107,7 +111,7 @@ func adaptedTree(t testing.TB) string {
 			return err
 		}
 		for _, task := range []string{"local", "tests"} {
-			if err := described(isolated(toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task))); err != nil {
+			if err := described(isolated(home, toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task))); err != nil {
 				return err
 			}
 		}
@@ -117,22 +121,30 @@ func adaptedTree(t testing.TB) string {
 		// The typecheck's tsconfig.tsbuildinfo files record each library's path relative to the build, up through the
 		// checkout to the install's real path, so two checkouts would build two products under one key (Golem, Oct 16:
 		// 13 files). They serve only an incremental rebuild, and nothing runs from them.
-		return filepath.WalkDir(filepath.Join(tree, "built"), func(path string, entry os.DirEntry, err error) error {
+		err = filepath.WalkDir(filepath.Join(tree, "built"), func(path string, entry os.DirEntry, err error) error {
 			if err != nil || entry.IsDir() || filepath.Ext(path) != ".tsbuildinfo" {
 				return err
 			}
 			return os.Remove(path)
 		})
+		if err != nil {
+			return err
+		}
+		return os.RemoveAll(home)
 	})
 }
 
-// isolated keeps the adapted tree's build off the box: no `HOME`, and node's compile cache off. hereby's cli.js and
-// TypeScript's tsc.js call module.enableCompileCache(), which writes under the temporary directory, and Workshop's is
-// shared (/tmp/adamic-gate), so tree 77eff2ce refused the product for /tmp/adamic-gate/node-compile-cache and for the
-// home itself. Nothing the build runs needs the home: python runs with -E -S and git with GitEnv's settings.
-func isolated(command *exec.Cmd) *exec.Cmd {
-	command.Env = slices.DeleteFunc(command.Env, func(setting string) bool { return strings.HasPrefix(setting, "HOME=") })
-	command.Env = append(command.Env, "NODE_DISABLE_COMPILE_CACHE=1")
+// isolated keeps the adapted tree's build off the box: its home is home, an empty directory inside the product's own
+// build, and node's compile cache is off. hereby's cli.js and TypeScript's tsc.js call module.enableCompileCache(),
+// which writes under the temporary directory, and Workshop's is shared (/tmp/adamic-gate), so tree 77eff2ce refused the
+// product for /tmp/adamic-gate/node-compile-cache. With no `HOME` at all, node's os.homedir() asks the user database,
+// and /etc/passwd differs between boxes (chg_cjg1c5e4, red on Cloud), so the home is set, never dropped: reads inside
+// the product's own directory are its build's, never its inputs.
+func isolated(home string, command *exec.Cmd) *exec.Cmd {
+	command.Env = slices.DeleteFunc(command.Env, func(setting string) bool {
+		return strings.HasPrefix(setting, "HOME=") || strings.HasPrefix(setting, "XDG_CONFIG_HOME=")
+	})
+	command.Env = append(command.Env, "HOME="+home, "XDG_CONFIG_HOME="+home, "NODE_DISABLE_COMPILE_CACHE=1")
 	return command
 }
 
