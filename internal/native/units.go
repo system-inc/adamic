@@ -283,7 +283,7 @@ func unitKey(files []runtimeFile, flags []string, compiler, version string) stri
 	return runtimeKey(files, append([]string{"adamic-units-v3"}, flags...), compiler, version, "")
 }
 
-func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {
+func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool, jobserver *Jobserver) (string, error) {
 	// Preprocess the snapshotted source on every lookup: the result includes transitive system
 	// headers, ambient include paths, target macros and time-dependent predefined macros. Hash
 	// those exact bytes and compile that same snapshot, rather than reopening dependencies.
@@ -303,7 +303,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
 	var preprocessed []byte
-	if err := withCompilerToken(func() (err error) { preprocessed, err = preprocess.Output(); return err }); err != nil {
+	if err := jobserver.Hold(func() (err error) { preprocessed, err = preprocess.Output(); return err }); err != nil {
 		return "", fmt.Errorf("native: preprocessing unit %s: %w\n%s", unit.name, err, &diagnostic)
 	}
 	key := unitKey([]runtimeFile{{unit.name, preprocessed}}, flags, compiler, version)
@@ -334,7 +334,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
 	command := toolchain.CommandIn(temporary, compiler, arguments...)
 	var output []byte
-	if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+	if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
 	if uncached {
@@ -372,6 +372,10 @@ func buildUnits(source, output string, options Options) error {
 // checker archive at the absolute path archive (checkerArchivePath) when it isn't empty.
 func buildUnitsWithLibrary(source, output string, options Options, library string, archive string) error {
 	header, units, err := splitC(source)
+	if err != nil {
+		return err
+	}
+	jobserver, err := defaultJobserver()
 	if err != nil {
 		return err
 	}
@@ -440,7 +444,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			for index := range work {
 				unit := units[index]
 				files := append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...)
-				objects[index], errors[index] = compileUnit(unit, files, flags, compiler, string(version), cache, directory, os.Getenv("ADAMIC_GATE_UNCACHED") == "1")
+				objects[index], errors[index] = compileUnit(unit, files, flags, compiler, string(version), cache, directory, os.Getenv("ADAMIC_GATE_UNCACHED") == "1", jobserver)
 			}
 		}()
 	}
@@ -485,7 +489,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, "-lm")
 	link := toolchain.CommandIn(directory, compiler, arguments...)
 	var linked []byte
-	if err := withCompilerToken(func() (err error) { linked, err = link.CombinedOutput(); return err }); err != nil {
+	if err := jobserver.Hold(func() (err error) { linked, err = link.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
 	}
 	return nil

@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 	regex "github.com/system-inc/adamic/internal/regexp"
 )

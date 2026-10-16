@@ -58,9 +58,11 @@ type RuntimeRequest struct {
 
 // Build compiles the archive into directory as the runtime cache holds one, runtime.a beside the runtime's files,
 // compiling up to workers of its translation units at once: one where a test waits on it, as the cache compiles, and
-// more where a product build is given the CPUs for it.
-func (request RuntimeRequest) Build(directory string, workers int) error {
-	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers)
+// more where a product build is given the CPUs for it. Each compile holds a token of jobserver, the one it's handed and
+// never the process's, and a nil one bounds none (#yzwm4rj): so the archive's build reads no state set outside its own
+// initializers, and its key, which the jobserver never enters, is all its bytes depend on.
+func (request RuntimeRequest) Build(directory string, workers int, jobserver *Jobserver) error {
+	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers, jobserver)
 }
 
 // runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
@@ -404,7 +406,11 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err
 	}
-	if err := compileRuntime(files, flags, compiler, temporary, 1); err != nil {
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		return "", err
+	}
+	if err := compileRuntime(files, flags, compiler, temporary, 1, jobserver); err != nil {
 		return "", err
 	}
 	// Publish everything together. A competing process may already have published this key; its
@@ -417,9 +423,10 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	return library, nil
 }
 
-// compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, and
-// archives them as runtime.a there, in the files' order whatever order they finished in.
-func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int) error {
+// compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, each
+// holding a token of jobserver (nil bounds none, and is never the process's), and archives them as runtime.a there, in
+// the files' order whatever order they finished in.
+func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int, jobserver *Jobserver) error {
 	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
@@ -459,7 +466,7 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
 			var output []byte
-			if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+			if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
 			}
 		})
@@ -530,9 +537,13 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 	if len(sources) == 0 {
 		return "", nil
 	}
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		return "", err
+	}
 	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
 	var rules []byte
-	err = withCompilerToken(func() (err error) { rules, err = command.Output(); return err })
+	err = jobserver.Hold(func() (err error) { rules, err = command.Output(); return err })
 	if err != nil {
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {
