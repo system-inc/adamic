@@ -1,0 +1,29 @@
+{
+  "files": 1356,
+  "main": "d79302e50c022c997c00f7c68ddb7475f9ee65fc",
+  "newly_admitted": [],
+  "newly_refused": [
+    {
+      "Path": "internal/oracle/testdata/coverage_regexp_view.a",
+      "Admitted": false,
+      "Diagnostic": "/workspace/adamic/internal/oracle/testdata/coverage_regexp_view.a:3:19: Adamic 0.1 refuses an object spread through a view that may hold library class RegExp (its internal fields are not own enumerable properties); copy the fields you mean by name"
+    },
+    {
+      "Path": "internal/oracle/testdata/review/agree/fxspptb_9984394_error_spread.a",
+      "Admitted": false,
+      "Diagnostic": "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_9984394_error_spread.a:9:25: Adamic 0.1 refuses an object spread through a view that may hold library class Error (its internal fields are not own enumerable properties); copy the fields you mean by name"
+    }
+  ],
+  "existing_panics": [
+    {
+      "Path": "internal/oracle/testdata/review/agree/fxspptb_iterators_derived_symbol.a",
+      "Admitted": false,
+      "Diagnostic": "PANIC: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+    },
+    {
+      "Path": "internal/oracle/testdata/review/agree/fxspptb_iterators_override_source.a",
+      "Admitted": false,
+      "Diagnostic": "PANIC: Unhandled case in Node.Text: *ast.ComputedPropertyName"
+    }
+  ]
+}
