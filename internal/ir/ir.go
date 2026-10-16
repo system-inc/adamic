@@ -222,6 +222,7 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	Uint16Array
 	Promise
 )
 

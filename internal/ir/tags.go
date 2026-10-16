@@ -23,6 +23,7 @@ func TypeTags() map[string]Type {
 		"Uint8Array":              Uint8Array,
 		"Int32Array":              Int32Array,
 		"Float64Array":            Float64Array,
+		"Uint16Array":             Uint16Array,
 		"NullRepresentation":      NullRepresentation,
 		"UndefinedRepresentation": UndefinedRepresentation,
 		"Record":                  Record,

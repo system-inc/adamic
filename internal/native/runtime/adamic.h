@@ -31,7 +31,8 @@ enum adamic_ir_type {
 	adamic_ir_Uint8Array = 15,
 	adamic_ir_Int32Array = 16,
 	adamic_ir_Float64Array = 17,
-	adamic_ir_Promise = 18,
+	adamic_ir_Uint16Array = 18,
+	adamic_ir_Promise = 19,
 };
 
 enum adamic_stream {
@@ -518,6 +519,7 @@ enum adamic_typed_array_kind {
 	adamic_typed_array_uint8 = 1,
 	adamic_typed_array_int32,
 	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
 };
 typedef struct adamic_typed_array {
 	adamic_heap heap;
