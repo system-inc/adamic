@@ -63,15 +63,13 @@ func LeanGet(inputs Inputs, build func(directory string) error) (string, error) 
 	return directory, err
 }
 
-// A leanBuild is a build Settle keys by its own window (LeanProduct), with keyed the files outside its declared Files
-// whose bytes its name key already holds: a lean build's window counts a file its test wrote before the window as an
-// input, never as the build's own output, unless it is one of these (goProduct's -overlay file, whose map the key holds).
+// A leanBuild is a build Settle keys by its own window (LeanProduct). A lean build's window counts a file its test wrote
+// before the window as an input, never as the build's own output.
 //
 // caller is the lean caller whose package holds the build's code, as an import path (leanCalled), or "" when it is
 // buildcache's own: Settle keys a lean build by the recipe of the code that makes it (leanRecipeOf, #earlycut), never by
 // the recipe of the test binary that settled it.
 type leanBuild struct {
-	keyed  []string
 	caller string
 }
 
@@ -294,7 +292,7 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean *leanBuild) {
 	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean != nil}
 	if lean != nil {
-		entry.Keyed, entry.LeanCaller = lean.keyed, lean.caller
+		entry.LeanCaller = lean.caller
 	}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)
