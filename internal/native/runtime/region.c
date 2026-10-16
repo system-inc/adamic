@@ -31,11 +31,7 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
-static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
-	if (region == NULL) {
-		return adamic_object_new(shape);
-	}
-	size_t size = object_size(shape->count);
+static inline void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
 		// Each block twice the last, from 4 KB up to 1 MB, and at least as big as the object.
@@ -57,8 +53,20 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 		region->blocks = fresh;
 		block = fresh;
 	}
-	adamic_object *object = (adamic_object *)(void *)(block->bytes + block->used);
+	void *value = (void *)(block->bytes + block->used);
 	block->used += size;
+ region->count++;
+ ADAMIC_COUNT_ALLOCATION();
+ return value;
+}
+
+
+static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
+	if (region == NULL) {
+		return adamic_object_new(shape);
+	}
+	size_t size = object_size(shape->count);
+ adamic_object *object = allocate_in(region, size);
 	object->heap.references = 0;
 	object->heap.kind = adamic_kind_object;
 	object->heap.slab = ADAMIC_REGION_VALUE;
@@ -73,8 +81,6 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 	}
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
-	region->count++;
-	ADAMIC_COUNT_ALLOCATION();
 	return object;
 }
 
@@ -85,6 +91,18 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape) {
 	return object_new(region, shape, false);
 }
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+adamic_environment *adamic_environment_new_in(adamic_region *region, size_t count) {
+ size_t size = sizeof(adamic_environment) + count * sizeof(adamic_cell);
+ size = (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
+ adamic_environment *environment = allocate_in(region, size);
+ adamic_environment_init(environment, (adamic_cell *)(void *)(environment + 1), count);
+ environment->heap.slab = ADAMIC_REGION_VALUE;
+ region->holds_outside = true;
+ return environment;
+}
+#endif
 
 bool adamic_region_contains(const adamic_region *region, const void *value) {
 	// Integer ranges, not relational comparisons of pointers into unrelated allocations.
@@ -104,9 +122,19 @@ void adamic_region_end(adamic_region *region) {
 	if (region->holds_outside) {
 		for (adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
 			for (size_t offset = 0; offset < block->used;) {
-				adamic_object *object = (adamic_object *)(void *)(block->bytes + offset);
-				adamic_object_free_children(object, adamic_release);
-				offset += object_size(object->shape->count);
+                adamic_heap *value = (adamic_heap *)(void *)(block->bytes + offset);
+#ifdef ADAMIC_CANONICAL_CLOSURES
+                if (value->kind == adamic_kind_environment) {
+                    adamic_environment *environment = (adamic_environment *)value;
+                    adamic_environment_end(environment);
+                    size_t size = sizeof *environment + environment->count * sizeof(adamic_cell);
+                    offset += (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
+                    continue;
+                }
+#endif
+                adamic_object *object = (adamic_object *)value;
+                adamic_object_free_children(object, adamic_release);
+                offset += object_size(object->shape->count);
 			}
 		}
 	}

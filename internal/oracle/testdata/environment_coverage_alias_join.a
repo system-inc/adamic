@@ -1,0 +1,12 @@
+function make(start: number): () => string {
+ const text = 'alias' + String(start);
+ function read(): string { return text; }
+ function other(): string { return text + '!'; }
+ let alias: (() => string) | undefined = undefined;
+ if (start === 0) { alias = read; } else { alias = other; }
+ let selected = alias ?? read;
+ const before = selected;
+ selected = () => 'replacement';
+ return start >= 0 ? before : read;
+}
+for (const value of [0, 1, -1]) { const read = make(value); console.log(read()); }
