@@ -44,7 +44,7 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
  if (adamic_record_is(object)) return adamic_record_has_own(object, key);
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
-  if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
+  if (adamic_object_present(object, index) && name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
  }
  return false;
 }
@@ -71,14 +71,20 @@ static int compare_names(const char *left, const char *right) {
  return a < b ? -1 : a > b ? 1 : 0;
 }
 
-static size_t *ordered(const adamic_object *object) {
+size_t *adamic_object_ordered(const adamic_object *object) {
  size_t count = object->shape->count;
  size_t *indices = malloc((count == 0 ? 1 : count) * sizeof *indices);
  if (indices == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
  // Stable insertion sort preserves order of ordinary strings.
  for (size_t index = 0; index < count; index++) {
   size_t place = index;
-  while (place > 0 && compare_names(object->shape->names[index], object->shape->names[indices[place - 1]]) < 0) {
+  while (place > 0) {
+   size_t previous = indices[place - 1];
+   int comparison = compare_names(object->shape->names[index], object->shape->names[previous]);
+   if (comparison == 0 && object->write_order != NULL) {
+    comparison = object->write_order[index] < object->write_order[previous] ? -1 : 0;
+   }
+   if (comparison >= 0) break;
    indices[place] = indices[place - 1];
    place--;
   }
@@ -98,11 +104,11 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
  if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
- size_t *indices = ordered(object);
+ size_t *indices = adamic_object_ordered(object);
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || !adamic_object_present(object, indices[at])) continue;
   adamic_array_push(keys, (adamic_value){.reference = key_string(name)});
  }
  free(indices);
@@ -110,7 +116,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
 }
 
 adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries) {
- size_t *indices = ordered(object);
+ size_t *indices = adamic_object_ordered(object);
  adamic_array *values = adamic_array_new(object->shape->count, entries || references);
  static const char *const names[] = {"0", "1"};
  static const bool number_references[] = {true, false};
@@ -120,7 +126,7 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || !adamic_object_present(object, indices[at])) continue;
   adamic_value value = object->slots[index];
   if (references) adamic_retain(value.reference);
   if (entries) {
@@ -136,10 +142,11 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
 }
 
 void adamic_object_assign(adamic_object *target, const adamic_object *source) {
- size_t *indices = ordered(source);
+ size_t *indices = adamic_object_ordered(source);
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
+  if (!adamic_object_present(source, index)) continue;
   adamic_object_check_write(target, name);
   adamic_slot_cache cache = {NULL, 0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
@@ -149,6 +156,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
    adamic_release(slot->reference);
   }
   *slot = value;
+  adamic_object_publish(target, cache.index);
  }
  free(indices);
 }

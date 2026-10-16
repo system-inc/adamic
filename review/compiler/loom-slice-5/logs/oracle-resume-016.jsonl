@@ -1,0 +1,39 @@
+{"Time":"2026-10-13T06:54:18.153123507Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-13T06:54:18.168363818Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant"}
+{"Time":"2026-10-13T06:54:18.168466533Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Output":"=== RUN   TestParserSpeculationRewindMutant\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168501555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Output":"=== PAUSE TestParserSpeculationRewindMutant\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168505622Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant"}
+{"Time":"2026-10-13T06:54:18.16851104Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal"}
+{"Time":"2026-10-13T06:54:18.168514705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Output":"=== RUN   TestParserStackLegal\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168523639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Output":"=== PAUSE TestParserStackLegal\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168526593Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal"}
+{"Time":"2026-10-13T06:54:18.168530309Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological"}
+{"Time":"2026-10-13T06:54:18.168532953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Output":"=== RUN   TestParserStackPathological\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168536698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Output":"=== PAUSE TestParserStackPathological\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168538862Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological"}
+{"Time":"2026-10-13T06:54:18.168541175Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit"}
+{"Time":"2026-10-13T06:54:18.168543208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit","Output":"=== RUN   TestParserStackTinyLimit\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168546012Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit","Output":"=== PAUSE TestParserStackTinyLimit\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168548897Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit"}
+{"Time":"2026-10-13T06:54:18.168551941Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant"}
+{"Time":"2026-10-13T06:54:18.168555006Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Output":"=== CONT  TestParserSpeculationRewindMutant\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.168560815Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit"}
+{"Time":"2026-10-13T06:54:18.168563088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit","Output":"=== CONT  TestParserStackTinyLimit\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.169856236Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal"}
+{"Time":"2026-10-13T06:54:18.16987207Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Output":"=== CONT  TestParserStackLegal\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:18.169959992Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological"}
+{"Time":"2026-10-13T06:54:18.16996518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Output":"=== CONT  TestParserStackPathological\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.654798545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Output":"    parser_speculation_test.go:121: skipped scanner-position rewind caught by Node stdout in both backends\n"}
+{"Time":"2026-10-13T06:54:19.654854159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Output":"--- PASS: TestParserSpeculationRewindMutant (1.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.718042559Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationRewindMutant","Elapsed":1.48}
+{"Time":"2026-10-13T06:54:19.718103941Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Output":"    parser_stack_test.go:54: 859 nested parentheses: source Node, native sanitizers/leaks and JavaScript print 859|1719\n"}
+{"Time":"2026-10-13T06:54:19.718258033Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Output":"--- PASS: TestParserStackLegal (1.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.783889883Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackLegal","Elapsed":1.55}
+{"Time":"2026-10-13T06:54:19.783935071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Output":"    parser_stack_test.go:74: source Node outcome: exit 70, stderr \"adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\\n\"; native named guard pinned separately\n"}
+{"Time":"2026-10-13T06:54:19.784341283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Output":"--- PASS: TestParserStackPathological (1.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.829925255Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackPathological","Elapsed":1.61}
+{"Time":"2026-10-13T06:54:19.829964985Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit","Output":"--- PASS: TestParserStackTinyLimit (1.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.829971895Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackTinyLimit","Elapsed":1.66}
+{"Time":"2026-10-13T06:54:19.829979206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:54:19.832050456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.673s\n"}
+{"Time":"2026-10-13T06:54:19.832098609Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.679}

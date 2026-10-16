@@ -1,0 +1,21 @@
+=== RUN   TestParserAheadCounts
+=== PAUSE TestParserAheadCounts
+=== CONT  TestParserAheadCounts
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+    parser_ahead_counts_test.go:29: gate cache native miss
+--- PASS: TestParserAheadCounts (9.23s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.273s

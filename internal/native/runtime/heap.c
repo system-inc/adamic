@@ -285,6 +285,7 @@ static void free_one(void *value) {
 			}
 		}
 		let_go(array->properties);
+		if (array->metadata != NULL) adamic_object_free_children(array->metadata, let_go);
 		free(array->elements);
 		break;
 	}

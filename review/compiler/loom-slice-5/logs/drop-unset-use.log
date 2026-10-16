@@ -1,0 +1,8 @@
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== CONT  TestParserConstructionUnsetUse
+    parser_construction_test.go:85: native: exit codes differ
+--- FAIL: TestParserConstructionUnsetUse (1.34s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	1.347s
+FAIL
