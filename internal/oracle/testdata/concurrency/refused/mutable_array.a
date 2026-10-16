@@ -1,0 +1,3 @@
+import { parallelMap } from 'adamic';
+const items: number[] = [1, 2];
+parallelMap(items, (item) => item);
