@@ -1,0 +1,13 @@
+{"Time":"2026-10-16T08:31:51.390727233Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-16T08:31:51.395291592Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission"}
+{"Time":"2026-10-16T08:31:51.395358181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Output":"=== RUN   TestNullableStringAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.395378602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Output":"=== PAUSE TestNullableStringAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.395381036Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission"}
+{"Time":"2026-10-16T08:31:51.395383299Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission"}
+{"Time":"2026-10-16T08:31:51.395384942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Output":"=== CONT  TestNullableStringAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.426946865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Output":"    nullable_strings_test.go:14: /tmp/adamic-gate/TestNullableStringAdmission2876416159/001/main.a:1:15: stage 0 can't lower a value of type string | null yet\n","OutputType":"error"}
+{"Time":"2026-10-16T08:31:51.427010951Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Output":"--- FAIL: TestNullableStringAdmission (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.427019584Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNullableStringAdmission","Elapsed":0.03}
+{"Time":"2026-10-16T08:31:51.427047205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.427254967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.036s\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:31:51.427270581Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.037}
