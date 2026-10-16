@@ -144,7 +144,10 @@ func expressionNode(t *testing.T, ctx context.Context, directory, manifest strin
 func TestProduct_ExpressionsSource001(t *testing.T) { t.Parallel(); expressionSource(t, 1) }
 func TestProduct_ExpressionsSource002(t *testing.T) { t.Parallel(); expressionSource(t, 2) }
 func TestProduct_ExpressionsSource003(t *testing.T) { t.Parallel(); expressionSource(t, 3) }
-func TestProduct_ExpressionsOracle(t *testing.T)    { t.Parallel(); wholeMutantBuildOracleProduct(t) }
+func TestProduct_ParserFindsExpressionsOracle(t *testing.T) {
+	t.Parallel()
+	wholeMutantBuildOracleProduct(t)
+}
 func TestProduct_ExpressionsLower000(t *testing.T) {
 	t.Parallel()
 	wholeMutantLowerProduct(t, expressionSource(t, 0))

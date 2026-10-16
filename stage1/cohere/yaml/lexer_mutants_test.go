@@ -3,19 +3,17 @@ package yaml
 import (
 	"bytes"
 	"fmt"
-	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"sort"
 	"strings"
 	"sync"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/toolchain"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 const repository = "../../.."
@@ -50,76 +48,7 @@ func run(t *testing.T, directory string, environment []string, name string, args
 	return out.Bytes()
 }
 
-// lexCorpus is the upstream YAML lexCases reads: in each checkout, the files under roots at the checkout's pin.
-var lexCorpus = []struct {
-	checkout, pin string
-	roots         []string
-}{
-	{"cohere", corpusfiles.CohereCommit, []string{".github/workflows"}},
-	{"cohere/TypeScript", corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}},
-}
-
-func lexCases(t *testing.T) (string, int, int) {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var texts []string
-	files := 0
-	patterns := []string{"*.yaml", "*.yml"}
-	var paths []string
-	for _, corpus := range lexCorpus {
-		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, corpus.checkout), corpus.pin, corpus.roots, patterns)...)
-	}
-	sort.Strings(paths)
-	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !utf8.Valid(data) {
-			t.Fatalf("invalid UTF-8: %s", path)
-		}
-		texts = append(texts, string(data))
-		files++
-	}
-	// Each lexical state, separators, directives, tags, markers, chomping and Unicode boundaries.
-	texts = append(texts, "", "\ufeff", "\ufeffa: b\n", "%YAML 1.1 # c\n---\na: b\n...\n", "a: |+\n  b\n\n\n", "a: |-\n  b\n\n", "a: >2-\n  b\n", "{a: [1, 2], b: \"q\\\"r\"}\n", "a: 'q''r'\n", "a: !<tag:example.org,%E2%82%AC> &ref b\nc: *ref\n", "a: x\n y\nz: x\n", "a: [x\nq: y\n", "a: |\n\tb\n", "a: \"x\ny\"\n", "---x\n...\n", "😀: café\n中: x\n", "a:\tx\r\n# b\r\n", "\x00\n")
-	values := []string{"x", "true", "null", "1", "'q''r'", `"a\nb"`, "[x,y]", "{a:b, c: d}", "&a x", "*a", "!str x", "😀", "中文"}
-	for _, value := range values {
-		for _, indicator := range []string{"", "- ", "a: ", "? ", "[", "{a: "} {
-			texts = append(texts, indicator+value+"\n", indicator+value+" # c\r\n")
-		}
-	}
-	random := rand.New(rand.NewSource(20261006))
-	alphabet := []rune("abc012:?!&*[]{}|>+-.,%'\"# \\\t\r\n😀中\ufeff\x00")
-	for count := 0; count < 2000; count++ {
-		var text strings.Builder
-		for size := random.Intn(180); size > 0; size-- {
-			text.WriteRune(alphabet[random.Intn(len(alphabet))])
-		}
-		texts = append(texts, text.String())
-	}
-	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
-	var source strings.Builder
-	cases := 0
-	for index, text := range texts {
-		chunks := []int{0}
-		if index >= files {
-			chunks = append(chunks, 1, 2, 7)
-		}
-		for _, chunk := range chunks {
-			fmt.Fprintf(&source, "%d\t%s\n", chunk, escape.Replace(text))
-			cases++
-		}
-	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(source.String()), 0644); err != nil {
-		t.Fatal(err)
-	}
-	return path, files, cases
-}
+func lexCases(t *testing.T) (string, int, int) { return oracles.LexicalCases(t) }
 
 func goLexer(t *testing.T, cases string) []byte {
 	t.Helper()
@@ -142,12 +71,9 @@ func goLexer(t *testing.T, cases string) []byte {
 }
 
 // goLexerOracle is formatter_comparison over testdata/lexer_go.go, a product built ahead (#5qykzj5).
-func goLexerOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-lexer", "lexer_go.go")
-}
+func goLexerOracle(t *testing.T) string { return oracles.Lexer(t) }
 
-func TestProduct_YAMLLexerGo(t *testing.T) {
+func TestProduct_YamlFindsLexerGo(t *testing.T) {
 	t.Parallel()
 	goLexerOracle(t)
 }

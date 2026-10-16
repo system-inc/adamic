@@ -5,7 +5,8 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/lint/helpers/oracles"
+
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -51,20 +52,9 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 }
 func oracle(t *testing.T) string {
 	t.Helper()
-	root, _ := filepath.Abs("../../../../cohere")
-	side, _ := filepath.Abs("testdata/oracle.go")
-	catalog, _ := filepath.Abs("testdata/catalog.go")
-	descriptors, _ := filepath.Abs("testdata/descriptors.go")
-	virtual := filepath.Join(root, "adamic_helper_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side, filepath.Join(root, "policy/adamic_helpers.go"): catalog, filepath.Join(root, "adamic_helper_descriptors.go"): descriptors}})
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
-	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual+" "+filepath.Join(root, "adamic_helper_descriptors.go"), []string{"-overlay=" + path})
+	return oracles.Helpers(t)
 }
-func TestProduct_HelperOracle(t *testing.T) {
+func TestProduct_HelpersFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	oracle(t)
 }

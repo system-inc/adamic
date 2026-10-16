@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goUnist(t *testing.T, cases string) []byte {
@@ -14,12 +16,9 @@ func goUnist(t *testing.T, cases string) []byte {
 }
 
 // goUnistOracle is formatter_comparison over testdata/unist_go.go, a product built ahead (#5qykzj5).
-func goUnistOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-unist", "unist_go.go")
-}
+func goUnistOracle(t *testing.T) string { return oracles.Unist(t) }
 
-func TestProduct_YAMLUnistGo(t *testing.T) {
+func TestProduct_YamlFindsUnistGo(t *testing.T) {
 	t.Parallel()
 	goUnistOracle(t)
 }
