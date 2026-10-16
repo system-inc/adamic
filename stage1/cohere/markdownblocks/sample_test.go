@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // The slowest cited seat sweep was 241s; ceil(241/30)=9.
@@ -83,23 +84,7 @@ func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput
 	return selected, selectedNames, rows
 }
 
-func numericBatch(inputs [][]uint16) []byte {
-	var batch strings.Builder
-	for _, units := range inputs {
-		if len(units) == 0 {
-			batch.WriteString("-")
-		} else {
-			for i, unit := range units {
-				if i > 0 {
-					batch.WriteByte(',')
-				}
-				fmt.Fprint(&batch, unit)
-			}
-		}
-		batch.WriteByte('\n')
-	}
-	return []byte(batch.String())
-}
+func numericBatch(inputs [][]uint16) []byte { return oracles.NumericBatch(inputs) }
 
 func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {
 	t.Helper()

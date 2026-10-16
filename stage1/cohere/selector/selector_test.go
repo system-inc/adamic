@@ -3,15 +3,14 @@ package selector
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/selector/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -19,7 +18,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -35,7 +33,7 @@ var portFiles = []string{"source.ts", "nodes.ts", "tokenize.ts", "parser.ts", "m
 
 // generatedSeed fixes the generated selectors, so a failure names selectors anyone can make again.
 // Setting COHERE_SELECTOR_SEED asks for others, and COHERE_SELECTOR_GENERATED for more or fewer of them.
-const generatedSeed = 20261005
+const generatedSeed = oracles.DefaultSeed
 
 // run is one execution's observable behavior.
 type run struct {
@@ -155,108 +153,18 @@ func catches(t *testing.T, applied mutant) {
 
 // askedCases returns the cases file's path and Go cohere's answer to each, from the product
 // selectorAnswers builds, after checking the cohere checkout they come from.
-func askedCases(t *testing.T) (string, string) {
-	t.Helper()
-	seed := int64(generatedSeed)
-	var err error
-	if value := os.Getenv("COHERE_SELECTOR_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
-		}
-	}
-	generated := 4000
-	if value := os.Getenv("COHERE_SELECTOR_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
-		}
-	}
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	// The root also contains the Go test constants the generator extracts.
-	// Validate it before running that generator, even without the npm oracle.
-	files := corpusfiles.Upstream(t, root, corpusfiles.CohereCommit,
-		[]string{"internal/format/css", "internal/lint/rules/tailwind"}, []string{"*.css"})
-	directory := selectorAnswers(t, seed, generated, root, files, os.Getenv("ADAMIC_SELECTOR_LIBRARY"))
-	casesPath := filepath.Join(directory, "cases.txt")
-	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if keep := os.Getenv("ADAMIC_SELECTOR_KEEP"); keep != "" {
-		cases, err := os.ReadFile(casesPath)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	t.Logf("seed %d, %d generated selectors", seed, generated)
-	return casesPath, string(answers)
-}
+func askedCases(t *testing.T) (string, string) { return oracles.Cases(t) }
 
 // selectorAnswers is the directory holding cases.txt, every case cohere's side writes, and answers.txt, Go
-// cohere's answer to each: a product built ahead by TestProduct_SelectorGoAnswers, since asking takes two
+// cohere's answer to each: a product built ahead by TestProduct_SelectorFindsGoAnswers, since asking takes two
 // oracle runs and a corpus extraction every test reading them would otherwise pay. It is keyed by the
 // request, the oracle and the library by content, the cohere directories the oracle and the extraction read,
 // and this file and testdata, which hold the recipe.
-func selectorAnswers(t *testing.T, seed int64, generated int, root string, files []string, library string) string {
-	t.Helper()
-	oracle, _ := cohereSideOracle(t)
-	var libraryDigest, node string
-	if library != "" {
-		libraryDigest, node = contentDigest(t, library), buildcache.Tool("node", "--version")
-	}
-	inputs := selectorAnswersInputs(seed, generated, contentDigest(t, oracle), libraryDigest, node)
-	return buildcache.Product(t, inputs, func(product string) error {
-		directory := t.TempDir()
-		corpus := filepath.Join(directory, "corpus.txt")
-		testTexts := filepath.Join(directory, "test-texts.json")
-		request := map[string]any{"seed": seed, "generated": generated, "cases": filepath.Join(product, "cases.txt"), "answers": filepath.Join(product, "answers.txt"), "corpus": corpus, "testTexts": testTexts}
-		cohereSide(t, request)
-		if library != "" {
-			script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
-			if err != nil {
-				return err
-			}
-			fileList := filepath.Join(directory, "css-files.json")
-			encoded, err := json.Marshal(files)
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(fileList, encoded, 0644); err != nil {
-				return err
-			}
-			result := execute(t, nil, "node", script, library, "corpus", root, corpus, testTexts, fileList)
-			if result.exitCode != 0 {
-				return fmt.Errorf("corpus: %s", result.stderr)
-			}
-			t.Logf("%s", result.stdout)
-			cohereSide(t, request)
-		} else {
-			t.Log("CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY")
-		}
-		return nil
-	})
-}
 
 // selectorAnswersInputs keys the answers product: the request, the oracle's content digest, and, when the
 // library extracts the corpus, its content digest and node's report. libraryDigest is "" without the library.
 func selectorAnswersInputs(seed int64, generated int, oracleDigest, libraryDigest, node string) buildcache.Inputs {
-	flags := []string{fmt.Sprintf("seed=%d", seed), fmt.Sprintf("generated=%d", generated), "oracle-content-sha256=" + oracleDigest}
-	toolchain := []string{runtime.Version()}
-	if libraryDigest != "" {
-		flags = append(flags, "library-content-sha256="+libraryDigest)
-		toolchain = append(toolchain, node)
-	}
-	return buildcache.Inputs{
-		Name:      "selector Go oracle answers",
-		Files:     []string{"cohere/internal/format/css", "cohere/internal/lint/rules/tailwind", "stage1/cohere/selector/testdata", "stage1/cohere/selector/selector_test.go"},
-		Flags:     flags,
-		Toolchain: toolchain,
-	}
+	return oracles.AnswerInputs(seed, generated, oracleDigest, libraryDigest, node)
 }
 
 // The answers product's name key (what a runner finds it by) and declared key (what this machine alone builds it by)
@@ -295,55 +203,9 @@ func TestSelectorAnswersRekey(t *testing.T) {
 
 // contentDigest hashes a file, or every file under a directory by its relative name, so a key names what a path
 // holds and never where it is.
-func contentDigest(t *testing.T, path string) string {
-	t.Helper()
-	hash := sha256.New()
-	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() {
-			return err
-		}
-		content, err := os.ReadFile(name)
-		if err != nil {
-			return err
-		}
-		relative, err := filepath.Rel(path, name)
-		if err != nil {
-			return err
-		}
-		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	return fmt.Sprintf("%x", hash.Sum(nil))
-}
 
 // cohereSide runs testdata/cohere_side_test.go inside cohere's selector package, by overlay, with a
 // request.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
-	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	// The package's test binary with the harness laid over it is a product built ahead (cohereSideOracle), run here in
-	// the package's directory, where go test would run it; the child guard owns hang detection.
-	binary, packageDirectory := cohereSideOracle(t)
-	command := bounded(t, binary, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
-	command.Dir = packageDirectory
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(command, childguard.Options{})
-	if err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
-	}
-	t.Logf("Go oracle: %s", output)
-}
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
 func portDirectory(t *testing.T, applied *mutant) string {
@@ -712,37 +574,14 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 
 // cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
-func cohereSideOracle(t testing.TB) (string, string) {
-	t.Helper()
-	directory := t.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	binary := buildcache.GoTest(t, "cohere", "selector.test", "./internal/format/css/selector", []string{"-overlay=" + overlayPath})
-	return binary, packageDirectory
-}
+func cohereSideOracle(t testing.TB) (string, string) { return oracles.Parser(t) }
 
-func TestProduct_SelectorGoOracle(t *testing.T) {
+func TestProduct_SelectorFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	cohereSideOracle(t)
 }
 
-func TestProduct_SelectorGoAnswers(t *testing.T) {
+func TestProduct_SelectorFindsGoAnswers(t *testing.T) {
 	t.Parallel()
 	askedCases(t)
 }

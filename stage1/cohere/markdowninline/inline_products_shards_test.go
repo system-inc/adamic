@@ -5,9 +5,9 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
-	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/markdowninline/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -83,30 +83,7 @@ func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) s
 // inlineOverlayBuild is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
 // lays over it, a product (buildcache.GoBuildIn) built ahead. It returns the go-printer binary. The overlay names this
 // checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
-func inlineOverlayBuild(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/markdown/adamic_stage_one.go"): bridge, mainPath: driver}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	write(t, overlayPath, data)
-	return buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, []string{"-overlay=" + overlayPath})
-}
+func inlineOverlayBuild(t *testing.T) string { return oracles.Printer(t) }
 func inlineWrite(dir, name string, data []byte) error {
 	return os.WriteFile(filepath.Join(dir, name), data, 0644)
 }

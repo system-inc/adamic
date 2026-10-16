@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -12,10 +14,6 @@ import (
 	"syscall"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 const repository = "../../.."
@@ -78,35 +76,8 @@ type stringsCorpus struct {
 }
 
 func enumerateStrings(t *testing.T) stringsCorpus {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var texts []string
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
-	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		texts = append(texts, string(data))
-	}
-	files := len(texts)
-	alphabet := []string{"a", "'", "\"", "\\", "\n", "😀"}
-	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
-		if n > 0 {
-			for _, c := range alphabet {
-				generate(s+c, n-1)
-			}
-		}
-	}
-	generate("", 5)
-	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
-	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
-	return stringsCorpus{texts: texts, paths: paths, raw: raw}
+	c := oracles.Enumerate(t)
+	return stringsCorpus{texts: c.Texts, paths: c.Paths, raw: c.Raw}
 }
 
 // TestCSSStrings builds each input once before the parallel units. ADAMIC_TEST_SHARD=i/n
@@ -329,30 +300,4 @@ func equal(t *testing.T, name string, a, b []byte) {
 // stringsPreparedOracle is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
 // lays over it, a product (buildcache.GoBuildIn) built ahead. The overlay names this checkout's paths, so it sits in a
 // temporary directory and is never part of the product (#tqrqx60).
-func stringsPreparedOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_stage_one/main.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-		filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-		mainPath: driver,
-	}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-printer", mainPath, []string{"-overlay=" + overlayPath})
-}
+func stringsPreparedOracle(t *testing.T) string { return oracles.Printer(t) }
