@@ -82,6 +82,10 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err != nil {
 		return err
 	}
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		return err
+	}
 	directory, err := os.MkdirTemp("", "adamic-tsgo-")
 	if err != nil {
 		return err
@@ -128,7 +132,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
 	command := toolchain.CommandIn(directory, "clang", arguments...)
 	var combined []byte
-	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
+	if err := jobserver.Hold(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
 	return nil

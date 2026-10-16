@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/system-inc/adamic/stage1/cohere/lint/helpers/oracles"
 
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
