@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static uint64_t regex_step_limit;
+// The test/embedding budget may be changed while workers match.
+static _Atomic uint64_t regex_step_limit;
 void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = limit; }
 static void *regex_memory(size_t size) {
 	void *memory = malloc(size == 0 ? 1 : size);
@@ -184,7 +185,8 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 	regex_state *stack = NULL;
 	bool matched = false;
 	for (;;) {
-		if (regex_step_limit && *steps >= regex_step_limit) {
+		uint64_t limit = regex_step_limit;
+		if (limit != 0 && *steps >= limit) {
 			static const char message[] = "regexp: instruction step limit exceeded";
 			adamic_panic(message, sizeof message - 1);
 		}

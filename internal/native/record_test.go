@@ -368,9 +368,12 @@ var recordReadMutationCases = []struct {
 	{"own-read-checked-as-missing", recordGuardedMiss, "check_missing_member(key);", "reads"},
 }
 
-func TestRecordReadMutants(t *testing.T) {
-	t.Parallel()
-	for _, mutant := range recordReadMutationCases {
+func runRecordReadMutant(t *testing.T, unit int) {
+	t.Helper()
+	for index, mutant := range recordReadMutationCases {
+		if index != unit {
+			continue
+		}
 		t.Run(mutant.name, func(t *testing.T) {
 			binary := recordMutant(t, mutant.name)
 			if mutant.operation == "reads" {
@@ -489,4 +492,17 @@ func TestRecordMutantsUnit04(t *testing.T) {
 func TestRecordMutantsUnit05(t *testing.T) {
 	t.Parallel()
 	runRecordMutantUnit(t, 5)
+}
+
+func TestRecordReadMutantsUnit00(t *testing.T) {
+	t.Parallel()
+	runRecordReadMutant(t, 0)
+}
+func TestRecordReadMutantsUnit01(t *testing.T) {
+	t.Parallel()
+	runRecordReadMutant(t, 1)
+}
+func TestRecordReadMutantsUnit02(t *testing.T) {
+	t.Parallel()
+	runRecordReadMutant(t, 2)
 }
