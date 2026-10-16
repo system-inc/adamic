@@ -151,31 +151,72 @@ func goProduct(t testing.TB, request goRequest) string {
 		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	// Lean: go builds from the files its key names, in a process of its own.
-	directory := product(t, inputs, func(directory string) error {
-		arguments, cleanup, err := request.withOutsideHeaders(root, inputs)
-		if err != nil {
-			return err
-		}
-		defer cleanup()
-		return request.build(root, directory, arguments)
-	}, &leanBuild{keyed: request.keyedOutside(root)})
+	// Lean: go builds from the files its key names, in a process of its own, by a plan made before the window opens.
+	directory := product(t, inputs, request.plan(root, inputs).run, &leanBuild{})
 	return filepath.Join(directory, request.output)
 }
 
-// keyedOutside is what go reads in the build that its test wrote before it and its key holds: the -overlay file, which
-// a test writes into a temporary directory of its own, and whose map and replacements' content the key holds
-// (identity), never its temporary name. Its read in the build's window is the overlay's, never an input the key lacks.
-func (request goRequest) keyedOutside(root string) []string {
-	var overlay overlayKey
-	keying(func() { _, overlay, _ = request.identity(root) })
-	if overlay.path == "" {
-		return nil
+// plan is the request's build as a goBuildPlan, decided before its window opens, so the window holds only go and what
+// the plan writes. Each read here is one the build's name key holds, so none is lost to the window: the overlay's map
+// and its replacements' content (identity), the mutations' before and after strings and the files they mutate, which
+// are the packages' own (Declared) or the overlay's replacements, and the outside headers' key over their include
+// directories (outsideHeaders' flag). A plan that can't be made says why, and its build fails with it.
+func (request goRequest) plan(root string, inputs Inputs) goBuildPlan {
+	plan, err := request.planned(root, inputs)
+	if err != nil {
+		return goBuildPlan{failed: err.Error()}
 	}
-	if filepath.IsAbs(overlay.path) {
-		return []string{filepath.Clean(overlay.path)}
+	return plan
+}
+
+func (request goRequest) planned(root string, inputs Inputs) (goBuildPlan, error) {
+	program, err := toolchain.Path("go")
+	if err != nil {
+		return goBuildPlan{}, err
 	}
-	return []string{filepath.Join(root, overlay.path)}
+	_, overlay, err := request.identity(root)
+	if err != nil {
+		return goBuildPlan{}, err
+	}
+	plan := goBuildPlan{program: program, directory: filepath.Join(root, request.module), output: request.output, verb: request.verb,
+		pkg: request.pkg, arguments: append(strings.Fields(request.verb), overlay.arguments...), packages: strings.Fields(request.pkg),
+		environment: toolchain.Env(request.environment...)}
+	if overlay.path != "" {
+		path := overlay.path
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(root, path)
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return goBuildPlan{}, err
+		}
+		var declared struct{ Replace map[string]string }
+		if err := json.Unmarshal(content, &declared); err != nil {
+			return goBuildPlan{}, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		plan.replace = declared.Replace
+	}
+	if plan.headers, err = outsideHeaderPlan(root, inputs); err != nil {
+		return goBuildPlan{}, err
+	}
+	texts, err := request.mutated(root)
+	if err != nil {
+		return goBuildPlan{}, err
+	}
+	for _, file := range slices.Sorted(maps.Keys(texts)) {
+		mutation := plannedMutation{file: file, text: texts[file], original: filepath.Join(root, file)}
+		for from, to := range plan.replace {
+			if !filepath.IsAbs(to) {
+				to = filepath.Join(root, request.module, to)
+			}
+			if filepath.Clean(to) == mutation.original {
+				mutation.pointers = append(mutation.pointers, from)
+			}
+		}
+		slices.Sort(mutation.pointers)
+		plan.mutated = append(plan.mutated, mutation)
+	}
+	return plan, nil
 }
 
 // mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after
@@ -193,7 +234,7 @@ func (request goRequest) mutationKeys() []string {
 // files, so after such a header changes, go build alone links the object compiled from the old one (measured Oct 9 by
 // TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild built such a
 // product with -a, which compiled the standard library again too, 20.8 s of that test on Cloud and the floor of this
-// package's unit (#dzpzyme, #hqxje9h). It now lays a header into the package instead (withOutsideHeaders), which moves
+// package's unit (#dzpzyme, #hqxje9h). It now lays a header into the package instead (outsideHeaderPlan), which moves
 // that package alone in go's cache.
 const outsideHeaders = "cgo headers outside the package: "
 
@@ -204,76 +245,36 @@ type outsideHeaderPackage struct {
 	Includes []string `json:"includes"`
 }
 
-// outsideHeaderName is the header withOutsideHeaders lays into a package: read by nothing, so the product's bytes are
+// outsideHeaderName is the header outsideHeaderPlan lays into a package: read by nothing, so the product's bytes are
 // a plain build's (measured on Linux, go1.27.1: byte-identical to a fresh build, as -a's were).
 const outsideHeaderName = "zz_buildcache_outside_headers.h"
 
-// withOutsideHeaders returns the build's arguments for a key that names packages reading headers outside themselves:
-// the request's own overlay with one more file in each such package, a header holding Key over its include
-// directories, so go's cache, which hashes a cgo package's own headers, compiles that package again exactly when one
-// of those directories changes. The overlay names this checkout's paths, so it sits in a temporary directory and leaves
-// with the build, as a mutation's does.
-func (request goRequest) withOutsideHeaders(root string, inputs Inputs) ([]string, func(), error) {
-	var packages []outsideHeaderPackage
+// outsideHeaderPlan is the header the build lays into each package its key names as reading headers outside itself:
+// one holding Key over its include directories, so go's cache, which hashes a cgo package's own headers, compiles that
+// package again exactly when one of those directories changes.
+func outsideHeaderPlan(root string, inputs Inputs) ([]plannedHeader, error) {
+	var headers []plannedHeader
 	for _, flag := range inputs.Flags {
-		if encoded, found := strings.CutPrefix(flag, outsideHeaders); found {
-			var listed outsideHeaderPackage
-			if err := json.Unmarshal([]byte(encoded), &listed); err != nil {
-				return nil, nil, fmt.Errorf("%s: %v", flag, err)
-			}
-			packages = append(packages, listed)
+		encoded, found := strings.CutPrefix(flag, outsideHeaders)
+		if !found {
+			continue
 		}
-	}
-	if len(packages) == 0 {
-		return request.arguments, func() {}, nil
-	}
-	_, overlay, err := request.identity(root)
-	if err != nil {
-		return nil, nil, err
-	}
-	replace := map[string]string{}
-	if overlay.path != "" {
-		path := overlay.path
-		if !filepath.IsAbs(path) {
-			path = filepath.Join(root, path)
+		var listed outsideHeaderPackage
+		if err := json.Unmarshal([]byte(encoded), &listed); err != nil {
+			return nil, fmt.Errorf("%s: %v", flag, err)
 		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return nil, nil, err
-		}
-		var declared struct{ Replace map[string]string }
-		if err := json.Unmarshal(content, &declared); err != nil {
-			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
-		}
-		replace = declared.Replace
-	}
-	scratch, err := os.MkdirTemp("", "buildcache-headers-")
-	if err != nil {
-		return nil, nil, err
-	}
-	cleanup := func() { os.RemoveAll(scratch) }
-	for index, listed := range packages {
 		var digest string
+		var err error
 		keying(func() { digest, err = Key(root, Inputs{Name: outsideHeaders + listed.Package, Files: listed.Includes}) })
-		header := filepath.Join(scratch, fmt.Sprintf("%d.h", index))
-		if err == nil {
-			err = os.WriteFile(header, []byte("/* buildcache: the headers outside this package are "+digest+" */\n"), 0o644)
-		}
 		if err != nil {
-			cleanup()
-			return nil, nil, err
+			return nil, err
 		}
-		replace[filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName)] = header
+		headers = append(headers, plannedHeader{
+			target:  filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName),
+			content: []byte("/* buildcache: the headers outside this package are " + digest + " */\n"),
+		})
 	}
-	encoded, err := json.Marshal(map[string]any{"Replace": replace})
-	if err == nil {
-		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
-	}
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	return append(slices.Clone(overlay.arguments), "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
+	return headers, nil
 }
 
 // goSettings runs go env for names in directory (the working directory when empty) with environment, the whole
