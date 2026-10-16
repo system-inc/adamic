@@ -257,15 +257,26 @@ def build_product(out):
         raise RuntimeError('keyed builds require the pinned stage3/api parser, without overrides')
     pin = json.loads((stage / 'source.json').read_text())
     source = typescript_source(pin)
-    adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
-    adaptation_env = dict(os.environ)
-    if any(directory.name != '00-setup' for directory in adaptations):
-        adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
     # A file:// clone, since a local path ignores --depth: the pinned commit alone, not the checkout's history.
     run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
     # The product names no path on the machine that built it.
     run('git', '-C', str(out), 'remote', 'remove', 'origin')
     run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
+    adapt(out)
+
+
+def adapt(out):
+    """Adapts out, a checkout of the pinned commit, in place: upstream's generated inputs, then each adaptation, then
+    the patch table. build_product clones the checkout; stage3/lane's adapted-tree product makes it from the pinned
+    commit's objects (--adapt-checkout), so its build never reads the gate input's files."""
+    pin = json.loads((stage / 'source.json').read_text())
+    head = subprocess.run(['git', '-C', str(out), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    if head != pin['commit']:
+        raise RuntimeError(f'{out} is at {head or "no commit"}, not the pinned {pin["commit"]}')
+    adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
+    adaptation_env = dict(os.environ)
+    if any(directory.name != '00-setup' for directory in adaptations):
+        adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
     # The pristine measurement tree includes upstream's normal generated inputs.
     run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
     with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
@@ -319,11 +330,16 @@ def main():
     parser.add_argument('--publish-hook', action='store_true',
                         help='print local payload paths and key for developer tools publisher')
     parser.add_argument('--key', action='store_true', help='print the input hash only')
+    parser.add_argument('--adapt-checkout', type=Path,
+                        help='adapt an existing checkout of the pinned commit in place (stage3/lane\'s product)')
     parser.add_argument('--packages-digest', action='store_true',
                         help='print the digest of stage3/api/node_modules, for stage3/api/node_modules.sha256')
     args = parser.parse_args()
     if args.packages_digest:
         print(packages_digest(installed_packages(stage / 'api')))
+        return
+    if args.adapt_checkout:
+        adapt(args.adapt_checkout.resolve())
         return
     key = product_key()
     if args.key:
