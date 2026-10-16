@@ -19,6 +19,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"unicode"
 
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -662,12 +663,20 @@ type traceState struct {
 	// lastReads is each ended build's paths by when they were last read in its window, and endedAt when it ended.
 	lastReads map[string]map[string]int
 	endedAt   map[string]int
-	// windowEnded and windowLast are each ended build's reads made inside its window alone, as ended and lastReads are
-	// its process's reads up to its end: a lean build's (#mmpt615).
-	windowEnded, windowLast map[string]map[string]int
-	order                   []string
-	lost                    []string
-	started                 bool
+	// windowOpened is when each build's window opened, the sequence of the last read before it, and windowOwner the
+	// process it is open for; lastOpened is the newest opening. A lean build's window is its reads (#mmpt615), and what
+	// its processes wrote before it opened is never its own output (madeBy), so a writer is kept once a process for each
+	// opening (record).
+	windowOpened, windowOwner map[string]int
+	lastOpened                int
+	// windowLate are the windows the trace opened late, their build-begin from a thread it placed after the marker,
+	// with no process the build's id names to open them for at the marker (openEarly): their owner's other threads may
+	// have read meanwhile, outside them, so a lean build's reads are its superset. misowned are those opened at the
+	// marker for the process the id names, whose marker's thread the trace then placed in another (Mentat's M2 and S1).
+	windowLate, misowned map[string]bool
+	order                []string
+	lost                 []string
+	started              bool
 	// command is the command strace ran, the trace's first process; commandStatus its exit status, -1 until it exits.
 	command, commandStatus int
 	// runReads is everything the run read, the command's reads and every process's it started, taken as the command
@@ -699,13 +708,16 @@ type traceCall struct {
 	pid                    int
 	call, arguments, value string
 	opened, errno          string
+	// queued is a call of a thread the trace hadn't placed when it printed it, handled once its thread is placed.
+	queued bool
 }
 
 func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, commandStatus: -1, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
 		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}, lastReads: map[string]map[string]int{}, endedAt: map[string]int{},
-		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}, windowEnded: map[string]map[string]int{}, windowLast: map[string]map[string]int{}}
+		outside: map[int]map[string]*pathReads{}, windows: map[string]map[string]*pathReads{}, windowOpened: map[string]int{}, windowOwner: map[string]int{},
+		windowLate: map[string]bool{}, misowned: map[string]bool{}}
 	return state
 }
 
@@ -798,6 +810,8 @@ func (state *traceState) handle(call traceCall) {
 	}
 	process, known := state.process[call.pid]
 	if !known {
+		state.openEarly(call)
+		call.queued = true
 		state.waiting[call.pid] = append(state.waiting[call.pid], call)
 		return
 	}
@@ -843,7 +857,7 @@ func (state *traceState) handle(call traceCall) {
 			return
 		}
 		if strings.HasPrefix(name, traceMarker) {
-			state.marker(call.pid, process, strings.TrimPrefix(name, traceMarker))
+			state.marker(call.pid, process, strings.TrimPrefix(name, traceMarker), call.queued)
 			return
 		}
 		failed := call.value == "-1"
@@ -913,7 +927,9 @@ func (state *traceState) record(pid, process int, name string, kind int) {
 	}
 	state.sequence++
 	if kind&readWrite != 0 {
-		if !slices.ContainsFunc(state.writers[name], func(other writer) bool { return other.process == process }) {
+		// A process's first write since the newest window opened, so a window sees whether its processes wrote a path after
+		// it opened (madeBy).
+		if !slices.ContainsFunc(state.writers[name], func(other writer) bool { return other.process == process && other.sequence > state.lastOpened }) {
 			state.writers[name] = append(state.writers[name], writer{process, state.sequence})
 		}
 		// A write into the tree by any process of the run means what was read isn't the tree that is keyed.
@@ -957,7 +973,7 @@ func noteRead(reads map[string]*pathReads, name string, kind, sequence int) {
 	}
 }
 
-func (state *traceState) marker(pid, process int, marker string) {
+func (state *traceState) marker(pid, process int, marker string, queued bool) {
 	event, id, _ := strings.Cut(marker, "/")
 	switch event {
 	case "key-begin":
@@ -967,8 +983,22 @@ func (state *traceState) marker(pid, process int, marker string) {
 			state.keying[pid]--
 		}
 	case "build-begin":
-		state.open[id] = process
-		state.windows[id] = map[string]*pathReads{}
+		if _, opened := state.windows[id]; opened {
+			// Opened at the marker, for the process the id names (openEarly): the thread it came from is that process's.
+			if owner := state.windowOwner[id]; owner != process {
+				state.windowLate[id] = true
+				if _, open := state.open[id]; open {
+					state.open[id], state.windowOwner[id] = process, process
+				} else {
+					state.misowned[id] = true
+				}
+			}
+			return
+		}
+		state.openWindow(id, process)
+		if queued {
+			state.windowLate[id] = true
+		}
 	case "build-end":
 		owner, ok := state.open[id]
 		if !ok {
@@ -977,9 +1007,45 @@ func (state *traceState) marker(pid, process int, marker string) {
 		delete(state.open, id)
 		snapshot, last := state.snapshot(owner)
 		state.ended[id], state.lastReads[id], state.endedAt[id] = snapshot, last, state.sequence
-		state.windowEnded[id], state.windowLast[id] = state.windowSnapshot(id, owner)
 		state.order = append(state.order, id)
 	}
+}
+
+// openWindow opens build id's window for owner, now.
+func (state *traceState) openWindow(id string, owner int) {
+	state.open[id] = owner
+	state.windows[id] = map[string]*pathReads{}
+	state.windowOpened[id], state.windowOwner[id], state.lastOpened = state.sequence, owner, state.sequence
+}
+
+// openEarly opens a build's window at its build-begin marker when the trace hasn't placed the marker's thread yet
+// (strace -f often prints a new thread's first call before its parent's clone returns), for the process the build's id
+// names, when the trace knows that process: the reads its placed threads make before the thread is placed are the
+// window's, never outside it (Mentat's M2). A process it doesn't know yet has no placed thread to read meanwhile, and its
+// marker opens the window when its thread is placed, late (windowLate).
+func (state *traceState) openEarly(call traceCall) {
+	name, _ := target(call.call, call.arguments, "")
+	marker, ok := strings.CutPrefix(name, traceMarker)
+	if !ok {
+		return
+	}
+	event, id, _ := strings.Cut(marker, "/")
+	if _, opened := state.windows[id]; event != "build-begin" || opened {
+		return
+	}
+	if owner, ok := buildProcess(id); ok && state.process[owner] == owner {
+		state.openWindow(id, owner)
+	}
+}
+
+// buildProcess is the process a build's id names (traced): its middle field, the pid of the process that built it.
+func buildProcess(id string) (int, bool) {
+	fields := strings.Split(id, ".")
+	if len(fields) != 3 {
+		return 0, false
+	}
+	pid, err := strconv.Atoi(fields[1])
+	return pid, err == nil && pid > 0
 }
 
 // snapshot is everything owner and the processes it started read so far, by kinds, with when each path was last read,
@@ -999,7 +1065,7 @@ func (state *traceState) snapshotOf(processes map[int]map[string]*pathReads, own
 		}
 		for name, found := range reads {
 			kinds := found.kinds
-			if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
+			if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, 0, found.firstRead) {
 				kinds &= readWrite
 			}
 			if kinds != 0 {
@@ -1011,13 +1077,25 @@ func (state *traceState) snapshotOf(processes map[int]map[string]*pathReads, own
 	return snapshot, last
 }
 
-// windowSnapshot is snapshot over build id's window alone: what owner and the processes it started read while the build
-// was open, by kinds, with when each path was last read, but what they wrote before reading it.
-func (state *traceState) windowSnapshot(id string, owner int) (map[string]int, map[string]int) {
+// windowSnapshot is snapshot over build id's window alone: what its owner and the processes it started read while the
+// build was open, by kinds, with when each path was last read, but what they wrote after the window opened and before
+// reading it. A write before the window is never the build's own output: the reads behind those bytes are outside the
+// window, so the file reads by content (Mentat's M1: a test that writes a fixed path from its own case and builds from
+// it), but for a file keyed names, whose bytes the build's name key holds (leanBuild).
+func (state *traceState) windowSnapshot(id string, keyed []string) (map[string]int, map[string]int) {
+	owner, opened := state.windowOwner[id], state.windowOpened[id]
+	var holds []string
+	for _, name := range keyed {
+		holds = append(holds, variants(name)...)
+	}
 	snapshot, last := map[string]int{}, map[string]int{}
 	for name, found := range state.windows[id] {
 		kinds := found.kinds
-		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
+		since := opened
+		if slices.Contains(holds, name) {
+			since = 0
+		}
+		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, since, found.firstRead) {
 			kinds &= readWrite
 		}
 		if kinds != 0 {
@@ -1031,10 +1109,11 @@ func (state *traceState) windowSnapshot(id string, owner int) (map[string]int, m
 // leanReads is a lean build's reads (#mmpt615, Node's ruling): its window, and every file its declared Files name, as the
 // tree carries them, each directory by its listing and every file under it by its content, read or not. A lean build
 // may use its declared files' bytes taken before its window (native's runtime archives snapshot the runtime's files as
-// the request is made, and compile the copies), so they are its reads whatever the window holds. A directory walked
-// enters no read set beyond the files the tree carries (Tracked), and a declared path that isn't there is read as
-// absent.
-func (state *traceState) leanReads(entry journalEntry, window, last map[string]int, end int) (map[string]int, map[string]int) {
+// the request is made, and compile the copies), so they are its reads whatever the window holds. A declared path that
+// isn't there is read as absent. One it can't read whole is the reason it can't be keyed, never dropped: a file or a
+// directory the tree doesn't carry, or one that can't be read (Mentat's S2, Node's must), since the build may have
+// taken its bytes before its window, and the key would lack them.
+func (state *traceState) leanReads(entry journalEntry, window, last map[string]int, end int) (map[string]int, map[string]int, string) {
 	reads, lastReads := maps.Clone(window), maps.Clone(last)
 	add := func(name string, kind int) {
 		reads[name] |= kind
@@ -1046,34 +1125,40 @@ func (state *traceState) leanReads(entry journalEntry, window, last map[string]i
 		if !filepath.IsAbs(start) {
 			start = filepath.Join(root, filepath.FromSlash(declared))
 		}
-		filepath.WalkDir(start, func(name string, found fs.DirEntry, err error) error {
+		err := filepath.WalkDir(start, func(name string, found fs.DirEntry, err error) error {
 			switch {
-			case err != nil:
-				if name == start {
-					add(name, readAbsent)
-				}
+			case err != nil && name == start && (errors.Is(err, fs.ErrNotExist) || errors.Is(err, syscall.ENOTDIR)):
+				add(name, readAbsent)
 				return nil
+			case err != nil:
+				return err
 			case found.IsDir() && found.Name() == ".git":
 				return filepath.SkipDir
 			case found.IsDir():
 				if name != start && !Tracked(root, name, true) {
-					return filepath.SkipDir
+					return fmt.Errorf("%s is a directory the tree doesn't carry", name)
 				}
 				add(name, readListing)
 			case Tracked(root, name, false):
 				add(name, readContent)
+			case !unkeyed(name):
+				return fmt.Errorf("%s is a file the tree doesn't carry", name)
 			}
 			return nil
 		})
+		if err != nil {
+			return nil, nil, fmt.Sprintf("declared %s can't be read whole: %v", declared, err)
+		}
 	}
-	return reads, lastReads
+	return reads, lastReads, ""
 }
 
-// madeBy says whether owner or a process it started wrote name, or a directory above it, before first reading it.
-func (state *traceState) madeBy(owner int, name string, firstRead int) bool {
+// madeBy says whether owner or a process it started wrote name, or a directory above it, after since and before first
+// reading it.
+func (state *traceState) madeBy(owner int, name string, since, firstRead int) bool {
 	for at := name; at != "/" && at != "."; at = filepath.Dir(at) {
 		for _, wrote := range state.writers[at] {
-			if wrote.sequence < firstRead && state.descends(wrote.process, owner) {
+			if since < wrote.sequence && wrote.sequence < firstRead && state.descends(wrote.process, owner) {
 				return true
 			}
 		}
@@ -1161,7 +1246,7 @@ func merge(into, reads map[string]*pathReads) {
 func (state *traceState) joinRun(run, last map[string]int, reads map[string]*pathReads) {
 	for name, found := range reads {
 		kinds := found.kinds
-		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(state.command, name, found.firstRead) {
+		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(state.command, name, 0, found.firstRead) {
 			kinds &= readWrite
 		}
 		if kinds != 0 {
@@ -1318,11 +1403,20 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
+		if state.misowned[id] {
+			refuse(entry, fmt.Sprintf("a lost trace: its build's window opened for process %d, which its id names, and the trace placed its marker in another", state.windowOwner[id]))
+			continue
+		}
 		reads, lastReads, window := state.ended[id], state.lastReads[id], BuildSuperset
 		if entry.Lean {
 			window = BuildLeanSuperset
-			if inside, placed := state.windowEnded[id]; placed {
-				reads, lastReads = state.leanReads(entry, inside, state.windowLast[id], state.endedAt[id])
+			if !state.windowLate[id] {
+				inside, last := state.windowSnapshot(id, entry.Keyed)
+				var why string
+				if reads, lastReads, why = state.leanReads(entry, inside, last, state.endedAt[id]); why != "" {
+					refuse(entry, why)
+					continue
+				}
 				window = BuildWindowed
 			}
 		}
