@@ -10,8 +10,9 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 )
@@ -52,9 +53,9 @@ func selectExpressionUnits(value string, count int) ([]bool, error) {
 func TestExpressionUnitBoxSelection(t *testing.T) {
 	t.Parallel()
 	for _, boxes := range []int{1, 2, 7, 65, 100} {
-		seen := make([]int, testExpressionsAgainstGoAndPrettierShards)
+		seen := make([]int, oracles.ExpressionsAgainstGoAndPrettierShards)
 		for box := 0; box < boxes; box++ {
-			selected, err := selectExpressionUnits(fmt.Sprintf("%d/%d", box, boxes), testExpressionsAgainstGoAndPrettierShards)
+			selected, err := selectExpressionUnits(fmt.Sprintf("%d/%d", box, boxes), oracles.ExpressionsAgainstGoAndPrettierShards)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -71,11 +72,11 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 		}
 	}
 	for _, value := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
-		if _, err := selectExpressionUnits(value, testExpressionsAgainstGoAndPrettierShards); err == nil {
+		if _, err := selectExpressionUnits(value, oracles.ExpressionsAgainstGoAndPrettierShards); err == nil {
 			t.Fatalf("invalid selector accepted: %s", value)
 		}
 	}
-	selected, err := selectExpressionUnits("", testExpressionsAgainstGoAndPrettierShards)
+	selected, err := selectExpressionUnits("", oracles.ExpressionsAgainstGoAndPrettierShards)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -86,246 +87,23 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 	}
 }
 
-func expressionUnits(t *testing.T, path, want string, count int) (*corpusPlan, [][]byte) {
-	t.Helper()
-	text, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
+func expressionDisagreement(plan *oracles.CorpusPlan, number int, want []byte, result oracles.Run) error {
+	if result.ExitCode != 0 || len(result.Stderr) != 0 {
+		return fmt.Errorf("shard-%03d: exit %d stderr %s", number, result.ExitCode, result.Stderr)
 	}
-	data, err := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var cases []printerCase
-	if err := json.Unmarshal(data, &cases); err != nil {
-		t.Fatal(err)
-	}
-	rows := bytes.Split(bytes.TrimSuffix(text, []byte("\n")), []byte("\n"))
-	answers := bytes.Split(bytes.TrimSuffix([]byte(want), []byte("\n")), []byte("\n"))
-	if len(rows) != len(cases) || len(answers) != len(cases) || len(cases) == 0 {
-		t.Fatalf("expression enumeration: %d cases, %d rows, %d answers", len(cases), len(rows), len(answers))
-	}
-	// Every pinned upstream record must occur in the unsplit enumeration. Each
-	// unit then checks the exact independently pinned outcome for its own cases.
-	for _, record := range upstreamOutcomes(t) {
-		if record.Family != "expressions" {
-			continue
-		}
-		found := false
-		for _, item := range cases {
-			if strings.HasSuffix(item.Label, record.Label) && item.Source == record.Source && item.Want == record.Go {
-				found = true
-				break
-			}
-		}
-		if !found {
-			t.Fatalf("recorded upstream case absent: %s", record.Label)
-		}
-	}
-	plan := &corpusPlan{labels: make([]string, len(cases))}
-	for i, item := range cases {
-		plan.labels[i] = fmt.Sprintf("case-%06d %s", i, item.Label)
-	}
-	directory := t.TempDir()
-	var outputs [][]byte
-	partition := expressionGatePartition(t, cases, count)
-	for number, indices := range partition {
-		shard := corpusShard{indices: indices, text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
-		var protocol, expected bytes.Buffer
-		subset := make([]printerCase, 0, len(indices))
-		for _, i := range indices {
-			protocol.Write(rows[i])
-			protocol.WriteByte('\n')
-			expected.Write(answers[i])
-			expected.WriteByte('\n')
-			subset = append(subset, cases[i])
-		}
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(shard.text, protocol.Bytes(), 0644); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(shard.specs, encoded, 0644); err != nil {
-			t.Fatal(err)
-		}
-		plan.shards = append(plan.shards, shard)
-		outputs = append(outputs, expected.Bytes())
-	}
-	if err := expressionUnion(plan, outputs, []byte(want)); err != nil {
-		t.Fatal(err)
-	}
-	gapData, err := os.ReadFile(filepath.Dir(path) + "/gaps.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var gaps []printerCase
-	if err := json.Unmarshal(gapData, &gaps); err != nil {
-		t.Fatal(err)
-	}
-	gapAnswers, err := os.ReadFile(filepath.Dir(path) + "/gap-answers.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(gaps) != bytes.Count(gapAnswers, []byte("\n")) {
-		t.Fatal("gap enumeration/answer count differs")
-	}
-	whole := &corpusPlan{labels: append([]string(nil), plan.labels...), shards: append([]corpusShard(nil), plan.shards...)}
-	gapIDs := make([]int, len(gaps))
-	for i, item := range gaps {
-		gapIDs[i] = len(cases) + i
-		whole.labels = append(whole.labels, fmt.Sprintf("case-%06d gap %s", gapIDs[i], item.Label))
-	}
-	whole.shards = append(whole.shards, corpusShard{indices: gapIDs})
-	wholeOutputs := append(append([][]byte(nil), outputs...), gapAnswers)
-	if err := expressionUnion(whole, wholeOutputs, append([]byte(want), gapAnswers...)); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("union: %d unique expression case ids in %d units; %d gap ids in one unit; total %d", len(cases), len(plan.shards), len(gaps), len(cases)+len(gaps))
-	return plan, outputs
-}
-
-// The plan as every unit of one process shares it. Each unit's protocol and
-// specifications are held as bytes: the files expressionUnits wrote belong to
-// the unit that built the plan and are removed when that unit ends.
-type expressionGateUnits struct {
-	plan                       *corpusPlan
-	texts, specs, answers      [][]byte
-	gapText, gapSpecs, gapWant []byte
-	builder                    string
-}
-
-var expressionGateUnitsShared struct {
-	once  sync.Once
-	units *expressionGateUnits
-}
-
-// The first selected unit in a process builds the plan through expressionUnits,
-// with every whole-corpus check it makes: each pinned upstream record present,
-// every stable key unique and both unions exact. The plan is a pure function of
-// the corpus product, so later units in the process read it rather than repeat
-// it. TestExpressionsAgainstGoAndPrettierUnion still builds and checks its own.
-func expressionGateUnitsOnce(t *testing.T) *expressionGateUnits {
-	t.Helper()
-	// printerCorpusFiles skips without a TypeScript source. Skip here, before the
-	// once, so every unit skips alike rather than failing on the builder's skip.
-	if os.Getenv("ADAMIC_TYPESCRIPT_SOURCE") == "" {
-		printerCorpusFiles(t)
-	}
-	shared := &expressionGateUnitsShared
-	shared.once.Do(func() {
-		cases, want, _ := expressionCorpus(t, false)
-		plan, answers := expressionUnits(t, cases, want, testExpressionsAgainstGoAndPrettierShards-1)
-		units := &expressionGateUnits{plan: &corpusPlan{labels: plan.labels}, answers: answers, builder: t.Name()}
-		for _, shard := range plan.shards {
-			text, err := os.ReadFile(shard.text)
-			if err != nil {
-				t.Fatal(err)
-			}
-			specs, err := os.ReadFile(shard.specs)
-			if err != nil {
-				t.Fatal(err)
-			}
-			units.plan.shards = append(units.plan.shards, corpusShard{indices: shard.indices})
-			units.texts, units.specs = append(units.texts, text), append(units.specs, specs)
-		}
-		directory := filepath.Dir(cases)
-		for _, file := range []struct {
-			name string
-			data *[]byte
-		}{{"gaps.txt", &units.gapText}, {"gaps.json", &units.gapSpecs}, {"gap-answers.txt", &units.gapWant}} {
-			data, err := os.ReadFile(filepath.Join(directory, file.name))
-			if err != nil {
-				t.Fatal(err)
-			}
-			*file.data = data
-		}
-		shared.units = units
-	})
-	if shared.units == nil {
-		t.Fatal("expression unit preparation failed")
-	}
-	if shared.units.builder != t.Name() {
-		t.Logf("union: checked once in this process by %s", shared.units.builder)
-	}
-	return shared.units
-}
-
-// A unit's own protocol and specifications, written where its children read them.
-func (units *expressionGateUnits) unit(t *testing.T, number int) corpusShard {
-	t.Helper()
-	directory := t.TempDir()
-	shard := corpusShard{indices: units.plan.shards[number].indices, text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
-	if err := os.WriteFile(shard.text, units.texts[number], 0644); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(shard.specs, units.specs[number], 0644); err != nil {
-		t.Fatal(err)
-	}
-	return shard
-}
-
-// The loud gap unit's inputs. The Prettier script knows its gap proof by the name gaps.json.
-func (units *expressionGateUnits) gaps(t *testing.T) string {
-	t.Helper()
-	directory := t.TempDir()
-	for name, data := range map[string][]byte{"gaps.txt": units.gapText, "gaps.json": units.gapSpecs} {
-		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	return directory
-}
-
-func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {
-	// Position is part of the case id: generated cases may share a label.
-	seen := make(map[int]bool, len(plan.labels))
-	count := 0
-	for number, shard := range plan.shards {
-		for _, id := range shard.indices {
-			if id < 0 || id >= len(plan.labels) || seen[id] {
-				return fmt.Errorf("shard-%03d: missing, extra or repeated case id %d", number, id)
-			}
-			seen[id] = true
-			count++
-		}
-	}
-	if count != len(plan.labels) {
-		return fmt.Errorf("union: %d case ids, want %d", count, len(plan.labels))
-	}
-	for id := range plan.labels {
-		if !seen[id] {
-			return fmt.Errorf("union: missing case id %d", id)
-		}
-	}
-	merged, err := mergeCorpus(plan, outputs)
-	if err != nil {
-		return err
-	}
-	if !bytes.Equal(merged, want) {
-		return fmt.Errorf("union differs from unsplit answers")
-	}
-	return nil
-}
-
-func expressionDisagreement(plan *corpusPlan, number int, want []byte, result run) error {
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		return fmt.Errorf("shard-%03d: exit %d stderr %s", number, result.exitCode, result.stderr)
-	}
-	if bytes.Equal(result.stdout, want) {
+	if bytes.Equal(result.Stdout, want) {
 		return nil
 	}
-	actual, expected := bytes.Split(result.stdout, []byte("\n")), bytes.Split(want, []byte("\n"))
+	actual, expected := bytes.Split(result.Stdout, []byte("\n")), bytes.Split(want, []byte("\n"))
 	for i := 0; i < max(len(actual), len(expected)); i++ {
 		if i < len(actual) && i < len(expected) && bytes.Equal(actual[i], expected[i]) {
 			continue
 		}
 		label := "answer count"
-		if i < len(plan.shards[number].indices) {
-			label = plan.labels[plan.shards[number].indices[i]]
+		if i < len(plan.Shards[number].Indices) {
+			label = plan.Labels[plan.Shards[number].Indices[i]]
 		}
-		return fmt.Errorf("shard-%03d %s: %s", number, label, firstDifference(string(result.stdout), string(want)))
+		return fmt.Errorf("shard-%03d %s: %s", number, label, firstDifference(string(result.Stdout), string(want)))
 	}
 	return fmt.Errorf("shard-%03d: byte disagreement", number)
 }
@@ -334,14 +112,14 @@ func expressionDisagreement(plan *corpusPlan, number int, want []byte, result ru
 // catches it through the same comparison used by the complete expression test.
 func TestExpressionUnitPlantedDisagreement(t *testing.T) {
 	t.Parallel()
-	plan := &corpusPlan{labels: []string{"case-0", "case-1", "case-2", "case-3"}}
-	for _, ids := range assignCorpus([]int{1, 1, 1, 1}, 2) {
-		plan.shards = append(plan.shards, corpusShard{indices: ids})
+	plan := &oracles.CorpusPlan{Labels: []string{"case-0", "case-1", "case-2", "case-3"}}
+	for _, ids := range oracles.AssignCorpus([]int{1, 1, 1, 1}, 2) {
+		plan.Shards = append(plan.Shards, oracles.CorpusShard{Indices: ids})
 	}
 	catches := 0
-	for number, shard := range plan.shards {
+	for number, shard := range plan.Shards {
 		var want, actual strings.Builder
-		for _, id := range shard.indices {
+		for _, id := range shard.Indices {
 			want.WriteString("ok\n")
 			if id == 2 {
 				actual.WriteString("planted\n")
@@ -368,8 +146,8 @@ func TestExpressionUnitPlantedDisagreement(t *testing.T) {
 func TestExpressionUnitUnionRejectsMissingAndRepeated(t *testing.T) {
 	t.Parallel()
 	for _, ids := range [][]int{{0}, {0, 0}} {
-		plan := &corpusPlan{labels: []string{"first", "second"}, shards: []corpusShard{{indices: ids}}}
-		if expressionUnion(plan, [][]byte{[]byte("ok\nok\n")}, []byte("ok\nok\n")) == nil {
+		plan := &oracles.CorpusPlan{Labels: []string{"first", "second"}, Shards: []oracles.CorpusShard{{Indices: ids}}}
+		if oracles.ExpressionUnion(plan, [][]byte{[]byte("ok\nok\n")}, []byte("ok\nok\n")) == nil {
 			t.Fatalf("invalid union accepted: %v", ids)
 		}
 	}
@@ -380,7 +158,7 @@ func TestExpressionUnitUnionRejectsMissingAndRepeated(t *testing.T) {
 func expressionInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
-	tree, err := filepath.Abs(repository)
+	tree, err := filepath.Abs(oracles.Repository)
 	if err != nil {
 		t.Fatal(err)
 	}
