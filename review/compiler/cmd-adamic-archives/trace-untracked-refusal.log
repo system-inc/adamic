@@ -1,8 +1,0 @@
-=== RUN   TestProduct_CommandRuntimeSanitized
-=== PAUSE TestProduct_CommandRuntimeSanitized
-=== CONT  TestProduct_CommandRuntimeSanitized
-    runtimes_test.go:82: build native-runtime f0fc5b52d9e3 miss 3.84
---- PASS: TestProduct_CommandRuntimeSanitized (7.07s)
-PASS
-refused native-runtime (name key f0fc5b52d9e3): its binary links files git doesn't track: cmd/adamic/runtimes_test.go, cmd/adamic/runtimes_test.go, cmd/adamic/runtimes_test.go
-traced: 0 settled, 1 refused; journal and report in /tmp/adamic-command-products/traces/20261014T015920Z-2762859514

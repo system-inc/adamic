@@ -1,8 +1,0 @@
-=== RUN   TestProduct_CommandRuntimeWASI
-=== PAUSE TestProduct_CommandRuntimeWASI
-=== CONT  TestProduct_CommandRuntimeWASI
-    runtimes_test.go:84: build native-runtime d7d9fcd63992 miss 3.10
---- PASS: TestProduct_CommandRuntimeWASI (5.15s)
-PASS
-settled native-runtime 68480c0b7f57: 1254 reads; declared Files: 1 reads undeclared, 4 declared unread
-traced: 1 settled, 0 refused; journal and report in /tmp/adamic-command-products/traces/20261014T020002Z-535942987
