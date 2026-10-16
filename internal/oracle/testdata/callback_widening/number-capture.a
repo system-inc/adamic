@@ -1,0 +1,1 @@
+let calls=0;let prefix='v';function maker():(x:number|string)=>string{calls++;return (x:number|string):string=>prefix+`${x}`;}console.log([1,2].map(maker()).join(','));prefix='w';console.log([3].map(maker()).join(','));console.log(`${calls}`);

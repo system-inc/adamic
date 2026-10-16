@@ -1,0 +1,164 @@
+[
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEveryRelease",
+    "seconds": 25.37
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapJavaScript",
+    "seconds": 25.59
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapRelease",
+    "seconds": 26.06
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNullableObjectMapSanitized",
+    "seconds": 27.41
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionJavaScript",
+    "seconds": 0.92
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionRelease",
+    "seconds": 1.31
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterJavaScript",
+    "seconds": 2.08
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialHeldUnionSanitized",
+    "seconds": 4.02
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterRelease",
+    "seconds": 1.63
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestWeakDifferentialBooleanFilterSanitized",
+    "seconds": 3.73
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEveryJavaScript",
+    "seconds": 0.43
+  },
+  {
+    "check": "oracle",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallbackWideningNumberEverySanitized",
+    "seconds": 2.73
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareArrayFill",
+    "seconds": 40.68
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareClosure",
+    "seconds": 40.79
+  },
+  {
+    "check": "fixtures",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesSelfCompareSweep",
+    "seconds": 40.94
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsNative",
+    "seconds": 10.38
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsLower",
+    "seconds": 10.45
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsFresh",
+    "seconds": 19.16
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetExportInputsFlow",
+    "seconds": 16.88
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesNative",
+    "seconds": 25.82
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFlow",
+    "seconds": 26.25
+  },
+  {
+    "check": "reader-products",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesLower",
+    "seconds": 26.97
+  },
+  {
+    "check": "fresh-archives",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFresh",
+    "seconds": 26.32
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFlow",
+    "seconds": 27.49
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFresh",
+    "seconds": 29.83
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersLower",
+    "seconds": 29.91
+  },
+  {
+    "check": "readers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersNative",
+    "seconds": 30.04
+  }
+]

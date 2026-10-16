@@ -1,0 +1,1 @@
+const found=[1,2,3].find((x: number | string): boolean => (typeof x === 'number' ? x : 0) === 2); console.log(`${found ?? -1}`);

@@ -1,0 +1,634 @@
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 6b81dc89..9f8f0a3a 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -67,7 +67,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
+ // newError lowers new Error(message), and new Error().
+ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+ 	created := node.AsNewExpression()
+-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
++	message := ir.Expression(ir.Undefined{Of: ir.String})
+ 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
+ 		if len(created.Arguments.Nodes) > 1 {
+ 			return nil, l.notYet(node, "new Error with options")
+@@ -76,6 +76,7 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+ 		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
+ 			return nil, err
+ 		}
++		message = fit(message, ir.String)
+ 		if message.Type() != ir.String {
+ 			return nil, l.notYet(node, "new Error with a message that isn't a string")
+ 		}
+diff --git a/internal/lower/known_lowering_gaps.go b/internal/lower/known_lowering_gaps.go
+new file mode 100644
+index 00000000..6752a73d
+--- /dev/null
++++ b/internal/lower/known_lowering_gaps.go
+@@ -0,0 +1,96 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// Stop known wrong answers before either backend receives an IR program. These
++// are implementation gaps, not new language exclusions.
++func (l *lowering) knownLoweringGap(node *ast.Node) error {
++	switch node.Kind {
++	case ast.KindSpreadAssignment:
++		source := node.AsSpreadAssignment().Expression
++		if l.errorStorage(l.checker.GetTypeAtLocation(source), map[*checker.Type]bool{}) {
++			return l.notYet(node, "object spread of Error storage with non-enumerable properties; copy the desired fields explicitly")
++		}
++	case ast.KindSetAccessor:
++		parameters := node.AsSetAccessorDeclaration().Parameters.Nodes
++		if len(parameters) == 1 {
++			if of, known := l.representation(l.checker.GetTypeAtLocation(parameters[0])); known && of == ir.MaybeNumber {
++				return l.notYet(node, "a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments")
++			}
++		}
++	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindPropertySignature:
++		if len(plainPropertyName(node)) > 4095 {
++			return l.notYet(node.Name(), "a property name longer than 4095 bytes; shorten the name until native metadata supports long strings")
++		}
++	case ast.KindClassDeclaration:
++		for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
++			if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
++				continue
++			}
++			for _, member := range node.Members() {
++				if member.Name() != nil && member.Name().Kind == ast.KindComputedPropertyName {
++					return l.notYet(member.Name(), "a computed member name in a derived class; use a named member until override lookup supports computed names")
++				}
++			}
++		}
++	case ast.KindThisKeyword:
++		var arrow *ast.Node
++		for parent := node.Parent; parent != nil; parent = parent.Parent {
++			if parent.Kind == ast.KindArrowFunction {
++				arrow = parent
++				continue
++			}
++			if parent.Kind == ast.KindConstructor {
++				if arrow == nil {
++					return nil
++				}
++				// The existing readiness boundary counts direct unconditional assignments.
++				// A closure created earlier captures this even when its only use is a field read.
++				for _, member := range parent.Parent.Members() {
++					if member.Kind == ast.KindPropertyDeclaration && member.Name().Kind == ast.KindComputedPropertyName {
++						return l.notYet(member.Name(), "constructor readiness with a computed field; use a named field")
++					}
++				}
++				if arrow.Pos() < lastFieldAssignment(parent.Parent, parent) {
++					return &Refused{Where: l.program.Where(node), What: "this escaping a constructor through a closure before every field is set", Fix: "assign every field first, then create the closure that reads this"}
++				}
++				return nil
++			}
++			if ast.IsFunctionLike(parent) {
++				return nil
++			}
++		}
++	}
++	return nil
++}
++
++// Error and its subclasses store non-enumerable own fields. Their structural
++// name/message types do not prove that copying runtime storage is a JS spread.
++func (l *lowering) errorStorage(proven *checker.Type, seen map[*checker.Type]bool) bool {
++	if proven == nil || seen[proven] {
++		return false
++	}
++	seen[proven] = true
++	if l.isLibraryType(proven, "Error", "EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "AggregateError") {
++		return true
++	}
++	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
++		for _, member := range proven.Types() {
++			if l.errorStorage(member, seen) {
++				return true
++			}
++		}
++	}
++	if isClassInstance(proven) {
++		for _, base := range l.classBases(proven) {
++			if l.errorStorage(base, seen) {
++				return true
++			}
++		}
++	}
++	return false
++}
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index e9909dfa..8c030b54 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -85,6 +85,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 		if branch := l.literalCallableBranch(node); branch != nil {
+ 			return visit(branch)
+ 		}
++		if err := l.knownLoweringGap(node); err != nil {
++			found = err
++			return true
++		}
+ 		if node.Kind == ast.KindTypePredicate {
+ 			found = l.predicateRefusal(node)
+ 			return found != nil
+diff --git a/internal/native/error_message_test.go b/internal/native/error_message_test.go
+new file mode 100644
+index 00000000..c1779327
+--- /dev/null
++++ b/internal/native/error_message_test.go
+@@ -0,0 +1,49 @@
++package native
++
++import (
++	"path/filepath"
++	"testing"
++)
++
++// Direct own-property queries on Error remain NotYet in lowering. Probe the runtime
++// directly to distinguish the inherited empty message from an explicitly supplied empty one.
++func TestErrorUndefinedMessageHasNoOwnProperty(t *testing.T) {
++	t.Parallel()
++	const source = `#include "adamic.h"
++#include "view_representations.h"
++#include <stdio.h>
++static adamic_string empty = ADAMIC_STRING("");
++static adamic_string text = ADAMIC_STRING("m");
++static adamic_string key = ADAMIC_STRING("message");
++int main(void) {
++    adamic_string *messages[] = {NULL, &empty, &text, NULL};
++    adamic_slot_cache cache = {NULL, 0};
++    adamic_slot_cache optional_cache = {NULL, 0};
++    for (size_t i = 0; i < 4; i++) {
++        adamic_object *error = adamic_error_new(messages[i]);
++        adamic_string *message = adamic_object_field(error, "message", &cache)->reference;
++        printf("[%.*s] %s %s\n", (int)message->length, message->bytes,
++            adamic_object_has(error, &key) ? "true" : "false",
++            adamic_object_has_own(error, &key) ? "true" : "false");
++        adamic_value *optional = adamic_object_optional_field(error, "message", &optional_cache);
++        if (optional == NULL || optional->reference != message) return 1;
++        adamic_value checked = adamic_object_view(error, "message", &cache, adamic_rep_string, "string", "error.message");
++        if (checked.reference != message) return 2;
++        adamic_release(error);
++    }
++    return 0;
++}
++`
++	const oracle = `for (const error of [new Error(), new Error(''), new Error('m'), new Error(undefined)]) console.log('[' + error.message + '] ' + error.hasOwnProperty('message') + ' ' + Object.hasOwn(error, 'message'));`
++	want := runWithInput(t, "", "node", "--eval", oracle)
++	if want != "[] false false\n[] true true\n[m] true true\n[] false false\n" {
++		t.Fatalf("Node changed: %q", want)
++	}
++	binary := filepath.Join(t.TempDir(), "error-message")
++	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
++		t.Fatal(err)
++	}
++	if got := runWithInput(t, "", binary); got != want {
++		t.Fatalf("native %q; Node %q", got, want)
++	}
++}
+diff --git a/internal/native/fields.go b/internal/native/fields.go
+index 3bab9780..c705bd87 100644
+--- a/internal/native/fields.go
++++ b/internal/native/fields.go
+@@ -43,7 +43,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
+ 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
+ 	offsets := map[string]int{
+ 		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
+-		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
++		"#message": 1, "names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+ 	}
+ 	for _, names := range [][]string{
+ 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index 3142aaa3..3cf95767 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -898,7 +898,9 @@ bool adamic_weak_held(const void *target);
+ // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+ // Error(message), and adamic_uncaught the panic of an error nothing caught.
+ extern adamic_object *adamic_thrown;
++// NULL is an omitted or undefined message; its empty fallback is not an own field.
+ adamic_object *adamic_error_new(adamic_string *message);
++const char *adamic_error_field_name(const adamic_object *object, const char *name);
+ _Noreturn void adamic_uncaught(void);
+ 
+ // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+diff --git a/internal/native/runtime/exceptions.c b/internal/native/runtime/exceptions.c
+index e99e7e40..7d1acc6a 100644
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@ -2,6 +2,7 @@
+ // designed into counting"). The emitter does the unwinding; the runtime holds what's thrown.
+ 
+ #include "adamic.h"
++#include "view_representations.h"
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -12,15 +13,27 @@ adamic_object *adamic_thrown;
+ static const char *const error_names[] = {"name", "message"};
+ static const bool error_references[] = {true, true};
+ static const adamic_shape error_shape = {2, error_names, error_references, NULL};
++static const char *const absent_message_names[] = {"name", "#message"};
++static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};
++static adamic_string empty_message = ADAMIC_STRING("");
+ static adamic_string error_name = ADAMIC_STRING("Error");
+ 
+ adamic_object *adamic_error_new(adamic_string *message) {
+-	adamic_object *error = adamic_object_new(&error_shape);
++	// Undefined creates no own message property. Keep the inherited empty fallback
++	// in private storage so ordinary and checked field reads share the same slot.
++	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
+ 	error->slots[0].reference = adamic_retain(&error_name);
+-	error->slots[1].reference = adamic_retain(message);
++	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
++	adamic_object_field_types(error)[0] = adamic_rep_string;
++	adamic_object_field_types(error)[1] = adamic_rep_string;
+ 	return error;
+ }
+ 
++// Public lookup sees Error.prototype.message without creating an own property.
++const char *adamic_error_field_name(const adamic_object *object, const char *name) {
++	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
++}
++
+ _Noreturn void adamic_uncaught(void) {
+ 	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
+ 	// when there is one.
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index 13653e1b..97e0f82f 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -56,6 +56,7 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+ }
+ 
+ adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
++	name = adamic_error_field_name(object, name);
+ 	adamic_object *mutable = (adamic_object *)object;
+ 	for (size_t index = 0; index < object->shape->count; index++) {
+ 		if (strcmp(object->shape->names[index], name) == 0) {
+@@ -114,6 +115,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
+ 
+ // Cache absence too, with count as the index, without adding a field to the object's shape.
+ adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
++	name = adamic_error_field_name(object, name);
+ 	cache->shape = object->shape;
+ 	cache->index = object->shape->count;
+ 	for (size_t index = 0; index < object->shape->count; index++) {
+diff --git a/internal/oracle/miscompile_2a_test.go b/internal/oracle/miscompile_2a_test.go
+new file mode 100644
+index 00000000..4b3e5d60
+--- /dev/null
++++ b/internal/oracle/miscompile_2a_test.go
+@@ -0,0 +1,161 @@
++package oracle
++
++import (
++	"errors"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/lower"
++)
++
++func checkMiscompile2AStop(t *testing.T, name, output, diagnostic string, refused bool) {
++	t.Helper()
++	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/miscompile_2a", name+".a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	node := onNode(t, path)
++	if node.exitCode != 0 || string(node.stdout) != output || len(node.stderr) != 0 {
++		t.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
++	}
++	t.Logf("Node: exit=0 stdout=%q", node.stdout)
++	// Both backends share lowering. A stop here prevents C, JavaScript and a
++	// sanitizer build from receiving the unsafe program at all.
++	_, err = lowered(t, path)
++	var pending *lower.NotYet
++	var rejection *lower.Refused
++	if err == nil || (!refused && !errors.As(err, &pending)) || (refused && !errors.As(err, &rejection)) || !strings.Contains(err.Error(), diagnostic) || !strings.Contains(err.Error(), name+".a:") {
++		t.Fatalf("want path-bearing stop %q, got %v", diagnostic, err)
++	}
++	t.Log(err)
++}
++
++func TestMiscompile2AErrorSpread(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "9984394_error_spread", "no name no message\n", "object spread of Error storage", false)
++}
++func TestMiscompile2AOptionalError(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a", "[] [m]\n")
++}
++func TestMiscompile2AMaybeSetter(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "classfeat_maybe_setter", "3\n", "setter with an optional numeric input", false)
++}
++func TestMiscompile2ALongName(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "4ddd17f_long_name", "2\n", "property name longer than 4095 bytes", false)
++}
++func TestMiscompile2ADerivedSymbol(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "iterators_derived_symbol", "1,2\n", "computed member name in a derived class", false)
++}
++func TestMiscompile2AOverrideSource(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "iterators_override_source", "300\n3\n", "computed member name in a derived class", false)
++}
++func TestMiscompile2AConstructorArrow(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "d7054e9_this_arrow", "undefined:NaN|set\n", "this escaping a constructor through a closure", true)
++}
++func TestMiscompile2AConstructorNumberArrow(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "d7054e9_this_arrow_number", "NaN\nNaN,NaN\n", "this escaping a constructor through a closure", true)
++}
++
++func TestMiscompile2AErrorSubclassSpread(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AStop(t, "error_subclass_spread", "no name no message\n", "object spread of Error storage", false)
++}
++
++func checkMiscompile2AAdmitted(t *testing.T, relative, output string) {
++	t.Helper()
++	path := relative
++	if !filepath.IsAbs(path) {
++		path = filepath.Join(repository, relative)
++	}
++	path, err := filepath.Abs(path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	node := onNode(t, path)
++	if node.exitCode != 0 || string(node.stdout) != output || len(node.stderr) != 0 {
++		t.Fatalf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if got := onJavaScriptBackend(t, program); disagreement(node, got) != "" {
++		t.Fatalf("JavaScript: %s", disagreement(node, got))
++	}
++	got, binary := natively(t, program)
++	if difference := disagreement(node, got); difference != "" {
++		t.Fatalf("%s; native stderr: %s", difference, got.stderr)
++	}
++	if report := leaks(t, program, binary); report != "" {
++		t.Fatal(report)
++	}
++}
++
++func TestMiscompile2AControls(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/controls.a", "2\n2\n3\nplain shown\nm\n1,2\n[] [m]\nError bad\nundefined\n3\n")
++}
++func TestMiscompile2AMarker(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/census_never_rest_marker.a", "function\nfunction\nok\nfunction:function\nfunction\nfunction\nfunction\nfunction\nfunction:1\nfunction\n")
++}
++
++// Keep the stored census program unchanged, and exercise its existing optional
++// entry point with an omitted argument using a separate test driver.
++func TestMiscompile2AMarkerUndefined(t *testing.T) {
++	t.Parallel()
++	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/census_never_rest_marker.a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	path := filepath.Join(t.TempDir(), "marker-undefined.a")
++	source = append(source, []byte(`
++try { fail(); } catch (error) {
++ if (error instanceof Error) { console.log('[' + error.message + ']'); }
++}
++`)...)
++	if err := os.WriteFile(path, source, 0o644); err != nil {
++		t.Fatal(err)
++	}
++	checkMiscompile2AAdmitted(t, path, "function\nfunction\nok\nfunction:function\nfunction\nfunction\nfunction\nfunction\nfunction:1\nfunction\n[]\n")
++}
++
++func TestMiscompile2AUndefinedError(t *testing.T) {
++	t.Parallel()
++	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/error_undefined_message.a", "[] []\n[] [m]\n[] 1\n")
++}
++
++func init() {
++	for _, name := range []string{"9984394_error_spread", "classfeat_maybe_setter", "4ddd17f_long_name", "iterators_derived_symbol", "iterators_override_source", "error_subclass_spread"} {
++		fixtures = append(fixtures, struct {
++			path            string
++			lowers, checked bool
++		}{"internal/oracle/testdata/miscompile_2a/" + name + ".a", false, false})
++	}
++}
++
++func init() {
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/miscompile_2a/controls.a", true, false})
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a", true, false})
++
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/miscompile_2a/error_undefined_message.a", true, false})
++
++}
+diff --git a/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a b/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+new file mode 100644
+index 00000000..3fb3bb62
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+@@ -0,0 +1,4 @@
++interface Wide { readonly first: number; kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk: number; }
++const wide: Wide = { first: 0, kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk: 1 };
++wide.kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk += 1;
++console.log(`${wide.kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk}`);
+diff --git a/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a b/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+new file mode 100644
+index 00000000..745eada9
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+@@ -0,0 +1,2 @@
++function failed(message?: string): string { return new Error(message).message; }
++console.log(`[${failed()}] [${failed('m')}]`);
+diff --git a/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a b/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+new file mode 100644
+index 00000000..ecd5faa8
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+@@ -0,0 +1,7 @@
++interface Shown { readonly name?: string; readonly message?: string; }
++try { throw new Error(`bad ${1}`); } catch (error) {
++ if (error instanceof Error) {
++  const copy: Shown = { ...error };
++  console.log(`${copy.name ?? 'no name'} ${copy.message ?? 'no message'}`);
++ }
++}
+diff --git a/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a b/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+new file mode 100644
+index 00000000..0a2ac370
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+@@ -0,0 +1,8 @@
++class Gauge {
++ #level: number | undefined = undefined;
++ get level(): number | undefined { return this.#level; }
++ set level(value: number | undefined) { this.#level = value; }
++}
++const gauge = new Gauge(); gauge.level = 3;
++function show(g: Gauge): string { return `${g.level}`; }
++console.log(show(gauge));
+diff --git a/internal/oracle/testdata/miscompile_2a/controls.a b/internal/oracle/testdata/miscompile_2a/controls.a
+new file mode 100644
+index 00000000..3e4f04f8
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/controls.a
+@@ -0,0 +1,44 @@
++class Ready {
++ readonly count: number;
++ constructor(count: number) {
++  this.count = count;
++  const read = (): number => this.count;
++  console.log(`${read()}`);
++ }
++}
++class ScalarGauge {
++ #level: number = 0;
++ get level(): number { return this.#level; }
++ set level(value: number) { this.#level = value; }
++}
++const ready = new Ready(2);
++console.log(`${ready.count}`);
++const gauge = new ScalarGauge();
++gauge.level = 3;
++function showGauge(g: ScalarGauge): string {
++ const level = g.level;
++ return `${level}`;
++}
++console.log(showGauge(gauge));
++const source = { name: 'plain', message: 'shown' };
++const copy = { ...source };
++console.log(`${copy.name} ${copy.message}`);
++console.log(new Error('m').message);
++class PlainIterator {
++ [Symbol.iterator]() {
++  let index = 0;
++  return { next() { index++; return { value: index, done: index > 2 }; } };
++ }
++}
++console.log([...new PlainIterator()].join(','));
++function safeError(message?: string): string {
++ return new Error(message ?? '').message;
++}
++console.log(`[${safeError()}] [${safeError('m')}]`);
++const error = new Error('bad');
++const explicit = { name: error.name, message: error.message };
++console.log(`${explicit.name} ${explicit.message}`);
++const optional: { amount: number | undefined } = { amount: undefined };
++console.log(`${optional.amount}`);
++optional.amount = 3;
++console.log(`${optional.amount}`);
+diff --git a/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a b/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a
+new file mode 100644
+index 00000000..5ba69b1e
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a
+@@ -0,0 +1,10 @@
++class Box {
++ readonly first: string; readonly later: string; readonly count: number;
++ constructor(label: string) {
++  const read = (): string => this.later;
++  const counted = (): number => this.count + 1;
++  this.first = `${read()}:${counted()}`;
++  this.later = label; this.count = 2;
++ }
++}
++const box = new Box('set'); console.log(`${box.first}|${box.later}`);
+diff --git a/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a b/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a
+new file mode 100644
+index 00000000..fb2054f7
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a
+@@ -0,0 +1,10 @@
++class Counter {
++ readonly start: number; readonly count: number;
++ constructor() {
++  const next = (): number => this.count + 1;
++  this.start = next(); this.count = 5;
++ }
++}
++console.log(`${new Counter().start}`);
++const scaled = [1, 2].map((value) => value * new Counter().start);
++console.log(scaled.join(','));
+diff --git a/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a b/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+new file mode 100644
+index 00000000..de664567
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+@@ -0,0 +1,3 @@
++class Bad extends Error {}
++const copy = { ...new Bad('bad') };
++console.log(`${copy.name ?? 'no name'} ${copy.message ?? 'no message'}`);
+diff --git a/internal/oracle/testdata/miscompile_2a/error_undefined_message.a b/internal/oracle/testdata/miscompile_2a/error_undefined_message.a
+new file mode 100644
+index 00000000..ce6234e5
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/error_undefined_message.a
+@@ -0,0 +1,5 @@
++let reads = 0;
++function absent(): string | undefined { reads++; return undefined; }
++console.log(`[${new Error().message}] [${new Error(undefined).message}]`);
++console.log(`[${new Error('').message}] [${new Error('m').message}]`);
++console.log(`[${new Error(absent()).message}] ${reads}`);
+diff --git a/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a b/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+new file mode 100644
+index 00000000..a0bd2d68
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+@@ -0,0 +1,9 @@
++class Base { readonly limit = 2; }
++class Counted extends Base {
++ [Symbol.iterator]() {
++  let index = 0;
++  const limit = this.limit;
++  return { next() { index++; return { value: index, done: index > limit }; } };
++ }
++}
++console.log([...new Counted()].join(','));
+diff --git a/internal/oracle/testdata/miscompile_2a/iterators_override_source.a b/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+new file mode 100644
+index 00000000..0e034990
+--- /dev/null
++++ b/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+@@ -0,0 +1,17 @@
++interface Step { readonly value: number; readonly done: boolean; }
++class Counter {
++ index = 0;
++ readonly scale: number;
++ constructor(scale: number) { this.scale = scale; }
++ next(): Step {
++  const value = this.index; this.index++;
++  return { value: value * this.scale, done: value >= 3 };
++ }
++}
++class Base {
++ [Symbol.iterator](): Counter { return new Counter(1); }
++ total(): number { let sum = 0; for(const value of this) { sum += value; } return sum; }
++}
++class Scaled extends Base { override [Symbol.iterator](): Counter { return new Counter(100); } }
++console.log(`${new Scaled().total()}`);
++console.log(`${new Base().total()}`);

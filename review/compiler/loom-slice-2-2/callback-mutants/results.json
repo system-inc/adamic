@@ -1,0 +1,86 @@
+[
+  {
+    "mutant": "refusal-revert",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningRefuseSome",
+      "TestCallbackWideningRefuseReduce",
+      "TestCallbackWideningRefuseMap",
+      "TestCallbackWideningRefuseSort",
+      "TestCallbackWideningRefuseFind",
+      "TestCallbackWideningRefuseEvery",
+      "TestCallbackWideningRefuseForEach",
+      "TestCallbackWideningRefuseFilter"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/callback-mutants/refusal-revert/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningRefuse"
+    ]
+  },
+  {
+    "mutant": "unrepresented-parameter-admitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningUnrepresentedParameter"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/callback-mutants/unrepresented-parameter-admitted/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningUnrepresentedParameter$"
+    ]
+  },
+  {
+    "mutant": "adapter-target-omitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackAdapterTargets"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/callback-mutants/adapter-target-omitted/overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestCallbackAdapterTargets$"
+    ]
+  },
+  {
+    "mutant": "adaptation-omitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningNumberEveryRelease",
+      "TestCallbackWideningNumberEverySanitized"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/callback-mutants/adaptation-omitted/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningNumberEvery(Release|Sanitized|JavaScript)$"
+    ]
+  }
+]

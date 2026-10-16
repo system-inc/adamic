@@ -1,0 +1,5 @@
+let reads = 0;
+function absent(): string | undefined { reads++; return undefined; }
+console.log(`[${new Error().message}] [${new Error(undefined).message}]`);
+console.log(`[${new Error('').message}] [${new Error('m').message}]`);
+console.log(`[${new Error(absent()).message}] ${reads}`);

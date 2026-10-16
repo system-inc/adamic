@@ -1,0 +1,2 @@
+interface Item {readonly id:number;}
+console.log([{id:1},{id:2},{id:3}].reduce((acc: string, x: Item | number): string => acc + (typeof x === 'number' ? `${x}` : `${x.id}`), ""));
