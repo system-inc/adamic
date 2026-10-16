@@ -1,6 +1,9 @@
 {
   "version": 1,
   "waits": {
+    "cmd/adamic-admission-delta TestProduct_AdmissionCompilerReady": [
+      "cmd/adamic-admission-delta TestProduct_AdmissionCompiler"
+    ],
     "cmd/adamic-test262 TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
@@ -134,6 +137,30 @@
       "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
       "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
     ],
+    "stage1/cohere/cssnumbers TestProduct_CSSNumbersFindsGoAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoAnswers"
+    ],
+    "stage1/cohere/cssnumbers TestProduct_CSSNumbersFindsGoBatchAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoBatchAnswers"
+    ],
+    "stage1/cohere/cssnumbers TestProduct_CSSNumbersFindsGoOracle": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
+    ],
+    "stage1/cohere/cssnumbers TestProduct_CSSNumbersFindsGoRawAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoRawAnswers"
+    ],
+    "stage1/cohere/cssnumbers TestProduct_CSSNumbersPrettierBatchAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
+    ],
+    "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
+    ],
+    "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoBatchAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
+    ],
+    "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoRawAnswers": [
+      "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
+    ],
     "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
       "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
     ],
@@ -211,6 +238,9 @@
     ],
     "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
       "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/gitignore TestProduct_GitignoreFindsOracle": [
+      "stage1/cohere/gitignore/oracles TestProduct_GitignoreOracle"
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout",
@@ -303,6 +333,9 @@
     ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
+    ],
+    "stage1/cohere/mediaquery TestProduct_MediaQueryFindsGoOracle": [
+      "stage1/cohere/mediaquery/oracles TestProduct_MediaQueryGoOracle"
     ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
@@ -1382,6 +1415,9 @@
     ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsGoOracle": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_DecodedOptionsNative": [
+      "stage1/cohere/lint TestProduct_DecodedOptionsLowered"
     ]
   }
 }

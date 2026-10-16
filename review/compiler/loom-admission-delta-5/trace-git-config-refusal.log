@@ -1,0 +1,8 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:279: build admission-compiler 47dac25c0ba2 miss 2.99
+--- PASS: TestProduct_AdmissionCompiler (3.81s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	3.878s
+refused admission-compiler (name key 47dac25c0ba2): it read what no key can name, home: /home/agent/.gitconfig
+traced: 0 settled, 1 refused; journal and report in /workspace/scratch/admission-delta-5-products/traces/20261016T125536Z-3854751551
+exit status 3

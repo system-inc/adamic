@@ -5,6 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"math/rand/v2"
 	"net/http/httptest"
 	"os"
@@ -1499,7 +1502,7 @@ func TestTheReportNamesEachProductsOutcome(t *testing.T) {
 		t.Fatalf("header's read sets: %+v, %v", file, err)
 	}
 	settled := map[string]any{"name": "header", "nameKey": built["header"].NameKey, "key": file.Sets[0].Key, "outcome": "settled",
-		"reads": float64(len(file.Sets[0].Entries))}
+		"reads": float64(len(file.Sets[0].Entries)), "window": BuildSuperset}
 	if fmt.Sprint(got[0]) != fmt.Sprint(settled) {
 		t.Fatalf("the settled line is %v; want %v", got[0], settled)
 	}
@@ -2266,5 +2269,336 @@ func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(t *testing.T) {
 	entries := r.entries(t, build.NameKey)
 	if !slices.Contains(entries, "filesystem case") || slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
 		t.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
+	}
+}
+
+// leanRun settles one traced run of a build of port, lean or not, in a rig of its own: before is a file its test reads
+// before the build (a shard's own case), and the build reads source/a.c in its window, and notes.txt in a process it
+// starts. It returns the run's report for port and the set's entries.
+func leanRun(t *testing.T, lean bool, before string) (Report, []string) {
+	t.Helper()
+	r := newRig(t)
+	if lean {
+		LeanProduct(t, port, building("built"))
+	} else {
+		Product(t, port, building("built"))
+	}
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	r.open(r.pid, before)
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
+		r.open(child, "notes.txt")
+		r.add(child, "+++ exited with 0 +++")
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	for _, report := range settlement.Reports {
+		if report.Outcome == ReportSettled {
+			return report, r.entries(t, build.NameKey)
+		}
+	}
+	t.Fatalf("no settled report: %+v", settlement.Reports)
+	return Report{}, nil
+}
+
+// A lean build's read set is its own (#mmpt615, Node's ruling): what its process and the processes it starts read in
+// its window, and every file its declared Files name, read or not, never what its test read before it. So two tests
+// that read different cases before asking for one lean product settle it under one key, where a build that isn't lean
+// keeps the superset, its test's earlier reads included, and settles two. The report names how each was taken.
+// Mutants that each fail it: lean ignored; the declared files left out; the window's subprocesses dropped.
+// Not parallel: newRig.
+func TestALeanBuildIsKeyedByItsWindowAndItsDeclaredFilesAlone(t *testing.T) {
+	first, entries := leanRun(t, true, "go.sum")
+	if first.Window != BuildWindowed {
+		t.Fatalf("a lean build's reads were taken as %q", first.Window)
+	}
+	for _, want := range []string{"content source/a.c", "content source/b.c", "listing source", "content include/x.h", "content notes.txt"} {
+		if !slices.Contains(entries, want) {
+			t.Errorf("the lean set lacks %q: %q", want, entries)
+		}
+	}
+	if slices.Contains(entries, "content go.sum") {
+		t.Errorf("the lean set holds what its test read before it: %q", entries)
+	}
+	if second, _ := leanRun(t, true, "include/x.h"); second.Key != first.Key {
+		t.Errorf("two tests reading different files before one lean build settled it under %s and %s", first.Key[:12], second.Key[:12])
+	}
+	one, oneEntries := leanRun(t, false, "go.sum")
+	two, _ := leanRun(t, false, "notes.txt")
+	if one.Window != BuildSuperset || !slices.Contains(oneEntries, "content go.sum") || one.Key == two.Key {
+		t.Errorf("a build that isn't lean: taken as %q, holds go.sum %v, keys %s and %s; want the superset, its test's reads in it, two keys",
+			one.Window, slices.Contains(oneEntries, "content go.sum"), one.Key[:12], two.Key[:12])
+	}
+}
+
+// Only the packages buildcache reviewed build lean (leanCallers): a lean build is keyed without what its caller read
+// before it, so a caller that handed it bytes of its own would key it without them. A caller is any file that imports
+// buildcache, under any name, a dot import too, and calls LeanProduct or LeanGet, buildcache's own subpackages included
+// (Mentat's S3: a text match let an aliased import through). buildcache's own files are the reviewer, never a caller,
+// and cohere is a module of its own, which can't import adamic's internal packages. Mutants: a caller added to the tree
+// and not to leanCallers; one importing buildcache under another name.
+func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	callers := leanCallersIn(t, root)
+	for _, caller := range callers {
+		if !slices.Contains(leanCallers, caller) {
+			t.Errorf("%s builds lean, and isn't one of buildcache's reviewed lean callers %v", caller, leanCallers)
+		}
+	}
+	if !slices.Contains(callers, "internal/native/runtimeproducts") {
+		t.Fatalf("lean callers found: %v; want runtimeproducts among them", callers)
+	}
+	aliased := t.TempDir()
+	write(t, aliased, "caller/aliased.go", "package caller\n\nimport cache \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = cache.LeanGet(cache.Inputs{}, nil)\n")
+	write(t, aliased, "dotted/dotted.go", "package dotted\n\nimport . \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = LeanGet(Inputs{}, nil)\n")
+	write(t, aliased, "plain/plain.go", "package plain\n\nimport \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = buildcache.Get(buildcache.Inputs{}, nil)\n")
+	if found := leanCallersIn(t, aliased); !slices.Equal(found, []string{"caller", "dotted"}) {
+		t.Errorf("lean callers by an alias and a dot import: %v; want caller and dotted", found)
+	}
+}
+
+// leanCallersIn is every package under root, by its directory relative to root, a file of which calls buildcache's
+// LeanProduct or LeanGet.
+func leanCallersIn(t *testing.T, root string) []string {
+	t.Helper()
+	const importPath = "github.com/system-inc/adamic/internal/buildcache"
+	found := map[string]bool{}
+	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return nil
+		}
+		if entry.IsDir() && (entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
+			return filepath.SkipDir
+		}
+		if entry.IsDir() || !strings.HasSuffix(name, ".go") || filepath.Dir(name) == filepath.Join(root, "internal", "buildcache") {
+			return nil
+		}
+		content, err := os.ReadFile(name)
+		if err != nil || !strings.Contains(string(content), importPath) {
+			return nil
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), name, content, parser.SkipObjectResolution)
+		if err != nil {
+			t.Errorf("%s: %v", name, err)
+			return nil
+		}
+		local := ""
+		for _, imported := range file.Imports {
+			if strings.Trim(imported.Path.Value, "`\"") != importPath {
+				continue
+			}
+			local = "buildcache"
+			if imported.Name != nil {
+				local = imported.Name.Name
+			}
+		}
+		lean := func(called string) bool { return called == "LeanProduct" || called == "LeanGet" }
+		ast.Inspect(file, func(node ast.Node) bool {
+			switch node := node.(type) {
+			case *ast.SelectorExpr:
+				if receiver, ok := node.X.(*ast.Ident); ok && local != "" && local != "." && receiver.Name == local && lean(node.Sel.Name) {
+					found[filepath.Dir(name)] = true
+				}
+			case *ast.Ident:
+				if local == "." && lean(node.Name) {
+					found[filepath.Dir(name)] = true
+				}
+			}
+			return true
+		})
+		return nil
+	})
+	var callers []string
+	for directory := range found {
+		relative, _ := filepath.Rel(root, directory)
+		callers = append(callers, filepath.ToSlash(relative))
+	}
+	sort.Strings(callers)
+	return callers
+}
+
+// leanSettle settles one lean build of inputs in a rig of its own, keyed naming the files its key holds beyond its Files
+// (leanBuild), with trace writing the run around the build's id. It returns the settlement, the settled report (empty
+// when none settled) and the settled set's entries.
+func leanSettle(t *testing.T, inputs Inputs, keyed []string, trace func(r *rig, id string)) (Settlement, Report, []string) {
+	t.Helper()
+	r := newRig(t)
+	product(t, inputs, building("built"), &leanBuild{keyed: keyed})
+	build := r.built(t)[inputs.Name]
+	trace(r, build.Build)
+	settlement := r.settle(t)
+	for _, report := range settlement.Reports {
+		if report.Outcome == ReportSettled {
+			return settlement, report, r.entries(t, build.NameKey)
+		}
+	}
+	return settlement, Report{}, nil
+}
+
+// A file a lean build's test wrote before its window is never the build's own output (Mentat's M1): the reads behind
+// those bytes are the test's, outside the window, so the file reads by content, and a temporary file no key can name
+// refuses the build. One the build's processes wrote in its window is theirs, whatever was written there before. A file
+// its key holds (goProduct's -overlay, written by its test into a directory of its own) is the build's to read wherever
+// its test wrote it. Mutants that each fail it: the window's writes counted since the run began; the keyed files left
+// out; a writer kept once a process for the whole run.
+// Not parallel: newRig.
+func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
+	const generated = "/tmp/adamic-written-before-the-window/gen.h"
+	before := func(r *rig, id string) {
+		r.open(r.pid, "notes.txt")
+		r.write(r.pid, generated)
+		r.window(id, func() {
+			r.open(r.pid, "source/a.c")
+			r.open(r.pid, generated)
+		})
+	}
+	if settlement, _, _ := leanSettle(t, port, nil, before); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
+		t.Errorf("a lean build reading what its test wrote before its window: settled %q, refused %q; want it refused as temp not made by this run",
+			settlement.Settled, settlement.Refused)
+	}
+	for name, trace := range map[string]func(r *rig, id string){
+		"written in the window": func(r *rig, id string) {
+			r.window(id, func() {
+				r.write(r.pid, generated)
+				r.open(r.pid, generated)
+			})
+		},
+		"written before and again in the window": func(r *rig, id string) {
+			r.write(r.pid, generated)
+			r.window(id, func() {
+				r.write(r.pid, generated)
+				r.open(r.pid, generated)
+			})
+		},
+	} {
+		if settlement, report, _ := leanSettle(t, port, nil, trace); report.Window != BuildWindowed {
+			t.Errorf("%s: settled %q, refused %q; want it the build's own output, settled windowed", name, settlement.Settled, settlement.Refused)
+		}
+	}
+	settlement, report, entries := leanSettle(t, port, []string{generated}, before)
+	if report.Window != BuildWindowed || slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "gen.h") }) {
+		t.Errorf("a file its key holds, written before its window: settled %q, refused %q, entries %q; want it settled windowed without it",
+			settlement.Settled, settlement.Refused, entries)
+	}
+}
+
+// A build-begin from a thread the trace hasn't placed yet opens its window at the marker, for the process the build's
+// id names, so what that process's placed threads read before the thread is placed is the build's (Mentat's M2). A
+// marker whose id names a process the trace doesn't know yet opens the window once its thread is placed, late, and a
+// lean build whose window opened late keys by its superset, as its report says (S1). One opened for the id's process
+// whose thread the trace then placed in another process is lost. Mutants that each fail it: no opening at the marker; a
+// late window read as placed; the marker's process never checked against the opening's.
+// Not parallel: newRig.
+func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
+	thread := func(r *rig) int { return r.pid + 7 }
+	settlement, report, entries := leanSettle(t, port, nil, func(r *rig, id string) {
+		r.open(r.pid, "go.sum")
+		r.marker(thread(r), "build-begin", id)
+		r.open(r.pid, "notes.txt")
+		r.add(r.pid, `clone(child_stack=0x7f, flags=CLONE_VM|CLONE_THREAD) = %d`, thread(r))
+		r.open(thread(r), "source/a.c")
+		r.marker(thread(r), "build-end", id)
+	})
+	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.sum") {
+		t.Errorf("a marker on a thread placed after it: settled %q, refused %q, taken as %q, entries %q; want it windowed, holding notes.txt read before its thread was placed, never go.sum",
+			settlement.Settled, settlement.Refused, report.Window, entries)
+	}
+	settlement, report, entries = leanSettle(t, port, nil, func(r *rig, id string) {
+		command := r.pid + 100
+		r.open(command, "go.sum")
+		r.marker(r.pid, "build-begin", id)
+		r.add(command, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, r.pid)
+		r.open(r.pid, "source/a.c")
+		r.marker(r.pid, "build-end", id)
+	})
+	if report.Window != BuildLeanSuperset || !slices.Contains(entries, "content source/a.c") {
+		t.Errorf("a marker of a process the trace placed after it: settled %q, refused %q, taken as %q, entries %q; want the lean superset",
+			settlement.Settled, settlement.Refused, report.Window, entries)
+	}
+	other := func(r *rig) int { return r.pid + 50 }
+	settlement, report, _ = leanSettle(t, port, nil, func(r *rig, id string) {
+		r.open(r.pid, "go.sum")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
+		r.marker(thread(r), "build-begin", id)
+		r.add(other(r), `clone(child_stack=0x7f, flags=CLONE_VM|CLONE_THREAD) = %d`, thread(r))
+		r.open(thread(r), "source/a.c")
+		r.marker(thread(r), "build-end", id)
+	})
+	if report.Window != BuildLeanSuperset {
+		t.Errorf("a window opened for the id's process, its thread placed in another while it's open: settled %q, refused %q, taken as %q; want the lean superset",
+			settlement.Settled, settlement.Refused, report.Window)
+	}
+	settlement, _, _ = leanSettle(t, port, nil, func(r *rig, id string) {
+		r.open(r.pid, "go.sum")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
+		r.marker(thread(r), "build-begin", id)
+		r.marker(r.pid, "build-end", id)
+		r.add(other(r), `clone(child_stack=0x7f, flags=CLONE_VM|CLONE_THREAD) = %d`, thread(r))
+	})
+	if len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the trace placed its marker in another") {
+		t.Errorf("a window opened for the id's process, ended, its thread then placed in another: settled %q, refused %q; want it lost", settlement.Settled, settlement.Refused)
+	}
+}
+
+// A lean build's declared path it can't read whole refuses it, named, never dropped (Mentat's S2, Node's must): the
+// build may have taken its bytes before its window, and the key would lack them. A file or a directory the tree doesn't
+// carry, and a directory that can't be read, each refuse; a declared path that isn't there reads as absent and settles.
+// Mutants that each fail it: an untracked file dropped; an untracked directory skipped; a walk's error ignored; the
+// declared directory's own error read as absent.
+// Not parallel: newRig.
+func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
+	if os.Geteuid() == 0 {
+		t.Skip("root reads a directory whatever its mode")
+	}
+	seal := func(t *testing.T, directory string) {
+		if err := os.Chmod(directory, 0); err != nil {
+			t.Fatal(err)
+		}
+		t.Cleanup(func() { os.Chmod(directory, 0o755) })
+	}
+	withFiles := func(files ...string) Inputs {
+		inputs := port
+		inputs.Files = files
+		return inputs
+	}
+	for name, test := range map[string]struct {
+		inputs  Inputs
+		make    func(t *testing.T, r *rig)
+		refusal string
+	}{
+		"an untracked declared file": {withFiles("source", "stray.h"), func(t *testing.T, r *rig) { write(t, r.root, "stray.h", "#define S 1\n") },
+			"stray.h is a file the tree doesn't carry"},
+		"an untracked file in a declared directory": {port, func(t *testing.T, r *rig) { write(t, r.root, "source/extra.c", "int e;\n") },
+			"extra.c is a file the tree doesn't carry"},
+		"an untracked directory in a declared directory": {port, func(t *testing.T, r *rig) { write(t, r.root, "source/generated/g.c", "int g;\n") },
+			"generated is a directory the tree doesn't carry"},
+		"a declared directory it can't read": {port, func(t *testing.T, r *rig) { seal(t, filepath.Join(r.root, "include")) },
+			"declared include can't be read whole"},
+		"a directory it can't read in a declared directory": {port, func(t *testing.T, r *rig) {
+			write(t, r.root, "source/deep/d.c", "int d;\n")
+			gitIn(t, r.root, "add", ".")
+			gitIn(t, r.root, "commit", "-q", "-m", "deep")
+			forgetTracked()
+			seal(t, filepath.Join(r.root, "source", "deep"))
+		}, "declared source can't be read whole"},
+		"a declared file that isn't there": {withFiles("source", "gone.h"), nil, ""},
+	} {
+		settlement, report, entries := leanSettle(t, test.inputs, nil, func(r *rig, id string) {
+			if test.make != nil {
+				test.make(t, r)
+			}
+			r.window(id, func() { r.open(r.pid, "source/a.c") })
+		})
+		switch {
+		case test.refusal == "" && (report.Window != BuildWindowed || !slices.Contains(entries, "exists gone.h")):
+			t.Errorf("%s: settled %q, refused %q, entries %q; want it settled, the path read as absent", name, settlement.Settled, settlement.Refused, entries)
+		case test.refusal != "" && (len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], test.refusal)):
+			t.Errorf("%s: settled %q, refused %q; want it refused naming %q", name, settlement.Settled, settlement.Refused, test.refusal)
+		}
 	}
 }

@@ -79,7 +79,9 @@ func Supply(request native.RuntimeRequest) (string, error) {
 	if err := Declared(request); err != nil {
 		return "", err
 	}
-	return buildcache.Get(Inputs(request), func(directory string) error { return request.Build(directory, 1) })
+	// Lean (#mmpt615): an archive's build takes nothing but its request, made from the runtime's files Inputs names, so
+	// a test that asks for it mid-run never keys it by what that test read before.
+	return buildcache.LeanGet(Inputs(request), func(directory string) error { return request.Build(directory, 1) })
 }
 
 // Declared says why a request is for an archive the tree build doesn't build ahead, or nil when it is one.
@@ -125,7 +127,7 @@ func Build(t *testing.T, name string, group int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		buildcache.Product(t, Inputs(request), func(directory string) error { return request.Build(directory, 4) })
+		buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 4) })
 	}
 }
 

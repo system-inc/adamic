@@ -1,0 +1,4 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),cp=require('node:child_process');
+const root=path.resolve(process.argv[2]),file=path.join(root,'built/local/_tsc.js'),original=fs.readFileSync(file),command=[path.join(__dirname,'instrumentation-audit.cjs'),root];
+try{fs.appendFileSync(file,'\n// __49read\n');const mutant=cp.spawnSync(process.execPath,command,{encoding:'utf8'});assert.equal(mutant.status,1);assert.ok(mutant.stderr.includes('instrumentation leaked into'));}finally{fs.writeFileSync(file,original);}
+const clean=cp.spawnSync(process.execPath,command,{encoding:'utf8'});assert.equal(clean.status,0,clean.stderr);console.log(JSON.stringify({mutant:'inject an observation hook into emitted tsc',caught:'zero-instrumentation audit',restored:true}));

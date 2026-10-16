@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/es2015.ts",
+  "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+  "source_bytes": 231789,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:5458:ImportDeclaration",
+      "start": 0,
+      "end": 5458,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 5458,
+      "name": ""
+    },
+    {
+      "id": "5458:5694:EnumDeclaration",
+      "start": 5458,
+      "end": 5694,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 236,
+      "name": "ES2015SubstitutionFlags"
+    },
+    {
+      "id": "5694:7277:InterfaceDeclaration",
+      "start": 5694,
+      "end": 7277,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 1583,
+      "name": "LoopOutParameter"
+    },
+    {
+      "id": "7277:7475:EnumDeclaration",
+      "start": 7277,
+      "end": 7475,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 198,
+      "name": "LoopOutParameterFlags"
+    },
+    {
+      "id": "7475:7546:EnumDeclaration",
+      "start": 7475,
+      "end": 7546,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 71,
+      "name": "CopyDirection"
+    },
+    {
+      "id": "7546:7637:EnumDeclaration",
+      "start": 7546,
+      "end": 7637,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 91,
+      "name": "Jump"
+    },
+    {
+      "id": "7637:10460:InterfaceDeclaration",
+      "start": 7637,
+      "end": 10460,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 2823,
+      "name": "ConvertedLoopState"
+    },
+    {
+      "id": "10460:10680:TypeAliasDeclaration",
+      "start": 10460,
+      "end": 10680,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 220,
+      "name": "LoopConverter"
+    },
+    {
+      "id": "10680:15901:EnumDeclaration",
+      "start": 10680,
+      "end": 15901,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 5221,
+      "name": "HierarchyFacts"
+    },
+    {
+      "id": "15901:16240:EnumDeclaration",
+      "start": 15901,
+      "end": 16240,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 339,
+      "name": "SpreadSegmentKind"
+    },
+    {
+      "id": "16240:16331:InterfaceDeclaration",
+      "start": 16240,
+      "end": 16331,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 91,
+      "name": "SpreadSegment"
+    },
+    {
+      "id": "16331:16466:FunctionDeclaration",
+      "start": 16331,
+      "end": 16466,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 135,
+      "name": "createSpreadSegment"
+    },
+    {
+      "id": "16466:231787:FunctionDeclaration",
+      "start": 16466,
+      "end": 231787,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 215321,
+      "name": "transformES2015"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "16466:231787:FunctionDeclaration"
+      ],
+      "bytes": 215321
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "0:5458:ImportDeclaration"
+      ],
+      "bytes": 5458
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "10680:15901:EnumDeclaration"
+      ],
+      "bytes": 5221
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "7637:10460:InterfaceDeclaration"
+      ],
+      "bytes": 2823
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "5694:7277:InterfaceDeclaration"
+      ],
+      "bytes": 1583
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "15901:16240:EnumDeclaration"
+      ],
+      "bytes": 339
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "5458:5694:EnumDeclaration"
+      ],
+      "bytes": 236
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "10460:10680:TypeAliasDeclaration"
+      ],
+      "bytes": 220
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "7277:7475:EnumDeclaration"
+      ],
+      "bytes": 198
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "16331:16466:FunctionDeclaration"
+      ],
+      "bytes": 135
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "7546:7637:EnumDeclaration"
+      ],
+      "bytes": 91
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "16240:16331:InterfaceDeclaration"
+      ],
+      "bytes": 91
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "7475:7546:EnumDeclaration"
+      ],
+      "bytes": 71
+    }
+  ]
+}

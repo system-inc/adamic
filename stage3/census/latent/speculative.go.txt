@@ -245,7 +245,7 @@ func latentSpecValue(node *ast.Node) bool {
 }
 
 func (l *lowering) latentSpecWalk(node *ast.Node) {
-	if node == nil || latentSpec.active[node] {
+	if node == nil || latentSpec.active[node] || !latentPieceAllows(node) {
 		return
 	}
 	latentSpec.visited[node] = true
@@ -296,6 +296,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	nodes := map[string]*ast.Node{}
 	for _, file := range program.Files() {
 		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
+		latentPieceStart(program, file)
 		latentProgressStart(program, file)
 		latentFindings = nil
 		latentSpec = &latentSpeculation{attempted: map[*ast.Node]bool{}, failed: failed, nodes: nodes, active: map[*ast.Node]bool{}, visited: map[*ast.Node]bool{}, bodies: map[*ast.Node]bool{}, boundaries: boundaries, sites: sites}
@@ -325,18 +326,21 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		l.latentRegister(program.Files())
 		l.latentRegisterNested(program.Files())
 		latentProgressPhase("walk")
-		for _, node := range file.Statements.Nodes {
+		for _, node := range latentPieceUnits(file) {
+			latentPieceOrigin = latentPieceAtomID(node)
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "speculative", CheckerDiagnostics: []string{}}
 			if node.Name() != nil {
 				unit.Name = node.Name().Text()
 			}
 			copy := l.latentSnapshot()
+			copy.latentPiecePrepare(node)
 			copy.latentSpecWalk(node)
 			record.Units = append(record.Units, unit)
 			latentProgressUnitDone()
 		}
-		l.latentSpecWalk(file.AsNode())
+		if latentPiece == nil { l.latentSpecWalk(file.AsNode()) }
+		latentPieceFinish(&record)
 		record.Findings = append([]LatentFinding{}, latentFindings...)
 		record.SpeculativeCoverage = &LatentSpeculativeCoverage{SourceBytes: len(file.Text()), VisitedNodes: len(latentSpec.visited), AttemptedNodes: len(latentSpec.attempted)}
 		var verify ast.Visitor
@@ -348,7 +352,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			node.ForEachChild(verify)
 			return false
 		}
-		verify(file.AsNode())
+		if latentPiece == nil { verify(file.AsNode()) } else { for _, node := range latentPieceUnits(file) { verify(node) } }
 		latentProgressPhase("completed")
 		release()
 		fmt.Fprintf(os.Stderr, "speculative walk: %s nodes=%d findings=%d unvisited=%d\n", record.File, record.SpeculativeCoverage.TotalNodes, len(record.Findings), record.SpeculativeCoverage.UnvisitedNodes)
@@ -405,6 +409,8 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		}
 		emit(record)
 	}
+	latentPiece = nil
+	latentPieceOrigin = ""
 	latentSpec = nil
 	latentSpecProgram = nil
 }
