@@ -13,6 +13,15 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+const graphMillionPath = "internal/oracle/testdata/graph_regions/million.a"
+
+func init() {
+	// The large witness has a count row without joining ordinary native/WASI families.
+	additionalFixtureCounts = append(additionalFixtureCounts, countCase{graphMillionPath, func(t *testing.T) (string, func() string) {
+		return counted(t, graphMillionPath, false, nil, false, false)
+	}})
+}
+
 // The same lowered program with graph metadata disabled is a counterfactual
 // counted baseline. Cycles leak there; it is not an accepted compiler mode.
 func withoutGraph(program *ir.Program) *ir.Program {
@@ -119,7 +128,8 @@ func graphMeasureFixture(t *testing.T, path string, million bool) {
 
 // Not parallel: compare resident sets without overlapping large witnesses.
 func TestGraphMeasurementMillion(t *testing.T) {
-	graphMeasureFixture(t, "internal/oracle/testdata/graph_regions/million.a", true)
+	graphMeasureFixture(t, graphMillionPath, true)
+	graphOracleCounts(t, graphMillionPath)
 }
 func TestGraphMeasurementLinks(t *testing.T) {
 	t.Parallel()

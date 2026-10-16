@@ -121,6 +121,12 @@ func graphOracleWitness(t *testing.T, path string) {
 	if report := leakcheck.Unbalanced(leakRun(countedResult)); report != "" {
 		t.Fatal(report)
 	}
+	graphOracleCounts(t, path)
+	graphMeasureFixture(t, path, false)
+}
+
+func graphOracleCounts(t *testing.T, path string) {
+	t.Helper()
 	_, measure := counted(t, path, false, nil, false, false)
 	row := measure()
 	if *updateCounts {
@@ -135,7 +141,6 @@ func graphOracleWitness(t *testing.T, path string) {
 		}
 	}
 	t.Log(row)
-	graphMeasureFixture(t, path, false)
 }
 
 func TestGraphOracleCanonicalGraph(t *testing.T) {
