@@ -35,7 +35,7 @@ var cycleCorpusExcluded = map[string]string{
 
 // A recording piece adds its number only after declaring its per-fixture products.
 // Unregistered shards remain explicitly pending; only complete recordings are registered.
-var cycleCorpusRegistered = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+var cycleCorpusRegistered = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 var cycleCorpusUpdateUnits = flag.Bool("update-cycle-units", false, "declare bounded units for registered cycle shards")
 var cycleCorpusAssemble = flag.Int("assemble-cycle-shard", -1, "assemble one complete shard from prepared per-case products")
 
@@ -9994,6 +9994,906 @@ func TestProduct_CycleCurrent_c0410e7e9961b2bc(t *testing.T) {
 func TestCyclesCorpus_c0410e7e9961b2bc(t *testing.T) {
 	t.Parallel()
 	cycleCorpusVerify(t, "stage1/typescript/scanner/scanner.ts")
+}
+func TestProduct_CycleFrozen_c32cf9fa1ad07d87(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/arguments.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_c32cf9fa1ad07d87(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/arguments.a", "current", true)
+}
+func TestCyclesCorpus_c32cf9fa1ad07d87(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/arguments.a")
+}
+func TestProduct_CycleFrozen_5fb3a7dc7a12913c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/array_from.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_5fb3a7dc7a12913c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/array_from.a", "current", true)
+}
+func TestCyclesCorpus_5fb3a7dc7a12913c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/array_from.a")
+}
+func TestProduct_CycleFrozen_60b28c7a82b8edb7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/async_catches.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_60b28c7a82b8edb7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/async_catches.a", "current", true)
+}
+func TestCyclesCorpus_60b28c7a82b8edb7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/async_catches.a")
+}
+func TestProduct_CycleFrozen_6dd6a1eff99ef419(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/borrow_chain_coverage_parents.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_6dd6a1eff99ef419(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/borrow_chain_coverage_parents.a", "current", true)
+}
+func TestCyclesCorpus_6dd6a1eff99ef419(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/borrow_chain_coverage_parents.a")
+}
+func TestProduct_CycleFrozen_8157dff1794a2dbd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/census_overload_binders.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_8157dff1794a2dbd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/census_overload_binders.a", "current", true)
+}
+func TestCyclesCorpus_8157dff1794a2dbd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/census_overload_binders.a")
+}
+func TestProduct_CycleFrozen_9f1972bf677aee8e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_9f1972bf677aee8e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a", "current", true)
+}
+func TestCyclesCorpus_9f1972bf677aee8e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a")
+}
+func TestProduct_CycleFrozen_39b23fee3057e33e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/concurrency/accepted/readonly_forms.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_39b23fee3057e33e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/concurrency/accepted/readonly_forms.a", "current", true)
+}
+func TestCyclesCorpus_39b23fee3057e33e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/concurrency/accepted/readonly_forms.a")
+}
+func TestProduct_CycleFrozen_e484eb1a055dba97(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/concurrency/refused/directory.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_e484eb1a055dba97(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/concurrency/refused/directory.a", "current", true)
+}
+func TestCyclesCorpus_e484eb1a055dba97(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/concurrency/refused/directory.a")
+}
+func TestProduct_CycleFrozen_99cce5c182093c06(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/conditions_union.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_99cce5c182093c06(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/conditions_union.a", "current", true)
+}
+func TestCyclesCorpus_99cce5c182093c06(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/conditions_union.a")
+}
+func TestProduct_CycleFrozen_c99d757a23e8c287(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/coverage_uncaught_no_argument.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_c99d757a23e8c287(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/coverage_uncaught_no_argument.a", "current", true)
+}
+func TestCyclesCorpus_c99d757a23e8c287(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/coverage_uncaught_no_argument.a")
+}
+func TestProduct_CycleFrozen_c1c227ef67672124(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/coverage_view_string.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_c1c227ef67672124(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/coverage_view_string.a", "current", true)
+}
+func TestCyclesCorpus_c1c227ef67672124(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/coverage_view_string.a")
+}
+func TestProduct_CycleFrozen_70d03c8bb0641ce6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/defaults.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_70d03c8bb0641ce6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/defaults.a", "current", true)
+}
+func TestCyclesCorpus_70d03c8bb0641ce6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/defaults.a")
+}
+func TestProduct_CycleFrozen_237a84b45137b65a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/element_access_optional.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_237a84b45137b65a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/element_access_optional.a", "current", true)
+}
+func TestCyclesCorpus_237a84b45137b65a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/element_access_optional.a")
+}
+func TestProduct_CycleFrozen_92988454d73e9066(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/element_access_tuple.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_92988454d73e9066(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/element_access_tuple.a", "current", true)
+}
+func TestCyclesCorpus_92988454d73e9066(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/element_access_tuple.a")
+}
+func TestProduct_CycleFrozen_221706dd6484db92(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/environment_capture.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_221706dd6484db92(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/environment_capture.a", "current", true)
+}
+func TestCyclesCorpus_221706dd6484db92(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/environment_capture.a")
+}
+func TestProduct_CycleFrozen_6410134685becf95(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/environment_virtual_call.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_6410134685becf95(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/environment_virtual_call.a", "current", true)
+}
+func TestCyclesCorpus_6410134685becf95(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/environment_virtual_call.a")
+}
+func TestProduct_CycleFrozen_136381cefd2fb8e8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/call_leaks_parent.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_136381cefd2fb8e8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/call_leaks_parent.a", "current", true)
+}
+func TestCyclesCorpus_136381cefd2fb8e8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/fresh_refused/call_leaks_parent.a")
+}
+func TestProduct_CycleFrozen_8bbef450a8e27cb1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_8bbef450a8e27cb1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a", "current", true)
+}
+func TestCyclesCorpus_8bbef450a8e27cb1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a")
+}
+func TestProduct_CycleFrozen_80a9d519febbeaeb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/set_add.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_80a9d519febbeaeb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/fresh_refused/set_add.a", "current", true)
+}
+func TestCyclesCorpus_80a9d519febbeaeb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/fresh_refused/set_add.a")
+}
+func TestProduct_CycleFrozen_8adb2158d4fc221f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/function_values_boundary.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_8adb2158d4fc221f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/function_values_boundary.a", "current", true)
+}
+func TestCyclesCorpus_8adb2158d4fc221f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/function_values_boundary.a")
+}
+func TestProduct_CycleFrozen_dc7adb8693de6a7c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/getters_census_primary_function.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_dc7adb8693de6a7c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/getters_census_primary_function.a", "current", true)
+}
+func TestCyclesCorpus_dc7adb8693de6a7c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/getters_census_primary_function.a")
+}
+func TestProduct_CycleFrozen_2cd72cd2cbc9dba7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/graph_regions/classification_override.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_2cd72cd2cbc9dba7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/graph_regions/classification_override.a", "current", true)
+}
+func TestCyclesCorpus_2cd72cd2cbc9dba7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/graph_regions/classification_override.a")
+}
+func TestProduct_CycleFrozen_7dde0023d85d70b1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/host_scanner_never.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_7dde0023d85d70b1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/host_scanner_never.a", "current", true)
+}
+func TestCyclesCorpus_7dde0023d85d70b1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/host_scanner_never.a")
+}
+func TestProduct_CycleFrozen_ca0942863351133c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/import_cycles/read/a.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_ca0942863351133c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/import_cycles/read/a.a", "current", true)
+}
+func TestCyclesCorpus_ca0942863351133c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/import_cycles/read/a.a")
+}
+func TestProduct_CycleFrozen_bd9cd6050a8169f1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_globals.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_bd9cd6050a8169f1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_globals.a", "current", true)
+}
+func TestCyclesCorpus_bd9cd6050a8169f1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/library_globals.a")
+}
+func TestProduct_CycleFrozen_b1645360ab94b304(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_map_set_keys.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_b1645360ab94b304(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_map_set_keys.a", "current", true)
+}
+func TestCyclesCorpus_b1645360ab94b304(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/library_map_set_keys.a")
+}
+func TestProduct_CycleFrozen_3f073be6153d46e6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_object_keys.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_3f073be6153d46e6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/library_object_keys.a", "current", true)
+}
+func TestCyclesCorpus_3f073be6153d46e6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/library_object_keys.a")
+}
+func TestProduct_CycleFrozen_ad96ac8a902142be(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/logical_and_reference_maybe.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_ad96ac8a902142be(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/logical_and_reference_maybe.a", "current", true)
+}
+func TestCyclesCorpus_ad96ac8a902142be(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/logical_and_reference_maybe.a")
+}
+func TestProduct_CycleFrozen_37749d6778d05e99(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/method_coverage_string_charat.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_37749d6778d05e99(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/method_coverage_string_charat.a", "current", true)
+}
+func TestCyclesCorpus_37749d6778d05e99(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/method_coverage_string_charat.a")
+}
+func TestProduct_CycleFrozen_c0b84dd19e3d82ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/module_namespace_reads/early.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_c0b84dd19e3d82ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/module_namespace_reads/early.a", "current", true)
+}
+func TestCyclesCorpus_c0b84dd19e3d82ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/module_namespace_reads/early.a")
+}
+func TestProduct_CycleFrozen_7eb5a9d4f2de0a5c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/moves/refused/nested_arrays.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_7eb5a9d4f2de0a5c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/moves/refused/nested_arrays.a", "current", true)
+}
+func TestCyclesCorpus_7eb5a9d4f2de0a5c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/moves/refused/nested_arrays.a")
+}
+func TestProduct_CycleFrozen_a065c9111725a36a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nbody_spread_fields.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_a065c9111725a36a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nbody_spread_fields.a", "current", true)
+}
+func TestCyclesCorpus_a065c9111725a36a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/nbody_spread_fields.a")
+}
+func TestProduct_CycleFrozen_bf63b46a87c7e3cf(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nested_callback_recursive.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_bf63b46a87c7e3cf(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nested_callback_recursive.a", "current", true)
+}
+func TestCyclesCorpus_bf63b46a87c7e3cf(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/nested_callback_recursive.a")
+}
+func TestProduct_CycleFrozen_f3ed5050f30c6dd2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nested_destructured.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_f3ed5050f30c6dd2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/nested_destructured.a", "current", true)
+}
+func TestCyclesCorpus_f3ed5050f30c6dd2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/nested_destructured.a")
+}
+func TestProduct_CycleFrozen_6e110e3dbbd2ef68(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/non_null_literal_return.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_6e110e3dbbd2ef68(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/non_null_literal_return.ts", "current", true)
+}
+func TestCyclesCorpus_6e110e3dbbd2ef68(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/non_null_literal_return.ts")
+}
+func TestProduct_CycleFrozen_f6e6078b272ad208(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/non_null_static_uninitialized.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_f6e6078b272ad208(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/non_null_static_uninitialized.ts", "current", true)
+}
+func TestCyclesCorpus_f6e6078b272ad208(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/non_null_static_uninitialized.ts")
+}
+func TestProduct_CycleFrozen_74230c0e94167dac(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/normalize_coverage_quick.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_74230c0e94167dac(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/normalize_coverage_quick.a", "current", true)
+}
+func TestCyclesCorpus_74230c0e94167dac(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/normalize_coverage_quick.a")
+}
+func TestProduct_CycleFrozen_2ccc03d175000f05(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/normalize_coverage_repeat.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_2ccc03d175000f05(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/normalize_coverage_repeat.a", "current", true)
+}
+func TestCyclesCorpus_2ccc03d175000f05(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/normalize_coverage_repeat.a")
+}
+func TestProduct_CycleFrozen_8ef14c3b097272ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/notyet_element_access/string_dictionary.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_8ef14c3b097272ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/notyet_element_access/string_dictionary.a", "current", true)
+}
+func TestCyclesCorpus_8ef14c3b097272ae(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/notyet_element_access/string_dictionary.a")
+}
+func TestProduct_CycleFrozen_15beac9fd4382afb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/overload_mutate_map.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_15beac9fd4382afb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/overload_mutate_map.a", "current", true)
+}
+func TestCyclesCorpus_15beac9fd4382afb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/overload_mutate_map.a")
+}
+func TestProduct_CycleFrozen_3daafdb1e77104eb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/ownership-query/flat.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_3daafdb1e77104eb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/ownership-query/flat.a", "current", true)
+}
+func TestCyclesCorpus_3daafdb1e77104eb(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/ownership-query/flat.a")
+}
+func TestProduct_CycleFrozen_26177b6d18b001e4(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/proven_assertions.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_26177b6d18b001e4(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/proven_assertions.a", "current", true)
+}
+func TestCyclesCorpus_26177b6d18b001e4(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/proven_assertions.a")
+}
+func TestProduct_CycleFrozen_939725234afa18c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/regexp_cycle_fields.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_939725234afa18c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/regexp_cycle_fields.a", "current", true)
+}
+func TestCyclesCorpus_939725234afa18c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/regexp_cycle_fields.a")
+}
+func TestProduct_CycleFrozen_6ee601df0fd8deb3(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/regions_spread_fresh.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_6ee601df0fd8deb3(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/regions_spread_fresh.a", "current", true)
+}
+func TestCyclesCorpus_6ee601df0fd8deb3(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/regions_spread_fresh.a")
+}
+func TestProduct_CycleFrozen_42bd88281ba8cb86(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/replace_all_large.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_42bd88281ba8cb86(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/replace_all_large.a", "current", true)
+}
+func TestCyclesCorpus_42bd88281ba8cb86(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/replace_all_large.a")
+}
+func TestProduct_CycleFrozen_427471dc86de5be1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/review/agree/fxspptb_8e67677_class_escapes.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_427471dc86de5be1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/review/agree/fxspptb_8e67677_class_escapes.a", "current", true)
+}
+func TestCyclesCorpus_427471dc86de5be1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/review/agree/fxspptb_8e67677_class_escapes.a")
+}
+func TestProduct_CycleFrozen_f84aee835f3524c2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_f84aee835f3524c2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a", "current", true)
+}
+func TestCyclesCorpus_f84aee835f3524c2(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a")
+}
+func TestProduct_CycleFrozen_8f91198090ec3618(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/search_halves.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_8f91198090ec3618(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/search_halves.a", "current", true)
+}
+func TestCyclesCorpus_8f91198090ec3618(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/search_halves.a")
+}
+func TestProduct_CycleFrozen_af35cc5095917dd5(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/set_foreach_numbers.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_af35cc5095917dd5(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/set_foreach_numbers.a", "current", true)
+}
+func TestCyclesCorpus_af35cc5095917dd5(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/set_foreach_numbers.a")
+}
+func TestProduct_CycleFrozen_08396432edabce0f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/stack_tail_call.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_08396432edabce0f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/stack_tail_call.a", "current", true)
+}
+func TestCyclesCorpus_08396432edabce0f(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/stack_tail_call.a")
+}
+func TestProduct_CycleFrozen_ccf61fa87c4f6c74(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/string_build_caches.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_ccf61fa87c4f6c74(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/string_build_caches.a", "current", true)
+}
+func TestCyclesCorpus_ccf61fa87c4f6c74(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/string_build_caches.a")
+}
+func TestProduct_CycleFrozen_e3f8a4886ffc967d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/structural_statics_inherited.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_e3f8a4886ffc967d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/structural_statics_inherited.a", "current", true)
+}
+func TestCyclesCorpus_e3f8a4886ffc967d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/structural_statics_inherited.a")
+}
+func TestProduct_CycleFrozen_ac92dc4c351cf1cc(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/structural_statics_optional.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_ac92dc4c351cf1cc(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/structural_statics_optional.a", "current", true)
+}
+func TestCyclesCorpus_ac92dc4c351cf1cc(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/structural_statics_optional.a")
+}
+func TestProduct_CycleFrozen_02e8ef19e90068d1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/taste_stage3_representations.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_02e8ef19e90068d1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/taste_stage3_representations.a", "current", true)
+}
+func TestCyclesCorpus_02e8ef19e90068d1(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/taste_stage3_representations.a")
+}
+func TestProduct_CycleFrozen_7cbb32b627781855(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/typed_arrays_views.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_7cbb32b627781855(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/typed_arrays_views.a", "current", true)
+}
+func TestCyclesCorpus_7cbb32b627781855(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/typed_arrays_views.a")
+}
+func TestProduct_CycleFrozen_4b53c06fa3229c56(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/write_after_shrink.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_4b53c06fa3229c56(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "internal/oracle/testdata/write_after_shrink.a", "current", true)
+}
+func TestCyclesCorpus_4b53c06fa3229c56(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "internal/oracle/testdata/write_after_shrink.a")
+}
+func TestProduct_CycleFrozen_25b6b4addaf0956b(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/estree/jsxEntities.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_25b6b4addaf0956b(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/estree/jsxEntities.ts", "current", true)
+}
+func TestCyclesCorpus_25b6b4addaf0956b(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/estree/jsxEntities.ts")
+}
+func TestProduct_CycleFrozen_c020c0b62e1823c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/i/013_runtime.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_c020c0b62e1823c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/i/013_runtime.a", "current", true)
+}
+func TestCyclesCorpus_c020c0b62e1823c9(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/regex/testdata/shapes/i/013_runtime.a")
+}
+func TestProduct_CycleFrozen_970ab967ecf36fe6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/034_runtime.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_970ab967ecf36fe6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/034_runtime.a", "current", true)
+}
+func TestCyclesCorpus_970ab967ecf36fe6(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/regex/testdata/shapes/plain/034_runtime.a")
+}
+func TestProduct_CycleFrozen_9b7a2e0dd7cdd59d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/035.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_9b7a2e0dd7cdd59d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/035.a", "current", true)
+}
+func TestCyclesCorpus_9b7a2e0dd7cdd59d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/regex/testdata/shapes/plain/035.a")
+}
+func TestProduct_CycleFrozen_02dab9a51d41e284(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/078_runtime.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_02dab9a51d41e284(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/078_runtime.a", "current", true)
+}
+func TestCyclesCorpus_02dab9a51d41e284(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/regex/testdata/shapes/plain/078_runtime.a")
+}
+func TestProduct_CycleFrozen_83cf4d2c957d8bfd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/079.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_83cf4d2c957d8bfd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/regex/testdata/shapes/plain/079.a", "current", true)
+}
+func TestCyclesCorpus_83cf4d2c957d8bfd(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/regex/testdata/shapes/plain/079.a")
+}
+func TestProduct_CycleFrozen_9d0de8e9c24c2847(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/max-depth/messages.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_9d0de8e9c24c2847(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/max-depth/messages.a", "current", true)
+}
+func TestCyclesCorpus_9d0de8e9c24c2847(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/max-depth/messages.a")
+}
+func TestProduct_CycleFrozen_e1b28d0220745d45(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_e1b28d0220745d45(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a", "current", true)
+}
+func TestCyclesCorpus_e1b28d0220745d45(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a")
+}
+func TestProduct_CycleFrozen_01ad9f5f62466e1a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_01ad9f5f62466e1a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a", "current", true)
+}
+func TestCyclesCorpus_01ad9f5f62466e1a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a")
+}
+func TestProduct_CycleFrozen_4d3552d5f532b171(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/no-empty-character-class/rule.a", "frozen", true)
+}
+func TestProduct_CycleCurrent_4d3552d5f532b171(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/no-empty-character-class/rule.a", "current", true)
+}
+func TestCyclesCorpus_4d3552d5f532b171(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/no-empty-character-class/rule.a")
+}
+func TestProduct_CycleFrozen_d312f3b27cf8297a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_d312f3b27cf8297a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts", "current", true)
+}
+func TestCyclesCorpus_d312f3b27cf8297a(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts")
+}
+func TestProduct_CycleFrozen_66812fb0592be620(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_66812fb0592be620(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts", "current", true)
+}
+func TestCyclesCorpus_66812fb0592be620(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts")
+}
+func TestProduct_CycleFrozen_7bdf84879daf8500(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/structure.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_7bdf84879daf8500(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/structure.ts", "current", true)
+}
+func TestCyclesCorpus_7bdf84879daf8500(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/markdownblocks/structure.ts")
+}
+func TestProduct_CycleFrozen_af8dfc794969cf6c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/whitespace.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_af8dfc794969cf6c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/whitespace.ts", "current", true)
+}
+func TestCyclesCorpus_af8dfc794969cf6c(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/markdownblocks/whitespace.ts")
+}
+func TestProduct_CycleFrozen_8352e67887f9c09d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/widthTables.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_8352e67887f9c09d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/markdownblocks/widthTables.ts", "current", true)
+}
+func TestCyclesCorpus_8352e67887f9c09d(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/markdownblocks/widthTables.ts")
+}
+func TestProduct_CycleFrozen_ab5cdf77db645cb8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/suppression/gaps/1_mutual_recursion.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_ab5cdf77db645cb8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/suppression/gaps/1_mutual_recursion.ts", "current", true)
+}
+func TestCyclesCorpus_ab5cdf77db645cb8(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/suppression/gaps/1_mutual_recursion.ts")
+}
+func TestProduct_CycleFrozen_cc6f7e1c95eb5ca7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/tsprinter/transport.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_cc6f7e1c95eb5ca7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/tsprinter/transport.ts", "current", true)
+}
+func TestCyclesCorpus_cc6f7e1c95eb5ca7(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/tsprinter/transport.ts")
+}
+func TestProduct_CycleFrozen_17b8fce6cfd97e7e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/typeaware/completion.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_17b8fce6cfd97e7e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/typeaware/completion.ts", "current", true)
+}
+func TestCyclesCorpus_17b8fce6cfd97e7e(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/typeaware/completion.ts")
+}
+func TestProduct_CycleFrozen_fb883aecbdcdda09(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/typeaware/unary_minus.ts", "frozen", true)
+}
+func TestProduct_CycleCurrent_fb883aecbdcdda09(t *testing.T) {
+	t.Parallel()
+	cycleCorpusObservation(t, "stage1/cohere/typeaware/unary_minus.ts", "current", true)
+}
+func TestCyclesCorpus_fb883aecbdcdda09(t *testing.T) {
+	t.Parallel()
+	cycleCorpusVerify(t, "stage1/cohere/typeaware/unary_minus.ts")
 }
 
 // END RECORDED CYCLE UNITS
