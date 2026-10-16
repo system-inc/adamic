@@ -16,6 +16,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache/goplan"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -152,35 +153,43 @@ func goProduct(t testing.TB, request goRequest) string {
 	}
 	root, _ := repositoryRoot()
 	// Lean: go builds from the files its key names, in a process of its own, by a plan made before the window opens.
-	directory := product(t, inputs, request.plan(root, inputs).run, &leanBuild{})
+	directory := product(t, inputs, request.plan(root, inputs).Run, &leanBuild{})
 	return filepath.Join(directory, request.output)
 }
 
-// plan is the request's build as a goBuildPlan, decided before its window opens, so the window holds only go and what
+// plan is the request's build as a goplan.Plan, decided before its window opens, so the window holds only go and what
 // the plan writes. Each read here is one the build's name key holds, so none is lost to the window: the overlay's map
 // and its replacements' content (identity), the mutations' before and after strings and the files they mutate, which
 // are the packages' own (Declared) or the overlay's replacements, and the outside headers' key over their include
 // directories (outsideHeaders' flag). A plan that can't be made says why, and its build fails with it.
-func (request goRequest) plan(root string, inputs Inputs) goBuildPlan {
-	plan, err := request.planned(root, inputs)
+func (request goRequest) plan(root string, inputs Inputs) goplan.Plan {
+	parts, err := request.planned(root, inputs)
 	if err != nil {
-		return goBuildPlan{failed: err.Error()}
+		return goplan.Failed(err.Error())
 	}
-	return plan
+	return goplan.New(parts.command, parts.replace, parts.headers, parts.mutated)
 }
 
-func (request goRequest) planned(root string, inputs Inputs) (goBuildPlan, error) {
+// planParts are what goplan.New takes, as planned makes them.
+type planParts struct {
+	command goplan.Command
+	replace map[string]string
+	headers []goplan.Header
+	mutated []goplan.Mutation
+}
+
+func (request goRequest) planned(root string, inputs Inputs) (planParts, error) {
 	program, err := toolchain.Path("go")
 	if err != nil {
-		return goBuildPlan{}, err
+		return planParts{}, err
 	}
 	_, overlay, err := request.identity(root)
 	if err != nil {
-		return goBuildPlan{}, err
+		return planParts{}, err
 	}
-	plan := goBuildPlan{program: program, directory: filepath.Join(root, request.module), output: request.output, verb: request.verb,
-		pkg: request.pkg, arguments: append(strings.Fields(request.verb), overlay.arguments...), packages: strings.Fields(request.pkg),
-		environment: toolchain.Env(request.environment...)}
+	parts := planParts{command: goplan.Command{Program: program, Directory: filepath.Join(root, request.module), Output: request.output,
+		Verb: request.verb, Package: request.pkg, Arguments: append(strings.Fields(request.verb), overlay.arguments...),
+		Packages: strings.Fields(request.pkg), Environment: toolchain.Env(request.environment...)}}
 	if overlay.path != "" {
 		path := overlay.path
 		if !filepath.IsAbs(path) {
@@ -188,35 +197,35 @@ func (request goRequest) planned(root string, inputs Inputs) (goBuildPlan, error
 		}
 		content, err := os.ReadFile(path)
 		if err != nil {
-			return goBuildPlan{}, err
+			return planParts{}, err
 		}
 		var declared struct{ Replace map[string]string }
 		if err := json.Unmarshal(content, &declared); err != nil {
-			return goBuildPlan{}, fmt.Errorf("overlay %s: %v", path, err)
+			return planParts{}, fmt.Errorf("overlay %s: %v", path, err)
 		}
-		plan.replace = declared.Replace
+		parts.replace = declared.Replace
 	}
-	if plan.headers, err = outsideHeaderPlan(root, inputs); err != nil {
-		return goBuildPlan{}, err
+	if parts.headers, err = outsideHeaderPlan(root, inputs); err != nil {
+		return planParts{}, err
 	}
 	texts, err := request.mutated(root)
 	if err != nil {
-		return goBuildPlan{}, err
+		return planParts{}, err
 	}
 	for _, file := range slices.Sorted(maps.Keys(texts)) {
-		mutation := plannedMutation{file: file, text: texts[file], original: filepath.Join(root, file)}
-		for from, to := range plan.replace {
+		mutation := goplan.Mutation{File: file, Text: texts[file], Original: filepath.Join(root, file)}
+		for from, to := range parts.replace {
 			if !filepath.IsAbs(to) {
 				to = filepath.Join(root, request.module, to)
 			}
-			if filepath.Clean(to) == mutation.original {
-				mutation.pointers = append(mutation.pointers, from)
+			if filepath.Clean(to) == mutation.Original {
+				mutation.Pointers = append(mutation.Pointers, from)
 			}
 		}
-		slices.Sort(mutation.pointers)
-		plan.mutated = append(plan.mutated, mutation)
+		slices.Sort(mutation.Pointers)
+		parts.mutated = append(parts.mutated, mutation)
 	}
-	return plan, nil
+	return parts, nil
 }
 
 // mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after
@@ -252,8 +261,8 @@ const outsideHeaderName = "zz_buildcache_outside_headers.h"
 // outsideHeaderPlan is the header the build lays into each package its key names as reading headers outside itself:
 // one holding Key over its include directories, so go's cache, which hashes a cgo package's own headers, compiles that
 // package again exactly when one of those directories changes.
-func outsideHeaderPlan(root string, inputs Inputs) ([]plannedHeader, error) {
-	var headers []plannedHeader
+func outsideHeaderPlan(root string, inputs Inputs) ([]goplan.Header, error) {
+	var headers []goplan.Header
 	for _, flag := range inputs.Flags {
 		encoded, found := strings.CutPrefix(flag, outsideHeaders)
 		if !found {
@@ -269,9 +278,9 @@ func outsideHeaderPlan(root string, inputs Inputs) ([]plannedHeader, error) {
 		if err != nil {
 			return nil, err
 		}
-		headers = append(headers, plannedHeader{
-			target:  filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName),
-			content: []byte("/* buildcache: the headers outside this package are " + digest + " */\n"),
+		headers = append(headers, goplan.Header{
+			Target:  filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName),
+			Content: []byte("/* buildcache: the headers outside this package are " + digest + " */\n"),
 		})
 	}
 	return headers, nil

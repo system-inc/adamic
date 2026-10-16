@@ -103,8 +103,6 @@ type journalEntry struct {
 	// Lean is a built product whose build takes nothing from its caller but its Inputs (LeanProduct): Settle keys it by
 	// its window and its declared files, never by what its process read before it.
 	Lean bool `json:"lean,omitempty"`
-	// Keyed are a lean build's files outside Declared whose bytes its name key holds (leanBuild), as absolute paths.
-	Keyed []string `json:"keyed,omitempty"`
 	// LeanCaller is a lean build's caller outside buildcache (leanBuild), by import path: its package's code is the
 	// build's, keyed in its recipe (leanRecipeOf). Empty for buildcache's own lean builds.
 	LeanCaller string `json:"leanCaller,omitempty"`
