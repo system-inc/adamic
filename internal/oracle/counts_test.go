@@ -48,7 +48,9 @@ fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write
 inference and reuse in place are measured against (docs/memory.md).
 
 Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
-the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them.
+the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them; and
+internal/oracle/testdata/moves/accepted/objects.a, whose counted build alone is over a unit's 60 s (the moves tests hold it
+to Node and the leak check).
 
 The tree build measures each row once for what it runs (its emitted C, how an input fixture runs and the files it reads, the
 runtime's sources, the counted build's flags and the clang that builds it), into a product keyed by exactly that
@@ -170,6 +172,9 @@ func pinnedStack(name string, arguments ...string) (string, []string) {
 // count that measures something other than counting.
 var uncounted = map[string]bool{
 	"internal/oracle/testdata/stack_overflow.a": true,
+	// Its counted build is clang over its very large C, 70.85 s on a 4-CPU share, over a unit's 60 s; the moves tests
+	// build it as products and hold it to Node and the leak check.
+	moveObjectsPath: true,
 }
 
 // counted lowers a fixture and returns what its row runs, the emitted C and how it is run, and measure, which builds
