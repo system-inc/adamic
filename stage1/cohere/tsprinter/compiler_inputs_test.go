@@ -52,9 +52,9 @@ var tsprinterCompilerInputs = []string{
 	"cohere/internal/types/sourcename", "cohere/policy", "cohere/rule_runner",
 }
 
-// mutantNativeRecipe are this package's files whose code makes a mutant native: the mutations and the port they
-// plant into, the product and its key, lowering, and the build wrapper.
-var mutantNativeRecipe = []string{"mutants_test.go", "mutant_products_test.go", "compiler_inputs_test.go", "helpers_test.go", "expressions_test.go"}
+// mutantNativeRecipe are this package's files whose code makes a mutant native: the port the mutations plant into, the
+// product and its key, and lowering; the mutations and the build wrapper are in oracles/oracles.go since #2ba0c20.
+var mutantNativeRecipe = []string{"mutants_test.go", "mutant_products_test.go", "compiler_inputs_test.go", "helpers_test.go", "expressions_test.go", "oracles/oracles.go"}
 
 // mutantNativeBuildFiles are what a mutant native's lowering and build read, relative to the repository: the compiler
 // (tsprinterCompilerInputs), the port's TypeScript, the parser's and the scanner's TypeScript it imports, and the
@@ -93,7 +93,7 @@ func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 	}
 	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
 	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native")
-	listing, err := oracles.CombinedOutput(command)
+	listing, err := combinedOutput(command)
 	if err != nil {
 		t.Fatalf("go list: %v\n%s", err, listing)
 	}

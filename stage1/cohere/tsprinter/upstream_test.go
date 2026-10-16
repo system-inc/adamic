@@ -17,10 +17,10 @@ func TestStatementUpstreamDifferences(t *testing.T) {
 	recordsPath, _ := filepath.Abs("testdata/statement-upstream-differences.json")
 	// The same two harnesses over cohere's javascript package are tsprinter-go-oracle-v2, built ahead; the unit only
 	// runs it, in the package's directory (#5qykzj5).
-	command := oracles.Bounded(t, oracles.PrinterGateGoOracle(t)+"/oracle", "-test.v", "-test.run=^TestAdamicStatementUpstreamDifferences$")
+	command := bounded(t, oracles.PrinterGateGoOracle(t)+"/oracle", "-test.v", "-test.run=^TestAdamicStatementUpstreamDifferences$")
 	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
-	if output, err := oracles.CombinedOutput(command); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go: %v %s", err, output)
 	} else {
 		t.Log(string(output))
