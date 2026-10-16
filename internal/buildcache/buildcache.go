@@ -42,7 +42,7 @@ import (
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	return product(t, inputs, build, false)
+	return product(t, inputs, build, nil)
 }
 
 // LeanProduct is Product for a build that takes nothing from its caller but inputs: everything it uses is a file
@@ -52,20 +52,27 @@ func Product(t testing.TB, inputs Inputs, build func(directory string) error) st
 // (leanCallers, held by a test): a closure over a test's own bytes would be keyed without them.
 func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	return product(t, inputs, build, true)
+	return product(t, inputs, build, &leanBuild{})
 }
 
 // LeanGet is Get for a lean build (LeanProduct).
 func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, true)
+	directory, _, err := get(inputs, build, &leanBuild{})
 	return directory, err
+}
+
+// A leanBuild is a build Settle keys by its own window (LeanProduct), with keyed the files outside its declared Files
+// whose bytes its name key already holds: a lean build's window counts a file its test wrote before the window as an
+// input, never as the build's own output, unless it is one of these (goProduct's -overlay file, whose map the key holds).
+type leanBuild struct {
+	keyed []string
 }
 
 // leanCallers are the packages outside buildcache that may build lean (LeanProduct, LeanGet), each reviewed to take
 // nothing from its caller but its Inputs: native's runtime archives, whose sources are the runtime's files.
 var leanCallers = []string{"internal/native/runtimeproducts"}
 
-func product(t testing.TB, inputs Inputs, build func(directory string) error, lean bool) string {
+func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
 	t.Helper()
 	directory, line, err := get(inputs, build, lean)
 	if line != "" {
@@ -88,7 +95,7 @@ var ErrNotBuilt = errors.New("not built")
 
 // Get is Product for TestMain and tools.
 func Get(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, false)
+	directory, _, err := get(inputs, build, nil)
 	return directory, err
 }
 
@@ -96,9 +103,9 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 // builds is for every runner, so it must be keyed by what its build read, and building untraced there is refused.
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
-// get finds or builds inputs' product; lean says its build takes nothing from its caller (LeanProduct), so Settle keys
-// it by its own window.
-func get(inputs Inputs, build func(directory string) error, lean bool) (string, string, error) {
+// get finds or builds inputs' product; a lean build takes nothing from its caller (LeanProduct), so Settle keys it by its
+// own window, and nil is any other.
+func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (string, string, error) {
 	started := time.Now()
 	root, err := repositoryRoot()
 	if err != nil {
@@ -231,8 +238,11 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 }
 
 // journalBuilt journals a traced build where its product now is, for Settle to key and place, and whether it is lean.
-func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean bool) {
-	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean}
+func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean *leanBuild) {
+	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean != nil}
+	if lean != nil {
+		entry.Keyed = lean.keyed
+	}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)
 }
