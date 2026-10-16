@@ -358,6 +358,12 @@
     ],
     "internal/native TestProduct_Stage1ProfileColdB": [
       "internal/native TestProduct_Stage1ProfileTraining"
+    ],
+    "internal/lower TestProduct_CycleCorpusFrozenAnswer": [
+      "internal/lower TestProduct_CycleCorpusFrozen"
+    ],
+    "internal/lower TestProduct_CycleCorpusCurrentAnswer": [
+      "internal/lower TestProduct_CycleCorpusCurrent"
     ]
   }
 }
