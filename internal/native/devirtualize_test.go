@@ -66,7 +66,7 @@ func TestDevirtualizedCalls(t *testing.T) {
 			t.Fatal("interface receiver lost its exact allocation")
 		}
 		// A direct adapter invocation in the generated body, beyond its declaration.
-		if !strings.Contains(code, " = adamic_method_"+fmt.Sprint(function)+"(") {
+		if !strings.Contains(code, " = "+stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))+"(") {
 			t.Fatal("interface call still looks up its method")
 		}
 		found = true

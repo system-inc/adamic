@@ -8,7 +8,15 @@ import (
 )
 
 func (e *emitter) functionName(function int) string {
-	return fmt.Sprintf("adamic_function_%d_%s", function, cIdentifier.ReplaceAllString(e.program.Functions[function].Name, ""))
+	if e.functionNames == nil {
+		e.functionNames = map[int]string{}
+	}
+	if name, ok := e.functionNames[function]; ok {
+		return name
+	}
+	name := e.namedFunction(function)
+	e.functionNames[function] = name
+	return name
 }
 
 func (e *emitter) signature(function int) string {

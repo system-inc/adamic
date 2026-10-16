@@ -100,9 +100,18 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return 0, &Refused{Where: l.program.Where(call), What: "a generic function instantiated without end (polymorphic recursion)", Fix: "call it with the same type arguments it was called with, or write a function per type"}
 	}
 
+	source := l.sourceIdentity(declaration)
+	for _, parameter := range declaration.TypeParameters() {
+		concrete := concreteTypes[l.checker.GetTypeAtLocation(parameter.Name())]
+		if concrete != nil {
+			source.Specialization += ";" + l.sourceTypeKey(concrete, map[*checker.Type]bool{})
+		} else {
+			source.Specialization += ";unread"
+		}
+	}
 	index := len(l.result.Functions)
 	name += "_" + strconv.Itoa(index)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Closure: owner >= 0, NestedParent: owner + 1})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Source: source, Closure: owner >= 0, NestedParent: owner + 1})
 	if l.genericInstances == nil {
 		l.genericInstances = map[string]int{}
 	}

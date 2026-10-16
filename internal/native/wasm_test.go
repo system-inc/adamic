@@ -178,7 +178,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		if !strings.Contains(code, "adamic_region_end(") {
 			t.Fatal("request fixture must actually use a statement region")
 		}
-		handler := regexp.MustCompile(`static adamic_string \* (adamic_function_[0-9]+_handleRequest)\(`).FindStringSubmatch(code)
+		handler := wasiRequestHandler(code)
 		if len(handler) != 2 {
 			t.Fatal("cannot find the handler in the existing executable C backend")
 		}
@@ -554,4 +554,9 @@ func TestTheWASIBuildsNameNoBareClang(t *testing.T) {
 		}
 		return true
 	})
+}
+
+// The ABI adapter locates the source-qualified handler, independent of ordinals.
+func wasiRequestHandler(code string) []string {
+	return regexp.MustCompile(`static adamic_string \* (adamic_function_[A-Za-z0-9_]*handleRequest_[a-f0-9]{32})\(`).FindStringSubmatch(code)
 }
