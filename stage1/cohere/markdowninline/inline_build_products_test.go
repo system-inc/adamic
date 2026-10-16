@@ -54,7 +54,7 @@ func inlineMutationNodeProduct(t *testing.T, index int) string {
 	return inlineBuild(t, inlineNodeInputs(t, inlineProductName(index)+" Node", source), inlineSource(source).buildNode)
 }
 
-func TestProduct_MarkdownInlineGoOverlay(t *testing.T) {
+func TestProduct_MarkdownInlineFindsGoOverlay(t *testing.T) {
 	t.Parallel()
 	inlineOverlayBuild(t)
 }

@@ -10,6 +10,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/values/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -17,14 +24,6 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -500,32 +499,9 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 
 // cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
-func cohereSideOracle(t testing.TB) (string, string) {
-	t.Helper()
-	directory := t.TempDir()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "values")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	binary := buildcache.GoTest(t, "cohere", "values.test", "./internal/format/css/values", []string{"-overlay=" + overlayPath})
-	return binary, packageDirectory
-}
+func cohereSideOracle(t testing.TB) (string, string) { return oracles.Parser(t) }
 
-func TestProduct_ValuesGoOracle(t *testing.T) {
+func TestProduct_ValuesFindsGoOracle(t *testing.T) {
 	t.Parallel()
 	cohereSideOracle(t)
 }

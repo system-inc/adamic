@@ -71,3 +71,45 @@ func TestProduct_MarkdownblocksTextGenerator(t *testing.T) {
 	t.Parallel()
 	TextGeneratorProduct(t, productRoot(t))
 }
+
+func TestProduct_MarkdownChunksGo(t *testing.T) { t.Parallel(); ChunksGoOracle(t) }
+
+func TestProduct_MarkdownASTGo(t *testing.T) { t.Parallel(); ASTGoOracle(t) }
+
+func TestProduct_MarkdownFrontMatterGo(t *testing.T) { t.Parallel(); FrontMatterGoOracle(t) }
+
+func TestProduct_MarkdownPrefixGo(t *testing.T) { t.Parallel(); PrefixGoOracle(t) }
+
+func TestProduct_MarkdownIdentifierGo(t *testing.T) { t.Parallel(); PilotGoProduct(t, "identifier") }
+
+func TestProduct_TokenizerEventsGo(t *testing.T) { t.Parallel(); PilotGoProduct(t, "events") }
+
+func TestProduct_TokenizerEventsAnswers(t *testing.T) { t.Parallel(); TokenizerEventsAnswers(t) }
+
+func TestProduct_MarkdownTextGo(t *testing.T) { t.Parallel(); TextGoBuild(t, "go") }
+
+func TestProduct_MarkdownMalformedEventsGo(t *testing.T) { t.Parallel(); MalformedEventsGoOracle(t) }
+
+func TestProduct_GrainMarkdown_path_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "path") }
+
+func TestProduct_GrainMarkdown_mdast_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "mdast") }
+
+func TestProduct_GrainMarkdown_decode_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "decode") }
+
+func TestProduct_GrainMarkdown_width_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "width") }
+
+func TestProduct_GrainMarkdownEntitiesGenerator(t *testing.T) { t.Parallel(); GrainTool(t, "entities") }
+
+func TestProduct_GrainMarkdownWidthGenerator(t *testing.T) { t.Parallel(); GrainTool(t, "width") }
+
+func TestProduct_GrainMarkdownFormatter(t *testing.T) { t.Parallel(); GrainTool(t, "formatter") }
+
+func TestProduct_GrainMarkdownWidthFullAnswers(t *testing.T) {
+	t.Parallel()
+	GrainMarkdownWidthFullAnswers(t)
+}
+
+func TestProduct_WholeDocumentPreflightGoProducts(t *testing.T) {
+	t.Parallel()
+	PreflightGoProducts(t)
+}

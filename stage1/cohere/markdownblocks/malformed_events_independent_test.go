@@ -3,7 +3,6 @@ package markdownblocks
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -19,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testMdastMalformedEventsShards = 3
@@ -347,37 +347,5 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 
 func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) string {
 	t.Helper()
-	cohere := filepath.Join(root, "cohere")
-	return buildcache.Product(t, buildcache.Inputs{
-		Name:      "markdownblocks-malformed-events-go-errors",
-		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
-		Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(dir string) error {
-		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
-		replace := map[string]string{}
-		for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
-			source, err := filepath.Abs(p.source)
-			if err != nil {
-				return err
-			}
-			replace[p.target] = source
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := malformedEventsCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)...)
-		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("Go errors: %w\n%s", err, output)
-		}
-		return nil
-	})
+	return filepath.Dir(oracles.MalformedEventsGoOracle(t))
 }
