@@ -1250,6 +1250,16 @@ func TestNativeAgreesWithNode_async_typeof(t *testing.T) {
 	runNativeAgreesShard(t, -121)
 }
 
+func TestNativeAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -122)
+}
+
+func TestNativeAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -123)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -2488,6 +2498,16 @@ func TestWASIAgreesWithNode_async_throw(t *testing.T) {
 func TestWASIAgreesWithNode_async_typeof(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -119)
+}
+
+func TestWASIAgreesWithNode_async_refuse_user_iterator_function(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -120)
+}
+
+func TestWASIAgreesWithNode_async_refuse_user_iterator_module(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -121)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
