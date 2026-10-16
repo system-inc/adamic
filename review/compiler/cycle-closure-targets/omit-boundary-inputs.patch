@@ -1,0 +1,11 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -647,7 +647,7 @@
+ 	for _, function := range p.Functions {
+ 		walkClosureFlow(reflect.ValueOf(function.Body), inspectBoundary)
+ 	}
+-	if unknownCaller {
++	if false && unknownCaller {
+ 		poison := func(node any) {
+ 			if closure, ok := node.(MakeClosure); ok && closure.Function >= 0 && closure.Function < len(p.Functions) {
+ 				for _, local := range p.Functions[closure.Function].Parameters {

@@ -1,0 +1,65 @@
+=== RUN   TestTscNamespaceDeclarationShapes
+=== PAUSE TestTscNamespaceDeclarationShapes
+=== CONT  TestTscNamespaceDeclarationShapes
+=== RUN   TestTscNamespaceDeclarationShapes/BuilderState
+=== PAUSE TestTscNamespaceDeclarationShapes/BuilderState
+=== RUN   TestTscNamespaceDeclarationShapes/JsxNames
+=== PAUSE TestTscNamespaceDeclarationShapes/JsxNames
+=== RUN   TestTscNamespaceDeclarationShapes/ReactNames
+=== PAUSE TestTscNamespaceDeclarationShapes/ReactNames
+=== RUN   TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== PAUSE TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== RUN   TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== RUN   TestTscNamespaceDeclarationShapes/Debug
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug
+=== RUN   TestTscNamespaceDeclarationShapes/Debug.log
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug.log
+=== RUN   TestTscNamespaceDeclarationShapes/Parser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser
+=== RUN   TestTscNamespaceDeclarationShapes/IncrementalParser
+=== PAUSE TestTscNamespaceDeclarationShapes/IncrementalParser
+=== RUN   TestTscNamespaceDeclarationShapes/tracingEnabled
+=== PAUSE TestTscNamespaceDeclarationShapes/tracingEnabled
+=== CONT  TestTscNamespaceDeclarationShapes/BuilderState
+=== CONT  TestTscNamespaceDeclarationShapes/Debug
+=== CONT  TestTscNamespaceDeclarationShapes/IncrementalParser
+=== CONT  TestTscNamespaceDeclarationShapes/tracingEnabled
+=== NAME  TestTscNamespaceDeclarationShapes/IncrementalParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Parser
+=== NAME  TestTscNamespaceDeclarationShapes/Debug
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== NAME  TestTscNamespaceDeclarationShapes/BuilderState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== NAME  TestTscNamespaceDeclarationShapes/tracingEnabled
+    namespaces_shapes_test.go:53: /tmp/adamic-gate/TestTscNamespaceDeclarationShapestracingEnabled2428163172/001/main.a:30:15: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet
+=== CONT  TestTscNamespaceDeclarationShapes/ReactNames
+=== NAME  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/JsxNames
+=== NAME  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Debug.log
+=== NAME  TestTscNamespaceDeclarationShapes/ReactNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/Parser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/JsxNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/Debug.log
+    namespaces_shapes_test.go:46: declaration shape lowers
+--- PASS: TestTscNamespaceDeclarationShapes (0.06s)
+    --- PASS: TestTscNamespaceDeclarationShapes/IncrementalParser (0.11s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug (0.12s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BuilderState (0.14s)
+    --- PASS: TestTscNamespaceDeclarationShapes/tracingEnabled (0.17s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser.JSDocParser (0.12s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BinaryExpressionState (0.15s)
+    --- PASS: TestTscNamespaceDeclarationShapes/ReactNames (0.10s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser (0.19s)
+    --- PASS: TestTscNamespaceDeclarationShapes/JsxNames (0.09s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug.log (0.08s)
+PASS

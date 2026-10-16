@@ -1,0 +1,17 @@
+=== RUN   TestNumericEnumLiteralPromises
+=== PAUSE TestNumericEnumLiteralPromises
+=== CONT  TestNumericEnumLiteralPromises
+=== RUN   TestNumericEnumLiteralPromises/member_tag
+=== RUN   TestNumericEnumLiteralPromises/narrowed_member
+=== RUN   TestNumericEnumLiteralPromises/plain_literal
+=== RUN   TestNumericEnumLiteralPromises/indexed_subset
+=== RUN   TestNumericEnumLiteralPromises/subset_member
+=== RUN   TestNumericEnumLiteralPromises/open_tag
+--- PASS: TestNumericEnumLiteralPromises (0.40s)
+    --- PASS: TestNumericEnumLiteralPromises/member_tag (0.11s)
+    --- PASS: TestNumericEnumLiteralPromises/narrowed_member (0.06s)
+    --- PASS: TestNumericEnumLiteralPromises/plain_literal (0.03s)
+    --- PASS: TestNumericEnumLiteralPromises/indexed_subset (0.06s)
+    --- PASS: TestNumericEnumLiteralPromises/subset_member (0.09s)
+    --- PASS: TestNumericEnumLiteralPromises/open_tag (0.04s)
+PASS

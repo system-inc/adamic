@@ -13,7 +13,8 @@ import (
 // collector, so a cycle must not be able to form. One forms only when a slot (a field, readonly or
 // not, since a constructor writes a readonly one, an element of an array that isn't readonly, a map's
 // value, a variable a function value captures) is set to something that can reach back to what
-// holds the slot. Whether it can is visible in the types, so every such slot is found here, from the
+// holds the slot. Objects and collections are judged by type; function slots use the shared closure targets.
+// Every such slot is found here, from the
 // whole program, and each one is refused unless it's declared Weak<Target>, which doesn't count. A
 // map's key and a set's element are slots too, now that they may be objects; neither can be declared
 // weak, so one that can reach back is refused with the fix of a ReadonlyMap or ReadonlySet.
@@ -21,8 +22,8 @@ import (
 // Reaching is followed through everything the checker knows a value can hold: an object's fields,
 // including the fields of every object type in the program that can be seen as it (a Dog seen as an
 // Animal brings its owner along), an array's elements, a map's keys and values, and through a
-// function type, the variables captured by every function value in the program that can be seen as
-// it, since a type doesn't say what a function captured. A Weak isn't followed: it holds nothing.
+// function slot, the variables captured by every closure target that can flow into it. Unknown
+// producers remain cycle-capable, since a type does not describe a closure environment. A Weak isn't followed: it holds nothing.
 //
 // It runs after lowering, when the variables each function value captures are known.
 
@@ -37,6 +38,7 @@ type closureRecord struct {
 type cycleNode struct {
 	proven *checker.Type
 	cell   int
+	slot   string
 }
 
 type cycleFinder struct {
@@ -109,7 +111,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		if proven == nil || node == nil || finder.weak(proven) {
 			continue
 		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
+		if finder.reachesFrom(cycleNode{cell: local + 1}, cycleNode{cell: local + 1}, true) && !l.closedFrameInput(local) {
 			return &Refused{
 				Where: l.program.Where(node),
 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
@@ -267,7 +269,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			return nil
 		}
 		for _, element := range l.checker.GetTypeArguments(holder) {
-			if f.weak(element) || !f.reaches(element, cycleNode{proven: holder}) {
+			if f.weak(element) || !f.reachesFrom(cycleNode{proven: element, slot: "array"}, cycleNode{proven: holder}, false) {
 				continue
 			}
 			write := f.unproven(fresh.WriteElement, holder, "")
@@ -284,7 +286,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
 	case l.isLibraryType(holder, "Set"):
 		arguments := l.checker.GetTypeArguments(holder)
-		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
+		if len(arguments) == 1 && f.reachesFrom(cycleNode{proven: arguments[0], slot: "set"}, cycleNode{proven: holder}, false) {
 			if write := f.unproven(fresh.WriteSetElement, holder, ""); write != nil {
 				return &Refused{
 					Where: l.program.Where(f.where[holder]),
@@ -295,7 +297,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		}
 	case l.isLibraryType(holder, "Map"):
 		arguments := l.checker.GetTypeArguments(holder)
-		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
+		if len(arguments) == 2 && f.reachesFrom(cycleNode{proven: arguments[0], slot: "map-key"}, cycleNode{proven: holder}, false) {
 			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					Where: l.program.Where(f.where[holder]),
@@ -304,7 +306,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				}
 			}
 		}
-		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
+		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reachesFrom(cycleNode{proven: arguments[1], slot: "map"}, cycleNode{proven: holder}, false) {
 			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					Where: l.program.Where(f.where[holder]),
@@ -321,7 +323,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			// and is no write at all.
 			readonly := l.checker.IsReadonlySymbol(field)
 			proven := l.checker.GetTypeOfSymbol(field)
-			if f.weak(proven) || !f.reaches(proven, cycleNode{proven: holder}) {
+			if f.weak(proven) || !f.reachesFrom(cycleNode{proven: proven, slot: "field:" + field.Name}, cycleNode{proven: holder}, false) {
 				continue
 			}
 			write := f.unproven(fresh.WriteField, holder, field.Name)
@@ -350,18 +352,35 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 // reaches reports whether a value of type from can reach target: a value seen as target's type
 // (either way round, since either may be what the value really is), or target's cell.
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+	return f.reachesFrom(cycleNode{proven: from}, target, false)
+}
+
+func (f *cycleFinder) reachesFrom(start, target cycleNode, root bool) bool {
 	visited := map[cycleNode]bool{}
-	queue := []cycleNode{{proven: from}}
+	queue := []cycleNode{start}
 	for len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
+		if node.cell != 0 && node.cell == target.cell && !root {
+			return true
+		}
+		root = false
 		if visited[node] {
 			continue
 		}
 		visited[node] = true
 		if node.cell != 0 {
-			if node == target {
-				return true
+			if f.l.result.Locals[node.cell-1].Type == ir.Closure {
+				targets := f.l.result.ValueClosureTargets(ir.Read{Local: node.cell - 1, Of: ir.Closure})
+				if targets.Unknown {
+					return true
+				}
+				for _, function := range targets.Functions {
+					for _, local := range f.l.result.Functions[function].Environment {
+						queue = append(queue, cycleNode{cell: local + 1})
+					}
+				}
+				continue
 			}
 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
 				queue = append(queue, cycleNode{proven: proven})
@@ -380,7 +399,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 			for _, member := range proven.Types() {
-				queue = append(queue, cycleNode{proven: member})
+				queue = append(queue, cycleNode{proven: member, slot: node.slot})
 			}
 			continue
 		}
@@ -403,19 +422,33 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					}
 				}
 			}
-			// What a function value holds is what it captured: the cells of every function value the
-			// program makes that can be seen as this type.
-			for _, closure := range f.l.closureRecords {
-				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-					continue
-				}
-				for _, local := range f.l.result.Functions[closure.function].Environment {
+			// Stored values and calls use the same producer graph. A type alone
+			// does not bound a function value's origin.
+			if node.slot == "" {
+				return true
+			}
+			targets := f.l.result.StoredClosureTargets(node.slot)
+			if targets.Unknown {
+				return true
+			}
+			for _, function := range targets.Functions {
+				for _, local := range f.l.result.Functions[function].Environment {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
-			for _, argument := range f.l.checker.GetTypeArguments(proven) {
-				queue = append(queue, cycleNode{proven: argument})
+			for index, argument := range f.l.checker.GetTypeArguments(proven) {
+				slot := "array"
+				if f.l.isLibraryType(proven, "Set", "ReadonlySet") {
+					slot = "set"
+				}
+				if f.l.isLibraryType(proven, "Map", "ReadonlyMap") {
+					slot = "map"
+					if index == 0 {
+						slot = "map-key"
+					}
+				}
+				queue = append(queue, cycleNode{proven: argument, slot: slot})
 			}
 		default:
 			if f.l.isStaticType(proven) {
@@ -431,7 +464,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				}
 			}
 			for _, field := range f.fields(proven) {
-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field), slot: "field:" + field.Name})
 			}
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.

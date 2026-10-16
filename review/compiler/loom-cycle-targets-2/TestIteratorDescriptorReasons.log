@@ -1,0 +1,33 @@
+=== RUN   TestIteratorDescriptorReasons
+=== PAUSE TestIteratorDescriptorReasons
+=== CONT  TestIteratorDescriptorReasons
+=== RUN   TestIteratorDescriptorReasons/required_boolean_done
+=== PAUSE TestIteratorDescriptorReasons/required_boolean_done
+=== RUN   TestIteratorDescriptorReasons/represented_value_field
+=== PAUSE TestIteratorDescriptorReasons/represented_value_field
+=== RUN   TestIteratorDescriptorReasons/optional_iterator_method
+=== PAUSE TestIteratorDescriptorReasons/optional_iterator_method
+=== RUN   TestIteratorDescriptorReasons/arguments_or_overloads
+=== PAUSE TestIteratorDescriptorReasons/arguments_or_overloads
+=== RUN   TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== PAUSE TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== RUN   TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== PAUSE TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== RUN   TestIteratorDescriptorReasons/object_spread
+=== PAUSE TestIteratorDescriptorReasons/object_spread
+=== CONT  TestIteratorDescriptorReasons/required_boolean_done
+=== CONT  TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== CONT  TestIteratorDescriptorReasons/optional_iterator_method
+=== CONT  TestIteratorDescriptorReasons/object_spread
+=== CONT  TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== CONT  TestIteratorDescriptorReasons/arguments_or_overloads
+=== CONT  TestIteratorDescriptorReasons/represented_value_field
+--- PASS: TestIteratorDescriptorReasons (0.00s)
+    --- PASS: TestIteratorDescriptorReasons/required_boolean_done (0.27s)
+    --- PASS: TestIteratorDescriptorReasons/declare_or_abstract_class_field (0.28s)
+    --- PASS: TestIteratorDescriptorReasons/optional_iterator_method (0.29s)
+    --- PASS: TestIteratorDescriptorReasons/object_spread (0.30s)
+    --- PASS: TestIteratorDescriptorReasons/represented_value_field (0.09s)
+    --- PASS: TestIteratorDescriptorReasons/replacing_an_iterator_protocol (0.11s)
+    --- PASS: TestIteratorDescriptorReasons/arguments_or_overloads (0.11s)
+PASS

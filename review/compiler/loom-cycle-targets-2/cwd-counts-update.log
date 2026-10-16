@@ -1,0 +1,137 @@
+=== RUN   TestCountsAreRecorded_000
+=== PAUSE TestCountsAreRecorded_000
+=== RUN   TestCountsAreRecorded_001
+=== PAUSE TestCountsAreRecorded_001
+=== RUN   TestCountsAreRecorded_002
+=== PAUSE TestCountsAreRecorded_002
+=== RUN   TestCountsAreRecorded_003
+=== PAUSE TestCountsAreRecorded_003
+=== RUN   TestCountsAreRecorded_004
+=== PAUSE TestCountsAreRecorded_004
+=== RUN   TestCountsAreRecorded_005
+=== PAUSE TestCountsAreRecorded_005
+=== RUN   TestCountsAreRecorded_006
+=== PAUSE TestCountsAreRecorded_006
+=== RUN   TestCountsAreRecorded_007
+=== PAUSE TestCountsAreRecorded_007
+=== RUN   TestCountsAreRecorded_008
+=== PAUSE TestCountsAreRecorded_008
+=== RUN   TestCountsAreRecorded_009
+=== PAUSE TestCountsAreRecorded_009
+=== RUN   TestCountsAreRecorded_010
+=== PAUSE TestCountsAreRecorded_010
+=== RUN   TestCountsAreRecorded_011
+=== PAUSE TestCountsAreRecorded_011
+=== RUN   TestCountsAreRecorded_012
+=== PAUSE TestCountsAreRecorded_012
+=== RUN   TestCountsAreRecorded_013
+=== PAUSE TestCountsAreRecorded_013
+=== RUN   TestCountsAreRecorded_014
+=== PAUSE TestCountsAreRecorded_014
+=== RUN   TestCountsAreRecorded_015
+=== PAUSE TestCountsAreRecorded_015
+=== RUN   TestCountsAreRecorded_016
+=== PAUSE TestCountsAreRecorded_016
+=== RUN   TestCountsAreRecorded_017
+=== PAUSE TestCountsAreRecorded_017
+=== RUN   TestCountsAreRecorded_018
+=== PAUSE TestCountsAreRecorded_018
+=== RUN   TestCountsAreRecorded_019
+=== PAUSE TestCountsAreRecorded_019
+=== RUN   TestCountsAreRecorded_020
+=== PAUSE TestCountsAreRecorded_020
+=== RUN   TestCountsAreRecorded_021
+=== PAUSE TestCountsAreRecorded_021
+=== RUN   TestCountsAreRecorded_022
+=== PAUSE TestCountsAreRecorded_022
+=== RUN   TestCountsAreRecorded_023
+=== PAUSE TestCountsAreRecorded_023
+=== RUN   TestCountsAreRecorded_024
+=== PAUSE TestCountsAreRecorded_024
+=== RUN   TestCountsAreRecorded_025
+=== PAUSE TestCountsAreRecorded_025
+=== RUN   TestCountsAreRecorded_026
+=== PAUSE TestCountsAreRecorded_026
+=== RUN   TestCountsAreRecorded_027
+=== PAUSE TestCountsAreRecorded_027
+=== RUN   TestCountsAreRecorded_028
+=== PAUSE TestCountsAreRecorded_028
+=== RUN   TestCountsAreRecorded_029
+=== PAUSE TestCountsAreRecorded_029
+=== RUN   TestCountsAreRecorded_030
+=== PAUSE TestCountsAreRecorded_030
+=== RUN   TestCountsAreRecorded_031
+=== PAUSE TestCountsAreRecorded_031
+=== CONT  TestCountsAreRecorded_000
+=== CONT  TestCountsAreRecorded_031
+=== CONT  TestCountsAreRecorded_030
+=== CONT  TestCountsAreRecorded_029
+--- PASS: TestCountsAreRecorded_000 (0.00s)
+=== CONT  TestCountsAreRecorded_028
+--- PASS: TestCountsAreRecorded_029 (0.01s)
+=== CONT  TestCountsAreRecorded_027
+--- PASS: TestCountsAreRecorded_030 (0.01s)
+=== CONT  TestCountsAreRecorded_026
+--- PASS: TestCountsAreRecorded_028 (0.01s)
+=== CONT  TestCountsAreRecorded_025
+--- PASS: TestCountsAreRecorded_027 (0.01s)
+=== CONT  TestCountsAreRecorded_024
+=== RUN   TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+=== PAUSE TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+--- PASS: TestCountsAreRecorded_024 (0.00s)
+=== CONT  TestCountsAreRecorded_022
+=== CONT  TestCountsAreRecorded_023
+--- PASS: TestCountsAreRecorded_026 (0.01s)
+=== CONT  TestCountsAreRecorded_021
+--- PASS: TestCountsAreRecorded_025 (0.01s)
+=== CONT  TestCountsAreRecorded_020
+--- PASS: TestCountsAreRecorded_020 (0.01s)
+=== CONT  TestCountsAreRecorded_019
+--- PASS: TestCountsAreRecorded_021 (0.01s)
+=== CONT  TestCountsAreRecorded_018
+--- PASS: TestCountsAreRecorded_023 (0.01s)
+=== CONT  TestCountsAreRecorded_017
+--- PASS: TestCountsAreRecorded_022 (0.02s)
+=== CONT  TestCountsAreRecorded_016
+--- PASS: TestCountsAreRecorded_019 (0.01s)
+=== CONT  TestCountsAreRecorded_015
+--- PASS: TestCountsAreRecorded_018 (0.02s)
+=== CONT  TestCountsAreRecorded_014
+--- PASS: TestCountsAreRecorded_016 (0.02s)
+=== CONT  TestCountsAreRecorded_013
+--- PASS: TestCountsAreRecorded_017 (0.02s)
+=== CONT  TestCountsAreRecorded_012
+--- PASS: TestCountsAreRecorded_015 (0.02s)
+=== CONT  TestCountsAreRecorded_011
+--- PASS: TestCountsAreRecorded_013 (0.01s)
+=== CONT  TestCountsAreRecorded_010
+--- PASS: TestCountsAreRecorded_014 (0.02s)
+=== CONT  TestCountsAreRecorded_009
+--- PASS: TestCountsAreRecorded_011 (0.01s)
+=== CONT  TestCountsAreRecorded_008
+--- PASS: TestCountsAreRecorded_012 (0.02s)
+=== CONT  TestCountsAreRecorded_007
+--- PASS: TestCountsAreRecorded_009 (0.01s)
+--- PASS: TestCountsAreRecorded_010 (0.01s)
+=== CONT  TestCountsAreRecorded_005
+=== CONT  TestCountsAreRecorded_006
+--- PASS: TestCountsAreRecorded_007 (0.01s)
+=== CONT  TestCountsAreRecorded_004
+--- PASS: TestCountsAreRecorded_005 (0.01s)
+=== CONT  TestCountsAreRecorded_003
+--- PASS: TestCountsAreRecorded_008 (0.02s)
+=== CONT  TestCountsAreRecorded_002
+--- PASS: TestCountsAreRecorded_006 (0.01s)
+=== CONT  TestCountsAreRecorded_001
+--- PASS: TestCountsAreRecorded_004 (0.01s)
+=== CONT  TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+--- PASS: TestCountsAreRecorded_002 (0.01s)
+--- PASS: TestCountsAreRecorded_003 (0.01s)
+--- PASS: TestCountsAreRecorded_001 (0.01s)
+--- PASS: TestCountsAreRecorded_031 (0.02s)
+    --- PASS: TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a (9.60s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.738s

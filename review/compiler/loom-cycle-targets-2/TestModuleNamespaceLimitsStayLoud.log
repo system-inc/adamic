@@ -1,0 +1,25 @@
+=== RUN   TestModuleNamespaceLimitsStayLoud
+=== PAUSE TestModuleNamespaceLimitsStayLoud
+=== CONT  TestModuleNamespaceLimitsStayLoud
+=== RUN   TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== PAUSE TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== RUN   TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== PAUSE TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== CONT  TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== CONT  TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+--- PASS: TestModuleNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance; (0.28s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/performance.value_=_2; (0.29s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(',')); (0.27s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`); (0.35s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`); (0.13s)
+PASS

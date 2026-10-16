@@ -1,0 +1,49 @@
+=== RUN   TestArgumentsLengthRefusals
+=== PAUSE TestArgumentsLengthRefusals
+=== CONT  TestArgumentsLengthRefusals
+=== RUN   TestArgumentsLengthRefusals/indexing
+=== PAUSE TestArgumentsLengthRefusals/indexing
+=== RUN   TestArgumentsLengthRefusals/aliasing
+=== PAUSE TestArgumentsLengthRefusals/aliasing
+=== RUN   TestArgumentsLengthRefusals/passing
+=== PAUSE TestArgumentsLengthRefusals/passing
+=== RUN   TestArgumentsLengthRefusals/returning
+=== PAUSE TestArgumentsLengthRefusals/returning
+=== RUN   TestArgumentsLengthRefusals/spreading
+=== PAUSE TestArgumentsLengthRefusals/spreading
+=== RUN   TestArgumentsLengthRefusals/writing_object
+=== PAUSE TestArgumentsLengthRefusals/writing_object
+=== RUN   TestArgumentsLengthRefusals/writing_length
+=== PAUSE TestArgumentsLengthRefusals/writing_length
+=== RUN   TestArgumentsLengthRefusals/incrementing_length
+=== PAUSE TestArgumentsLengthRefusals/incrementing_length
+=== RUN   TestArgumentsLengthRefusals/compound_length
+=== PAUSE TestArgumentsLengthRefusals/compound_length
+=== RUN   TestArgumentsLengthRefusals/arrow
+=== PAUSE TestArgumentsLengthRefusals/arrow
+=== RUN   TestArgumentsLengthRefusals/parenthesized_write
+=== PAUSE TestArgumentsLengthRefusals/parenthesized_write
+=== CONT  TestArgumentsLengthRefusals/indexing
+=== CONT  TestArgumentsLengthRefusals/writing_length
+=== CONT  TestArgumentsLengthRefusals/parenthesized_write
+=== CONT  TestArgumentsLengthRefusals/arrow
+=== CONT  TestArgumentsLengthRefusals/compound_length
+=== CONT  TestArgumentsLengthRefusals/incrementing_length
+=== CONT  TestArgumentsLengthRefusals/returning
+=== CONT  TestArgumentsLengthRefusals/writing_object
+=== CONT  TestArgumentsLengthRefusals/spreading
+=== CONT  TestArgumentsLengthRefusals/passing
+=== CONT  TestArgumentsLengthRefusals/aliasing
+--- PASS: TestArgumentsLengthRefusals (0.00s)
+    --- PASS: TestArgumentsLengthRefusals/arrow (0.14s)
+    --- PASS: TestArgumentsLengthRefusals/writing_length (0.14s)
+    --- PASS: TestArgumentsLengthRefusals/indexing (0.14s)
+    --- PASS: TestArgumentsLengthRefusals/parenthesized_write (0.18s)
+    --- PASS: TestArgumentsLengthRefusals/returning (0.09s)
+    --- PASS: TestArgumentsLengthRefusals/incrementing_length (0.09s)
+    --- PASS: TestArgumentsLengthRefusals/writing_object (0.06s)
+    --- PASS: TestArgumentsLengthRefusals/compound_length (0.15s)
+    --- PASS: TestArgumentsLengthRefusals/passing (0.07s)
+    --- PASS: TestArgumentsLengthRefusals/spreading (0.07s)
+    --- PASS: TestArgumentsLengthRefusals/aliasing (0.07s)
+PASS

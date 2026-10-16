@@ -1,0 +1,9 @@
+=== RUN   TestNamespaceCallGraphLinearWork
+=== PAUSE TestNamespaceCallGraphLinearWork
+=== CONT  TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphLinearWork/12
+=== RUN   TestNamespaceCallGraphLinearWork/24
+--- PASS: TestNamespaceCallGraphLinearWork (0.08s)
+    --- PASS: TestNamespaceCallGraphLinearWork/12 (0.04s)
+    --- PASS: TestNamespaceCallGraphLinearWork/24 (0.04s)
+PASS

@@ -1,0 +1,61 @@
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.23s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.25s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.30s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.34s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.26s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.21s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.25s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.17s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.16s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.21s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.15s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.11s)
+PASS

@@ -1,0 +1,61 @@
+=== RUN   TestLibraryMethodValueSafety
+=== PAUSE TestLibraryMethodValueSafety
+=== CONT  TestLibraryMethodValueSafety
+=== RUN   TestLibraryMethodValueSafety/absent_array
+=== PAUSE TestLibraryMethodValueSafety/absent_array
+=== RUN   TestLibraryMethodValueSafety/apply_spread
+=== PAUSE TestLibraryMethodValueSafety/apply_spread
+=== RUN   TestLibraryMethodValueSafety/number_receiver
+=== PAUSE TestLibraryMethodValueSafety/number_receiver
+=== RUN   TestLibraryMethodValueSafety/opaque_identity
+=== PAUSE TestLibraryMethodValueSafety/opaque_identity
+=== RUN   TestLibraryMethodValueSafety/unsupported_callback
+=== PAUSE TestLibraryMethodValueSafety/unsupported_callback
+=== RUN   TestLibraryMethodValueSafety/mutable_alias
+=== PAUSE TestLibraryMethodValueSafety/mutable_alias
+=== RUN   TestLibraryMethodValueSafety/opaque_field
+=== PAUSE TestLibraryMethodValueSafety/opaque_field
+=== RUN   TestLibraryMethodValueSafety/opaque_shorthand
+=== PAUSE TestLibraryMethodValueSafety/opaque_shorthand
+=== RUN   TestLibraryMethodValueSafety/array_element_erasure
+=== PAUSE TestLibraryMethodValueSafety/array_element_erasure
+=== RUN   TestLibraryMethodValueSafety/call_spread
+=== PAUSE TestLibraryMethodValueSafety/call_spread
+=== RUN   TestLibraryMethodValueSafety/string_receiver
+=== PAUSE TestLibraryMethodValueSafety/string_receiver
+=== RUN   TestLibraryMethodValueSafety/bind_arity
+=== PAUSE TestLibraryMethodValueSafety/bind_arity
+=== RUN   TestLibraryMethodValueSafety/bind_absent_receiver
+=== PAUSE TestLibraryMethodValueSafety/bind_absent_receiver
+=== RUN   TestLibraryMethodValueSafety/opaque_return
+=== PAUSE TestLibraryMethodValueSafety/opaque_return
+=== CONT  TestLibraryMethodValueSafety/absent_array
+=== CONT  TestLibraryMethodValueSafety/opaque_shorthand
+=== CONT  TestLibraryMethodValueSafety/opaque_return
+=== CONT  TestLibraryMethodValueSafety/unsupported_callback
+=== CONT  TestLibraryMethodValueSafety/opaque_field
+=== CONT  TestLibraryMethodValueSafety/mutable_alias
+=== CONT  TestLibraryMethodValueSafety/string_receiver
+=== CONT  TestLibraryMethodValueSafety/bind_absent_receiver
+=== CONT  TestLibraryMethodValueSafety/bind_arity
+=== CONT  TestLibraryMethodValueSafety/call_spread
+=== CONT  TestLibraryMethodValueSafety/array_element_erasure
+=== CONT  TestLibraryMethodValueSafety/number_receiver
+=== CONT  TestLibraryMethodValueSafety/opaque_identity
+=== CONT  TestLibraryMethodValueSafety/apply_spread
+--- PASS: TestLibraryMethodValueSafety (0.01s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_return (0.13s)
+    --- PASS: TestLibraryMethodValueSafety/unsupported_callback (0.19s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_shorthand (0.20s)
+    --- PASS: TestLibraryMethodValueSafety/absent_array (0.23s)
+    --- PASS: TestLibraryMethodValueSafety/mutable_alias (0.08s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_field (0.19s)
+    --- PASS: TestLibraryMethodValueSafety/bind_absent_receiver (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/string_receiver (0.13s)
+    --- PASS: TestLibraryMethodValueSafety/call_spread (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/array_element_erasure (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/bind_arity (0.17s)
+    --- PASS: TestLibraryMethodValueSafety/number_receiver (0.11s)
+    --- PASS: TestLibraryMethodValueSafety/apply_spread (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_identity (0.10s)
+PASS

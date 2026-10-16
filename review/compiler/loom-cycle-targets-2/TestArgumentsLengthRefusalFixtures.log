@@ -1,0 +1,33 @@
+=== RUN   TestArgumentsLengthRefusalFixtures
+=== PAUSE TestArgumentsLengthRefusalFixtures
+=== CONT  TestArgumentsLengthRefusalFixtures
+=== RUN   TestArgumentsLengthRefusalFixtures/indexing
+=== PAUSE TestArgumentsLengthRefusalFixtures/indexing
+=== RUN   TestArgumentsLengthRefusalFixtures/aliasing
+=== PAUSE TestArgumentsLengthRefusalFixtures/aliasing
+=== RUN   TestArgumentsLengthRefusalFixtures/passing
+=== PAUSE TestArgumentsLengthRefusalFixtures/passing
+=== RUN   TestArgumentsLengthRefusalFixtures/returning
+=== PAUSE TestArgumentsLengthRefusalFixtures/returning
+=== RUN   TestArgumentsLengthRefusalFixtures/spreading
+=== PAUSE TestArgumentsLengthRefusalFixtures/spreading
+=== RUN   TestArgumentsLengthRefusalFixtures/writing
+=== PAUSE TestArgumentsLengthRefusalFixtures/writing
+=== RUN   TestArgumentsLengthRefusalFixtures/arrow
+=== PAUSE TestArgumentsLengthRefusalFixtures/arrow
+=== CONT  TestArgumentsLengthRefusalFixtures/indexing
+=== CONT  TestArgumentsLengthRefusalFixtures/spreading
+=== CONT  TestArgumentsLengthRefusalFixtures/returning
+=== CONT  TestArgumentsLengthRefusalFixtures/arrow
+=== CONT  TestArgumentsLengthRefusalFixtures/writing
+=== CONT  TestArgumentsLengthRefusalFixtures/passing
+=== CONT  TestArgumentsLengthRefusalFixtures/aliasing
+--- PASS: TestArgumentsLengthRefusalFixtures (0.00s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/returning (0.17s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/indexing (0.20s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/spreading (0.22s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/arrow (0.23s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/writing (0.12s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/passing (0.12s)
+    --- PASS: TestArgumentsLengthRefusalFixtures/aliasing (0.10s)
+PASS

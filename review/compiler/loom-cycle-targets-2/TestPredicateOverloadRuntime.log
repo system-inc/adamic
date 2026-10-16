@@ -1,0 +1,39 @@
+=== RUN   TestPredicateOverloadRuntime
+=== PAUSE TestPredicateOverloadRuntime
+=== CONT  TestPredicateOverloadRuntime
+=== RUN   TestPredicateOverloadRuntime/parser_every_result
+=== RUN   TestPredicateOverloadRuntime/parser_some_result
+=== RUN   TestPredicateOverloadRuntime/overload_some
+=== RUN   TestPredicateOverloadRuntime/overload_some_empty
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_valid
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_read
+=== RUN   TestPredicateOverloadRuntime/overload_some_objects
+=== RUN   TestPredicateOverloadRuntime/overload_some_true_only
+=== RUN   TestPredicateOverloadRuntime/overload_callback
+=== RUN   TestPredicateOverloadRuntime/overload_erased
+=== RUN   TestPredicateOverloadRuntime/overload_checked
+=== RUN   TestPredicateOverloadRuntime/overload_false
+=== RUN   TestPredicateOverloadRuntime/overload_once
+=== RUN   TestPredicateOverloadRuntime/overload_every
+=== RUN   TestPredicateOverloadRuntime/overload_array_alias
+=== RUN   TestPredicateOverloadRuntime/overload_assertion
+=== RUN   TestPredicateOverloadRuntime/overload_nominal
+--- PASS: TestPredicateOverloadRuntime (11.42s)
+    --- PASS: TestPredicateOverloadRuntime/parser_every_result (2.93s)
+    --- PASS: TestPredicateOverloadRuntime/parser_some_result (0.67s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some (0.46s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_empty (0.48s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_valid (0.48s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_read (0.70s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_objects (0.49s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_true_only (0.49s)
+    --- PASS: TestPredicateOverloadRuntime/overload_callback (0.47s)
+    --- PASS: TestPredicateOverloadRuntime/overload_erased (0.61s)
+    --- PASS: TestPredicateOverloadRuntime/overload_checked (0.50s)
+    --- PASS: TestPredicateOverloadRuntime/overload_false (0.51s)
+    --- PASS: TestPredicateOverloadRuntime/overload_once (0.47s)
+    --- PASS: TestPredicateOverloadRuntime/overload_every (0.70s)
+    --- PASS: TestPredicateOverloadRuntime/overload_array_alias (0.52s)
+    --- PASS: TestPredicateOverloadRuntime/overload_assertion (0.47s)
+    --- PASS: TestPredicateOverloadRuntime/overload_nominal (0.46s)
+PASS

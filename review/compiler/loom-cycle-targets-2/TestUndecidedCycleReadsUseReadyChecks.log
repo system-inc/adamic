@@ -1,0 +1,17 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (7.91s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (2.16s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.43s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (1.37s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (1.38s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.90s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (1.01s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.65s)
+PASS
