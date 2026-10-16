@@ -119,7 +119,7 @@ func TestMutantsUnion(t *testing.T) {
 	// the JSX canary previously skipped by the parent TestMutants.
 	descriptors := prepareRegistry(t, packageDirectory)
 	shards := mutantRuleDeclarations(t, "TestMutants_", "mutantRuleShard")
-	products := mutantRuleDeclarations(t, "TestProduct_LintMutant_", "mutantRuleProduct")
+	products := mutantRuleDeclarations(t, "TestProduct_LintMutant_", "requireMutantRuleProduct")
 	for _, group := range []struct {
 		owners []mutantRuleOwner
 		prefix string
