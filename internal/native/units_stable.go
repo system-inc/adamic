@@ -12,6 +12,7 @@ type unitDefinition struct {
 	name, declaration, definition, owner string
 	references                           []string
 	function                             bool
+	initializationOwner                  string
 	source                               bool
 }
 
@@ -128,7 +129,10 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 
 		if old, ok := definitions[d.name]; ok {
 			if old.declaration != declaration {
-				return "", nil, fmt.Errorf("native: split: conflicting declaration %s: %q versus %q", d.name, old.declaration, declaration)
+				unannotated := strings.TrimSuffix(old.declaration, initializerAttribute+";\n") + ";\n"
+				if !d.function || !strings.HasPrefix(d.name, "adamic_initialize_") || unannotated != declaration {
+					return "", nil, fmt.Errorf("native: split: conflicting declaration %s: %q versus %q", d.name, old.declaration, declaration)
+				}
 			}
 			if !d.function && d.initializer < 0 && strings.HasPrefix(d.name, "adamic_class_") {
 				continue
@@ -152,6 +156,11 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		} else if d.function && marked {
 			if module != "" {
 				item.owner = moduleUnit(module)
+				if strings.HasPrefix(d.name, "adamic_initialize_chunk_") {
+					item.initializationOwner = item.owner
+					digest := sha256.Sum256([]byte(d.name))
+					item.owner = fmt.Sprintf("%s_initialize_%02d.c", strings.TrimSuffix(item.owner, ".c"), int(digest[0])%8)
+				}
 			} else {
 				digest := sha256.Sum256([]byte(d.name))
 				item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
@@ -208,6 +217,31 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		} else {
 			digest := sha256.Sum256([]byte(item.name))
 			item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
+		}
+	}
+
+	// A declaration's readiness write identifies the module owning its storage.
+	for name, helper := range definitions {
+		if !helper.source || !strings.HasPrefix(name, "adamic_initialize_") {
+			continue
+		}
+		tokens, err := cTokens(helper.definition)
+		if err != nil {
+			return "", nil, err
+		}
+		for i, token := range tokens {
+			if !strings.HasPrefix(token.text, "adamic_unit_adamic_global_") || !strings.HasSuffix(token.text, "_ready") || i+2 >= len(tokens) || tokens[i+1].text != "=" || tokens[i+2].text != "true" {
+				continue
+			}
+			ready := strings.TrimPrefix(token.text, "adamic_unit_")
+			for _, global := range []string{ready, strings.TrimSuffix(ready, "_ready")} {
+				if item := definitions[global]; item != nil {
+					item.owner = helper.owner
+					if helper.initializationOwner != "" {
+						item.owner = helper.initializationOwner
+					}
+				}
+			}
 		}
 	}
 
