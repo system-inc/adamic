@@ -95,6 +95,7 @@ func onWASI(t *testing.T, source string) run {
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -118,6 +119,7 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
