@@ -60,6 +60,9 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

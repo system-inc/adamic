@@ -1,0 +1,4 @@
+console.log("a1");
+await Promise.resolve();
+console.log("a2");
+export {};

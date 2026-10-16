@@ -8,9 +8,11 @@ package lower
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"path/filepath"
@@ -27,7 +29,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -47,9 +49,6 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
 		}
-	}
-	if lowering.hasAsync(modules) {
-		return lowering.lowerAsync(modules)
 	}
 	// Link every declaration before lowering any function body, including across back edges.
 	var declarations []*ast.Node
@@ -80,7 +79,21 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
+	if err := flow.NormalizeAsync(lowering.result); err != nil {
+		where := entry.AsNode()
+		var located *flow.AsyncError
+		if errors.As(err, &located) && located.Site > 0 && located.Site <= len(lowering.asyncSites) {
+			where = lowering.asyncSites[located.Site-1]
+		}
+		return nil, &NotYet{Where: lowering.program.Where(where), What: err.Error()}
+	}
 	if err := lowering.findCycles(modules); err != nil {
+		return nil, err
+	}
+	if len(lowering.asyncPayloadFailures) > 0 {
+		return nil, lowering.asyncPayloadFailures[0]
+	}
+	if err := lowering.checkPromiseConsumption(); err != nil {
 		return nil, err
 	}
 	readiness(lowering.result)
@@ -90,6 +103,10 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	entry                *ast.SourceFile
+	asyncSites           []*ast.Node
+	asyncPayloadFailures []error
+
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
 

@@ -140,6 +140,13 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			return nil, fmt.Errorf("native: split: incomplete declaration")
 		}
 		declaration.tokens = tokens[begin:end]
+		// Types have no separately owned storage. Keep them out of the symbol
+		// rewrite table and copy them once into the shared header, in source order.
+		if generatedTypeDeclaration(declaration.tokens) {
+			declarations = append(declarations, declaration)
+			begin = end
+			continue
+		}
 		limit := len(declaration.tokens)
 		if declaration.body >= 0 {
 			limit = declaration.body
@@ -182,6 +189,23 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		begin = end
 	}
 	return declarations, nil
+}
+
+// generatedTypeDeclaration recognizes the emitter's object type declarations,
+// including array fields inside anonymous frame typedefs. A struct followed by
+// a variable declarator is storage and must still pass the static-symbol rules.
+func generatedTypeDeclaration(tokens []cToken) bool {
+	if len(tokens) < 3 || tokens[len(tokens)-1].text != ";" {
+		return false
+	}
+	generated := func(name string) bool { return strings.HasPrefix(name, "adamic_") && cName.MatchString(name) }
+	if tokens[0].text == "typedef" {
+		return len(tokens) >= 4 && generated(tokens[len(tokens)-2].text)
+	}
+	if tokens[0].text == "struct" && generated(tokens[1].text) {
+		return len(tokens) == 3 || tokens[2].text == "{" && tokens[len(tokens)-2].text == "}"
+	}
+	return false
 }
 
 // splitC gives every generated static symbol one external definition. Token replacement never

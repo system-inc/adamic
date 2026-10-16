@@ -28,6 +28,11 @@ type handler struct {
 // jumpThrown emits the jump for a pending exception, once the statement's temporaries are let go: to
 // the innermost handler, or out of the function, or, out of main, the panic.
 func (e *emitter) jumpThrown() {
+	if e.asyncHandler != "" {
+		e.line("adamic_release(frame->error); frame->error = adamic_thrown; adamic_thrown = NULL;")
+		e.line("goto %s;", e.asyncHandler)
+		return
+	}
 	if len(e.handlers) > 0 {
 		inner := e.handlers[len(e.handlers)-1]
 		inner.jumped = true
@@ -57,6 +62,14 @@ func (e *emitter) jumpThrown() {
 // the release of what holds names (what a loop around the call holds), then of every temporary the
 // statement owns so far, and the jump.
 func (e *emitter) checkThrown(holds ...string) {
+	// Async graph edges use the precise call-target proof. Some ordinary library
+	// emitters conservatively request a check whenever any closure can throw.
+	// A block without an exception edge must not invent a Goto handler for it.
+	if e.asyncSlots != nil && e.asyncHandler == "" {
+		message := e.function.Name + ": exception where the flow graph proved none"
+		e.line("if (adamic_thrown != NULL) { adamic_panic(%s, %d); }", cString(message), len(message))
+		return
+	}
 	e.line("if (adamic_thrown != NULL) {")
 	e.indent++
 	for _, hold := range holds {

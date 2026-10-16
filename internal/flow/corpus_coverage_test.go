@@ -121,6 +121,9 @@ func TestFlowCorpusRemainder(t *testing.T) {
 	for _, path := range flowCorpusPaths {
 		generated[path] = true
 	}
+	for _, unit := range asyncFlowUnits {
+		generated[unit.path] = true
+	}
 	count := 0
 	for _, path := range programs(t) {
 		if generated[filepath.ToSlash(path)] {

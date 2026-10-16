@@ -1,0 +1,24 @@
+let number = 1;
+function first(): number {
+    console.log(`first ${number}`);
+    return number;
+}
+async function second(): Promise<number> {
+    number = 7;
+    console.log("second prefix");
+    await Promise.resolve();
+    console.log("second resume");
+    return number;
+}
+function third(): number {
+    console.log(`third ${number}`);
+    return 3;
+}
+function combine(a: number, b: number, c: number): number { return a * 100 + b * 10 + c; }
+async function run(): Promise<number> {
+    const result = combine(first(), await second(), third());
+    const selected = false ? await second() : await Promise.resolve(4);
+    const skipped = false && await Promise.resolve(true);
+    return result + selected + (skipped ? 1 : 0);
+}
+console.log(`${await run()}`);

@@ -1,0 +1,16 @@
+async function descend(depth: number, fail: boolean): Promise<string> {
+    await Promise.resolve();
+    if (depth === 0) {
+        if (fail) { await Promise.reject<number>(new Error("recursive")); return "missed"; }
+        return "leaf";
+    }
+    return `${depth}:${await descend(depth - 1, fail)}`;
+}
+async function run(fail: boolean): Promise<string> {
+    try { return await descend(2, fail); }
+    catch (error) {
+        if (error instanceof Error) { return `caught:${error.message}`; }
+        return "wrong error";
+    }
+}
+console.log(`${await run(false)}|${await run(true)}`);

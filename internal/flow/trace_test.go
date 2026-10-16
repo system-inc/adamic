@@ -98,11 +98,24 @@ const adamicPanicked = () => {
 	}
 	return adamicStopped;
 };
-const adamicFrames = [{ last: -1, held: new Map() }];
+let adamicNextFrame = 1;
+const adamicFrames = [{ id: 0, last: -1, held: new Map() }];
 const adamicEnter = (function_) => {
 	if (adamicPanicked()) return;
-	adamicFrames.push({ last: -1, held: new Map() });
+	const frame = { id: adamicNextFrame++, last: -1, held: new Map() };
+	adamicFrames.push(frame);
 	adamicTrace.push('enter ' + function_);
+	return frame;
+};
+const adamicPark = (frame) => {
+ if (adamicPanicked()) return;
+ if (adamicFrames.pop() !== frame) throw new Error('trace activation mismatch');
+ adamicTrace.push('park ' + frame.id);
+};
+const adamicResume = (frame) => {
+ if (adamicPanicked()) return;
+ adamicFrames.push(frame);
+ adamicTrace.push('resume ' + frame.id);
 };
 const adamicLeave = (function_) => {
 	if (adamicPanicked()) return;
@@ -182,6 +195,8 @@ func prepareTrace(t *testing.T, path string) traceSetup {
 		Enter: func(function int) string {
 			return fmt.Sprintf("adamicEnter(%d)", function)
 		},
+		Suspend: func() string { return "adamicPark(adamicActivation)" },
+		Resume:  func() string { return "adamicResume(adamicActivation)" },
 		Leave: func(function int) string {
 			return fmt.Sprintf("adamicLeave(%d)", function)
 		},
@@ -245,11 +260,13 @@ func traced(t *testing.T, path string) run {
 // walk follows a trace through the graphs and says everything about it that isn't a path.
 func walk(graphs map[int]*Function, marked []point, events []string) []string {
 	type frame struct {
+		id       int
 		function int
 		last     *point
 	}
 	var problems, ends []string
 	stack := []frame{{function: -1}}
+	parked := map[int]frame{}
 	end := func(current frame) {
 		if problem := finishes(graphs[current.function], current.last); problem != "" {
 			ends = append(ends, fmt.Sprintf("function %d: %s", current.function, problem))
@@ -262,8 +279,33 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 		case event == "missing":
 			problems = append(problems, fmt.Sprintf("function %d ran a point the graph says can't be reached", top.function))
 		case strings.HasPrefix(event, "enter "):
-			function, _ := strconv.Atoi(strings.TrimPrefix(event, "enter "))
-			stack = append(stack, frame{function: function})
+			fields := strings.Fields(event)
+			function, _ := strconv.Atoi(fields[1])
+			id := len(stack)
+			if len(fields) > 2 {
+				id, _ = strconv.Atoi(fields[2])
+			}
+			stack = append(stack, frame{function: function, id: id})
+		case strings.HasPrefix(event, "park "):
+			id, _ := strconv.Atoi(strings.TrimPrefix(event, "park "))
+			if top.last == nil {
+				problems = append(problems, "park without its active invocation")
+			} else {
+				block, position := locate(graphs[top.function], top.last.instruction)
+				if _, ok := block.Terminal.(*Suspend); !ok || position+1 != len(block.Instructions) {
+					problems = append(problems, "park bypassed a suspension terminal")
+				}
+			}
+			parked[id] = *top
+			stack = stack[:len(stack)-1]
+		case strings.HasPrefix(event, "resume "):
+			id, _ := strconv.Atoi(strings.TrimPrefix(event, "resume "))
+			current, ok := parked[id]
+			if !ok {
+				problems = append(problems, "resume without a parked invocation")
+			}
+			delete(parked, id)
+			stack = append(stack, current)
 		case strings.HasPrefix(event, "leave "):
 			end(*top)
 			stack = stack[:len(stack)-1]
@@ -497,11 +539,20 @@ type sequence struct {
 func frames(run run) []sequence {
 	var done []sequence
 	stack := []sequence{{function: -1}}
+	parked := map[int]sequence{}
 	for _, event := range run.events {
 		switch {
 		case strings.HasPrefix(event, "enter "):
 			function, _ := strconv.Atoi(strings.TrimPrefix(event, "enter "))
 			stack = append(stack, sequence{function: function})
+		case strings.HasPrefix(event, "park "):
+			id, _ := strconv.Atoi(strings.TrimPrefix(event, "park "))
+			parked[id] = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+		case strings.HasPrefix(event, "resume "):
+			id, _ := strconv.Atoi(strings.TrimPrefix(event, "resume "))
+			stack = append(stack, parked[id])
+			delete(parked, id)
 		case strings.HasPrefix(event, "leave "):
 			done = append(done, stack[len(stack)-1])
 			stack = stack[:len(stack)-1]
@@ -513,4 +564,33 @@ func frames(run run) []sequence {
 		}
 	}
 	return append(done, stack...)
+}
+
+// Hold suspension edges to executed Node paths, independently of SSA construction.
+func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
+	t.Parallel()
+	run := traced(t, "../oracle/testdata/async_three.a")
+	if problems := walk(run.graphs, run.marked, run.events); len(problems) != 0 {
+		t.Fatalf("control graph rejects Node: %v", problems)
+	}
+	// traced shares immutable setup with the per-program flow units. Mutate a
+	// fresh graph, not the cached control other parallel tests are walking.
+	graphs := map[int]*Function{}
+	for function := range run.graphs {
+		graph := Build(lowered(t, "../oracle/testdata/async_three.a"), function)
+		Construct(graph)
+		graphs[function] = graph
+	}
+	changed := 0
+	for _, graph := range graphs {
+		for _, block := range graph.Blocks {
+			if terminal, ok := block.Terminal.(*Suspend); ok {
+				terminal.Fulfilled = terminal.Rejected
+				changed++
+			}
+		}
+	}
+	if changed == 0 || len(walk(graphs, run.marked, run.events)) == 0 {
+		t.Fatal("wrong suspension edge survived Node path check")
+	}
 }

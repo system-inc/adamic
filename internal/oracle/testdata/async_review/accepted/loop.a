@@ -1,0 +1,14 @@
+async function run(fail: boolean): Promise<string> {
+    let total = 0;
+    try {
+        for (let index = 0; index < 3; index++) {
+            if (fail && index === 1) { await Promise.reject<number>(new Error("loop")); }
+            total += await Promise.resolve(index);
+        }
+        return `total:${total}`;
+    } catch (error) {
+        if (error instanceof Error) { return `caught:${error.message}:${total}`; }
+        return "wrong error";
+    }
+}
+console.log(`${await run(false)}|${await run(true)}`);
