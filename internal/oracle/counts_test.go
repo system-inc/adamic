@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -14,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -156,7 +156,7 @@ func countDigest(t *testing.T, key string, runs string) string {
 }
 
 // countsLine is the line a counted build writes last to stderr (runtime/count.c).
-var countsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
+var countsLine = leakcheck.CountsLine
 
 // pinnedStack is a command run with an 8 MiB stack, whatever the stack of whoever runs the test: a
 // fixture that recurses until the stack runs out is counted at the depth it reached, which moves with
