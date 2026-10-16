@@ -33,8 +33,16 @@ func constantTableWitness(t *testing.T, source, template string, split, sanitize
 		t.Fatal("missing constant template " + template)
 	}
 	binary := filepath.Join(directory, "tables")
-	if err := Build(code, binary, Options{Split: split, Sanitize: sanitize, Count: true, Jobs: 1}); err != nil {
-		t.Fatal(err)
+	options := Options{Split: split, Sanitize: sanitize, Count: true, Jobs: 1}
+	var buildError error
+	if split {
+		buildError = Build(code, binary, options)
+	} else {
+		// This remains a whole-unit control when automatic split compilation is enabled.
+		buildError = BuildFlags(code, binary, options, SourceFlags(code, options))
+	}
+	if buildError != nil {
+		t.Fatal(buildError)
 	}
 	run := func(name string, args ...string) (string, string) {
 		t.Helper()

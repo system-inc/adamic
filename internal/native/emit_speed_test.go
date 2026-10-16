@@ -51,8 +51,16 @@ func initializerWitness(t *testing.T, split bool, exceptions bool) {
 		t.Fatal("initializer helpers are missing")
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1}); err != nil {
-		t.Fatal(err)
+	options := native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1}
+	var buildError error
+	if split {
+		buildError = native.Build(code, binary, options)
+	} else {
+		// Keep the explicit whole-unit control after instrumented builds default to split.
+		buildError = native.BuildFlags(code, binary, options, native.SourceFlags(code, options))
+	}
+	if buildError != nil {
+		t.Fatal(buildError)
 	}
 	js := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {

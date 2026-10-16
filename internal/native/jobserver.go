@@ -9,7 +9,7 @@ import (
 // JobserverVariable names a jobserver that bounds native's C compiles (#cyew6p3): a FIFO holding one byte a token, as
 // make's fifo jobserver protocol fills it. Each clang native runs takes a token first and gives it back when clang
 // exits, whatever it exited with, so Loom bounds how many compile at once across every build on a box (Workshop's
-// native products ran 68 to 79 clang at once, 99% busy, Oct 10). Unset, compiles are unbounded, as before.
+// native products ran 68 to 79 clang at once, 99% busy, Oct 10). The process-local clang pool also applies when unset.
 //
 // It moves no key: nothing reads it into a unit's or a runtime's key, and the compiler is still keyed by its own path
 // and report. Under a trace it moves none either, as long as the FIFO sits under /run or /dev (Loom puts it in
@@ -29,6 +29,8 @@ var jobserver = &compilerJobserver{}
 // withCompilerToken runs compile holding one of the jobserver's tokens, when one is named. A FIFO that can't be opened
 // or read fails the compile, naming it, rather than letting it run unbounded.
 func withCompilerToken(compile func() error) error {
+	release := acquireClang()
+	defer release()
 	path := os.Getenv(JobserverVariable)
 	if path == "" {
 		return compile()

@@ -143,6 +143,14 @@ func featureFlags(source string) []string {
 }
 
 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
+	jobs := 1
+	if useSplit(options) {
+		var err error
+		jobs, err = splitJobs(options)
+		if err != nil {
+			return "", err
+		}
+	}
 	files, flags, compiler, version, err := runtimeInputs(directory, options, extraFlags)
 	if err != nil {
 		return "", err
@@ -171,7 +179,7 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	if err != nil {
 		return "", err
 	}
-	return cachedRuntime(files, flags, compiler, version, cache)
+	return cachedRuntime(files, flags, compiler, version, cache, jobs)
 }
 
 // runtimeInputs are what a runtime archive is compiled from: the runtime's files (directory's, or the embedded
@@ -213,7 +221,7 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 	if err != nil {
 		return nil, nil, "", "", fmt.Errorf("native: %w", err)
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
+	version, err := compilerVersion(compiler)
 	if err != nil {
 		return nil, nil, "", "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
@@ -380,7 +388,14 @@ func compilerInstallation(compiler string) string {
 	return installation
 }
 
-func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
+func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string, parallel ...int) (string, error) {
+	jobs := 1
+	if len(parallel) > 0 {
+		jobs = parallel[0]
+	}
+	if jobs < 1 {
+		return "", fmt.Errorf("native: runtime jobs must be positive")
+	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
 		return "", err
@@ -405,7 +420,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err
 	}
-	if err := compileRuntime(files, flags, compiler, temporary, 1); err != nil {
+	if err := compileRuntime(files, flags, compiler, temporary, jobs); err != nil {
 		return "", err
 	}
 	// Publish everything together. A competing process may already have published this key; its

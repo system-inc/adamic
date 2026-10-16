@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	goruntime "runtime"
 	"strconv"
 	"strings"
 	"sync"
+	"testing"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -176,7 +178,7 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		// Runtime entry points may be declared by an emitted helper's consumer.
 		// Their prototypes belong in every unit's header, with external linkage and
 		// their API names intact. Non-static definitions remain unsupported.
-		if prototype && !declaration.function && declaration.initializer < 0 && declaration.tokens[0].text != "static" && cName.MatchString(declaration.name) {
+		if prototype && externalPrototype(declaration) {
 			declaration.name = ""
 			declarations = append(declarations, declaration)
 			begin = end
@@ -329,7 +331,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
+	version, err := compilerVersion(compiler)
 	if err != nil {
 		return err
 	}
@@ -347,20 +349,9 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	jobs := options.Jobs
-	if jobs == 0 {
-		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
-			jobs, err = strconv.Atoi(value)
-			if err != nil {
-				return fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", err)
-			}
-		}
-	}
-	if jobs == 0 {
-		jobs = 1
-	}
-	if jobs < 1 {
-		return fmt.Errorf("native: split jobs must be positive")
+	jobs, err := splitJobs(options)
+	if err != nil {
+		return err
 	}
 	if jobs > len(units) {
 		jobs = len(units)
@@ -428,4 +419,54 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
 	}
 	return nil
+}
+
+// Scheduling is not an input to emitted bytes or any cache key.
+func splitJobs(options Options) (int, error) {
+	jobs := options.Jobs
+	if jobs == 0 {
+		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
+			var err error
+			jobs, err = strconv.Atoi(value)
+			if err != nil {
+				return 0, fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", err)
+			}
+		}
+	}
+	if jobs == 0 {
+		jobs = defaultSplitJobs(testing.Testing())
+	}
+	if jobs < 1 {
+		return 0, fmt.Errorf("native: split jobs must be positive")
+	}
+	return jobs, nil
+}
+func defaultSplitJobs(test bool) int {
+	if test {
+		return 1
+	}
+	return max(1, goruntime.GOMAXPROCS(0))
+}
+
+// A runtime prototype declares a function, not function-pointer storage. Only
+// prototypes retain external linkage in the shared header.
+func externalPrototype(declaration cDeclaration) bool {
+	if declaration.function || declaration.initializer >= 0 {
+		return false
+	}
+	tokens := declaration.tokens
+	if len(tokens) < 4 || tokens[len(tokens)-2].text != ")" {
+		return false
+	}
+	for _, token := range tokens {
+		if token.text == "static" {
+			return false
+		}
+	}
+	for i, token := range tokens {
+		if token.text == "(" {
+			return i > 0 && i+1 < len(tokens) && cName.MatchString(tokens[i-1].text) && tokens[i+1].text != "*"
+		}
+	}
+	return false
 }

@@ -5,9 +5,12 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
-// its owner can decide whether to dispatch here when Options.Split is requested.
+// BuildSplitTSGo builds TSGoC output as stable units with its explicitly selected
+// checker archive. BuildTSGo dispatches here under the generated-source policy.
 func BuildSplitTSGo(source, output, archive string, options Options) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
 	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
@@ -32,7 +35,7 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
+	version, err := compilerVersion(compiler)
 	if err != nil {
 		return "", err
 	}
@@ -41,5 +44,9 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 		return "", err
 	}
 	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
-	return cachedRuntime(files, flags, compiler, string(version), cache)
+	jobs, err := splitJobs(options)
+	if err != nil {
+		return "", err
+	}
+	return cachedRuntime(files, flags, compiler, string(version), cache, jobs)
 }
