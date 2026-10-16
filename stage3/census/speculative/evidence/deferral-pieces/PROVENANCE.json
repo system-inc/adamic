@@ -1,0 +1,668 @@
+{
+  "adapter_commit": "f6bb0b41fb00b69a0a33db5551290b62a06e3cc7",
+  "affinity": {
+    "available": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "groups": [
+      {
+        "cpus": [
+          2,
+          3
+        ],
+        "group": "checks",
+        "processes": 5,
+        "root": 8095
+      },
+      {
+        "cpus": [
+          2,
+          3
+        ],
+        "group": "checks",
+        "processes": 3,
+        "root": 13259
+      },
+      {
+        "cpus": [
+          0,
+          1
+        ],
+        "group": "proof",
+        "processes": 2,
+        "root": 13776
+      }
+    ]
+  },
+  "baseline_workspace": "go 1.27\n\ntoolchain go1.27.1\n\nuse (\n /tmp/kaxjrp9/baseline\n /workspace/adamic/cohere/TypeScript/tsc\n)\n\nreplace (\n github.com/microsoft/TypeScript/tsc/shim/format => /workspace/adamic/cohere/TypeScript-shim/format\n github.com/microsoft/TypeScript/tsc/shim/incremental => /workspace/adamic/cohere/TypeScript-shim/incremental\n github.com/microsoft/TypeScript/tsc/shim/parser => /workspace/adamic/cohere/TypeScript-shim/parser\n github.com/microsoft/TypeScript/tsc/shim/ast => /workspace/adamic/cohere/TypeScript-shim/ast\n github.com/microsoft/TypeScript/tsc/shim/bundled => /workspace/adamic/cohere/TypeScript-shim/bundled\n github.com/microsoft/TypeScript/tsc/shim/checker => /workspace/adamic/cohere/TypeScript-shim/checker\n github.com/microsoft/TypeScript/tsc/shim/compiler => /workspace/adamic/cohere/TypeScript-shim/compiler\n github.com/microsoft/TypeScript/tsc/shim/core => /workspace/adamic/cohere/TypeScript-shim/core\n github.com/microsoft/TypeScript/tsc/shim/locale => /workspace/adamic/cohere/TypeScript-shim/locale\n github.com/microsoft/TypeScript/tsc/shim/scanner => /workspace/adamic/cohere/TypeScript-shim/scanner\n github.com/microsoft/TypeScript/tsc/shim/tsoptions => /workspace/adamic/cohere/TypeScript-shim/tsoptions\n github.com/microsoft/TypeScript/tsc/shim/tspath => /workspace/adamic/cohere/TypeScript-shim/tspath\n github.com/microsoft/TypeScript/tsc/shim/vfs => /workspace/adamic/cohere/TypeScript-shim/vfs\n github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs => /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs\n github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs => /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs\n)\n",
+  "binary_sha256": {
+    "current": "360af6c3fe9d3003dc04828a00af7c692061bde15e49f110ba9a989587c27478",
+    "historical": "4e477cc531618617c279b49f818f5f55c541a89732d2c46a316d526fd3961708",
+    "mutant": "dd7636f0c939316006ba58b71ab31c09a78e61ded53e29d5a5eada16246583c1"
+  },
+  "branch": "typescript/stage3-census-deferral-4",
+  "compiler_source_root": "/tmp/kaxjrp9/tree/src/compiler",
+  "cpu_max": "400000 100000",
+  "dependencies": {
+    "current_cohere": "0183ccf8c57a775f874ca73be1adfc06e9ad1562",
+    "current_shim_tree": "c79d659e4450e9a2258f74eda3fc245b609d2185",
+    "historical_cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+    "historical_shim_tree": "c79d659e4450e9a2258f74eda3fc245b609d2185",
+    "typescript_gitlink": "160000 commit d92d9bfee114c80be2c375d72edae966176e3a4f\tTypeScript"
+  },
+  "first_setup_log": "submodule cache: off\nv24.19.0\nsetup: node ready (0.183s)\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.280s)\nCloning into '/workspace/adamic/cohere'...\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.818s)\n\nadded 3 packages in 2s\nsetup: markdown dependencies installed (npm ci, integrity verified); step-duration=2.963s\nsetup: markdown dependencies ready (3.598s)\nFrom https://github.com/system-inc/cohere\n * branch            0183ccf8c57a775f874ca73be1adfc06e9ad1562 -> FETCH_HEAD\nSubmodule path 'cohere': checked out '0183ccf8c57a775f874ca73be1adfc06e9ad1562'\nSubmodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'\nCloning into '/workspace/adamic/cohere/TypeScript'...\n",
+  "guard_git_blob": "cb7b85a230c03f7f3a4b60eec816d15a5c943a88",
+  "header_fix": [
+    {
+      "body_unchanged": true,
+      "file": "review/compiler/loom-census-deferral/deferred/source/z.a",
+      "header": "// a-check: type error TS2322",
+      "program_body_sha256": "841204da475ccf05fbe52eee053b83901d425a89072e298879dde0e203029294"
+    },
+    {
+      "body_unchanged": true,
+      "file": "review/compiler/loom-census-deferral/no-caller-audit/source/z.a",
+      "header": "// a-check: type error TS2322",
+      "program_body_sha256": "841204da475ccf05fbe52eee053b83901d425a89072e298879dde0e203029294"
+    }
+  ],
+  "header_fix_reason": "Required lane check rejected missing TS2322 expectation headers in two caller fixtures that import the intentionally diagnosed a.a. Audit generator now emits the same header. Program bodies and compiler/census Go producer are unchanged.",
+  "historical_base": "d2d64b3557919caaf46ccff154b34e5c059addbd",
+  "historical_deferral": "76057b92b1c517e459c8680554119a835c4e691d",
+  "input_files": [
+    {
+      "file": "_namespaces/ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+    },
+    {
+      "file": "_namespaces/ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+    },
+    {
+      "file": "_namespaces/ts.ts",
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b"
+    },
+    {
+      "file": "binder.ts",
+      "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39"
+    },
+    {
+      "file": "builder.ts",
+      "sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+    },
+    {
+      "file": "builderPublic.ts",
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+    },
+    {
+      "file": "builderState.ts",
+      "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+    },
+    {
+      "file": "checker.ts",
+      "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "sha256": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec"
+    },
+    {
+      "file": "core.ts",
+      "sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    {
+      "file": "corePublic.ts",
+      "sha256": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44"
+    },
+    {
+      "file": "debug.ts",
+      "sha256": "ca255a522710019f5f852647b077cebc35d8771e966241e2f5fdc56f63f3a0a7"
+    },
+    {
+      "file": "diagnosticInformationMap.generated.ts",
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+    },
+    {
+      "file": "diagnosticMessages.generated.json",
+      "sha256": "37c9a689ea26146b2f76ee880294e31e8f71ce472143ec95509a61bb72e673ef"
+    },
+    {
+      "file": "diagnosticMessages.json",
+      "sha256": "5749a34fae974494aa86dc39e190c07e913bf04ad5c1223826597613a5800b95"
+    },
+    {
+      "file": "emitter.ts",
+      "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b"
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "sha256": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7"
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    {
+      "file": "factory/nodeChildren.ts",
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3"
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+    },
+    {
+      "file": "factory/utilities.ts",
+      "sha256": "4f81ac7ff1df30b368dde225874e60ba6b34b6c1d825dc1174bd5cae79766b25"
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "sha256": "d26ce806051739e30dd82b5246b8fb649f71c8598786247be0bdb080ad95a17a"
+    },
+    {
+      "file": "hostErrors.ts",
+      "sha256": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "sha256": "ce232806990e9de26577a8ee09df2bac9056e768e9c31cb8a14eb260c6b0291d"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "sha256": "b6218f396aa492dd6f9e713f577ef6b73c842575163468e8e1871b4bbd9d3f19"
+    },
+    {
+      "file": "parser.ts",
+      "sha256": "d7cd175a0f21d59e8ff58f111cda29d5aa15358b61fa7ed87e404f522d288afd"
+    },
+    {
+      "file": "path.ts",
+      "sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    {
+      "file": "performance.ts",
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+    },
+    {
+      "file": "performanceCore.ts",
+      "sha256": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242"
+    },
+    {
+      "file": "program.ts",
+      "sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284"
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "sha256": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673"
+    },
+    {
+      "file": "scanner.ts",
+      "sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750"
+    },
+    {
+      "file": "semver.ts",
+      "sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+    },
+    {
+      "file": "sourcemap.ts",
+      "sha256": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513"
+    },
+    {
+      "file": "symbolWalker.ts",
+      "sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216"
+    },
+    {
+      "file": "sys.ts",
+      "sha256": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c"
+    },
+    {
+      "file": "tracing.ts",
+      "sha256": "c93e0678045906b86323d834b005182a3a334355c89faebb6455cdbb26b67dd5"
+    },
+    {
+      "file": "transformer.ts",
+      "sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c"
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "sha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c"
+    },
+    {
+      "file": "transformers/classThis.ts",
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d"
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed"
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4"
+    },
+    {
+      "file": "transformers/es2016.ts",
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7"
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755"
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88"
+    },
+    {
+      "file": "transformers/es2019.ts",
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a"
+    },
+    {
+      "file": "transformers/es2021.ts",
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684"
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633"
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "sha256": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119"
+    },
+    {
+      "file": "transformers/generators.ts",
+      "sha256": "75ef4834f020bda555a8757a587af77a8f2e111f328e300666ccdcf30d4ccc79"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "sha256": "8f9884b8ecee51c0798ae00957eb6696161ab8941294da522bd4d85e1bdf9e01"
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0"
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71"
+    },
+    {
+      "file": "transformers/module/impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c"
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6"
+    },
+    {
+      "file": "transformers/namedEvaluation.ts",
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+    },
+    {
+      "file": "transformers/taggedTemplate.ts",
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+    },
+    {
+      "file": "transformers/ts.ts",
+      "sha256": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469"
+    },
+    {
+      "file": "transformers/typeSerializer.ts",
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd"
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+    },
+    {
+      "file": "tsbuild.ts",
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "sha256": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88"
+    },
+    {
+      "file": "tsconfig.json",
+      "sha256": "995596ff26d7f9333078c6c8096685fc93f4abe87d2576396a6d7a69994e734f"
+    },
+    {
+      "file": "types.ts",
+      "sha256": "fa9143edd295cb16ad747a1bb45a3db1a0180d2ee09362ff9ab8581dd2e73644"
+    },
+    {
+      "file": "utilities.ts",
+      "sha256": "9f51fd0a65950c5d19a16e0d7d41760c948ef227dab22a282abc6023f5158ffc"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "sha256": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
+    },
+    {
+      "file": "visitorPublic.ts",
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+    },
+    {
+      "file": "watch.ts",
+      "sha256": "c002991223605d063f5339d68387b148686cdabcfe8192ac95d760adf7f9b7bf"
+    },
+    {
+      "file": "watchPublic.ts",
+      "sha256": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+    }
+  ],
+  "lane_final_exit": 0,
+  "lane_final_output": "lane checks 58.2 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; a-check 13 .a files; vet 1 packages\n",
+  "nproc": 5,
+  "plan": {
+    "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+    "atoms": [
+      {
+        "bytes": 842,
+        "end": 842,
+        "id": "0:842:ImportDeclaration",
+        "kind": "ImportDeclaration",
+        "name": "",
+        "parent": "file",
+        "start": 0
+      },
+      {
+        "bytes": 696,
+        "end": 1538,
+        "id": "842:1538:FunctionDeclaration",
+        "kind": "FunctionDeclaration",
+        "name": "getFileEmitOutput",
+        "parent": "file",
+        "start": 842
+      },
+      {
+        "bytes": 114,
+        "end": 1652,
+        "id": "1538:1652:EnumDeclaration",
+        "kind": "EnumDeclaration",
+        "name": "SignatureInfo",
+        "parent": "file",
+        "start": 1538
+      },
+      {
+        "bytes": 1494,
+        "end": 3146,
+        "id": "1652:3146:InterfaceDeclaration",
+        "kind": "InterfaceDeclaration",
+        "name": "BuilderState",
+        "parent": "file",
+        "start": 1652
+      },
+      {
+        "bytes": 23061,
+        "end": 26207,
+        "id": "3146:26207:ModuleDeclaration",
+        "kind": "ModuleDeclaration",
+        "name": "BuilderState",
+        "parent": "file",
+        "start": 3146
+      }
+    ],
+    "file": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts",
+    "pieces": [
+      {
+        "atoms": [
+          "3146:26207:ModuleDeclaration"
+        ],
+        "bytes": 23061,
+        "id": 0
+      },
+      {
+        "atoms": [
+          "0:842:ImportDeclaration",
+          "842:1538:FunctionDeclaration",
+          "1538:1652:EnumDeclaration",
+          "1652:3146:InterfaceDeclaration"
+        ],
+        "bytes": 3146,
+        "id": 1
+      }
+    ],
+    "requested_pieces": 2,
+    "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+    "source_bytes": 26209,
+    "typescript": "6.0.3",
+    "version": 1
+  },
+  "plan_sha256": "26b915dec5f3bdf52a1ee634ddf55f401d9c7e6ae0f435de6a0efccefd577824",
+  "production_base": "bfee3224158d5fa5142fffa57302c2ed4792a7b2",
+  "proof_commands": [
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/make_overlay.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "overlay",
+      "seconds": 10.901
+    },
+    {
+      "args": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-overlay=/tmp/loom-census-overlay/overlay.json",
+        "-o",
+        "/tmp/loom-census",
+        "./stage3/census/latent/tool"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "build",
+      "seconds": 189.355
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/baseline/stage3/census/latent/make_overlay.py",
+        "/tmp/kaxjrp9/baseline",
+        "/tmp/kaxjrp9/base-overlay"
+      ],
+      "cwd": "/tmp/kaxjrp9/baseline",
+      "exit": 0,
+      "name": "base-overlay",
+      "seconds": 10.598
+    },
+    {
+      "args": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-overlay=/tmp/kaxjrp9/base-overlay/overlay.json",
+        "-o",
+        "/tmp/kaxjrp9/base-census",
+        "./stage3/census/latent/tool"
+      ],
+      "cwd": "/tmp/kaxjrp9/baseline",
+      "exit": 0,
+      "name": "base-build-retry",
+      "seconds": 23.669
+    },
+    {
+      "args": [
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/tree/src/compiler",
+        "/tmp/kaxjrp9/whole.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": -15,
+      "name": "whole",
+      "seconds": 393.965
+    },
+    {
+      "args": [
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/tree/src/compiler",
+        "/tmp/kaxjrp9/whole.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "whole",
+      "seconds": 519.253
+    },
+    {
+      "args": [
+        "/tmp/kaxjrp9/base-census",
+        "/tmp/kaxjrp9/tree/src/compiler",
+        "/tmp/kaxjrp9/base-whole.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "base-whole",
+      "seconds": 474.775
+    },
+    {
+      "args": [
+        "node",
+        "stage3/census/speculative/plan_pieces.cjs",
+        "/tmp/kaxjrp9/tree/src/compiler/builderState.ts",
+        "2",
+        "/tmp/kaxjrp9/plan.json"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "plan",
+      "seconds": 1.873
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/run_pieces.py",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/tree/src/compiler",
+        "/tmp/kaxjrp9/plan.json",
+        "/tmp/kaxjrp9/pieces",
+        "600",
+        "3072",
+        "2"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "pieces",
+      "seconds": 290.642
+    },
+    {
+      "args": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-overlay=/tmp/kaxjrp9/mutant-overlay.json",
+        "-o",
+        "/tmp/kaxjrp9/mutant",
+        "./stage3/census/latent/tool"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "mutant-build",
+      "seconds": 160.113
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/run_pieces.py",
+        "/tmp/kaxjrp9/mutant",
+        "/tmp/kaxjrp9/tree/src/compiler",
+        "/tmp/kaxjrp9/plan.json",
+        "/tmp/kaxjrp9/mutant-pieces",
+        "600",
+        "3072",
+        "2"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "name": "mutant-pieces",
+      "seconds": 236.883
+    }
+  ],
+  "setup_attempt_limits_seconds": [
+    300,
+    300,
+    600,
+    300,
+    300
+  ],
+  "setup_final_exit": 0,
+  "setup_final_seconds": 88.542,
+  "setup_logs": {
+    "setup-complete.log": "submodule cache: off\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.153s)\nv24.19.0\nsetup: node ready (0.178s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.030s\nsetup: markdown dependencies ready (0.334s)\nsetup: submodules ready (0.412s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.791s)\nsetup: shared cache ready (1.871s)\nsetup: go build ready (87.955s)\nsetup: test binaries deferred (use --warm-tests) (88.323s)\nsetup: build cache warm (88.328s)\nsetup: build-flags commit=30fab0b9eb3eb4c0e152f944dea6463012c1a311 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=on load-before=0.33 2.04 3.81 1/280 20684 load-after=4.33 2.98 3.98 1/293 21633\nsetup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (88.542s)\nsetup: source /workspace/adamic-tools/env.sh\nsetup: logs /tmp/adamic-gate/setup.V0cjLi\n",
+    "setup-final.log": "submodule cache: off\nv24.19.0\ngo version go1.27.1 linux/amd64\nsetup: node ready (0.228s)\nsetup: go ready (0.239s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.040s\nsetup: markdown dependencies ready (0.426s)\nsetup: submodules ready (0.477s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.182s)\nsetup: shared cache ready (3.665s)\n",
+    "setup-retry.log": "submodule cache: off\nv24.19.0\nsetup: node ready (0.085s)\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.109s)\nsetup: submodules ready (0.336s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.062s\nsetup: markdown dependencies ready (0.391s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.013s)\nsetup: shared cache ready (31.052s)\n",
+    "setup-warm.log": "submodule cache: off\nv24.19.0\nsetup: node ready (0.305s)\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.420s)\nsetup: submodules ready (0.975s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.140s\nsetup: markdown dependencies ready (1.429s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.781s)\nsetup: shared cache ready (3.909s)\n"
+  },
+  "source_bytes": 26209,
+  "source_file": "builderState.ts",
+  "source_sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+  "task": "#kaxjrp9",
+  "tested_commit": "30fab0b9eb3eb4c0e152f944dea6463012c1a311",
+  "toolchain": {
+    "clang": "20.1.8",
+    "go": "1.27.1",
+    "node": "24.19.0",
+    "stock_typescript": "6.0.3"
+  },
+  "typescript_root_count": 79,
+  "whole_record_sha256": {
+    "current": "2ba4c27defce9c0491fdebf4f3028a02c6cdd12ceee801db09883ec6fc49455e",
+    "historical": "2ba4c27defce9c0491fdebf4f3028a02c6cdd12ceee801db09883ec6fc49455e"
+  }
+}

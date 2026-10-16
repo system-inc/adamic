@@ -1,0 +1,926 @@
+{
+  "audits": [
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/prove_identity.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/identity"
+      ],
+      "exit": 0,
+      "name": "identity-clean",
+      "seconds": 15.302
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit_output_guards.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay",
+        "/tmp/kaxjrp9/checks/output-guards"
+      ],
+      "exit": 0,
+      "name": "output-guards-clean",
+      "seconds": 196.537
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/build-mutants-cold.py"
+      ],
+      "exit": 0,
+      "name": "build-mutants-clean",
+      "seconds": 405.702
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/run-mutants.py"
+      ],
+      "exit": 0,
+      "name": "run-mutants-clean",
+      "seconds": 4.769
+    },
+    {
+      "args": [
+        "python3",
+        "review/compiler/loom-census-deferral/production-identity.py",
+        "/workspace/adamic",
+        "/tmp/kaxjrp9/checks/production",
+        "bfee3224"
+      ],
+      "exit": 0,
+      "name": "production-clean",
+      "seconds": 47.387
+    },
+    {
+      "args": [
+        "go",
+        "vet",
+        "./internal/oracle",
+        "./stage3/census/..."
+      ],
+      "exit": 0,
+      "name": "vet-clean",
+      "seconds": 36.756
+    },
+    {
+      "args": [
+        "go",
+        "vet",
+        "-overlay=/tmp/loom-census-overlay/overlay.json",
+        "./internal/lower",
+        "./internal/load",
+        "./stage3/census/latent/tool"
+      ],
+      "exit": 0,
+      "name": "overlay-vet-clean",
+      "seconds": 14.66
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "-p",
+        "2",
+        "-run",
+        "^$",
+        "-timeout",
+        "90s",
+        "./internal/oracle",
+        "./stage3/fixtures",
+        "./stage3/census/..."
+      ],
+      "exit": 0,
+      "name": "reader-compile-clean",
+      "seconds": 98.673
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/audit_snapshot.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay",
+        "/tmp/kaxjrp9/checks/snapshot"
+      ],
+      "exit": 0,
+      "name": "snapshot",
+      "seconds": 371.996
+    }
+  ],
+  "build_budget_note": "Review mutant builder copied to scratch, output destination relocated, build timeout raised from 90 to 300 seconds. Behavioral Go test timeouts remain 90s. Production identity base is bfee3224, the requested branch parent.",
+  "comparison_program": "import collections,json,pathlib,sys\nwhole=pathlib.Path(sys.argv[1]);paths=[pathlib.Path(p) for p in sys.argv[2:]]\nfields=('where','name','body_start','body_end')\ndef units(paths):\n return collections.Counter(tuple(u.get(k,'') for k in fields) for p in paths for line in p.read_text().splitlines() for u in json.loads(line).get('units',[]) if u['status']=='deferred_generic_instantiation')\na=units([whole]);b=units(paths);diff=[dict(zip(fields,k),whole=a[k],pieces=b[k]) for k in sorted(a.keys()|b.keys()) if a[k]!=b[k]]\nprint(json.dumps(dict(exact_match=a==b,whole=sum(a.values()),pieces=sum(b.values()),differences=diff),indent=2));sys.exit(0 if a==b else 1)\n",
+  "control_outputs": {
+    "deferred": "legacy missing never-reached list: caught by deferred coverage gap\nlegacy deferred as attempted: caught by deferred counted as attempted\nlegacy deferred bytes as examined: caught by independent byte-mask audit\nfull missing never-reached list: caught by deferred coverage gap\nfull deferred as attempted: caught by deferred counted as attempted\nfull deferred bytes as examined: caught by independent byte-mask audit\nspeculative missing never-reached list: caught by deferred coverage gap\nspeculative deferred as attempted: caught by deferred counted as attempted\nPASS: never reached, cross-file concrete caller, diagnosed deferral, nested gap, explicit counts and bytes\n",
+    "full-report-control": "full-report missing no-caller gap ledger: caught\nPASS: stock spans, full-report counts, no-caller ledger, rerun accounting\n",
+    "identity-clean": "token-position identity mutant caught: async root incorrectly depth 1; await child remains depth 1\nPASS: exact AST identity; failed generic signature continued into await; output guards\n",
+    "latent": "signature/body range mutant caught\n{\n  \"continuation\": \"pass\",\n  \"all_refusal_sites\": \"pass\",\n  \"no_IR_output\": \"pass\",\n  \"production_loader_disabled\": \"pass\",\n  \"body_skip\": \"pass\",\n  \"signature_eligible\": \"pass\",\n  \"same_line_ranges\": \"pass\",\n  \"measurement\": \"measured on a checker-rejected program\",\n  \"mutant\": {\n    \"one.a_delta\": 1,\n    \"two.a_delta\": 0,\n    \"location\": \"one.a:3:1\"\n  },\n  \"misattribution_mutant\": \"caught\"\n}\n",
+    "output-guards-clean": "IR output guard mutant caught: measurement returned usable IR\nloader output guard mutant caught: measurement loader exposed an output program\n",
+    "piece-resume": "PASS: resume with 32 workers launches zero binaries and preserves completed records\nchanged-checksum mutant caught before any compiler launch\ndropped-completed-piece mutant caught before any compiler launch\n",
+    "piece-timing": "shifted-prepass-time mutant caught by independent timed workload\nerased-CPU-time mutant caught by independent timed workload\nPASS: prepass/body timestamp and CPU usage match an independently timed workload\n",
+    "production-clean": "c leaked-stub-output mutant caught by byte comparison\nPASS: base, overlay off, and speculative flag on production: identical c (6907 bytes, sha256=169abd45ca4c225362f18da3c6c8bd8171a9939f51e329b2686e7152c77479ab)\njs leaked-stub-output mutant caught by byte comparison\nPASS: base, overlay off, and speculative flag on production: identical js (9930 bytes, sha256=918453f11ba043e10346c3dd920e5fba93d72ccca6aaed92f7126c49a808f7f5)\n",
+    "run-mutants-clean": "no-caller: caught by unused generic instantiated assertion\nplain-map: caught by speculative depth/continuation assertion\nmissing inventory: caught by original census-check.py\npremature: caught by original census-check.py deferred status assertion\nPASS: all four independent census mutants caught by assertions\n",
+    "snapshot": "baseline: PASS\nshared-slice-mutant: caught by snapshot ownership check\nscalar-value-mutant: caught by optimized snapshot differs from legacy copy\nfunction-cursor-mutant: caught by snapshot function cursor not rebound\nprivate-field-mutant: caught by private field copied silently\nmapper-identity-mutant: caught by checker mapper identity changed\nfunction-schema-mutant: caught by unsupported mutable function-field guard\n",
+    "speculative": "no-stubs mutant caught by nested depth/continuation control: \ndepth-zero mutant caught by nested depth/continuation control: [(3, 0), (4, 0), (5, 0), (8, 0)]\nPASS: exact depths 0,1,2; sibling depth 0; 8 speculative sites versus 0 full sites; no-stubs byte-identical full JSON; all AST nodes visited; no-output guards\n",
+    "verify": "headline-depth-total artifact mutant caught\ntop20-depth-count artifact mutant caught\nomit-source-file artifact mutant caught\nbyte-share artifact mutant caught\nomit-never-reached artifact mutant caught\ndeferred-as-examined artifact mutant caught\nPASS: 20 unique sites; exact depth totals and top20; complete source inventory; independent byte denominator; all 6 applicable artifact mutants caught\n"
+  },
+  "counts_table_unchanged": true,
+  "header_correction_checks": {
+    "headers-deferred": "legacy missing never-reached list: caught by deferred coverage gap\nlegacy deferred as attempted: caught by deferred counted as attempted\nlegacy deferred bytes as examined: caught by independent byte-mask audit\nfull missing never-reached list: caught by deferred coverage gap\nfull deferred as attempted: caught by deferred counted as attempted\nfull deferred bytes as examined: caught by independent byte-mask audit\nspeculative missing never-reached list: caught by deferred coverage gap\nspeculative deferred as attempted: caught by deferred counted as attempted\nPASS: never reached, cross-file concrete caller, diagnosed deferral, nested gap, explicit counts and bytes\n",
+    "headers-full-report": "full-report missing no-caller gap ledger: caught\nPASS: stock spans, full-report counts, no-caller ledger, rerun accounting\n",
+    "headers-no-caller": "Traceback (most recent call last):\n  File \"/workspace/adamic/stage3/census/latent/audit_deferred.py\", line 61, in <module>\n    assert not named['unused']['instantiated'], (mode, named['unused'])\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('legacy', {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/kaxjrp9/checks-headers/no-caller/source/a.a:2:1', 'kind': 'KindFunctionDeclaration', 'body_start': 68, 'body_end': 131, 'instantiated': True, 'status': 'deferred_generic_instantiation', 'checker_diagnostics': [], 'name': 'unused'})\n",
+    "headers-report": "{\n  \"base\": \"historical census base a5630a90\",\n  \"mapper_fix\": \"historical mapper merge 69501280\",\n  \"upstream\": \"050880ce59e30b356b686bd3144efe24f875ebc8\",\n  \"observation_kinds\": {\n    \"NotYet\": 20\n  },\n  \"stream_inventory\": null,\n  \"counts\": {\n    \"NotYet\": [\n      8,\n      10,\n      2,\n      0,\n      0\n    ],\n    \"Refused\": [\n      0,\n      0,\n      0,\n      0,\n      0\n    ]\n  },\n  \"source_bytes\": 621,\n  \"examined_bytes\": 436,\n  \"deferred_body_bytes\": 185,\n  \"deferred_generic_instantiation\": 6,\n  \"instantiated_generics\": 3,\n  \"never_reached\": [\n    {\n      \"where\": \"/tmp/kaxjrp9/checks-headers/deferred/source/a.a:2:1\",\n      \"name\": \"unused\",\n      \"body_start\": 68,\n      \"body_end\": 131\n    },\n    {\n      \"where\": \"/tmp/kaxjrp9/checks-headers/deferred/source/a.a:4:1\",\n      \"name\": \"diagnosed\",\n      \"body_start\": 230,\n      \"body_end\": 277\n    },\n    {\n      \"where\": \"/tmp/kaxjrp9/checks-headers/deferred/source/a.a:2:42\",\n      \"name\": \"unusedNested\",\n      \"body_start\": 97,\n      \"body_end\": 115\n    }\n  ],\n  \"examined_share\": 0.7020933977455717,\n  \"typescript_source_bytes\": 621,\n  \"typescript_examined_share\": 0.7020933977455717,\n  \"coverage_definition\": \"Every TypeScript AST child visited; value/statement/signature/binding positions attempted. Deferred generic body bytes are excluded from examined bytes despite AST traversal. This is speculative examination, not successful production lowering.\",\n  \"independent_depth_matches\": 20,\n  \"independent_depth_unmatched\": 0,\n  \"independent_depth_without_source\": 0,\n  \"unexamined\": []\n}\n",
+    "headers-stock": "",
+    "headers-verify": "headline-depth-total artifact mutant caught\ntop20-depth-count artifact mutant caught\nomit-source-file artifact mutant caught\nbyte-share artifact mutant caught\nomit-never-reached artifact mutant caught\ndeferred-as-examined artifact mutant caught\nPASS: 20 unique sites; exact depth totals and top20; complete source inventory; independent byte denominator; all 6 applicable artifact mutants caught\n"
+  },
+  "header_correction_expected_exits": {
+    "deferred": 0,
+    "full_report": 0,
+    "no_caller_mutant": 1,
+    "report": 0,
+    "stock": 0,
+    "verify": 0
+  },
+  "initial_attempts": [
+    {
+      "args": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "./stage3/census/..."
+      ],
+      "exit": 124,
+      "name": "go-census",
+      "seconds": 182.033
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestInstantiation",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 124,
+      "name": "oracle-instantiation",
+      "seconds": 180.083
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/instantiation_",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": -15,
+      "name": "instantiation-counts",
+      "seconds": 101.941
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/instantiation_",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v",
+        "-args",
+        "-update-counts"
+      ],
+      "exit": 1,
+      "name": "counts-regenerate",
+      "seconds": 119.849
+    },
+    {
+      "args": [
+        "git",
+        "diff",
+        "--exit-code",
+        "30fab0b9",
+        "--",
+        "internal/oracle/counts.md"
+      ],
+      "exit": 0,
+      "name": "counts-unchanged",
+      "seconds": 0.081
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecordedTable$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "name": "counts-table",
+      "seconds": 22.279
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/ir",
+        "-run",
+        "^TestCallTargetReaders$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 124,
+      "name": "ir-readers",
+      "seconds": 120.61
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/lower",
+        "-run",
+        "^TestNativeAgreementRowsNameRegisteredPrograms$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 124,
+      "name": "lower-rows",
+      "seconds": 120.06
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit_deferred.py",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/deferred"
+      ],
+      "exit": 0,
+      "name": "deferred",
+      "seconds": 10.512
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit.py",
+        "/tmp/loom-census"
+      ],
+      "exit": 0,
+      "name": "latent",
+      "seconds": 5.797
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/audit.py",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/speculative"
+      ],
+      "exit": 0,
+      "name": "speculative",
+      "seconds": 7.309
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/prove_identity.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/identity"
+      ],
+      "exit": 124,
+      "name": "identity",
+      "seconds": 180.124
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit_output_guards.py",
+        "/workspace/adamic",
+        "/tmp/loom-census-overlay",
+        "/tmp/kaxjrp9/checks/output-guards"
+      ],
+      "exit": 124,
+      "name": "output-guards",
+      "seconds": 180.094
+    },
+    {
+      "args": [
+        "node",
+        "stage3/census/speculative/stock.cjs",
+        "/tmp/kaxjrp9/checks/deferred/source",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/stock.json"
+      ],
+      "exit": 0,
+      "name": "stock",
+      "seconds": 10.519
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/report.py",
+        "/tmp/kaxjrp9/checks/deferred/source",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/stock.json",
+        "/tmp/kaxjrp9/checks/deferred/report"
+      ],
+      "exit": 0,
+      "name": "report",
+      "seconds": 2.475
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/verify.py",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/report/RESULT.json",
+        "/tmp/kaxjrp9/checks/deferred/source"
+      ],
+      "exit": 0,
+      "name": "verify",
+      "seconds": 2.818
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/build-mutants.py"
+      ],
+      "exit": 1,
+      "name": "build-mutants",
+      "seconds": 93.207
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/run-mutants.py"
+      ],
+      "exit": 1,
+      "name": "run-mutants",
+      "seconds": 5.559
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/full-report-control.py"
+      ],
+      "exit": 0,
+      "name": "full-report-control",
+      "seconds": 16.498
+    },
+    {
+      "args": [
+        "python3",
+        "review/compiler/loom-census-deferral/production-identity.py",
+        "/workspace/adamic",
+        "/tmp/kaxjrp9/checks/production",
+        "bfee3224"
+      ],
+      "exit": 124,
+      "name": "production",
+      "seconds": 180.115
+    }
+  ],
+  "lane": {
+    "final_exit": 0,
+    "final_output": "lane checks 58.2 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; a-check 13 .a files; vet 1 packages\n",
+    "initial_exit": 1,
+    "initial_output": "a-check: review/compiler/loom-census-deferral/deferred/source/z.a: type error, expected checked (review/compiler/loom-census-deferral/deferred/source/a.a:4:51: error TS2322: Type 'string' is not assignable to type 'number'.)\na-check: review/compiler/loom-census-deferral/no-caller-audit/source/z.a: type error, expected checked (review/compiler/loom-census-deferral/no-caller-audit/source/a.a:4:51: error TS2322: Type 'string' is not assignable to type 'number'.)\na-check 13 .a files\nvet skipped, over 10 s\n"
+  },
+  "original_report_checks": [
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecordedTable$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "name": "counts-table",
+      "seconds": 22.279
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit_deferred.py",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/deferred"
+      ],
+      "exit": 0,
+      "name": "deferred",
+      "seconds": 10.512
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/latent/audit.py",
+        "/tmp/loom-census"
+      ],
+      "exit": 0,
+      "name": "latent",
+      "seconds": 5.797
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/audit.py",
+        "/tmp/loom-census",
+        "/tmp/kaxjrp9/checks/speculative"
+      ],
+      "exit": 0,
+      "name": "speculative",
+      "seconds": 7.309
+    },
+    {
+      "args": [
+        "node",
+        "stage3/census/speculative/stock.cjs",
+        "/tmp/kaxjrp9/checks/deferred/source",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/stock.json"
+      ],
+      "exit": 0,
+      "name": "stock",
+      "seconds": 10.519
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/report.py",
+        "/tmp/kaxjrp9/checks/deferred/source",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/stock.json",
+        "/tmp/kaxjrp9/checks/deferred/report"
+      ],
+      "exit": 0,
+      "name": "report",
+      "seconds": 2.475
+    },
+    {
+      "args": [
+        "python3",
+        "stage3/census/speculative/verify.py",
+        "/tmp/kaxjrp9/checks/deferred/speculative.jsonl",
+        "/tmp/kaxjrp9/checks/deferred/report/RESULT.json",
+        "/tmp/kaxjrp9/checks/deferred/source"
+      ],
+      "exit": 0,
+      "name": "verify",
+      "seconds": 2.818
+    },
+    {
+      "args": [
+        "python3",
+        "/tmp/kaxjrp9/full-report-control.py"
+      ],
+      "exit": 0,
+      "name": "full-report-control",
+      "seconds": 16.498
+    }
+  ],
+  "ownership_program": "import json,pathlib,sys\nplan=json.loads(pathlib.Path(sys.argv[1]).read_text());atoms=plan['atoms'];owners={}\nfor piece in plan['pieces']:\n for atom in piece['atoms']:\n  assert atom not in owners\n  owners[atom]=piece['id']\nassert set(owners)=={a['id'] for a in atoms}\nissues=[];count=0\nfor path in sys.argv[2:]:\n for row in map(json.loads,pathlib.Path(path).read_text().splitlines()):\n  for unit in row.get('units',[]):\n   if unit['status']!='deferred_generic_instantiation':continue\n   count+=1\n   found=[a for a in atoms if a['start']<=unit['body_start']<unit['body_end']<=a['end']]\n   assert len(found)==1,(unit['where'],found)\n   expected=owners[found[0]['id']];actual=row['piece']['id']\n   if expected!=actual:issues.append(dict(where=unit['where'],name=unit.get('name',''),expected_piece=expected,actual_piece=actual,atom=found[0]['id']))\nprint(json.dumps(dict(exact_ownership=not issues,deferred_units=count,issues=issues),indent=2));sys.exit(1 if issues else 0)\n",
+  "retry_attempts": [
+    {
+      "args": [
+        "go",
+        "test",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "./stage3/census/..."
+      ],
+      "exit": 1,
+      "name": "go-census-final",
+      "seconds": 121.725
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestInstantiation",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 1,
+      "name": "oracle-instantiation-final",
+      "seconds": 258.835
+    }
+  ],
+  "snapshot_case_package_seconds": {
+    "baseline.log": [
+      0.019
+    ],
+    "function-cursor-mutant.log": [
+      0.053
+    ],
+    "function-schema-mutant.log": [
+      0.017
+    ],
+    "mapper-identity-mutant.log": [
+      0.016
+    ],
+    "private-field-mutant.log": [
+      0.015
+    ],
+    "scalar-value-mutant.log": [
+      0.02
+    ],
+    "shared-slice-mutant.log": [
+      0.018
+    ]
+  },
+  "tests": [
+    {
+      "args": [
+        "go",
+        "test",
+        "-p",
+        "1",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "./stage3/census/..."
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestFullOwnerGuardRequiresFunctionDeclaration",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestRewriteAcceptsTwoOuterRefusalReturns",
+          "seconds": 0.04
+        },
+        {
+          "name": "TestChangedVisitorMutantFailsLoudly",
+          "seconds": 0.08
+        },
+        {
+          "name": "TestMissingFunctionMutantFailsLoudly",
+          "seconds": 0.0
+        },
+        {
+          "name": "TestCompiler41231d51Shape",
+          "seconds": 0.2
+        },
+        {
+          "name": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+          "seconds": 1.22
+        },
+        {
+          "name": "TestProduct_RefusalRewriteBehaviorProbe",
+          "seconds": 1.92
+        },
+        {
+          "name": "TestPublishedCopyModeIsPrivate",
+          "seconds": 5.47
+        },
+        {
+          "name": "TestProduct_Statecopy",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestUnknownMutableContainerFailsLoudly",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestUnknownForeignPointerFailsLoudly",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestMissingStatementFailsWithMethodName",
+          "seconds": 2.6
+        },
+        {
+          "name": "TestProduct_Statementrewrite",
+          "seconds": 2.78
+        }
+      ],
+      "log": "go-census-clean.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/stage3/census/latent/refusalrewrite\t2.068s",
+        "ok  \tgithub.com/system-inc/adamic/stage3/census/latent/statecopy\t5.527s",
+        "ok  \tgithub.com/system-inc/adamic/stage3/census/latent/statementrewrite\t2.847s"
+      ]
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestInstantiation",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestInstantiationPresenceMutant",
+          "seconds": 58.04
+        },
+        {
+          "name": "TestInstantiationLast",
+          "seconds": 59.16
+        },
+        {
+          "name": "TestInstantiationFind",
+          "seconds": 59.23
+        },
+        {
+          "name": "TestInstantiationCallback",
+          "seconds": 59.28
+        },
+        {
+          "name": "TestInstantiationArray",
+          "seconds": 1.36
+        },
+        {
+          "name": "TestInstantiationFirst",
+          "seconds": 1.97
+        }
+      ],
+      "log": "oracle-clean.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/internal/oracle\t61.159s"
+      ]
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/instantiation_",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v",
+        "-args",
+        "-update-counts"
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestCountsAreRecorded_000",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_024",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_016",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_023",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_020",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_021",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_022",
+          "seconds": 0.04
+        },
+        {
+          "name": "TestCountsAreRecorded_019",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_017",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_029",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_008",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_028",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_015",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_031",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_012",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_013",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_011",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_014",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_007",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_004",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_006",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_010",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_002",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_027",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_003",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_026",
+          "seconds": 0.03
+        },
+        {
+          "name": "TestCountsAreRecorded_025",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_018",
+          "seconds": 0.02
+        },
+        {
+          "name": "TestCountsAreRecorded_018/internal/oracle/testdata/instantiation_last.a",
+          "seconds": 25.91
+        },
+        {
+          "name": "TestCountsAreRecorded_005",
+          "seconds": 0.04
+        },
+        {
+          "name": "TestCountsAreRecorded_005/internal/oracle/testdata/instantiation_callback.a",
+          "seconds": 26.09
+        },
+        {
+          "name": "TestCountsAreRecorded_001",
+          "seconds": 0.01
+        },
+        {
+          "name": "TestCountsAreRecorded_001/internal/oracle/testdata/instantiation_find.a",
+          "seconds": 0.78
+        },
+        {
+          "name": "TestCountsAreRecorded_030",
+          "seconds": 0.0
+        },
+        {
+          "name": "TestCountsAreRecorded_030/internal/oracle/testdata/instantiation_first.a",
+          "seconds": 27.36
+        },
+        {
+          "name": "TestCountsAreRecorded_009",
+          "seconds": 0.04
+        },
+        {
+          "name": "TestCountsAreRecorded_009/internal/oracle/testdata/instantiation_array.a",
+          "seconds": 27.43
+        }
+      ],
+      "log": "counts-clean.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/internal/oracle\t27.692s"
+      ]
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/ir",
+        "-run",
+        "^TestCallTargetReaders$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestCallTargetReaders",
+          "seconds": 22.47
+        }
+      ],
+      "log": "ir-readers-clean.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/internal/ir\t22.512s"
+      ]
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/lower",
+        "-run",
+        "^TestNativeAgreementRowsNameRegisteredPrograms$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestNativeAgreementRowsNameRegisteredPrograms",
+          "seconds": 0.07
+        }
+      ],
+      "log": "lower-rows-clean.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.090s"
+      ]
+    },
+    {
+      "args": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecordedTable$",
+        "-timeout",
+        "90s",
+        "-count=1",
+        "-v"
+      ],
+      "exit": 0,
+      "leaves": [
+        {
+          "name": "TestCountsAreRecordedTable",
+          "seconds": 0.0
+        }
+      ],
+      "log": "counts-table.log",
+      "package_lines": [
+        "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.012s"
+      ]
+    }
+  ]
+}
