@@ -257,26 +257,39 @@ def build_product(out):
         raise RuntimeError('keyed builds require the pinned stage3/api parser, without overrides')
     pin = json.loads((stage / 'source.json').read_text())
     source = typescript_source(pin)
+    adaptations, adaptation_env = adaptation_inputs()
     # A file:// clone, since a local path ignores --depth: the pinned commit alone, not the checkout's history.
     run('git', 'clone', '--depth', '1', source.resolve().as_uri(), str(out))
     # The product names no path on the machine that built it.
     run('git', '-C', str(out), 'remote', 'remove', 'origin')
     run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
-    adapt(out)
+    adapt(out, adaptations, adaptation_env)
 
 
-def adapt(out):
-    """Adapts out, a checkout of the pinned commit, in place: upstream's generated inputs, then each adaptation, then
-    the patch table. build_product clones the checkout; stage3/lane's adapted-tree product makes it from the pinned
-    commit's objects (--adapt-checkout), so its build never reads the gate input's files."""
-    pin = json.loads((stage / 'source.json').read_text())
-    head = subprocess.run(['git', '-C', str(out), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
-    if head != pin['commit']:
-        raise RuntimeError(f'{out} is at {head or "no commit"}, not the pinned {pin["commit"]}')
+def adaptation_inputs():
+    """The adaptations in order, and the environment they run in: stage3/api's pinned packages on NODE_PATH, checked
+    before anything is cloned or adapted."""
     adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
     adaptation_env = dict(os.environ)
     if any(directory.name != '00-setup' for directory in adaptations):
         adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))
+    return adaptations, adaptation_env
+
+
+def adapt_checkout(out):
+    """Adapts out, a checkout of the pinned commit made elsewhere, in place: stage3/lane's adapted-tree product makes it
+    from the pinned commit's objects, so its build never reads the gate input's files."""
+    pin = json.loads((stage / 'source.json').read_text())
+    adaptations, adaptation_env = adaptation_inputs()
+    head = subprocess.run(['git', '-C', str(out), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    if head != pin['commit']:
+        raise RuntimeError(f'{out} is at {head or "no commit"}, not the pinned {pin["commit"]}')
+    adapt(out, adaptations, adaptation_env)
+
+
+def adapt(out, adaptations, adaptation_env):
+    """Adapts out, a checkout of the pinned commit, in place: upstream's generated inputs, then each adaptation, then
+    the patch table."""
     # The pristine measurement tree includes upstream's normal generated inputs.
     run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
     with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
@@ -339,7 +352,7 @@ def main():
         print(packages_digest(installed_packages(stage / 'api')))
         return
     if args.adapt_checkout:
-        adapt(args.adapt_checkout.resolve())
+        adapt_checkout(args.adapt_checkout.resolve())
         return
     key = product_key()
     if args.key:
