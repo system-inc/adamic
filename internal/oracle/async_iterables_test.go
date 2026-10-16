@@ -15,6 +15,14 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a", false, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a", false, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/async_for_of_string.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
@@ -641,4 +649,14 @@ func TestAsyncLiveReleaseStringBreak(t *testing.T) {
 func TestAsyncLiveReleaseSetReturn(t *testing.T) {
 	t.Parallel()
 	asyncLiveReleaseMutant(t, "async_iterable_set_return_function")
+}
+
+func TestAsyncLiveUserIteratorFunctionRemainsUnproven(t *testing.T) {
+	t.Parallel()
+	asyncLoopsRefusal(t, "async_refuse_user_iterator_function", "async for-of over a user iterator", "")
+}
+
+func TestAsyncLiveUserIteratorModuleRemainsUnproven(t *testing.T) {
+	t.Parallel()
+	asyncLoopsRefusal(t, "async_refuse_user_iterator_module", "async for-of over a user iterator", "")
 }

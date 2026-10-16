@@ -129,6 +129,8 @@ var families = []family{
 		"internal/oracle/testdata/async_three.a",
 		"internal/oracle/testdata/async_throw.a",
 		"internal/oracle/testdata/async_typeof.a",
+		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
+		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
@@ -228,6 +230,8 @@ var families = []family{
 		"internal/oracle/testdata/async_three.a",
 		"internal/oracle/testdata/async_throw.a",
 		"internal/oracle/testdata/async_typeof.a",
+		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
+		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
 	}},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
