@@ -27,6 +27,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Each shard is killed at 90s, after shared setup and admission.
@@ -395,24 +396,10 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	// Regeneration is independent of case partitioning and executes once, after its build inputs.
 	var formatterDir, generatorDir string
 	if target == "" || target == "formatter" {
-		formatterDir = buildcache.Product(t, textGoProductInputs("formatter", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, filepath.Join(root, "cohere"), append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "cohere"), "./command/cohere")...)
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("formatter: %w\n%s", err, output)
-			}
-			return nil
-		})
+		formatterDir = oracles.TextFormatterProduct(t, root)
 	}
 	if target == "" || target == "generator" {
-		generatorDir = buildcache.Product(t, textGoProductInputs("generator", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, root, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")...)
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("generator: %w\n%s", err, output)
-			}
-			return nil
-		})
+		generatorDir = oracles.TextGeneratorProduct(t, root)
 	}
 	if target == "" {
 		command := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
