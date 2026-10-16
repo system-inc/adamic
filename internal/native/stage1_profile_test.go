@@ -291,3 +291,18 @@ func TestStage1ProfileBuildVerifiesManifest(t *testing.T) {
 		t.Fatal("verified profile build", err)
 	}
 }
+
+func TestStage1ProfileCompilerInstallationIsPlaceless(t *testing.T) {
+	t.Parallel()
+	record, text := stage1Record(t)
+	profile, err := os.ReadFile(text)
+	if err != nil {
+		t.Fatal(err)
+	}
+	record.Compiler = profileCompilerIdentity(record.Compiler) + "\nInstalledDir: /another/tool/installation\n"
+	// Preserve exactly one trailing newline in the semantic identity.
+	record.Compiler = strings.ReplaceAll(record.Compiler, "\n\nInstalledDir:", "\nInstalledDir:")
+	if err := CheckStage1ProfileManifest(profileControl, profile, "training", record); err != nil {
+		t.Fatal("compiler installation changed identity", err)
+	}
+}
