@@ -100,7 +100,7 @@ func TestLintShippedProfileAgreesWithNode(t *testing.T) {
 	manifest := manifest(t, []string{filepath.Join("../../..", row)})
 	got := execute(t, "", binary, "--manifest", manifest)
 	want := execute(t, "", "node", "--disable-warning=ExperimentalWarning", "../../../oracle/node.mjs", "main.ts", "--manifest", manifest)
-	oracle := execute(t, "", lintGoOracleProduct(t), "--manifest", manifest)
+	oracle := execute(t, "", shippedLintNoVarOracle(t), "--manifest", manifest)
 	if !bytes.Equal(got.output, oracle.output) {
 		t.Fatal("shipping lint differs from Go")
 	}
@@ -169,3 +169,55 @@ func TestLintProfileDataParts(t *testing.T) {
 		}
 	}
 }
+
+// This product references only the upstream no-var rule. The shared all-rules Go
+// oracle exceeds one cold leaf's budget; its other owners keep their own tests.
+func shippedLintNoVarOracle(t *testing.T) string {
+	t.Helper()
+	inputs, err := buildcache.GoBuildInInputs("cohere", "oracle", "./internal/lint/rules/core", nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Name = "stage1-profile-no-var-oracle"
+	inputs.Files = append(inputs.Files, "stage1/cohere/lint/testdata/oracle.go", "stage1/cohere/lint/rules/no-var/oracle.go", "stage1/cohere/lint/shipped_profile_test.go")
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		root, err := filepath.Abs("../../../cohere")
+		if err != nil {
+			return err
+		}
+		main, err := filepath.Abs("testdata/oracle.go")
+		if err != nil {
+			return err
+		}
+		rule, err := filepath.Abs("rules/no-var/oracle.go")
+		if err != nil {
+			return err
+		}
+		registry := filepath.Join(directory, "registry.go.txt")
+		text := "package main\nimport \"github.com/system-inc/cohere/internal/lint/rule\"\ntype registeredRule struct{subject rule.Rule;options func([]string)any}\nfunc registeredRules()[]registeredRule{return []registeredRule{{oracleNoVar(),oracleNoVarOptions}}}\n"
+		if err := os.WriteFile(registry, []byte(text), 0644); err != nil {
+			return err
+		}
+		defer os.Remove(registry)
+		virtual := filepath.Join(root, "adamic_lint_profile")
+		data, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(virtual, "main.go"): main, filepath.Join(virtual, "rule.go"): rule, filepath.Join(virtual, "registry.go"): registry}})
+		if err != nil {
+			return err
+		}
+		overlay := filepath.Join(directory, "overlay.json")
+		if err := os.WriteFile(overlay, data, 0644); err != nil {
+			return err
+		}
+		defer os.Remove(overlay)
+		args := append(buildcache.ReproducibleGoFlags(), "-tags=lintoracle", "-overlay="+overlay, "-o", filepath.Join(directory, "oracle"), "./adamic_lint_profile")
+		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+		defer cancel()
+		command := lintCommand(ctx, root, "go", append([]string{"build"}, args...)...)
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("no-var Go oracle: %v %s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "oracle")
+}
+func TestProduct_LintShippedNoVarOracle(t *testing.T) { t.Parallel(); shippedLintNoVarOracle(t) }
