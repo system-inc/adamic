@@ -64,7 +64,7 @@ func cProgram(program *ir.Program, handler int) string {
 	}
 	for index, value := range program.Strings {
 		if len(value) <= longestLiteral {
-			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_UNITS(%s, %d);\n", index, cString(value), utf16Units(value))
+			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_UNITS(%s, %d);\n", index, cLiteral(value), utf16Units(value))
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.

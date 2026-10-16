@@ -1,0 +1,28 @@
+// A helper hands the parent to a function value, which adds a fresh child (a proven write); the
+// caller then pushes the parent into that child, which it can only know of through the clobber.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function grow(parent: Node, tie: (node: Node) => void): void {
+	tie(parent);
+}
+function close(parent: Node, tie: (node: Node) => void): void {
+	grow(parent, tie);
+	const first = parent.nodes[0];
+	if (first !== undefined) {
+		first.nodes.push(parent); // closes the cycle
+	}
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	close(node, (given: Node) => {
+		given.nodes.push({ kind: `made${n}`, nodes: [] });
+	});
+	return node.nodes.length;
+}
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	total += run(i);
+}
+console.log(`${total}`);

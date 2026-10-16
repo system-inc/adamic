@@ -209,6 +209,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		value = l.graphAllocation(value, node)
+	}
+	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
@@ -1095,6 +1098,12 @@ func (l *lowering) writable(proven *checker.Type) bool {
 // result takes one.
 func slotless(valueType ir.Type) bool {
 	return valueType == ir.MaybeBoolean || valueType == ir.Union
+}
+
+// A fitted Union occupies one counted reference. Keep the general slot refusal
+// for callers that have not arranged boxing, and optional booleans for Map slots.
+func boxedSlot(valueType ir.Type) bool {
+	return !slotless(valueType) || valueType == ir.Union
 }
 
 // call lowers a call to one of the module's functions, or to a function value.

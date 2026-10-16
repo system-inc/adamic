@@ -155,8 +155,10 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			limit = declaration.initializer
 		}
 		// Generated declarators are a single identifier, followed by an array or argument list.
+		prototype := false
 		for j := 1; j < limit; j++ {
 			if declaration.tokens[j].text == "(" {
+				prototype = true
 				declaration.name = declaration.tokens[j-1].text
 				break
 			}
@@ -170,6 +172,15 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		}
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
+		}
+		// Runtime entry points may be declared by an emitted helper's consumer.
+		// Their prototypes belong in every unit's header, with external linkage and
+		// their API names intact. Non-static definitions remain unsupported.
+		if prototype && !declaration.function && declaration.initializer < 0 && declaration.tokens[0].text != "static" && cName.MatchString(declaration.name) {
+			declaration.name = ""
+			declarations = append(declarations, declaration)
+			begin = end
+			continue
 		}
 		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)

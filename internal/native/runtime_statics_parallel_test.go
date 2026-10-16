@@ -55,6 +55,7 @@ func runRuntimeStaticsProtectionMutant(t *testing.T, unit int) {
 		{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
 		{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
 		{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
+		{"graph_scratch", "graph_regions.c", "static _Thread_local", "static", "normalization"},
 	}
 	for index, mutant := range mutants {
 		if index != unit {
@@ -517,4 +518,9 @@ func TestRuntimeStaticsProtectionMutantsUnit09(t *testing.T) {
 func TestRuntimeStaticsProtectionMutantsUnit10(t *testing.T) {
 	t.Parallel()
 	runRuntimeStaticsProtectionMutant(t, 10)
+}
+
+func TestRuntimeStaticsProtectionMutantsUnit11(t *testing.T) {
+	t.Parallel()
+	runRuntimeStaticsProtectionMutant(t, 11)
 }

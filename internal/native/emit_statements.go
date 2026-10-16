@@ -194,7 +194,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
@@ -209,14 +209,14 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
 		e.line("if (%s == NULL) {", object)
-		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
+		e.line("\tstatic const char message[] = %s;", cArray("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		records := e.hasRecordStorage()
 		keptValue := value
 		if statement.Value.Type().IsReference() {
-			keptValue = e.kept(value)
+			keptValue = e.keptIn(object, value)
 		}
 		if records {
 			e.line("if (adamic_record_is(%s)) {", object)
@@ -266,7 +266,11 @@ func (e *emitter) statement(statement ir.Statement) {
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
 			e.line("%s->reference = %s;", slot, keptValue)
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -412,6 +416,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}

@@ -250,3 +250,14 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# Graph scratch belongs to one task thread; sharing graph members is refused.
+`graph_regions.c:joining:1`
+`graph_regions.c:mark_work:1`
+`graph_regions.c:mark_count:1`
+`graph_regions.c:mark_root:1`
+`graph_regions.c:outside_release:1`
+`graph_regions.c:freeing_root:1`
+`graph_regions.c:freeing_lone:1`
+`runtime-file:graph_regions.c`
+`runtime-file:graph_regions.h`

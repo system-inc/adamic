@@ -1,0 +1,11 @@
+// An error nothing catches is reported as String(error) (Error.prototype.toString): name and message
+// joined by ": ", the message alone when the name is empty, the name alone when the message is. Here
+// the name is emptied and the error thrown on. From integration's reading of 9984394 (#fxspptb).
+try {
+	throw new Error(`message ${1}`);
+} catch (error) {
+	if (error instanceof Error) {
+		error.name = '';
+		throw error;
+	}
+}

@@ -1,0 +1,10 @@
+// A scalar-only initializer still uses the declared boxed element layout.
+type Value = string | number;
+const values: Value[] = [17, 18];
+values.push('built'.repeat(2));
+for (const value of values) { console.log(`${typeof value}:${value}`); }
+const map = new Map<string, Value>([['a', values[0] ?? 'missing'], ['b', values[2] ?? 'missing']]);
+console.log(`${map.get('a')} ${map.get('b')}`);
+const copied = Array.from(map.values());
+map.clear();
+for (const value of copied) { console.log(`${typeof value}:${value}`); }

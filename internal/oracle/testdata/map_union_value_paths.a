@@ -1,0 +1,43 @@
+// Every write source is read through every Map entry/view path. Dynamic strings
+// and numeric boxes must survive copying and snapshots after the Map is cleared.
+type Value = string | number;
+function show(value: Value | undefined): string { return `${typeof value}:${value}`; }
+function readAll(label: string, map: Map<string, Value>): void {
+ console.log(`${label} get ${show(map.get('number'))} ${show(map.get('string'))} ${show(map.get('missing'))}`);
+ for (const key of ['number', 'string', 'missing']) {
+  if (map.has(key)) { console.log(`${label} has/get ${key}=${show(map.get(key))}`); }
+ }
+ map.forEach((value: Value, key: string): void => { console.log(`${label} foreach ${key}=${show(value)}`); });
+ for (const value of map.values()) { console.log(`${label} values ${show(value)}`); }
+ for (const [key, value] of map.entries()) { console.log(`${label} entries ${key}=${show(value)}`); }
+ for (const key of map.keys()) { console.log(`${label} keys/get ${key}=${show(map.get(key))}`); }
+ const spread = [...map];
+ const fromValues = Array.from(map.values());
+ // Narrowing must still load the tuple's reference slot before unboxing it.
+ for (const pair of spread) {
+  if (typeof pair[1] === 'number') { console.log(`${label} tuple ${pair[1] + 1}`); }
+  else { console.log(`${label} tuple ${pair[1].toUpperCase()}`); }
+ }
+ map.clear();
+ for (const [key, value] of spread) { console.log(`${label} spread ${key}=${show(value)}`); }
+ for (const value of fromValues) { console.log(`${label} from ${show(value)}`); }
+ console.log(`${label} cleared ${map.size}`);
+}
+const pairs: [string, Value][] = [['number', 17], ['string', 'array'.repeat(2)]];
+const arrayMap = new Map<string, Value>(pairs);
+const copy = new Map(arrayMap);
+readAll('array', arrayMap);
+readAll('copy', copy);
+// Also exercise the compiler's direct constructor Entries path, not only Pairs.
+const literal = new Map<string, Value>([['number', 18], ['string', 'literal'.repeat(2)]]);
+readAll('literal', literal);
+const setMap = new Map<string, Value>();
+setMap.set('number', 'old'.repeat(2)); setMap.set('number', 19);
+setMap.set('string', 1); setMap.set('string', 'set'.repeat(2));
+readAll('set', setMap);
+function put(map: Map<string, Value>, key: string, value: Value): void { map.set(key, value); }
+const setter: (map: Map<string, Value>, key: string, value: Value) => void = put;
+const functionMap = new Map<string, Value>();
+setter(functionMap, 'number', 'old'.repeat(2)); setter(functionMap, 'number', 20);
+setter(functionMap, 'string', 1); setter(functionMap, 'string', 'function'.repeat(2));
+readAll('function', functionMap);
