@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admission-drop-relation-diagnostic",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/admission-drop-relation-diagnostic-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesFactoryResultCovariance$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 10.098,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesFactoryResultCovariance",
+      "action": "fail",
+      "seconds": 0.1
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "label": "mutant-omit-data-mutation",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/omit-data-mutation-overlay.json",
+    "./internal/flow",
+    "-run",
+    "^TestFlowTraceSnapshotsDoNotInvokeGetters$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 1,
+  "seconds": 18.858,
+  "tests": [
+    {
+      "name": "TestFlowTraceSnapshotsDoNotInvokeGetters",
+      "action": "fail",
+      "seconds": 0.04
+    }
+  ]
+}

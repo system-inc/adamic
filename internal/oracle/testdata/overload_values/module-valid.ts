@@ -1,0 +1,8 @@
+interface Result<T>{readonly value:T;}
+const shared:Result<string|number|undefined>={value:'word'};
+function evaluate(input:string):Result<string|undefined>;
+function evaluate(input:string|number):Result<string|number|undefined>;
+function evaluate(input:string|number):Result<string|number|undefined>{return shared;}
+const narrow:(input:string)=>Result<string|undefined>=evaluate;
+console.log(`${narrow===evaluate}`);
+console.log(`${narrow('text').value}`);

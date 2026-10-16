@@ -1,0 +1,82 @@
+{
+  "label": "runtime-products",
+  "command": [
+    "timeout",
+    "600",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestProduct_NativeRuntimes",
+    "-count=1",
+    "-timeout",
+    "540s",
+    "-parallel",
+    "1",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 150.208,
+  "tests": [
+    {
+      "name": "TestProduct_NativeRuntimesSanitized0",
+      "action": "pass",
+      "seconds": 6.67
+    },
+    {
+      "name": "TestProduct_NativeRuntimesWASI2",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "name": "TestProduct_NativeRuntimesWASI1",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "name": "TestProduct_NativeRuntimesWASI0",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "name": "TestProduct_NativeRuntimesCounted2",
+      "action": "pass",
+      "seconds": 5.54
+    },
+    {
+      "name": "TestProduct_NativeRuntimesCounted1",
+      "action": "pass",
+      "seconds": 8.19
+    },
+    {
+      "name": "TestProduct_NativeRuntimesCounted0",
+      "action": "pass",
+      "seconds": 10.43
+    },
+    {
+      "name": "TestProduct_NativeRuntimesRelease2",
+      "action": "pass",
+      "seconds": 14.35
+    },
+    {
+      "name": "TestProduct_NativeRuntimesRelease1",
+      "action": "pass",
+      "seconds": 24.07
+    },
+    {
+      "name": "TestProduct_NativeRuntimesRelease0",
+      "action": "pass",
+      "seconds": 19.34
+    },
+    {
+      "name": "TestProduct_NativeRuntimesSanitized2",
+      "action": "pass",
+      "seconds": 24.35
+    },
+    {
+      "name": "TestProduct_NativeRuntimesSanitized1",
+      "action": "pass",
+      "seconds": 33.06
+    }
+  ]
+}

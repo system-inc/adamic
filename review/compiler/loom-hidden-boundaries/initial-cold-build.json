@@ -1,0 +1,21 @@
+{
+  "label": "cmd-adamic",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./cmd/adamic",
+    "-run",
+    "^(TestExplainOverloadFieldChecks|TestExplainOverloadValueChecks|TestExplainOverloadVisitorChecks)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 124,
+  "seconds": 180.006,
+  "tests": []
+}

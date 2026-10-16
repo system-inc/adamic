@@ -1,0 +1,49 @@
+{
+  "label": "mutant-results-trust-shared-result",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/results-trust-shared-result-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadResultsRefuses",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 25.568,
+  "tests": [
+    {
+      "name": "TestOverloadResultsRefusesEscapingCheckedOverload",
+      "action": "pass",
+      "seconds": 0.27
+    },
+    {
+      "name": "TestOverloadResultsRefusesUnservedGenericDomain",
+      "action": "pass",
+      "seconds": 0.32
+    },
+    {
+      "name": "TestOverloadResultsRefusesSharedReadonlyResult",
+      "action": "fail",
+      "seconds": 0.31
+    },
+    {
+      "name": "TestOverloadResultsRefusesOptionalResultProperty",
+      "action": "pass",
+      "seconds": 0.34
+    },
+    {
+      "name": "TestOverloadResultsRefusesSharedWritableResult",
+      "action": "fail",
+      "seconds": 0.12
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "region": {
+    "file": "checker.ts",
+    "start": 620304,
+    "end": 627479,
+    "source_sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb"
+  },
+  "old_hidden_intersection": [
+    [
+      620304,
+      627479
+    ]
+  ],
+  "old_hidden_bytes": 7175,
+  "new_hidden_intersection": [
+    [
+      620603,
+      621669
+    ],
+    [
+      622380,
+      624252
+    ],
+    [
+      624411,
+      624548
+    ],
+    [
+      624985,
+      625304
+    ],
+    [
+      625583,
+      626740
+    ],
+    [
+      626763,
+      627425
+    ]
+  ],
+  "new_hidden_bytes": 5213,
+  "byte_difference": 1962,
+  "overlapping_units": [
+    "checker.ts:10648:13",
+    "checker.ts:1486:1",
+    "checker.ts:6309:5",
+    "checker.ts:9346:9"
+  ],
+  "adapted_files_verified": 82,
+  "historical_partial_matches_full": true,
+  "ledger_sha256": "716be2e1899c0374cb8a22db866ed3dd77e2c0bcd6c4625afac6703a4c4e55b0",
+  "scope": "Assigned interval only. No whole-file, group, or corpus total is measured."
+}

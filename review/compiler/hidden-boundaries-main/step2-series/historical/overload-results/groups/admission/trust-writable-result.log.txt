@@ -1,0 +1,8 @@
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/factory_writable_invariance
+    overload_structural_test.go:53: wanted refusal naming writable invariance (reverse direction) requires string | undefined to fit string, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.19s)
+    --- FAIL: TestOverloadStructuralRefuses/factory_writable_invariance (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.207s
+FAIL

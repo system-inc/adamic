@@ -1,0 +1,17 @@
+{
+  "label": "vet",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "vet",
+    "./cmd/adamic",
+    "./internal/flow",
+    "./internal/ir",
+    "./internal/lower",
+    "./internal/oracle"
+  ],
+  "exit": 0,
+  "seconds": 47.308,
+  "tests": []
+}

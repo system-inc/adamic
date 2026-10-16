@@ -1,0 +1,29 @@
+{
+  "label": "mutant-generic-value",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/generic-value-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestHiddenTNodeGenericValueRemainsNotYet$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 10.445,
+  "tests": [
+    {
+      "name": "TestHiddenTNodeGenericValueRemainsNotYet",
+      "action": "fail",
+      "seconds": 0.04
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:42:43.214829926Z","Action":"start","Package":"github.com/system-inc/adamic/internal/flow"}
+{"Time":"2026-10-09T13:42:43.222309985Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification"}
+{"Time":"2026-10-09T13:42:43.222400278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Output":"=== RUN   TestFlowCorpusHiddenBoundaryRefusalClassification\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.222429031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Output":"=== PAUSE TestFlowCorpusHiddenBoundaryRefusalClassification\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.222432466Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification"}
+{"Time":"2026-10-09T13:42:43.22246934Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification"}
+{"Time":"2026-10-09T13:42:43.222473176Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Output":"=== CONT  TestFlowCorpusHiddenBoundaryRefusalClassification\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.224937356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Output":"    corpus_coverage_test.go:148: refused control hidden_boundary_alias_cast_refused.a entered the runnable flow corpus\n","OutputType":"error"}
+{"Time":"2026-10-09T13:42:43.224991866Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Output":"--- FAIL: TestFlowCorpusHiddenBoundaryRefusalClassification (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.224996413Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestFlowCorpusHiddenBoundaryRefusalClassification","Elapsed":0}
+{"Time":"2026-10-09T13:42:43.225012507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.225225301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"FAIL\tgithub.com/system-inc/adamic/internal/flow\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:42:43.225242547Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/flow","Elapsed":0.01}

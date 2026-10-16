@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:54:04.843073695Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:54:04.850576443Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet"}
+{"Time":"2026-10-09T09:54:04.85071003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Output":"=== RUN   TestHiddenTNodeGenericValueRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.850731732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Output":"=== PAUSE TestHiddenTNodeGenericValueRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.850734196Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet"}
+{"Time":"2026-10-09T09:54:04.850736359Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet"}
+{"Time":"2026-10-09T09:54:04.850738322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Output":"=== CONT  TestHiddenTNodeGenericValueRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.914135824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Output":"    hidden_boundary_generic_tnode_test.go:103: want generic value refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T09:54:04.91432335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Output":"--- FAIL: TestHiddenTNodeGenericValueRemainsNotYet (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.914374536Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeGenericValueRemainsNotYet","Elapsed":0.06}
+{"Time":"2026-10-09T09:54:04.914392973Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.916771214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.073s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:04.916789981Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.074}

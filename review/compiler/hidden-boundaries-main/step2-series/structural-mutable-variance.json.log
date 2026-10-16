@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:32.728422449Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:32.741582933Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance"}
+{"Time":"2026-10-09T10:23:32.741684453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Output":"=== RUN   TestOverloadStructuralRefusesWritableVariance\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.7417096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Output":"=== PAUSE TestOverloadStructuralRefusesWritableVariance\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.741712034Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance"}
+{"Time":"2026-10-09T10:23:32.741759534Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance"}
+{"Time":"2026-10-09T10:23:32.741769108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Output":"=== CONT  TestOverloadStructuralRefusesWritableVariance\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.937178416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Output":"    overload_structural_test.go:58: wanted refusal naming parameter input, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:32.937904489Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Output":"--- FAIL: TestOverloadStructuralRefusesWritableVariance (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.937958068Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesWritableVariance","Elapsed":0.2}
+{"Time":"2026-10-09T10:23:32.93798002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.939823724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.211s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:32.939839226Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.211}

@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "drop-indirect-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "mutant": "skip-single-signature-check",
+    "caught": true,
+    "exit": 1
+  }
+]

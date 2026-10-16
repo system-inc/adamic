@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -41,7 +41,7 @@
+ }
+ 
+ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+-	proven = l.concrete(proven)
++	// mutant: ignore concrete checker mapper
+ 	if kind := l.typedArrayKind(proven); kind != 0 {
+ 		return kind, true
+ 	}

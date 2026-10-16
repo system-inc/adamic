@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -80,7 +80,7 @@
+ 		case ir.Number, ir.String, ir.Boolean:
+ 			return held, true
+ 		case ir.Object:
+-			return ir.Union, true
++			return ir.Object, true
+ 		}
+ 		return 0, false
+ 	}

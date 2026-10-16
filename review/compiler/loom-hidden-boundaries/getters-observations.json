@@ -1,0 +1,127 @@
+{
+  "label": "getters-observations",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestGettersCensus",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 14.347,
+  "tests": [
+    {
+      "name": "TestGettersCensusHigherCallbackPairMethods",
+      "action": "pass",
+      "seconds": 3.59
+    },
+    {
+      "name": "TestGettersCensusClosureNumberMethods",
+      "action": "pass",
+      "seconds": 3.6
+    },
+    {
+      "name": "TestGettersCensusCallbackPairMethods",
+      "action": "pass",
+      "seconds": 3.6
+    },
+    {
+      "name": "TestGettersCensusSnapshotNext",
+      "action": "pass",
+      "seconds": 0.2
+    },
+    {
+      "name": "TestGettersCensusClosureUnionNext",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestGettersCensusClosureNumberNext",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestGettersCensusClassMap",
+      "action": "pass",
+      "seconds": 0.68
+    },
+    {
+      "name": "TestGettersCensusUnaryFunction",
+      "action": "pass",
+      "seconds": 0.24
+    },
+    {
+      "name": "TestGettersCensusBinaryFunction",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestGettersCensusOverloadedFunction",
+      "action": "pass",
+      "seconds": 0.29
+    },
+    {
+      "name": "TestGettersCensusOptionalCommentFunction",
+      "action": "pass",
+      "seconds": 0.31
+    },
+    {
+      "name": "TestGettersCensusUpdateCommentFunction",
+      "action": "pass",
+      "seconds": 0.39
+    },
+    {
+      "name": "TestGettersCensusUpdateTypeFunction",
+      "action": "pass",
+      "seconds": 0.23
+    },
+    {
+      "name": "TestGettersCensusOptionalTypeFunction",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestGettersCensusUnaryNodeFunction",
+      "action": "pass",
+      "seconds": 0.3
+    },
+    {
+      "name": "TestGettersCensusUpdateNodeFunction",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "name": "TestGettersCensusOptionalBooleanFunction",
+      "action": "pass",
+      "seconds": 0.42
+    },
+    {
+      "name": "TestGettersCensusPrimaryFunction",
+      "action": "pass",
+      "seconds": 0.36
+    },
+    {
+      "name": "TestGettersCensusLazyObject",
+      "action": "pass",
+      "seconds": 0.23
+    },
+    {
+      "name": "TestGettersCensusBinaryInline",
+      "action": "pass",
+      "seconds": 7.66
+    },
+    {
+      "name": "TestGettersCensusThrowingObject",
+      "action": "pass",
+      "seconds": 4.24
+    }
+  ]
+}
