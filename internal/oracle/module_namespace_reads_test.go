@@ -18,7 +18,7 @@ func init() {
 }
 
 func TestModuleNamespaceReadinessMutants(t *testing.T) {
-	// Not parallel: cyclic projects use the process-wide cohere rule runner.
+	t.Parallel()
 	for _, name := range []string{"early", "direct_early"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/module_namespace_reads", name+".a"))

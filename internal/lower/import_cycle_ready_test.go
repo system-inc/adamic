@@ -7,25 +7,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// undecidedCycleRule models no finding from a rule that cannot follow the load-time
-// call. It is a test seam, not a replacement for cohere's public runner.
-type undecidedCycleRule struct{}
-
-func (undecidedCycleRule) RunRule(*compiler.Program, *checker.Checker, []*ast.SourceFile, string) ([]Finding, error) {
-	return nil, nil
-}
-
+// A cycle read the module order can't prove keeps its runtime dead-zone check, and one it proves loses it: lowering
+// decides from the order alone, with no lint rule's findings to consult.
 func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
-	// Not parallel: replace the process-wide rule seam, restoring it before parallel tests run.
-	previous := loadTimeReadRunner
-	loadTimeReadRunner = undecidedCycleRule{}
-	defer func() { loadTimeReadRunner = previous }()
+	t.Parallel()
 	for _, probe := range []struct {
 		name, a, b, entry, output string
 		fails                     bool

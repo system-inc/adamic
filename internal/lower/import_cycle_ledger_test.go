@@ -1,3 +1,8 @@
+// The ledger is the one test in this package that runs cohere's lint rule, so it builds only with -tags=cycleledger:
+// the package's default test binary, like the compiler, links none of cohere's lint (#321063n).
+
+//go:build cycleledger
+
 package lower
 
 import (
@@ -21,6 +26,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/cohere/rule_runner"
 )
 
 // TestOriginalCycleLedger measures binding-initialization obligations on the pinned
@@ -29,7 +35,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	// Not parallel: the public rule caches one program process-wide.
 	root := os.Getenv("ADAMIC_CYCLE_LEDGER_ROOT")
 	if root == "" {
-		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
+		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics, and build with -tags=cycleledger")
 	}
 	pin, err := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
@@ -50,9 +56,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	if !cyclic {
 		t.Fatal("original program lost its import cycle")
 	}
-	loadTimeReadLock.Lock()
-	findings, err := loadTimeReadRunner.RunRule(program, typeChecker, modules, loadTimeReadRule)
-	loadTimeReadLock.Unlock()
+	findings, err := rule_runner.RunRule(program, typeChecker, modules, "nexus/correctness-no-import-cycle-load-time-read")
 	if err != nil {
 		t.Fatal(err)
 	}
