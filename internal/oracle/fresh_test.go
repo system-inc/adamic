@@ -8,14 +8,12 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Every way to sneak a cycle past the relaxation for fresh writes (docs/memory.md) is a probe that
-// must stay refused, naming the write marked "closes the cycle". Each is a whole program Node runs,
-// whose marked write really closes a cycle when it runs: if the relaxation ever lets one through,
-// the test builds it and reports what LeakSanitizer says, which is how each mutant of the proof
-// shows it was caught.
+// A closing write either remains refused or selects graph ownership. Acceptance
+// must agree with source Node and return every value, including the closed cycle.
 func TestFreshWriteProbesStayRefused(t *testing.T) {
 	t.Parallel()
 	probes, err := filepath.Glob(filepath.Join(repository, "internal", "oracle", "testdata", "fresh_refused", "*.a"))
@@ -60,15 +58,27 @@ func TestFreshWriteProbesStayRefused(t *testing.T) {
 			if err != nil {
 				t.Fatalf("want the cycle refused, got %v", err)
 			}
-			// Accepted: the hole is real when the program leaks the cycle it closed.
-			oracle := onNode(t, path)
-			native, sanitized := natively(t, program)
-			report := "nothing"
-			if leaked := leaks(t, program, sanitized); leaked != "" {
-				report = leaked
-			}
-			t.Errorf("accepted a program that closes a cycle at line %d; Node exit %d %q, native exit %d %q; the leak check reports:\n%s",
-				marked, oracle.exitCode, oracle.stdout, native.exitCode, native.stdout, report)
+			checkGraphAdmission(t, path, program)
 		})
+	}
+}
+
+// Existing refusal fixtures become admissions only with graph metadata, both
+// backends agreeing with Node, and the ordinary leak check still enabled.
+func checkGraphAdmission(t *testing.T, path string, program *ir.Program) {
+	t.Helper()
+	if len(program.GraphTypes) == 0 {
+		t.Fatal("cycle admitted without graph ownership")
+	}
+	truth := onNode(t, path)
+	actual, binary := natively(t, program)
+	if difference := disagreement(truth, actual); difference != "" {
+		t.Fatal(difference)
+	}
+	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
