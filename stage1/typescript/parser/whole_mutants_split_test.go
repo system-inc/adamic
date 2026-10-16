@@ -68,7 +68,7 @@ func wholeMutantBuildFlags() []string {
 func wholeMutantBuildOracleProduct(t *testing.T) string {
 	t.Helper()
 	files := append(wholeMutantBuildFiles(t), "stage1/typescript/parser/testdata/oracle.go")
-	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: wholeMutantBuildFlags(), Toolchain: []string{buildcache.Tool("go", "version")}}
+	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: append(wholeMutantBuildFlags(), "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")), Toolchain: []string{buildcache.Tool("go", "version")}}
 	directory := buildcache.Product(t, inputs, func(dir string) error {
 		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 		if err != nil {
@@ -91,7 +91,7 @@ func wholeMutantBuildOracleProduct(t *testing.T) string {
 		defer os.Remove(path)
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := wholeMutantCommandContext(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)...)
 		command.Dir = root
 		command.Env = append(command.Env, "PWD="+root)
 		output, err := command.CombinedOutput()

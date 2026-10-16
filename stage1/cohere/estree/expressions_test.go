@@ -1,14 +1,13 @@
 package estree
 
 import (
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"path/filepath"
 	"testing"
 )
 
-func recoveredExpressions() []string {
-	return []string{"const C = @d class {};", "const C = @d @e(1) class Named extends Base { static x=1; };", "(@d class { m(){return 1;} });", "function f(){ await 'x'; await 1; await true; await this; }", "function f(){ yield 'x'; yield 1; yield true; }", "await\nx; yield\nx;", "await(x); yield(x);"}
-}
+func recoveredExpressions() []string { return oracles.RecoveredExpressions() }
 
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressions(t *testing.T) {

@@ -166,7 +166,8 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	var listeners []rule.Listeners
 	for _, item := range registeredRules() {
 		subject := item.subject
-		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
+		// Manifest sets carry boundary commas, even for one rule; keep registry order.
+		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name && !strings.Contains(fields[1], ","+subject.Name+",") {
 			continue
 		}
 		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}

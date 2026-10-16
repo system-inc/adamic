@@ -248,6 +248,21 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 	return files, nil
 }
 
+// RuntimeSourceDigest is the sha256 of every file of the embedded runtime, named and by what it holds, every feature's
+// units included: the runtime as its sources say it, with nothing of the machine or the compiler that builds it, so it is
+// the same on every machine. internal/oracle's counts table keys each row by it (countDigest).
+func RuntimeSourceDigest() (string, error) {
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		return "", fmt.Errorf("native: runtime: %w", err)
+	}
+	parts := []string{"adamic-runtime-sources-v1"}
+	for _, file := range files {
+		parts = append(parts, fmt.Sprintf("file %s %x", file.name, sha256.Sum256(file.contents)))
+	}
+	return partsKey(parts), nil
+}
+
 // runtimeKey addresses a compiled runtime by everything its compile reads (runtimeKeyParts).
 func runtimeKey(files []runtimeFile, flags []string, compiler string, version string, headers string) string {
 	return partsKey(runtimeKeyParts(files, flags, compiler, version, headers))
@@ -443,7 +458,8 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
+			var output []byte
+			if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
 			}
 		})
@@ -515,7 +531,8 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 		return "", nil
 	}
 	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	rules, err := command.Output()
+	var rules []byte
+	err = withCompilerToken(func() (err error) { rules, err = command.Output(); return err })
 	if err != nil {
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {

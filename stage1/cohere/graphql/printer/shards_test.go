@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sort"
 	"strconv"
@@ -15,6 +16,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -87,14 +89,6 @@ func printerGeneratedSum(t *testing.T, file string) string {
 	return entry.sum
 }
 
-// printerRepositoryFiles is the walk of the whole repository (about 98k entries), which every lowered product lists:
-// once per process, since what the tree tracks doesn't change while it runs.
-var printerRepositoryFiles struct {
-	once  sync.Once
-	files []string
-	err   error
-}
-
 func printerInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
@@ -107,13 +101,7 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var files []string
-		if absolute == tree {
-			printerRepositoryFiles.once.Do(func() { printerRepositoryFiles.files, printerRepositoryFiles.err = printerWalk(tree, absolute) })
-			files, err = printerRepositoryFiles.files, printerRepositoryFiles.err
-		} else {
-			files, err = printerWalk(tree, absolute)
-		}
+		files, err := printerWalk(tree, absolute)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -136,16 +124,19 @@ func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
 	directory := t.TempDir()
 	key := func(source string) string {
 		t.Helper()
-		return buildcache.NameKey(directory, printerKey(t, printerBuildInputs{Name: "lowered GraphQL printer", Files: printerInputFiles(t, source), Toolchain: runtime.Version()}))
+		return buildcache.NameKey(directory, printerKey(t, printerLoweredInputs(t, source)))
 	}
 	keys := map[string]string{}
 	for _, mutant := range []string{"000", "001"} {
 		product := filepath.Join(directory, "products", mutant)
-		if err := os.MkdirAll(filepath.Join(product, "graphql/printer"), 0o755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(filepath.Join(product, "graphql/printer/main.ts"), []byte("mutant "+mutant), 0o644); err != nil {
-			t.Fatal(err)
+		for _, file := range printerPortFiles {
+			path := filepath.Join(product, filepath.FromSlash(file))
+			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(path, []byte(file+" of mutant "+mutant), 0o644); err != nil {
+				t.Fatal(err)
+			}
 		}
 		link := filepath.Join(directory, "links", mutant)
 		if err := os.MkdirAll(filepath.Dir(link), 0o755); err != nil {
@@ -154,11 +145,8 @@ func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
 		if err := os.Symlink(product, link); err != nil {
 			t.Fatal(err)
 		}
-		if files := printerInputFiles(t, link); len(files) != 1 || files[0] != filepath.Join(link, "graphql/printer/main.ts") {
-			t.Fatalf("mutant %s's source through its link lists %q, want its main.ts under the link", mutant, files)
-		}
-		keys[mutant] = key(link)
-		if direct := key(product); direct != keys[mutant] {
+		keys[mutant] = key(filepath.Join(link, "graphql/printer/main.ts"))
+		if direct := key(filepath.Join(product, "graphql/printer/main.ts")); direct != keys[mutant] {
 			t.Fatalf("mutant %s keys %s through its link and %s through its directory", mutant, keys[mutant][:12], direct[:12])
 		}
 	}
@@ -166,6 +154,84 @@ func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
 		t.Fatalf("mutants 000 and 001 key one lowered product %s through their links", keys["000"][:12])
 	}
 	t.Logf("through their links, mutant 000 keys %s and 001 keys %s", keys["000"][:12], keys["001"][:12])
+}
+
+// The package's own lowered printer keys the compiler and the port's sources, and nothing else of the tree: no
+// directory beside them, so no listing of one, enters its key (#7zhyjz6).
+func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(t *testing.T) {
+	t.Parallel()
+	inputs := printerLoweredInputs(t, printerInTreeSource(t))
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]bool{}
+	for _, input := range compilerinputs.Lowering() {
+		want[input] = true
+	}
+	for _, file := range printerPortFiles {
+		want["stage1/cohere/"+file] = true
+	}
+	for _, file := range printerKey(t, inputs).Files {
+		if !want[file] {
+			t.Errorf("the lowered printer keys %s, which is neither the compiler nor the port", file)
+		}
+		delete(want, file)
+	}
+	for file := range want {
+		t.Errorf("the lowered printer doesn't key %s", file)
+	}
+	if t.Failed() {
+		return
+	}
+	for _, file := range printerPortFiles {
+		if _, err := os.Stat(filepath.Join(root, "stage1/cohere", filepath.FromSlash(file))); err != nil {
+			t.Error(err)
+		}
+	}
+}
+
+// printerPortFiles is exactly what main.ts imports, read from the sources' own import lines: a new import outside the
+// list would be lowered without being keyed, and a file the list names that nothing imports keys what isn't read.
+func TestPrinterPortFilesAreMainsImports(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(filepath.Join(repository, "stage1/cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	importLine := regexp.MustCompile(`(?m)^\s*(?:import|export)\b[^;]*?\bfrom\s+'([^']+)'`)
+	reached := map[string]bool{}
+	pending := []string{"graphql/printer/main.ts"}
+	for len(pending) > 0 {
+		file := pending[len(pending)-1]
+		pending = pending[:len(pending)-1]
+		if reached[file] {
+			continue
+		}
+		reached[file] = true
+		source, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, match := range importLine.FindAllStringSubmatch(string(source), -1) {
+			if !strings.HasPrefix(match[1], ".") {
+				continue
+			}
+			pending = append(pending, filepath.ToSlash(filepath.Join(filepath.Dir(file), match[1])))
+		}
+	}
+	listed := map[string]bool{}
+	for _, file := range printerPortFiles {
+		listed[file] = true
+		if !reached[file] {
+			t.Errorf("printerPortFiles names %s, which main.ts doesn't import", file)
+		}
+	}
+	for file := range reached {
+		if !listed[file] {
+			t.Errorf("main.ts imports %s, which printerPortFiles doesn't name", file)
+		}
+	}
 }
 
 // printerWalk is every regular file under absolute that the tree carries. A product reached through a link, as a
@@ -202,11 +268,38 @@ func printerWalk(tree, absolute string) ([]string, error) {
 	return files, err
 }
 
+// printerPortFiles are the port's sources by their path under a source root: stage1/cohere for the package's own
+// main.ts, a product's directory for a copy, which printerDirectoryAt lays out the same way. main.ts's imports reach
+// these and nothing else of the tree (TestPrinterPortFilesAreMainsImports).
+var printerPortFiles = []string{
+	"graphql/token.ts", "graphql/characterClasses.ts", "graphql/blockString.ts", "graphql/lexer.ts", "graphql/parser.ts",
+	"json/width.ts", "json/widthTables.ts", "graphql/printer/doc.ts", "graphql/printer/printer.ts", "graphql/printer/main.ts",
+}
+
+// printerLoweredInputs keys the lowered printer of path, a source root's graphql/printer/main.ts, by what lowering it
+// reads: the compiler (compilerinputs.Lowering) and the port's sources under that root. It keyed every file the tree
+// carries, by a walk that listed every directory, so a doc-only change under a lint rule's evidence/ moved all ten
+// GraphQL printer products (#7zhyjz6).
+func printerLoweredInputs(t *testing.T, path string) printerBuildInputs {
+	t.Helper()
+	tree, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := filepath.Dir(filepath.Dir(filepath.Dir(path)))
+	var files []string
+	for _, input := range compilerinputs.Lowering() {
+		files = append(files, filepath.Join(tree, filepath.FromSlash(input)))
+	}
+	for _, file := range printerPortFiles {
+		files = append(files, filepath.Join(root, filepath.FromSlash(file)))
+	}
+	return printerBuildInputs{Name: "lowered GraphQL printer", Files: files, Toolchain: runtime.Version()}
+}
+
 func printerLoweredProduct(t *testing.T, path string) string {
 	t.Helper()
-	return printerBuild(t, printerBuildInputs{
-		Name: "lowered GraphQL printer", Files: printerInputFiles(t, repository, filepath.Dir(filepath.Dir(filepath.Dir(path)))), Toolchain: runtime.Version(),
-	}, func(dir string) error {
+	return printerBuild(t, printerLoweredInputs(t, path), func(dir string) error {
 		start := time.Now()
 		program := lowered(t, path)
 		t.Logf("lowering wall %.3fs", time.Since(start).Seconds())

@@ -1,0 +1,22 @@
+import { statSync, Stats } from 'node:fs';
+const options = (({ throwIfNoEntry: false }) as const);
+function status(path: string): Stats | undefined {
+    return statSync(path, options);
+}
+const present = status('.');
+if (present === undefined) console.log('missing');
+else console.log(present.isDirectory() ? 'directory' : 'other');
+console.log(`absent=${status('missing-node-options-widening-entry') === undefined}`);
+
+function secondStatus(path: string): Stats | undefined {
+    return statSync(path, options);
+}
+console.log(`second=${secondStatus('.') !== undefined}`);
+function localCapture(): void {
+    const localOptions = ({ throwIfNoEntry: false }) as const;
+    const localStatus = (path: string): Stats | undefined => statSync(path, localOptions);
+    const localPresent = localStatus('.');
+    console.log(`local=${localPresent !== undefined}`);
+    console.log(`localAbsent=${statSync('missing-node-options-widening-entry', localOptions) === undefined}`);
+}
+localCapture();

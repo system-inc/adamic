@@ -4,10 +4,10 @@
 //
 // A product's address is its name key (its name, flags and tool reports) and the read set its last traced build
 // measured, valued on the tree at hand (reads.go, #vt46geg): a change misses only the products that read it. A product
-// is found by the cache's read sets, then the store's. Only Workshop's tree builder (ADAMIC_BUILD_STORE=traced, under
-// cmd/traced) builds traced, and only a settled traced build is placed under its key or published (settle.go). Every
-// other miss builds as before, for this machine alone: keyed by the declared Files, never published, never found by a
-// read set, and never failing for want of a trace.
+// is found by the cache's read sets, which a runner's cache holds as Loom's tree index unpacked them. Only Workshop's
+// tree builder (ADAMIC_BUILD_STORE=traced, under cmd/traced) builds traced, and only a settled traced build is placed
+// under its key (settle.go). Every other miss builds as before, for this machine alone: keyed by the declared Files,
+// never found by a read set, and never failing for want of a trace.
 //
 // A product on disk is always complete: it is filled in a private directory and placed whole by rename, so a failed
 // build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh directory: the uncached proof mode,
@@ -32,25 +32,12 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"sync/atomic"
 	"syscall"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
-
-// Inputs are everything that can change a product. Name is one per build function. Files are repository-relative
-// files and directories, valued by content (a file by its git blob id and exec bit, a directory by every name and file
-// under it, sorted). Flags are every flag and environment value the build reads. Toolchain names the tools, from Tool
-// or runtime.Version().
-type Inputs struct {
-	Name      string
-	Files     []string
-	Flags     []string
-	Toolchain []string
-}
 
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
@@ -81,7 +68,7 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 }
 
 // ErrUntraced is a product Workshop's tree builder (ADAMIC_BUILD_STORE=traced) would build outside cmd/traced: what it
-// publishes must be keyed by what its build read, so building untraced there is refused rather than published.
+// builds is for every runner, so it must be keyed by what its build read, and building untraced there is refused.
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
@@ -118,36 +105,24 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	var described, name string
+	var described string
 	var looked found
 	keying(func() {
-		described, name = describe(root, inputs), portable(root, inputs.Name)
+		described = describe(root, inputs)
 		looked, err = productFor(root, cache, nameKey, 0, nil)
 	})
 	if err != nil {
 		return "", "", err
 	}
-	// The store's read sets for this name key join the cache's, so a machine with none of its own finds what the store
-	// holds (#vt46geg). Find (find.go) joins them the same way, for many name keys at once.
-	if looked.directory == "" && storeAddress() != "" {
-		joined, err := joinStoreReads(cache, nameKey, name)
-		if err != nil {
-			return "", "", err
-		}
-		if joined {
-			keying(func() { looked, err = productFor(root, cache, nameKey, 0, nil) })
-			if err != nil {
-				return "", "", err
-			}
-		}
-	}
+	// Only the cache's own read sets give a product's keys: the store holds products by key, never read sets, so a name
+	// key the cache holds no read set for has nothing to fetch (Oct 14: asking the store for read sets was 96.7% of its
+	// billed reads, every one a 404).
 	if looked.directory != "" {
-		journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: looked.directory})
-		refreshPublished(cache, nameKey, looked.key, looked.directory, name)
+		journalFound(nameKey, inputs.Name, looked.directory, looked.upstreams)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
-		for _, key := range looked.keys {
+		for index, key := range looked.keys {
 			outcome := "fetched"
 			product := filepath.Join(cache, key)
 			_, err := filled(product, described, func(scratch string) error {
@@ -168,8 +143,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			if err != nil {
 				return "", "", err
 			}
-			journal(journalEntry{Event: "found", NameKey: nameKey, Name: inputs.Name, Directory: product})
-			refreshPublished(cache, nameKey, key, product, name)
+			journalFound(nameKey, inputs.Name, product, looked.keyUpstreams[index])
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
@@ -195,11 +169,11 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
 		}
 		return holding(nameKey, product), record(inputs.Name, nameKey, outcome, started), nil
-	case publishing():
+	case treeBuilder():
 		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w, so a build's reads become its key", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
 	}
 	// Untraced, as every machine but Workshop's tree builder builds: for this machine alone, keyed by the declared
-	// Files, never published and never found by a read set.
+	// Files and never found by a read set.
 	var key string
 	keying(func() { key, err = Key(root, inputs) })
 	if err != nil {
@@ -246,15 +220,11 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
 		return false, err
 	}
-	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	unlock, err := lockTarget(target)
 	if err != nil {
 		return false, err
 	}
-	defer lock.Close()
-	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
-		return false, err
-	}
-	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+	defer unlock()
 	if _, err = os.Stat(target); err == nil {
 		return false, nil
 	}
@@ -273,9 +243,32 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 	}
 	if err = os.Rename(scratch, target); err != nil {
 		os.RemoveAll(scratch)
+		// A product another placer put there whole is the product: found, not a failure (#bcae1e2).
+		if _, found := os.Stat(target); found == nil {
+			return false, nil
+		}
 		return false, err
 	}
 	return true, nil
+}
+
+// lockTarget takes target's lock, which every process that places a product at target holds from its look to its
+// rename: filled while it fills, and Settle while it places a settled build (placeSettled). Without it, a fetch and a
+// settlement of one key each saw it missing, and the one whose rename lost failed its test with "file exists" while the
+// product sat there (#bcae1e2). It returns the release.
+func lockTarget(target string) (func(), error) {
+	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	if err != nil {
+		return nil, err
+	}
+	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+		lock.Close()
+		return nil, err
+	}
+	return func() {
+		syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+		lock.Close()
+	}, nil
 }
 
 // keyVersion is how buildcache builds and holds what Key addresses, the one input no product declares: a change to what
@@ -335,8 +328,6 @@ func portable(root, value string) string {
 	return withoutParallelShare(value)
 }
 
-type place struct{ path, name string }
-
 // places are the directories portable rewrites, longest first, so a checkout inside the home directory becomes
 // <repository> rather than ~/....: the repository, the build cache (a key that names another product by its path,
 // such as estree's main=<build cache>/<key>/main.ts, names it by its key), the home directory, and each as its symbolic
@@ -377,17 +368,6 @@ func places(root string) []place {
 	return found
 }
 
-func resolved(path string) string {
-	resolutions.Add(1)
-	if value, err := filepath.EvalSymlinks(path); err == nil {
-		return value
-	}
-	return ""
-}
-
-// resolutions counts the paths this process has resolved: a test asks it.
-var resolutions atomic.Int64
-
 // productResolutions holds what each product directory places has met resolves to. places runs for every key a process
 // computes, over every product it holds, and a resolution is a stat per path element, each one a stop under a trace
 // (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving product directories
@@ -401,33 +381,6 @@ func productResolved(directory string) string {
 	value := resolved(directory)
 	productResolutions.Store(directory, value)
 	return value
-}
-
-// replacePath replaces path with name where it stands as a whole path: not inside a longer name (/work/adamic in
-// /work/adamic-bench stays) and not as the tail of another path (/root in /chroot stays).
-func replacePath(value, path, name string) string {
-	var built strings.Builder
-	for {
-		index := strings.Index(value, path)
-		if index < 0 {
-			built.WriteString(value)
-			return built.String()
-		}
-		end := index + len(path)
-		before := index == 0 || !pathByte(value[index-1]) && value[index-1] != '/'
-		after := end == len(value) || value[end] == '/' || !pathByte(value[end])
-		built.WriteString(value[:index])
-		if before && after {
-			built.WriteString(name)
-		} else {
-			built.WriteString(path)
-		}
-		value = value[end:]
-	}
-}
-
-func pathByte(b byte) bool {
-	return 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z' || '0' <= b && b <= '9' || strings.IndexByte("._-+@~", b) >= 0
 }
 
 // parallelShare is go's -p flag as a token of its own: after the start, a space, a quote or an equals sign (GOFLAGS=-p=8),
@@ -829,43 +782,6 @@ func cacheDirectory() (string, error) {
 		return "", err
 	}
 	return directory, os.MkdirAll(directory, 0o755)
-}
-
-// cacheLocation is where products live on this machine (location.BuildCache), the one rule internal/native's caches
-// live under too.
-func cacheLocation() (string, error) {
-	return location.BuildCache()
-}
-
-var root struct {
-	once      sync.Once
-	directory string
-	err       error
-}
-
-// repositoryRoot is the nearest directory above the working directory holding this module's go.mod.
-func repositoryRoot() (string, error) {
-	root.once.Do(func() {
-		directory, err := os.Getwd()
-		if err != nil {
-			root.err = err
-			return
-		}
-		for {
-			content, err := os.ReadFile(filepath.Join(directory, "go.mod"))
-			if err == nil && strings.HasPrefix(string(content), "module github.com/system-inc/adamic\n") {
-				root.directory = directory
-				return
-			}
-			parent := filepath.Dir(directory)
-			if parent == directory {
-				root.err = errors.New("buildcache: no adamic go.mod above the working directory")
-				return
-			}
-			directory = parent
-		}
-	})
-	return root.directory, root.err
 }
 
 // describe is a product's inputs as its key reads them (its name, each flag and tool portable), beside it in the cache, so the

@@ -10,9 +10,8 @@ import (
 	"testing/fstest"
 )
 
-// Not parallel: enable observations even when the surrounding gate is uncached.
 func TestEditCacheSeparation(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	t.Parallel()
 	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if err != nil {
 		t.Fatal(err)
@@ -44,6 +43,12 @@ func TestEditCacheSeparation(t *testing.T) {
 			}
 		}
 	}
+	e.cache.bypass = true
+	e.profile = newRunProfile()
+	if got := e.attempt(test); got.Kind != outcomePass {
+		t.Fatal(got)
+	}
+	assertFreshCacheProfile(t, e.profile)
 }
 
 func TestNodeHarnessIdentity(t *testing.T) {
@@ -92,9 +97,8 @@ func TestWorkerLazyFallback(t *testing.T) {
 	}
 }
 
-// Not parallel: explicitly enable cached observations for successive source edits.
 func TestLoweringSourceEdit(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	t.Parallel()
 	root := t.TempDir()
 	runtime, err := filepath.Abs("../../internal/native/runtime")
 	if err != nil {
@@ -138,6 +142,16 @@ func TestLoweringSourceEdit(t *testing.T) {
 			if phase.Stage == "node" && phase.Hit != (previousContext != "") {
 				t.Fatal("lowering edit invalidated Node")
 			}
+		}
+		if previousContext != "" {
+			e.cache.bypass = true
+			e.profile = newRunProfile()
+			e.compiler = &compilerWorker{}
+			if got := e.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")}); got.Kind != outcomePass {
+				t.Fatal(got)
+			}
+			e.compiler.close()
+			assertFreshCacheProfile(t, e.profile)
 		}
 		previousContext = e.context
 	}
@@ -190,5 +204,20 @@ func TestRunnerLocationIdentity(t *testing.T) {
 			t.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
 		}
 		before = output
+	}
+}
+
+// A bypassed repeat of a primed program must execute every observation again.
+func assertFreshCacheProfile(t testing.TB, profile *runProfile) {
+	t.Helper()
+	if len(profile.Tests) == 0 {
+		t.Fatal("no cache observations recorded")
+	}
+	for _, test := range profile.Tests {
+		for _, phase := range test.Phases {
+			if phase.Hit {
+				t.Fatalf("bypassed %s observation was reused", phase.Stage)
+			}
+		}
 	}
 }

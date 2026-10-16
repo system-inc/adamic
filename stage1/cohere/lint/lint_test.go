@@ -30,6 +30,10 @@ func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
 	return descriptors
 }
 
+// portFiles are the port's sources, relative to this directory. A rule's sources are the files directly in
+// rules/<slug>/ (registry.Discover and RuleModule read nothing deeper), so the walk never enters a rule's evidence/,
+// testdata/ or any other directory below it: listing one put every rule's evidence into the read sets of every test and
+// product this walk keys, so a doc-only change under one rule's evidence/ moved 861 of 990 keys (#s57yq6y).
 func portFiles(t *testing.T) []string {
 	t.Helper()
 	var files []string
@@ -37,7 +41,7 @@ func portFiles(t *testing.T) []string {
 		if err != nil {
 			return err
 		}
-		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata")) {
+		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata") || lintRuleSubdirectory(path)) {
 			return filepath.SkipDir
 		}
 		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
@@ -49,6 +53,19 @@ func portFiles(t *testing.T) []string {
 		t.Fatal(err)
 	}
 	return files
+}
+
+// lintRuleSubdirectory is whether path is a directory below a rule's own, rules/<slug>/<directory> (evidence/,
+// testdata/, validation/, evidence-completion/), given relative to this directory, to the repository, or absolute. A
+// rule's sources sit directly in its directory, so a walk that keys or copies them skips these: what churns there is
+// evidence and reports, and a listing of it in any lint test's read set moved every later test's key (#s57yq6y).
+func lintRuleSubdirectory(path string) bool {
+	slashed := filepath.ToSlash(filepath.Clean(path))
+	if index := strings.LastIndex(slashed, "stage1/cohere/lint/rules/"); index >= 0 {
+		slashed = slashed[index+len("stage1/cohere/lint/"):]
+	}
+	parts := strings.Split(slashed, "/")
+	return len(parts) >= 3 && parts[0] == "rules"
 }
 
 type execution struct {
@@ -555,7 +572,9 @@ func TestDecorationOptionMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
-	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	// ESLint escapes a `-` decoration as `\x2d`, so it is one more character to skip; the mutant drops it from
+	// the class as the RE2 range reading did, which the `["-", "/"]` row's "-/ TODO" catches.
+	directory := mutant(t, "if(foldPoint(member) === foldPoint(point))", "if(member !== 45 && foldPoint(member) === foldPoint(point))", "comments.ts")
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -564,9 +583,9 @@ func TestDecorationOptionMutant(t *testing.T) {
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("decoration range mutant survived on %s", side.name)
+			t.Fatalf("decoration hyphen mutant survived on %s", side.name)
 		}
-		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+		t.Logf("decoration hyphen dropped from the class caught on %s: %s", side.name, difference(side.run.output, want))
 	}
 }
 

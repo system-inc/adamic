@@ -49,7 +49,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 				return err
 			}
 			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
+				if entry.Name() == ".git" || entry.Name() == "node_modules" || lintRuleSubdirectory(path) {
 					return filepath.SkipDir
 				}
 				return nil
@@ -81,7 +81,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 
 func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
+	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
 	directory := jsxProduct(t, inputs, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
@@ -95,7 +95,7 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		// toolchain's go, under its environment, in root with PWD set to it: the go and the settings the key reads.
-		command := toolchain.CommandIn(root, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := toolchain.CommandIn(root, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)...)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
 		if err := command.Run(); err != nil {

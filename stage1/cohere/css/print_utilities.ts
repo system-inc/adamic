@@ -1,7 +1,6 @@
 // CSS printer predicates and path reads from cohere/utilities.go and print_helpers.go.
 import { Tree, ObjectNode } from './tree.ts';
-import { byteSlice } from './convert.ts';
-import { utf8Length } from 'adamic';
+import { ByteView } from './byte_view.ts';
 export class Node {
     readonly tree: Tree;
     readonly index: number;
@@ -86,13 +85,17 @@ export function breakList(path: Path): boolean {
 export function precedeSoft(path: Path): boolean {
     return path.node().type() === 'value-paren_group' && path.node().child('open').index < 0 && path.up(1).type() === 'value-value' && path.up(2).type() === 'value-root' && path.up(3).type() === 'css-decl' && path.key() === 'group' && path.key(1) === 'group' && path.key(2) === 'value';
 }
-export function hasNewline(text: string, offset: number, backwards: boolean): boolean {
-    const before = byteSlice(text, 0, offset); let index = backwards ? before.length - 1 : before.length;
+export function hasNewline(view: ByteView, offset: number, backwards: boolean): boolean {
+    return hasNewlineAt(view.text, view.prefixLength(offset), backwards);
+}
+function hasNewlineAt(text: string, index: number, backwards: boolean): boolean {
+    if(backwards) index--;
     while(index >= 0 && index < text.length && (text[index] === ' ' || text[index] === '\t')) index += backwards ? -1 : 1;
     return /[\n\r\u2028\u2029]/.test(text.slice(index, index + 1));
 }
-export function nextEmpty(text: string, offset: number): boolean {
-    let index = byteSlice(text, 0, offset).length; let old = -1;
+export function nextEmpty(view: ByteView, offset: number): boolean {
+    const text = view.text;
+    let index = view.prefixLength(offset); let old = -1;
     while(old !== index) {
         old = index;
         while(index < text.length && ',; \t'.includes(text[index] ?? '')) index++;
@@ -103,5 +106,5 @@ export function nextEmpty(text: string, offset: number): boolean {
     if(text.slice(index, index + 2) === '\r\n') index += 2;
     else if(/[\n\r\u2028\u2029]/.test(text.slice(index, index + 1))) index++;
     else return false;
-    return hasNewline(text, utf8Length(text.slice(0, index)), false);
+    return hasNewlineAt(text, index, false);
 }

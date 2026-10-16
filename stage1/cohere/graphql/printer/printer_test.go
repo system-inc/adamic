@@ -119,32 +119,25 @@ func printerDirectory(t *testing.T, file, from, to string) string {
 
 func printerDirectoryAt(t *testing.T, directory, file, from, to string) string {
 	t.Helper()
-	for _, group := range []struct {
-		source, target string
-		files          []string
-	}{
-		{"..", "graphql", []string{"token.ts", "characterClasses.ts", "blockString.ts", "lexer.ts", "parser.ts"}},
-		{"../../json", "json", []string{"width.ts", "widthTables.ts"}},
-		{".", "graphql/printer", []string{"doc.ts", "printer.ts", "main.ts"}},
-	} {
-		target := filepath.Join(directory, group.target)
-		if err := os.MkdirAll(target, 0755); err != nil {
+	// The port's sources, laid out under directory as they sit under stage1/cohere (printerPortFiles); a mutation
+	// changes one of the printer's own.
+	for _, name := range printerPortFiles {
+		data, err := os.ReadFile(filepath.Join("../..", filepath.FromSlash(name)))
+		if err != nil {
 			t.Fatal(err)
 		}
-		for _, name := range group.files {
-			data, err := os.ReadFile(filepath.Join(group.source, name))
-			if err != nil {
-				t.Fatal(err)
+		if file != "" && name == "graphql/printer/"+file {
+			if strings.Count(string(data), from) != 1 {
+				t.Fatalf("mutant must match once: %s", file)
 			}
-			if group.source == "." && file == name {
-				if strings.Count(string(data), from) != 1 {
-					t.Fatalf("mutant must match once: %s", file)
-				}
-				data = []byte(strings.Replace(string(data), from, to, 1))
-			}
-			if err = os.WriteFile(filepath.Join(target, name), data, 0644); err != nil {
-				t.Fatal(err)
-			}
+			data = []byte(strings.Replace(string(data), from, to, 1))
+		}
+		target := filepath.Join(directory, filepath.FromSlash(name))
+		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err = os.WriteFile(target, data, 0644); err != nil {
+			t.Fatal(err)
 		}
 	}
 	return filepath.Join(directory, "graphql/printer/main.ts")

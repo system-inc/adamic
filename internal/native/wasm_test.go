@@ -6,6 +6,9 @@ import (
 	"crypto/sha256"
 	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"maps"
 	"os"
 	"os/exec"
@@ -21,7 +24,7 @@ import (
 )
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
-// benchmark. Keep native tests on the native clang PATH, and run this separately with WASI clang.
+// benchmark. Native tests keep the native clang; every WASI build here runs wasiCompiler, the SDK's.
 var wasiFixtures = []string{
 	"internal/load/testdata/0.1/compile/01_hello.ts",
 	"internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
@@ -49,16 +52,23 @@ var wasiFixtures = []string{
 	"internal/oracle/testdata/write_stderr_order.a",
 }
 
+// wasiCompiler is the clang every WASI build in this file runs and keys its products by: the WASI SDK's, beside
+// WASI_SYSROOT (compilerName), as the module emission and decode-ascii-wasi already were, never the box's
+// tools/bin/clang that toolchain finds for "clang" (#jzc9yne). A path passes toolchain.Path unchanged.
+func wasiCompiler() string {
+	return compilerName(Options{Target: "wasm32-wasi"})
+}
+
 func runWASIUnit(t *testing.T, unit int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH")
+		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH")
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")
 	if sysroot == "" {
 		t.Skip("WASI toolchain missing: WASI_SYSROOT is not set")
 	}
-	for _, tool := range []string{"clang", "node", "go"} {
+	for _, tool := range []string{wasiCompiler(), "node", "go"} {
 		if _, err := toolchain.Path(tool); err != nil {
 			if toolchain.Sandboxed() {
 				t.Fatal(err)
@@ -75,7 +85,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	flags := wasiFlags(sysroot)
 	probe := filepath.Join(directory, "probe.c")
 	writeWASIFile(t, probe, "#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n")
-	if output, err := toolchain.Command("clang", append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
+	if output, err := toolchain.Command(wasiCompiler(), append(append([]string{}, flags...), probe, "-o", filepath.Join(directory, "probe.wasm"))...).CombinedOutput(); err != nil {
 		t.Skipf("WASI toolchain missing or unusable (sysroot, linker, builtins): %v\n%s", err, output)
 	}
 	if output, err := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "--input-type=module", "-e",
@@ -115,7 +125,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		command := toolchain.CommandIn(repository, "clang", arguments...)
+		command := toolchain.CommandIn(repository, wasiCompiler(), arguments...)
 		if data, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("WASI link: %v\n%s", err, data)
 		}
@@ -233,7 +243,8 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 	return wasiObservation{stdout.Bytes(), stderr.Bytes(), exit}
 }
 
-// TestProduct_WASICompiler builds the stage 0 compiler the WASI units run, so the tree build builds it ahead.
+// TestProduct_WASICompiler builds the stage 0 compiler the WASI units run, so the tree build builds it ahead. It is the
+// one product test that builds it (buildcache.AdamicOwner): every other package's finds it, so it has one key.
 func TestProduct_WASICompiler(t *testing.T) {
 	t.Parallel()
 	buildcache.Adamic(t)
@@ -266,7 +277,7 @@ func strictWASIRuntime(t *testing.T) string {
 		Name:      "strict-wasi-runtime",
 		Files:     []string{"internal/native/runtime", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.Tool(wasiCompiler(), "--version")},
 	}
 	for _, variant := range variants {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))
@@ -303,7 +314,7 @@ func strictWASIRuntime(t *testing.T) string {
 			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
 			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), prefixMaps(destination, "/adamic-runtime")...)
 			if err := eachInParallel(len(sources), func(index int) error {
-				command := toolchain.CommandIn(destination, "clang", append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
+				command := toolchain.CommandIn(destination, wasiCompiler(), append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("compile %s %s: %w\n%s", variant, sources[index], err, output)
 				}
@@ -525,4 +536,22 @@ func TestWASIUnit34(t *testing.T) {
 // Not parallel: this unit changes process environment or uses the WASI toolchain.
 func TestWASIUnit35(t *testing.T) {
 	runWASIUnit(t, 35)
+}
+
+// Every WASI build in this file runs wasiCompiler: none names "clang", which toolchain resolves to the box's own clang
+// rather than the SDK's beside WASI_SYSROOT, so a build of one and a key of the other could each work and disagree
+// (#jzc9yne). Mutant: one site back to "clang".
+func TestTheWASIBuildsNameNoBareClang(t *testing.T) {
+	t.Parallel()
+	files := token.NewFileSet()
+	parsed, err := parser.ParseFile(files, "wasm_test.go", nil, parser.SkipObjectResolution)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ast.Inspect(parsed, func(node ast.Node) bool {
+		if literal, ok := node.(*ast.BasicLit); ok && literal.Kind == token.STRING && literal.Value == `"clang"` {
+			t.Errorf("%s names bare clang: run wasiCompiler, the WASI SDK's", files.Position(literal.Pos()))
+		}
+		return true
+	})
 }

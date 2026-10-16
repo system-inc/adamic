@@ -1,5 +1,6 @@
 import { panic, utf8Length } from 'adamic';
 import { Tree } from './tree.ts';
+import { ByteView } from './byte_view.ts';
 import type { Input, Position } from './input.ts';
 import type { CssNode } from './nodes.ts';
 import type { SelectorNode } from '../selector/nodes.ts';
@@ -234,28 +235,16 @@ export function fromMedia(tree: Tree, original: MediaNode, input: Input): number
     }
     return result;
 }
-// Byte slices used by Go's composition. A cut inside a code point is represented
-// by replacement characters when rendered, just as Go's JSON encoder does.
+// One-off composition/value slices also avoid rebuilding a prefix. The printer
+// retains a ByteView for all slices and index queries on its original document.
 export function byteSlice(text: string, start: number, end: number = utf8Length(text)): string {
     const length = utf8Length(text);
-    start = start < 0 ? Math.max(0, length + start) : Math.min(start, length);
-    end = end < 0 ? Math.max(0, length + end) : Math.min(end, length);
-    if(end <= start) return '';
-    if(length === text.length) return text.slice(start, end);
-    let offset = 0;
-    let result = '';
-    for(const character of text) {
-        if(offset >= end) break;
-        const next = offset + utf8Length(character);
-        if(offset >= start && next <= end) {
-            result += character;
-        }
-        else if(next > start && offset < end) {
-            result += repeatText('�', Math.min(next, end) - Math.max(offset, start));
-        }
-        offset = next;
+    if(length === text.length) {
+        start = start < 0 ? Math.max(0, length + start) : Math.min(start, length);
+        end = end < 0 ? Math.max(0, length + end) : Math.min(end, length);
+        return end <= start ? '' : text.slice(start, end);
     }
-    return result;
+    return new ByteView(text).slice(start, end);
 }
 
 export function repeatText(text: string, count: number): string {

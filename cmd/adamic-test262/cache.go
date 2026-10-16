@@ -21,6 +21,7 @@ import (
 // Cache observations, never verdicts: decide still compares both executions on every hit.
 type resultCache struct {
 	directory   string
+	bypass      bool // Set per runner before observations; workers share this policy.
 	locks       sync.Map
 	nodeContext string
 }
@@ -65,7 +66,7 @@ func nativeResultKey(code, library, command, context string) string {
 }
 
 func (cache *resultCache) observe(key string, execute func() (execution, bool)) execution {
-	if cache == nil || os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+	if cache == nil || cache.bypass {
 		value, _ := execute()
 		return value
 	}
@@ -249,7 +250,7 @@ func prepareCache(root string, tools runnerTools) (*resultCache, string, string,
 			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
 		}
 	}
-	return &resultCache{directory: filepath.Join(directory, "adamic", "test262"), nodeContext: cacheKey(nodeParts...)}, string(version), cacheKey(parts...), nil
+	return &resultCache{directory: filepath.Join(directory, "adamic", "test262"), bypass: os.Getenv("ADAMIC_GATE_UNCACHED") == "1", nodeContext: cacheKey(nodeParts...)}, string(version), cacheKey(parts...), nil
 }
 
 // checkoutPlace is the working directory relative to the checkout root, in slash form: the same in

@@ -48,9 +48,3 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 		})
 	}
 }
-
-// Default admission has no environment switch.
-func TestDefaultTaggedInterfaceNeedsNoFlag(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, interfaceCastSource+`console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`)
-}

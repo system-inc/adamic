@@ -640,8 +640,8 @@ or observed runtime disagreement, and no build failure is counted:
 | Close numeric assignability again | TestNumericEnumsAreOpen/arithmetic | Lowering refuses the arithmetic return with the old closed-union message. |
 | Invert optional-object presence | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | Native and JavaScript stop where source Node exits 0. |
 | Permit runtime enum mutation | TestEnumSlotViews/object_assign | Expected refusal disappears. |
-| Repeat switch scrutinee effects | TestNumericEnumNeverPathsPinned/implicit | Lookup is printed three times instead of once. |
-| Omit numeric never increment check | TestNumericEnumNeverPathsPinned/update | Both backends exit 0 instead of 70. |
+| Repeat switch scrutinee effects | TestNumericEnumNeverPathsPinned_implicit | Lookup is printed three times instead of once. |
+| Omit numeric never increment check | TestNumericEnumNeverPathsPinned_update | Both backends exit 0 instead of 70. |
 
 The existing six semantic mutants, name-order mutant and cleanup mutant remain
 held by their original checks. The cleanup mutant now disables conservative dead
@@ -698,6 +698,6 @@ the corresponding named refusal and fails its test without a build failure.
 Array element reads also recover their declared enum element type before flow
 narrowing. `enums_open_never_index.a` pins an out-of-domain array value at the
 never binding in both backends. Removing that recovery makes
-`TestNumericEnumNeverPathsPinned/index` fail at lowering, without a Go or C build
+`TestNumericEnumNeverPathsPinned_index` fail at lowering, without a Go or C build
 failure. `TestNumericEnumsAreOpen/coalesce` preserves optional enum Map values
 through nullish coalescing; absence is checked separately from numeric values.
