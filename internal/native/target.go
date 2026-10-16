@@ -8,6 +8,12 @@ import (
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
 func ValidateOptions(options Options) error {
+	if options.ProfileGenerate && options.Profile != "" {
+		return fmt.Errorf("native: profile generation and use are mutually exclusive")
+	}
+	if shippedRelease(options) && options.Profile != "" && !options.profileValidated {
+		return fmt.Errorf("native: unverified stage 1 profile")
+	}
 	if (options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1") && (options.Request || options.Target != "") {
 		return fmt.Errorf("native: Program regions require a one-shot native CLI")
 	}

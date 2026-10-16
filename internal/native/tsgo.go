@@ -78,6 +78,9 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
+	if options.Profile != "" || options.ProfileGenerate {
+		return fmt.Errorf("native: stage 1 profiles do not cover a checker archive")
+	}
 	if err := ValidateOptions(options); err != nil {
 		return err
 	}

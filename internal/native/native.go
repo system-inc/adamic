@@ -70,6 +70,11 @@ type Options struct {
 	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
 	Release bool
 
+	// Profile and ProfileGenerate are restricted to verified stage 1 release builds.
+	Profile          string
+	ProfileGenerate  bool
+	profileValidated bool
+
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
 
@@ -148,6 +153,12 @@ func Flags(options Options) []string {
 	flags = append(flags, "-O2")
 	if shippedRelease(options) {
 		flags = append(flags, "-flto=thin")
+		if options.ProfileGenerate {
+			flags = append(flags, "-fprofile-instr-generate")
+		}
+		if options.Profile != "" && options.profileValidated {
+			flags = append(flags, "-fprofile-use="+options.Profile, "-Wno-profile-instr-out-of-date")
+		}
 	}
 	return flags
 }
@@ -214,6 +225,11 @@ func useSplitSource(source string, options Options) bool {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	var err error
+	options, err = prepareStage1Profile(source, options)
+	if err != nil {
+		return err
+	}
 	if err := ValidateOptions(options); err != nil {
 		return err
 	}

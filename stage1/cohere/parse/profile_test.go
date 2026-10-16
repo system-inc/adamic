@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -118,7 +119,11 @@ func checkAST(t *testing.T, source string) {
 		t.Fatal(err)
 	}
 	want := execute(t, parseOracle(t), "--manifest", manifest, "--ast")
-	got := execute(t, driverBinary(t, "parse"), "--manifest", manifest, "--ast")
+	binary := os.Getenv("ADAMIC_STAGE1_PARSE_BINARY")
+	if binary == "" {
+		binary = driverBinary(t, "parse")
+	}
+	got := execute(t, binary, "--manifest", manifest, "--ast")
 	node := execute(t, "node", "--disable-warning=ExperimentalWarning", "../../../oracle/node.mjs", "parse.a", "--manifest", manifest, "--ast")
 	if !bytes.Equal(got, want) || !bytes.Equal(node, want) {
 		t.Fatalf("full AST differs from Go: native=%d Node=%d Go=%d", len(got), len(node), len(want))
@@ -496,4 +501,61 @@ func TestParseDriverCompiler075(t *testing.T) {
 func TestParseDriverCompiler076(t *testing.T) {
 	t.Parallel()
 	checkCompilerAST(t, "watchUtilities.ts", "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487")
+}
+
+func shippedParseProfile(t *testing.T) string {
+	t.Helper()
+	directory := filepath.Join("profiles", runtime.GOOS+"-"+runtime.GOARCH)
+	text, err := native.ReadStage1Profile(filepath.Join(directory, "profile.txt"))
+	if os.IsNotExist(err) && os.Getenv("ADAMIC_REQUIRE_STAGE1_PROFILES") != "1" {
+		t.Skip("profile is a subsequent target-specific piece")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(filepath.Join(directory, "manifest.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var record native.Stage1ProfileManifest
+	if err := json.Unmarshal(data, &record); err != nil {
+		t.Fatal(err)
+	}
+	training, err := os.ReadFile("../../profiles/training.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := driverSource(t, "parse")
+	if err := native.CheckStage1ProfileManifest(source, text, fmt.Sprintf("%x", sha256.Sum256(training)), record); err != nil {
+		t.Fatal(err)
+	}
+	inputs := driverInputs(t, "shipped")
+	inputs.Flags = append(inputs.Flags, source)
+	inputs.Files = append(inputs.Files, "stage1/profiles/training.json")
+	profdata, err := native.Stage1ProfileDataTool()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"), buildcache.Tool(profdata, "--version"))
+	product := buildcache.Product(t, inputs, func(output string) error {
+		return native.Build(source, filepath.Join(output, "binary"), native.Options{Release: true, Split: true, Profile: filepath.Join(directory, "profile.txt")})
+	})
+	return filepath.Join(product, "binary")
+}
+func TestProduct_ParseShippedProfile(t *testing.T) { t.Parallel(); t.Log(shippedParseProfile(t)) }
+func TestParseShippedProfileAgreesWithGo(t *testing.T) {
+	t.Parallel()
+	binary := shippedParseProfile(t)
+	fixture := filepath.Join(t.TempDir(), "fixture.a")
+	if err := os.WriteFile(fixture, []byte("const text = '🐢'; const value = {a: [1, 2]};"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	manifest := filepath.Join(t.TempDir(), "manifest")
+	if err := os.WriteFile(manifest, []byte(fixture+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	want := execute(t, parseOracle(t), "--manifest", manifest, "--ast")
+	if !bytes.Equal(execute(t, binary, "--manifest", manifest, "--ast"), want) {
+		t.Fatal("shipping profile AST differs from Go")
+	}
 }
