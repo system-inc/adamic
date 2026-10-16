@@ -68,7 +68,13 @@ func (e *emitter) asyncFunction(index int) string {
 			case *flow.MayThrow:
 				e.asyncHandler = fmt.Sprintf("adamic_async_block_%d", terminal.Handler)
 			case *flow.Goto:
-				e.asyncHandler = fmt.Sprintf("adamic_async_block_%d", terminal.Block)
+				// Only an explicit throw uses its normal Goto as an exception edge.
+				if len(block.Instructions) > 0 {
+					last := graph.Instructions[block.Instructions[len(block.Instructions)-1]]
+					if _, throwing := (*last.At).(ir.Throw); throwing {
+						e.asyncHandler = fmt.Sprintf("adamic_async_block_%d", terminal.Block)
+					}
+				}
 			}
 			var condition, waiting string
 			var result ir.Expression

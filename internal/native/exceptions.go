@@ -62,6 +62,12 @@ func (e *emitter) jumpThrown() {
 // the release of what holds names (what a loop around the call holds), then of every temporary the
 // statement owns so far, and the jump.
 func (e *emitter) checkThrown(holds ...string) {
+	// Async graph edges use the precise call-target proof. Some ordinary library
+	// emitters conservatively request a check whenever any closure can throw.
+	// A block without an exception edge must not invent a Goto handler for it.
+	if e.asyncSlots != nil && e.asyncHandler == "" {
+		return
+	}
 	e.line("if (adamic_thrown != NULL) {")
 	e.indent++
 	for _, hold := range holds {

@@ -144,6 +144,7 @@ type Function struct {
 	// Returns is the result's type, or 0 for void.
 	Returns      Type
 	Async        bool
+	AsyncSite    int  // diagnostic source site of the async declaration
 	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
