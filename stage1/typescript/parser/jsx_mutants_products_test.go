@@ -241,7 +241,7 @@ func jsxMutantsSource(t *testing.T, index int) string {
 	return copyPort(t, "jsx.ts", change.from, change.to)
 }
 
-// The oracle is TestProduct_ParserOracle's and the control TestProduct_WholeMutantsNative_Control's.
+// The oracle is TestProduct_ParserFindsOracle's and the control TestProduct_WholeMutantsNative_Control's.
 func TestProduct_JsxMutantsNative_000(t *testing.T) {
 	t.Parallel()
 	buildPort(t, jsxMutantsSource(t, 0), true)

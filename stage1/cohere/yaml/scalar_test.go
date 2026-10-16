@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func scalarCases(t *testing.T) (string, int, int) {
@@ -67,12 +69,9 @@ func goScalars(t *testing.T, cases string) []byte {
 
 // goScalarsOracle is formatter_comparison over testdata/scalar_go.go, with compose's numbers.go opened to it by
 // testdata/scalar_exports.txt, a product built ahead (#5qykzj5).
-func goScalarsOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-scalars", "scalar_go.go", numbersExports(t, "\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "scalar_exports.txt")...)
-}
+func goScalarsOracle(t *testing.T) string { return oracles.Scalars(t) }
 
-func TestProduct_YAMLScalarsGo(t *testing.T) {
+func TestProduct_YamlFindsScalarsGo(t *testing.T) {
 	t.Parallel()
 	goScalarsOracle(t)
 }

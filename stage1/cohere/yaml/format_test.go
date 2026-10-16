@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goFormat(t *testing.T, cases string) []byte {
@@ -40,49 +42,14 @@ func goFormat(t *testing.T, cases string) []byte {
 }
 
 // goFormatOracle is formatter_comparison over testdata/format_go.go, a product built ahead (#5qykzj5).
-func goFormatOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-format", "format_go.go")
-}
+func goFormatOracle(t *testing.T) string { return oracles.Formatter(t) }
 
-func TestProduct_YAMLFormatGo(t *testing.T) {
+func TestProduct_YamlFindsFormatGo(t *testing.T) {
 	t.Parallel()
 	goFormatOracle(t)
 }
 
-func formatCases(t *testing.T) (string, int, int) {
-	path, files, count := composeCases(t)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
-	var extra strings.Builder
-	add := func(text string) { extra.WriteString("0\t" + escape.Replace(text) + "\n"); count++ }
-	for _, unit := range []string{"a", "中", "😀", "é", "👨‍👩‍👦"} {
-		for width := 34; width <= 86; width += 2 {
-			value := strings.Repeat(unit, width)
-			for _, text := range []string{"key: [" + value + ", tail]\n", "{first: " + value + ", second: [a, b]}\n", "[" + value + ", {x: y}, end]\n", "\"" + value + "\": [a, b]\n"} {
-				add(text)
-			}
-		}
-	}
-	for _, header := range []string{"|", "|-", "|+", "|2", "|2-", "|+2", ">", ">-", ">+", ">2", ">2-", ">+2"} {
-		for _, body := range []string{"", "\n", "  a\n", "  a\n\n", "  a\n\n\n", "  a\n    b\n  c\n", "  a  \n  b\t\n"} {
-			for _, prefix := range []string{"", "key: ", "- "} {
-				add(prefix + header + " # header\n" + body)
-			}
-		}
-	}
-	for _, text := range []string{"# prettier-ignore\nkey:   [a,b]\n", "---\n# prettier-ignore\na:    {b: c}\n", "a:\n  # prettier-ignore\n  -   {b:  c}\n", "? [a,b]\n: {c: d}\n", "key: # colon\n  value\n", "a: 1\n\n# end\n", "[a,\n\n# middle\nb]\n", "&a\n# middle\n{b: c}\n", "!local &a\n# middle\nvalue\n", "a: 'x\\y'\n", "a: \"x\\\"y\"\n", "a: 'x\ny'\n", "a: \"x\\n y\"\n", "\ufeffa:  1\r\n", "\ufeff  ", "  \t\n", "", "---\n...\n---\n"} {
-		add(text)
-	}
-	target := filepath.Join(t.TempDir(), "format-cases.txt")
-	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		t.Fatal(err)
-	}
-	return target, files, count
-}
+func formatCases(t *testing.T) (string, int, int) { return oracles.FormatterCases(t) }
 
 // formatterMatchesGo compares the formatter's port build (port_products_test.go) with Go over formatCases, in four
 // shards of about ten seconds each alone on one core.

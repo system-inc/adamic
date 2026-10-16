@@ -128,55 +128,6 @@ func emitJavaScriptTo(directory, module string) error {
 	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
-// goOraclePackage is the directory, inside cohere, of the main package goOracleOverlay adds: the Go oracle.
-const goOraclePackage = "adamic_lint_oracle"
-
-// goOracleOverlay writes into directory the overlay that lays the Go oracle over cohere, so the upstream rules stay
-// unmodified: testdata/oracle.go, sourceRoot's generated registry and each of its rules' oracle.go, each a file of
-// goOraclePackage, a main package the overlay adds to cohere. It returns the overlay's path.
-func goOracleOverlay(sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, goOraclePackage, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	return path, nil
-}
-
 // lintGoSettings is every go setting a go run under toolchain.Env builds with, as go reports it there: its CC is the
 // compiler a cgo build runs, which the caller's CC isn't when the caller sets none (toolchain names clang then). A
 // product that builds with toolchain's go keys it.
