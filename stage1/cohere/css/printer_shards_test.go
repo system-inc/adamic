@@ -1,15 +1,16 @@
 package css
 
 import (
+	"cmp"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -21,69 +22,15 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Each declaration and leaf calls the same recipe through a process-local Once.
 // Cached source trees live with their product, never in a declaring test's TempDir.
 type cssExecutable struct{ binary, javascript, source string }
 
-var cssOracleOnce [2]sync.Once
-var cssOracles [2]string
 var cssExecutableOnce [5]sync.Once
 var cssExecutables [5]cssExecutable
-
-func cssOracleProduct(t *testing.T, printer bool) string {
-	t.Helper()
-	index := 0
-	if printer {
-		index = 1
-	}
-	cssOracleOnce[index].Do(func() {
-		repo, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		side, pkg, target := "cohere_side_test.go", "postcss", "adamic_port_side_test.go"
-		if printer {
-			side, pkg, target = "print_side_test.go", "", "adamic_print_side_test.go"
-		}
-		sidePath := filepath.Join(repo, "stage1/cohere/css/testdata", side)
-		inputs := buildcache.Inputs{
-			Name:      "css-printer-oracle-" + strconv.Itoa(index),
-			Files:     []string{"stage1/cohere/css/testdata/" + side, "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"},
-			Flags:     []string{"test", "-c", "./internal/format/css/" + pkg},
-			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
-		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
-			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
-			cmd.Dir = filepath.Join(repo, "cohere")
-			output, err := cmd.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
-			}
-			return nil
-		})
-		cssOracles[index] = filepath.Join(directory, "oracle")
-	})
-	// A build that failed inside the Once leaves the path empty for every later caller in this process.
-	// Say so, rather than running an empty command.
-	if cssOracles[index] == "" {
-		t.Fatalf("css oracle product %d unavailable: its build failed earlier in this process (see that test's log)", index)
-	}
-	return cssOracles[index]
-}
 
 // variant -1 is the regular sanitized printer; 0..2 are its mutants;
 // variant 3 is the unsanitized printer used by macOS's leaks tool.
@@ -133,8 +80,6 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 	return cssExecutables[index]
 }
 
-func TestProduct_CSSPrinterParserOracle(t *testing.T)        { t.Parallel(); cssOracleProduct(t, false) }
-func TestProduct_CSSPrinterOracle(t *testing.T)              { t.Parallel(); cssOracleProduct(t, true) }
 func TestProduct_CSSPrinterSanitizedAndLowered(t *testing.T) { t.Parallel(); cssPrinterProduct(t, -1) }
 func TestProduct_CSSPrinterSemicolonMutant(t *testing.T)     { t.Parallel(); cssPrinterProduct(t, 0) }
 func TestProduct_CSSPrinterIndentMutant(t *testing.T)        { t.Parallel(); cssPrinterProduct(t, 1) }
@@ -164,7 +109,7 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 		cmd.Dir = filepath.Join(cmd.Dir, "postcss")
 	}
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+path)
-	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	if err != nil {
 		t.Fatalf("oracle: %v %s", err, output)
 	}
@@ -177,7 +122,7 @@ func cssPrinterCases(t *testing.T, oracle string) string {
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]string{"Cases": cases, "Answers": answers, "Repository": repo, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]any{"Cases": cases, "Answers": answers, "Repository": repo, "Roots": oracles.CorpusRoots(), "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	return cases
 }
 
@@ -291,75 +236,144 @@ type cssModeShard struct {
 	cases  []cssCase
 }
 
-func cssModePlan(lines []string, count int) []cssModeShard {
-	parts := cssPartition(lines, count/8)
-	var plan []cssModeShard
-	for variant := -1; variant < len(printerMutants); variant++ {
-		for modeIndex, mode := range []string{"default", "narrow"} {
-			for _, part := range parts {
-				unit := cssModeShard{mode: mode, mutant: variant}
-				for _, c := range part {
-					unit.cases = append(unit.cases, cssCase{((variant+1)*2+modeIndex)*len(lines) + c.id, c.line})
-				}
-				plan = append(plan, unit)
-			}
+// cssModePlan is the printer's shards: first the unmutated printer, each mode by cssPrinterPartitions content-hash
+// partitions, then each mutant in each mode over exactly its witnesses, witnesses[mutant][mode] (cssPrinterWitnesses).
+// A case's id names its check group ((mutant+1)*2 + mode) times the corpus size plus its line, so no two shards share
+// an id.
+func cssModePlan(lines []string, witnesses [][][]int) []cssModeShard {
+	plan := cssPrinterUnmutatedPlan(lines)
+	for variant := range witnesses {
+		for modeIndex := range cssPrinterModes {
+			plan = append(plan, cssPrinterMutantShard(lines, variant, modeIndex, witnesses[variant][modeIndex]))
 		}
 	}
 	return plan
 }
 
-func cssModeUnion(lines []string, plan []cssModeShard, count int) error {
-	if count%8 != 0 || count == 0 {
-		return fmt.Errorf("invalid mode shard count %d", count)
+// cssPrinterUnmutatedPlan is the plan's first 128 shards, which read no witnesses.
+func cssPrinterUnmutatedPlan(lines []string) []cssModeShard {
+	var plan []cssModeShard
+	for modeIndex, mode := range cssPrinterModes {
+		for _, part := range cssPartition(lines, cssPrinterPartitions) {
+			unit := cssModeShard{mode: mode, mutant: -1}
+			for _, c := range part {
+				unit.cases = append(unit.cases, cssCase{modeIndex*len(lines) + c.id, c.line})
+			}
+			plan = append(plan, unit)
+		}
 	}
-	for index, unit := range plan {
-		group := index / (count / 8)
-		if unit.mutant != group/2-1 || unit.mode != []string{"default", "narrow"}[group%2] {
+	return plan
+}
+
+// cssPrinterWitnessesRun is how many of a mutant's witnesses its shard runs. The witnesses gather the corpus's big
+// stylesheets, where a mutant differs: run over all of them the six shards' own work came to about 137 s a run on the
+// Mac, one shard 43 s, where 64 apiece keeps each near a second. The product still holds and checks every witness
+// (Loom's ruling B on #tpjban7).
+const cssPrinterWitnessesRun = 64
+
+// cssPrinterChosenWitnesses is the rule that picks them: the smallest witnesses by bytes, ties by case id, never by
+// hand, back in corpus order. Ids outside the corpus are left for cssModeUnion to refuse.
+func cssPrinterChosenWitnesses(lines []string, ids []int) []int {
+	var chosen []int
+	for _, id := range ids {
+		if id >= 0 && id < len(lines) {
+			chosen = append(chosen, id)
+		}
+	}
+	slices.SortFunc(chosen, func(a, b int) int { return cmp.Or(cmp.Compare(len(lines[a]), len(lines[b])), cmp.Compare(a, b)) })
+	chosen = chosen[:min(len(chosen), cssPrinterWitnessesRun)]
+	slices.Sort(chosen)
+	return chosen
+}
+
+func cssPrinterMutantShard(lines []string, variant, modeIndex int, ids []int) cssModeShard {
+	unit := cssModeShard{mode: cssPrinterModes[modeIndex], mutant: variant}
+	group := (variant+1)*2 + modeIndex
+	for _, id := range cssPrinterChosenWitnesses(lines, ids) {
+		unit.cases = append(unit.cases, cssCase{group*len(lines) + id, lines[id]})
+	}
+	return unit
+}
+
+// cssModeUnion holds the plan exact: every case in both modes exactly once across the unmutated shards, each by its
+// hash owner, and each mutant shard in each mode exactly its chosen witnesses, from a witness set that isn't empty
+// and lies inside the corpus.
+func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) error {
+	if len(witnesses) != len(printerMutants) {
+		return fmt.Errorf("witnesses for %d printer mutants, want %d", len(witnesses), len(printerMutants))
+	}
+	if len(plan) != testCSSPrinterAgreesWithGoShards {
+		return fmt.Errorf("enumerated %d printer shards, declared %d", len(plan), testCSSPrinterAgreesWithGoShards)
+	}
+	var units [][]cssCase
+	for index, unit := range plan[:2*cssPrinterPartitions] {
+		group := index / cssPrinterPartitions
+		if unit.mutant != -1 || unit.mode != cssPrinterModes[group] {
 			return fmt.Errorf("incorrect mode/check group in shard %d", index)
 		}
 		for _, c := range unit.cases {
-			if c.id/len(lines) != group || cssPrinterOwner(c.line, count/8) != index%(count/8) {
+			if c.id/len(lines) != group || cssPrinterOwner(c.line, cssPrinterPartitions) != index%cssPrinterPartitions {
 				return fmt.Errorf("incorrect case owner in shard %d", index)
 			}
 		}
-	}
-	var units [][]cssCase
-	for _, unit := range plan {
 		units = append(units, unit.cases)
 	}
-	var enumeration []string
-	for range 8 {
-		enumeration = append(enumeration, lines...)
+	if err := cssUnion(append(append([]string{}, lines...), lines...), units, 2*cssPrinterPartitions); err != nil {
+		return err
 	}
-	return cssUnion(enumeration, units, count)
-}
-
-func cssPrinterModeShards(t *testing.T, path string, count int) []cssModeShard {
-	t.Helper()
-	parts := cssShards(t, path, count/8)
-	total := 0
-	for _, part := range parts {
-		total += len(part)
-	}
-	lines := make([]string, total)
-	for _, part := range parts {
-		for _, c := range part {
-			lines[c.id] = c.line
+	for offset, unit := range plan[2*cssPrinterPartitions:] {
+		index := 2*cssPrinterPartitions + offset
+		variant, modeIndex := offset/2, offset%2
+		if unit.mutant != variant || unit.mode != cssPrinterModes[modeIndex] {
+			return fmt.Errorf("incorrect mutant/mode in shard %d", index)
+		}
+		ids := witnesses[variant][modeIndex]
+		if err := cssPrinterWitnessError(printerMutants[variant].name, unit.mode, ids); err != nil {
+			return err
+		}
+		for _, id := range ids {
+			if id < 0 || id >= len(lines) {
+				return fmt.Errorf("mutant %d's %s witness %d is not in the corpus of %d", variant, unit.mode, id, len(lines))
+			}
+		}
+		ids = cssPrinterChosenWitnesses(lines, ids)
+		group := (variant+1)*2 + modeIndex
+		seen := map[int]bool{}
+		for _, c := range unit.cases {
+			id := c.id - group*len(lines)
+			if c.id < 0 || c.id/len(lines) != group || seen[id] || lines[id] != c.line {
+				return fmt.Errorf("incorrect, repeated or foreign case %d in mutant shard %d", c.id, index)
+			}
+			seen[id] = true
+		}
+		for _, id := range ids {
+			if !seen[id] {
+				return fmt.Errorf("mutant shard %d is missing chosen witness case %d", index, id)
+			}
+		}
+		if len(seen) != len(ids) {
+			return fmt.Errorf("mutant shard %d holds %d cases, its chosen witnesses are %d", index, len(seen), len(ids))
 		}
 	}
-	plan := cssModePlan(lines, count)
-	if err := cssModeUnion(lines, plan, count); err != nil {
-		t.Fatal(err)
+	return nil
+}
+
+// cssPrinterAllWitnesses reads every mutant's witness product.
+func cssPrinterAllWitnesses(t *testing.T) [][][]int {
+	t.Helper()
+	var witnesses [][][]int
+	for variant := range printerMutants {
+		witnesses = append(witnesses, cssPrinterWitnesses(t, variant))
 	}
-	t.Logf("check union: %d unique check-group/mode/case ids, %d case ids per group and mode, %d shards", total*8, total, count)
-	return plan
+	return witnesses
 }
 
 func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 	t.Parallel()
 	lines := cssPrinterCorpusLines(t)
-	plan := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	if err := cssModeUnion(lines, plan, testCSSPrinterAgreesWithGoShards); err != nil {
+	witnesses := cssPrinterAllWitnesses(t)
+	plan := cssModePlan(lines, witnesses)
+	if err := cssModeUnion(lines, plan, witnesses); err != nil {
 		t.Fatal(err)
 	}
 	planted := 0
@@ -378,20 +392,38 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 			caught = append(caught, fmt.Sprintf("shard-%03d", id))
 		}
 	}
-	if len(caught) != 1 || caught[0] != fmt.Sprintf("shard-%03d", cssPrinterOwner(lines[0], testCSSPrinterAgreesWithGoShards/8)) {
+	if len(caught) != 1 || caught[0] != fmt.Sprintf("shard-%03d", cssPrinterOwner(lines[0], cssPrinterPartitions)) {
 		t.Fatalf("planted mode/case %d caught by %v, want exactly its hash owner", planted, caught)
 	}
 	t.Logf("planted disagreement mode/case %d caught exactly by %s", planted, caught[0])
-	broken := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	owner := cssPrinterOwner(lines[0], testCSSPrinterAgreesWithGoShards/8)
-	broken[owner].cases = append(broken[owner].cases, broken[owner].cases[0])
-	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
-		t.Fatal("repeated case accepted")
+	owner := cssPrinterOwner(lines[0], cssPrinterPartitions)
+	mutantShard := 2 * cssPrinterPartitions
+	foreign := 0
+	for slices.Contains(witnesses[0][0], foreign) {
+		foreign++
 	}
-	broken = cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
-	broken[owner].cases = broken[owner].cases[1:]
-	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
-		t.Fatal("missing case accepted")
+	for _, broken := range []struct {
+		name  string
+		shard int
+		edit  func([]cssCase) []cssCase
+	}{
+		{"repeated case", owner, func(cases []cssCase) []cssCase { return append(cases, cases[0]) }},
+		{"missing case", owner, func(cases []cssCase) []cssCase { return cases[1:] }},
+		{"repeated mutant case", mutantShard, func(cases []cssCase) []cssCase { return append(cases, cases[0]) }},
+		{"mutant shard missing a witness", mutantShard, func(cases []cssCase) []cssCase { return cases[1:] }},
+		{"mutant shard with a case that isn't a witness", mutantShard, func(cases []cssCase) []cssCase {
+			return append(cases, cssCase{2*len(lines) + foreign, lines[foreign]})
+		}},
+	} {
+		plan := cssModePlan(lines, witnesses)
+		plan[broken.shard].cases = broken.edit(plan[broken.shard].cases)
+		if cssModeUnion(lines, plan, witnesses) == nil {
+			t.Fatalf("%s accepted", broken.name)
+		}
+	}
+	empty := [][][]int{witnesses[0], witnesses[1], {{}, witnesses[2][1]}}
+	if err := cssModeUnion(lines, cssModePlan(lines, empty), empty); err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
+		t.Fatalf("an empty witness set read as %v", err)
 	}
 }
 

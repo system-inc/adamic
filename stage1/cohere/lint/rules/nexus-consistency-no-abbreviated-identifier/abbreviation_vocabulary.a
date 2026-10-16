@@ -28,12 +28,61 @@ function prefixFinding(text: string, entry: readonly string[]): Abbreviation {
         advisory ? (entry[2] ?? '') : `Use "${expansion + text.slice(word.length)}".`,
     ]);
 }
+// The policy is prepared in vocabulary order once, never mutated by a walk.
+class Word {
+    readonly entry: string[];
+    readonly word: string;
+    readonly capitalizedWord: string;
+    readonly replacement: string;
+    constructor(entry: string[]) {
+        this.entry = entry;
+        this.word = entry[0] ?? panic('word');
+        this.capitalizedWord = capitalized(this.word);
+        this.replacement = entry[8] === '' ? capitalized(entry[1] ?? '') : (entry[8] ?? '');
+    }
+}
+class Policy {
+    readonly allowed: Set<string> = new Set<string>();
+    readonly whole: Map<string, Word> = new Map<string, Word>();
+    readonly early: Word[] = [];
+    readonly suffix: Word[] = [];
+    readonly late: Word[] = [];
+    readonly segment: Word[] = [];
+    constructor() {
+        for(const text of allowedNames) {
+            this.allowed.add(text);
+        }
+        for(const entry of vocabulary) {
+            const item = new Word(entry);
+            if(entry[3] !== '') {
+                this.whole.set(item.word, item);
+            }
+            if(entry[4] === 'early') {
+                this.early.push(item);
+            }
+            if(entry[6] === 'true') {
+                this.suffix.push(item);
+            }
+            if(entry[4] === 'late') {
+                this.late.push(item);
+            }
+            if(entry[10] === 'true') {
+                this.segment.push(item);
+            }
+        }
+    }
+}
+const policy = new Policy();
+const millisecondWord = /([a-z])Ms((?![\s\S])|[A-Z])/u;
+
 export function abbreviation(text: string): Abbreviation | undefined {
-    if(allowedNames.includes(text)) {
+    if(policy.allowed.has(text)) {
         return undefined;
     }
-    for(const entry of vocabulary) {
-        const word = entry[0] ?? panic('word');
+    const whole = policy.whole.get(text);
+    if(whole !== undefined) {
+        const entry = whole.entry;
+        const word = whole.word;
         const expansion = entry[1] ?? '';
         if(text === word && entry[3] !== '') {
             const style = entry[3];
@@ -44,75 +93,67 @@ export function abbreviation(text: string): Abbreviation | undefined {
             return new Abbreviation('whole', word, 'abbreviatedIdentifier', ['name', text, 'advice', advice]);
         }
     }
-    for(const phase of ['early', 'suffix', 'late', 'segment']) {
-        for(const entry of vocabulary) {
-            const word = entry[0] ?? panic('word');
-            const expansion = entry[1] ?? '';
-            if(phase === 'early' || phase === 'late') {
-                if(entry[4] !== phase || !prefixMatches(word, text)) {
-                    continue;
-                }
-                let allowed = false;
-                for(const segment of allowedSegments) {
-                    if(text.includes(segment) && segment.toLowerCase().includes(word)) {
-                        allowed = true;
-                    }
-                }
-                if(phase === 'late' || !allowed) {
-                    return prefixFinding(text, entry);
-                }
+    for(const item of policy.early) {
+        const word = item.word;
+        if(!prefixMatches(word, text)) {
+            continue;
+        }
+        let allowed = false;
+        for(const segment of allowedSegments) {
+            if(text.includes(segment) && segment.toLowerCase().includes(word)) {
+                allowed = true;
             }
-            if(phase === 'suffix' && entry[6] === 'true') {
-                if(entry[7] === 'millisecondWord') {
-                    if(/([a-z])Ms((?![\s\S])|[A-Z])/u.test(text)) {
-                        return new Abbreviation('suffix', word, 'millisecondSuffix', [
-                            'name', text, 'suggestion',
-                            text.replace(/([a-z])Ms((?![\s\S])|[A-Z])/u, '$1' + (entry[8] ?? '') + '$2'),
-                        ]);
-                    }
-                }
-                else {
-                    const suffix = capitalized(word);
-                    if(text.endsWith(suffix)) {
-                        const replacement = entry[8] === '' ? capitalized(expansion) : (entry[8] ?? '');
-                        const advice =
-                            entry[9] === ''
-                                ? `Use "${text.slice(0, text.length - suffix.length) + replacement}".`
-                                : (entry[9] ?? '');
-                        return new Abbreviation('suffix', word, 'abbreviatedSuffix', [
-                            'name',
-                            text,
-                            'suffix',
-                            suffix,
-                            'advice',
-                            advice,
-                        ]);
-                    }
-                }
+        }
+        if(!allowed) {
+            return prefixFinding(text, item.entry);
+        }
+    }
+    for(const item of policy.suffix) {
+        const entry = item.entry;
+        const word = item.word;
+        if(entry[7] === 'millisecondWord') {
+            if(text.includes('Ms') && millisecondWord.test(text)) {
+                return new Abbreviation('suffix', word, 'millisecondSuffix', [
+                    'name', text, 'suggestion',
+                    text.replace(millisecondWord, '$1' + (entry[8] ?? '') + '$2'),
+                ]);
             }
-            if(phase === 'segment' && entry[10] === 'true') {
-                let allowed = false;
-                for(const segment of allowedSegments) {
-                    if(text.includes(segment)) {
-                        allowed = true;
-                    }
-                }
-                if(allowed) {
-                    return undefined;
-                }
-                const segment = capitalized(word);
-                const suggestion = replaceSegment(word, text, capitalized(expansion));
-                if(segmentMatches(word, text) && suggestion !== text) {
-                    return new Abbreviation('segment', word, 'abbreviatedWordSegment', [
-                        'name',
-                        text,
-                        'word',
-                        segment,
-                        'suggestion',
-                        suggestion,
-                    ]);
-                }
+        }
+        else {
+            const suffix = item.capitalizedWord;
+            if(text.endsWith(suffix)) {
+                const advice =
+                    entry[9] === ''
+                        ? `Use "${text.slice(0, text.length - suffix.length) + item.replacement}".`
+                        : (entry[9] ?? '');
+                return new Abbreviation('suffix', word, 'abbreviatedSuffix', [
+                    'name', text, 'suffix', suffix, 'advice', advice,
+                ]);
             }
+        }
+    }
+    for(const item of policy.late) {
+        if(prefixMatches(item.word, text)) {
+            return prefixFinding(text, item.entry);
+        }
+    }
+    for(const segment of allowedSegments) {
+        if(text.includes(segment)) {
+            return undefined;
+        }
+    }
+    for(const item of policy.segment) {
+        const word = item.word;
+        if(!segmentMatches(word, text)) {
+            continue;
+        }
+        // Go replaces the first right-bounded occurrence, which can precede the
+        // left-bounded occurrence that established a segment match.
+        const suggestion = replaceSegment(word, text, item.replacement);
+        if(suggestion !== text) {
+            return new Abbreviation('segment', word, 'abbreviatedWordSegment', [
+                'name', text, 'word', item.capitalizedWord, 'suggestion', suggestion,
+            ]);
         }
     }
     return undefined;

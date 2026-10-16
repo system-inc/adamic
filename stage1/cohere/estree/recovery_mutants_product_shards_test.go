@@ -236,7 +236,7 @@ func recoveryMutantAnswer(t *testing.T) []byte {
 	return recoveryMutantAnswerPrepared.answer
 }
 
-func TestProduct_RecoveryMutantsAnswer(t *testing.T) {
+func TestProduct_EstreeFindsRecoveryMutantsAnswer(t *testing.T) {
 	t.Parallel()
 	recoveryMutantAnswer(t)
 }

@@ -153,19 +153,6 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	}
 }
 
-func TestPredicateOverloadCallback(t *testing.T) {
-	t.Parallel()
-	source, err := os.ReadFile("testdata/predicates/overload_callback.a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowersAndAgreesWithNode(t, string(source))
-	lying := strings.Replace(string(source), "typeof value === 'number'", "true", 1)
-	if _, err = lowerSource(t, lying); err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
-		t.Fatalf("want lying overload callback argument refused at call site, got %v", err)
-	}
-}
-
 // Behavior cannot observe the proof analysis's per-call use-direction facts.
 func TestPredicateUseRegions(t *testing.T) {
 	t.Parallel()

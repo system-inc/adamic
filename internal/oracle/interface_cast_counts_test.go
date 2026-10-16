@@ -11,17 +11,18 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so the tree build builds it ahead.
+// TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so this package's units are handed it;
+// internal/native's TestProduct_WASICompiler builds it (buildcache.AdamicOwner), and this one finds it.
 func TestProduct_Adamic(t *testing.T) {
 	t.Parallel()
-	buildcache.Adamic(t)
+	buildcache.AdamicBuiltElsewhere(t)
 }
 
 // Default cast fixtures use the same counted runtime and table as ordinary fixtures, each a row of counts.md.
 func interfaceCastCountCases() []countCase {
 	var cases []countCase
 	for _, path := range []string{"stage3/interface-downcasts/visitor.a", "stage3/interface-downcasts/wrong-kind.a"} {
-		cases = append(cases, countCase{path, func(t *testing.T) string { return interfaceCastCounted(t, path) }})
+		cases = append(cases, countCase{path, func(t *testing.T) (string, func() string) { return interfaceCastCounted(t, path) }})
 	}
 	var paths []string
 	for _, name := range []string{"default-staged", "default-wrong-type", "default-wrong-boolean", "default-literal", "default-boxed-string", "default-boxed-write", "default-destructure", "default-read-before-set"} {
@@ -39,24 +40,32 @@ func interfaceCastCountCases() []countCase {
 		paths = append(paths, "stage3/interface-downcasts/lane1/"+name+".a")
 	}
 	for _, path := range paths {
-		cases = append(cases, countCase{path, func(t *testing.T) string { return counted(t, path, false, nil, false, false) }})
+		cases = append(cases, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
 	}
 	return cases
 }
 
-// interfaceCastCounted is the row of a cast fixture compiled by the stage 0 compiler's default, run counted.
-func interfaceCastCounted(t *testing.T, path string) string {
+// interfaceCastCounted is a cast fixture compiled by the stage 0 compiler's default, the C its row runs, and measure,
+// which builds that C counted, runs it and returns the row.
+func interfaceCastCounted(t *testing.T, path string) (string, func() string) {
 	t.Helper()
-	// The stage 0 compiler is a product built ahead (buildcache.Adamic), run here as go run ran it (#5qykzj5).
-	command := exec.Command(buildcache.Adamic(t), "c", path)
+	// The stage 0 compiler is a product built ahead, run here as go run ran it (#5qykzj5): its owner builds it
+	// (buildcache.AdamicOwner), so a count product measuring this row finds it rather than building it again.
+	command := exec.Command(buildcache.AdamicBuiltElsewhere(t), "c", path)
 	command.Dir = repository
 
 	source, err := command.Output()
 	if err != nil {
 		t.Fatalf("default compiler for %s: %v", path, err)
 	}
+	return countPortable(t, string(source), ""), func() string { return interfaceCastRun(t, path, string(source)) }
+}
+
+// interfaceCastRun builds a cast fixture's C counted, runs it and returns its row.
+func interfaceCastRun(t *testing.T, path string, source string) string {
+	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(string(source), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, arguments := pinnedStack(binary)

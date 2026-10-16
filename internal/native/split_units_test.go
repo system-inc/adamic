@@ -216,17 +216,6 @@ func currentTestShard(t *testing.T) testShard {
 }
 func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
 
-// Empty shards have no observation to pass. Check ownership before shared setup
-// and before required checker or WASI inputs, which belong to owning shards.
-func requireNativeShard(t *testing.T, pieces int) {
-	t.Helper()
-	shard := currentTestShard(t)
-	// Piece numbers are consecutive from zero, so the first owned piece is index.
-	if shard.index >= pieces {
-		t.Skip("not applicable: ADAMIC_TEST_SHARD owns no native corpus pieces")
-	}
-}
-
 func TestShardSelection(t *testing.T) {
 	t.Parallel()
 	for _, value := range []string{"-1/2", "0/0", "2/2", "one/2", "0/2/3", "/2"} {

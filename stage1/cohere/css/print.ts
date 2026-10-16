@@ -1,7 +1,7 @@
 // cohere CSS printer-postcss, declaration/rule printers, and value-group printers.
 import { Tree } from './tree.ts';
 import { compose } from './compose.ts';
-import { byteSlice } from './convert.ts';
+import { ByteView } from './byte_view.ts';
 import { utf8Length } from 'adamic';
 import { quote } from '../selector/nodes.ts';
 import { adjustStrings, printString } from '../cssstrings/strings.ts';
@@ -14,12 +14,13 @@ const knownUnits: readonly string[] = 'em rem ex rex cap rcap ch rch ic ric lh r
 export class Printer {
     readonly tree: Tree;
     readonly text: string;
+    readonly bytes: ByteView;
     readonly options: PrintOptions;
     readonly scss: boolean;
     readonly docs = new Documents();
-    constructor(tree: Tree, text: string, options: PrintOptions, scss: boolean) { this.tree = tree; this.text = text; this.options = options; this.scss = scss; }
+    constructor(tree: Tree, text: string, options: PrintOptions, scss: boolean) { this.tree = tree; this.text = text; this.bytes = new ByteView(text); this.options = options; this.scss = scss; }
     adjusted(value: string): string { return adjustNumbers(adjustStrings(value, this.options.single)); }
-    textOf(n: Node): string { return byteSlice(this.text, n.start(), n.end()); }
+    textOf(n: Node): string { return this.bytes.slice(n.start(), n.end()); }
     list(path: Path, key: string): number[] {
         const printed: number[] = [];
         for(let i = 0; i < path.node().list(key).length; i++) printed.push(this.print(path.child(key, i)));
@@ -31,8 +32,8 @@ export class Printer {
             const child = path.child('nodes', i); const n = child.node(); const previous = child.sibling(-1); const next = child.sibling(1);
             parts.push(previous.type() === 'css-comment' && previous.string('text').trim() === 'prettier-ignore' ? d.text(this.textOf(n)) : this.print(child));
             if(i === nodes.length - 1) continue;
-            if((next.type() === 'css-comment' && !hasNewline(this.text, next.start(), true) && n.type() !== 'front-matter') || (next.type() === 'css-atrule' && next.string('name') === 'else' && n.type() !== 'css-comment')) parts.push(d.text(' '));
-            else { parts.push(d.hard()); if(nextEmpty(this.text, n.end()) && n.type() !== 'front-matter') parts.push(d.hard()); }
+            if((next.type() === 'css-comment' && !hasNewline(this.bytes, next.start(), true) && n.type() !== 'front-matter') || (next.type() === 'css-atrule' && next.string('name') === 'else' && n.type() !== 'css-comment')) parts.push(d.text(' '));
+            else { parts.push(d.hard()); if(nextEmpty(this.bytes, n.end()) && n.type() !== 'front-matter') parts.push(d.hard()); }
         }
         return d.concat(parts);
     }
@@ -96,9 +97,9 @@ export class Printer {
             case 'selector-pseudo': return d.concat([d.text(maybeLower(value)), n.list('nodes').length > 0 ? d.group(d.concat([d.text('('), d.indent(d.concat([d.soft(), d.join(d.concat([d.text(','), d.line()]), this.list(path,'nodes'))])), d.soft(), d.text(')')])) : d.text('')]);
             case 'selector-unknown': {
                 if(path.ancestor('css-rule').truth('isScssNestedProperty')) return d.text(this.adjusted(maybeLower(value)));
-                if(p.raw('selector') !== '') return d.text(byteSlice(this.text, p.start(), p.start() + utf8Length(p.raw('selector'))).trim());
+                if(p.raw('selector') !== '') return d.text(this.bytes.slice(p.start(), p.start() + utf8Length(p.raw('selector'))).trim());
                 if(p.type() === 'value-paren_group' && path.up(2).type() === 'value-func' && path.up(2).string('value') === 'selector') {
-                    const text = byteSlice(this.text, p.child('open').end() + 1, p.child('close').start()).trim(); return inlineLast(text) ? d.concat([d.add('break'), d.text(text)]) : d.text(text);
+                    const text = this.bytes.slice(p.child('open').end() + 1, p.child('close').start()).trim(); return inlineLast(text) ? d.concat([d.add('break'), d.text(text)]) : d.text(text);
                 }
                 return d.text(value);
             }
@@ -142,7 +143,7 @@ export class Printer {
         const flag = (name: string, pattern: RegExp, suffix: string) => n.raw(name) !== '' ? n.raw(name).replace(pattern, suffix) : n.truth(name) ? suffix : '';
         let ending = d.text(';');
         if(n.truth('nodes')) ending = d.concat([d.text(' {'), n.list('nodes').length > 0 ? d.indent(d.concat([d.soft(), this.sequence(path)])) : d.text(''), d.soft(), d.text('}')]);
-        else if(n.string('prop').startsWith('@prettier-placeholder') && !p.child('raws').truth('semicolon') && byteSlice(this.text, n.end() - 1, n.end()) !== ';') ending = d.text('');
+        else if(n.string('prop').startsWith('@prettier-placeholder') && !p.child('raws').truth('semicolon') && this.bytes.slice(n.end() - 1, n.end()) !== ';') ending = d.text('');
         return d.concat([d.text(n.raw('before').replace(/[\s;]/g,'')), d.text(prop), d.text(trimmed.startsWith('//') ? ' ' : ''), d.text(trimmed), d.text(space), value, d.text(flag('important', /\s*!\s*important/i, ' !important')), d.text(flag('scssDefault', /\s*!default/i, ' !default')), d.text(flag('scssGlobal', /\s*!global/i, ' !global')), ending]);
     }
     atRule(path: Path): number {
@@ -163,12 +164,12 @@ export class Printer {
             let opening = d.text(control(n,this.scss) ? '' : ' ');
             if(!control(n,this.scss) && ((selector.index >= 0 && !selector.truth('nodes') && selector.data().strings.has('value') && inlineLast(selector.string('value'))) || (selector.index < 0 && n.data().strings.has('params') && inlineLast(n.string('params'))))) opening = d.line();
             ending = d.concat([opening,d.text('{'), n.list('nodes').length > 0 ? d.indent(d.concat([d.soft(), this.sequence(path)])) : d.text(''), d.soft(), d.text('}')]);
-        } else if((template && !p.child('raws').truth('semicolon') && byteSlice(this.text,n.end()-1,n.end()) !== ';') || (name === 'import' && params.type() === 'value-unknown' && params.string('value').endsWith(';'))) ending = d.text('');
+        } else if((template && !p.child('raws').truth('semicolon') && this.bytes.slice(n.end()-1,n.end()) !== ';') || (name === 'import' && params.type() === 'value-unknown' && params.string('value').endsWith(';'))) ending = d.text('');
         return d.concat([d.text('@'+printedName),printedParams,printedSelector,printedValue,ending]);
     }
     trailing(path: Path): number {
         const d = this.docs; const n = path.node(); const parent = path.up(1); const grand = path.up(2);
-        if(grand.type() === 'value-func' && lower(grand.string('value')) === 'var' && n.truth('source') && byteSlice(this.text,n.start(),parent.child('close').start()).trimEnd().endsWith(',')) return d.text(',');
+        if(grand.type() === 'value-func' && lower(grand.string('value')) === 'var' && n.truth('source') && this.bytes.slice(n.start(),parent.child('close').start()).trimEnd().endsWith(',')) return d.text(',');
         if(n.type() !== 'value-comment' && !(n.type() === 'value-comma_group' && n.list('groups').every(i => new Node(this.tree,i).type() === 'value-comment')) && ['es5','all'].includes(this.options.trailingComma) && mapItem(path.parent(), this.scss)) return d.ifBreak(d.text(','));
         return d.text('');
     }
@@ -191,7 +192,7 @@ export class Printer {
                 if(outer.kind === 'group' && middle.kind === 'indent' && d.at(middle.parts[0] ?? 0).kind === 'fill') document = d.group(d.dedent(document));
             }
             const one: number[] = [document, i === groups.length - 1 ? this.trailing(c) : d.text(',')];
-            if(i < groups.length - 1 && child.type() === 'value-comma_group' && childGroups.length > 0) { let last = new Node(this.tree, childGroups[childGroups.length - 1] ?? -1); if(!last.truth('source') && last.child('close').index >= 0) last = last.child('close'); if(last.truth('source') && nextEmpty(this.text,last.end())) one.push(d.hard()); }
+            if(i < groups.length - 1 && child.type() === 'value-comma_group' && childGroups.length > 0) { let last = new Node(this.tree, childGroups[childGroups.length - 1] ?? -1); if(!last.truth('source') && last.child('close').index >= 0) last = last.child('close'); if(last.truth('source') && nextEmpty(this.bytes,last.end())) one.push(d.hard()); }
             parts.push(d.concat(one));
         }
         const pg = p.list('groups'); const i = pg.indexOf(n.index); const isKey = pair(p) && i >= 0 && new Node(this.tree,pg[i+1] ?? -1).type() === 'value-colon';

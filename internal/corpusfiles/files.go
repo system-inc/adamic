@@ -17,7 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
-const CohereCommit = "7945d102a6c18dd36adf9114a758ce646e8b2359"
+const CohereCommit = "0183ccf8c57a775f874ca73be1adfc06e9ad1562"
 const TypeScriptCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 const TypeScriptGoCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 const PrettierCommit = "cb4b33fba24a8428d00e54be85fc886288a374ea"
@@ -27,7 +27,15 @@ const PrettierCommit = "cb4b33fba24a8428d00e54be85fc886288a374ea"
 // Matching tracked files must be clean in the index and worktree separately.
 func Repository(t testing.TB, checkout string, roots, patterns []string) []string {
 	t.Helper()
-	return checked(t, checkout, "", roots, patterns)
+	return checked(t, checkout, "", roots, patterns, nil)
+}
+
+// RepositoryExcept is Repository, leaving every directory below a root whose name skip holds unentered, as
+// tracked.PathsUnder does: nothing under one is selected, checked or, under Workshop's trace, listed, so a file added or
+// deleted there moves no read set of the build that selects (#hp8gq3e).
+func RepositoryExcept(t testing.TB, checkout string, roots, patterns, skip []string) []string {
+	t.Helper()
+	return checked(t, checkout, "", roots, patterns, skip)
 }
 
 // Upstream requires the exact commit and an empty porcelain status, including
@@ -38,12 +46,12 @@ func Upstream(t testing.TB, checkout, pin string, roots, patterns []string) []st
 	if len(pin) != 40 || strings.Trim(pin, "0123456789abcdef") != "" {
 		t.Fatalf("upstream corpus %s: invalid commit pin %q", checkout, pin)
 	}
-	return checked(t, checkout, pin, roots, patterns)
+	return checked(t, checkout, pin, roots, patterns, nil)
 }
 
-func checked(t testing.TB, checkout, pin string, roots, patterns []string) []string {
+func checked(t testing.TB, checkout, pin string, roots, patterns, skip []string) []string {
 	t.Helper()
-	files, actual, counts, err := selectFiles(checkout, pin, roots, patterns)
+	files, actual, counts, err := selectFiles(checkout, pin, roots, patterns, skip)
 	if err != nil {
 		t.Fatalf("corpus-files: %v", err)
 	}
@@ -90,7 +98,7 @@ func matches(name string, patterns []string) bool {
 	return false
 }
 
-func selectFiles(checkout, pin string, roots, patterns []string) ([]string, string, []int, error) {
+func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string, string, []int, error) {
 	if len(roots) == 0 || len(patterns) == 0 {
 		return nil, "", nil, fmt.Errorf("%s: named roots and patterns are required", checkout)
 	}
@@ -109,7 +117,7 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 		}
 	}
 	if !tracked.Git(checkout) {
-		return selectManifest(checkout, pin, roots, patterns)
+		return selectManifest(checkout, pin, roots, patterns, skip)
 	}
 	head, err := git(checkout, "rev-parse", "HEAD")
 	if err != nil {
@@ -152,7 +160,7 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 			}
 			var dirty []string
 			for _, name := range names(data) {
-				if matches(name, patterns) {
+				if matches(name, patterns) && !tracked.Skipped(root, name, skip) {
 					dirty = append(dirty, name)
 				}
 			}
@@ -161,7 +169,7 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 			}
 		}
 		// git ls-files, or under Workshop's trace a walk the build's read set keys (tracked.PathsUnder).
-		listed, err := tracked.PathsUnder(checkout, root)
+		listed, err := tracked.PathsUnder(checkout, root, skip...)
 		if err != nil {
 			return nil, actual, nil, err
 		}
@@ -200,7 +208,7 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 // else is untracked, ignored or not), and every entry under it is on disk as recorded. Repository's worktree check
 // becomes: every matching entry is on disk as recorded, and no matching file that the .gitignore files leave in is
 // missing from the record, which would make the selection smaller than git's.
-func selectManifest(checkout, pin string, roots, patterns []string) ([]string, string, []int, error) {
+func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]string, string, []int, error) {
 	actual, err := tracked.Head(checkout)
 	if err != nil {
 		return nil, "", nil, err
@@ -218,7 +226,12 @@ func selectManifest(checkout, pin string, roots, patterns []string) ([]string, s
 		if _, err := os.Stat(filepath.Join(checkout, root)); err != nil {
 			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, err)
 		}
-		under := tracked.Under(entries, filepath.ToSlash(root))
+		var under []tracked.Entry
+		for _, entry := range tracked.Under(entries, filepath.ToSlash(root)) {
+			if !tracked.Skipped(root, entry.Path, skip) {
+				under = append(under, entry)
+			}
+		}
 		var matching []tracked.Entry
 		for _, entry := range under {
 			if matches(entry.Path, patterns) {
@@ -226,9 +239,15 @@ func selectManifest(checkout, pin string, roots, patterns []string) ([]string, s
 			}
 		}
 		if pin != "" {
-			dirty, err := unrecorded(checkout, root, under)
+			found, err := unrecorded(checkout, root, under)
 			if err != nil {
 				return nil, actual, nil, err
+			}
+			var dirty []string
+			for _, name := range found {
+				if !tracked.Skipped(root, name, skip) {
+					dirty = append(dirty, name)
+				}
 			}
 			missing, changed, err := tracked.Changed(checkout, under)
 			if err != nil {
@@ -260,7 +279,7 @@ func selectManifest(checkout, pin string, roots, patterns []string) ([]string, s
 			}
 			var unlisted []string
 			for _, name := range extra {
-				if matches(name, patterns) {
+				if matches(name, patterns) && !tracked.Skipped(root, name, skip) {
 					unlisted = append(unlisted, name)
 				}
 			}

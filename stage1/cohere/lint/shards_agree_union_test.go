@@ -28,7 +28,7 @@ func TestShardsAgree_Union(t *testing.T) {
 	if len(regexp.MustCompile(`(?m)^func TestShardsAgree_[0-9]{3}\(`).FindAll(data, -1)) != testShardsAgreeShards {
 		t.Fatal("shard enumeration differs from constant")
 	}
-	// Every heavy row has exactly one test per process count and mode, and each runs the pass its name says.
+	// Every heavy row has exactly one test per heavy pass and mode, and each runs the pass its name says.
 	type pass struct{ name, label, mode string }
 	wrappers := map[pass]int{}
 	matches := shardsAgreeHeavyWrapper.FindAllSubmatch(data, -1)
@@ -47,7 +47,7 @@ func TestShardsAgree_Union(t *testing.T) {
 	}
 	want := 0
 	for _, entry := range testShardsAgreeHeavy {
-		for _, each := range testShardsAgreePasses {
+		for _, each := range testShardsAgreeHeavyPasses {
 			for _, mode := range []string{"Output", "Count"} {
 				want++
 				if wrappers[pass{entry.Name, each.Label, mode}] != 1 {
@@ -109,17 +109,22 @@ func TestShardsAgree_Union(t *testing.T) {
 		passes []pass
 	}
 	var owners []owner
-	var everyPass []pass
+	var everyPass, heavyPasses []pass
 	for _, each := range testShardsAgreePasses {
 		for _, mode := range []string{"Output", "Count"} {
 			everyPass = append(everyPass, pass{"", each.Label, mode})
+		}
+	}
+	for _, each := range testShardsAgreeHeavyPasses {
+		for _, mode := range []string{"Output", "Count"} {
+			heavyPasses = append(heavyPasses, pass{"", each.Label, mode})
 		}
 	}
 	for shard, bucket := range buckets {
 		owners = append(owners, owner{fmt.Sprintf("TestShardsAgree_%03d", shard), bucket, everyPass})
 	}
 	for index, entry := range testShardsAgreeHeavy {
-		for _, each := range everyPass {
+		for _, each := range heavyPasses {
 			owners = append(owners, owner{fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode), heavy[index], []pass{each}})
 		}
 	}
@@ -154,7 +159,7 @@ func TestShardsAgree_Union(t *testing.T) {
 		plant(planted, each, fmt.Sprintf("TestShardsAgree_%03d", testShardsAgreeOwner(t, planted)))
 	}
 	for index, entry := range testShardsAgreeHeavy {
-		for _, each := range everyPass {
+		for _, each := range heavyPasses {
 			plant(heavy[index][0], each, fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode))
 		}
 	}

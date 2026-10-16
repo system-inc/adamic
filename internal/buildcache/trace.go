@@ -16,7 +16,7 @@ import (
 // a directory, and every process under it that builds a product marks the build in the trace and writes it to the
 // directory's journal. When the command ends, Settle reads the trace, gives each build the reads of its process and
 // the processes it started, up to the build's end, and records the read set that becomes the product's key. Only a
-// settled build is placed under its key and published, so only a traced build publishes.
+// settled build is placed under its key, so only a traced build is found by a read set.
 //
 // A marker is a failed access of /adamic-trace/<event>/<id>: it prints in the trace beside the thread that made it and
 // changes nothing else. Keying (hashing read sets and declared files, go list, go env, a tool's report, git ls-files)
@@ -64,6 +64,15 @@ func keying(compute func()) {
 
 // keyingNow is how many traced keyings this process is running: a test asks it whether a look ran as keying.
 var keyingNow atomic.Int64
+
+// The make files run what they look up about this machine as keying, and journal a product they read as found, through
+// these hooks (make_relative.go).
+func init() {
+	asKeying = keying
+	foundProduct = func(nameKey, directory string) {
+		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: directory})
+	}
+}
 
 var builds atomic.Int64
 

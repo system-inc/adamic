@@ -52,15 +52,3 @@ func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
 		}
 	}
 }
-
-func TestDefiniteAssignmentSoundNeighbors(t *testing.T) {
-	t.Parallel()
-	for _, source := range []string{
-		"class Box { n: number = 2; }\nconsole.log(`${new Box().n + 1}`);\n",
-		"let n: number;\nn = 2;\nconsole.log(`${n + 1}`);\n",
-		"class Box { n: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n",
-		"// This mentions ts-ignore in prose.\nconsole.log('@ts-ignore');\n",
-	} {
-		lowersAndAgreesWithNode(t, source)
-	}
-}

@@ -34,7 +34,17 @@ type BlocksRule struct {
 	// Sizing: each block's size from the red rate on the queue's log, the budget standing only without it. Optional
 	// (Loom 0.8.19, #hr7v2wc).
 	Sizing *SizingRule `json:"sizing"`
+	// Depth: the most blocks in flight, each pipelined on the last prefix of the one below it, from DefaultBlocksDepth to
+	// MaximumBlocksDepth. Optional, and never null; absent reads as 2 (Loom 0.8.71, #wpcbqpd).
+	Depth *int `json:"depth"`
 }
+
+// DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower
+// (Loom's lander/rules.go).
+const (
+	DefaultBlocksDepth = 2
+	MaximumBlocksDepth = 32
+)
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
 // Window decided branches, is at least Target, clamped to Min and Max.
@@ -58,7 +68,7 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing the lander would refuse, or anything after the object is refused, so a typo can't land as a
+// a budget that isn't a whole number of 1 or more, a sizing or a depth the lander would refuse, or anything after the object is refused, so a typo can't land as a
 // rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
@@ -82,6 +92,21 @@ func ParseRules(data []byte) (Rules, error) {
 		}
 		if *sizing.Min < 1 || *sizing.Max < *sizing.Min || !(*sizing.Target > 0 && *sizing.Target < 1) || *sizing.Window < 1 || *sizing.Window > MaximumSizingWindow {
 			return Rules{}, fmt.Errorf("rules.json: blocks' sizing needs 1 <= min <= max, target above 0 and below 1, and window from 1 to %d", MaximumSizingWindow)
+		}
+	}
+	// Present or absent, never null, as the lander reads it: a null decodes as absent, so it's read from the raw object.
+	var raw struct {
+		Blocks map[string]json.RawMessage `json:"blocks"`
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return Rules{}, fmt.Errorf("rules.json: %w", err)
+	}
+	if depth, present := raw.Blocks["depth"]; present {
+		if bytes.Equal(bytes.TrimSpace(depth), []byte("null")) || rules.Blocks.Depth == nil {
+			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %s, and it's a whole number from %d to %d", depth, DefaultBlocksDepth, MaximumBlocksDepth)
+		}
+		if *rules.Blocks.Depth < DefaultBlocksDepth || *rules.Blocks.Depth > MaximumBlocksDepth {
+			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %d, and it's from %d to %d", *rules.Blocks.Depth, DefaultBlocksDepth, MaximumBlocksDepth)
 		}
 	}
 	if rules.Restack == nil || rules.Restack.On == nil {

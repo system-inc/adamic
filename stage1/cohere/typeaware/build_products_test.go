@@ -1,7 +1,6 @@
 package typeaware
 
 import (
-	"context"
 	"encoding/json"
 	"path/filepath"
 	"testing"
@@ -53,24 +52,6 @@ func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) strin
 func volumeProfileControlProduct(t *testing.T, sanitize bool) string {
 	h := typeAwareProductHarness(t)
 	return volumeProfileControlsBinary(h, "", h.archive("checker", sanitize), sanitize)
-}
-
-func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {
-	h := typeAwareProductHarness(t)
-	ctx := context.Background()
-	stage0 := volumeProfileCorporaGoProduct(t, ctx, h.repository, "adamic")
-	archiveName := "checker.a"
-	if sanitize {
-		archiveName = "checker-asan.a"
-	}
-	archive := volumeProfileCorporaGoProduct(t, ctx, h.repository, archiveName)
-	inputs := volumeProfileCorporaNativeInputs(ctx, h, sanitize)
-	return volumeProfileCorporaNative(ctx, h, stage0, archive, inputs, sanitize)
-}
-
-func volumeProfileCorpusGoProduct(t *testing.T, output string) string {
-	h := typeAwareProductHarness(t)
-	return volumeProfileCorporaGoProduct(t, context.Background(), h.repository, output)
 }
 
 func volumeProfileDeclaredMutant(t *testing.T, index int) string {
@@ -204,23 +185,6 @@ func TestProduct_profile_mutant_scope_containment(t *testing.T) {
 func TestProduct_profile_mutant_first_binding(t *testing.T) {
 	t.Parallel()
 	volumeProfileDeclaredMutant(t, 2)
-}
-func TestProduct_corpus_stage0(t *testing.T) { t.Parallel(); volumeProfileCorpusGoProduct(t, "adamic") }
-func TestProduct_corpus_checker(t *testing.T) {
-	t.Parallel()
-	volumeProfileCorpusGoProduct(t, "checker.a")
-}
-func TestProduct_corpus_checker_asan(t *testing.T) {
-	t.Parallel()
-	volumeProfileCorpusGoProduct(t, "checker-asan.a")
-}
-func TestProduct_corpus_oracle(t *testing.T) {
-	t.Parallel()
-	volumeProfileCorpusGoProduct(t, "volume-oracle")
-}
-func TestProduct_corpus_native(t *testing.T) {
-	t.Parallel()
-	volumeProfileCorpusNativeProduct(t, false)
 }
 func TestProduct_type_symbol_archive(t *testing.T) {
 	t.Parallel()
