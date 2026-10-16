@@ -115,6 +115,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if err := l.stringBrandRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.enumRefusal(node); err != nil {
 			found = err
 			return true

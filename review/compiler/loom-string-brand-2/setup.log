@@ -1,0 +1,16 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.133s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.177s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.026s
+setup: markdown dependencies ready (0.377s)
+setup: submodules ready (0.424s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.042s)
+setup: shared cache ready (4.191s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/cast_proof.go:114:7: l.stringBrandCast undefined (type *lowering has no field or method stringBrandCast)
+internal/lower/expression.go:49:25: l.stringBrandRepresentation undefined (type *lowering has no field or method stringBrandRepresentation)
+internal/lower/expression.go:176:31: l.stringBrandRepresentation undefined (type *lowering has no field or method stringBrandRepresentation)
+internal/lower/refusals.go:118:15: l.stringBrandRefusal undefined (type *lowering has no field or method stringBrandRefusal)

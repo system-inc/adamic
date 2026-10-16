@@ -1,0 +1,87 @@
+[
+  {
+    "name": "real-field-phantom",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/string-brand-proof/real-field-phantom-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandRealRefused$",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "drop-undefined",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/string-brand-proof/drop-undefined-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandOptional$",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "read-brand",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/string-brand-proof/read-brand-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandReadRefused$",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "literal-refinement",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/string-brand-proof/literal-refinement-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastKeepsLiterals$",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "unchecked-missing-cast",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/string-brand-proof/unchecked-missing-cast-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastChecksMissing$",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

@@ -1,0 +1,312 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== RUN   TestStringBrandValue
+=== PAUSE TestStringBrandValue
+=== RUN   TestStringBrandDestructureRefused
+=== PAUSE TestStringBrandDestructureRefused
+=== RUN   TestStringBrandUnknownCastRefused
+=== PAUSE TestStringBrandUnknownCastRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandIndexRefused
+=== CONT  TestStringBrandOptional
+=== CONT  TestStringBrandReadRefused
+--- PASS: TestStringBrandIndexRefused (0.72s)
+=== CONT  TestStringBrandPlain
+--- PASS: TestStringBrandReadRefused (0.72s)
+=== CONT  TestStringBrandMap
+panic: test timed out after 1m0s
+	running tests:
+		TestStringBrandEscape (1m0s)
+		TestStringBrandMap (59s)
+		TestStringBrandOptional (1m0s)
+		TestStringBrandPlain (59s)
+
+goroutine 123 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x2538387ba488, 0x2538386afad8)
+	testing/testing.go:2199 +0x123
+testing.runTests({0xf6615c, 0x1c}, {0xf88202, 0x2c}, 0x25383861a588, {0x258e8a8, 0x275, 0x275}, {0xc2abfa615f4ac26c, 0xdfc11e2d5, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x253838946d20)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/internal/oracle.TestMain(0x25da340?)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:452 +0x1f
+main.main()
+	_testmain.go:1304 +0xa5
+
+goroutine 37 [chan send]:
+github.com/system-inc/adamic/internal/native.compileRuntime({0x25383b8ac008?, 0x1853a40?, 0x23c0240?}, {0x25383afd1b80, 0x11, 0x16}, {0x2538387ce450, 0x21}, {0x25383864a910, 0x47}, ...)
+	github.com/system-inc/adamic/internal/native/library.go:437 +0x8a5
+github.com/system-inc/adamic/internal/native.RuntimeRequest.Build(...)
+	github.com/system-inc/adamic/internal/native/library.go:63
+github.com/system-inc/adamic/internal/oracle.supplyRuntime.func1({0x25383864a910?, 0x40?})
+	github.com/system-inc/adamic/internal/oracle/runtimes_test.go:86 +0x65
+github.com/system-inc/adamic/internal/buildcache.relocating.func1({0x25383864a910, 0x47})
+	github.com/system-inc/adamic/internal/buildcache/relative.go:194 +0x78
+github.com/system-inc/adamic/internal/buildcache.filled({0x25383864f030, 0x66}, {0x2538394cc000, 0x5adf}, 0x253838656d68)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:266 +0x249
+github.com/system-inc/adamic/internal/buildcache.get({{0xf49001, 0xe}, {0x25383ab6be80, 0x4, 0x4}, {0x253838b47c08, 0x67, 0x6f}, {0x253839027a60, 0x2, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:209 +0x1405
+github.com/system-inc/adamic/internal/buildcache.Get(...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:79
+github.com/system-inc/adamic/internal/oracle.supplyRuntime({{0x2538388ae008, 0x6a, 0x6f}, {0x253838a73508, 0x67, 0x6f}, {0x2538387ce450, 0x21}, {0xf39120, 0x2}, ...})
+	github.com/system-inc/adamic/internal/oracle/runtimes_test.go:86 +0x1dc
+github.com/system-inc/adamic/internal/native.runtimeLibrary.func1()
+	github.com/system-inc/adamic/internal/native/library.go:157 +0x88
+sync.(*Once).doSlow(0x25b5b40?, 0x1853a40?)
+	sync/once.go:78 +0xab
+sync.(*Once).Do(...)
+	sync/once.go:69
+github.com/system-inc/adamic/internal/native.runtimeLibrary({0x0?, 0x0}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x1, 0x0, {0x0, ...}, ...}, ...)
+	github.com/system-inc/adamic/internal/native/library.go:156 +0x345
+github.com/system-inc/adamic/internal/native.RuntimeLibrary(...)
+	github.com/system-inc/adamic/internal/native/library.go:35
+github.com/system-inc/adamic/internal/oracle.identity.func1()
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:188 +0x355
+sync.(*Once).doSlow(0x25383ab93040?, 0xe1441f?)
+	sync/once.go:78 +0xab
+sync.(*Once).Do(...)
+	sync/once.go:69
+github.com/system-inc/adamic/internal/oracle.identity(0x2538387ba6c8)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:174 +0x65
+github.com/system-inc/adamic/internal/oracle.cachedNode(0x2538387ba6c8, {0x2538387a9240, 0x40}, 0x253838657c40)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:312 +0x6c
+github.com/system-inc/adamic/internal/oracle.onNode(0x2538387ba6c8, {0x2538387a9240, 0x40})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:556 +0x9d
+github.com/system-inc/adamic/internal/oracle.stringBrandOracle(0x2538387ba6c8, {0xf3e178, 0x6})
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:32 +0x194
+github.com/system-inc/adamic/internal/oracle.TestStringBrandEscape(0x2538387ba6c8)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:47 +0x2e
+testing.tRunner(0x2538387ba6c8, 0x24b6e80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 38 [chan receive]:
+testing.(*testState).waitParallel(0x25383879eb40)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2538387ba908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestStringBrandUnescape(0x2538387ba908)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:48 +0x18
+testing.tRunner(0x2538387ba908, 0x24b6eb8)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 39 [sync.Mutex.Lock]:
+internal/sync.runtime_SemacquireMutex(0x25383b55f938?, 0xc0?, 0xa21b3636d291d2a8?)
+	runtime/sema.go:95 +0x25
+internal/sync.(*Mutex).lockSlow(0x25da7ec)
+	internal/sync/mutex.go:149 +0x15a
+internal/sync.(*Mutex).Lock(...)
+	internal/sync/mutex.go:70
+sync.(*Mutex).Lock(...)
+	sync/mutex.go:46
+sync.(*Once).doSlow(0x253838ae5900?, 0x24b76e8)
+	sync/once.go:74 +0x48
+sync.(*Once).Do(...)
+	sync/once.go:69
+github.com/system-inc/adamic/internal/oracle.identity(0x2538387bab48)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:174 +0x65
+github.com/system-inc/adamic/internal/oracle.cachedNode(0x2538387bab48, {0x253838828100, 0x3d}, 0x25383896bc40)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:312 +0x6c
+github.com/system-inc/adamic/internal/oracle.onNode(0x2538387bab48, {0x253838828100, 0x3d})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:556 +0x9d
+github.com/system-inc/adamic/internal/oracle.stringBrandOracle(0x2538387bab48, {0xf399cd, 0x3})
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:32 +0x194
+github.com/system-inc/adamic/internal/oracle.TestStringBrandMap(0x2538387bab48)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:49 +0x2e
+testing.tRunner(0x2538387bab48, 0x24b6e90)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 40 [sync.Mutex.Lock]:
+internal/sync.runtime_SemacquireMutex(0x253838d7b938?, 0xa0?, 0xfb5cbcbb41fc4501?)
+	runtime/sema.go:95 +0x25
+internal/sync.(*Mutex).lockSlow(0x25da7ec)
+	internal/sync/mutex.go:149 +0x15a
+internal/sync.(*Mutex).Lock(...)
+	internal/sync/mutex.go:70
+sync.(*Mutex).Lock(...)
+	sync/mutex.go:46
+sync.(*Once).doSlow(0x25383b0ea140?, 0x24b76e8)
+	sync/once.go:74 +0x48
+sync.(*Once).Do(...)
+	sync/once.go:69
+github.com/system-inc/adamic/internal/oracle.identity(0x2538387bad88)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:174 +0x65
+github.com/system-inc/adamic/internal/oracle.cachedNode(0x2538387bad88, {0x2538387680f0, 0x42}, 0x25383896dc40)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:312 +0x6c
+github.com/system-inc/adamic/internal/oracle.onNode(0x2538387bad88, {0x2538387680f0, 0x42})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:556 +0x9d
+github.com/system-inc/adamic/internal/oracle.stringBrandOracle(0x2538387bad88, {0xf4022c, 0x8})
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:32 +0x194
+github.com/system-inc/adamic/internal/oracle.TestStringBrandOptional(0x2538387bad88)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:50 +0x2e
+testing.tRunner(0x2538387bad88, 0x24b6e98)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 41 [sync.Mutex.Lock]:
+internal/sync.runtime_SemacquireMutex(0x25383b329938?, 0x80?, 0x4e1d19ef2b6c891f?)
+	runtime/sema.go:95 +0x25
+internal/sync.(*Mutex).lockSlow(0x25da7ec)
+	internal/sync/mutex.go:149 +0x15a
+internal/sync.(*Mutex).Lock(...)
+	internal/sync/mutex.go:70
+sync.(*Mutex).Lock(...)
+	sync/mutex.go:46
+sync.(*Once).doSlow(0x253838fec320?, 0x24b76e8)
+	sync/once.go:74 +0x48
+sync.(*Once).Do(...)
+	sync/once.go:69
+github.com/system-inc/adamic/internal/oracle.identity(0x2538387bafc8)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:174 +0x65
+github.com/system-inc/adamic/internal/oracle.cachedNode(0x2538387bafc8, {0x2538389242c0, 0x3f}, 0x253838969c40)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:312 +0x6c
+github.com/system-inc/adamic/internal/oracle.onNode(0x2538387bafc8, {0x2538389242c0, 0x3f})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:556 +0x9d
+github.com/system-inc/adamic/internal/oracle.stringBrandOracle(0x2538387bafc8, {0xf3d6b5, 0x5})
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:32 +0x194
+github.com/system-inc/adamic/internal/oracle.TestStringBrandPlain(0x2538387bafc8)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:51 +0x2e
+testing.tRunner(0x2538387bafc8, 0x24b6ea0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 44 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x25383879eb40)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2538387bb688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestStringBrandRealRefused(0x2538387bb688)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:58 +0x18
+testing.tRunner(0x2538387bb688, 0x24b6eb0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 45 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x25383879eb40)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2538387bb8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestStringBrandValue(0x2538387bb8c8)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:69 +0x18
+testing.tRunner(0x2538387bb8c8, 0x24b6ec8)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 46 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x25383879eb40)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2538387bbb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestStringBrandDestructureRefused(0x2538387bbb08)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:72 +0x18
+testing.tRunner(0x2538387bbb08, 0x24b6e78)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 47 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x25383879eb40)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2538387bbd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestStringBrandUnknownCastRefused(0x2538387bbd48)
+	github.com/system-inc/adamic/internal/oracle/string_brand_test.go:77 +0x1f
+testing.tRunner(0x2538387bbd48, 0x24b6ec0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 122 [IO wait]:
+internal/poll.runtime_pollWait(0x7fd818080200, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x25383b0c50e0?, 0x253839082200?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x25383b0c50e0, {0x253839082200, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x25383b0dc2a8, {0x253839082200?, 0x4cf3d0?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x25383b8665a0, {0x24a5028, 0x25383b0dc2a8})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x24a5168, 0x25383b8665a0}, {0x24a5028, 0x25383b0dc2a8}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x25383b0dc2a8?, {0x24a5168?, 0x25383b8665a0?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x25383b0dc2a8, {0x24a5168, 0x25383b8665a0})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x24a5168, 0x25383b8665a0}, {0x24a50a8, 0x25383b0dc2a8}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x24b6ec0?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 121
+	os/exec/exec.go:767 +0x92b
+
+goroutine 121 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x25383861fc78, 0x4, 0x253838864c60, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x25383861fca6?, 0x25383861fdd0?, 0x575ccb?, 0x18?, 0x2431de0?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x253838f0ab00)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x4?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x253838f096c0)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x253838f096c0)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x253838f096c0)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.compileRuntime.func1()
+	github.com/system-inc/adamic/internal/native/library.go:446 +0x433
+sync.(*WaitGroup).Go.func1()
+	sync/waitgroup.go:258 +0x4a
+created by sync.(*WaitGroup).Go in goroutine 37
+	sync/waitgroup.go:238 +0x7d
+FAIL	github.com/system-inc/adamic/internal/oracle	60.186s
+FAIL

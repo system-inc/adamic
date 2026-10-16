@@ -1,0 +1,326 @@
+{
+  "gomaxprocs": 4,
+  "cpu_max": "400000 100000",
+  "tests": [
+    {
+      "test": "TestStringBrandCastChecksMissing",
+      "seconds": 0.45,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+      "seconds": 0.63,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "seconds": 0.74,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "seconds": 0.82,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestStringBrandCastKeepsLiterals",
+      "seconds": 0.38,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestStringBrandRepresentation",
+      "seconds": 0.52,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestStringBrandRepresentationRejectsLayout",
+      "seconds": 1.44,
+      "log": "lower.log"
+    },
+    {
+      "test": "TestStringBrandReadRefused",
+      "seconds": 0.27,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandIndexRefused",
+      "seconds": 0.27,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandDestructureRefused",
+      "seconds": 0.12,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandUnknownCastRefused",
+      "seconds": 0.1,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandEscape",
+      "seconds": 10.01,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandMap",
+      "seconds": 9.67,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandOptional",
+      "seconds": 10.2,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandPlain",
+      "seconds": 9.94,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandRealRefused",
+      "seconds": 0.11,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandValue",
+      "seconds": 1.02,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestStringBrandUnescape",
+      "seconds": 1.18,
+      "log": "fixtures-green.log"
+    },
+    {
+      "test": "TestEveryMapAProgramHoldsIsSorted",
+      "seconds": 0.0,
+      "log": "readers-and-maps-retry.log"
+    },
+    {
+      "test": "TestASortedMapIsNilWhereAPlainMapIs",
+      "seconds": 0.01,
+      "log": "readers-and-maps-retry.log"
+    },
+    {
+      "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+      "seconds": 0.07,
+      "log": "readers-and-maps-retry.log"
+    },
+    {
+      "test": "TestCallTargetReaders",
+      "seconds": 38.31,
+      "log": "readers-and-maps-retry.log"
+    },
+    {
+      "test": "TestProduct_NativeRuntimesSanitized0",
+      "seconds": 32.46,
+      "log": "runtime-products.log"
+    },
+    {
+      "test": "TestProduct_NativeRuntimesCounted0",
+      "seconds": 28.78,
+      "log": "runtime-products.log"
+    },
+    {
+      "test": "TestProduct_NativeRuntimesRelease0",
+      "seconds": 15.4,
+      "log": "runtime-products.log"
+    },
+    {
+      "test": "TestCountsAreRecordedTable",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_030",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_029",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_027",
+      "seconds": 0.02,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_025",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_031",
+      "seconds": 0.06,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_026",
+      "seconds": 0.05,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_024",
+      "seconds": 0.04,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_023",
+      "seconds": 0.05,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_020",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_019",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_018",
+      "seconds": 0.02,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_021",
+      "seconds": 0.06,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_011",
+      "seconds": 0.07,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_017",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_016",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_012",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_015",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_010",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_005",
+      "seconds": 0.04,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_006",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_008",
+      "seconds": 0.02,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_009",
+      "seconds": 0.04,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_007",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_003",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_004",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_000",
+      "seconds": 0.04,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_028",
+      "seconds": 0.03,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_028/internal/oracle/testdata/string_brand_plain.a",
+      "seconds": 16.6,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_013",
+      "seconds": 0.05,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_013/internal/oracle/testdata/string_brand_value.a",
+      "seconds": 16.62,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_014",
+      "seconds": 0.02,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_014/internal/oracle/testdata/string_brand_optional.a",
+      "seconds": 16.73,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_022",
+      "seconds": 0.02,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_022/internal/oracle/testdata/string_brand_map.a",
+      "seconds": 16.77,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_001",
+      "seconds": 0.01,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_001/internal/oracle/testdata/string_brand_escape.a",
+      "seconds": 0.95,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_002",
+      "seconds": 0.0,
+      "log": "counts-check.log"
+    },
+    {
+      "test": "TestCountsAreRecorded_002/internal/oracle/testdata/string_brand_unescape.a",
+      "seconds": 1.1,
+      "log": "counts-check.log"
+    }
+  ]
+}
