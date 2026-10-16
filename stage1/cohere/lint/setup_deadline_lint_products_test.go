@@ -2,6 +2,7 @@ package lint
 
 import (
 	"context"
+	"path/filepath"
 	"testing"
 )
 
@@ -10,17 +11,17 @@ import (
 // until their cold builds meet the build phase grain (#c5k975w, #3he8f8g).
 func TestProduct_FactoryHooksLowered(t *testing.T) {
 	t.Parallel()
-	factoryHooksLowered(t, context.Background(), 0)
+	requireLintArtifacts(t, filepath.Dir(factoryHooksLowered(t, context.Background(), 0)), "lint.c", "lint.mjs")
 }
 func TestProduct_FactoryHooksMutantLowered(t *testing.T) {
 	t.Parallel()
-	factoryHooksLowered(t, context.Background(), 1)
+	requireLintArtifacts(t, filepath.Dir(factoryHooksLowered(t, context.Background(), 1)), "lint.c", "lint.mjs")
 }
 func TestProduct_FactoryHooksNative(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	factoryHooksNative(t, ctx, factoryHooksLowered(t, ctx, 0))
+	requireLintExecutable(t, factoryHooksNative(t, ctx, factoryHooksLowered(t, ctx, 0)))
 }
 
 // Independently selectable shared preparation check; it imposes no setup deadline.

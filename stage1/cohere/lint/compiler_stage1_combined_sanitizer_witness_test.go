@@ -53,7 +53,12 @@ func compilerAgreementHeapWitnessNative(t *testing.T) string {
 
 func TestProduct_CompilerAgreementCheckerHeapWitness(t *testing.T) {
 	t.Parallel()
-	compilerAgreementMeasureProduct(t, compilerAgreementHeapWitnessNative)
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
+		binary := compilerAgreementHeapWitnessNative(t)
+		requireLintArtifacts(t, filepath.Dir(binary), "lint.c")
+		requireLintExecutable(t, binary)
+		return binary
+	})
 }
 
 // compilerAgreementHeapWitnessOwner is the one group that holds no-bitwise, the only rule whose code reaches the write.
