@@ -212,6 +212,36 @@
     "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
       "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
     ],
+    "stage1/cohere/json TestProduct_JsonFindsClassOrderAnswer": [
+      "stage1/cohere/json/oracles TestProduct_JSONClassOrderAnswer"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsGoOracle": [
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_0": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_0"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_1": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_1"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsPrinterMutant_2": [
+      "stage1/cohere/json/oracles TestProduct_JSONPrinterMutant_2"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsUpstreamOracle": [
+      "stage1/cohere/json/oracles TestProduct_JSONAuditOracle"
+    ],
+    "stage1/cohere/json TestProduct_JsonFindsUpstreamParityVerdict": [
+      "stage1/cohere/json/oracles TestProduct_JSONUpstreamParityVerdict"
+    ],
+    "stage1/cohere/json/oracles TestProduct_JSONClassOrderAnswer": [
+      "stage1/cohere/json TestProduct_JSONPinnedCorpus",
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle"
+    ],
+    "stage1/cohere/json/oracles TestProduct_JSONUpstreamParityVerdict": [
+      "stage1/cohere/json TestProduct_JSONPinnedCorpus",
+      "stage1/cohere/json/oracles TestProduct_JSONGoOracle",
+      "stage1/cohere/json/oracles TestProduct_JSONAuditOracle"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_lists"
