@@ -201,54 +201,28 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 	}
 }
 
+// Keep the inherited fixtures in their registration order; new witnesses are
+// explicit entries in oracle_test.go and run in the same bounded families.
 func init() {
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/async_*.a"))
-	if err != nil {
-		panic(err)
-	}
-	for _, path := range paths {
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			panic(err)
-		}
+	for _, path := range []string{
+		"internal/oracle/testdata/async_coverage_discard.a",
+		"internal/oracle/testdata/async_coverage_parameters.a",
+		"internal/oracle/testdata/async_coverage_reject_eager.a",
+		"internal/oracle/testdata/async_coverage_reject_empty.a",
+		"internal/oracle/testdata/async_coverage_reject_nested.a",
+		"internal/oracle/testdata/async_coverage_typeof.a",
+		"internal/oracle/testdata/async_coverage_unions.a",
+		"internal/oracle/testdata/async_coverage_values.a",
+		"internal/oracle/testdata/async_nested.a",
+		"internal/oracle/testdata/async_plain.a",
+		"internal/oracle/testdata/async_three.a",
+		"internal/oracle/testdata/async_throw.a",
+		"internal/oracle/testdata/async_typeof.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{filepath.ToSlash(relative), true, false})
-	}
-}
-
-func TestAsyncFixturesAgreeWithNode(t *testing.T) {
-	t.Parallel()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/async_*.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, path := range paths {
-		t.Run(filepath.Base(path), func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			oracle := onNode(t, path)
-			observed, leaked, comparable := nativelyCheckingLeaks(t, program, oracle.exitCode == 0)
-			if leaked != "" {
-				t.Fatal(leaked)
-			}
-			if comparable {
-				if diff := disagreement(oracle, observed); diff != "" {
-					t.Fatal(diff)
-				}
-			}
-			if diff := disagreement(oracle, onJavaScriptBackend(t, program)); diff != "" {
-				t.Fatal(diff)
-			}
-		})
+		}{path, true, false})
 	}
 }
