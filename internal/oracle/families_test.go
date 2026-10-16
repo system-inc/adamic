@@ -58,6 +58,10 @@ var families = []family{
 		"internal/oracle/testdata/user_iterators.a",
 		"internal/oracle/testdata/typed_arrays_integer.a",
 		"internal/oracle/testdata/typed_arrays_integer_stop.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
@@ -86,6 +90,10 @@ var families = []family{
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 		"internal/oracle/testdata/typed_arrays_integer.a",
 		"internal/oracle/testdata/typed_arrays_integer_stop.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
 	}},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
@@ -109,6 +117,10 @@ var families = []family{
 		"internal/oracle/testdata/async_void_value.a",
 		"internal/oracle/testdata/typed_arrays_integer.a",
 		"internal/oracle/testdata/typed_arrays_integer_stop.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
 	}},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},

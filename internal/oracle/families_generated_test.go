@@ -775,6 +775,26 @@ func TestNativeAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
 	runNativeAgreesShard(t, -26)
 }
 
+func TestNativeAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -27)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -28)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -29)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -30)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -1540,6 +1560,26 @@ func TestWASIAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
 	runWASIAgreesShard(t, -24)
 }
 
+func TestWASIAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -25)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -26)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -27)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -28)
+}
+
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestWASIAgreesWithNode")
@@ -1858,6 +1898,26 @@ func TestCountsAreRecorded_typed_arrays_integer(t *testing.T) {
 func TestCountsAreRecorded_typed_arrays_integer_stop(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -18)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -19)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -20)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -21)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -22)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
