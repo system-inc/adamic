@@ -12,6 +12,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -19,8 +21,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
-
-const repository = "../../.."
 
 // firstDifference says where two outputs first differ, line by line, or "" when they don't.
 func firstDifference(got string, want string) string {
@@ -65,21 +65,7 @@ func lowerProgram(path string) (*ir.Program, error) {
 	return result, nil
 }
 
-// bounded prepares a child; execute and combinedOutput run it with progress-based guards.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	// The child guard owns hang detection, including for Go test children.
-	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
-		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
-	}
-	return exec.Command(name, arguments...)
-}
-
-func combinedOutput(command *exec.Cmd) ([]byte, error) {
-	return childguard.CombinedOutput(command, childguard.Options{})
-}
-
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
+func execute(t *testing.T, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
 	if result, ok := executeShards(t, environment, name, arguments); ok {
 		return result
@@ -87,9 +73,9 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	return executeOne(t, environment, name, arguments...)
 }
 
-func executeOne(t *testing.T, environment []string, name string, arguments ...string) run {
+func executeOne(t *testing.T, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	command := oracles.Bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -101,13 +87,13 @@ func executeOne(t *testing.T, environment []string, name string, arguments ...st
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
+func onNode(t *testing.T, path string, arguments ...string) oracles.Run {
 	t.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -115,7 +101,7 @@ func onNode(t *testing.T, path string, arguments ...string) run {
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
+func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) oracles.Run {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
@@ -125,7 +111,7 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 }
 
 // nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
+func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) oracles.Run {
 	t.Helper()
 	result, _ := natively(t, program, arguments...)
 	return result
@@ -134,7 +120,7 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
 // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
 // its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
+func natively(t *testing.T, program *ir.Program, arguments ...string) (oracles.Run, string) {
 	t.Helper()
 	binary := nativeBinary(t, program, t.TempDir())
 	var environment []string
@@ -175,24 +161,19 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 			t.Fatal(err)
 		}
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
+		if report.ExitCode == 0 {
 			return ""
 		}
-		return string(report.stdout)
+		return string(report.Stdout)
 	case "linux":
 		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
+		if report.ExitCode == 0 {
 			return ""
 		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+		return fmt.Sprintf("exit %d\n%s", report.ExitCode, report.Stderr)
 	}
 	t.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
-}
-
-type run struct {
-	stdout, stderr []byte
-	exitCode       int
 }
 
 // output keeps stdout and stderr separate for git corpus queries.

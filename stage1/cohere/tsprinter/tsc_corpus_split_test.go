@@ -3,7 +3,6 @@ package tsprinter
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -17,18 +16,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 )
-
-const testTSCCorpusAgreementShards = 8
-
-type tscAgreementFamily struct {
-	Name, Directory                     string
-	Cases                               []printerCase
-	Source, Backend, Sanitized, Release string
-}
-type tscAgreementData struct{ Families []tscAgreementFamily }
 
 var tscAgreementShared struct {
 	once      sync.Once
@@ -37,47 +29,6 @@ var tscAgreementShared struct {
 var tscAgreementFamilyProducts [2]struct {
 	once     sync.Once
 	products tsPrinterProducts
-}
-
-// tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build here, the TSC filter, the
-// oracle outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle
-// runs and its output is captured (statementContextCommand; bounded and combinedOutput). printerGateOnce, in
-// printer_gate_products_test.go, is only a per-process memo, and the oracle it builds is keyed by its bytes.
-var tscAgreementRecipe = []string{
-	"stage1/cohere/tsprinter/tsc_corpus_split_test.go",
-	"stage1/cohere/tsprinter/tsc_corpus_test.go",
-	"stage1/cohere/tsprinter/tsc_units_test.go",
-	"stage1/cohere/tsprinter/expression_products_test.go",
-	"stage1/cohere/tsprinter/expressions_test.go",
-	"stage1/cohere/tsprinter/corpus_test.go",
-	"stage1/cohere/tsprinter/statements_shards_test.go",
-	"stage1/cohere/tsprinter/helpers_test.go",
-}
-
-// tscAgreementInputs are what the corpus product's build reads: the TSC corpus, the gaps file, the Go oracle that
-// answers every case, by its bytes as expressionBuild keys a generated input, and the recipe. Keying every tracked file
-// of the repository cost the first shard of every process 19 s of walking (#4ycgm2n).
-func tscAgreementInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle, err := os.ReadFile(tscOracle(t, root))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return tscAgreementKeyInputs(fmt.Sprintf("%x", sha256.Sum256(oracle)))
-}
-
-// tscAgreementKeyInputs is tscAgreementInputs for the oracle whose bytes hash to oracle.
-func tscAgreementKeyInputs(oracle string) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      "TSC agreement corpus v3",
-		Files:     append([]string{"stage3/drivers/tsc/corpus", "stage1/cohere/tsprinter/testdata/notyet.json"}, tscAgreementRecipe...),
-		Flags:     []string{fmt.Sprint(testTSCCorpusAgreementShards), "oracle " + oracle},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
-	}
 }
 
 // The corpus product's key moves with each corpus file and the recipe, and with nothing else the tree holds: a stand-in
@@ -98,14 +49,14 @@ func TestTSCAgreementKeyIsItsCorpusAndRecipe(t *testing.T) {
 		}
 	}
 	corpus := "stage3/drivers/tsc/corpus/case.ts"
-	files := append([]string{corpus, "stage1/cohere/tsprinter/testdata/notyet.json"}, tscAgreementRecipe...)
+	files := append([]string{corpus, "stage1/cohere/tsprinter/testdata/notyet.json"}, oracles.TSCAgreementRecipe...)
 	for _, name := range files {
 		write(name, name)
 	}
 	write("internal/unrelated.go", "package unrelated")
 	key := func(oracle string) string {
 		t.Helper()
-		key, err := buildcache.Key(root, tscAgreementKeyInputs(oracle))
+		key, err := buildcache.Key(root, oracles.TSCAgreementKeyInputs(oracle))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -128,57 +79,9 @@ func TestTSCAgreementKeyIsItsCorpusAndRecipe(t *testing.T) {
 	}
 }
 
-// Every independently selected leaf can prepare the corpus; no test ordering is required.
-func tscAgreementPrepare(t *testing.T) string {
+func tscAgreementLoad(t *testing.T) oracles.TSCAgreementData {
 	t.Helper()
-	return buildcache.Product(t, tscAgreementInputs(t), func(directory string) error {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			return err
-		}
-		files, err := trackedRootFiles(t, root, "stage3/drivers/tsc/corpus")
-		if err != nil {
-			return err
-		}
-		oracle := tscOracle(t, root)
-		data := tscAgreementData{}
-		for _, statements := range []bool{false, true} {
-			family, entry := "expressions", "main.ts"
-			if statements {
-				family, entry = "statements", "statementsMain.ts"
-			}
-			cases, original := tscCorpus(t, root, files, family, statements, oracle)
-			output := filepath.Join(directory, family)
-			if err := os.MkdirAll(output, 0755); err != nil {
-				return err
-			}
-			for _, name := range []string{"coverage.json"} {
-				content, err := os.ReadFile(filepath.Join(original, name))
-				if err != nil {
-					return err
-				}
-				// A refused file is named by the root the reader supplies (#tqrqx60).
-				if err := os.WriteFile(filepath.Join(output, name), []byte(buildcache.Relative(string(content))), 0644); err != nil {
-					return err
-				}
-			}
-			// Each case's label names its corpus file by the root the reader supplies, never this checkout (#tqrqx60).
-			for i := range cases {
-				cases[i].Label = buildcache.Relative(cases[i].Label)
-			}
-			data.Families = append(data.Families, tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry})
-		}
-		encoded, err := json.Marshal(data)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "manifest.json"), encoded, 0644)
-	})
-}
-
-func tscAgreementLoad(t *testing.T) tscAgreementData {
-	t.Helper()
-	tscAgreementShared.once.Do(func() { tscAgreementShared.directory = tscAgreementPrepare(t) })
+	tscAgreementShared.once.Do(func() { tscAgreementShared.directory = oracles.TSCAgreementPrepare(t) })
 	directory := tscAgreementShared.directory
 	if directory == "" {
 		t.Fatal("shared corpus preparation failed")
@@ -188,7 +91,7 @@ func tscAgreementLoad(t *testing.T) tscAgreementData {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var data tscAgreementData
+	var data oracles.TSCAgreementData
 	if err := json.Unmarshal(encoded, &data); err != nil {
 		t.Fatal(err)
 	}
@@ -209,14 +112,14 @@ func tscAgreementLoad(t *testing.T) tscAgreementData {
 func tscAgreementOwner(label string) int {
 	hash := fnv.New64a()
 	_, _ = hash.Write([]byte(label))
-	return int(hash.Sum64() % uint64(testTSCCorpusAgreementShards/2))
+	return int(hash.Sum64() % uint64(oracles.TSCCorpusAgreementShards/2))
 }
 
-func tscAgreementPartition(t *testing.T, family string, cases []printerCase, offset int) ([]corpusShard, [][]byte, string) {
+func tscAgreementPartition(t *testing.T, family string, cases []oracles.PrinterCase, offset int) ([]oracles.CorpusShard, [][]byte, string) {
 	t.Helper()
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
-	count := testTSCCorpusAgreementShards / 2
-	shards, answers := make([]corpusShard, count), make([][]byte, count)
+	count := oracles.TSCCorpusAgreementShards / 2
+	shards, answers := make([]oracles.CorpusShard, count), make([][]byte, count)
 	inputs := make([]strings.Builder, count)
 	var whole strings.Builder
 	for i, item := range cases {
@@ -226,42 +129,42 @@ func tscAgreementPartition(t *testing.T, family string, cases []printerCase, off
 			label = label[at:]
 		}
 		owner := tscAgreementOwner(label)
-		shards[owner].indices = append(shards[owner].indices, offset+i)
+		shards[owner].Indices = append(shards[owner].Indices, offset+i)
 		inputs[owner].WriteString(">" + escape.Replace(item.Source) + "\n")
 		line := "ok\t" + escape.Replace(item.Want) + "\n"
 		answers[owner] = append(answers[owner], []byte(line)...)
 		whole.WriteString(line)
 	}
 	for i := range shards {
-		shards[i].text = filepath.Join(t.TempDir(), fmt.Sprintf("%s-%03d.txt", family, i))
-		if err := os.WriteFile(shards[i].text, []byte(inputs[i].String()), 0644); err != nil {
+		shards[i].Text = filepath.Join(t.TempDir(), fmt.Sprintf("%s-%03d.txt", family, i))
+		if err := os.WriteFile(shards[i].Text, []byte(inputs[i].String()), 0644); err != nil {
 			t.Fatal(err)
 		}
 	}
 	return shards, answers, whole.String()
 }
 
-func tscAgreementPlan(t *testing.T, data tscAgreementData) (*corpusPlan, [][]byte) {
+func tscAgreementPlan(t *testing.T, data oracles.TSCAgreementData) (*oracles.CorpusPlan, [][]byte) {
 	t.Helper()
-	plan := &corpusPlan{}
+	plan := &oracles.CorpusPlan{}
 	var answers [][]byte
 	var whole strings.Builder
 	for _, family := range data.Families {
-		shards, outputs, want := tscAgreementPartition(t, family.Name, family.Cases, len(plan.labels))
+		shards, outputs, want := tscAgreementPartition(t, family.Name, family.Cases, len(plan.Labels))
 		for i, item := range family.Cases {
-			plan.labels = append(plan.labels, fmt.Sprintf("%s/case-%06d %s", family.Name, i, item.Label))
+			plan.Labels = append(plan.Labels, fmt.Sprintf("%s/case-%06d %s", family.Name, i, item.Label))
 		}
-		plan.shards = append(plan.shards, shards...)
+		plan.Shards = append(plan.Shards, shards...)
 		answers = append(answers, outputs...)
 		whole.WriteString(want)
 	}
-	if len(plan.shards) != testTSCCorpusAgreementShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(plan.shards), testTSCCorpusAgreementShards)
+	if len(plan.Shards) != oracles.TSCCorpusAgreementShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(plan.Shards), oracles.TSCCorpusAgreementShards)
 	}
-	if err := expressionUnion(plan, answers, []byte(whole.String())); err != nil {
+	if err := oracles.ExpressionUnion(plan, answers, []byte(whole.String())); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("union: %d unique family/case ids across %d shards", len(plan.labels), len(plan.shards))
+	t.Logf("union: %d unique family/case ids across %d shards", len(plan.Labels), len(plan.Shards))
 	return plan, answers
 }
 
@@ -270,11 +173,11 @@ func tscAgreementRun(t *testing.T, number int) {
 	setupStart := time.Now()
 	data := tscAgreementLoad(t)
 	plan, answers := tscAgreementPlan(t, data)
-	if !expressionSelection(t, testTSCCorpusAgreementShards)[number] {
+	if !expressionSelection(t, oracles.TSCCorpusAgreementShards)[number] {
 		t.Skip("assigned to another box")
 	}
-	owner := number / (testTSCCorpusAgreementShards / 2)
-	family, shard := data.Families[owner], plan.shards[number]
+	owner := number / (oracles.TSCCorpusAgreementShards / 2)
+	family, shard := data.Families[owner], plan.Shards[number]
 	tscAgreementFamilyProducts[owner].once.Do(func() {
 		tscAgreementFamilyProducts[owner].products = tscAgreementProducts(t, family.Source, family.Name)
 	})
@@ -289,23 +192,23 @@ func tscAgreementRun(t *testing.T, number int) {
 	defer cancel()
 	started := time.Now()
 	defer func() { t.Logf("case work: %.3fs", time.Since(started).Seconds()) }()
-	node := func(path string, arguments ...string) run {
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	node := func(path string, arguments ...string) oracles.Run {
+		runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))
 		if err != nil {
 			t.Fatal(err)
 		}
 		return tscAgreementExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 	}
-	t.Logf("family %s: %d fragments", family.Name, len(shard.indices))
-	args := []string{"--cases", shard.text, "80"}
+	t.Logf("family %s: %d fragments", family.Name, len(shard.Indices))
+	args := []string{"--cases", shard.Text, "80"}
 	var report []map[string]string
-	check := func(name string, result run) {
+	check := func(name string, result oracles.Run) {
 		if err := expressionDisagreement(plan, number, answers[number], result); err != nil {
 			t.Errorf("%s: %v", name, err)
 		}
-		lines := strings.Split(strings.TrimSuffix(string(result.stdout), "\n"), "\n")
+		lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 		expected := strings.Split(strings.TrimSuffix(string(answers[number]), "\n"), "\n")
-		for index, id := range shard.indices {
+		for index, id := range shard.Indices {
 			got := ""
 			if index < len(lines) {
 				got = lines[index]
@@ -330,8 +233,8 @@ func tscAgreementRun(t *testing.T, number int) {
 		}
 	case "darwin":
 		result := tscAgreementExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", products.release}, args...)...)
-		if result.exitCode != 0 {
-			t.Errorf("leaks: exit %d stdout %s stderr %s", result.exitCode, result.stdout, result.stderr)
+		if result.ExitCode != 0 {
+			t.Errorf("leaks: exit %d stdout %s stderr %s", result.ExitCode, result.Stdout, result.Stderr)
 		}
 	default:
 		t.Fatalf("no leak check for %s", runtime.GOOS)
@@ -374,18 +277,18 @@ func TestTSCCorpusAgreement_PlantedDisagreement(t *testing.T) {
 	data := tscAgreementLoad(t)
 	plan, answers := tscAgreementPlan(t, data)
 	number := 0
-	for len(plan.shards[number].indices) == 0 {
+	for len(plan.Shards[number].Indices) == 0 {
 		number++
 	}
-	results := make([]run, len(answers))
+	results := make([]oracles.Run, len(answers))
 	for i := range answers {
-		family := data.Families[i/(testTSCCorpusAgreementShards/2)]
-		results[i] = onNode(t, family.Source, "--cases", plan.shards[i].text, "80")
+		family := data.Families[i/(oracles.TSCCorpusAgreementShards/2)]
+		results[i] = onNode(t, family.Source, "--cases", plan.Shards[i].Text, "80")
 		if err := expressionDisagreement(plan, i, answers[i], results[i]); err != nil {
 			t.Fatal(err)
 		}
 	}
-	results[number].stdout[0] = 'X'
+	results[number].Stdout[0] = 'X'
 	caught := 0
 	for i, result := range results {
 		if err := expressionDisagreement(plan, i, answers[i], result); err != nil {
@@ -408,7 +311,7 @@ func tscAgreementProducts(t *testing.T, path, family string) tsPrinterProducts {
 }
 
 // Keep the same process status, stderr and byte oracles under a case-only deadline.
-func tscAgreementExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
+func tscAgreementExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, arguments...)
 	if environment != nil {
@@ -424,5 +327,5 @@ func tscAgreementExecute(t *testing.T, ctx context.Context, environment []string
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }

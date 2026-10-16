@@ -6,57 +6,36 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
-
-type upstreamOutcome struct {
-	Family, Label, Source, Go, Prettier, Embedded, PrettierError, EmbeddedError string
-}
-
-func upstreamOutcomes(t *testing.T) []upstreamOutcome {
-	t.Helper()
-	data, err := os.ReadFile("testdata/tsc-upstream-differences.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	var pinned struct {
-		Version string
-		Records []upstreamOutcome
-	}
-	if err := json.Unmarshal(data, &pinned); err != nil {
-		t.Fatal(err)
-	}
-	if pinned.Version != "3.9.6" {
-		t.Fatalf("upstream outcome version: %s", pinned.Version)
-	}
-	return pinned.Records
-}
 
 // The port always matches Go. External printers retain their own exact bytes or
 // parser errors; these outcomes are compared, never normalized into Go output.
-func comparePrinterLibrary(t *testing.T, name string, result run, specs, family string, embedded bool) {
+func comparePrinterLibrary(t *testing.T, name string, result oracles.Run, specs, family string, embedded bool) {
 	t.Helper()
 	comparePrinterLibraryCases(t, name, result, specs, family, embedded, true)
 }
 
 // A unit checks every applicable pinned outcome; the parent checks the full census.
-func comparePrinterLibraryCases(t *testing.T, name string, result run, specs, family string, embedded, census bool) {
+func comparePrinterLibraryCases(t *testing.T, name string, result oracles.Run, specs, family string, embedded, census bool) {
 	t.Helper()
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("%s: exit %d stderr %s", name, result.exitCode, result.stderr)
+	if result.ExitCode != 0 || len(result.Stderr) != 0 {
+		t.Fatalf("%s: exit %d stderr %s", name, result.ExitCode, result.Stderr)
 	}
 	data, err := os.ReadFile(specs)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var cases []printerCase
+	var cases []oracles.PrinterCase
 	if err := json.Unmarshal(data, &cases); err != nil {
 		t.Fatal(err)
 	}
-	lines := strings.Split(strings.TrimSuffix(string(result.stdout), "\n"), "\n")
+	lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 	if len(lines) != len(cases) {
 		t.Fatalf("%s: %d answers, want %d", name, len(lines), len(cases))
 	}
-	records := upstreamOutcomes(t)
+	records := oracles.UpstreamOutcomes(t)
 	seen := make(map[string]bool)
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	differences, refusals := 0, 0
@@ -106,10 +85,10 @@ func TestTSCCorpusUpstreamDifferences(t *testing.T) {
 		t.Skip("set ADAMIC_TS_PRETTIER to prettier@3.9.6; #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	for _, family := range []string{"expressions", "statements"} {
-		var cases []printerCase
-		for _, record := range upstreamOutcomes(t) {
+		var cases []oracles.PrinterCase
+		for _, record := range oracles.UpstreamOutcomes(t) {
 			if record.Family == family {
-				cases = append(cases, printerCase{record.Label, record.Source, record.Go})
+				cases = append(cases, oracles.PrinterCase{Label: record.Label, Source: record.Source, Want: record.Go})
 			}
 		}
 		data, _ := json.Marshal(cases)
@@ -120,7 +99,7 @@ func TestTSCCorpusUpstreamDifferences(t *testing.T) {
 		npm, _ := filepath.Abs("testdata/expressions.mjs")
 		comparePrinterLibrary(t, "npm Prettier", execute(t, nil, "node", npm, library, specs), specs, family, false)
 		fork, _ := filepath.Abs("testdata/embedded.mjs")
-		bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+		bundles, _ := filepath.Abs(filepath.Join(oracles.Repository, "cohere/internal/format/prettier/bundles"))
 		comparePrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", fork, bundles, specs), specs, family, true)
 	}
 }
