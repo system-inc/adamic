@@ -200,8 +200,9 @@ type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
 	roots, caches, temporary, kernel, system, buildLogs                                      []string
 	searched, executables                                                                    map[string]bool
-	// ran is every program a process of the run executed, as the trace names it.
-	ran map[string]bool
+	// ran is every program a process of the run executed, as the trace names it; opened every file a process of it read the
+	// content of, which a case probe may ask about too (caseProbe).
+	ran, opened map[string]bool
 	// goCaches are goCache's spellings, as written and resolved, each without its leading slash (goCacheJoined).
 	goCaches []string
 }
@@ -212,7 +213,7 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	if err != nil {
 		return nil, err
 	}
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}, opened: map[string]bool{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
 	facts.roots, facts.caches = variants(root), variants(cache)
 	// Where a product's go keeps things: toolchain's go, under the environment GoBuild gives it.
@@ -596,11 +597,14 @@ func (facts *traceFacts) landsWhereMachinesAgree(directory string) bool {
 
 // caseProbe says whether a lookup that missed was a program asking whether the file system is case-sensitive:
 // typescript-go's osvfs stats its own executable with every letter's case swapped as it starts (os.go's
-// fileSystemCaseSensitivity), in every process that links it, and the answer is the machine's, not a path's. Only a
-// swap of a program the run executed is one; any other path in another case is the path it names.
+// fileSystemCaseSensitivity), in every process that links it, and the answer is the machine's, not a path's. TypeScript's
+// JavaScript sys asks the same of its own __filename, typescript.js, a file node read rather than ran (#4gp2ytz:
+// stage3/api's, keyed as an absolute path naming the checkout, so the adapted tree keyed apart at two checkout paths).
+// Only a swap of a program the run executed or a file it read is one; any other path in another case is the path it
+// names.
 func (facts *traceFacts) caseProbe(name string) bool {
 	swapped := swapCase(name)
-	return swapped != name && (facts.ran[swapped] || facts.executables[swapped])
+	return swapped != name && (facts.ran[swapped] || facts.executables[swapped] || facts.opened[swapped])
 }
 
 // swapCase is name with each letter's case swapped, as osvfs swaps it.
@@ -884,6 +888,9 @@ func readKind(call, rest string, failed bool) int {
 func (state *traceState) record(pid, process int, name string, kind int) {
 	if kind&readExec != 0 {
 		state.facts.ran[name] = true
+	}
+	if kind&readContent != 0 {
+		state.facts.opened[name] = true
 	}
 	if state.keying[pid] > 0 || state.keyingTree[process] {
 		return
