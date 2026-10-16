@@ -165,7 +165,8 @@ type Report struct {
 	// Window is how a settled build's reads were taken (#mmpt615's census): BuildWindowed, BuildLeanSuperset or
 	// BuildSuperset.
 	Window string `json:"window,omitempty"`
-	// Lean is a settled build keyed by the lean recipe (leanRecipeOf): the products Loom's sampled key check draws from.
+	// Lean is a product keyed by the lean recipe (leanRecipeOf), settled or found under a lean set (leanSet): the products
+	// Loom's sampled key check draws from, hits as well as builds.
 	Lean bool `json:"lean,omitempty"`
 }
 
@@ -1476,7 +1477,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, reason)
 			continue
 		}
-		set.Trace = filepath.Base(facts.trace)
+		set.Trace, set.Lean = filepath.Base(facts.trace), leanRecipe
 		settingsOverride = recipes[name].settings
 		set, evaluated, product, err := recordUnion(facts.root, facts.cache, entry.NameKey, entry.Name, set, func(key string) string {
 			return placeSettled(facts.cache, key, entry)
@@ -1493,7 +1494,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
 		settlement.Settled = append(settlement.Settled, line)
-		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window, Lean: leanRecipe})
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window, Lean: set.Lean})
 	}
 	for id, entry := range built {
 		if !settled[id] {
@@ -1518,7 +1519,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			continue
 		}
 		reported[entry.NameKey+key] = true
-		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound})
+		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound, Lean: leanSet(facts.cache, entry.NameKey, key)})
 	}
 	os.Remove(filepath.Join(facts.cache, "pending", filepath.Base(facts.trace)))
 	sort.Strings(settlement.Refused)
@@ -1604,7 +1605,8 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // recordUnion keys set on this tree, places the product by placing it under the key, and records the set first among
 // nameKey's, all under the read sets' lock. An earlier set that still values as it was recorded came from a build of
 // this same tree: its reads are ones this build could have made too (a build's reads can vary from run to run, and
-// two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it.
+// two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it. The
+// union is lean only when every set in it is: a lean set folded with a whole one keys by the whole recipe's reads too.
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
@@ -1612,7 +1614,7 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		var kept []readSet
 		for _, other := range file.Sets {
 			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
-				set.Entries = sortedEntries(set.Entries, other.Entries)
+				set.Entries, set.Lean = sortedEntries(set.Entries, other.Entries), set.Lean && other.Lean
 				continue
 			}
 			kept = append(kept, other)
@@ -1630,6 +1632,21 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		return nil
 	})
 	return set, evaluated, product, err
+}
+
+// leanSet says whether the set nameKey's read sets in cache store under key is lean: what a found product's report
+// says, so Loom's sampled key check draws from lean products a run found as well as the ones it built.
+func leanSet(cache, nameKey, key string) bool {
+	file, err := loadReads(cache, nameKey)
+	if err != nil {
+		return false
+	}
+	for _, set := range file.Sets {
+		if set.Key == key {
+			return set.Lean
+		}
+	}
+	return false
 }
 
 // placeSettled puts a settled build's product under its key and returns where it is: a product already there (the same
