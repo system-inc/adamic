@@ -1,11 +1,14 @@
 # Benchmarks
 
-Six fair programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
+Seven fair programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
 
 ```
 go run ./bench                      # every program, 5 interleaved rounds, best of 5
 go run ./bench -rounds 9 -only trees,nbody -timeout 300s
+go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 ```
+
+`-threads` interleaves native thread settings too; Node and Bun use the independent sequential `parallelMap` shim. Parallel counts use one thread so peak liveness is reproducible.
 
 The runs are interleaved round by round, so a machine that slows down slows all three alike, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it's what explains a native time. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
@@ -16,7 +19,20 @@ The runs are interleaved round by round, so a machine that slows down slows all 
 | `tokenizer.ts` | a lexer walking a 3.5-million-code-unit text with `charCodeAt`, some of it non-ASCII |
 | `word_count.ts` | `split`, then a `Map<string, number>` over a million words, then a sort |
 | `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
+| `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
+
+## Parallel files, October 6, 2026
+
+`parallel_files.a` generates 4,096 files, tokenizes and summarizes them through pure functions, then merges in input order. Linux amd64, AMD EPYC 9V74, four quota-limited CPUs (`nproc` 5), clang 20.1.8, Node 24.19.0, Bun 1.3.14. Best of five interleaved rounds: native 1/2/4 threads **0.744/0.454/0.312 s**, Node **0.637 s**, Bun **0.866 s**. All answers match. Load before **0.11/3.16/6.23**, after **0.69/3.10/6.14**; tests had finished, but the longer load averages still include them.
+
+[Every round](parallel_files.measurements.log) includes memory and counts. Node uses oracle/node.mjs for `.a` sources; Bun 1.3.14 executes `.a` directly. Both resolve the independent sequential shim; existing `.ts` programs remain unchanged.
+
+## TSan fixture units
+
+The source batch's reported time was 82 seconds. Its full 4,096-file program now runs as six independent top-level oracle tests: three attempts with `ADAMIC_THREADS=1` and three with the override unset. Each attempt still compares the full ordered answer with Node; no input or thread setting was removed. Every subprocess has a one-minute deadline.
+
+On the piece 6 Linux worker (four quota-limited CPUs, `nproc` 5), the one-thread units took 11.02, 19.02 and 15.18 seconds; the default-pool units took 10.39, 10.22 and 13.81 seconds. These are whole test-unit timings, including build and oracle work, from `go test -count=1 -v -timeout 90s ./internal/oracle -run 'Async|Parallel|Concurrency'`. The 82-second figure is supplied historical evidence, not a before measurement on this worker; the split establishes bounded units, not a speedup.
 
 ## Noisy cloud numbers, October 5, 2026
 
