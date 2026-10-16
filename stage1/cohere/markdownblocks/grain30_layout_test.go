@@ -9,6 +9,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 var grainLayoutOnce sync.Once
@@ -32,7 +34,7 @@ func runGrainLayout(t *testing.T, slice string, shard int) {
 	stop := grainOwn(t)
 	defer stop()
 	grainPlanted(t)
-	all, files := blockCorpus(t, products.root, "whitespace")
+	all, files := oracles.BlockCorpus(t, products.root, "whitespace")
 	if shard < grainCorpusShards {
 		inputs := grainSelect(all, shard)
 		if len(inputs) == 0 {
@@ -257,7 +259,7 @@ func TestMarkdownCodeBlockLayout_010(t *testing.T) { t.Parallel(); runGrainLayou
 
 func TestMarkdownCodeBlockLayoutUnion(t *testing.T) {
 	t.Parallel()
-	all, _ := blockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
+	all, _ := oracles.BlockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
 	grainUnion(t, all, 11, "TestMarkdownCodeBlockLayout", "runGrainLayout")
 }
 
@@ -285,7 +287,7 @@ func TestMarkdownHTMLBlockLayout_010(t *testing.T) { t.Parallel(); runGrainLayou
 
 func TestMarkdownHTMLBlockLayoutUnion(t *testing.T) {
 	t.Parallel()
-	all, _ := blockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
+	all, _ := oracles.BlockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
 	grainUnion(t, all, 11, "TestMarkdownHTMLBlockLayout", "runGrainLayout")
 }
 
@@ -313,6 +315,6 @@ func TestMarkdownRootLayout_010(t *testing.T) { t.Parallel(); runGrainLayout(t, 
 
 func TestMarkdownRootLayoutUnion(t *testing.T) {
 	t.Parallel()
-	all, _ := blockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
+	all, _ := oracles.BlockCorpus(t, markdownLayoutProductRoot(t), "whitespace")
 	grainUnion(t, all, 11, "TestMarkdownRootLayout", "runGrainLayout")
 }

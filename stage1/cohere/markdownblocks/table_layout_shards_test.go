@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 	"hash/fnv"
 	"os"
 	"path/filepath"
@@ -32,7 +33,7 @@ func tableLayoutShard(key string) int {
 }
 
 var tableLayoutSharedProducts tableLayoutProducts
-var tableLayoutInputs []auditInput
+var tableLayoutInputs []oracles.AuditInput
 var tableLayoutSetupElapsed time.Duration
 
 // Every selected shard prepares once per process, before its own deadline.
@@ -48,7 +49,7 @@ func tableLayoutReady(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		tableLayoutInputs, _ = blockCorpus(t, root, "whitespace")
+		tableLayoutInputs, _ = oracles.BlockCorpus(t, root, "whitespace")
 		tableLayoutSetupElapsed = time.Since(started)
 	})
 	if tableLayoutInputs == nil {
@@ -66,8 +67,8 @@ func TestMarkdownTableLayout_Setup(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
 
-func tableLayoutPartition(inputs []auditInput) [][]auditInput {
-	shards := make([][]auditInput, testMarkdownTableLayoutShards)
+func tableLayoutPartition(inputs []oracles.AuditInput) [][]oracles.AuditInput {
+	shards := make([][]oracles.AuditInput, testMarkdownTableLayoutShards)
 	for _, input := range inputs {
 		shard := tableLayoutShard(input.Name)
 		shards[shard] = append(shards[shard], input)
@@ -81,9 +82,9 @@ func TestMarkdownTableLayoutUnion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
+	inputs, _ := oracles.BlockCorpus(t, root, "whitespace")
 	shards := tableLayoutPartition(inputs)
-	expected, actual := make(map[auditInput]int), make(map[auditInput]int)
+	expected, actual := make(map[oracles.AuditInput]int), make(map[oracles.AuditInput]int)
 	for _, input := range inputs {
 		expected[input]++
 	}
@@ -152,10 +153,7 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 	t.Helper()
 	var products tableLayoutProducts
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
+	var err error
 	products.main, err = filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -202,60 +200,10 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 			return filepath.Join(directory, "program"), nil
 		}))
 	}
-	directory := filepath.Join(artifactDirectory, "table-layout-builds")
-	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []string{"list", "document"} {
-		if target != "" && target != mode {
-			continue
-		}
-		driver := "list_go.go"
-		command := "adamic_markdown_lists"
-		if mode == "document" {
-			driver = "document_go.go"
-			command = "adamic_markdown_doclayout"
-		}
-		driverPath, err := filepath.Abs(filepath.Join("testdata", driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		main := filepath.Join(cohere, "cmd", command, "main.go")
-		replacements := map[string]string{main: driverPath}
-		if mode == "list" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-		if err != nil {
-			t.Fatal(err)
-		}
-		overlayPath := filepath.Join(directory, mode+".json")
-		write(t, overlayPath, overlay)
-		goInputs := buildcache.Inputs{Name: "markdown table Go " + mode, Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/" + driver}, Flags: []string{string(overlay), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{buildcache.Tool("go", "version")}}
-		if mode == "list" {
-			goInputs.Files = append(goInputs.Files, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
-		}
-		product := buildcache.Product(t, goInputs, func(product string) error {
-			ctx, cancel := markdownLayoutSetupContext(t.Context())
-			defer cancel()
-			build := tableLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)...)
-			build.Dir = cohere
-			if output, err := build.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(product, "oracle")
-		if mode == "list" {
-			products.list = binary
-		} else {
-			products.document = binary
-		}
+	// The Go sides are the compiler-free oracles package's products (#znxt7v5).
+	if target == "" {
+		products.list = oracles.TableGoOracle(t, "list")
+		products.document = oracles.TableGoOracle(t, "document")
 	}
 	if target == "" {
 		products.sanitized = builds[0].await(t)
@@ -271,7 +219,7 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 	return products
 }
 
-func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, products tableLayoutProducts, planted string) *layoutFixture {
+func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []oracles.AuditInput, products tableLayoutProducts, planted string) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	root, err := filepath.Abs(repository)

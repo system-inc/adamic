@@ -1,79 +1,14 @@
 package markdownblocks
 
 import (
-	"fmt"
-	"path/filepath"
-	"strings"
 	"testing"
-	"unicode/utf16"
-)
 
-func tokenizerEventLiveEnumeration(t *testing.T) (string, [][]uint16, []string, int) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	corpus, files := blockCorpus(t, root, "whitespace")
-	// Upstream selection verifies the two fixed checkout pins against Git.
-	// The live repository portion must independently remain non-empty.
-	repositoryFiles, cohereFiles, checkerFiles := 0, 0, 0
-	for _, item := range corpus {
-		switch {
-		case strings.HasPrefix(item.Name, "cohere/TypeScript/"):
-			checkerFiles++
-		case strings.HasPrefix(item.Name, "cohere/"):
-			cohereFiles++
-		case !strings.HasPrefix(item.Name, "generated/"):
-			repositoryFiles++
-		}
-	}
-	if repositoryFiles == 0 {
-		t.Fatal("repository Markdown corpus is empty")
-	}
-	// Only pinned upstream counts are fixed: cohere 7945d102 and
-	// TypeScript d92d9bfe, using auditCorpus's explicitly selected roots.
-	if census() && (cohereFiles != 786 || checkerFiles != 67) {
-		t.Fatalf("pinned upstream file counts: cohere %d/786, TypeScript %d/67", cohereFiles, checkerFiles)
-	}
-	inputs := [][]uint16{{}}
-	names := []string{"empty"}
-	for _, item := range corpus {
-		inputs = append(inputs, utf16.Encode([]rune(item.Text)))
-		names = append(names, item.Name)
-	}
-	for unit := 0; unit <= 65535; unit++ {
-		inputs = append(inputs, []uint16{uint16(unit)})
-		names = append(names, fmt.Sprintf("unit/%d", unit))
-	}
-	alphabet := []uint16{0, 9, 10, 13, 65279, 65}
-	for length := 1; length <= 5; length++ {
-		count := 1
-		for i := 0; i < length; i++ {
-			count *= len(alphabet)
-		}
-		for n := 0; n < count; n++ {
-			units := make([]uint16, length)
-			number := n
-			for i := range units {
-				units[i] = alphabet[number%len(alphabet)]
-				number /= len(alphabet)
-			}
-			inputs = append(inputs, units)
-			names = append(names, fmt.Sprintf("sequence/%d/%d", length, n))
-		}
-	}
-	for _, prefix := range []string{"", "a", "ab", "abc", "abcd", "abcde", "中", "😀", "a😀"} {
-		for _, tail := range []string{"\t", "\t\t", "\r\n", "\rX\n", "\rX", "\x00\t", "\ufeff\t"} {
-			inputs = append(inputs, utf16.Encode([]rune(prefix+tail)))
-			names = append(names, fmt.Sprintf("columns/%q/%q", prefix, tail))
-		}
-	}
-	return root, inputs, names, files
-}
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
+)
 
 func TestTokenizerEventsUnion(t *testing.T) {
 	t.Parallel()
-	_, inputs, names, _ := tokenizerEventLiveEnumeration(t)
+	_, inputs, names, _ := oracles.TokenizerEventLiveEnumeration(t)
 	shards := tokenizerEventShards(tokenizerEventKeys(names))
 	if len(shards) != testTokenizerEventsShards {
 		t.Fatal("static shard count mismatch")

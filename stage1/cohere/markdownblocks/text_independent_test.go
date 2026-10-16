@@ -8,36 +8,38 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Fixed hash shards keep existing cases in place as repository Markdown grows.
 // ADAMIC_TEST_SHARD=i/n selects top-level shards by index modulo n; unset runs all.
 const testMarkdownTextSplittingShards = 64
 
-func textSplittingInputs(t *testing.T) (string, []auditInput) {
+func textSplittingInputs(t *testing.T) (string, []oracles.AuditInput) {
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
 	}
-	inputs, _ := auditCorpus(t, root)
+	inputs, _ := oracles.AuditCorpus(t, root)
 	textVerifyCorpus(t, inputs)
-	original := append([]auditInput(nil), inputs...)
+	original := append([]oracles.AuditInput(nil), inputs...)
 	for _, input := range original {
 		for i, line := range strings.Split(input.Text, "\n") {
-			inputs = append(inputs, auditInput{Name: fmt.Sprintf("%s:%d", input.Name, i+1), Text: line})
+			inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("%s:%d", input.Name, i+1), Text: line})
 		}
 	}
 	for code := rune(0); code <= 0x10ffff; code++ {
 		if code >= 0xd800 && code <= 0xdfff {
 			continue
 		}
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("U+%06X", code), Text: string(code)})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("U+%06X", code), Text: string(code)})
 	}
 	atoms := []string{"a", "!", "中", "。", "한", "\u3000", "\t", "\n", " ", "\ufe0f", "\U000e0100", "😀", "\U00020000"}
 	for _, a := range atoms {
 		for _, b := range atoms {
 			for _, c := range atoms {
-				inputs = append(inputs, auditInput{Name: "sequence/" + a + b + c, Text: a + b + c})
+				inputs = append(inputs, oracles.AuditInput{Name: "sequence/" + a + b + c, Text: a + b + c})
 			}
 		}
 	}
@@ -45,7 +47,7 @@ func textSplittingInputs(t *testing.T) (string, []auditInput) {
 		for _, selector := range []rune{0xfe00, 0xfe0f, 0xe0100, 0xe01ef} {
 			for _, suffix := range []string{"", "a", "中", "!", " ", "😀"} {
 				text := "a" + string(point) + string(selector) + suffix
-				inputs = append(inputs, auditInput{Name: "selector/" + text, Text: text})
+				inputs = append(inputs, oracles.AuditInput{Name: "selector/" + text, Text: text})
 			}
 		}
 	}

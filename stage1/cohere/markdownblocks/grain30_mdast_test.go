@@ -8,28 +8,30 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-func grainMdastInputs(t *testing.T) (string, []auditInput, int) {
+func grainMdastInputs(t *testing.T) (string, []oracles.AuditInput, int) {
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
 	}
-	inputs, files := blockCorpus(t, root, "whitespace")
+	inputs, files := oracles.BlockCorpus(t, root, "whitespace")
 	smokeStart := len(inputs)
 	for _, text := range []string{"", "~~a\nb~~\n", "$$ meta\na\nb\n$$\n", "$ a $ and $b$\n", "[[target]] {{x}} {% x\ny %}\n", "[^a]: x\n\n[^a]\n", "[x]: /u \"title\"\n\n![a &amp; b][x]\n", "| a | b |\n|:-:|--:|\n|`a\\|b`|~~x~~|\n", "- [x] \n- [ ] a\n\n  > b\n", "<a href=\"x\">t</a>\n", "a &NotEqualTilde; &#x1F600; &#0; \\*\n"} {
-		inputs = append(inputs, auditInput{Name: "generated/mdast/" + text, Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: "generated/mdast/" + text, Text: text})
 	}
 	for _, delimiter := range []string{"---", "+++"} {
 		for _, language := range []string{"", " yaml", " toml", " JSON", "\uFEFFyaml\u00A0", "\u0085yaml"} {
 			for _, closing := range []string{"---", "+++", "...", "---suffix"} {
 				text := delimiter + language + "\n中😀: x\n" + closing + "\n\n# h\n"
-				inputs = append(inputs, auditInput{Name: "generated/mdast-front/" + text, Text: text})
+				inputs = append(inputs, oracles.AuditInput{Name: "generated/mdast-front/" + text, Text: text})
 			}
 		}
 	}
 	for _, text := range []string{"---\n---", "---\n...", "+++\n+++tail", "---yaml\n", "--- yaml\n---suffix\nx", "---\n😀\n...\n中"} {
-		inputs = append(inputs, auditInput{Name: "generated/mdast-front-edge/" + text, Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: "generated/mdast-front-edge/" + text, Text: text})
 	}
 	if os.Getenv("ADAMIC_MDAST_SMOKE") != "" {
 		inputs = append(inputs[smokeStart:smokeStart+11], inputs[len(inputs)-6:]...)

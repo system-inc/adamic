@@ -9,6 +9,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testTokenizerEventsShards = 512
@@ -104,7 +106,7 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 				part[i] = inputs[row]
 			}
 			cases := filepath.Join(t.TempDir(), "cases.txt")
-			write(t, cases, numericBatch(part))
+			write(t, cases, oracles.NumericBatch(part))
 			var expected bytes.Buffer
 			for _, row := range rows {
 				expected.Write(answers[row])

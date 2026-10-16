@@ -2,10 +2,9 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,7 +19,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, files := auditCorpus(t, root)
+	inputs, files := oracles.AuditCorpus(t, root)
 	// This file sweep is small beside the mandatory generated and fixed checks.
 	selection := selectMarkdownFiles(t, root, inputs, files, 1)
 	if selection.Sample {
@@ -28,14 +27,14 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	for _, text := range []string{"", "\ufeff", ">", "> ", ">\t", " > a", "   > a", "    > a", "\t> a", "\t > a", ">> a", "> > a", "\ufeff> a", "\r\na", "\ra", "a\r", "a\r\nb", "😀\t> a"} {
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/prefix/short/%d", len(inputs)), Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/prefix/short/%d", len(inputs)), Text: text})
 	}
 	units := []string{"a", " ", "\t", "\r", "\n", "\x00", "\ufeff", "😀", ">"}
 	for _, a := range units {
 		for _, b := range units {
 			for _, c := range units {
 				text := a + b + c
-				inputs = append(inputs, auditInput{Name: "generated/prefix/" + text, Text: text})
+				inputs = append(inputs, oracles.AuditInput{Name: "generated/prefix/" + text, Text: text})
 			}
 		}
 	}
@@ -43,7 +42,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		for _, prefix := range []string{" ", "\t", "  \t", "\t ", "\ufeff"} {
 			for _, suffix := range []string{"", "a", " ", "\t", "\r\n", "😀"} {
 				text := strings.Repeat(" ", column) + prefix + ">" + suffix
-				inputs = append(inputs, auditInput{Name: "generated/prefix/indent/" + text, Text: text})
+				inputs = append(inputs, oracles.AuditInput{Name: "generated/prefix/indent/" + text, Text: text})
 			}
 		}
 	}
@@ -55,7 +54,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		}
 		unicode.WriteRune(code)
 	}
-	inputs = append(inputs, auditInput{Name: "generated/prefix/unicode", Text: unicode.String() + "😀\t\U0010ffff"})
+	inputs = append(inputs, oracles.AuditInput{Name: "generated/prefix/unicode", Text: unicode.String() + "😀\t\U0010ffff"})
 	dir := t.TempDir()
 	encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	var batch strings.Builder
@@ -64,7 +63,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	}
 	cases := filepath.Join(dir, "cases.txt")
 	write(t, cases, []byte(batch.String()))
-	goBinary := prefixGoOracle(t)
+	goBinary := oracles.PrefixGoOracle(t)
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "actual Go parser primitives", want)
 	main, err := filepath.Abs("testdata/prefix_probe.ts")
@@ -146,36 +145,4 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		t.Logf("parser primitive throughput %s %.1f texts/s, three runs %.6fs; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
 	t.Logf("%d physical files, %d generated, %d sources; exact chunk boundaries/codes and %d quote prefix contexts match actual Go/source/native/backend; ASan/UBSan/leaks", files, len(inputs)-files, len(inputs), len(inputs)*8)
-}
-
-// prefixGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func prefixGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_prefix/main.go")
-	mainGo, err := filepath.Abs("testdata/prefix_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/prefix_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: mainGo, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_prefix.go"): bridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-prefix", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownPrefixGo(t *testing.T) {
-	t.Parallel()
-	prefixGoOracle(t)
 }

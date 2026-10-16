@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
@@ -160,7 +160,7 @@ func markdownASTPrepare(t *testing.T) markdownASTFixture {
 	if err != nil {
 		t.Fatal(err)
 	}
-	corpus, files := blockCorpus(t, root, "whitespace")
+	corpus, files := oracles.BlockCorpus(t, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
 	selection := selectMarkdownFiles(t, root, corpus, files, 1)
 	if selection.Sample {
@@ -188,7 +188,7 @@ func markdownASTPrepare(t *testing.T) markdownASTFixture {
 	cases := filepath.Join(dir, "cases.jsonl")
 	write(t, cases, batch.Bytes())
 	cohere := filepath.Join(root, "cohere")
-	goBinary := astGoOracle(t)
+	goBinary := oracles.ASTGoOracle(t)
 	nativeCases := filepath.Join(dir, "native.txt")
 	want := execute(t, nil, goBinary, cases, nativeCases)
 	clean(t, "Go preprocessing", want)
@@ -206,42 +206,6 @@ func markdownASTPrepare(t *testing.T) markdownASTFixture {
 	}
 	equal(t, "pinned bundle", installed, pinned)
 	return markdownASTFixture{inputs: inputs, files: files, batch: batch.Bytes(), goBinary: goBinary, nativeCases: nativeCases, fork: fork, want: want}
-}
-
-// astGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func astGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_ast/main.go")
-	driver, err := filepath.Abs("testdata/ast_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/ast_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	facts, err := filepath.Abs("testdata/ast_facts.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/adamic_ast.go"): bridge, filepath.Join(cohere, "internal/format/markdown/adamic_ast_facts.go"): facts}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-ast", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownASTGo(t *testing.T) {
-	t.Parallel()
-	astGoOracle(t)
 }
 
 func TestProduct_MarkdownASTLowered(t *testing.T) {

@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testWholeDocumentOraclePreflightShards = 4
@@ -27,79 +27,10 @@ type preflightProducts struct {
 	planted              string
 }
 
-func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightBudget) *preflightProducts {
-	driver, err := filepath.Abs("testdata/go_driver.go")
-	if err != nil {
-		t.Fatal(err)
-	}
+func prepareWholeDocumentPreflight(t *testing.T, root string) *preflightProducts {
 	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_markdown_blocks/main.go")
-	mutations := []struct{ name, path, from, to string }{
-		{"heading prefix", "heading.go", `strings.Repeat("#", currentNode(path).Depth)`, `strings.Repeat("#", currentNode(path).Depth+1)`},
-		{"list marker", "list.go", `rawPrefix = "- "`, `rawPrefix = "+ "`},
-		{"fence length", "print.go", `max(3, getMaxContinuousCount(value, "` + "`" + `")+1)`, `max(4, getMaxContinuousCount(value, "` + "`" + `")+1)`},
-	}
-	alteredSources := make([][]byte, len(mutations))
-	for index, mutation := range mutations {
-		content, err := os.ReadFile(filepath.Join(cohere, "internal/format/markdown", mutation.path))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if strings.Count(string(content), mutation.from) != 1 {
-			t.Fatal("mutant must alter exactly one site")
-		}
-		alteredSources[index] = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
-	}
-	buildFiles := []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata/go_driver.go", "stage1/cohere/markdownblocks/preflight_shards_test.go"}
-	for _, name := range []string{"go.sum", "go.work.sum"} {
-		if _, err := os.Stat(filepath.Join(root, name)); err == nil {
-			buildFiles = append(buildFiles, name)
-		} else if !os.IsNotExist(err) {
-			t.Fatal(err)
-		}
-	}
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name:      "markdownblocks-whole-document-preflight-go-products",
-		Files:     buildFiles,
-		Flags:     []string{"go build -overlay -o cmd/adamic_markdown_blocks/main.go", "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
-		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS", "GOTOOLCHAIN", "GOWORK")},
-	}, func(dir string) error {
-		build := func(replacements map[string]string, binary string) error {
-			replacements[mainPath] = driver
-			overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-			if err != nil {
-				return err
-			}
-			path := binary + ".overlay.json"
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(path)
-			command := preflightCommand(t, budget, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary, mainPath)...)
-			command.Dir = cohere
-			var output bytes.Buffer
-			command.Stdout, command.Stderr = &output, &output
-			if err := preflightRun(budget, command); err != nil {
-				return fmt.Errorf("build: %w\n%s", err, output.Bytes())
-			}
-			return nil
-		}
-		if err := build(map[string]string{}, filepath.Join(dir, "go-printer")); err != nil {
-			return err
-		}
-		for index, mutation := range mutations {
-			altered := filepath.Join(dir, mutation.path)
-			if err := os.WriteFile(altered, alteredSources[index], 0644); err != nil {
-				return err
-			}
-			source := filepath.Join(cohere, "internal/format/markdown", mutation.path)
-			if err := build(map[string]string{source: altered}, filepath.Join(dir, fmt.Sprintf("mutant-%d", index))); err != nil {
-				return err
-			}
-		}
-		return nil
-	})
+	// The Go printer and its mutants are the compiler-free oracles package's product (#znxt7v5).
+	binary, mutants := oracles.PreflightGoProducts(t)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
@@ -119,14 +50,10 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 	if err != nil {
 		t.Fatal(err)
 	}
-	products := &preflightProducts{binary: filepath.Join(product, "go-printer"), fork: fork, script: script}
-	for index := range mutations {
-		products.mutants = append(products.mutants, filepath.Join(product, fmt.Sprintf("mutant-%d", index)))
-	}
-	return products
+	return &preflightProducts{binary: binary, fork: fork, script: script, mutants: mutants}
 }
 
-func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root string, inputs []auditInput, files, shard int, products *preflightProducts) {
+func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root string, inputs []oracles.AuditInput, files, shard int, products *preflightProducts) {
 	dir := t.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
@@ -280,7 +207,7 @@ func preflightRequiredGaps() map[string]bool {
 		"generated/embedded_flow.md":  false,
 	}
 
-	if !census() {
+	if !oracles.Census() {
 		for name := range gaps {
 			if strings.HasPrefix(name, "cohere/") {
 				delete(gaps, name)
@@ -298,8 +225,8 @@ func preflightShard(name string) int {
 // deadline. Cached binaries outlive any leaf that uses them.
 type wholeDocumentPreflightFixture struct {
 	root     string
-	inputs   []auditInput
-	shards   [testWholeDocumentOraclePreflightShards][]auditInput
+	inputs   []oracles.AuditInput
+	shards   [testWholeDocumentOraclePreflightShards][]oracles.AuditInput
 	physical [testWholeDocumentOraclePreflightShards]int
 	products *preflightProducts
 }
@@ -317,13 +244,13 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 		if err != nil {
 			t.Fatal(err)
 		}
-		inputs, files := auditCorpus(t, root)
+		inputs, files := oracles.AuditCorpus(t, root)
 		selection := selectMarkdownFiles(t, root, inputs, files, 1)
 		if selection.Sample {
 			t.Log(selection.Log(t.Name()))
 		}
 		inputs, files = selectedMarkdownInputs(inputs, files, selection)
-		fixture := &wholeDocumentPreflightFixture{root: root, inputs: inputs, products: prepareWholeDocumentPreflight(t, root, budget)}
+		fixture := &wholeDocumentPreflightFixture{root: root, inputs: inputs, products: prepareWholeDocumentPreflight(t, root)}
 		for index, input := range inputs {
 			shard := preflightShard(input.Name)
 			fixture.shards[shard] = append(fixture.shards[shard], input)
@@ -339,20 +266,6 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 		t.Fatal("preflight setup failed")
 	}
 	return wholeDocumentPreflightShared
-}
-
-// TestProduct_WholeDocumentPreflightGoProducts builds the Go printer and its three mutants that every preflight unit
-// reads (markdownblocks-whole-document-preflight-go-products, 75 s measured inside a unit on Oct 10), so Workshop
-// builds them once and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
-func TestProduct_WholeDocumentPreflightGoProducts(t *testing.T) {
-	t.Parallel()
-	budget := newPreflightBudgetOf(t, t.Name(), 590*time.Second)
-	defer budget.close()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	prepareWholeDocumentPreflight(t, root, budget)
 }
 
 func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
@@ -490,14 +403,10 @@ type preflightBudget struct {
 	groups sync.Map
 }
 
+// newPreflightBudget is a unit's hard deadline of 90 s.
 func newPreflightBudget(t *testing.T, label string) *preflightBudget {
 	t.Helper()
-	return newPreflightBudgetOf(t, label, 90*time.Second)
-}
-
-// newPreflightBudgetOf is a hard deadline of limit: 90 s for a unit, a product's 600 s (less a margin) for a build.
-func newPreflightBudgetOf(t *testing.T, label string, limit time.Duration) *preflightBudget {
-	t.Helper()
+	const limit = 90 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	budget := &preflightBudget{ctx: ctx, cancel: cancel, label: label, limit: limit}
 	budget.timer = time.AfterFunc(limit, budget.cooked)

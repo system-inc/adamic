@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // The slowest cited seat sweep was 241s; ceil(241/30)=9.
@@ -13,7 +14,7 @@ import (
 // scalar/sequence checks and the full mutant streams are retained in full.
 const markdownCorpusStride = 9
 
-func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {
+func selectMarkdownFiles(t *testing.T, root string, inputs []oracles.AuditInput, files, stride int) gatesample.Selection {
 	t.Helper()
 	names := make([]string, files)
 	for i := range names {
@@ -32,7 +33,7 @@ func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, 
 	return selection.Generated(len(inputs)-files, controls...)
 }
 
-func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample.Selection) ([]auditInput, int) {
+func selectedMarkdownInputs(inputs []oracles.AuditInput, files int, selection gatesample.Selection) ([]oracles.AuditInput, int) {
 	if !selection.Sample {
 		return inputs, files
 	}
@@ -40,7 +41,7 @@ func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample
 	for _, name := range selection.Paths {
 		included[name] = true
 	}
-	var selected []auditInput
+	var selected []oracles.AuditInput
 	for _, input := range inputs[:files] {
 		if included[input.Name] {
 			selected = append(selected, input)
@@ -55,7 +56,7 @@ func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample
 	return selected, checkedFiles
 }
 
-func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {
+func sampledNumericInputs(inputs [][]uint16, names []string, corpus []oracles.AuditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {
 	included := map[string]bool{}
 	for _, name := range selection.Paths {
 		included[name] = true
@@ -83,24 +84,6 @@ func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput
 	return selected, selectedNames, rows
 }
 
-func numericBatch(inputs [][]uint16) []byte {
-	var batch strings.Builder
-	for _, units := range inputs {
-		if len(units) == 0 {
-			batch.WriteString("-")
-		} else {
-			for i, unit := range units {
-				if i > 0 {
-					batch.WriteByte(',')
-				}
-				fmt.Fprint(&batch, unit)
-			}
-		}
-		batch.WriteByte('\n')
-	}
-	return []byte(batch.String())
-}
-
 func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {
 	t.Helper()
 	lines := strings.Split(strings.TrimSuffix(string(answer.stdout), "\n"), "\n")
@@ -118,7 +101,7 @@ func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestSampleRetainsFixedMarkdownInputs(t *testing.T) {
 	parallelMarkdown(t)
-	inputs := []auditInput{{Name: "a.md"}, {Name: "b.md"}, {Name: "generated/list"}, {Name: "generated/quote"}}
+	inputs := []oracles.AuditInput{{Name: "a.md"}, {Name: "b.md"}, {Name: "generated/list"}, {Name: "generated/quote"}}
 	selection := gatesample.Selection{Sample: true, Paths: []string{"b.md", gatesample.GeneratedKey(0), gatesample.GeneratedKey(1)}}
 	selected, files := selectedMarkdownInputs(inputs, 2, selection)
 	if files != 1 || len(selected) != 3 || selected[0].Name != "b.md" || selected[1].Name != "generated/list" || selected[2].Name != "generated/quote" {
@@ -140,7 +123,7 @@ func TestSampleRetainsFixedMarkdownInputs(t *testing.T) {
 	}
 }
 
-func selectionPhysicalCount(inputs []auditInput) int {
+func selectionPhysicalCount(inputs []oracles.AuditInput) int {
 	for index, input := range inputs {
 		if strings.HasPrefix(input.Name, "generated/") {
 			return index
@@ -153,7 +136,7 @@ func selectionPhysicalCount(inputs []auditInput) int {
 func TestGeneratedLayoutSelection(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
 	t.Setenv("ADAMIC_GATE_CHANGED", "")
-	corpus := []auditInput{{Name: "generated/repeated", Corpus: true}, {Name: "generated/control"}, {Name: "generated/repeated", Corpus: true}}
+	corpus := []oracles.AuditInput{{Name: "generated/repeated", Corpus: true}, {Name: "generated/control"}, {Name: "generated/repeated", Corpus: true}}
 	selection := selectMarkdownFiles(t, t.TempDir(), corpus, 0, 3)
 	selected, files := selectedMarkdownInputs(corpus, 0, selection)
 	if files != 0 || len(selected) != 2 || selected[1].Name != "generated/control" {

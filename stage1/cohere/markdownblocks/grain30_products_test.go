@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -22,26 +21,17 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const grainCorpusShards = 8
 
-type grainRecipe struct {
-	name, probe, command string
-	overlay              map[string]string
-}
 type grainProducts struct{ main, goBinary, backend, sanitized, release string }
 type grainPreparation struct {
 	once     sync.Once
 	products grainProducts
 }
 
-var grainRecipes = map[string]grainRecipe{
-	"path":   {"path", "path_probe.ts", "adamic_path", map[string]string{"cmd/adamic_path/main.go": "path_go.go", "internal/format/markdown/adamic_path_facts.go": "path_facts.go", "internal/format/markdown/adamic_path.go": "path_bridge.go", "internal/format/markdown/adamic_ast.go": "ast_bridge.go"}},
-	"mdast":  {"mdast", "mdast_probe.ts", "adamic_mdast", map[string]string{"cmd/adamic_mdast/main.go": "mdast_go.go", "internal/format/markdown/mdast/adamic_mdast.go": "mdast_bridge.go", "internal/format/markdown/micromark/adamic_events.go": "events_transport.go"}},
-	"decode": {"decode", "decode_probe.ts", "adamic_decode", map[string]string{"cmd/adamic_decode/main.go": "decode_go.go"}},
-	"width":  {"width", "width_probe.ts", "adamic_width", map[string]string{"cmd/adamic_width/main.go": "width_go.go"}},
-}
 var grainPreparations sync.Map
 var grainContexts sync.Map
 
@@ -60,39 +50,14 @@ func grainReady(t *testing.T, name string) grainProducts {
 // Every product declaration uses this recipe, exactly as independent shard preparation does.
 func grainProduct(t *testing.T, name, target string) grainProducts {
 	t.Helper()
-	recipe := grainRecipes[name]
 	root := markdownLayoutProductRoot(t)
-	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata", recipe.probe)
+	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata", name+"_probe.ts")
 	p := grainProducts{main: main}
 	goTools := []string{buildcache.Tool("go", "version")}
 	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}
-	// GoBuild cannot key a newly synthesized overlay target yet: GoInputs stats that
-	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
-	// and reproducible flags declared. Generator/formatter products use GoBuild below.
+	// The Go oracle is the compiler-free oracles package's product (#znxt7v5).
 	if target == "" || target == "go" {
-		dir := buildcache.Product(t, grainGoInputs(name, markdownGoCompilers()), func(dir string) error {
-			replace := map[string]string{}
-			for to, from := range recipe.overlay {
-				replace[filepath.Join(root, "cohere", to)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
-			}
-			data, err := json.Marshal(map[string]any{"Replace": replace})
-			if err != nil {
-				return err
-			}
-			overlay := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlay, data, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlay)
-			args := append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
-			cmd := textGoCommand(t, filepath.Join(root, "cohere"), args...)
-			if output, err := textCombinedOutput(cmd); err != nil {
-				return fmt.Errorf("Go oracle: %w\n%s", err, output)
-			}
-			return nil
-		})
-		p.goBinary = filepath.Join(dir, "oracle")
+		p.goBinary = oracles.GrainGoOracle(t, name)
 	}
 
 	if target == "go" {
@@ -100,7 +65,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	}
 	// Keyed by what lowering reads, the package's and markdowninline's TypeScript, the checker and the compiler, as
 	// the pilot families' lowering is; the whole package directory would rebuild every grain port on any test edit.
-	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: whitespaceLayoutBuildFiles(), Toolchain: goTools}, func(dir string) error {
+	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-lowered", Files: oracles.LoweringFiles(), Toolchain: goTools}, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -132,18 +97,6 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 		}
 	}
 	return p
-}
-
-// grainGoInputs keys name's Go oracle. The build runs go under toolchain.Env (textGoCommand), so the key names the C
-// and C++ compilers that environment gives go, and the C compiler by its report: the caller's CC and CXX are empty on a
-// box where go runs clang. The other variables pass to go as the caller set them.
-func grainGoInputs(name string, compilers markdownCompilers) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: []string{buildcache.Tool("go", "version"), compilers.report}, Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}}
-	for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
-		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
-	}
-	inputs.Flags = append(inputs.Flags, "CC="+compilers.c, "CXX="+compilers.cPlusPlus, buildcache.Tool("go", "env", "GOWORK"))
-	return inputs
 }
 
 func grainOwn(t *testing.T) func() {
@@ -196,8 +149,8 @@ func grainLeaks(t *testing.T, p grainProducts, args ...string) string {
 	}
 	return ""
 }
-func grainSelect(inputs []auditInput, shard int) []auditInput {
-	selected := []auditInput{}
+func grainSelect(inputs []oracles.AuditInput, shard int) []oracles.AuditInput {
+	selected := []oracles.AuditInput{}
 	for i, input := range inputs {
 		if i%grainCorpusShards == shard {
 			selected = append(selected, input)
@@ -225,7 +178,7 @@ func grainPlanted(t *testing.T) {
 }
 
 // Empty groups expect zero catches; each nonempty child plants its own disagreement.
-func grainCheckUnion(t *testing.T, inputs []auditInput) {
+func grainCheckUnion(t *testing.T, inputs []oracles.AuditInput) {
 	t.Helper()
 	seen := make([]int, len(inputs))
 	for shard := 0; shard < grainCorpusShards; shard++ {
@@ -261,17 +214,15 @@ func grainCheckUnion(t *testing.T, inputs []auditInput) {
 	}
 	t.Logf("union=%d each exactly once", len(inputs))
 }
-func grainUnion(t *testing.T, inputs []auditInput, children int, family, helper string) {
+func grainUnion(t *testing.T, inputs []oracles.AuditInput, children int, family, helper string) {
 	grainVerifyChildren(t, family, helper, children)
 	grainCheckUnion(t, inputs)
 	grainCheckUnion(t, nil)
-	grainCheckUnion(t, []auditInput{{Name: "singleton", Text: "one"}})
+	grainCheckUnion(t, []oracles.AuditInput{{Name: "singleton", Text: "one"}})
 	for child := 0; child < children; child++ {
 		grainPlanted(t)
 	}
 }
-
-func TestProduct_GrainMarkdown_path_go(t *testing.T) { t.Parallel(); grainProduct(t, "path", "go") }
 
 func TestProduct_GrainMarkdown_path_lowered(t *testing.T) {
 	t.Parallel()
@@ -288,8 +239,6 @@ func TestProduct_GrainMarkdown_path_release(t *testing.T) {
 	grainProduct(t, "path", "release")
 }
 
-func TestProduct_GrainMarkdown_mdast_go(t *testing.T) { t.Parallel(); grainProduct(t, "mdast", "go") }
-
 func TestProduct_GrainMarkdown_mdast_lowered(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "mdast", "lowered")
@@ -304,8 +253,6 @@ func TestProduct_GrainMarkdown_mdast_release(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "mdast", "release")
 }
-
-func TestProduct_GrainMarkdown_decode_go(t *testing.T) { t.Parallel(); grainProduct(t, "decode", "go") }
 
 func TestProduct_GrainMarkdown_decode_lowered(t *testing.T) {
 	t.Parallel()
@@ -322,8 +269,6 @@ func TestProduct_GrainMarkdown_decode_release(t *testing.T) {
 	grainProduct(t, "decode", "release")
 }
 
-func TestProduct_GrainMarkdown_width_go(t *testing.T) { t.Parallel(); grainProduct(t, "width", "go") }
-
 func TestProduct_GrainMarkdown_width_lowered(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "width", "lowered")
@@ -339,34 +284,11 @@ func TestProduct_GrainMarkdown_width_release(t *testing.T) {
 	grainProduct(t, "width", "release")
 }
 
-type grainToolPreparation struct {
-	once sync.Once
-	path string
-}
-
-var grainToolPreparations sync.Map
-
-func grainTool(t *testing.T, name string) string {
-	t.Helper()
-	state, _ := grainToolPreparations.LoadOrStore(name, &grainToolPreparation{})
-	prepared := state.(*grainToolPreparation)
-	prepared.once.Do(func() { prepared.path = grainBuildTool(t, name) })
-	return prepared.path
-}
-
-func grainBuildTool(t *testing.T, name string) string {
-	pkg := "./stage1/cohere/markdownblocks/tools/generate_" + name
-	if name == "formatter" {
-		pkg = "github.com/system-inc/cohere/command/cohere"
-	}
-	return buildcache.GoBuild(t, "grain-"+name, pkg, nil)
-}
-
 func grainGenerator(t *testing.T, name string) string {
 	if name == "decode" {
 		name = "entities"
 	}
-	return grainTool(t, name)
+	return oracles.GrainTool(t, name)
 }
 func grainRegenerate(t *testing.T, name, generator, formatter string) {
 	cmd := grainCommand(t, generator, "-check", "-formatter", formatter)
@@ -375,9 +297,6 @@ func grainRegenerate(t *testing.T, name, generator, formatter string) {
 		t.Fatalf("%s regeneration: %v\n%s", name, err, output)
 	}
 }
-func TestProduct_GrainMarkdownEntitiesGenerator(t *testing.T) { t.Parallel(); grainTool(t, "entities") }
-func TestProduct_GrainMarkdownWidthGenerator(t *testing.T)    { t.Parallel(); grainTool(t, "width") }
-func TestProduct_GrainMarkdownFormatter(t *testing.T)         { t.Parallel(); grainTool(t, "formatter") }
 
 // Inspect dispatchers, rather than trusting a second hand-written list of leaves.
 func grainVerifyChildren(t *testing.T, family, helper string, children int) {

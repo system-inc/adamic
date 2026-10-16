@@ -9,14 +9,16 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-func grainPathInputs(t *testing.T) (string, []auditInput, int) {
+func grainPathInputs(t *testing.T) (string, []oracles.AuditInput, int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, files := blockCorpus(t, root, "whitespace")
+	inputs, files := oracles.BlockCorpus(t, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
 	selection := selectMarkdownFiles(t, root, inputs, files, 1)
 	if selection.Sample {
@@ -25,7 +27,7 @@ func grainPathInputs(t *testing.T) (string, []auditInput, int) {
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	for depth := 1; depth <= 32; depth++ {
 		text := strings.Repeat("> ", depth) + "- a *b*\n"
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/path/depth%d", depth), Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/path/depth%d", depth), Text: text})
 	}
 	return root, inputs, files
 }
@@ -175,7 +177,7 @@ func runGrainPathThroughput(t *testing.T, shard int) {
 }
 
 // grainPathCases writes a shard's contexts as the probes read them and returns Go's path bytes for them.
-func grainPathCases(t *testing.T, goBinary string, inputs []auditInput) (string, run) {
+func grainPathCases(t *testing.T, goBinary string, inputs []oracles.AuditInput) (string, run) {
 	dir := t.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)

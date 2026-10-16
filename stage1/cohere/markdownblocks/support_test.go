@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const repository = "../../.."
@@ -142,6 +143,10 @@ func TestMain(m *testing.M) {
 	}
 	code := m.Run()
 	if err := os.RemoveAll(artifactDirectory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		code = 1
+	}
+	if err := oracles.CleanupTemporaryDirectories(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		code = 1
 	}

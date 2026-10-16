@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testMarkdownQuoteLayoutShards = 12
@@ -118,12 +119,12 @@ func quoteLayoutReady(t *testing.T) quoteLayoutProducts {
 	return quoteLayoutReadyShared
 }
 
-func quoteLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownQuoteLayoutShards][]int) {
+func quoteLayoutEnumerate(t *testing.T) ([]oracles.AuditInput, [testMarkdownQuoteLayoutShards][]int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
+	inputs, _ := oracles.BlockCorpus(t, root, "whitespace")
 	var shards [testMarkdownQuoteLayoutShards][]int
 	for index, input := range inputs {
 		shard := quoteLayoutShard(input.Name)
@@ -178,7 +179,7 @@ func quoteLayoutRunShard(t *testing.T, shard int) {
 	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: " + t.Name() + " exceeded 90s") })
 	defer deadline.Stop()
 	inputs, shards := quoteLayoutEnumerate(t)
-	cases := make([]auditInput, 0, len(shards[shard]))
+	cases := make([]oracles.AuditInput, 0, len(shards[shard]))
 	for _, index := range shards[shard] {
 		cases = append(cases, inputs[index])
 	}
@@ -211,9 +212,9 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 	}
 	inputs := buildcache.Inputs{
 		Name: "markdown-quote-layout-lowered",
-		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
+		// What lowering reads (oracles.LoweringFiles, which TestLoweringInputsCoverCompilerDependencies keeps
 		// complete); the native builds keep the same Files.
-		Files:     whitespaceLayoutBuildFiles(),
+		Files:     oracles.LoweringFiles(),
 		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
@@ -239,59 +240,9 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 	if target == "lowered" {
 		return products
 	}
-	// GoBuild is not on this base; cache the unchanged overlay builds as products.
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []struct{ name, driver, command string }{
-		{"lists", "list_go.go", "adamic_markdown_lists"},
-		{"layout", "document_go.go", "adamic_markdown_doclayout"},
-	} {
-		if target != "" && target != mode.name {
-			continue
-		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
-		replace := map[string]string{mainPath: driver}
-		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		goInputs := buildcache.Inputs{
-			Name:      "markdown-quote-layout-go-" + mode.name,
-			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
-			Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
-			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
-		}
-		dir := buildcache.Product(t, goInputs, func(dir string) error {
-			overlayPath := filepath.Join(dir, mode.name+".json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command := quoteLayoutSetupCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)...)
-			command.Dir = cohere
-			if output, err := combinedOutput(command); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(dir, mode.name)
-		if mode.name == "lists" {
-			products.goBinary = binary
-		} else {
-			products.goLayout = binary
-		}
-	}
+	// The Go sides are the compiler-free oracles package's products (#znxt7v5).
+	products.goBinary = oracles.QuoteGoOracle(t, "lists")
+	products.goLayout = oracles.QuoteGoOracle(t, "layout")
 	return products
 }
 
@@ -352,7 +303,7 @@ func quoteLayoutMutants(t *testing.T, fixture *layoutFixture) {
 	}
 }
 
-func quoteLayoutFixture(t *testing.T, inputs []auditInput, products quoteLayoutProducts) *layoutFixture {
+func quoteLayoutFixture(t *testing.T, inputs []oracles.AuditInput, products quoteLayoutProducts) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.

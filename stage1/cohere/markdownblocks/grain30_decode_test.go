@@ -12,14 +12,16 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-func grainDecodeInputs(t *testing.T) (string, []auditInput, int, int, int) {
+func grainDecodeInputs(t *testing.T) (string, []oracles.AuditInput, int, int, int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, files := auditCorpus(t, root)
+	inputs, files := oracles.AuditCorpus(t, root)
 	source := filepath.Join(root, "cohere/internal/format/markdown/micromark/entities_generated.go")
 	tree, err := parser.ParseFile(token.NewFileSet(), source, nil, 0)
 	if err != nil {
@@ -36,22 +38,22 @@ func grainDecodeInputs(t *testing.T) (string, []auditInput, int, int, int) {
 			t.Fatal(err)
 		}
 		for _, text := range []string{"&" + name + ";", "\\&" + name + ";", "&" + name, "&" + name + "X;", "&&" + name + ";;", "a&" + name + ";中"} {
-			inputs = append(inputs, auditInput{Name: "entity/" + text, Text: text})
+			inputs = append(inputs, oracles.AuditInput{Name: "entity/" + text, Text: text})
 		}
 		entities++
 		return false
 	})
 	for _, text := range []string{"", "&#;", "&#x;", "&#X;", "&;", "&unknown;", "&#12345678;", "&#x1234567;", "&" + strings.Repeat("a", 32) + ";", "&amp;copy;", "\\\\&amp;", "\\&#65;", "&#8;", "&#0000000;", "&#x000000;", "&#x0000000;", "&#00000000;", "&#9999999;", "&#xFFFFFF;"} {
-		inputs = append(inputs, auditInput{Name: "edge/" + text, Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: "edge/" + text, Text: text})
 	}
 	for code := 0; code < 256; code++ {
 		text := "a\\" + string(rune(code)) + "&amp;中"
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("escape/%d", code), Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("escape/%d", code), Text: text})
 	}
 	compact := len(inputs)
 	for code := 0; code <= 0x110020; code++ {
 		for _, text := range []string{fmt.Sprintf("&#%d;", code), fmt.Sprintf("&#x%X;", code)} {
-			inputs = append(inputs, auditInput{Name: fmt.Sprintf("numeric/%d", code), Text: text})
+			inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("numeric/%d", code), Text: text})
 		}
 	}
 	return root, inputs, files, entities, compact
@@ -61,7 +63,7 @@ func runGrainDecode(t *testing.T, shard int) {
 	products := grainReady(t, "decode")
 	if shard == 11 {
 		generator := grainGenerator(t, "decode")
-		formatter := grainTool(t, "formatter")
+		formatter := oracles.GrainTool(t, "formatter")
 		stop := grainOwn(t)
 		defer stop()
 		grainRegenerate(t, "decode", generator, formatter)

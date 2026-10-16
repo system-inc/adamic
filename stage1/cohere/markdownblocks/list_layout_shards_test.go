@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -39,7 +40,7 @@ func listLayoutBucket(key string) int {
 var listLayoutBuildOnce sync.Once
 var listLayoutOnce sync.Once
 var listLayoutShared listLayoutProducts
-var listLayoutBuckets [][]auditInput
+var listLayoutBuckets [][]oracles.AuditInput
 var listLayoutContexts sync.Map
 
 type listLayoutManifest struct {
@@ -502,7 +503,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	return p
 }
 
-func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []auditInput) *layoutFixture {
+func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []oracles.AuditInput) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
@@ -823,21 +824,21 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 		t.Fatal(err)
 	}
 	inputs, _ := listLayoutInputs(t, root)
-	listLayoutBuckets = make([][]auditInput, testMarkdownListLayoutShards)
+	listLayoutBuckets = make([][]oracles.AuditInput, testMarkdownListLayoutShards)
 	for _, input := range inputs {
 		shard := listLayoutBucket(input.Name)
 		listLayoutBuckets[shard] = append(listLayoutBuckets[shard], input)
 	}
 }
 
-var listLayoutMutantControls = []auditInput{
+var listLayoutMutantControls = []oracles.AuditInput{
 	{Name: "generated/list-layout/mutant-control/unordered", Text: "- a\n- b\n"},
 	{Name: "generated/list-layout/mutant-control/task", Text: "- [x] a\n"},
 	{Name: "generated/list-layout/mutant-control/cap", Text: "999999999. a\n999999999. b\n"},
 }
 
-func listLayoutInputs(t *testing.T, root string) ([]auditInput, int) {
+func listLayoutInputs(t *testing.T, root string) ([]oracles.AuditInput, int) {
 	t.Helper()
-	inputs, files := blockCorpus(t, root, "whitespace")
+	inputs, files := oracles.BlockCorpus(t, root, "whitespace")
 	return append(inputs, listLayoutMutantControls...), files
 }

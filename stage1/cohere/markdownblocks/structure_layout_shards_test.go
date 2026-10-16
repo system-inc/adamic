@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -32,14 +33,14 @@ type structureLayoutProducts struct {
 	program                                                 *ir.Program
 }
 
-func structureLayoutShard(input auditInput) int {
+func structureLayoutShard(input oracles.AuditInput) int {
 	sum := sha256.Sum256([]byte(input.Name + "\x00" + input.Text))
 	return int(binary.LittleEndian.Uint64(sum[:8]) % testMarkdownStructureLayoutShards)
 }
 
 type structureLayoutState struct {
-	inputs   []auditInput
-	shards   [][]auditInput
+	inputs   []oracles.AuditInput
+	shards   [][]oracles.AuditInput
 	products structureLayoutProducts
 }
 
@@ -51,8 +52,8 @@ func structureLayoutEnumeration(t *testing.T) *structureLayoutState {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
-	state := &structureLayoutState{inputs: inputs, shards: make([][]auditInput, testMarkdownStructureLayoutShards)}
+	inputs, _ := oracles.BlockCorpus(t, root, "whitespace")
+	state := &structureLayoutState{inputs: inputs, shards: make([][]oracles.AuditInput, testMarkdownStructureLayoutShards)}
 	for _, input := range inputs {
 		index := structureLayoutShard(input)
 		state.shards[index] = append(state.shards[index], input)
@@ -71,7 +72,7 @@ func TestMarkdownStructureLayoutUnion(t *testing.T) {
 	// Compare multiplicities by the complete stable key, including any duplicate
 	// corpus entries, rather than assuming corpus names or totals are fixed.
 	want, got := map[string]int{}, map[string]int{}
-	key := func(input auditInput) string { return input.Name + "\x00" + input.Text }
+	key := func(input oracles.AuditInput) string { return input.Name + "\x00" + input.Text }
 	for _, input := range state.inputs {
 		want[key(input)]++
 	}
@@ -220,64 +221,9 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 	if target == "native" {
 		return p
 	}
-	cohere := filepath.Join(root, "cohere")
-	for _, item := range []struct {
-		command, driver string
-		bridge          bool
-	}{{"adamic_markdown_lists", "list_go.go", true}, {"adamic_markdown_doclayout", "document_go.go", false}} {
-		if target != "" && target != item.command {
-			continue
-		}
-		driver, err := filepath.Abs(filepath.Join("testdata", item.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		main := filepath.Join(cohere, "cmd", item.command, "main.go")
-		replace := map[string]string{main: driver}
-		if item.bridge {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		// Keep overlay files inside the content-addressed product. Their source
-		// paths are stable, so warm setup fetches the Go oracle instead of
-		// charging whichever shard first enters sync.Once for a new build.
-		goFiles := []string{"cohere/internal", "cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/mutation_aliasing", "cohere/static_single_assignment", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/" + item.driver}
-		if item.bridge {
-			goFiles = append(goFiles, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
-		}
-		goDir := buildcache.Product(t, buildcache.Inputs{
-			Name: "markdown-structure-go-" + item.command, Files: goFiles,
-			Flags:     []string{"overlay=" + string(overlay), "main=" + main, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
-			Toolchain: []string{buildcache.Tool("go", "version")},
-		}, func(dir string) error {
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command, cancel := structureLayoutCommand("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)...)
-			defer cancel()
-			command.Dir = cohere
-			if output, err := combinedOutput(command); err != nil {
-				return fmt.Errorf("Go bridge: %w\n%s", err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(goDir, "oracle")
-		if item.bridge {
-			p.goList = binary
-		} else {
-			p.goLayout = binary
-		}
-	}
+	// The Go sides are the compiler-free oracles package's products (#znxt7v5).
+	p.goList = oracles.StructureGoOracle(t, "adamic_markdown_lists")
+	p.goLayout = oracles.StructureGoOracle(t, "adamic_markdown_doclayout")
 	return p
 }
 
@@ -342,7 +288,7 @@ func structureLayoutMutants(t *testing.T, fixture *layoutFixture) {
 	}
 }
 
-func structureLayoutFixture(t *testing.T, inputs []auditInput, products structureLayoutProducts) *layoutFixture {
+func structureLayoutFixture(t *testing.T, inputs []oracles.AuditInput, products structureLayoutProducts) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	root := products.root

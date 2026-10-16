@@ -2,7 +2,6 @@ package markdownblocks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 // Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
@@ -21,7 +20,7 @@ func TestFrontMatterStage(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs, files := auditCorpus(t, root)
+	inputs, files := oracles.AuditCorpus(t, root)
 	// This file sweep is small beside the mandatory generated and fixed checks.
 	selection := selectMarkdownFiles(t, root, inputs, files, 1)
 	if selection.Sample {
@@ -35,20 +34,20 @@ func TestFrontMatterStage(t *testing.T) {
 				for _, value := range []string{"", "x: 1", "😀😀\n漢字", "a\r\nb\rc", "a\t\x00b", "x\n---\ny", "\n\n", "\u2028\u2029"} {
 					for _, suffix := range []string{"", "\n# h\n", "suffix\n", "😀\n\n"} {
 						text := start + language + "\n" + value + "\n" + end + suffix
-						inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/front-matter/%d", len(inputs)-original), Text: text})
+						inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/front-matter/%d", len(inputs)-original), Text: text})
 					}
 				}
 			}
 		}
 	}
 	for _, code := range []rune{9, 10, 11, 12, 13, 32, 0x85, 0xa0, 0x1680, 0x180e, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff, 0xffff, 0x10000, 0x10ffff} {
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/front-matter/trim-%x", code), Text: "---" + string(code) + "yaml" + string(code) + "\nx\n..."})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/front-matter/trim-%x", code), Text: "---" + string(code) + "yaml" + string(code) + "\nx\n..."})
 	}
 	for code := rune(0x2000); code <= 0x200b; code++ {
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/front-matter/trim-%x", code), Text: "---" + string(code) + "yaml" + string(code) + "\nx\n..."})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/front-matter/trim-%x", code), Text: "---" + string(code) + "yaml" + string(code) + "\nx\n..."})
 	}
 	for _, text := range []string{"", "---", "+++", "---\n---", "---\n...", "---yaml\n...", "---json\n...", "\ufeff---\nx\n---", "\n---\nx\n---", "---\nx\n---suffix", "---\nx\n...suffix", "+++\nx\n+++suffix"} {
-		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/front-matter/short-%d", len(inputs)), Text: text})
+		inputs = append(inputs, oracles.AuditInput{Name: fmt.Sprintf("generated/front-matter/short-%d", len(inputs)), Text: text})
 	}
 	// A long literal checks UTF-16 blanking across all Unicode scalar ranges without
 	// constructing 65,536 almost-identical one-character tests.
@@ -59,7 +58,7 @@ func TestFrontMatterStage(t *testing.T) {
 		}
 		unicode.WriteRune(code)
 	}
-	inputs = append(inputs, auditInput{Name: "generated/front-matter/unicode", Text: "---\n" + unicode.String() + "😀\U0010ffff\n---\n# h"})
+	inputs = append(inputs, oracles.AuditInput{Name: "generated/front-matter/unicode", Text: "---\n" + unicode.String() + "😀\U0010ffff\n---\n# h"})
 	dir := t.TempDir()
 	encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	var batch strings.Builder
@@ -69,7 +68,7 @@ func TestFrontMatterStage(t *testing.T) {
 	cases := filepath.Join(dir, "cases.txt")
 	write(t, cases, []byte(batch.String()))
 	cohere := filepath.Join(root, "cohere")
-	goBinary := frontMatterGoOracle(t)
+	goBinary := oracles.FrontMatterGoOracle(t)
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "Go front matter", want)
 	main, err := filepath.Abs("testdata/frontmatter_probe.ts")
@@ -179,32 +178,4 @@ func TestFrontMatterStage(t *testing.T) {
 		t.Logf("parser-stage throughput %s %.1f texts/s, 3 runs %.6fs; startup/protocol/I/O included, no Markdown layout measured", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
 	t.Logf("front-matter stage %d physical Markdown files and %d generated cases, %d total: Go/native/source Node/backend/pinned library byte parity, ASan/UBSan/leaks", files, len(inputs)-files, len(inputs))
-}
-
-// frontMatterGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func frontMatterGoOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_frontmatter/main.go")
-	driver, err := filepath.Abs("testdata/frontmatter_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	return buildcache.GoBuildIn(t, "cohere", "go-parser", mainPath, []string{"-overlay=" + overlayPath})
-}
-
-func TestProduct_MarkdownFrontMatterGo(t *testing.T) {
-	t.Parallel()
-	frontMatterGoOracle(t)
 }

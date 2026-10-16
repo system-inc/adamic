@@ -4,21 +4,18 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
-	"sort"
-	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 func TestProduct_MarkdownTextLowered(t *testing.T) {
@@ -36,27 +33,6 @@ func TestProduct_MarkdownTextNativeRelease(t *testing.T) {
 	textBuildProduct(t, markdownLayoutProductRoot(t), "release")
 }
 
-func TestProduct_MarkdownTextGo(t *testing.T) {
-	t.Parallel()
-	textBuildProduct(t, markdownLayoutProductRoot(t), "go")
-}
-
-func TestProduct_MarkdownTextFormatter(t *testing.T) {
-	t.Parallel()
-	textBuildProduct(t, markdownLayoutProductRoot(t), "formatter")
-}
-
-func TestProduct_MarkdownTextGenerator(t *testing.T) {
-	t.Parallel()
-	textBuildProduct(t, markdownLayoutProductRoot(t), "generator")
-}
-
-func TestProduct_MarkdownMalformedEventsGo(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	defer cancel()
-	malformedEventsGoProduct(t, ctx, markdownLayoutProductRoot(t))
-}
 func TestProduct_MarkdownMalformedEventsLowered(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := markdownLayoutSetupContext(t.Context())
@@ -70,52 +46,6 @@ func TestProduct_MarkdownMalformedEventsNative(t *testing.T) {
 	malformedEventsBuildProduct(t, ctx, filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata/mdast_probe.ts"), false)
 }
 
-// Both product declarations and independently selected shards fetch these recipes.
-func pilotGoProduct(t *testing.T, family string) string {
-	t.Helper()
-	root := markdownLayoutProductRoot(t)
-	cohere := filepath.Join(root, "cohere")
-	command, output := "adamic_identifier", "go-identifier"
-	targets := map[string]string{"cmd/adamic_identifier/main.go": "identifier_go.go"}
-	if family == "events" {
-		command, output = "adamic_chunks", "go-chunks"
-		targets = map[string]string{"cmd/adamic_chunks/main.go": "events_go.go", "internal/format/markdown/micromark/adamic_chunks.go": "events_bridge.go", "internal/format/markdown/micromark/adamic_event_transport.go": "events_transport.go"}
-	}
-	files := []string{"cohere"}
-	replace := make(map[string]string)
-	for target, source := range targets {
-		files = append(files, "stage1/cohere/markdownblocks/testdata/"+source)
-		replace[filepath.Join(cohere, target)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", source)
-	}
-	// Sort map-derived inputs to keep the recipe key deterministic.
-	sort.Strings(files)
-	flags := []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay:" + command}
-	for _, name := range []string{"GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "CC", "CXX"} {
-		flags = append(flags, name+"="+os.Getenv(name))
-	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-go", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		ctx, cancel := markdownLayoutSetupContext(t.Context())
-		defer cancel()
-		build := tableLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, output), filepath.Join(cohere, "cmd", command, "main.go"))...)
-		build.Dir = cohere
-		if result, err := build.CombinedOutput(); err != nil {
-			return fmt.Errorf("%s Go product: %w\n%s", family, err, result)
-		}
-		return nil
-	})
-	return filepath.Join(dir, output)
-}
-
 func pilotLoweredProduct(t *testing.T, family string) string {
 	t.Helper()
 	root := markdownLayoutProductRoot(t)
@@ -123,7 +53,7 @@ func pilotLoweredProduct(t *testing.T, family string) string {
 	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
-	return buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-lowered", Files: whitespaceLayoutBuildFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
+	return buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-lowered", Files: oracles.LoweringFiles(), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
 		program, err := loweredResult(filepath.Join(root, "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"))
 		if err != nil {
 			return err
@@ -163,7 +93,7 @@ type pilotProducts struct{ main, goBinary, backend, sanitized, release string }
 
 func pilotProductsReady(t *testing.T, family string) pilotProducts {
 	lowered := pilotLoweredProduct(t, family)
-	return pilotProducts{main: filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"), goBinary: pilotGoProduct(t, family), backend: filepath.Join(lowered, "program.mjs"), sanitized: pilotNativeProductFromLowered(t, family, lowered, true), release: pilotNativeProductFromLowered(t, family, lowered, false)}
+	return pilotProducts{main: filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata", family+"_probe.ts"), goBinary: oracles.PilotGoProduct(t, family), backend: filepath.Join(lowered, "program.mjs"), sanitized: pilotNativeProductFromLowered(t, family, lowered, true), release: pilotNativeProductFromLowered(t, family, lowered, false)}
 }
 
 var identifierProductsOnce sync.Once
@@ -199,12 +129,12 @@ func tokenizerEventReady(t *testing.T) tokenizerEventSetup {
 		configureMarkdownMemory(t)
 		markdownMemory.acquire(4)
 		defer markdownMemory.release(4)
-		root, inputs, names, files := tokenizerEventLiveEnumeration(t)
+		root, inputs, names, files := oracles.TokenizerEventLiveEnumeration(t)
 		shards := tokenizerEventShards(tokenizerEventKeys(names))
 		validateTokenizerEventUnion(t, len(inputs), shards)
 		products := pilotProductsReady(t, "events")
-		batch := numericBatch(inputs)
-		want := run{stdout: tokenizerEventAnswers(t, products.goBinary, batch)}
+		batch := oracles.NumericBatch(inputs)
+		want := run{stdout: oracles.TokenizerEventAnswers(t, products.goBinary, batch)}
 		answers := bytes.Split(bytes.TrimSuffix(want.stdout, []byte("\n")), []byte("\n"))
 		if len(answers) != len(inputs) {
 			t.Fatalf("Go oracle rows %d, want %d", len(answers), len(inputs))
@@ -231,51 +161,6 @@ func tokenizerEventReady(t *testing.T) tokenizerEventSetup {
 	return tokenizerEventShared
 }
 
-// The full-corpus Go answers are a product keyed by the oracle binary's bytes and the whole numeric batch's, so
-// the first shard compares against Go's answers without rerunning Go on all 79000 cases, which cost it about 19 s
-// of one core. Every shard still runs actual Go on its own cases. The full-corpus oracle uses temporary transport;
-// mutant shards copy the batch.
-func tokenizerEventAnswers(t *testing.T, goBinary string, batch []byte) []byte {
-	t.Helper()
-	binary, err := os.ReadFile(goBinary)
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := buildcache.Inputs{Name: "markdownblocks-tokenizer-events-answers", Files: []string{"stage1/cohere/markdownblocks/pilot_family_products_test.go"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("cases-sha256=%x", sha256.Sum256(batch))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
-		scratch, err := os.MkdirTemp("", "markdown-events-cases-")
-		if err != nil {
-			return err
-		}
-		defer os.RemoveAll(scratch)
-		cases := filepath.Join(scratch, "cases.txt")
-		if err := os.WriteFile(cases, batch, 0644); err != nil {
-			return err
-		}
-		ctx, cancel := markdownLayoutSetupContext(t.Context())
-		defer cancel()
-		want, err := pilotExecuteResult(ctx, nil, goBinary, cases)
-		if err != nil {
-			return err
-		}
-		if want.exitCode != 0 || len(want.stderr) > 0 {
-			return fmt.Errorf("full Go mutant oracle exit %d stderr %s", want.exitCode, want.stderr)
-		}
-		return os.WriteFile(filepath.Join(directory, "answers.txt"), want.stdout, 0644)
-	})
-	answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return answers
-}
-
-func TestProduct_TokenizerEventsAnswers(t *testing.T) {
-	t.Parallel()
-	_, inputs, _, _ := tokenizerEventLiveEnumeration(t)
-	tokenizerEventAnswers(t, pilotGoProduct(t, "events"), numericBatch(inputs))
-}
-
 // Child cancellation kills the process group; the caller owns the work deadline.
 func pilotExecuteResult(ctx context.Context, environment []string, name string, args ...string) (run, error) {
 	command := tableLayoutCommand(ctx, name, args...)
@@ -296,11 +181,6 @@ func pilotExecuteResult(ctx context.Context, environment []string, name string, 
 	return run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}, nil
 }
 
-func TestProduct_MarkdownIdentifierGo(t *testing.T) {
-	t.Parallel()
-	pilotGoProduct(t, "identifier")
-}
-
 func TestProduct_MarkdownIdentifierLowered(t *testing.T) {
 	t.Parallel()
 	pilotLoweredProduct(t, "identifier")
@@ -314,11 +194,6 @@ func TestProduct_MarkdownIdentifierNativeSanitized(t *testing.T) {
 func TestProduct_MarkdownIdentifierNativeRelease(t *testing.T) {
 	t.Parallel()
 	pilotNativeProduct(t, "identifier", false)
-}
-
-func TestProduct_TokenizerEventsGo(t *testing.T) {
-	t.Parallel()
-	pilotGoProduct(t, "events")
 }
 
 func TestProduct_TokenizerEventsLowered(t *testing.T) {
