@@ -1,0 +1,5 @@
+import { parallelMap } from 'adamic';
+import type { Weak } from 'adamic';
+interface Item { readonly parent: Weak<{ readonly value: number }>; }
+const items: readonly Item[] = [{ parent: undefined }];
+parallelMap(items, () => 1);
