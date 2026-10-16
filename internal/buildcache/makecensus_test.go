@@ -186,9 +186,10 @@ func TestProduct_GoProductCensusExports(t *testing.T) {
 	goProductCensusExports(t)
 }
 
-// A go product's build, goProduct's lean closure, reaches nothing its recipe doesn't key, and every package variable it
-// reads is written by its own initializer alone, anywhere in this package and its tests, which build lean in their own
-// binary (leancensus, Node's and Tests' ruling on adcc8fd771).
+// A go product's build, goplan's Plan.Run, which goProduct hands a plan made before the build's window, reaches nothing
+// its recipe doesn't key, and every package variable it reads is written by its own initializer alone. goplan holds no
+// init and no package variable, so rail 1(c) and the invariant hold over its whole package, with no exemption (leancensus,
+// Node's and Tests' ruling on adcc8fd771, Node's ruling (B) on b20037f75b).
 func TestAGoProductsBuildReadsNoStateButItsInitializers(t *testing.T) {
 	t.Parallel()
 	root := repositoryRootForTest(t)
@@ -197,10 +198,10 @@ func TestAGoProductsBuildReadsNoStateButItsInitializers(t *testing.T) {
 		t.Fatal(err)
 	}
 	census := leancensus.Census{
-		Root: root, Directory: filepath.Join(root, "internal", "buildcache"), ImportPath: buildcachePackage,
-		Entries:  []string{"goBuildPlan.run"},
-		Declared: []string{"internal/buildcache"},
-		Slice:    []string{buildcachePackage, modulePath + "/internal/buildcache/location", modulePath + "/internal/toolchain"},
+		Root: root, Directory: filepath.Join(root, "internal", "buildcache", "goplan"), ImportPath: buildcachePackage + "/goplan",
+		Entries:  []string{"Plan.Run"},
+		Declared: []string{"internal/buildcache/goplan"},
+		Slice:    []string{buildcachePackage + "/goplan"},
 		Exports:  exports, Tree: tree, TestsBuildLean: true,
 	}
 	findings, err := census.Findings()

@@ -396,23 +396,23 @@ func TestAGoRequestsOverlayIsItsPlansMap(t *testing.T) {
 	request := goRequest{verb: "test -c", module: "internal/buildcache/testdata/module", output: "greet.test", pkg: "./greet"}
 	for _, arguments := range [][]string{{"-overlay=" + overlay}, {"-trimpath", "-overlay", overlay}} {
 		request.arguments = arguments
-		plan := request.plan(root, Inputs{})
-		if plan.failed != "" {
-			t.Fatalf("arguments %q: %s", arguments, plan.failed)
+		parts, err := request.planned(root, Inputs{})
+		if err != nil {
+			t.Fatalf("arguments %q: %v", arguments, err)
 		}
-		if slices.ContainsFunc(plan.arguments, func(argument string) bool { return strings.HasPrefix(argument, "-overlay") || argument == overlay }) {
-			t.Errorf("arguments %q: the plan runs go with the test's overlay file: %q", arguments, plan.arguments)
+		if slices.ContainsFunc(parts.command.Arguments, func(argument string) bool { return strings.HasPrefix(argument, "-overlay") || argument == overlay }) {
+			t.Errorf("arguments %q: the plan runs go with the test's overlay file: %q", arguments, parts.command.Arguments)
 		}
-		if want := map[string]string{"greet/extra.go": replacement}; !maps.Equal(plan.replace, want) {
-			t.Errorf("arguments %q: the plan's overlay is %q, want %q", arguments, plan.replace, want)
+		if want := map[string]string{"greet/extra.go": replacement}; !maps.Equal(parts.replace, want) {
+			t.Errorf("arguments %q: the plan's overlay is %q, want %q", arguments, parts.replace, want)
 		}
-		if again := request.plan(root, Inputs{}); !reflect.DeepEqual(plan, again) {
-			t.Errorf("arguments %q: two plans of one request differ:\n%+v\n%+v", arguments, plan, again)
+		if again := request.plan(root, Inputs{}); !reflect.DeepEqual(request.plan(root, Inputs{}), again) {
+			t.Errorf("arguments %q: two plans of one request differ:\n%+v\n%+v", arguments, request.plan(root, Inputs{}), again)
 		}
 	}
 	request.arguments = []string{"-trimpath"}
-	if plan := request.plan(root, Inputs{}); plan.failed != "" || plan.replace != nil {
-		t.Errorf("a request without an overlay plans %q, %s", plan.replace, plan.failed)
+	if parts, err := request.planned(root, Inputs{}); err != nil || parts.replace != nil {
+		t.Errorf("a request without an overlay plans %q, %v", parts.replace, err)
 	}
 }
 
