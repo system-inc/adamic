@@ -49,6 +49,58 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
 	}
 }
 
+// A directory on the build cache's own chain of parents, listed or opened to list as Go's os.Open does, is keyed as a
+// lookup beside the cache's parents is, relative to the cache, never refused under the home, and two homes holding
+// different things class it alike (#4gp2ytz: esbuild's resolver lists every parent up to /). A listing off that chain
+// under the home, a sibling of the cache's or of one of its parents, and a file on it opened, are still refused under
+// the home (Tests' bounds). Mutant: every directory listed under the home keyed relative to the cache.
+// Not parallel: it sets HOME, which settleFacts reads.
+func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
+	classes := func(extra string) []classed {
+		t.Helper()
+		home, err := filepath.EvalSymlinks(t.TempDir())
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Setenv("HOME", home)
+		directory := filepath.Join(home, "loom-builder", "trees", "6299aba1")
+		cache := filepath.Join(directory, "cache")
+		for _, made := range []string{cache, filepath.Join(directory, "logs"), filepath.Join(home, "elsewhere"), filepath.Join(home, extra)} {
+			if err := os.MkdirAll(made, 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}
+		os.WriteFile(filepath.Join(home, "package.json"), []byte("{}\n"), 0o644)
+		facts, err := settleFacts(filepath.Join(home, "loom-trees", "adamic"), cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		// A home in no temporary directory, as a builder's isn't.
+		facts.temporary = nil
+		return []classed{
+			facts.classifyPath(directory, readListing),
+			facts.classifyPath(filepath.Join(home, "loom-builder"), readContent|readListing),
+			facts.classifyPath(home, readContent|readListing),
+			facts.classifyPath(filepath.Join(directory, "logs"), readListing),
+			facts.classifyPath(filepath.Join(home, "elsewhere"), readContent|readListing),
+			facts.classifyPath(filepath.Join(home, "package.json"), readContent),
+		}
+	}
+	first, second := classes("first-box-only"), classes("second-box-only")
+	if !reflect.DeepEqual(first[:3], second[:3]) {
+		t.Fatalf("two homes holding different things classed the cache's parents apart:\n%q\n%q", first, second)
+	}
+	want := []classed{{"above cache", ".."}, {"above cache", "../../.."}, {"above cache", "../../../.."}}
+	if !reflect.DeepEqual(first[:3], want) {
+		t.Fatalf("the cache's parents classed %q, want %q", first[:3], want)
+	}
+	for index, name := range []string{"a sibling of the cache", "a directory of the home off the chain", "a file of the home"} {
+		if found := first[3+index]; found.kind != refusal+"home" {
+			t.Errorf("%s classed %q, want refused under the home", name, found)
+		}
+	}
+}
+
 // go list -test's look for its cached test main at the package's directory joined to the Go cache's absolute path is
 // go's, never the tree's, wherever the cache sits (#pqq9z5q): two builders with their caches at two places class it
 // alike, as nothing. A missed look at a tree path that only resembles one, or that holds the cache's path as part of a
