@@ -389,19 +389,12 @@ func asyncLoopsRefusal(t *testing.T, name, want, output string) {
 	}
 	t.Logf("Node %q; compiler %v", truth.stdout, err)
 }
-func TestAsyncLoopsStringRemainsRefused(t *testing.T) {
-	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_for_of_string", "async for-of over this iterable or pattern", "a\nb\n")
-}
 func TestAsyncLoopsCallableReturnRemainsRefused(t *testing.T) {
 	t.Parallel()
 	asyncLoopsRefusal(t, "async_refuse_loop_cells_return", "hidden thenable", "2\n")
 }
 func init() {
 	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/oracle/testdata/async_refused/async_refuse_for_of_string.a", false, false}, struct {
 		path            string
 		lowers, checked bool
 	}{"internal/oracle/testdata/async_refused/async_refuse_loop_cells_return.a", false, false})

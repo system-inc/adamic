@@ -1,0 +1,4 @@
+async function walk(): Promise<void> {
+for (const x of "😀xy") { await Promise.resolve(); console.log(x); break; } console.log("done");
+}
+await walk();
