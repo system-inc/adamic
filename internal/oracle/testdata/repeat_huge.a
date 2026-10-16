@@ -1,0 +1,4 @@
+// repeat to a length far past V8's longest string is RangeError: Invalid string length before anything
+// is built (string_repeat_impl.h); without that check the copy would be built until memory ran out.
+console.log('before');
+console.log('a'.repeat(1e15));
