@@ -102,7 +102,6 @@ func TestAsyncReaderRefusals(t *testing.T) {
 		cycle              bool
 	}{
 		{"async_refuse_frame_capture_cycle", "async function make(seed: string): Promise<(n: number) => string> {\n    const text = `${seed}:held`;\n    const read = () => text;\n    await Promise.resolve();\n    return (n: number) => `${read()}:${n}`;\n}\nconst escaped = await make(`seed${3}`);\nconsole.log(escaped(7));\n", "async frame capture cycle", true},
-		{"async_refuse_loop_body_capture", "async function run(): Promise<void> {\n    const readers: (() => string)[] = [];\n    let i = 0;\n    while (i < 3) {\n        const held = `item${i}`;\n        readers.push(() => held);\n        await Promise.resolve();\n        i++;\n    }\n    const a = readers[0] ?? (() => \"missing\");\n    const b = readers[1] ?? (() => \"missing\");\n    const c = readers[2] ?? (() => \"missing\");\n    console.log(`${a()} ${b()} ${c()}`);\n}\nawait run();\n", "async per-iteration captured cells", false},
 		{"async_refuse_return_thenable", "async function f(): Promise<number> {\n    return {\n        then(resolve: (value: number) => void): void {\n            resolve(7);\n        }\n    };\n}\nconsole.log(`${await f()}`);\n", "return of thenables", false},
 		{"async_refuse_arrow_thenable", "const f = async (): Promise<number> => ({\n    then(resolve: (value: number) => void): void {\n        resolve(7);\n    }\n});\nconsole.log(`${await f()}`);\n", "return of thenables", false},
 	} {
@@ -122,7 +121,7 @@ func TestAsyncReaderRefusals(t *testing.T) {
 	}
 }
 
-func TestAsyncRepeatedBindingRefusals(t *testing.T) {
+func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	t.Parallel()
 	for _, body := range []string{
 		"if (true) { const held = `item${i}`; readers.push(() => held); }",
@@ -135,8 +134,8 @@ func TestAsyncRepeatedBindingRefusals(t *testing.T) {
 		} {
 			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
 			_, err := lowerSource(t, source)
-			if err == nil || !strings.Contains(err.Error(), "async per-iteration captured cells") {
-				t.Fatalf("repeated binding must be refused: %s: %v", source, err)
+			if err != nil {
+				t.Fatalf("repeated binding must lower: %s: %v", source, err)
 			}
 		}
 	}

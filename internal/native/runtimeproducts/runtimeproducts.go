@@ -85,7 +85,10 @@ func Supply(request native.RuntimeRequest) (string, error) {
 // Declared says why a request is for an archive the tree build doesn't build ahead, or nil when it is one.
 func Declared(request native.RuntimeRequest) error {
 	setDeclared := slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, request.Features) })
-	variantDeclared := slices.ContainsFunc(Variants, func(variant Variant) bool { return variant.Options == request.Options })
+	// Split and Jobs govern generated program units, not runtime compilation.
+	options := request.Options
+	options.Split, options.Jobs = false, 0
+	variantDeclared := slices.ContainsFunc(Variants, func(variant Variant) bool { return variant.Options == options })
 	if setDeclared && variantDeclared {
 		return nil
 	}

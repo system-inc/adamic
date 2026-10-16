@@ -14,6 +14,13 @@ func NormalizeAsync(program *ir.Program) error {
 		program.Functions = append(program.Functions, ir.Function{Name: "module", Async: true, AsyncSite: asyncSourceSite(program.Main), Returns: ir.Promise, Body: program.Main})
 		program.AsyncEntry = index + 1
 		program.Main = nil
+		// The top level's own locals (a catch binding, a block's let) belong to the module
+		// function now, so they get frame cells and the frame releases them. Globals stay global.
+		for local := range program.Locals {
+			if program.Locals[local].Function == -1 && !program.Locals[local].Global {
+				program.Locals[local].Function = index
+			}
+		}
 	}
 	for index := range program.Functions {
 		function := &program.Functions[index]
@@ -34,7 +41,7 @@ func NormalizeAsync(program *ir.Program) error {
 				if declared.Type == ir.MaybeBoolean {
 					return &AsyncError{Site: function.AsyncSite, What: "async slots holding boolean or undefined are not yet proven"}
 				}
-				if declared.Captured {
+				if declared.Captured && !declared.IterationCell {
 					program.Locals[local].Preallocated = true
 					program.Locals[local].EnvironmentCell = true
 				}
@@ -278,25 +285,31 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 		case ir.Loop:
 			// Body declarations (including nested blocks and catch bindings) are
 			// new bindings on each execution, just like for-header bindings.
-			var captured bool
+			mark := func(local int) {
+				if n.program.Locals[local].Captured {
+					n.program.Locals[local].IterationCell = true
+					n.program.Locals[local].EnvironmentCell = false
+				}
+			}
 			inspectAsyncIR(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
 				switch binding := node.(type) {
 				case ir.Declare:
-					captured = captured || n.program.Locals[binding.Local].Captured
+					mark(binding.Local)
 				case ir.Try:
 					if binding.HasCatch && binding.CatchLocal >= 0 {
-						captured = captured || n.program.Locals[binding.CatchLocal].Captured
+						mark(binding.CatchLocal)
 					}
 				}
 			})
-			if captured {
-				return nil, n.errorAt(value, "async per-iteration captured cells in a repeatedly executed body are not yet represented")
-			}
+			var copies []ir.Statement
 			for _, local := range value.PerIteration {
+				mark(local)
 				if n.program.Locals[local].Captured {
-					return nil, n.errorAt(value, "async per-iteration captured cells are not yet represented")
+					copies = append(copies, ir.Declare{Local: local, CopyCell: true, Value: ir.Read{Local: local, Of: n.program.Locals[local].Type}})
 				}
 			}
+			value.Update = append(copies, value.Update...)
+			value.PerIteration = nil
 			value.Condition = n.expression(value.Condition, &value.Test, true)
 			value.Body, err = n.statements(value.Body)
 			if err == nil {
@@ -323,8 +336,58 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			statement = value
 		case ir.Labeled:
 			return nil, n.errorAt(value, "async labeled regions are not yet proven")
-		case ir.ForOf, ir.Switch:
-			return nil, n.errorAt(value, "async for-of and switch regions are not yet proven")
+		case ir.ForOf:
+			if value.Iterable.Type() != ir.Array || value.RegexIterator || value.MapPart != "" || value.Pattern != nil {
+				return nil, n.errorAt(value, "async for-of over this iterable or pattern is not yet proven")
+			}
+			var outerBreak bool
+			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
+				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
+					outerBreak = true
+				}
+			})
+			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
+				return nil, n.errorAt(value, "async for-of labeled outer break is not yet proven")
+			}
+			// Hold the array itself, not a copy or its current length. The next pass
+			// observes mutations made while suspended, like an array iterator on Node.
+			array := n.expression(value.Iterable, &before, true)
+			index := n.temporary(ir.Number)
+			position := ir.Read{Local: index, Of: ir.Number}
+			before = append(before, ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}})
+			var element ir.Expression = ir.ArrayIndex{Array: array, Index: position, Element: value.Element}
+			if element.Type() != value.Element {
+				// Only numbers and booleans use presence pairs. References already
+				// have their element representation, and maybe elements stay maybe.
+				element = ir.Unwrap{Value: element}
+			}
+			loop := ir.Loop{
+				Condition: ir.Binary{Operator: ir.Less, Left: position, Right: ir.Length{Array: array}},
+				Body:      append([]ir.Statement{ir.Declare{Local: value.Local, Value: element}}, value.Body...),
+				Update:    []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}}}},
+			}
+			// Loop normalization marks the element declaration as a fresh iteration
+			// cell when captured, so closures keep their binding across suspension.
+			var normalized []ir.Statement
+			normalized, err = n.statements([]ir.Statement{loop})
+			if err == nil {
+				statement = normalized[0]
+			}
+		case ir.Switch:
+			value.Value = n.expression(value.Value, &before, true)
+			for index := range value.Cases {
+				if containsAwait(reflect.ValueOf(value.Cases[index].Tests)) {
+					return nil, n.errorAt(value, "await in switch case tests is not yet proven")
+				}
+				value.Cases[index].Body, err = n.statements(value.Cases[index].Body)
+				if err != nil {
+					break
+				}
+			}
+			if err == nil {
+				value.Default, err = n.statements(value.Default)
+			}
+			statement = value
 		default:
 			if containsAwait(reflect.ValueOf(statement)) {
 				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)

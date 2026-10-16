@@ -1,0 +1,7 @@
+// A top-level catch that binds an awaited rejection. The binding belongs to the module's async
+// frame, which releases it; it leaked one value when it was a plain local (Apple, Oct 7).
+try {
+    await Promise.reject<number>(new Error("refused1"));
+} catch (error) {
+    console.log(error instanceof Error ? error.message : "not");
+}

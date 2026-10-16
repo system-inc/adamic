@@ -401,6 +401,10 @@ func (e *emitter) nested(statements []ir.Statement) {
 
 func (e *emitter) declare(local int, value string) {
 	declared := e.program.Locals[local]
+	if declared.IterationCell && !declared.Preallocated {
+		e.line("%s = { value: %s, ready: true };", e.cellName(local), value)
+		return
+	}
 	if declared.Captured && declared.Preallocated {
 		e.line("%s.value = %s;", e.cell(local), value)
 		e.line("%s.ready = true;", e.cell(local))
@@ -433,11 +437,19 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
+		if statement.CopyCell {
+			e.line("%s = { value: %s.value, ready: true };", e.cellName(statement.Local), e.cellName(statement.Local))
+			return
+		}
 		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
 			e.tracedAwait(at, wait, statement.Local)
 			return
 		}
 		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].IterationCell {
+				e.line("%s = { value: undefined, ready: false };", e.cellName(statement.Local))
+				return
+			}
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
@@ -1311,6 +1323,10 @@ func (e *emitter) allocateEnvironment(cells []int) {
 	environment := e.temporary()
 	e.line("const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));", environment, len(cells))
 	for position, local := range cells {
-		e.line("const %s = %s[%d];", e.cellName(local), environment, position)
+		keyword := "const"
+		if e.program.Locals[local].IterationCell {
+			keyword = "let"
+		}
+		e.line("%s %s = %s[%d];", keyword, e.cellName(local), environment, position)
 	}
 }

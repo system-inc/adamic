@@ -1,0 +1,9 @@
+async function run(): Promise<void> {
+    const readers: (() => number)[] = [];
+    for (const element of [10, 20, 30]) {
+        readers.push(() => element);
+        await Promise.resolve();
+    }
+    for (const read of readers) console.log(`${read()}`);
+}
+await run();
