@@ -29,7 +29,11 @@ return second + '-three';
 }
 const result = await decorate('dynamic-' + 'input');
 console.log(result);
-`, "dynamic-input-one-two\ndynamic-input-one-two-three\n")
+let version = 1;
+function change(): number { version = 2; return 7; }
+console.log(version + await Promise.resolve(change()));
+console.log(version);
+`, "dynamic-input-one-two\ndynamic-input-one-two-three\n8\n2\n")
 }
 
 func TestParallelCompilerSharedReferencesMatchNode(t *testing.T) {

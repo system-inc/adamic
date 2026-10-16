@@ -198,6 +198,16 @@ func (*MayThrow) terminal()    {}
 func (*Throw) terminal()       {}
 func (*Choose) terminal()      {}
 
+// Suspend has two explicit resumption edges, independent of the operand call's synchronous effects.
+type Suspend struct {
+	Fulfilled, Rejected BlockId
+	Local               int
+	Of                  ir.Type
+	Order               EvaluationOrder
+}
+
+func (*Suspend) terminal() {}
+
 // NewFunction makes an empty function ready to build.
 func NewFunction(name string) *Function {
 	return &Function{Name: name, blocksById: map[BlockId]*BasicBlock{}, nextBlock: 1}
@@ -271,6 +281,9 @@ func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
 	case *If:
 		visit(terminal.Consequent)
 		visit(terminal.Alternate)
+	case *Suspend:
+		visit(terminal.Fulfilled)
+		visit(terminal.Rejected)
 	case *MayThrow:
 		visit(terminal.Next)
 		visit(terminal.Handler)
@@ -294,6 +307,8 @@ func TerminalOrder(terminal Terminal) EvaluationOrder {
 	case *Return:
 		return terminal.Order
 	case *Unreachable:
+		return terminal.Order
+	case *Suspend:
 		return terminal.Order
 	case *MayThrow:
 		return terminal.Order

@@ -28,6 +28,11 @@ type handler struct {
 // jumpThrown emits the jump for a pending exception, once the statement's temporaries are let go: to
 // the innermost handler, or out of the function, or, out of main, the panic.
 func (e *emitter) jumpThrown() {
+	if e.asyncHandler != "" {
+		e.line("adamic_release(frame->error); frame->error = adamic_thrown; adamic_thrown = NULL;")
+		e.line("goto %s;", e.asyncHandler)
+		return
+	}
 	if len(e.handlers) > 0 {
 		inner := e.handlers[len(e.handlers)-1]
 		inner.jumped = true

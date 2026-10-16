@@ -122,7 +122,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
-	case ast.KindNonNullExpression, ast.KindVoidExpression:
+	case ast.KindAwaitExpression, ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err
@@ -171,6 +171,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err != nil {
 			return nil, err
 		}
+		if call.Type() == ir.Promise {
+			return nil, &Refused{Where: l.program.Where(expression), What: "an unawaited async task", Fix: "await the call or keep and return its Promise"}
+		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
@@ -202,8 +205,8 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	expression := node.AsReturnStatement().Expression
 	if expression == nil {
 		returned := ir.Return{}
-		if l.function.Returns != 0 {
-			returned.Value = fit(ir.Undefined{}, l.function.Returns)
+		if l.function.BodyReturns() != 0 {
+			returned.Value = fit(ir.Undefined{}, l.function.BodyReturns())
 		}
 		return []ir.Statement{returned}, nil
 	}
@@ -219,7 +222,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return l.expressionStatement(expression)
 	}
 	// A generic return specialized to void still evaluates the call before returning.
-	if l.function.Returns == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
+	if l.function.BodyReturns() == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
 		statements, err := l.expressionStatement(expression)
 		if err != nil {
 			return nil, err
@@ -230,10 +233,13 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	if l.function.Returns == 0 {
+	if err := l.checkAsyncReturn(expression, value); err != nil {
+		return nil, err
+	}
+	if l.function.BodyReturns() == 0 {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
 }
 
 // returnAssignment preserves the right side's value, assigns once, then returns
@@ -253,7 +259,10 @@ func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assigned", Type: assignment.Value.Type(), Function: l.functionIndex})
 	value := assignment.Value
+	if err := l.checkAsyncReturn(node, value); err != nil {
+		return nil, err
+	}
 	read := ir.Read{Local: held, Of: value.Type()}
 	assignment.Value = read
-	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
+	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.BodyReturns())}}, nil
 }
