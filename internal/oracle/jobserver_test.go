@@ -69,8 +69,12 @@ func TestTheJobserverNeverReachesTheEmittedCOrClang(t *testing.T) {
 		}
 		runContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 		command := exec.CommandContext(runContext, os.Args[0], "-test.run", "^TestTheJobserverNeverReachesTheEmittedCOrClangChild$", "-test.count=1", "-test.v")
+		// Each run builds what it links, the runtime archive among them, into its own empty cache, so the cache builds:
+		// a Loom unit's ADAMIC_BUILD_CACHE=read, which only reads what the tree's product tests built, is cleared (the
+		// last value of a variable is the one a child sees). Under it, chg_j1h9dkkk's unit refused the archive as not
+		// built (#yzwm4rj).
 		command.Env = append(os.Environ(), "ADAMIC_ORACLE_JOBSERVER_CHILD="+out, ccjobserver.Variable+"="+fifo, "ADAMIC_TOOLS="+tools,
-			"ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_STORE=off")
+			"ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_STORE=off", "ADAMIC_BUILD_CACHE=")
 		output, err := command.CombinedOutput()
 		cancel()
 		if err != nil || !strings.Contains(string(output), "--- PASS: TestTheJobserverNeverReachesTheEmittedCOrClangChild") {
