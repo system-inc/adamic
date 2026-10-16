@@ -2817,3 +2817,100 @@ func TestNoBuildIsLeanWhileLoomTurnsLeanOff(t *testing.T) {
 		}
 	}
 }
+
+// Under ADAMIC_BUILD_LEAN=off no lean read set is matched (#earlycut, Node's ruling on Mentat's M4): a product stored
+// under a lean set is a hit with lean on and a miss with it off, so the switch is the mass rekey Loom's page says. A
+// found product's report says whether its set is lean, so Loom's sample draws from hits too. Mutants that each fail it:
+// the lookup ignoring the switch; a found product's report never lean.
+// Not parallel: newRig, t.Setenv.
+func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	var key string
+	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
+		file.Sets[0].Lean, key = true, file.Sets[0].Key
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if !leanSet(r.cache, build.NameKey, key) || leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)) {
+		t.Fatalf("leanSet of the lean set %s: %v; of a key no set stores: %v", key[:12], leanSet(r.cache, build.NameKey, key), leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)))
+	}
+	// A traced run that finds it reports it lean.
+	forgetHeldForLife()
+	if _, err := Get(port, func(string) error { return errors.New("found, never built") }); err != nil {
+		t.Fatal(err)
+	}
+	foundLean := false
+	for _, report := range r.settle(t).Reports {
+		if report.Outcome == ReportFound && report.NameKey == build.NameKey && report.Key == key {
+			foundLean = report.Lean
+		}
+	}
+	if !foundLean {
+		t.Fatal("a product found under a lean set isn't reported lean")
+	}
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	look := func() int {
+		t.Helper()
+		forgetHeldForLife()
+		builds := 0
+		if _, err := Get(port, func(directory string) error {
+			builds++
+			return building("built")(directory)
+		}); err != nil {
+			t.Fatal(err)
+		}
+		return builds
+	}
+	if builds := look(); builds != 0 {
+		t.Fatalf("a lean set with lean on: built %d times, want a hit", builds)
+	}
+	t.Setenv("ADAMIC_BUILD_LEAN", "off")
+	if builds := look(); builds != 1 {
+		t.Fatalf("a lean set under ADAMIC_BUILD_LEAN=off: built %d times, want a miss", builds)
+	}
+}
+
+// A union is lean only when every set in it is (#earlycut): a lean set folded with an earlier whole one that still
+// values keys by the whole recipe's reads too, so it isn't lean; folded with a lean one, it is. Mutant: the new set's
+// Lean kept whatever it folds.
+// Not parallel: newRig.
+func TestAUnionIsLeanOnlyWhenEverySetInItIs(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, build.NameKey)
+	if err != nil || len(file.Sets) != 1 || file.Sets[0].Lean {
+		t.Fatalf("the settled whole set: %+v (%v)", file.Sets, err)
+	}
+	union := func() bool {
+		t.Helper()
+		set, _, _, err := recordUnion(r.root, r.cache, build.NameKey, "port", readSet{Entries: slices.Clone(file.Sets[0].Entries), Lean: true}, func(string) string { return "" })
+		if err != nil {
+			t.Fatal(err)
+		}
+		return set.Lean
+	}
+	if union() {
+		t.Fatal("a lean set folded with a whole one is lean")
+	}
+	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
+		file.Sets[0].Lean = true
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if !union() {
+		t.Fatal("a lean set folded with a lean one isn't lean")
+	}
+}
