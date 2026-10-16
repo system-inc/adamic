@@ -1,0 +1,37 @@
+=== RUN   TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+=== PAUSE TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+=== RUN   TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+=== PAUSE TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+=== RUN   TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+=== PAUSE TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+=== CONT  TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+=== CONT  TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+=== CONT  TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+=== NAME  TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+    corpus_units_test.go:8320: 3 functions: 0 phis, 0 values, 1 uses checked
+=== NAME  TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+    corpus_units_test.go:8314: 6 functions: 0 phis, 9 values, 26 uses checked
+=== NAME  TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+    corpus_units_test.go:4972: 33 functions: 3 phis, 20 values, 74 uses checked
+=== NAME  TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+    corpus_units_test.go:8320: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+    corpus_units_test.go:8314: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+    corpus_units_test.go:4972: 70 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+    corpus_units_test.go:8320: 23 points walked, 32 events
+=== NAME  TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+    corpus_units_test.go:8314: 44 points walked, 75 events
+=== NAME  TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda
+    corpus_units_test.go:8320: 0 variable-and-point pairs checked
+--- PASS: TestFlowProgram____oracle_testdata_spreads_a_5a2975febeda (0.20s)
+=== NAME  TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5
+    corpus_units_test.go:8314: 49 variable-and-point pairs checked
+--- PASS: TestFlowProgram____oracle_testdata_spread_undefined_a_f127e87bdaa5 (0.21s)
+=== NAME  TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44
+    corpus_units_test.go:4972: 375 points walked, 732 events
+    corpus_units_test.go:4972: 638 variable-and-point pairs checked
+--- PASS: TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44 (0.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.270s
