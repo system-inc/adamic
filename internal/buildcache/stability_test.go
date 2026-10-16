@@ -92,14 +92,14 @@ func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {
 		}
 	}
 	entry := readEntry{Kind: "above cache", Path: "../beside-the-cache"}
-	before, err := entryValue(root, cache, entry, 0, nil)
+	before, err := treeEntryValue(root, cache, entry)
 	if err != nil || before != "absent" {
 		t.Fatalf("nothing beside the cache: %q, %v", before, err)
 	}
 	if err := os.Mkdir(filepath.Join(filepath.Dir(cache), "beside-the-cache"), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if after, err := entryValue(root, cache, entry, 0, nil); err != nil || after != "directory" {
+	if after, err := treeEntryValue(root, cache, entry); err != nil || after != "directory" {
 		t.Fatalf("a directory beside the cache: %q, %v", after, err)
 	}
 }
