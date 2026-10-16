@@ -1,0 +1,6 @@
+=== RUN   TestProduct_CallTargetExports
+=== PAUSE TestProduct_CallTargetExports
+=== CONT  TestProduct_CallTargetExports
+    call_targets_guard_test.go:191: build go_list_-export__./internal/native_./internal/lower_./internal/fresh_./internal/flow_listing.json 3c9151dae931 miss 42.27
+--- PASS: TestProduct_CallTargetExports (44.03s)
+PASS

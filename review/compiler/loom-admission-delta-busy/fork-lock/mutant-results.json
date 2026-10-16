@@ -1,0 +1,7 @@
+{
+  "mutant_runs": 100,
+  "mutant_failures": 97,
+  "first_failure_run": 1,
+  "first_failure_output": "    speed_test.go:87: executable 12 under concurrent forks: {WallSeconds:0.000489852 Exit:-1 Stdout: Stderr: Error:fork/exec /tmp/adamic-gate/TestExecutableForkIsolation2095330854/001/compiler: text file busy}\n",
+  "mutant_max_leaf_seconds": 1.12
+}

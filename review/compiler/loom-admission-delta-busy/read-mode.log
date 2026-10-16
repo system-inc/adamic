@@ -1,0 +1,168 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:302: build admission-compiler e27c33959815 missing 0.00
+    command_test.go:302: product admission-compiler (name key e27c33959815) is not built: no traced build has recorded what it reads, in /workspace/scratch/admission-busy-products, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name admission-compiler
+        flag 40b25f0411929152605c138cdca8123d8aa0b2d0
+        flag adapter=fd17ea5ed37137cf8666c675e74699284f529212114e9958f9d7005569da6bfd
+        flag -trimpath
+        flag -buildvcs=false
+        flag GOFLAGS=
+        flag CGO_ENABLED=
+        flag GOEXPERIMENT=
+        tool go1.27.1
+        tool linux
+        tool amd64
+        
+--- FAIL: TestProduct_AdmissionCompiler (0.09s)
+=== RUN   TestProduct_AdmissionCompilerReady
+=== PAUSE TestProduct_AdmissionCompilerReady
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNegativeContentHash
+=== PAUSE TestNegativeContentHash
+=== RUN   TestNegativeExactBackendStop
+=== PAUSE TestNegativeExactBackendStop
+=== RUN   TestNegativeRulingMetadata
+=== PAUSE TestNegativeRulingMetadata
+=== RUN   TestNegativeCommandAccepted
+=== PAUSE TestNegativeCommandAccepted
+=== RUN   TestNegativeTypeCorrectMutant
+=== PAUSE TestNegativeTypeCorrectMutant
+=== RUN   TestNegativeValidProgramCannotBeListed
+=== PAUSE TestNegativeValidProgramCannotBeListed
+=== RUN   TestNegativeEmptyListPrinted
+=== PAUSE TestNegativeEmptyListPrinted
+=== RUN   TestNegativeAlreadyAcceptedRepairMutant
+=== PAUSE TestNegativeAlreadyAcceptedRepairMutant
+=== RUN   TestNegativeEditedWitnessMandatory
+=== PAUSE TestNegativeEditedWitnessMandatory
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== RUN   TestShardPartitionKeepsDiff
+=== PAUSE TestShardPartitionKeepsDiff
+=== RUN   TestShardCommandScope
+=== PAUSE TestShardCommandScope
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== RUN   TestExecutableReplacement
+=== PAUSE TestExecutableReplacement
+=== RUN   TestCompilerCacheIgnoresBuildPolicy
+--- PASS: TestCompilerCacheIgnoresBuildPolicy (0.00s)
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestExecutableReplacement
+=== CONT  TestNegativeContentHash
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestSampling
+--- PASS: TestNegativeContentHash (0.00s)
+=== CONT  TestParallelLoweringOnly
+--- PASS: TestSampling (0.00s)
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestNewlyRefusedIsInformational
+=== CONT  TestProduct_AdmissionCompilerReady
+--- PASS: TestExecutableReplacement (0.01s)
+=== CONT  TestManifestMismatch
+--- PASS: TestParallelLoweringOnly (0.03s)
+=== CONT  TestHeadInputIsolation
+=== NAME  TestProduct_AdmissionCompilerReady
+    command_test.go:323: build admission-compiler e27c33959815 missing 0.00
+    command_test.go:323: product admission-compiler (name key e27c33959815) is not built: no traced build has recorded what it reads, in /workspace/scratch/admission-busy-products, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name admission-compiler
+        flag 40b25f0411929152605c138cdca8123d8aa0b2d0
+        flag adapter=fd17ea5ed37137cf8666c675e74699284f529212114e9958f9d7005569da6bfd
+        flag -trimpath
+        flag -buildvcs=false
+        flag GOFLAGS=
+        flag CGO_ENABLED=
+        flag GOEXPERIMENT=
+        tool go1.27.1
+        tool linux
+        tool amd64
+        
+--- FAIL: TestProduct_AdmissionCompilerReady (0.07s)
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestManifestMismatch (0.33s)
+=== CONT  TestCompilerTimeoutIsError
+--- PASS: TestCompilerTimeoutIsError (0.11s)
+=== CONT  TestEmptyCorpus
+--- PASS: TestNewlyRefusedIsInformational (0.94s)
+=== CONT  TestDiffSamplingIsMandatory
+=== CONT  TestDiffCoverage
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+--- PASS: TestEmptyCorpus (0.62s)
+=== CONT  TestBuildRevisions
+    command_test.go:329: build admission-compiler e27c33959815 missing 0.04
+    command_test.go:329: product admission-compiler (name key e27c33959815) is not built: no traced build has recorded what it reads, in /workspace/scratch/admission-busy-products, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name admission-compiler
+        flag 40b25f0411929152605c138cdca8123d8aa0b2d0
+        flag adapter=fd17ea5ed37137cf8666c675e74699284f529212114e9958f9d7005569da6bfd
+        flag -trimpath
+        flag -buildvcs=false
+        flag GOFLAGS=
+        flag CGO_ENABLED=
+        flag GOEXPERIMENT=
+        tool go1.27.1
+        tool linux
+        tool amd64
+        
+--- FAIL: TestBuildRevisions (1.43s)
+=== CONT  TestCompilerCacheIncludesSHA
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== CONT  TestShardCommandScope
+--- PASS: TestNewAdmissionMismatch (2.75s)
+=== CONT  TestShardPartitionKeepsDiff
+--- PASS: TestShardPartitionKeepsDiff (0.00s)
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+=== CONT  TestNegativeEditedWitnessMandatory
+--- PASS: TestNegativeEditedWitnessMandatory (0.00s)
+=== CONT  TestNegativeAlreadyAcceptedRepairMutant
+--- PASS: TestShardCommandScope (0.49s)
+=== CONT  TestNegativeEmptyListPrinted
+--- PASS: TestHeadInputIsolation (3.09s)
+=== CONT  TestNegativeValidProgramCannotBeListed
+--- PASS: TestNegativeValidProgramCannotBeListed (0.00s)
+=== CONT  TestNegativeTypeCorrectMutant
+--- PASS: TestDiffCoverage (2.16s)
+=== CONT  TestNegativeCommandAccepted
+=== NAME  TestNegativeAlreadyAcceptedRepairMutant
+    negative_test.go:185: type-correct input admitted by both compilers still demands Node agreement and rejects exit 70
+--- PASS: TestNegativeAlreadyAcceptedRepairMutant (1.50s)
+=== CONT  TestNegativeRulingMetadata
+=== CONT  TestNegativeExactBackendStop
+--- PASS: TestNegativeExactBackendStop (0.00s)
+--- PASS: TestNegativeRulingMetadata (0.00s)
+--- PASS: TestNegativeCommandAccepted (1.36s)
+--- PASS: TestNegativeEmptyListPrinted (1.93s)
+=== NAME  TestNegativeTypeCorrectMutant
+    negative_test.go:152: type-correct copy demands Node agreement; backend exit 70 is a divergence
+--- PASS: TestNegativeTypeCorrectMutant (2.12s)
+FAIL
