@@ -4,15 +4,10 @@ cmd/adamic-test262/cache_test.go	TestParallelCachedMatchesSerial
 cmd/adamic-test262/edit_test.go	TestEditCacheSeparation
 cmd/adamic-test262/edit_test.go	TestLoweringSourceEdit
 internal/lower/import_cycle_ledger_test.go	TestOriginalCycleLedger
-internal/lower/import_cycle_ready_test.go	TestUndecidedCycleReadsUseReadyChecks
-internal/lower/module_namespace_test.go	TestModuleNamespaceInitializedReadProof
 internal/native/normalize_benchmark_test.go	TestNormalizeLongMeasurements
 internal/oracle/cache_test.go	TestGateCacheUncached
 internal/oracle/enums_test.go	TestEnumSemanticMutants
-internal/oracle/import_cycles_test.go	TestImportCycleLoadTimeReads
-internal/oracle/import_cycles_test.go	TestImportCycleRuntimeCalls
 internal/oracle/library_map_set_test.go	TestLibraryMapSetMutants
-internal/oracle/module_namespace_reads_test.go	TestModuleNamespaceReadinessMutants
 internal/oracle/namespaces_test.go	TestNamespaceSemanticMutants
 internal/oracle/parameter_properties_test.go	TestParameterPropertyMutants
 internal/oracle/wasi_test.go	TestWASIOracleCatchesMutants

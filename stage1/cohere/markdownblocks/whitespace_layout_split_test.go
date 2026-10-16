@@ -665,14 +665,7 @@ func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork strin
 // that pin them, by the precise directories `go list -deps` names (all of cohere/internal would hash 92 MB of lint for
 // about 5.6 MB used). TestLoweringInputsCoverCompilerDependencies keeps the list complete and every entry needed.
 var loweringCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
-	"cohere/internal/lint/checking", "cohere/internal/lint/ecmascript/binding", "cohere/internal/lint/ecmascript/comments",
-	"cohere/internal/lint/ecmascript/control_flow_graph", "cohere/internal/lint/ecmascript/imports", "cohere/internal/lint/ecmascript/jsx",
-	"cohere/internal/lint/ecmascript/module", "cohere/internal/lint/ecmascript/module_roots", "cohere/internal/lint/ecmascript/nextjs",
-	"cohere/internal/lint/ecmascript/property", "cohere/internal/lint/ecmascript/react", "cohere/internal/lint/ecmascript/reference",
-	"cohere/internal/lint/ecmascript/regexsyntax", "cohere/internal/lint/ecmascript/scope", "cohere/internal/lint/ecmascript/text",
-	"cohere/internal/lint/linter", "cohere/internal/lint/rule", "cohere/internal/lint/rules/adamic", "cohere/internal/lint/rules/nexus",
-	"cohere/internal/types/sourcename", "cohere/policy", "cohere/rule_runner",
+	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
 }
 
 func whitespaceLayoutBuildFiles() []string {
