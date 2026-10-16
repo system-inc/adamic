@@ -1,0 +1,60 @@
+{"kind":"Refused","path":"stage3/fixtures/generics/13_constrained_local.a","reason":"/workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:2:11: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"}
+{"kind":"accepted","path":"stage3/fixtures/generics/14_optional_literal_union.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/generics/15_array_callback.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/host/01_readFile_utf8.a","reason":"/workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"stage3/fixtures/host/02_readFile_utf16le.a","reason":"/workspace/adamic/stage3/fixtures/host/02_readFile_utf16le.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"stage3/fixtures/host/03_readFile_utf16be.a","reason":"/workspace/adamic/stage3/fixtures/host/03_readFile_utf16be.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"stage3/fixtures/host/04_readFile_missing.a","reason":"/workspace/adamic/stage3/fixtures/host/04_readFile_missing.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"accepted","path":"stage3/fixtures/host/05_writeFile.a","reason":""}
+{"kind":"NotYet","path":"stage3/fixtures/host/06_fileExists.a","reason":"/workspace/adamic/stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/07_directoryExists.a","reason":"/workspace/adamic/stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/08_getDirectories.a","reason":"/workspace/adamic/stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/09_realpath.a","reason":"/workspace/adamic/stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/10_getModifiedTime.a","reason":"/workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet"}
+{"kind":"accepted","path":"stage3/fixtures/host/11_setModifiedTime.a","reason":""}
+{"kind":"NotYet","path":"stage3/fixtures/host/12_deleteFile.a","reason":"/workspace/adamic/stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet"}
+{"kind":"accepted","path":"stage3/fixtures/host/13_createDirectory.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/host/14_getCurrentDirectory.a","reason":"/workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
+{"kind":"NotYet","path":"stage3/fixtures/host/15_getExecutingFilePath.a","reason":"/workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/16_getEnvironmentVariable.a","reason":"/workspace/adamic/stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/17_write.a","reason":"/workspace/adamic/stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/18_exit_0.a","reason":"/workspace/adamic/stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/19_exit_1.a","reason":"/workspace/adamic/stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/20_exit_2.a","reason":"/workspace/adamic/stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/21_createHash.a","reason":"/workspace/adamic/stage3/fixtures/host/21_createHash.a:21:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/22_createHash_fallback.a","reason":"/workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet"}
+{"kind":"NotYet","path":"stage3/fixtures/host/23_newLine.a","reason":"/workspace/adamic/stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"}
+{"kind":"accepted","path":"stage3/fixtures/host/24_useCaseSensitiveFileNames.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/host/25_readDirectory.a","reason":"/workspace/adamic/stage3/fixtures/host/25_readDirectory.a:523:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/body_throw.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/break.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/cached_next.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/class.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/close_throw_body.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/close_throw_break.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/completion.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/done_throw.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/labeled_continue.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/method_getters.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/next_throw.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/iteration-dispatch/non_callable_next.a","reason":"/workspace/adamic/stage3/fixtures/iteration-dispatch/non_callable_next.a:5:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"Refused","path":"stage3/fixtures/iteration-dispatch/non_object_close.a","reason":"/workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_close.a:5:114: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"Refused","path":"stage3/fixtures/iteration-dispatch/non_object_iterator.a","reason":"/workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_iterator.a:5:53: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"Refused","path":"stage3/fixtures/iteration-dispatch/non_object_step.a","reason":"/workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_step.a:5:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/object.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/return.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration-dispatch/value_throw.a","reason":""}
+{"kind":"NotYet","path":"stage3/fixtures/iteration/accessor_binding.a","reason":"/workspace/adamic/stage3/fixtures/iteration/accessor_binding.a:24:10: stage 0 can't lower a for...of destructuring an object yet"}
+{"kind":"accepted","path":"stage3/fixtures/iteration/array_view_stress.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/iteration/array_view_variance.a","reason":"/workspace/adamic/stage3/fixtures/iteration/array_view_variance.a:9:38: Adamic 0.1 refuses a value of type Slot\u003cLarge\u003e[] seen as NodeArray\u003cSlot\u003cSmall\u003e\u003e, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
+{"kind":"accepted","path":"stage3/fixtures/iteration/array_view_weak.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration/collections.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration/delegated_generator.a","reason":""}
+{"kind":"accepted","path":"stage3/fixtures/iteration/generator.a","reason":""}
+{"kind":"Refused","path":"stage3/fixtures/iteration/intrinsic_iterator_alias.a","reason":"/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:5:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"}
+{"kind":"Refused","path":"stage3/fixtures/iteration/intrinsic_iterator_prototype.a","reason":"/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_prototype.a:3:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"}
+{"kind":"Refused","path":"stage3/fixtures/iteration/intrinsic_iterator_write.a","reason":"/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_write.a:4:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"}
+{"kind":"NotYet","path":"stage3/fixtures/iteration/iterable_view.a","reason":"/workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet"}
+{"kind":"NotYet","path":"stage3/fixtures/iteration/object_binding.a","reason":"/workspace/adamic/stage3/fixtures/iteration/object_binding.a:3:6: stage 0 can't lower a for...of destructuring an object yet"}
+{"kind":"NotYet","path":"stage3/fixtures/iteration/object_binding_stress.a","reason":"/workspace/adamic/stage3/fixtures/iteration/object_binding_stress.a:42:10: stage 0 can't lower a for...of destructuring an object yet"}
+{"kind":"accepted","path":"stage3/fixtures/iteration/object_iteration.a","reason":""}

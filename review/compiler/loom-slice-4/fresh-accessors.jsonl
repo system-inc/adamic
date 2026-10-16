@@ -1,0 +1,20 @@
+{"Time":"2026-10-13T08:23:50.700486772Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-13T08:23:50.707818459Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.707919602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== RUN   TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.707985881Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== PAUSE TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.707990108Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.707994234Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.707997849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== RUN   TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708002336Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== PAUSE TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708005471Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.708009046Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.70801162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== CONT  TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708014985Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-13T08:23:50.70801825Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== CONT  TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708026623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"--- PASS: TestIteratorFieldAccessorEscapesReceiver (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708031059Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Elapsed":0}
+{"Time":"2026-10-13T08:23:50.708043068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"--- PASS: TestIteratorMethodAccessorEscapesReceiver (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708045591Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Elapsed":0}
+{"Time":"2026-10-13T08:23:50.708049567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:23:50.708379434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.008s\n"}
+{"Time":"2026-10-13T08:23:50.708400556Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}

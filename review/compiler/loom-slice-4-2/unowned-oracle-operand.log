@@ -1,0 +1,9 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:59: build go_list_-export__./internal/native_./internal/lower_./internal/fresh_./internal/flow_./internal/oracle_listing.json 80c677b653f4 hit 0.36
+    call_targets_guard_test.go:173: unapproved call-target read internal/oracle/iteration_dispatch_mutant_test.go:TestIterationDispatchMutants:CallClosure.Closure at /workspace/adamic/internal/oracle/iteration_dispatch_mutant_test.go:49:23; use CallTargets or ClosureTargets
+--- FAIL: TestCallTargetReaders (1.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	1.060s
+FAIL

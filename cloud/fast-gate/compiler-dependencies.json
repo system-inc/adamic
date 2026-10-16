@@ -9,6 +9,7 @@
     "internal/buildcache/cmd/traced": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native/runtimeproducts": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/tracked": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "internal/toolchain": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
+    "internal/toolchain": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "stage3/project-loader/probe": ["internal/load"]
   }
 }

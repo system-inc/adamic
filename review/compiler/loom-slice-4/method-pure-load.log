@@ -1,0 +1,8 @@
+=== RUN   TestIteratorMethodAccessorEscapesReceiver
+=== PAUSE TestIteratorMethodAccessorEscapesReceiver
+=== CONT  TestIteratorMethodAccessorEscapesReceiver
+    iteration_test.go:17: protocol accessor must leave the receiver escaped: [{Kind:1 Site:1 Name:saved Function:-1 Proven:true Why:}]
+--- FAIL: TestIteratorMethodAccessorEscapesReceiver (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.008s
+FAIL

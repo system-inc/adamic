@@ -1,0 +1,3 @@
+function two<T extends { readonly value: number }, U>(): T['value'] | U | undefined { return 2; }
+const value: 1 | undefined = two<{ readonly value: 1 }, never>();
+console.log(`${value}`);

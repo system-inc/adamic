@@ -1,0 +1,13 @@
+..F.
+======================================================================
+FAIL: test_roots_are_not_attempts_or_sites (__main__.AuditTests.test_roots_are_not_attempts_or_sites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py", line 73, in test_roots_are_not_attempts_or_sites
+    self.assertEqual(result['roots'], 2)
+AssertionError: 4 != 2
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)

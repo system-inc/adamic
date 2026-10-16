@@ -1,0 +1,902 @@
+{
+  "main": "0bf6186d",
+  "previous_slice": "1fc069f0",
+  "rows_total": 1069,
+  "changes_against_main": [
+    {
+      "fixture": "internal/fresh/testdata/regexp_tree.ts",
+      "before": [
+        91,
+        91,
+        81,
+        85,
+        35,
+        0
+      ],
+      "after": [
+        91,
+        91,
+        85,
+        89,
+        35,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "iterator result value reads own boxed field values; respectively one or four retain/release pairs"
+    },
+    {
+      "fixture": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+      "before": null,
+      "after": [
+        28,
+        28,
+        16,
+        20,
+        8,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+      "before": null,
+      "after": [
+        57,
+        57,
+        31,
+        49,
+        9,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/basic.a",
+      "before": null,
+      "after": [
+        30,
+        30,
+        85,
+        101,
+        14,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/cancellation.a",
+      "before": null,
+      "after": [
+        23,
+        23,
+        65,
+        74,
+        14,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/captures.a",
+      "before": null,
+      "after": [
+        31,
+        31,
+        95,
+        95,
+        24,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/checker.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        104,
+        93,
+        16,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/close.a",
+      "before": null,
+      "after": [
+        27,
+        27,
+        57,
+        59,
+        13,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/completions.a",
+      "before": null,
+      "after": [
+        59,
+        59,
+        166,
+        175,
+        38,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/default_error.a",
+      "before": null,
+      "after": [
+        13,
+        13,
+        31,
+        30,
+        12,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/defaults.a",
+      "before": null,
+      "after": [
+        29,
+        29,
+        104,
+        107,
+        21,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/delegate.a",
+      "before": null,
+      "after": [
+        89,
+        89,
+        316,
+        332,
+        51,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/delegate_throw.a",
+      "before": null,
+      "after": [
+        28,
+        28,
+        158,
+        151,
+        22,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/first_reference.a",
+      "before": null,
+      "after": [
+        17,
+        17,
+        73,
+        72,
+        12,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/map_iterator.a",
+      "before": null,
+      "after": [
+        24,
+        24,
+        95,
+        103,
+        15,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/owned.a",
+      "before": null,
+      "after": [
+        32,
+        32,
+        132,
+        130,
+        21,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/reentrant.a",
+      "before": null,
+      "after": [
+        14,
+        14,
+        53,
+        54,
+        11,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generators/throw.a",
+      "before": null,
+      "after": [
+        16,
+        16,
+        75,
+        74,
+        12,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generic_body_indexed.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        0
+      ],
+      "owner": "generic-body-relations",
+      "reason": "new dependent read and indexed mapper witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/generic_body_read.a",
+      "before": null,
+      "after": [
+        10,
+        10,
+        0,
+        10,
+        3,
+        0
+      ],
+      "owner": "generic-body-relations",
+      "reason": "new dependent read and indexed mapper witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/notyet_element_access/nodearray.a",
+      "before": null,
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/notyet_element_access/sorted.a",
+      "before": null,
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/notyet_element_access/template.a",
+      "before": null,
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "internal/oracle/testdata/regexp.a",
+      "before": [
+        437,
+        437,
+        382,
+        417,
+        58,
+        0
+      ],
+      "after": [
+        437,
+        437,
+        383,
+        418,
+        58,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "iterator result value reads own boxed field values; respectively one or four retain/release pairs"
+    },
+    {
+      "fixture": "internal/oracle/testdata/user_iterators.a",
+      "before": [
+        663,
+        663,
+        455,
+        904,
+        64,
+        0
+      ],
+      "after": [
+        1050,
+        1050,
+        677,
+        994,
+        97,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch retains cached method closures, represented step fields and close lookup"
+    },
+    {
+      "fixture": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+      "before": [
+        5,
+        0,
+        5,
+        3,
+        5,
+        0
+      ],
+      "after": [
+        11,
+        3,
+        7,
+        3,
+        8,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch retains cached method closures, represented step fields and close lookup"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/01_identity.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        3,
+        7,
+        3,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/02_optional_return.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        3,
+        9,
+        3,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/03_callback_return.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        3,
+        11,
+        3,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/05_nested_class.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        5,
+        16,
+        7,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/09_recursive_optional.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        1,
+        4,
+        3,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/10_identifier_multimap.a",
+      "before": null,
+      "after": [
+        11,
+        11,
+        27,
+        36,
+        9,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/14_optional_literal_union.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        0,
+        3,
+        3,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/generics/15_array_callback.a",
+      "before": null,
+      "after": [
+        18,
+        18,
+        7,
+        27,
+        4,
+        0
+      ],
+      "owner": "generics-scout-main",
+      "reason": "new generic fixture registration"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/body_throw.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        17,
+        24,
+        12,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/break.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        11,
+        18,
+        10,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/cached_next.a",
+      "before": null,
+      "after": [
+        29,
+        29,
+        17,
+        34,
+        12,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/class.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        11,
+        22,
+        7,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        20,
+        26,
+        12,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        16,
+        21,
+        10,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/completion.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        10,
+        20,
+        11,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/done_throw.a",
+      "before": null,
+      "after": [
+        13,
+        13,
+        14,
+        16,
+        10,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+      "before": null,
+      "after": [
+        44,
+        44,
+        22,
+        38,
+        12,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/method_getters.a",
+      "before": null,
+      "after": [
+        26,
+        26,
+        16,
+        24,
+        15,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/next_throw.a",
+      "before": null,
+      "after": [
+        12,
+        12,
+        13,
+        16,
+        7,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/object.a",
+      "before": null,
+      "after": [
+        26,
+        26,
+        14,
+        28,
+        11,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/return.a",
+      "before": null,
+      "after": [
+        21,
+        21,
+        11,
+        18,
+        13,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration-dispatch/value_throw.a",
+      "before": null,
+      "after": [
+        13,
+        13,
+        14,
+        16,
+        10,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/array_view_stress.a",
+      "before": null,
+      "after": [
+        34,
+        34,
+        50,
+        72,
+        16,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/array_view_weak.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        8,
+        13,
+        4,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/collections.a",
+      "before": null,
+      "after": [
+        35,
+        35,
+        24,
+        47,
+        11,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/delegated_generator.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        70,
+        74,
+        15,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/generator.a",
+      "before": null,
+      "after": [
+        14,
+        14,
+        33,
+        35,
+        13,
+        0
+      ],
+      "owner": "generators-main",
+      "reason": "new owned synchronous generator frame fixture"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/object_iteration.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        1,
+        6,
+        3,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/strings.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        14,
+        27,
+        9,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/test262_array_views.a",
+      "before": null,
+      "after": [
+        11,
+        11,
+        25,
+        38,
+        11,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/fixtures/iteration/user_forwarding.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        7,
+        17,
+        14,
+        0
+      ],
+      "owner": "iteration-main",
+      "reason": "runtime protocol dispatch and saved methods with owned closures; new view/dispatch witness"
+    },
+    {
+      "fixture": "stage3/project-references-source/fixture/chain/app/main-print.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        0
+      ],
+      "owner": "project-references-main",
+      "reason": "new executable project reference fixture"
+    },
+    {
+      "fixture": "stage3/project-references-source/fixture/two/app/main.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        0
+      ],
+      "owner": "project-references-main",
+      "reason": "new executable project reference fixture"
+    }
+  ],
+  "changes_against_previous_slice": [
+    {
+      "fixture": "internal/oracle/testdata/getters_census_binary_inline.a",
+      "before": null,
+      "after": [
+        37,
+        37,
+        29,
+        57,
+        17,
+        0
+      ],
+      "owner": "main getters census"
+    },
+    {
+      "fixture": "internal/oracle/testdata/getters_census_class_map.a",
+      "before": null,
+      "after": [
+        13,
+        13,
+        4,
+        15,
+        6,
+        0
+      ],
+      "owner": "main getters census"
+    },
+    {
+      "fixture": "internal/oracle/testdata/getters_census_throwing_object.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        5,
+        8,
+        3,
+        0
+      ],
+      "owner": "main getters census"
+    }
+  ]
+}

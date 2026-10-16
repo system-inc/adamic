@@ -1,0 +1,8 @@
+=== RUN   TestMixedAdamicAndTypeScriptWithoutReferences
+=== PAUSE TestMixedAdamicAndTypeScriptWithoutReferences
+=== CONT  TestMixedAdamicAndTypeScriptWithoutReferences
+    mixed_file_build_test.go:18: mixed file build: load: mixed .a and project .ts checking is not implemented: /tmp/adamic-gate/TestMixedAdamicAndTypeScriptWithoutReferences2123216003/001/value.a
+--- FAIL: TestMixedAdamicAndTypeScriptWithoutReferences (3.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	3.240s
+FAIL

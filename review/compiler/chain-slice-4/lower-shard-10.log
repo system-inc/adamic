@@ -1,0 +1,380 @@
+=== RUN   TestTsgoHonorsNoCheckInAdamicFiles
+=== PAUSE TestTsgoHonorsNoCheckInAdamicFiles
+=== RUN   TestStringEnumsStayClosed
+=== PAUSE TestStringEnumsStayClosed
+=== RUN   TestReadonlyFieldsAreJudgedByTheirConstructorsWrites
+=== PAUSE TestReadonlyFieldsAreJudgedByTheirConstructorsWrites
+=== RUN   TestRepresentedMethodReplacementIsNotYet
+=== PAUSE TestRepresentedMethodReplacementIsNotYet
+=== RUN   TestTscNamespaceDeclarationShapes
+=== PAUSE TestTscNamespaceDeclarationShapes
+=== RUN   TestTracingNamespaceEscapeStaysNotYet
+=== PAUSE TestTracingNamespaceEscapeStaysNotYet
+=== RUN   TestPrototypeMethodsAreRefusedWithReasons
+=== PAUSE TestPrototypeMethodsAreRefusedWithReasons
+=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsErase
+=== PAUSE TestProvenRelationsErase
+=== RUN   TestReadinessElisionRequiresDominatingAssignment
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestRegExpNativeRefusals
+=== PAUSE TestRegExpNativeRefusals
+=== RUN   TestRegExpSourceNode
+=== PAUSE TestRegExpSourceNode
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestRegExpEscapedSlashSourceAgreesWithNode
+=== PAUSE TestRegExpEscapedSlashSourceAgreesWithNode
+=== RUN   TestRepresentationClockSourceCheckedTypes
+=== PAUSE TestRepresentationClockSourceCheckedTypes
+=== RUN   TestReadinessErrorIncludesReceiverExpression
+=== PAUSE TestReadinessErrorIncludesReceiverExpression
+=== RUN   TestSuppressionDirectivesAreRefused
+=== PAUSE TestSuppressionDirectivesAreRefused
+=== RUN   TestSuppressionDirectiveSoundNeighbors
+=== PAUSE TestSuppressionDirectiveSoundNeighbors
+=== RUN   TestSwitchConditionalBreakFallsThrough
+=== PAUSE TestSwitchConditionalBreakFallsThrough
+=== RUN   TestSwitchEmptyElseFallsThrough
+=== PAUSE TestSwitchEmptyElseFallsThrough
+=== RUN   TestSwitchEmptyCaseFallsThrough
+=== PAUSE TestSwitchEmptyCaseFallsThrough
+=== RUN   TestSwitchEmptyBlockFallsThrough
+=== PAUSE TestSwitchEmptyBlockFallsThrough
+=== RUN   TestTasteRepresentationLimitsStayExplicit
+=== PAUSE TestTasteRepresentationLimitsStayExplicit
+=== CONT  TestTsgoHonorsNoCheckInAdamicFiles
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+=== CONT  TestRegExpSourceNode
+=== CONT  TestTasteRepresentationLimitsStayExplicit
+=== RUN   TestTasteRepresentationLimitsStayExplicit/union_scalar_field
+=== CONT  TestSuppressionDirectiveSoundNeighbors
+--- PASS: TestRegExpSourceNode (0.04s)
+=== CONT  TestSwitchEmptyBlockFallsThrough
+=== RUN   TestTasteRepresentationLimitsStayExplicit/evolving_different_objects
+=== RUN   TestTasteRepresentationLimitsStayExplicit/explicit_any
+--- PASS: TestTsgoHonorsNoCheckInAdamicFiles (0.22s)
+=== CONT  TestSwitchEmptyCaseFallsThrough
+=== RUN   TestTasteRepresentationLimitsStayExplicit/computed_enum
+--- PASS: TestSwitchEmptyBlockFallsThrough (0.24s)
+=== CONT  TestSwitchEmptyElseFallsThrough
+=== RUN   TestTasteRepresentationLimitsStayExplicit/enum_prototype
+--- PASS: TestSuppressionDirectiveSoundNeighbors (0.39s)
+=== CONT  TestSwitchConditionalBreakFallsThrough
+=== RUN   TestTasteRepresentationLimitsStayExplicit/merged_enum
+--- PASS: TestSwitchEmptyCaseFallsThrough (0.20s)
+=== CONT  TestRepresentationClockSourceCheckedTypes
+--- PASS: TestTasteRepresentationLimitsStayExplicit (0.44s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/union_scalar_field (0.11s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/evolving_different_objects (0.05s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/explicit_any (0.08s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/computed_enum (0.07s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/enum_prototype (0.09s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/merged_enum (0.03s)
+=== CONT  TestSuppressionDirectivesAreRefused
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestReadinessErrorIncludesReceiverExpression
+=== NAME  TestRepresentationClockSourceCheckedTypes
+    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
+--- PASS: TestRepresentationClockSourceCheckedTypes (0.06s)
+=== CONT  TestPrototypeMethodsAreRefusedWithReasons
+--- PASS: TestRegExpUnicodeClassSourceAgreesWithNode (0.49s)
+=== CONT  TestRegExpNativeRefusals
+--- PASS: TestReadinessErrorIncludesReceiverExpression (0.11s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestProvenRelationsErase
+--- PASS: TestSwitchEmptyElseFallsThrough (0.31s)
+=== CONT  TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet
+--- PASS: TestSwitchConditionalBreakFallsThrough (0.22s)
+=== CONT  TestRegExpEscapedSlashSourceAgreesWithNode
+--- PASS: TestRegExpNativeRefusals (0.26s)
+=== CONT  TestRepresentedMethodReplacementIsNotYet
+--- PASS: TestRepresentedMethodReplacementIsNotYet (0.04s)
+=== CONT  TestTracingNamespaceEscapeStaysNotYet
+--- PASS: TestTracingNamespaceEscapeStaysNotYet (0.05s)
+=== CONT  TestTscNamespaceDeclarationShapes
+=== RUN   TestTscNamespaceDeclarationShapes/BuilderState
+=== PAUSE TestTscNamespaceDeclarationShapes/BuilderState
+=== RUN   TestTscNamespaceDeclarationShapes/JsxNames
+=== PAUSE TestTscNamespaceDeclarationShapes/JsxNames
+=== RUN   TestTscNamespaceDeclarationShapes/ReactNames
+=== PAUSE TestTscNamespaceDeclarationShapes/ReactNames
+=== RUN   TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== PAUSE TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== RUN   TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== RUN   TestTscNamespaceDeclarationShapes/Debug
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug
+=== RUN   TestTscNamespaceDeclarationShapes/Debug.log
+=== PAUSE TestTscNamespaceDeclarationShapes/Debug.log
+=== RUN   TestTscNamespaceDeclarationShapes/Parser
+=== PAUSE TestTscNamespaceDeclarationShapes/Parser
+=== RUN   TestTscNamespaceDeclarationShapes/IncrementalParser
+=== PAUSE TestTscNamespaceDeclarationShapes/IncrementalParser
+=== RUN   TestTscNamespaceDeclarationShapes/tracingEnabled
+=== PAUSE TestTscNamespaceDeclarationShapes/tracingEnabled
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+--- PASS: TestRegExpEscapedSlashSourceAgreesWithNode (0.41s)
+=== CONT  TestReadonlyFieldsAreJudgedByTheirConstructorsWrites
+--- PASS: TestPrototypeMethodsAreRefusedWithReasons (0.66s)
+=== CONT  TestStringEnumsStayClosed
+--- PASS: TestProvenRelationsErase (0.60s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+--- PASS: TestReadonlyFieldsAreJudgedByTheirConstructorsWrites (0.20s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (0.64s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+--- PASS: TestStringEnumsStayClosed (0.11s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+--- PASS: TestRegExpSlashClassSourceAgreesWithNode (0.43s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-write
+--- PASS: TestSuppressionDirectivesAreRefused (0.00s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_ (0.07s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_ (0.08s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_ (0.03s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_ (0.05s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_ (0.04s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_ (0.06s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_ (0.05s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+--- PASS: TestReadinessElisionRequiresDominatingAssignment (0.00s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/branch-join (0.10s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-write (0.10s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-join (0.14s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/finally-write (0.10s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-missing-join (0.15s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/throw-before-write (0.07s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-read (0.08s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/catch-write (0.13s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-write (0.10s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/do-loop (0.09s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/loop-body (0.10s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/zero-iteration (0.08s)
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestTscNamespaceDeclarationShapes/BuilderState
+=== CONT  TestTscNamespaceDeclarationShapes/Debug
+=== CONT  TestTscNamespaceDeclarationShapes/tracingEnabled
+=== CONT  TestTscNamespaceDeclarationShapes/IncrementalParser
+=== NAME  TestTscNamespaceDeclarationShapes/BuilderState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Parser
+=== NAME  TestTscNamespaceDeclarationShapes/Debug
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Debug.log
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.03s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.06s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.03s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.04s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.04s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.05s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.07s)
+=== CONT  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+=== NAME  TestTscNamespaceDeclarationShapes/IncrementalParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+=== NAME  TestTscNamespaceDeclarationShapes/tracingEnabled
+    namespaces_shapes_test.go:53: /tmp/adamic-gate/TestTscNamespaceDeclarationShapestracingEnabled63794335/001/main.a:30:15: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet
+=== CONT  TestTscNamespaceDeclarationShapes/ReactNames
+=== NAME  TestTscNamespaceDeclarationShapes/Debug.log
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== CONT  TestTscNamespaceDeclarationShapes/JsxNames
+=== NAME  TestTscNamespaceDeclarationShapes/BinaryExpressionState
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/Parser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/Parser.JSDocParser
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/ReactNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+=== NAME  TestTscNamespaceDeclarationShapes/JsxNames
+    namespaces_shapes_test.go:46: declaration shape lowers
+--- PASS: TestTscNamespaceDeclarationShapes (0.07s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BuilderState (0.05s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug (0.06s)
+    --- PASS: TestTscNamespaceDeclarationShapes/IncrementalParser (0.08s)
+    --- PASS: TestTscNamespaceDeclarationShapes/tracingEnabled (0.08s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Debug.log (0.04s)
+    --- PASS: TestTscNamespaceDeclarationShapes/BinaryExpressionState (0.04s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser (0.09s)
+    --- PASS: TestTscNamespaceDeclarationShapes/Parser.JSDocParser (0.06s)
+    --- PASS: TestTscNamespaceDeclarationShapes/ReactNames (0.06s)
+    --- PASS: TestTscNamespaceDeclarationShapes/JsxNames (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.034s

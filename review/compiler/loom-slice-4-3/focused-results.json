@@ -1,0 +1,254 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^(TestGeneratorBasic|TestGeneratorCancellation|TestGeneratorThrow|TestGeneratorDefaults|TestGeneratorClose|TestGeneratorDelegate|TestGeneratorDelegateThrow|TestGeneratorReentrant|TestGeneratorOwned|TestGeneratorCaptures|TestGeneratorDefaultError|TestGeneratorMapIterator)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 18.963779225000053,
+    "log": "review/compiler/loom-slice-4-3/internal-flow-0.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^(TestGeneratorChecker|TestGeneratorFirstReference|TestGeneratorCompletions)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.860012726999912,
+    "log": "review/compiler/loom-slice-4-3/internal-flow-1.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^(TestGeneratorBasic|TestGeneratorCancellation|TestGeneratorThrow|TestGeneratorDefaults|TestGeneratorClose|TestGeneratorDelegate|TestGeneratorDelegateThrow|TestGeneratorReentrant|TestGeneratorOwned|TestGeneratorCaptures|TestGeneratorDefaultError|TestGeneratorMapIterator)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.844507323000016,
+    "log": "review/compiler/loom-slice-4-3/internal-fresh-0.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^(TestGeneratorChecker|TestGeneratorFirstReference|TestGeneratorCompletions|TestIteratorFieldAccessorEscapesReceiver|TestIteratorMethodAccessorEscapesReceiver)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.968846832000054,
+    "log": "review/compiler/loom-slice-4-3/internal-fresh-1.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/load",
+      "-run",
+      "^(TestMixedAdamicAndTypeScriptWithoutReferences|TestProjectLoaderReferenceSources|TestProjectLoaderOptionAuditFailsClosed|TestProjectLoaderOwnershipAndNoCheck|TestProjectLoaderHostConsoleAndCompositeEntries|TestProjectLoaderNodeImportsKeepReferenceRoots|TestProjectLoaderStandaloneNodeKeepsPrelude|TestProjectReferencesTransitive|TestProjectReferencesDiamond|TestProjectReferencesConflictingOptions|TestProjectReferencesAudit|TestProjectReferencesCompatibleOptions)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.04808613199998,
+    "log": "review/compiler/loom-slice-4-3/internal-load-0.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/load",
+      "-run",
+      "^(TestProjectReferencesCycle|TestProjectReferencesSharedPrelude|TestProjectReferencesTypesUnion|TestProjectReferencesTypesUnionDuplicate|TestProjectReferencesTypesUnionDuplicateSkipped|TestProjectReferencesTransitiveTypes)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 12.05521615900011,
+    "log": "review/compiler/loom-slice-4-3/internal-load-1.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestClassWrongOutputIteratorReceiver|TestClassWrongOutputKeysRepair|TestClassWrongOutputPrivateRepair|TestGeneratorNextPromiseNeedsResumeProof|TestGeneratorPrimitiveThrowRemainsExplicit|TestGeneratorOpaqueReceiverRemainsExplicit|TestGeneratorNestedFrameCaptureRemainsExplicit|TestGeneratorEmptyBodyUsesOwnedFrame|TestGeneratorProtocolReplacementRemainsExplicit|TestGeneratorDestructuredParameterCycle|TestGenericBodyRelationsCensus|TestGenericBodyRelationsRefuse)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 4.3017486170001575,
+    "log": "review/compiler/loom-slice-4-3/internal-lower-0.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestGenericBodyRelationsWitness|TestGenericBodyRelationsReadonlyBound|TestGenericBodyRelationsIndexedReturnMapper|TestGenericBodyRelationsThisRead|TestIteratorGapsAreExplicit|TestIteratorViewsDispatchHiddenReturn|TestIteratorViewsDispatchReceivers|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestAsyncGeneratorsAreRefusedEvenWithoutYield|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodViewsDoNotLoseThis|TestLiteralMethodSignatureViewsDoNotLoseThis)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 3.342923206000023,
+    "log": "review/compiler/loom-slice-4-3/internal-lower-1.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestIteratorDescriptorReasons|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestGenericIteratorViewsPreserveNativeArguments|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorSymbolKeysAreNotStringKeys|TestIteratorBuiltInStorageViewsArePending|TestIteratorOptionalCloseResultMustBeObject|TestIteratorDeclaredNextHasNoRuntimeMethod|TestConsoleLowersToWriteLine|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestWhatZeroOneRefusesIsRefusedWithAFix)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 4.584987015000024,
+    "log": "review/compiler/loom-slice-4-3/internal-lower-2.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAMutableLocationSeenWiderIsRefused|TestAViewThatCantWriteIsNotRefused|TestATupleSeenAsAnArrayIsNotYet|TestAMethodReadAsAValueIsRefused)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 6.359452106999925,
+    "log": "review/compiler/loom-slice-4-3/internal-lower-3.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCensusSmallStoppedSourceOnNode|TestClassWrongOutput103|TestClassWrongOutput107|TestClassWrongOutput108|TestClassWrongOutput106|TestElementAccessNodeArrayAgreement|TestElementAccessSortedAgreement|TestElementAccessTemplateAgreement|TestElementAccessCompilerAreaBoundaries|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.173519407999947,
+    "log": "review/compiler/loom-slice-4-3/internal-oracle-0.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestGeneratorParameterBorrowMutant|TestGeneratorLocalBorrowMutant|TestGeneratorCycleFrame|TestGeneratorBasic|TestGeneratorCancellation|TestGeneratorThrow|TestGeneratorDefaults|TestGeneratorClose|TestGeneratorDelegate|TestGeneratorDelegateThrow|TestGeneratorReentrant|TestGeneratorOwned)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 27.778344468999876,
+    "log": "review/compiler/loom-slice-4-3/internal-oracle-1.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestGeneratorCaptures|TestGeneratorDefaultError|TestGeneratorMapIterator|TestGeneratorChecker|TestGeneratorFirstReference|TestGeneratorCompletions|TestGeneratorRegExpIteratorResultCompatibility|TestGeneratorRegExpTreeResultCompatibility|TestGenericBodyRelationsMaybeBind|TestIterationDispatchMutants|TestIterationDispatchPendingStops|TestLoweringChainMixedFileAgreement)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.427818880000132,
+    "log": "review/compiler/loom-slice-4-3/internal-oracle-2.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestStep16GenericOutcomes|TestStep16IdentityMutant|TestStep16OptionalResultMutant|TestStep20IntrinsicIteratorWrites|TestStep20IterationOutcomes|TestStep20ArrayViewVariance)$",
+      "-parallel",
+      "4",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 21.522975724999924,
+    "log": "review/compiler/loom-slice-4-3/internal-oracle-3.jsonl"
+  }
+]

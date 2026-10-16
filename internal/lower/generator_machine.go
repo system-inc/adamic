@@ -1,0 +1,323 @@
+package lower
+
+import (
+	"reflect"
+	"sort"
+	"strconv"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+type generatorExit struct {
+	pc, depth int
+	label     string
+}
+type generatorContext struct {
+	handler           int
+	finals            [][]ir.Statement
+	breaks, continues []generatorExit
+}
+type generatorState struct {
+	body    []ir.Statement
+	handler int
+}
+type generatorMachine struct {
+	l                      *lowering
+	node                   *ast.Node
+	factory, resume, frame int
+	states                 []generatorState
+	slots                  map[int]bool
+	types                  *ir.GeneratorTypes
+	failure                error
+}
+
+func (g *generatorMachine) field(name string, of ir.Type) ir.Expression {
+	return ir.Property{Object: ir.Read{Local: g.frame, Of: ir.Object}, Name: name, Of: of}
+}
+func (g *generatorMachine) store(name string, value ir.Expression) ir.Statement {
+	// The frame is private to this factory. Record its writes like source writes;
+	// generatorFrames separately checks every source slot against its owning
+	// generator type, so an internal field cannot hide a cycle-capable source slot.
+	g.l.writeSites = append(g.l.writeSites, writeSite{holder: g.l.localTypes[g.frame], node: g.node})
+	return ir.SetProperty{Object: ir.Read{Local: g.frame, Of: ir.Object}, Name: name, Value: value, Site: len(g.l.writeSites)}
+}
+func generatorSlot(local int) string { return "local_" + strconv.Itoa(local) }
+func (g *generatorMachine) local(of ir.Type) int {
+	i := g.l.iterationLocal("generator_value", of, g.factory)
+	g.slots[i] = true
+	return i
+}
+func (g *generatorMachine) slot(local int) ir.Expression {
+	return g.field(generatorSlot(local), g.l.result.Locals[local].Type)
+}
+func (g *generatorMachine) add(body []ir.Statement, ctx generatorContext) int {
+	pc := len(g.states)
+	g.states = append(g.states, generatorState{body: body, handler: ctx.handler})
+	return pc
+}
+func (g *generatorMachine) reserve(ctx generatorContext) int { return g.add(nil, ctx) }
+func (g *generatorMachine) jump(pc int) []ir.Statement {
+	return []ir.Statement{g.store("pc", ir.NumberConstant{Value: float64(pc)}), ir.Continue{}}
+}
+func (g *generatorMachine) packet(value ir.Expression, done bool) ir.Expression {
+	return ir.ObjectLiteral{Fields: []ir.Field{{Name: "value", Value: fit(value, ir.Union)}, {Name: "done", Value: ir.BooleanConstant{Value: done}}}}
+}
+func (g *generatorMachine) equals(name string, value float64) ir.Expression {
+	return ir.Binary{Operator: ir.Equal, Left: g.field(name, ir.Number), Right: ir.NumberConstant{Value: value}}
+}
+func (g *generatorMachine) reject(what string) {
+	if g.failure == nil {
+		g.failure = g.l.notYet(g.node, "generator suspension "+what+" has no represented storage")
+	}
+}
+
+// rewrite moves source locals into owned ordinary object slots. Captures belonging
+// to the caller remain shared cells, retained by the resume closure at creation.
+func (g *generatorMachine) rewrite(value any) any {
+	if read, ok := value.(ir.Read); ok && g.slots[read.Local] {
+		if read.Checked || g.l.result.Locals[read.Local].Ready != 0 {
+			g.reject("local " + g.l.result.Locals[read.Local].Name + " needs an initialization proof")
+		}
+		return g.slot(read.Local)
+	}
+	var copy func(reflect.Value) reflect.Value
+	copy = func(v reflect.Value) reflect.Value {
+		if !v.IsValid() {
+			return v
+		}
+		if v.CanInterface() {
+			if read, ok := v.Interface().(ir.Read); ok && g.slots[read.Local] {
+				return reflect.ValueOf(g.rewrite(read))
+			}
+		}
+		switch v.Kind() {
+		case reflect.Interface:
+			if v.IsNil() {
+				return v
+			}
+			r := reflect.New(v.Type()).Elem()
+			r.Set(copy(v.Elem()))
+			return r
+		case reflect.Struct:
+			r := reflect.New(v.Type()).Elem()
+			for i := 0; i < v.NumField(); i++ {
+				held := copy(v.Field(i))
+				if held.Type().AssignableTo(r.Field(i).Type()) {
+					r.Field(i).Set(held)
+				} else {
+					g.reject("concrete operand " + v.Type().Field(i).Name)
+					r.Field(i).Set(v.Field(i))
+				}
+			}
+			return r
+		case reflect.Slice:
+			if v.IsNil() {
+				return v
+			}
+			r := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
+			for i := 0; i < v.Len(); i++ {
+				r.Index(i).Set(copy(v.Index(i)))
+			}
+			return r
+		}
+		return v
+	}
+	return copy(reflect.ValueOf(value)).Interface()
+}
+func (g *generatorMachine) finish(value ir.Expression, ctx generatorContext) int {
+	packet := g.l.iterationLocal("generator_result", ir.Object, g.resume)
+	body := []ir.Statement{ir.Declare{Local: packet, Value: g.packet(value, true)}}
+	locals := make([]int, 0, len(g.slots))
+	for local := range g.slots {
+		locals = append(locals, local)
+	}
+	sort.Ints(locals)
+	for _, local := range locals {
+		of := g.l.result.Locals[local].Type
+		if of.IsReference() {
+			body = append(body, g.store(generatorSlot(local), ir.Undefined{Of: of}))
+		}
+	}
+	for _, name := range []string{"input", "returned"} {
+		body = append(body, g.store(name, ir.Undefined{Of: ir.Union}))
+	}
+	body = append(body, g.store("error", ir.Undefined{Of: ir.Object}), g.store("status", ir.NumberConstant{Value: 3}), ir.Return{Value: ir.Read{Local: packet, Of: ir.Object}})
+	return g.add(body, ctx)
+}
+func (g *generatorMachine) returned(value ir.Expression, ctx generatorContext, depth int) int {
+	final := g.finish(g.field("returned", ir.Union), generatorContext{handler: -1})
+	for i := depth; i < len(ctx.finals); i++ {
+		outer := ctx
+		outer.finals = ctx.finals[:i]
+		final = g.statements(ctx.finals[i], final, outer)
+	}
+	return g.add(append([]ir.Statement{g.store("returned", fit(value, ir.Union))}, g.jump(final)...), ctx)
+}
+func (g *generatorMachine) leave(exit generatorExit, ctx generatorContext) int {
+	pc := exit.pc
+	for i := exit.depth; i < len(ctx.finals); i++ {
+		outer := ctx
+		outer.finals = ctx.finals[:i]
+		pc = g.statements(ctx.finals[i], pc, outer)
+	}
+	return g.add(g.jump(pc), ctx)
+}
+func (g *generatorMachine) statements(body []ir.Statement, next int, ctx generatorContext) int {
+	for i := len(body) - 1; i >= 0; i-- {
+		next = g.statement(body[i], next, ctx)
+	}
+	return next
+}
+func (g *generatorMachine) statement(statement ir.Statement, next int, ctx generatorContext) int {
+	switch s := statement.(type) {
+	case ir.Block:
+		return g.statements(s.Body, next, ctx)
+	case ir.Declare:
+		if s.Value == nil {
+			return next
+		}
+		return g.expression(s.Value, ctx, func(value ir.Expression) int {
+			write := ir.Statement(g.store(generatorSlot(s.Local), value))
+			if !g.slots[s.Local] {
+				write = ir.Assign{Local: s.Local, Value: value}
+			}
+			return g.add(append([]ir.Statement{write}, g.jump(next)...), ctx)
+		})
+	case ir.Assign:
+		return g.expression(s.Value, ctx, func(value ir.Expression) int {
+			write := ir.Statement(g.store(generatorSlot(s.Local), value))
+			if !g.slots[s.Local] {
+				write = ir.Assign{Local: s.Local, Value: value}
+			}
+			return g.add(append([]ir.Statement{write}, g.jump(next)...), ctx)
+		})
+	case ir.Evaluate:
+		if yield, ok := s.Value.(ir.GeneratorYield); ok {
+			return g.yield(yield, next, ctx, nil)
+		}
+		return g.expression(s.Value, ctx, func(value ir.Expression) int {
+			return g.add(append([]ir.Statement{ir.Evaluate{Value: value}}, g.jump(next)...), ctx)
+		})
+	case ir.Return:
+		if s.Value == nil {
+			return g.returned(ir.Undefined{Of: ir.Union}, ctx, 0)
+		}
+		return g.expression(s.Value, ctx, func(value ir.Expression) int { return g.returned(value, ctx, 0) })
+	case ir.If:
+		yes, no := g.statements(s.Then, next, ctx), g.statements(s.Else, next, ctx)
+		return g.expression(s.Condition, ctx, func(value ir.Expression) int {
+			return g.add([]ir.Statement{ir.If{Condition: value, Then: g.jump(yes), Else: g.jump(no)}}, ctx)
+		})
+	case ir.Loop:
+		condition := g.reserve(ctx)
+		inner := ctx
+		inner.breaks = append(append([]generatorExit{}, ctx.breaks...), generatorExit{pc: next, depth: len(ctx.finals)})
+		update := g.statements(s.Update, condition, ctx)
+		inner.continues = append(append([]generatorExit{}, ctx.continues...), generatorExit{pc: update, depth: len(ctx.finals)})
+		for _, local := range s.PerIteration {
+			if g.l.result.Locals[local].Captured {
+				g.reject("per-iteration capture " + g.l.result.Locals[local].Name)
+			}
+		}
+		body := g.statements(s.Body, update, inner)
+		check := g.expression(s.Condition, ctx, func(value ir.Expression) int {
+			return g.add([]ir.Statement{ir.If{Condition: value, Then: g.jump(body), Else: g.jump(next)}}, ctx)
+		})
+		g.states[condition].body = g.jump(check)
+		if s.CheckAfter {
+			return body
+		}
+		return condition
+	case ir.ForOf:
+		return g.forOf(s, next, ctx)
+	case ir.Try:
+		return g.attempt(s, next, ctx)
+	case ir.Switch:
+		inner := ctx
+		inner.breaks = append(append([]generatorExit{}, ctx.breaks...), generatorExit{pc: next, depth: len(ctx.finals)})
+		dispatch := ir.Switch{Default: g.jump(g.statements(s.Default, next, inner))}
+		for _, c := range s.Cases {
+			tests := make([]ir.Expression, len(c.Tests))
+			for i, test := range c.Tests {
+				if generatorHasYield(test) {
+					g.reject("yield in a switch case test")
+				}
+				tests[i] = g.rewrite(test).(ir.Expression)
+			}
+			dispatch.Cases = append(dispatch.Cases, ir.Case{Tests: tests, Body: g.jump(g.statements(c.Body, next, inner))})
+		}
+		return g.expression(s.Value, ctx, func(value ir.Expression) int { dispatch.Value = value; return g.add([]ir.Statement{dispatch}, ctx) })
+	case ir.Break:
+		if s.Label != "" || s.Depth >= len(ctx.breaks) {
+			g.reject("break target")
+			return next
+		}
+		return g.leave(ctx.breaks[len(ctx.breaks)-1-s.Depth], ctx)
+	case ir.Continue:
+		if s.Label != "" || len(ctx.continues) == 0 {
+			g.reject("continue target")
+			return next
+		}
+		return g.leave(ctx.continues[len(ctx.continues)-1], ctx)
+	}
+	return g.statementExpressions(statement, ctx, func(value ir.Statement) int { return g.add(append([]ir.Statement{value}, g.jump(next)...), ctx) })
+}
+
+// Errors from an instruction enter its own active source handler. The handler
+// stays attached to each resume state, including a continuation after a yield.
+func (g *generatorMachine) attempt(s ir.Try, next int, ctx generatorContext) int {
+	after := next
+	if s.HasFinally {
+		after = g.statements(s.Finally, next, ctx)
+	}
+	bodyContext := ctx
+	if s.HasFinally {
+		bodyContext.finals = append(append([][]ir.Statement{}, ctx.finals...), s.Finally)
+	}
+	if s.HasCatch {
+		caught := bodyContext
+		caught.handler = ctx.handler
+		if s.HasFinally {
+			rethrow := g.add([]ir.Statement{ir.Throw{Value: g.field("error", ir.Object)}}, ctx)
+			caught.handler = g.statements(s.Finally, rethrow, ctx)
+		}
+		entry := g.statements(s.Catch, after, caught)
+		if s.CatchLocal >= 0 {
+			entry = g.add(append([]ir.Statement{g.store(generatorSlot(s.CatchLocal), g.field("error", ir.Object))}, g.jump(entry)...), ctx)
+		}
+		bodyContext.handler = entry
+	} else if s.HasFinally {
+		rethrow := g.add([]ir.Statement{ir.Throw{Value: g.field("error", ir.Object)}}, ctx)
+		bodyContext.handler = g.statements(s.Finally, rethrow, ctx)
+	}
+	return g.statements(s.Body, after, bodyContext)
+}
+func (g *generatorMachine) forOf(s ir.ForOf, next int, ctx generatorContext) int {
+	source := g.local(s.Iterable.Type())
+	index := g.local(ir.Number)
+	iterator := g.slot(source)
+	if s.Iterable.Type() == ir.String {
+		g.reject("string iterator")
+		return next
+	}
+	if s.Iterable.Type() != ir.Array {
+		g.reject("non-array for-of")
+		return next
+	}
+	if len(s.Pattern) != 0 {
+		g.reject("destructured for-of")
+		return next
+	}
+	item := ir.ArrayIndex{Array: iterator, Index: g.slot(index), Element: s.Element}
+	of := g.l.result.Locals[s.Local].Type
+	value := ir.Expression(item)
+	if item.Type().IsMaybe() && of == s.Element {
+		value = ir.Unwrap{Value: item}
+	}
+	loop := ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: g.slot(index), Right: ir.Length{Array: iterator}}, Body: append([]ir.Statement{ir.Assign{Local: s.Local, Value: value}}, s.Body...), Update: []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: g.slot(index), Right: ir.NumberConstant{Value: 1}}}}}
+	entry := g.statement(loop, next, ctx)
+	return g.expression(s.Iterable, ctx, func(value ir.Expression) int {
+		return g.add(append([]ir.Statement{g.store(generatorSlot(source), value), g.store(generatorSlot(index), ir.NumberConstant{})}, g.jump(entry)...), ctx)
+	})
+}

@@ -1,0 +1,22 @@
+=== RUN   TestGeneratorDelegate
+=== PAUSE TestGeneratorDelegate
+=== CONT  TestGeneratorDelegate
+    generators_test.go:13: gate cache node miss
+    generators_test.go:13: gate cache node miss
+    generators_test.go:13: JavaScript: stdout differs: 1
+        2
+        6
+        7
+        3
+        4
+        inner finally
+        inner result:5
+        3
+        4
+--- FAIL: TestGeneratorDelegate (0.51s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.536s
+FAIL
