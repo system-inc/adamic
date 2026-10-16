@@ -1,0 +1,16 @@
+{
+  "base": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "small_head": "562b2ff017f5394621b684ed27ae56594c448c7f",
+  "small_paths": [
+    "internal/lower/testdata/array_narrowing/cat.a",
+    "internal/lower/testdata/array_narrowing/every.a",
+    "internal/lower/testdata/array_narrowing/find.a"
+  ],
+  "generator": "0fd9b945e15525b1dc25a840a40324bdbf0c31d0",
+  "workers": 4,
+  "shards": 3,
+  "fx_cache": "/workspace/admission-measure-fx-cache-hdepd_nx",
+  "small_cache": "/workspace/admission-measure-small-cache-ewzvct3u",
+  "cold_definition": "Empty compiler-product cache; preexisting Go package cache and pinned Git objects retained."
+}

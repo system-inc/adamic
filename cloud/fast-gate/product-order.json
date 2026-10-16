@@ -1,6 +1,9 @@
 {
   "version": 1,
   "waits": {
+    "cmd/adamic-admission-delta TestProduct_AdmissionCompilerReady": [
+      "cmd/adamic-admission-delta TestProduct_AdmissionCompiler"
+    ],
     "cmd/adamic-test262 TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
