@@ -12,7 +12,7 @@ import (
 
 // These witnesses exercise runtime allocation and ownership directly, before any
 // compiler graph classification is enabled. Mutants must compile and fail at run time.
-func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic string) {
+func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic string, modes ...bool) {
 	t.Helper()
 	options := Options{Sanitize: true, Count: true}
 	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
@@ -23,7 +23,10 @@ func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic stri
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []bool{false, true} {
+	if len(modes) == 0 {
+		modes = []bool{false, true}
+	}
+	for _, mutant := range modes {
 		if mutant {
 			found := false
 			for i := range files {
@@ -71,6 +74,16 @@ static const adamic_shape shape __attribute__((unused)) = {3, names, refs, NULL}
 
 func TestGraphAdoptionObjectBytes(t *testing.T) {
 	t.Parallel()
+	graphAdoptionObjectBytes(t, false)
+}
+
+func TestGraphAdoptionObjectBytesMutant(t *testing.T) {
+	t.Parallel()
+	graphAdoptionObjectBytes(t, true)
+}
+
+func graphAdoptionObjectBytes(t *testing.T, mutant bool) {
+	t.Helper()
 	source := graphObjectPrelude + `int main(void) {
  adamic_object *object = adamic_object_new(&shape);
  adamic_object_field_types(object)[2] = 173;
@@ -80,7 +93,7 @@ func TestGraphAdoptionObjectBytes(t *testing.T) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "heap.c", "memcpy(heap, old, size);", "memcpy(heap, old, size - 3 * (sizeof(size_t) + 2));", "Assertion")
+	graphRuntimeGuard(t, source, "heap.c", "memcpy(heap, old, size);", "memcpy(heap, old, size - 3 * (sizeof(size_t) + 2));", "Assertion", mutant)
 }
 
 func TestGraphAdoptionSelfPointer(t *testing.T) {
@@ -135,6 +148,16 @@ func TestGraphRegionSparseArrayRelease(t *testing.T) {
 
 func TestGraphSharedAllocationCannotBeAdopted(t *testing.T) {
 	t.Parallel()
+	graphSharedAllocationCannotBeAdopted(t, false)
+}
+
+func TestGraphSharedAllocationCannotBeAdoptedMutant(t *testing.T) {
+	t.Parallel()
+	graphSharedAllocationCannotBeAdopted(t, true)
+}
+
+func graphSharedAllocationCannotBeAdopted(t *testing.T, mutant bool) {
+	t.Helper()
 	source := `#include "adamic.h"
 #include "graph_regions.h"
 #include <assert.h>
@@ -146,10 +169,10 @@ int main(void) {
 }
 `
 	// Here the control is the intentional refusal, and the mutant must reach the assertion.
-	graphRefusalGuard(t, source)
+	graphRefusalGuard(t, source, mutant)
 }
 
-func graphRefusalGuard(t *testing.T, source string) {
+func graphRefusalGuard(t *testing.T, source string, mutant bool) {
 	t.Helper()
 	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
 	if err != nil {
@@ -159,30 +182,28 @@ func graphRefusalGuard(t *testing.T, source string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []bool{false, true} {
-		if mutant {
-			for i := range files {
-				if files[i].name == "graph_regions.c" {
-					files[i].contents = []byte(strings.Replace(string(files[i].contents), "(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1", "adamic_reference_count(heap) != 1", 1))
-				}
+	if mutant {
+		for i := range files {
+			if files[i].name == "graph_regions.c" {
+				files[i].contents = []byte(strings.Replace(string(files[i].contents), "(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1", "adamic_reference_count(heap) != 1", 1))
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			t.Fatal(err)
-		}
-		binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
-		command, release := boundedrun.Command(5*time.Second, binary)
-		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-		output, err := command.CombinedOutput()
-		release()
-		expected := "graph adoption needs a new allocation"
-		if mutant {
-			expected = "Assertion"
-		}
-		if err == nil || !strings.Contains(string(output), expected) {
-			t.Fatalf("mutant=%t: %v %s", mutant, err, output)
-		}
+	}
+	library, err := cachedRuntime(files, flags, compiler, version, cache)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
+	command, release := boundedrun.Command(5*time.Second, binary)
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+	output, err := command.CombinedOutput()
+	release()
+	expected := "graph adoption needs a new allocation"
+	if mutant {
+		expected = "Assertion"
+	}
+	if err == nil || !strings.Contains(string(output), expected) {
+		t.Fatalf("mutant=%t: %v %s", mutant, err, output)
 	}
 }
 
