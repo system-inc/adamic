@@ -1,0 +1,8 @@
+function make(start: number): (() => string)[] {
+ const text = 'result' + String(start);
+ function read(): string { return text; }
+ function map(value: number): () => string { return () => text + String(value); }
+ console.log(read());
+ return [1, 2].map(map);
+}
+for (const read of make(5)) { console.log(read()); }

@@ -1,0 +1,20 @@
+// Parse-only adapter of scout 9e062aac, using the base parser and scanner.
+import {panic,programArguments,readTextFile} from 'adamic';
+import {Parser} from '../../../../stage1/typescript/parser/parser.ts';
+import {Scanner} from '../../../../stage1/typescript/scanner/scanner.ts';
+import {Context} from './context.a';
+function run(path:string):number {
+ const read=readTextFile(path);if(read.kind==='Error'){panic(read.message);}
+ const parser=new Parser(read.text,path);const scanner=new Scanner(read.text);
+ const context=new Context(read.text,parser,scanner,'all');
+ context.root=parser.file();context.parents=parser.nodes.map(()=>-1);
+ context.mapParents(context.root,-1);
+ context.findings.sort((left,right)=>left.start-right.start);
+ return context.findings.length;
+}
+const args=programArguments();const first=args[0]??panic('missing manifest');
+if(first!=='--manifest'){panic('expected --manifest');}
+const manifest=readTextFile(args[1]??panic('missing manifest'));
+if(manifest.kind==='Error'){panic(manifest.message);}
+let total=0;for(const path of manifest.text.split('\n')){if(path!==''){total+=run(path);}}
+console.log(String(total));

@@ -1,0 +1,7 @@
+function check(start: number): string {
+ const text = 'bounded' + String(start);
+ function read(): string { return text; }
+ const use = (callback: () => string): string => callback();
+ return use(read);
+}
+console.log(check(6));

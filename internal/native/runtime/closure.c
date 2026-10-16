@@ -37,11 +37,21 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 
 #ifdef ADAMIC_CANONICAL_CLOSURES
 adamic_environment *adamic_environment_new(size_t count) {
-	adamic_environment *environment = adamic_allocate(sizeof *environment + count * sizeof environment->cells[0], adamic_kind_environment);
-	environment->count = count;
-	environment->functions = NULL;
-	adamic_environment_initialize_cells(&environment->heap, environment->cells, count);
-	return environment;
+ adamic_environment *environment = adamic_allocate(sizeof *environment + count * sizeof(adamic_cell), adamic_kind_environment);
+ adamic_heap heap = environment->heap;
+ adamic_environment_init(environment, (adamic_cell *)(void *)(environment + 1), count);
+ environment->heap = heap;
+ return environment;
+}
+void adamic_environment_init(adamic_environment *environment, adamic_cell *cells, size_t count) {
+ environment->heap = (adamic_heap){.kind = adamic_kind_environment};
+ environment->count = count;
+ environment->functions = NULL;
+ environment->cells = cells;
+ adamic_environment_initialize_cells(&environment->heap, cells, count);
+}
+void adamic_environment_end(adamic_environment *environment) {
+ adamic_environment_drop_cells(environment->cells, environment->count, adamic_release);
 }
 
 void adamic_environment_initialize_cells(adamic_heap *owner, adamic_cell *cells, size_t count) {
