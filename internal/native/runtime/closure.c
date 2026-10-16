@@ -1,6 +1,7 @@
 // closure.c: closures and the cells they capture.
 
 #include "adamic.h"
+#include "graph_regions.h"
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references) {
 	adamic_cell *cell = adamic_allocate(sizeof *cell, adamic_kind_cell);
@@ -58,7 +59,7 @@ void adamic_environment_drop_cells(adamic_cell *cells, size_t count, void (*drop
 // A live value is unique for its code and activation. If no owner kept it, a
 // later reference can recreate it: no surviving reference can observe that gap.
 // Captured cells keep the frame alive; its cache never keeps a closure alive.
-adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+static adamic_closure *canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[], bool graph) {
 	adamic_environment *owner = (adamic_environment *)identity->owner;
 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -72,6 +73,7 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
 	for (size_t index = 0; index < count; index++) {
 		closure->cells[index] = adamic_retain(cells[index]);
 	}
+	if (graph) { closure = adamic_graph_adopt_owned(closure, sizeof *closure + count * sizeof closure->cells[0]); }
 	closure->canonical_owner = owner;
 	closure->canonical_next = owner->functions;
 	if (owner->functions != NULL) {
@@ -83,18 +85,34 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
 
 
 #ifdef ADAMIC_CLOSURE_CONVENTION
-adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+static adamic_closure *counted_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[], bool graph) {
  adamic_environment *owner = (adamic_environment *)identity->owner;
  for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
  if (held->counted && held->counted_code == code) { return adamic_retain(held); }
  }
  adamic_closure *closure = adamic_counted_closure_new(code, count);
  for (size_t index = 0; index < count; index++) { closure->cells[index] = adamic_retain(cells[index]); }
+ if (graph) { closure = adamic_graph_adopt_owned(closure, sizeof *closure + count * sizeof closure->cells[0]); }
  closure->canonical_owner = owner;
  closure->canonical_next = owner->functions;
  if (owner->functions != NULL) { owner->functions->canonical_previous = closure; }
  owner->functions = closure;
  return closure;
+}
+#endif
+
+adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+ return canonical(identity, code, count, cells, false);
+}
+adamic_closure *(adamic_closure_canonical_graph)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+ return canonical(identity, code, count, cells, true);
+}
+#ifdef ADAMIC_CLOSURE_CONVENTION
+adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+ return counted_canonical(identity, code, count, cells, false);
+}
+adamic_closure *(adamic_counted_closure_canonical_graph)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+ return counted_canonical(identity, code, count, cells, true);
 }
 #endif
 
