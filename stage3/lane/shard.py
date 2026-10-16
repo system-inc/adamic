@@ -165,6 +165,10 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
             # cases' run-prepared.mjs imports from scripts/, so it's the view's own copy.
             (tree / 'scripts').unlink()
             shutil.copytree(source / 'scripts', tree / 'scripts', symlinks=True)
+            # A runner holds products read-only, and copytree copies a directory's mode, so the copy's directories are
+            # made writable again, or the test's cleanup couldn't remove what's in them.
+            for directory, _, _ in os.walk(tree / 'scripts'):
+                os.chmod(directory, 0o755)
         if mutant_case is not None:
             import hashlib
             content = mutant_content.read_bytes()
