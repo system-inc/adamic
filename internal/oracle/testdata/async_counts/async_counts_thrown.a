@@ -1,0 +1,8 @@
+async function fail(): Promise<void> {
+    await Promise.resolve();
+    throw new Error(['dynamic', 'failure'].join('-'));
+}
+async function relay(): Promise<void> {
+    try { await fail(); } catch (error) { if (error instanceof Error) throw error; }
+}
+try { await relay(); } catch (error) { if (error instanceof Error) console.log(error.message); }

@@ -10,15 +10,24 @@ func asyncBorrowedSlots(program *ir.Program, function int) map[int]bool {
 	assigned := assignedLocals(body)
 	declarations := map[int]int{}
 	repeated := map[int]bool{}
-	aliases := map[int]int{}
+	type source struct {
+		local   int
+		payload bool
+	}
+	aliases := map[int]source{}
 	var visit func([]ir.Statement, bool)
 	visit = func(body []ir.Statement, loop bool) {
 		for _, statement := range body {
 			if declaration, ok := statement.(ir.Declare); ok {
 				declarations[declaration.Local]++
 				repeated[declaration.Local] = repeated[declaration.Local] || loop
-				if read, ok := declaration.Value.(ir.Read); ok {
-					aliases[declaration.Local] = read.Local
+				switch value := declaration.Value.(type) {
+				case ir.Read:
+					aliases[declaration.Local] = source{local: value.Local}
+				case ir.Await:
+					if read, ok := value.Value.(ir.Read); ok {
+						aliases[declaration.Local] = source{local: read.Local, payload: true}
+					}
 				}
 			}
 			_, isLoop := statement.(ir.Loop)
@@ -32,7 +41,7 @@ func asyncBorrowedSlots(program *ir.Program, function int) map[int]bool {
 	}
 	borrowed := map[int]bool{}
 	for local, source := range aliases {
-		if stable(local) && stable(source) && program.Locals[local].Type == program.Locals[source].Type {
+		if stable(local) && stable(source.local) && (source.payload && program.Locals[source.local].Type == ir.Promise || !source.payload && program.Locals[local].Type == program.Locals[source.local].Type) {
 			borrowed[local] = true
 		}
 	}

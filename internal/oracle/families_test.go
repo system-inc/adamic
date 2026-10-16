@@ -31,6 +31,14 @@ import (
 var families = []family{
 	// 730 s over 946 fixtures, the four solo ones 6.7 to 11.9 s each.
 	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", solo: []string{
+		"internal/oracle/testdata/async_counts/async_counts_payload.a",
+		"internal/oracle/testdata/async_counts/async_counts_stable.a",
+		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+		"internal/oracle/testdata/async_counts/async_counts_captured.a",
+		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
 		"internal/oracle/testdata/async_catch_return.a",
 		"internal/oracle/testdata/async_catches.a",
 		"internal/oracle/testdata/async_closures.a",
@@ -165,6 +173,14 @@ var families = []family{
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
+		"internal/oracle/testdata/async_counts/async_counts_payload.a",
+		"internal/oracle/testdata/async_counts/async_counts_stable.a",
+		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+		"internal/oracle/testdata/async_counts/async_counts_captured.a",
+		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
 		"internal/oracle/testdata/async_catch_return.a",
 		"internal/oracle/testdata/async_catches.a",
 		"internal/oracle/testdata/async_closures.a",
@@ -299,6 +315,14 @@ var families = []family{
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
 	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed", solo: []string{
+		"internal/oracle/testdata/async_counts/async_counts_payload.a",
+		"internal/oracle/testdata/async_counts/async_counts_stable.a",
+		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+		"internal/oracle/testdata/async_counts/async_counts_captured.a",
+		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
 		"internal/oracle/testdata/async_catch_return.a",
 		"internal/oracle/testdata/async_catches.a",
 		"internal/oracle/testdata/async_closures.a",

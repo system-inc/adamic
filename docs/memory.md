@@ -492,7 +492,7 @@ The two masked mutants drop conditions that keep the abstract reach sound when c
 
 Async bodies use the ordinary IR and a counted suspension frame. The active
 caller owns the frame during the initial resume; thereafter a reaction owns it
-until its resume callback returns. That frame lifetime permits two borrows:
+until its resume callback returns. That frame lifetime permits three borrows:
 
 - Reading an uncaptured slot needs no statement retain when the binding is not
   assigned inside an expression. No callee can replace that binding while the
@@ -503,9 +503,14 @@ until its resume callback returns. That frame lifetime permits two borrows:
   with no assignments, expression writes, or repeated declarations in a loop.
   The source slot owns the value through every use of the alias. Borrowed slots
   advertise no owned child and are cleared without releasing their values.
-  Conditional results, mutable/global sources, field and element reads, and
-  captured aliases do not get this proof. Their snapshots own independent
-  counts because the original place may change while suspended.
+- An awaited reference can borrow the immutable payload of a stable promise
+  slot in that same frame. The promise owns its payload and the frame owns the
+  promise through every use, including a subsequent await. A repeated or mutable
+  promise slot, or a captured result, keeps the result's independent count.
+
+Conditional results, mutable/global sources, field and element reads, and
+captured aliases do not get this proof. Their snapshots own independent
+counts because the original place may change while suspended.
 
 Reference parameters still take a frame count on entry. An async call returns
 before its body finishes: its caller may release the argument's last count
@@ -523,13 +528,15 @@ and teardown. Settlement gives each reaction its promise count before clearing
 the waiting edge, so these queued owners protect the promise through registry
 removal. With no reactions there is no waiting or registry edge to remove. A
 separate temporary self-retain during settlement is consequently redundant.
+Abandonment keeps its temporary self-retain: cleanup can remove the waiting
+and registry owners without creating any replacement queued reaction.
 
 A promise owns a reference payload independently of the frame that produced it.
 The producer may finish before any waiter runs, and a resumed value may have to
 survive further awaits. Payload adoption therefore retains an existing borrowed
 value; it is not permission to borrow the producer's frame. The await result
-likewise takes an owned slot unless a separate same-frame owner proves its
-lifetime. Mutable operand snapshots and rejection values keep their counts
+likewise takes an owned slot unless the same-frame promise proves its lifetime.
+Mutable operand snapshots and rejection values keep their counts
 across callback boundaries, catch bindings and suspended finally paths.
 
 A freshly built thrown Error already belongs to the throwing statement. The
@@ -552,6 +559,21 @@ references. Those constructor retains are necessary under that ABI. Likewise,
 ordinary function values used by `typeof` may allocate a closure that the old
 closed grammar classified directly. These representation differences are not
 suspension borrow proofs and must not be hidden by changing the counter.
+
+A release count also differs from an ownership-edge count. Unit 1 released
+frame children through the destructor's uncounted drop callback. Unit 2 clears
+uncaptured owned slots explicitly at completion, since captured cells may keep
+the frame alive afterward. Those explicit releases are counted, including on
+error paths; an extra counted release does not imply an extra retained edge.
+
+The independent `TestAsyncCount*` witnesses run dynamic strings under ASan and
+against Node. Dropping a parameter, mutable-read snapshot, saved reassigned
+binding, borrowed rethrow retain, or root promise's frame-output retain must give
+an ASan use-after-free.
+`TestAsyncCount*Protocol` and the runtime owner mutants separately hold queued
+frames, queued promises, pending waiting edges and payload adoption. Every
+original async fixture has its own `TestAsyncOriginal*RetainBudget` against its
+unit-1 retain count, in addition to its existing differential fixture and count row.
 
 ## Exceptions, designed into counting
 
