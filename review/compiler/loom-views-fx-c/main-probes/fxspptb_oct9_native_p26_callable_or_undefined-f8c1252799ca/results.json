@@ -1,0 +1,61 @@
+{
+  "item": 146,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n2\n",
+    "stderr": "",
+    "seconds": 0.087
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.057
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p26_callable_or_undefined-f8c1252799ca/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "true\n2\n",
+    "stderr": "",
+    "seconds": 0.039
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p26_callable_or_undefined-f8c1252799ca/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.068
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p26_callable_or_undefined-f8c1252799ca/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

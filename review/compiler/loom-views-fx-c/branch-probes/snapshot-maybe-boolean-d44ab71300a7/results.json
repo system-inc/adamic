@@ -1,0 +1,61 @@
+{
+  "item": 143,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a"
+    ],
+    "exit": 0,
+    "stdout": "true / true\nfalse / false\nfalse / undefined\n",
+    "stderr": "",
+    "seconds": 0.34
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.279
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/snapshot-maybe-boolean-d44ab71300a7/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "true / true\nfalse / false\nfalse / undefined\n",
+    "stderr": "",
+    "seconds": 0.268
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/snapshot-maybe-boolean-d44ab71300a7/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 5.667
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/snapshot-maybe-boolean-d44ab71300a7/native"
+    ],
+    "exit": 0,
+    "stdout": "true / true\nfalse / false\nfalse / undefined\n",
+    "stderr": "",
+    "seconds": 0.025
+  },
+  "agrees": true
+}

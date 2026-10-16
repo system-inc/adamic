@@ -1,0 +1,12 @@
+type Target = ((value: number) => number) | ((value: number) => string);
+function invoke(target: Target): void { console.log(`${target(5)}`); }
+const offset = 1;
+const numberProducer = (value: number): number => value + offset;
+function stringProducer(value: number): string { return 'value:'.repeat(1) + value; }
+invoke(numberProducer);
+invoke(stringProducer);
+function countedNumber(value?: number): number { return (value ?? 0) + arguments.length; }
+invoke(countedNumber);
+function broad(target: (value: number) => number | string): void { console.log(`${target(5)}`); }
+const boxedProducer = (value: number): number | string => value + 1;
+broad(boxedProducer);

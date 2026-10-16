@@ -1,0 +1,36 @@
+[
+  {
+    "name": "unrecorded-unique-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerUniqueObjectResultRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.753
+  },
+  {
+    "name": "packed-number-stale",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestViewSnapshotPayloadOwnership$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 18.999
+  }
+]

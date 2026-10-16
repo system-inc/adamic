@@ -174,7 +174,8 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
     } else if (storage == adamic_rep_maybe_boolean) {
         adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
         value.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
-        value.payload.boolean = boolean.boolean;
+        value.payload = (adamic_value){0};
+        if (boolean.present) { value.payload.boolean = boolean.boolean; }
     } else if (storage == adamic_rep_null) { value.kind = adamic_view_union_null; }
     else if (storage == adamic_rep_undefined) { value.kind = adamic_view_union_undefined; }
     else if ((storage >= adamic_rep_string && storage <= adamic_rep_map) || storage == adamic_rep_closure || storage == adamic_rep_union || storage == adamic_rep_weak) {

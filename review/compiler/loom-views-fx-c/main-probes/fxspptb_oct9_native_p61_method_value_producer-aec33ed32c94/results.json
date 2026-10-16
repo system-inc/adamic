@@ -1,0 +1,53 @@
+{
+  "item": 145,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.101
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.051
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p61_method_value_producer-aec33ed32c94/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.052
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p61_method_value_producer-aec33ed32c94/native"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: native: clang failed: exit status 1\nmain.c:178:595: error: comparison of distinct pointer types ('adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *)') and 'double (*)(adamic_object *, double)' (aka 'double (*)(struct adamic_object *, double)')) [-Werror,-Wcompare-distinct-pointer-types]\n  178 |         if (adamic_temporary_32 != NULL && adamic_view_callable_signatures_match(adamic_temporary_32, ((adamic_temporary_32 != NULL && adamic_temporary_32->arity == 1 && adamic_temporary_32->result == 1 && adamic_temporary_32->parameters != NULL && adamic_temporary_32->parameters[0] == 1) ? &adamic_temporary_35 : (adamic_temporary_32 != NULL && adamic_temporary_32->arity == 1 && adamic_temporary_32->result == 1 && adamic_temporary_32->parameters != NULL && adamic_temporary_32->parameters[0] == 3) ? &adamic_temporary_37 : &adamic_temporary_35)) && !(((adamic_closure *)adamic_temporary_31)->code == adamic_function_1_Scale_apply || ((adamic_closure *)adamic_temporary_31)->code == adamic_function_3_closure)) adamic_temporary_32 = NULL;\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n",
+    "seconds": 1.044
+  },
+  "native": null,
+  "agrees": false
+}
