@@ -1,0 +1,3832 @@
+{
+  "typescript": "6.0.3",
+  "patterns": 324,
+  "stringPatterns": [
+    {
+      "path": "src/compiler/scanner.ts",
+      "line": 1332,
+      "column": 15,
+      "type": "string",
+      "text": "{ length } = scanIdentifierParts()",
+      "members": [
+        "length"
+      ]
+    }
+  ],
+  "members": [
+    "length"
+  ],
+  "assignments": [
+    {
+      "path": "src/compiler/semver.ts",
+      "line": 60,
+      "column": 14,
+      "type": "{ major: number; minor: number; patch: number; prerelease: string; build: string; }",
+      "string": false,
+      "text": "{ major, minor, patch, prerelease, build } = result"
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 3699,
+      "column": 10,
+      "type": "ExtendedConfigCacheEntry",
+      "string": false,
+      "text": "{ extendedResult, extendedConfig } = value"
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 626,
+      "column": 41,
+      "type": "{ resolvedFileName: string; originalPath: string | undefined; }",
+      "string": false,
+      "text": "{ resolvedFileName, originalPath } = getOriginalAndResolvedFileName(fileName, host, traceEnabled)"
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 10272,
+      "column": 26,
+      "type": "{ introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym?: undefined; } | { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym: Symbol | undefined; }",
+      "string": false,
+      "text": "{ introducesError, node: expr } = trackExistingEntityName(expr, context)"
+    },
+    {
+      "path": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 218,
+      "column": 10,
+      "type": "{ decorationStatements: Statement[] | undefined; members: NodeArray<ClassElement>; }",
+      "string": false,
+      "text": "{ members, decorationStatements } = transformDecoratorsOfClassElements(node, members)"
+    },
+    {
+      "path": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 343,
+      "column": 10,
+      "type": "{ decorationStatements: Statement[] | undefined; members: NodeArray<ClassElement>; }",
+      "string": false,
+      "text": "{ members, decorationStatements } = transformDecoratorsOfClassElements(node, members)"
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 1308,
+      "column": 22,
+      "type": "{ referencedName: StringLiteral; name: PropertyName; } | { referencedName: Identifier; name: ComputedPropertyName; }",
+      "string": false,
+      "text": "{ referencedName, name } = visitReferencedPropertyName(member.name)"
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1208,
+      "column": 14,
+      "type": "FileReference",
+      "string": false,
+      "text": "{ pos, end } = file.referencedFiles[index]"
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1211,
+      "column": 14,
+      "type": "FileReference",
+      "string": false,
+      "text": "{ pos, end } = file.typeReferenceDirectives[index]"
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1215,
+      "column": 14,
+      "type": "FileReference",
+      "string": false,
+      "text": "{ pos, end } = file.libReferenceDirectives[index]"
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 1765,
+      "column": 22,
+      "type": "{ affectedFile: SourceFile; emitKind: BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | ... 6 more ... | BuilderFileEmit.All; }",
+      "string": false,
+      "text": "{ affectedFile: affected, emitKind } = pendingAffectedFile"
+    }
+  ],
+  "unresolved": [],
+  "otherPatterns": [
+    {
+      "path": "src/compiler/core.ts",
+      "line": 2392,
+      "column": 29,
+      "type": "Pattern",
+      "text": "{ prefix, suffix }: Pattern",
+      "members": [
+        "prefix",
+        "suffix"
+      ]
+    },
+    {
+      "path": "src/compiler/core.ts",
+      "line": 2447,
+      "column": 32,
+      "type": "Pattern",
+      "text": "{ prefix, suffix }: Pattern",
+      "members": [
+        "prefix",
+        "suffix"
+      ]
+    },
+    {
+      "path": "src/compiler/debug.ts",
+      "line": 1108,
+      "column": 23,
+      "type": "FlowSwitchClauseData",
+      "text": "{ switchStatement, clauseStart, clauseEnd } = flowNode.node",
+      "members": [
+        "switchStatement",
+        "clauseStart",
+        "clauseEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/semver.ts",
+      "line": 84,
+      "column": 15,
+      "type": "{ major: number; minor: number; patch: number; prerelease: string; build: string; }",
+      "text": "{ major, minor, patch, prerelease, build } = result",
+      "members": [
+        "major",
+        "minor",
+        "patch",
+        "prerelease",
+        "build"
+      ]
+    },
+    {
+      "path": "src/compiler/semver.ts",
+      "line": 123,
+      "column": 15,
+      "type": "{ major?: number | undefined; minor?: number | undefined; patch?: number | undefined; prerelease?: string | readonly string[] | undefined; build?: string | readonly string[] | undefined; }",
+      "text": "{\r\n            major = this.major,\r\n            minor = this.minor,\r\n            patch = this.patch,\r\n            prerelease = this.prerelease,\r\n            build = this.build,\r\n        } = fields",
+      "members": [
+        "major",
+        "minor",
+        "patch",
+        "prerelease",
+        "build"
+      ]
+    },
+    {
+      "path": "src/compiler/semver.ts",
+      "line": 338,
+      "column": 11,
+      "type": "{ version: Version; major: string; minor: string; patch: string; }",
+      "text": "{ version, major, minor, patch } = result",
+      "members": [
+        "version",
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    {
+      "path": "src/compiler/performanceCore.ts",
+      "line": 35,
+      "column": 19,
+      "type": "Partial<typeof import(\"perf_hooks\")>",
+      "text": "{ performance } = require(\"perf_hooks\") as Partial<typeof import(\"perf_hooks\")>",
+      "members": [
+        "performance"
+      ]
+    },
+    {
+      "path": "src/compiler/performanceCore.ts",
+      "line": 64,
+      "column": 11,
+      "type": "{ shouldWriteNativeEvents: boolean; performance: Performance; } | { shouldWriteNativeEvents: boolean; performance: Performance; }",
+      "text": "{ shouldWriteNativeEvents, performance } = p",
+      "members": [
+        "shouldWriteNativeEvents",
+        "performance"
+      ]
+    },
+    {
+      "path": "src/compiler/tracing.ts",
+      "line": 175,
+      "column": 15,
+      "type": "{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; }",
+      "text": "{ phase, name, args, time, separateBeginAndEnd } = eventStack[index]",
+      "members": [
+        "phase",
+        "name",
+        "args",
+        "time",
+        "separateBeginAndEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 592,
+      "column": 52,
+      "type": "RecursiveDirectoryWatcherHost",
+      "text": "{\r\n    watchDirectory,\r\n    useCaseSensitiveFileNames,\r\n    getCurrentDirectory,\r\n    getAccessibleSortedChildDirectories,\r\n    fileSystemEntryExists,\r\n    realpath,\r\n    setTimeout,\r\n    clearTimeout,\r\n}: RecursiveDirectoryWatcherHost",
+      "members": [
+        "watchDirectory",
+        "useCaseSensitiveFileNames",
+        "getCurrentDirectory",
+        "getAccessibleSortedChildDirectories",
+        "fileSystemEntryExists",
+        "realpath",
+        "setTimeout",
+        "clearTimeout"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 728,
+      "column": 40,
+      "type": "{ dirName: string; callback: DirectoryWatcherCallback; }",
+      "text": "{ callback }",
+      "members": [
+        "callback"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 782,
+      "column": 19,
+      "type": "IteratorYieldResult<[Path, { dirName: string; options: WatchOptions | undefined; fileNames: string[]; }]>",
+      "text": "{ value: [dirPath, { dirName, options, fileNames }] } = result",
+      "members": [
+        "value"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 782,
+      "column": 38,
+      "type": "{ dirName: string; options: WatchOptions | undefined; fileNames: string[]; }",
+      "text": "{ dirName, options, fileNames }",
+      "members": [
+        "dirName",
+        "options",
+        "fileNames"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 794,
+      "column": 36,
+      "type": "{ dirName: string; callback: DirectoryWatcherCallback; }",
+      "text": "{ callback, dirName }",
+      "members": [
+        "callback",
+        "dirName"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 990,
+      "column": 44,
+      "type": "CreateSystemWatchFunctions",
+      "text": "{\r\n    pollingWatchFileWorker,\r\n    getModifiedTime,\r\n    setTimeout,\r\n    clearTimeout,\r\n    fsWatchWorker,\r\n    fileSystemEntryExists,\r\n    useCaseSensitiveFileNames,\r\n    getCurrentDirectory,\r\n    fsSupportsRecursiveFsWatch,\r\n    getAccessibleSortedChildDirectories,\r\n    realpath,\r\n    tscWatchFile,\r\n    useNonPollingWatchers,\r\n    tscWatchDirectory,\r\n    inodeWatching,\r\n    fsWatchWithTimestamp,\r\n    sysLog,\r\n}: CreateSystemWatchFunctions",
+      "members": [
+        "pollingWatchFileWorker",
+        "getModifiedTime",
+        "setTimeout",
+        "clearTimeout",
+        "fsWatchWorker",
+        "fileSystemEntryExists",
+        "useCaseSensitiveFileNames",
+        "getCurrentDirectory",
+        "fsSupportsRecursiveFsWatch",
+        "getAccessibleSortedChildDirectories",
+        "realpath",
+        "tscWatchFile",
+        "useNonPollingWatchers",
+        "tscWatchDirectory",
+        "inodeWatching",
+        "fsWatchWithTimestamp",
+        "sysLog"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 1502,
+      "column": 15,
+      "type": "{ watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; }",
+      "text": "{ watchFile, watchDirectory } = createSystemWatchFunctions({\r\n            pollingWatchFileWorker: fsWatchFileWorker,\r\n            getModifiedTime,\r\n            setTimeout,\r\n            clearTimeout,\r\n            fsWatchWorker,\r\n            useCaseSensitiveFileNames,\r\n            getCurrentDirectory,\r\n            fileSystemEntryExists,\r\n            // Node 4.0 `fs.watch` function supports the \"recursive\" option on both OSX and Windows\r\n            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n            fsSupportsRecursiveFsWatch,\r\n            getAccessibleSortedChildDirectories: path => getAccessibleFileSystemEntries(path).directories,\r\n            realpath,\r\n            tscWatchFile: process.env.TSC_WATCHFILE,\r\n            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,\r\n            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,\r\n            inodeWatching: isLinuxOrMacOs,\r\n            fsWatchWithTimestamp: isMacOs,\r\n            sysLog,\r\n        })",
+      "members": [
+        "watchFile",
+        "watchDirectory"
+      ]
+    },
+    {
+      "path": "src/compiler/sys.ts",
+      "line": 1696,
+      "column": 59,
+      "type": "StopReturnType",
+      "text": "{ profile }",
+      "members": [
+        "profile"
+      ]
+    },
+    {
+      "path": "src/compiler/utilitiesPublic.ts",
+      "line": 957,
+      "column": 19,
+      "type": "JSDocPropertyLikeTag",
+      "text": "{ name } = declaration as JSDocPropertyLikeTag",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/utilitiesPublic.ts",
+      "line": 985,
+      "column": 19,
+      "type": "ExportAssignment",
+      "text": "{ expression } = declaration as ExportAssignment",
+      "members": [
+        "expression"
+      ]
+    },
+    {
+      "path": "src/compiler/utilitiesPublic.ts",
+      "line": 2555,
+      "column": 11,
+      "type": "JSDocContainer",
+      "text": "{ jsDoc } = node as JSDocContainer",
+      "members": [
+        "jsDoc"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 909,
+      "column": 40,
+      "type": "PackageId",
+      "text": "{ name, subModuleName }: PackageId",
+      "members": [
+        "name",
+        "subModuleName"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 2528,
+      "column": 15,
+      "type": "LineAndCharacter",
+      "text": "{ line: startLine } = getLineAndCharacterOfPosition(sourceFile, node.body.pos)",
+      "members": [
+        "line"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 2529,
+      "column": 15,
+      "type": "LineAndCharacter",
+      "text": "{ line: endLine } = getLineAndCharacterOfPosition(sourceFile, node.body.end)",
+      "members": [
+        "line"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 2830,
+      "column": 19,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 3579,
+      "column": 15,
+      "type": "AllAccessorDeclarations",
+      "text": "{ firstAccessor, secondAccessor, setAccessor } = getAllAccessorDeclarations(parent.members, node)",
+      "members": [
+        "firstAccessor",
+        "secondAccessor",
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 3619,
+      "column": 11,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 3705,
+      "column": 11,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 3847,
+      "column": 11,
+      "type": "CallExpression",
+      "text": "{ expression, arguments: args } = callExpression as CallExpression",
+      "members": [
+        "expression",
+        "arguments"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 4308,
+      "column": 11,
+      "type": "Symbol",
+      "text": "{ valueDeclaration } = symbol",
+      "members": [
+        "valueDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 4832,
+      "column": 11,
+      "type": "SignatureDeclaration | InterfaceDeclaration | ClassDeclaration",
+      "text": "{ typeParameters } = node.parent.parent.parent as SignatureDeclaration | InterfaceDeclaration | ClassDeclaration",
+      "members": [
+        "typeParameters"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8100,
+      "column": 11,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8107,
+      "column": 19,
+      "type": "PrefixUnaryExpression | PostfixUnaryExpression",
+      "text": "{ operator } = parent as PrefixUnaryExpression | PostfixUnaryExpression",
+      "members": [
+        "operator"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8110,
+      "column": 19,
+      "type": "BinaryExpression",
+      "text": "{ left, operatorToken } = parent as BinaryExpression",
+      "members": [
+        "left",
+        "operatorToken"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8215,
+      "column": 11,
+      "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+      "text": "{ onDeleteValue, onExistingValue } = options",
+      "members": [
+        "onDeleteValue",
+        "onExistingValue"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8255,
+      "column": 11,
+      "type": "MutateMapOptions<K, T, U>",
+      "text": "{ createNewValue } = options",
+      "members": [
+        "createNewValue"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 8290,
+      "column": 37,
+      "type": "ImportDeclaration",
+      "text": "{ moduleSpecifier }: ImportDeclaration",
+      "members": [
+        "moduleSpecifier"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 9543,
+      "column": 15,
+      "type": "ResolvedModuleFull | ResolvedTypeReferenceDirective",
+      "text": "{ resolvedFileName, originalPath } = resolution",
+      "members": [
+        "resolvedFileName",
+        "originalPath"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 9699,
+      "column": 5,
+      "type": "WildcardMatcher",
+      "text": "{ singleAsteriskRegexFragment, doubleAsteriskRegexFragment, replaceWildcardCharacter }: WildcardMatcher = wildcardMatchers[usage]",
+      "members": [
+        "singleAsteriskRegexFragment",
+        "doubleAsteriskRegexFragment",
+        "replaceWildcardCharacter"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 9851,
+      "column": 15,
+      "type": "FileSystemEntries",
+      "text": "{ files, directories } = getFileSystemEntries(path)",
+      "members": [
+        "files",
+        "directories"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10053,
+      "column": 34,
+      "type": "SourceFile",
+      "text": "{ imports }: SourceFile",
+      "members": [
+        "imports"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10054,
+      "column": 35,
+      "type": "StringLiteralLike",
+      "text": "{ text }",
+      "members": [
+        "text"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10325,
+      "column": 11,
+      "type": "ParsedPatterns",
+      "text": "{ matchableStringSet, patterns } = parsedPatterns",
+      "members": [
+        "matchableStringSet",
+        "patterns"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10529,
+      "column": 38,
+      "type": "PseudoBigInt",
+      "text": "{ negative, base10Value }: PseudoBigInt",
+      "members": [
+        "negative",
+        "base10Value"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10813,
+      "column": 19,
+      "type": "TypeParameterDeclaration",
+      "text": "{ parent } = node as TypeParameterDeclaration",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10822,
+      "column": 19,
+      "type": "Decorator",
+      "text": "{ parent } = node as Decorator",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 10830,
+      "column": 11,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 11058,
+      "column": 11,
+      "type": "JSDocPropertyLikeTag",
+      "text": "{ isBracketed, typeExpression } = node",
+      "members": [
+        "isBracketed",
+        "typeExpression"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 11316,
+      "column": 33,
+      "type": "EvaluationResolver",
+      "text": "{ evaluateElementAccessExpression, evaluateEntityNameExpression }: EvaluationResolver",
+      "members": [
+        "evaluateElementAccessExpression",
+        "evaluateEntityNameExpression"
+      ]
+    },
+    {
+      "path": "src/compiler/utilities.ts",
+      "line": 11491,
+      "column": 36,
+      "type": "NameResolverOptions",
+      "text": "{\r\n    compilerOptions,\r\n    requireSymbol,\r\n    argumentsSymbol,\r\n    error,\r\n    getSymbolOfDeclaration,\r\n    globals,\r\n    lookup,\r\n    setRequiresScopeChangeCache = returnUndefined,\r\n    getRequiresScopeChangeCache = returnUndefined,\r\n    onPropertyWithInvalidInitializer = returnFalse,\r\n    onFailedToResolveSymbol = returnUndefined,\r\n    onSuccessfullyResolvedSymbol = returnUndefined,\r\n}: NameResolverOptions",
+      "members": [
+        "compilerOptions",
+        "requireSymbol",
+        "argumentsSymbol",
+        "error",
+        "getSymbolOfDeclaration",
+        "globals",
+        "lookup",
+        "setRequiresScopeChangeCache",
+        "getRequiresScopeChangeCache",
+        "onPropertyWithInvalidInitializer",
+        "onFailedToResolveSymbol",
+        "onSuccessfullyResolvedSymbol"
+      ]
+    },
+    {
+      "path": "src/compiler/factory/nodeFactory.ts",
+      "line": 7432,
+      "column": 11,
+      "type": "EmitNode",
+      "text": "{\r\n        flags,\r\n        internalFlags,\r\n        leadingComments,\r\n        trailingComments,\r\n        commentRange,\r\n        sourceMapRange,\r\n        tokenSourceMapRanges,\r\n        constantValue,\r\n        helpers,\r\n        startsOnNewLine,\r\n        snippetElement,\r\n        classThis,\r\n        assignedName,\r\n    } = sourceEmitNode",
+      "members": [
+        "flags",
+        "internalFlags",
+        "leadingComments",
+        "trailingComments",
+        "commentRange",
+        "sourceMapRange",
+        "tokenSourceMapRanges",
+        "constantValue",
+        "helpers",
+        "startsOnNewLine",
+        "snippetElement",
+        "classThis",
+        "assignedName"
+      ]
+    },
+    {
+      "path": "src/compiler/factory/utilities.ts",
+      "line": 363,
+      "column": 11,
+      "type": "AllAccessorDeclarations",
+      "text": "{ firstAccessor, getAccessor, setAccessor } = getAllAccessorDeclarations(properties, property)",
+      "members": [
+        "firstAccessor",
+        "getAccessor",
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 1349,
+      "column": 11,
+      "type": "CreateSourceFileOptions",
+      "text": "{\r\n        languageVersion,\r\n        setExternalModuleIndicator: overrideSetExternalModuleIndicator,\r\n        impliedNodeFormat: format,\r\n        jsDocParsingMode,\r\n    } = typeof languageVersionOrOptions === \"object\" ? languageVersionOrOptions : ({ languageVersion: languageVersionOrOptions } as CreateSourceFileOptions)",
+      "members": [
+        "languageVersion",
+        "setExternalModuleIndicator",
+        "impliedNodeFormat",
+        "jsDocParsingMode"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 1472,
+      "column": 9,
+      "type": "NodeFactory",
+      "text": "{\r\n        createNodeArray: factoryCreateNodeArray,\r\n        createNumericLiteral: factoryCreateNumericLiteral,\r\n        createStringLiteral: factoryCreateStringLiteral,\r\n        createLiteralLikeNode: factoryCreateLiteralLikeNode,\r\n        createIdentifier: factoryCreateIdentifier,\r\n        createPrivateIdentifier: factoryCreatePrivateIdentifier,\r\n        createToken: factoryCreateToken,\r\n        createArrayLiteralExpression: factoryCreateArrayLiteralExpression,\r\n        createObjectLiteralExpression: factoryCreateObjectLiteralExpression,\r\n        createPropertyAccessExpression: factoryCreatePropertyAccessExpression,\r\n        createPropertyAccessChain: factoryCreatePropertyAccessChain,\r\n        createElementAccessExpression: factoryCreateElementAccessExpression,\r\n        createElementAccessChain: factoryCreateElementAccessChain,\r\n        createCallExpression: factoryCreateCallExpression,\r\n        createCallChain: factoryCreateCallChain,\r\n        createNewExpression: factoryCreateNewExpression,\r\n        createParenthesizedExpression: factoryCreateParenthesizedExpression,\r\n        createBlock: factoryCreateBlock,\r\n        createVariableStatement: factoryCreateVariableStatement,\r\n        createExpressionStatement: factoryCreateExpressionStatement,\r\n        createIfStatement: factoryCreateIfStatement,\r\n        createWhileStatement: factoryCreateWhileStatement,\r\n        createForStatement: factoryCreateForStatement,\r\n        createForOfStatement: factoryCreateForOfStatement,\r\n        createVariableDeclaration: factoryCreateVariableDeclaration,\r\n        createVariableDeclarationList: factoryCreateVariableDeclarationList,\r\n    } = factory",
+      "members": [
+        "createNodeArray",
+        "createNumericLiteral",
+        "createStringLiteral",
+        "createLiteralLikeNode",
+        "createIdentifier",
+        "createPrivateIdentifier",
+        "createToken",
+        "createArrayLiteralExpression",
+        "createObjectLiteralExpression",
+        "createPropertyAccessExpression",
+        "createPropertyAccessChain",
+        "createElementAccessExpression",
+        "createElementAccessChain",
+        "createCallExpression",
+        "createCallChain",
+        "createNewExpression",
+        "createParenthesizedExpression",
+        "createBlock",
+        "createVariableStatement",
+        "createExpressionStatement",
+        "createIfStatement",
+        "createWhileStatement",
+        "createForStatement",
+        "createForOfStatement",
+        "createVariableDeclaration",
+        "createVariableDeclarationList"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 3815,
+      "column": 23,
+      "type": "FunctionOrConstructorTypeNode",
+      "text": "{ parameters, type } = node as FunctionOrConstructorTypeNode",
+      "members": [
+        "parameters",
+        "type"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 5770,
+      "column": 19,
+      "type": "UnaryExpression",
+      "text": "{ end } = simpleUnaryExpression",
+      "members": [
+        "end"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 9426,
+      "column": 23,
+      "type": "{ name: EntityName; isBracketed: boolean; }",
+      "text": "{ name, isBracketed } = parseBracketNameInPropertyAndParamTag()",
+      "members": [
+        "name",
+        "isBracketed"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 10050,
+      "column": 19,
+      "type": "CommentDirective",
+      "text": "{ range, type } = directive",
+      "members": [
+        "range",
+        "type"
+      ]
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "line": 10634,
+      "column": 27,
+      "type": "{ types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { ...; } & { ...; } & { ...; }",
+      "text": "{ types, lib, path, [\"resolution-mode\"]: res, preserve: _preserve } = arg.arguments",
+      "members": [
+        "types",
+        "lib",
+        "path",
+        "[\"resolution-mode\"]",
+        "preserve"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 2138,
+      "column": 11,
+      "type": "OptionsNameMap",
+      "text": "{ optionsNameMap, shortOptionNames } = getOptionNameMap()",
+      "members": [
+        "optionsNameMap",
+        "shortOptionNames"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 2177,
+      "column": 11,
+      "type": "BaseParsedCommandLine",
+      "text": "{ options, watchOptions, fileNames: projects, errors } = parseCommandLineWorker(\r\n        buildOptionsDidYouMeanDiagnostics,\r\n        commandLine,\r\n    )",
+      "members": [
+        "options",
+        "watchOptions",
+        "fileNames",
+        "errors"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 2782,
+      "column": 5,
+      "type": "OptionsNameMap",
+      "text": "{ optionsNameMap }: OptionsNameMap",
+      "members": [
+        "optionsNameMap"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 3075,
+      "column": 11,
+      "type": "ParsedTsconfig",
+      "text": "{ raw } = parsedConfig",
+      "members": [
+        "raw"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 3334,
+      "column": 34,
+      "type": "ConfigFileSpecs",
+      "text": "{ includeSpecs, excludeSpecs }: ConfigFileSpecs",
+      "members": [
+        "includeSpecs",
+        "excludeSpecs"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 3953,
+      "column": 11,
+      "type": "ConfigFileSpecs",
+      "text": "{ validatedFilesSpec, validatedIncludeSpecs, validatedExcludeSpecs } = configFileSpecs",
+      "members": [
+        "validatedFilesSpec",
+        "validatedIncludeSpecs",
+        "validatedExcludeSpecs"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 4025,
+      "column": 11,
+      "type": "ConfigFileSpecs",
+      "text": "{ validatedFilesSpec, validatedIncludeSpecs, validatedExcludeSpecs } = spec",
+      "members": [
+        "validatedFilesSpec",
+        "validatedIncludeSpecs",
+        "validatedExcludeSpecs"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 4113,
+      "column": 33,
+      "type": "ConfigFileSpecs",
+      "text": "{ validatedIncludeSpecs: include, validatedExcludeSpecs: exclude }: ConfigFileSpecs",
+      "members": [
+        "validatedIncludeSpecs",
+        "validatedExcludeSpecs"
+      ]
+    },
+    {
+      "path": "src/compiler/commandLineParser.ts",
+      "line": 4140,
+      "column": 23,
+      "type": "{ key: CanonicalKey; path: string; flags: WatchDirectoryFlags; }",
+      "text": "{ key, path, flags } = match",
+      "members": [
+        "key",
+        "path",
+        "flags"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 244,
+      "column": 15,
+      "type": "{ resolvedFileName: string; originalPath: string | undefined; }",
+      "text": "{ resolvedFileName, originalPath } = getOriginalAndResolvedFileName(resolved.path, state.host, state.traceEnabled)",
+      "members": [
+        "resolvedFileName",
+        "originalPath"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 447,
+      "column": 11,
+      "type": "VersionPaths",
+      "text": "{ version: bestVersionKey, paths: bestVersionPaths } = result",
+      "members": [
+        "version",
+        "paths"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 624,
+      "column": 15,
+      "type": "PathAndPackageId",
+      "text": "{ fileName, packageId } = resolved",
+      "members": [
+        "fileName",
+        "packageId"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 709,
+      "column": 27,
+      "type": "{ path: string; parts: string[]; }",
+      "text": "{ path: candidate } = normalizePathForCJSResolution(initialLocationForSecondaryLookup, typeReferenceDirectiveName)",
+      "members": [
+        "path"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 1568,
+      "column": 11,
+      "type": "CompilerOptions",
+      "text": "{ baseUrl, paths } = state.compilerOptions",
+      "members": [
+        "baseUrl",
+        "paths"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 1657,
+      "column": 11,
+      "type": "CompilerOptions",
+      "text": "{ baseUrl } = state.compilerOptions",
+      "members": [
+        "baseUrl"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 1679,
+      "column": 11,
+      "type": "ResolvedModuleWithFailedLookupLocations",
+      "text": "{ resolvedModule, failedLookupLocations } = tryResolveJSModuleWorker(moduleName, initialDir, host)",
+      "members": [
+        "resolvedModule",
+        "failedLookupLocations"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 1953,
+      "column": 19,
+      "type": "{ path: string; parts: string[]; }",
+      "text": "{ path: candidate, parts } = normalizePathForCJSResolution(containingDirectory, moduleName)",
+      "members": [
+        "path",
+        "parts"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 2446,
+      "column": 11,
+      "type": "ModuleResolutionState",
+      "text": "{ host, traceEnabled } = state",
+      "members": [
+        "host",
+        "traceEnabled"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleNameResolver.ts",
+      "line": 3093,
+      "column": 11,
+      "type": "{ packageName: string; rest: string; }",
+      "text": "{ packageName, rest } = parsePackageName(moduleName)",
+      "members": [
+        "packageName",
+        "rest"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 183,
+      "column": 5,
+      "type": "UserPreferences",
+      "text": "{ importModuleSpecifierPreference, importModuleSpecifierEnding, autoImportSpecifierExcludeRegexes }: UserPreferences",
+      "members": [
+        "importModuleSpecifierPreference",
+        "importModuleSpecifierEnding",
+        "autoImportSpecifierExcludeRegexes"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 583,
+      "column": 169,
+      "type": "ModuleSpecifierPreferences",
+      "text": "{ getAllowedEndingsInPreferredOrder: getAllowedEndingsInPrefererredOrder, relativePreference, excludeRegexes }: ModuleSpecifierPreferences",
+      "members": [
+        "getAllowedEndingsInPreferredOrder",
+        "relativePreference",
+        "excludeRegexes"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 584,
+      "column": 11,
+      "type": "CompilerOptions",
+      "text": "{ baseUrl, paths, rootDirs } = compilerOptions",
+      "members": [
+        "baseUrl",
+        "paths",
+        "rootDirs"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 589,
+      "column": 11,
+      "type": "Info",
+      "text": "{ sourceDirectory, canonicalSourceDirectory, getCanonicalFileName } = info",
+      "members": [
+        "sourceDirectory",
+        "canonicalSourceDirectory",
+        "getCanonicalFileName"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 851,
+      "column": 31,
+      "type": "{ path: string; isRedirect: boolean; isInNodeModules: boolean; }",
+      "text": "{ path, isRedirect, isInNodeModules }",
+      "members": [
+        "path",
+        "isRedirect",
+        "isInNodeModules"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 870,
+      "column": 25,
+      "type": "{ path: string; isRedirect: boolean; isInNodeModules: boolean; }",
+      "text": "{ isRedirect, isInNodeModules }",
+      "members": [
+        "isRedirect",
+        "isInNodeModules"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 979,
+      "column": 28,
+      "type": "{ ending: ModuleSpecifierEnding | undefined; value: string; }",
+      "text": "{ ending, value }",
+      "members": [
+        "ending",
+        "value"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 1002,
+      "column": 29,
+      "type": "{ ending: ModuleSpecifierEnding | undefined; value: string; }",
+      "text": "{ ending, value }: { ending: ModuleSpecifierEnding | undefined; value: string; }",
+      "members": [
+        "ending",
+        "value"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 1186,
+      "column": 39,
+      "type": "ModulePath",
+      "text": "{ path, isRedirect }: ModulePath",
+      "members": [
+        "path",
+        "isRedirect"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 1186,
+      "column": 73,
+      "type": "Info",
+      "text": "{ getCanonicalFileName, canonicalSourceDirectory }: Info",
+      "members": [
+        "getCanonicalFileName",
+        "canonicalSourceDirectory"
+      ]
+    },
+    {
+      "path": "src/compiler/moduleSpecifiers.ts",
+      "line": 1206,
+      "column": 19,
+      "type": "{ moduleFileToTry: string; packageRootPath?: string | undefined; blockedByExports?: true | undefined; verbatimFromExports?: true | undefined; }",
+      "text": "{ moduleFileToTry, packageRootPath, blockedByExports, verbatimFromExports } = tryDirectoryWithPackageJson(packageRootIndex)",
+      "members": [
+        "moduleFileToTry",
+        "packageRootPath",
+        "blockedByExports",
+        "verbatimFromExports"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 4964,
+      "column": 120,
+      "type": "ResolvedModuleFull",
+      "text": "{ packageId, resolvedFileName }: ResolvedModuleFull",
+      "members": [
+        "packageId",
+        "resolvedFileName"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 5185,
+      "column": 19,
+      "type": "{ exports: SymbolTable; typeOnlyExportStarMap: Map<__String, ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }> | undefined; }",
+      "text": "{ exports, typeOnlyExportStarMap } = getExportsOfModuleWorker(moduleSymbol)",
+      "members": [
+        "exports",
+        "typeOnlyExportStarMap"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 5278,
+      "column": 38,
+      "type": "ExportCollisionTracker",
+      "text": "{ exportsWithDuplicate }",
+      "members": [
+        "exportsWithDuplicate"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 7437,
+      "column": 35,
+      "type": "TupleType",
+      "text": "{ labeledElementDeclarations } = type.target as TupleType",
+      "members": [
+        "labeledElementDeclarations"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 8636,
+      "column": 23,
+      "type": "SymbolTrackerImpl",
+      "text": "{ moduleResolverHost } = context.tracker",
+      "members": [
+        "moduleResolverHost"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 10419,
+      "column": 35,
+      "type": "BindingElement",
+      "text": "{ propertyName } = node as BindingElement",
+      "members": [
+        "propertyName"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 11491,
+      "column": 19,
+      "type": "TypeSystemEntity[]",
+      "text": "{ length } = resolutionTargets",
+      "members": [
+        "length"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 15137,
+      "column": 24,
+      "type": "Symbol",
+      "text": "{ escapedName }",
+      "members": [
+        "escapedName"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 16448,
+      "column": 27,
+      "type": "Signature",
+      "text": "{ declaration } = signature",
+      "members": [
+        "declaration"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 21206,
+      "column": 23,
+      "type": "JsxAttribute",
+      "text": "{ initializer } = node as JsxAttribute",
+      "members": [
+        "initializer"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 21212,
+      "column": 23,
+      "type": "JsxExpression | YieldExpression",
+      "text": "{ expression } = node as JsxExpression | YieldExpression",
+      "members": [
+        "expression"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 21551,
+      "column": 19,
+      "type": "{ errorNode: Node; innerExpression: Expression | undefined; nameType: Type; errorMessage?: DiagnosticMessage | undefined; }",
+      "text": "{ errorNode: prop, innerExpression: next, nameType, errorMessage } = value",
+      "members": [
+        "errorNode",
+        "innerExpression",
+        "nameType",
+        "errorMessage"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 21637,
+      "column": 19,
+      "type": "{ errorNode: Node; innerExpression: Expression | undefined; nameType: Type; errorMessage?: DiagnosticMessage | undefined; }",
+      "text": "{ errorNode: prop, innerExpression: next, nameType, errorMessage } = status.value",
+      "members": [
+        "errorNode",
+        "innerExpression",
+        "nameType",
+        "errorMessage"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 25761,
+      "column": 27,
+      "type": "BigIntLiteralType",
+      "text": "{ value }: BigIntLiteralType",
+      "members": [
+        "value"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 26333,
+      "column": 24,
+      "type": "IntraExpressionInferenceSite",
+      "text": "{ node, type }",
+      "members": [
+        "node",
+        "type"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 28362,
+      "column": 15,
+      "type": "Expression",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 28448,
+      "column": 15,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 29815,
+      "column": 73,
+      "type": "FlowSwitchClauseData",
+      "text": "{ switchStatement, clauseStart, clauseEnd }: FlowSwitchClauseData",
+      "members": [
+        "switchStatement",
+        "clauseStart",
+        "clauseEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 29820,
+      "column": 63,
+      "type": "FlowSwitchClauseData",
+      "text": "{ switchStatement, clauseStart, clauseEnd }: FlowSwitchClauseData",
+      "members": [
+        "switchStatement",
+        "clauseStart",
+        "clauseEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 29901,
+      "column": 57,
+      "type": "FlowSwitchClauseData",
+      "text": "{ switchStatement, clauseStart, clauseEnd }: FlowSwitchClauseData",
+      "members": [
+        "switchStatement",
+        "clauseStart",
+        "clauseEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 29919,
+      "column": 55,
+      "type": "FlowSwitchClauseData",
+      "text": "{ switchStatement, clauseStart, clauseEnd }: FlowSwitchClauseData",
+      "members": [
+        "switchStatement",
+        "clauseStart",
+        "clauseEnd"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 31920,
+      "column": 27,
+      "type": "AccessExpression",
+      "text": "{ expression } = target",
+      "members": [
+        "expression"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 32201,
+      "column": 15,
+      "type": "BinaryExpression",
+      "text": "{ left, operatorToken, right } = binaryExpression",
+      "members": [
+        "left",
+        "operatorToken",
+        "right"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 32792,
+      "column": 15,
+      "type": "Expression",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 34766,
+      "column": 19,
+      "type": "ClassLikeDeclaration",
+      "text": "{ symbol } = containingClass",
+      "members": [
+        "symbol"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 35084,
+      "column": 15,
+      "type": "Symbol",
+      "text": "{ valueDeclaration } = prop",
+      "members": [
+        "valueDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 36361,
+      "column": 15,
+      "type": "TextSpan",
+      "text": "{ start, length } = getErrorSpanForNode(sourceFile, isPropertyAccessExpression(node.expression) ? node.expression.name : node.expression)",
+      "members": [
+        "start",
+        "length"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 36367,
+      "column": 19,
+      "type": "{ start: number; length: number; sourceFile: SourceFile; }",
+      "text": "{ sourceFile, start, length } = getDiagnosticSpanForCallNode(node)",
+      "members": [
+        "sourceFile",
+        "start",
+        "length"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 36741,
+      "column": 31,
+      "type": "DiagnosticRelatedInformation",
+      "text": "{ file, start, length } = diags[0]",
+      "members": [
+        "file",
+        "start",
+        "length"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 36900,
+      "column": 15,
+      "type": "{ readonly min: number; readonly max: number; }",
+      "text": "{ min: minArgumentCount, max: maxNonRestParam } = minAndMax(candidates, getNumNonRestParameters)",
+      "members": [
+        "min",
+        "max"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 36955,
+      "column": 15,
+      "type": "Signature",
+      "text": "{ typeParameters } = candidate",
+      "members": [
+        "typeParameters"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 37356,
+      "column": 19,
+      "type": "NodeLinks",
+      "text": "{ resolvedSymbol } = getNodeLinks(errorTarget)",
+      "members": [
+        "resolvedSymbol"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 37368,
+      "column": 15,
+      "type": "{ messageChain: DiagnosticMessageChain; relatedMessage: DiagnosticMessage | undefined; }",
+      "text": "{ messageChain, relatedMessage: relatedInfo } = invocationErrorDetails(errorTarget, apparentType, kind)",
+      "members": [
+        "messageChain",
+        "relatedMessage"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 37374,
+      "column": 19,
+      "type": "{ start: number; length: number; sourceFile: SourceFile; }",
+      "text": "{ start, length } = getDiagnosticSpanForCallNode(errorTarget.parent)",
+      "members": [
+        "start",
+        "length"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 38111,
+      "column": 15,
+      "type": "{ type: TypeNode; expression: Expression; }",
+      "text": "{ type, expression } = getAssertionTypeAndExpression(node)",
+      "members": [
+        "type",
+        "expression"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 38145,
+      "column": 15,
+      "type": "{ type: TypeNode; expression: Expression; }",
+      "text": "{ type } = getAssertionTypeAndExpression(node)",
+      "members": [
+        "type"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 38924,
+      "column": 15,
+      "type": "Decorator",
+      "text": "{ parent } = decorator",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 39023,
+      "column": 15,
+      "type": "Decorator",
+      "text": "{ parent } = decorator",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 39229,
+      "column": 19,
+      "type": "{ yieldTypes: Type[]; nextTypes: Type[]; }",
+      "text": "{ yieldTypes, nextTypes } = checkAndAggregateYieldOperandTypes(func, checkMode)",
+      "members": [
+        "yieldTypes",
+        "nextTypes"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 40619,
+      "column": 19,
+      "type": "BinaryExpression",
+      "text": "{ left, operatorToken } = node.parent",
+      "members": [
+        "left",
+        "operatorToken"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 40625,
+      "column": 19,
+      "type": "BinaryExpression",
+      "text": "{ operatorToken } = node.left",
+      "members": [
+        "operatorToken"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 40631,
+      "column": 19,
+      "type": "BinaryExpression",
+      "text": "{ operatorToken } = node.right",
+      "members": [
+        "operatorToken"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 42052,
+      "column": 15,
+      "type": "TypePredicateNode",
+      "text": "{ parameterName } = node",
+      "members": [
+        "parameterName"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 42067,
+      "column": 28,
+      "type": "ParameterDeclaration",
+      "text": "{ name }",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 44535,
+      "column": 15,
+      "type": "InferTypeNode",
+      "text": "{ typeParameter } = node",
+      "members": [
+        "typeParameter"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 44554,
+      "column": 19,
+      "type": "TypeParameterDeclaration",
+      "text": "{ parent } = typeParameter",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 45989,
+      "column": 15,
+      "type": "IterationTypes",
+      "text": "{ yieldType, returnType, nextType } = iterationTypes",
+      "members": [
+        "yieldType",
+        "returnType",
+        "nextType"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 46396,
+      "column": 23,
+      "type": "AnonymousType",
+      "text": "{ mapper } = methodType as AnonymousType",
+      "members": [
+        "mapper"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 46868,
+      "column": 35,
+      "type": "ParameterDeclaration",
+      "text": "{ name }",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 46889,
+      "column": 39,
+      "type": "JSDocParameterTag",
+      "text": "{ name, isNameFirst }",
+      "members": [
+        "name",
+        "isNameFirst"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 49016,
+      "column": 34,
+      "type": "Symbol",
+      "text": "{ declarations, flags }",
+      "members": [
+        "declarations",
+        "flags"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 49070,
+      "column": 34,
+      "type": "JSDoc",
+      "text": "{ comment, tags }",
+      "members": [
+        "comment",
+        "tags"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 49398,
+      "column": 15,
+      "type": "JSDocVariadicType",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 49430,
+      "column": 15,
+      "type": "JSDocVariadicType",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 50194,
+      "column": 15,
+      "type": "Node",
+      "text": "{ parent } = node",
+      "members": [
+        "parent"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 50576,
+      "column": 19,
+      "type": "TransientSymbol",
+      "text": "{ links: { leftSpread, rightSpread, syntheticOrigin } } = symbol as TransientSymbol",
+      "members": [
+        "links"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 50576,
+      "column": 28,
+      "type": "TransientSymbolLinks",
+      "text": "links: { leftSpread, rightSpread, syntheticOrigin }",
+      "members": [
+        "leftSpread",
+        "rightSpread",
+        "syntheticOrigin"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 51656,
+      "column": 40,
+      "type": "DuplicateInfoForFiles",
+      "text": "{ firstFile, secondFile, conflictingSymbols }",
+      "members": [
+        "firstFile",
+        "secondFile",
+        "conflictingSymbols"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 51659,
+      "column": 45,
+      "type": "DuplicateInfoForSymbol",
+      "text": "{ isBlockScoped, firstFileLocations, secondFileLocations }",
+      "members": [
+        "isBlockScoped",
+        "firstFileLocations",
+        "secondFileLocations"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 52409,
+      "column": 15,
+      "type": "ArrowFunction",
+      "text": "{ equalsGreaterThanToken } = node",
+      "members": [
+        "equalsGreaterThanToken"
+      ]
+    },
+    {
+      "path": "src/compiler/checker.ts",
+      "line": 52722,
+      "column": 19,
+      "type": "JsxAttribute",
+      "text": "{ name, initializer } = attr",
+      "members": [
+        "name",
+        "initializer"
+      ]
+    },
+    {
+      "path": "src/compiler/visitorPublic.ts",
+      "line": 446,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/sourcemap.ts",
+      "line": 40,
+      "column": 9,
+      "type": "Timer",
+      "text": "{ enter, exit } = generatorOptions.extendedDiagnostics\r\n        ? performance.createTimer(\"Source Map\", \"beforeSourcemap\", \"afterSourcemap\")\r\n        : performance.nullTimer",
+      "members": [
+        "enter",
+        "exit"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/utilities.ts",
+      "line": 734,
+      "column": 11,
+      "type": "AllAccessorDeclarations",
+      "text": "{ firstAccessor, secondAccessor, getAccessor, setAccessor } = getAllAccessorDeclarations(parent.members, accessor)",
+      "members": [
+        "firstAccessor",
+        "secondAccessor",
+        "getAccessor",
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/destructuring.ts",
+      "line": 301,
+      "column": 16,
+      "type": "{ pendingExpressions?: Expression[] | undefined; name: BindingName; value: Expression; location?: TextRange | undefined; original?: Node | undefined; }",
+      "text": "{ pendingExpressions, name, value, location, original }",
+      "members": [
+        "pendingExpressions",
+        "name",
+        "value",
+        "location",
+        "original"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/destructuring.ts",
+      "line": 557,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = flattenContext.context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 68,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 107,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 202,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 246,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 264,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 265,
+      "column": 11,
+      "type": "{ assignedName: StringLiteral; name: PropertyName; } | { assignedName: Identifier; name: ComputedPropertyName; }",
+      "text": "{ assignedName, name } = getAssignedNameOfPropertyName(context, node.name, assignedNameText)",
+      "members": [
+        "assignedName",
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 283,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 309,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 339,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 371,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 392,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 393,
+      "column": 11,
+      "type": "{ assignedName: StringLiteral; name: PropertyName; } | { assignedName: Identifier; name: ComputedPropertyName; }",
+      "text": "{ assignedName, name } = getAssignedNameOfPropertyName(context, node.name, assignedNameText)",
+      "members": [
+        "assignedName",
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 432,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 454,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/taggedTemplate.ts",
+      "line": 59,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/ts.ts",
+      "line": 236,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "startLexicalEnvironment",
+        "resumeLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 355,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n        endLexicalEnvironment,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        addBlockScopedVariable,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "hoistVariableDeclaration",
+        "endLexicalEnvironment",
+        "startLexicalEnvironment",
+        "resumeLexicalEnvironment",
+        "addBlockScopedVariable"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1169,
+      "column": 19,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classConstructor, superClassReference, facts } = lexicalEnvironment.data",
+      "members": [
+        "classConstructor",
+        "superClassReference",
+        "facts"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1196,
+      "column": 19,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classConstructor, superClassReference, facts } = lexicalEnvironment.data",
+      "members": [
+        "classConstructor",
+        "superClassReference",
+        "facts"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1228,
+      "column": 27,
+      "type": "{ readExpression: Expression; initializeExpression: Expression | undefined; }",
+      "text": "{ readExpression, initializeExpression } = createCopiableReceiverExpr(receiver)",
+      "members": [
+        "readExpression",
+        "initializeExpression"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1263,
+      "column": 23,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classConstructor, superClassReference, facts } = lexicalEnvironment.data",
+      "members": [
+        "classConstructor",
+        "superClassReference",
+        "facts"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1346,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ thisArg, target } = factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion)",
+      "members": [
+        "thisArg",
+        "target"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1394,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ thisArg, target } = factory.createCallBinding(node.tag, hoistVariableDeclaration, languageVersion)",
+      "members": [
+        "thisArg",
+        "target"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1565,
+      "column": 23,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classConstructor, superClassReference, facts } = lexicalEnvironment.data",
+      "members": [
+        "classConstructor",
+        "superClassReference",
+        "facts"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1663,
+      "column": 19,
+      "type": "{ readExpression: Expression; initializeExpression: Expression | undefined; }",
+      "text": "{ readExpression, initializeExpression } = createCopiableReceiverExpr(receiver)",
+      "members": [
+        "readExpression",
+        "initializeExpression"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1895,
+      "column": 15,
+      "type": "{ members: NodeArray<ClassElement>; prologue: Expression | undefined; }",
+      "text": "{ members, prologue } = transformClassMembers(node)",
+      "members": [
+        "members",
+        "prologue"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 1999,
+      "column": 15,
+      "type": "{ members: NodeArray<ClassElement>; prologue: Expression | undefined; }",
+      "text": "{ members, prologue } = transformClassMembers(node)",
+      "members": [
+        "members",
+        "prologue"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 2091,
+      "column": 19,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classThis, classConstructor } = lexicalEnvironment.data",
+      "members": [
+        "classThis",
+        "classConstructor"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 2200,
+      "column": 15,
+      "type": "PrivateEnvironmentData",
+      "text": "{ weakSetName } = getPrivateIdentifierEnvironment().data",
+      "members": [
+        "weakSetName"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 2675,
+      "column": 15,
+      "type": "PrivateEnvironmentData",
+      "text": "{ weakSetName } = getPrivateIdentifierEnvironment().data",
+      "members": [
+        "weakSetName"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 2954,
+      "column": 15,
+      "type": "PrivateEnvironmentData",
+      "text": "{ className } = getPrivateIdentifierEnvironment().data",
+      "members": [
+        "className"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 3024,
+      "column": 19,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ classConstructor, superClassReference, facts } = lexicalEnvironment.data",
+      "members": [
+        "classConstructor",
+        "superClassReference",
+        "facts"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/classFields.ts",
+      "line": 3271,
+      "column": 19,
+      "type": "ClassLexicalEnvironment",
+      "text": "{ facts, classConstructor, classThis } = lexicalEnvironment.data",
+      "members": [
+        "facts",
+        "classConstructor",
+        "classThis"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/typeSerializer.ts",
+      "line": 133,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/typeSerializer.ts",
+      "line": 230,
+      "column": 19,
+      "type": "AllAccessorDeclarations",
+      "text": "{ setAccessor } = getAllAccessorDeclarations(container.members, node as AccessorDeclaration)",
+      "members": [
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 89,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 538,
+      "column": 15,
+      "type": "{ false?: Decorator[] | undefined; true?: Decorator[] | undefined; }",
+      "text": "{ false: decorators, true: metadata } = groupBy(allDecorators.decorators, isSyntheticMetadataDecorator)",
+      "members": [
+        "false",
+        "true"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 296,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "startLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 1412,
+      "column": 15,
+      "type": "{ modifiers: NodeArray<Modifier> | undefined; referencedName: Expression | undefined; name: PropertyName; initializersName: Identifier | undefined; descriptorName: Identifier | undefined; thisArg: Identifier | undefined; extraInitializersName?: undefined; } | { ...; }",
+      "text": "{ modifiers, name, descriptorName } = partialTransformClassElement(node, classInfo, createMethodDescriptorObject)",
+      "members": [
+        "modifiers",
+        "name",
+        "descriptorName"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 1427,
+      "column": 15,
+      "type": "{ modifiers: NodeArray<Modifier> | undefined; referencedName: Expression | undefined; name: PropertyName; initializersName: Identifier | undefined; descriptorName: Identifier | undefined; thisArg: Identifier | undefined; extraInitializersName?: undefined; } | { ...; }",
+      "text": "{ modifiers, name, descriptorName } = partialTransformClassElement(node, classInfo, createGetAccessorDescriptorObject)",
+      "members": [
+        "modifiers",
+        "name",
+        "descriptorName"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 1442,
+      "column": 15,
+      "type": "{ modifiers: NodeArray<Modifier> | undefined; referencedName: Expression | undefined; name: PropertyName; initializersName: Identifier | undefined; descriptorName: Identifier | undefined; thisArg: Identifier | undefined; extraInitializersName?: undefined; } | { ...; }",
+      "text": "{ modifiers, name, descriptorName } = partialTransformClassElement(node, classInfo, createSetAccessorDescriptorObject)",
+      "members": [
+        "modifiers",
+        "name",
+        "descriptorName"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 1514,
+      "column": 15,
+      "type": "{ modifiers: NodeArray<Modifier> | undefined; referencedName: Expression | undefined; name: PropertyName; initializersName: Identifier | undefined; descriptorName: Identifier | undefined; thisArg: Identifier | undefined; extraInitializersName?: undefined; } | { ...; }",
+      "text": "{ modifiers, name, initializersName, extraInitializersName, descriptorName, thisArg } = partialTransformClassElement(node, classInfo, hasAccessorModifier(node) ? createAccessorPropertyDescriptorObject : undefined)",
+      "members": [
+        "modifiers",
+        "name",
+        "initializersName",
+        "extraInitializersName",
+        "descriptorName",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esDecorators.ts",
+      "line": 2267,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ target, thisArg } = factory.createCallBinding(expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)",
+      "members": [
+        "target",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2017.ts",
+      "line": 120,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "resumeLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2017.ts",
+      "line": 573,
+      "column": 36,
+      "type": "VariableDeclaration | BindingElement | ParameterDeclaration",
+      "text": "{ name }: ParameterDeclaration | VariableDeclaration | BindingElement",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2017.ts",
+      "line": 611,
+      "column": 28,
+      "type": "VariableDeclaration | BindingElement",
+      "text": "{ name }: VariableDeclaration | BindingElement",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2017.ts",
+      "line": 635,
+      "column": 40,
+      "type": "VariableDeclaration | BindingElement",
+      "text": "{ name }: VariableDeclaration | BindingElement",
+      "members": [
+        "name"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2018.ts",
+      "line": 155,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "resumeLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2020.ts",
+      "line": 43,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2020.ts",
+      "line": 167,
+      "column": 15,
+      "type": "{ expression: LeftHandSideExpression; chain: OptionalChain[]; }",
+      "text": "{ expression, chain } = flattenChain(node)",
+      "members": [
+        "expression",
+        "chain"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2021.ts",
+      "line": 26,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        hoistVariableDeclaration,\r\n        factory,\r\n    } = context",
+      "members": [
+        "hoistVariableDeclaration",
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/esnext.ts",
+      "line": 77,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "hoistVariableDeclaration",
+        "startLexicalEnvironment",
+        "endLexicalEnvironment"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/jsx.ts",
+      "line": 99,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2016.ts",
+      "line": 22,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2015.ts",
+      "line": 489,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "startLexicalEnvironment",
+        "resumeLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2015.ts",
+      "line": 1910,
+      "column": 19,
+      "type": "ParameterDeclaration",
+      "text": "{ name, initializer, dotDotDotToken } = parameter",
+      "members": [
+        "name",
+        "initializer",
+        "dotDotDotToken"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2015.ts",
+      "line": 2354,
+      "column": 79,
+      "type": "AllAccessorDeclarations",
+      "text": "{ firstAccessor, getAccessor, setAccessor }: AllAccessorDeclarations",
+      "members": [
+        "firstAccessor",
+        "getAccessor",
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2015.ts",
+      "line": 4530,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ target, thisArg } = factory.createCallBinding(node.expression, hoistVariableDeclaration)",
+      "members": [
+        "target",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/es2015.ts",
+      "line": 4610,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ target, thisArg } = factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)",
+      "members": [
+        "target",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/generators.ts",
+      "line": 337,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistFunctionDeclaration,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "resumeLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistFunctionDeclaration",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/generators.ts",
+      "line": 783,
+      "column": 15,
+      "type": "BinaryExpression",
+      "text": "{ left, right } = node",
+      "members": [
+        "left",
+        "right"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/generators.ts",
+      "line": 1227,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ target, thisArg } = factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)",
+      "members": [
+        "target",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/generators.ts",
+      "line": 1257,
+      "column": 19,
+      "type": "CallBinding",
+      "text": "{ target, thisArg } = factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)",
+      "members": [
+        "target",
+        "thisArg"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/generators.ts",
+      "line": 2888,
+      "column": 23,
+      "type": "ExceptionBlock",
+      "text": "{ startLabel, catchLabel, finallyLabel, endLabel } = currentExceptionBlock",
+      "members": [
+        "startLabel",
+        "catchLabel",
+        "finallyLabel",
+        "endLabel"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/module/module.ts",
+      "line": 192,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory",
+        "startLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/module/module.ts",
+      "line": 349,
+      "column": 15,
+      "type": "AsynchronousDependencies",
+      "text": "{ aliasedModuleNames, unaliasedModuleNames, importAliasNames } = collectAsynchronousDependencies(node, /*includeNonAmdDependencies*/ true)",
+      "members": [
+        "aliasedModuleNames",
+        "unaliasedModuleNames",
+        "importAliasNames"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/module/module.ts",
+      "line": 414,
+      "column": 15,
+      "type": "AsynchronousDependencies",
+      "text": "{ aliasedModuleNames, unaliasedModuleNames, importAliasNames } = collectAsynchronousDependencies(node, /*includeNonAmdDependencies*/ false)",
+      "members": [
+        "aliasedModuleNames",
+        "unaliasedModuleNames",
+        "importAliasNames"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/module/system.ts",
+      "line": 143,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    } = context",
+      "members": [
+        "factory",
+        "startLexicalEnvironment",
+        "endLexicalEnvironment",
+        "hoistVariableDeclaration"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 68,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n    } = context",
+      "members": [
+        "factory",
+        "getEmitHelperFactory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/declarations/diagnostics.ts",
+      "line": 720,
+      "column": 15,
+      "type": "AllAccessorDeclarations",
+      "text": "{ getAccessor, setAccessor } = getAllAccessorDeclarations(node.symbol.declarations, node)",
+      "members": [
+        "getAccessor",
+        "setAccessor"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/declarations.ts",
+      "line": 272,
+      "column": 11,
+      "type": "TransformationContext",
+      "text": "{ factory } = context",
+      "members": [
+        "factory"
+      ]
+    },
+    {
+      "path": "src/compiler/transformers/declarations.ts",
+      "line": 310,
+      "column": 11,
+      "type": "CompilerOptions",
+      "text": "{ stripInternal, isolatedDeclarations } = options",
+      "members": [
+        "stripInternal",
+        "isolatedDeclarations"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 611,
+      "column": 11,
+      "type": "EmitFileNames",
+      "text": "{ jsFilePath, sourceMapFilePath, declarationFilePath, declarationMapPath } = getOutputPathsForBundle(configFile.options, /*forceDtsPaths*/ false)",
+      "members": [
+        "jsFilePath",
+        "sourceMapFilePath",
+        "declarationFilePath",
+        "declarationMapPath"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 685,
+      "column": 50,
+      "type": "ParsedCommandLine",
+      "text": "{ options, fileNames }: ParsedCommandLine",
+      "members": [
+        "options",
+        "fileNames"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 696,
+      "column": 11,
+      "type": "{ addOutput: (path: string | undefined) => void; getOutputs: () => readonly string[]; }",
+      "text": "{ addOutput, getOutputs } = createAddOutput()",
+      "members": [
+        "addOutput",
+        "getOutputs"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 713,
+      "column": 11,
+      "type": "{ addOutput: (path: string | undefined) => void; getOutputs: () => readonly string[]; }",
+      "text": "{ addOutput, getOutputs } = createAddOutput()",
+      "members": [
+        "addOutput",
+        "getOutputs"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 726,
+      "column": 15,
+      "type": "EmitFileNames",
+      "text": "{ jsFilePath, declarationFilePath } = getOutputPathsForBundle(configFile.options, /*forceDtsPaths*/ false)",
+      "members": [
+        "jsFilePath",
+        "declarationFilePath"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 756,
+      "column": 5,
+      "type": "EmitTransformers",
+      "text": "{ scriptTransformers, declarationTransformers }: EmitTransformers",
+      "members": [
+        "scriptTransformers",
+        "declarationTransformers"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 771,
+      "column": 9,
+      "type": "Timer",
+      "text": "{ enter, exit } = performance.createTimer(\"printTime\", \"beforePrint\", \"afterPrint\")",
+      "members": [
+        "enter",
+        "exit"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 794,
+      "column": 37,
+      "type": "EmitFileNames",
+      "text": "{ jsFilePath, sourceMapFilePath, declarationFilePath, declarationMapPath, buildInfoPath }: EmitFileNames",
+      "members": [
+        "jsFilePath",
+        "sourceMapFilePath",
+        "declarationFilePath",
+        "declarationMapPath",
+        "buildInfoPath"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 1215,
+      "column": 9,
+      "type": "PrintHandlers",
+      "text": "{\r\n        hasGlobalName,\r\n        onEmitNode = noEmitNotification,\r\n        isEmitNotificationEnabled,\r\n        substituteNode = noEmitSubstitution,\r\n        onBeforeEmitNode,\r\n        onAfterEmitNode,\r\n        onBeforeEmitNodeArray,\r\n        onAfterEmitNodeArray,\r\n        onBeforeEmitToken,\r\n        onAfterEmitToken,\r\n    } = handlers",
+      "members": [
+        "hasGlobalName",
+        "onEmitNode",
+        "isEmitNotificationEnabled",
+        "substituteNode",
+        "onBeforeEmitNode",
+        "onAfterEmitNode",
+        "onBeforeEmitNodeArray",
+        "onAfterEmitNodeArray",
+        "onBeforeEmitToken",
+        "onAfterEmitToken"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 1275,
+      "column": 9,
+      "type": "Timer",
+      "text": "{ enter: enterComment, exit: exitComment } = performance.createTimerIf(extendedDiagnostics, \"commentTime\", \"beforeComment\", \"afterComment\")",
+      "members": [
+        "enter",
+        "exit"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 5924,
+      "column": 15,
+      "type": "TextRange",
+      "text": "{ pos, end } = detachedRange",
+      "members": [
+        "pos",
+        "end"
+      ]
+    },
+    {
+      "path": "src/compiler/emitter.ts",
+      "line": 6233,
+      "column": 15,
+      "type": "LineAndCharacter",
+      "text": "{ line: sourceLine, character: sourceCharacter } = getLineAndCharacterOfPosition(sourceMapSource, pos)",
+      "members": [
+        "line",
+        "character"
+      ]
+    },
+    {
+      "path": "src/compiler/watchUtilities.ts",
+      "line": 469,
+      "column": 34,
+      "type": "ExtendedConfigCacheEntry",
+      "text": "{ extendedResult }",
+      "members": [
+        "extendedResult"
+      ]
+    },
+    {
+      "path": "src/compiler/watchUtilities.ts",
+      "line": 572,
+      "column": 51,
+      "type": "IsIgnoredFileFromWildCardWatchingInput",
+      "text": "{\r\n    watchedDirPath,\r\n    fileOrDirectory,\r\n    fileOrDirectoryPath,\r\n    configFileName,\r\n    options,\r\n    program,\r\n    extraFileExtensions,\r\n    currentDirectory,\r\n    useCaseSensitiveFileNames,\r\n    writeLog,\r\n    toPath,\r\n    getScriptKind,\r\n}: IsIgnoredFileFromWildCardWatchingInput",
+      "members": [
+        "watchedDirPath",
+        "fileOrDirectory",
+        "fileOrDirectoryPath",
+        "configFileName",
+        "options",
+        "program",
+        "extraFileExtensions",
+        "currentDirectory",
+        "useCaseSensitiveFileNames",
+        "writeLog",
+        "toPath",
+        "getScriptKind"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 670,
+      "column": 15,
+      "type": "LineAndCharacter",
+      "text": "{ line, character } = getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start!)",
+      "members": [
+        "line",
+        "character"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 712,
+      "column": 11,
+      "type": "LineAndCharacter",
+      "text": "{ line: firstLine, character: firstLineChar } = getLineAndCharacterOfPosition(file, start)",
+      "members": [
+        "line",
+        "character"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 713,
+      "column": 11,
+      "type": "LineAndCharacter",
+      "text": "{ line: lastLine, character: lastLineChar } = getLineAndCharacterOfPosition(file, start + length)",
+      "members": [
+        "line",
+        "character"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 767,
+      "column": 11,
+      "type": "LineAndCharacter",
+      "text": "{ line: firstLine, character: firstLineChar } = getLineAndCharacterOfPosition(file, start)",
+      "members": [
+        "line",
+        "character"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 783,
+      "column": 19,
+      "type": "Diagnostic",
+      "text": "{ file, start } = diagnostic",
+      "members": [
+        "file",
+        "start"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 798,
+      "column": 24,
+      "type": "DiagnosticRelatedInformation",
+      "text": "{ file, start, length, messageText }",
+      "members": [
+        "file",
+        "start",
+        "length",
+        "messageText"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1197,
+      "column": 11,
+      "type": "ReferencedFile",
+      "text": "{ kind, index } = ref",
+      "members": [
+        "kind",
+        "index"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1517,
+      "column": 11,
+      "type": "CreateProgramOptions",
+      "text": "{ rootNames, options, configFileParsingDiagnostics, projectReferences, typeScriptVersion, host: createProgramOptionsHost } = _createProgramOptions",
+      "members": [
+        "rootNames",
+        "options",
+        "configFileParsingDiagnostics",
+        "projectReferences",
+        "typeScriptVersion",
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1518,
+      "column": 9,
+      "type": "CreateProgramOptions",
+      "text": "{ oldProgram } = _createProgramOptions",
+      "members": [
+        "oldProgram"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 1725,
+      "column": 11,
+      "type": "{ onProgramCreateComplete: (_?: unknown) => void; fileExists: (file: string) => boolean; directoryExists?: undefined; } | { onProgramCreateComplete: () => void; fileExists: (file: string) => boolean; directoryExists: ((path: string) => boolean) | undefined; }",
+      "text": "{ onProgramCreateComplete, fileExists, directoryExists } = updateHostForUseSourceOfProjectReferenceRedirect({\r\n        compilerHost: host,\r\n        getSymlinkCache,\r\n        useSourceOfProjectReferenceRedirect,\r\n        toPath,\r\n        getResolvedProjectReferences,\r\n        getRedirectFromOutput,\r\n        forEachResolvedProjectReference,\r\n    })",
+      "members": [
+        "onProgramCreateComplete",
+        "fileExists",
+        "directoryExists"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 2022,
+      "column": 32,
+      "type": "ResolvedModuleWithFailedLookupLocations",
+      "text": "{ resolvedModule }",
+      "members": [
+        "resolvedModule"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 2231,
+      "column": 135,
+      "type": "ResolveNamesReusingOldStateInput<Entry, SourceFileOrString, SourceFileOrUndefined, Resolution>",
+      "text": "{\r\n        entries,\r\n        containingFile,\r\n        containingSourceFile,\r\n        redirectedReference,\r\n        nameAndModeGetter,\r\n        resolutionWorker,\r\n        getResolutionFromOldProgram,\r\n        getResolved,\r\n        canReuseResolutionsInFile,\r\n        resolveToOwnAmbientModule,\r\n    }: ResolveNamesReusingOldStateInput<Entry, SourceFileOrString, SourceFileOrUndefined, Resolution>",
+      "members": [
+        "entries",
+        "containingFile",
+        "containingSourceFile",
+        "redirectedReference",
+        "nameAndModeGetter",
+        "resolutionWorker",
+        "getResolutionFromOldProgram",
+        "getResolved",
+        "canReuseResolutionsInFile",
+        "resolveToOwnAmbientModule"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 2929,
+      "column": 15,
+      "type": "{ diagnostics: Diagnostic[]; directives: CommentDirectivesMap; }",
+      "text": "{ diagnostics, directives } = getDiagnosticsWithPrecedingDirectives(sourceFile, sourceFile.commentDirectives, flatDiagnostics)",
+      "members": [
+        "diagnostics",
+        "directives"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 2966,
+      "column": 15,
+      "type": "Diagnostic",
+      "text": "{ file, start } = diagnostic",
+      "members": [
+        "file",
+        "start"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 3812,
+      "column": 15,
+      "type": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "text": "{ resolvedTypeReferenceDirective } = resolution",
+      "members": [
+        "resolvedTypeReferenceDirective"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 5139,
+      "column": 67,
+      "type": "ResolvedModuleFull",
+      "text": "{ extension }: ResolvedModuleFull",
+      "members": [
+        "extension"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 5139,
+      "column": 102,
+      "type": "{ isDeclarationFile: boolean; }",
+      "text": "{ isDeclarationFile }: { isDeclarationFile: SourceFile[\"isDeclarationFile\"]; }",
+      "members": [
+        "isDeclarationFile"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 5178,
+      "column": 25,
+      "type": "SourceFile",
+      "text": "{ imports, moduleAugmentations }: SourceFile",
+      "members": [
+        "imports",
+        "moduleAugmentations"
+      ]
+    },
+    {
+      "path": "src/compiler/program.ts",
+      "line": 5190,
+      "column": 46,
+      "type": "SourceFileImportsList",
+      "text": "{ imports, moduleAugmentations }: SourceFileImportsList",
+      "members": [
+        "imports",
+        "moduleAugmentations"
+      ]
+    },
+    {
+      "path": "src/compiler/programDiagnostics.ts",
+      "line": 179,
+      "column": 45,
+      "type": "LazyConfigDiagnostic",
+      "text": "{ file, diagnostic, args }",
+      "members": [
+        "file",
+        "diagnostic",
+        "args"
+      ]
+    },
+    {
+      "path": "src/compiler/programDiagnostics.ts",
+      "line": 190,
+      "column": 72,
+      "type": "FilePreprocessingLibReferenceDiagnostic",
+      "text": "{ reason }: FilePreprocessingLibReferenceDiagnostic",
+      "members": [
+        "reason"
+      ]
+    },
+    {
+      "path": "src/compiler/programDiagnostics.ts",
+      "line": 191,
+      "column": 15,
+      "type": "ReferenceFileLocation",
+      "text": "{ file, pos, end } = getReferencedFileLocation(program, reason) as ReferenceFileLocation",
+      "members": [
+        "file",
+        "pos",
+        "end"
+      ]
+    },
+    {
+      "path": "src/compiler/programDiagnostics.ts",
+      "line": 392,
+      "column": 23,
+      "type": "{ sourceFile: SourceFile; index: number; }",
+      "text": "{ sourceFile, index } = referenceInfo",
+      "members": [
+        "sourceFile",
+        "index"
+      ]
+    },
+    {
+      "path": "src/compiler/builderState.ts",
+      "line": 48,
+      "column": 11,
+      "type": "EmitResult",
+      "text": "{ emitSkipped, diagnostics } = program.emit(sourceFile, writeFile, cancellationToken, emitOnlyDtsFiles, customTransformers, forceDtsEmit)",
+      "members": [
+        "emitSkipped",
+        "diagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/builderState.ts",
+      "line": 239,
+      "column": 56,
+      "type": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "text": "{ resolvedTypeReferenceDirective }",
+      "members": [
+        "resolvedTypeReferenceDirective"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 580,
+      "column": 15,
+      "type": "ReusableDiagnostic",
+      "text": "{ relatedInformation } = diagnostic",
+      "members": [
+        "relatedInformation"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 601,
+      "column": 11,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "text": "{ file } = diagnostic",
+      "members": [
+        "file"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 641,
+      "column": 15,
+      "type": "BuilderProgramStateWithDefinedProgram",
+      "text": "{ affectedFiles } = state",
+      "members": [
+        "affectedFiles"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 1443,
+      "column": 15,
+      "type": "OptionsNameMap",
+      "text": "{ optionsNameMap } = getOptionsNameMap()",
+      "members": [
+        "optionsNameMap"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 1510,
+      "column": 19,
+      "type": "Diagnostic",
+      "text": "{ relatedInformation } = diagnostic",
+      "members": [
+        "relatedInformation"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 1521,
+      "column": 15,
+      "type": "DiagnosticRelatedInformation",
+      "text": "{ file } = diagnostic",
+      "members": [
+        "file"
+      ]
+    },
+    {
+      "path": "src/compiler/builder.ts",
+      "line": 1675,
+      "column": 5,
+      "type": "BuilderCreationParameters",
+      "text": "{ newProgram, host, oldProgram, configFileParsingDiagnostics }: BuilderCreationParameters",
+      "members": [
+        "newProgram",
+        "host",
+        "oldProgram",
+        "configFileParsingDiagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/builderPublic.ts",
+      "line": 261,
+      "column": 11,
+      "type": "BuilderCreationParameters",
+      "text": "{ newProgram, configFileParsingDiagnostics: newConfigFileParsingDiagnostics } = getBuilderCreationParameters(\r\n        newProgramOrRootNames,\r\n        hostOrOptions,\r\n        oldProgramOrHost,\r\n        configFileParsingDiagnosticsOrOldProgram,\r\n        configFileParsingDiagnostics,\r\n        projectReferences,\r\n    )",
+      "members": [
+        "newProgram",
+        "configFileParsingDiagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 553,
+      "column": 15,
+      "type": "ResolvedModuleWithFailedLookupLocations",
+      "text": "{ resolvedModule, failedLookupLocations, affectingLocations, resolutionDiagnostics } = loadModuleFromGlobalCache(\r\n            Debug.checkDefined(resolutionHost.globalCacheResolutionModuleName)(moduleName),\r\n            resolutionHost.projectName,\r\n            compilerOptions,\r\n            host,\r\n            globalCache,\r\n            moduleResolutionCache,\r\n        )",
+      "members": [
+        "resolvedModule",
+        "failedLookupLocations",
+        "affectingLocations",
+        "resolutionDiagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 858,
+      "column": 149,
+      "type": "ResolveNamesWithLocalCacheInput<Entry, SourceFile, T, R>",
+      "text": "{\r\n        entries,\r\n        containingFile,\r\n        containingSourceFile,\r\n        redirectedReference,\r\n        options,\r\n        perFileCache,\r\n        reusedNames,\r\n        loader,\r\n        getResolutionWithResolvedFileName,\r\n        deferWatchingNonRelativeResolution,\r\n        shouldRetryResolution,\r\n        logChanges,\r\n    }: ResolveNamesWithLocalCacheInput<Entry, SourceFile, T, R>",
+      "members": [
+        "entries",
+        "containingFile",
+        "containingSourceFile",
+        "redirectedReference",
+        "options",
+        "perFileCache",
+        "reusedNames",
+        "loader",
+        "getResolutionWithResolvedFileName",
+        "deferWatchingNonRelativeResolution",
+        "shouldRetryResolution",
+        "logChanges"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 1139,
+      "column": 19,
+      "type": "DirectoryOfFailedLookupWatch",
+      "text": "{ dir, dirPath, nonRecursive, packageDir, packageDirPath } = toWatch",
+      "members": [
+        "dir",
+        "dirPath",
+        "nonRecursive",
+        "packageDir",
+        "packageDirPath"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 1155,
+      "column": 15,
+      "type": "ResolutionWithFailedLookupLocations",
+      "text": "{ failedLookupLocations, affectingLocations, alternateResult } = resolution",
+      "members": [
+        "failedLookupLocations",
+        "affectingLocations",
+        "alternateResult"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 1175,
+      "column": 15,
+      "type": "ResolutionWithFailedLookupLocations",
+      "text": "{ affectingLocations } = resolution",
+      "members": [
+        "affectingLocations"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 1350,
+      "column": 19,
+      "type": "DirectoryOfFailedLookupWatch",
+      "text": "{ dirPath, packageDirPath } = toWatch",
+      "members": [
+        "dirPath",
+        "packageDirPath"
+      ]
+    },
+    {
+      "path": "src/compiler/resolutionCache.ts",
+      "line": 1394,
+      "column": 15,
+      "type": "T",
+      "text": "{ failedLookupLocations, affectingLocations, alternateResult } = resolution",
+      "members": [
+        "failedLookupLocations",
+        "affectingLocations",
+        "alternateResult"
+      ]
+    },
+    {
+      "path": "src/compiler/watch.ts",
+      "line": 250,
+      "column": 19,
+      "type": "LineAndCharacter",
+      "text": "{ line } = getLineAndCharacterOfPosition(diagnosticForFileName.file!, diagnosticForFileName.start!)",
+      "members": [
+        "line"
+      ]
+    },
+    {
+      "path": "src/compiler/watch.ts",
+      "line": 644,
+      "column": 11,
+      "type": "{ emitResult: EmitResult; diagnostics: SortedReadonlyArray<Diagnostic>; }",
+      "text": "{ emitResult, diagnostics } = emitFilesAndReportErrors(\r\n        program,\r\n        reportDiagnostic,\r\n        write,\r\n        reportSummary,\r\n        writeFile,\r\n        cancellationToken,\r\n        emitOnlyDtsFiles,\r\n        customTransformers,\r\n    )",
+      "members": [
+        "emitResult",
+        "diagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/watch.ts",
+      "line": 923,
+      "column": 122,
+      "type": "CreateWatchCompilerHostOfConfigFileInput<T>",
+      "text": "{\r\n    configFileName,\r\n    optionsToExtend,\r\n    watchOptionsToExtend,\r\n    extraFileExtensions,\r\n    system,\r\n    createProgram,\r\n    reportDiagnostic,\r\n    reportWatchStatus,\r\n}: CreateWatchCompilerHostOfConfigFileInput<T>",
+      "members": [
+        "configFileName",
+        "optionsToExtend",
+        "watchOptionsToExtend",
+        "extraFileExtensions",
+        "system",
+        "createProgram",
+        "reportDiagnostic",
+        "reportWatchStatus"
+      ]
+    },
+    {
+      "path": "src/compiler/watch.ts",
+      "line": 955,
+      "column": 135,
+      "type": "CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>",
+      "text": "{\r\n    rootFiles,\r\n    options,\r\n    watchOptions,\r\n    projectReferences,\r\n    system,\r\n    createProgram,\r\n    reportDiagnostic,\r\n    reportWatchStatus,\r\n}: CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>",
+      "members": [
+        "rootFiles",
+        "options",
+        "watchOptions",
+        "projectReferences",
+        "system",
+        "createProgram",
+        "reportDiagnostic",
+        "reportWatchStatus"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 141,
+      "column": 111,
+      "type": "IncrementalProgramOptions<T>",
+      "text": "{\r\n    rootNames,\r\n    options,\r\n    configFileParsingDiagnostics,\r\n    projectReferences,\r\n    host,\r\n    createProgram,\r\n}: IncrementalProgramOptions<T>",
+      "members": [
+        "rootNames",
+        "options",
+        "configFileParsingDiagnostics",
+        "projectReferences",
+        "host",
+        "createProgram"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 456,
+      "column": 11,
+      "type": "WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>",
+      "text": "{ configFileName, optionsToExtend: optionsToExtendForConfigFile = {}, watchOptionsToExtend, extraFileExtensions, createProgram } = host",
+      "members": [
+        "configFileName",
+        "optionsToExtend",
+        "watchOptionsToExtend",
+        "extraFileExtensions",
+        "createProgram"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 457,
+      "column": 9,
+      "type": "WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>",
+      "text": "{ rootFiles: rootFileNames, options: compilerOptions, watchOptions, projectReferences } = host",
+      "members": [
+        "rootFiles",
+        "options",
+        "watchOptions",
+        "projectReferences"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 484,
+      "column": 11,
+      "type": "WatchFactoryWithLog<WatchType, undefined>",
+      "text": "{ watchFile, watchDirectory, writeLog } = createWatchFactory(host, compilerOptions)",
+      "members": [
+        "watchFile",
+        "watchDirectory",
+        "writeLog"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 629,
+      "column": 15,
+      "type": "HasInvalidatedFromResolutionCache",
+      "text": "{ hasInvalidatedResolutions, hasInvalidatedLibResolutions } = resolutionCache.createHasInvalidatedResolutions(customHasInvalidatedResolutions, customHasInvalidLibResolutions)",
+      "members": [
+        "hasInvalidatedResolutions",
+        "hasInvalidatedLibResolutions"
+      ]
+    },
+    {
+      "path": "src/compiler/watchPublic.ts",
+      "line": 630,
+      "column": 15,
+      "type": "CompilerHostLikeWithCache",
+      "text": "{\r\n            originalReadFile,\r\n            originalFileExists,\r\n            originalDirectoryExists,\r\n            originalCreateDirectory,\r\n            originalWriteFile,\r\n            readFileWithCache,\r\n        } = changeCompilerHostLikeToUseCache(compilerHost, toPath)",
+      "members": [
+        "originalReadFile",
+        "originalFileExists",
+        "originalDirectoryExists",
+        "originalCreateDirectory",
+        "originalWriteFile",
+        "readFileWithCache"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 494,
+      "column": 11,
+      "type": "WatchFactoryWithLog<WatchType, ResolvedConfigFileName>",
+      "text": "{ watchFile, watchDirectory, writeLog } = createWatchFactory<ResolvedConfigFileName>(hostWithWatch, options)",
+      "members": [
+        "watchFile",
+        "watchDirectory",
+        "writeLog"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 560,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ resolvedConfigFilePaths } = state",
+      "members": [
+        "resolvedConfigFilePaths"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 579,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ configFileCache } = state",
+      "members": [
+        "configFileCache"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 587,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ parseConfigFileHost, baseCompilerOptions, baseWatchOptions, extendedConfigCache, host } = state",
+      "members": [
+        "parseConfigFileHost",
+        "baseCompilerOptions",
+        "baseWatchOptions",
+        "extendedConfigCache",
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 746,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ compilerHost, host } = state",
+      "members": [
+        "compilerHost",
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 751,
+      "column": 11,
+      "type": "CompilerHostLikeWithCache",
+      "text": "{\r\n        originalReadFile,\r\n        originalFileExists,\r\n        originalDirectoryExists,\r\n        originalCreateDirectory,\r\n        originalWriteFile,\r\n        getSourceFileWithCache,\r\n        readFileWithCache,\r\n    } = changeCompilerHostLikeToUseCache(\r\n        host,\r\n        fileName => toPath(state, fileName),\r\n        (...args) => originalGetSourceFile.call(compilerHost, ...args),\r\n    )",
+      "members": [
+        "originalReadFile",
+        "originalFileExists",
+        "originalDirectoryExists",
+        "originalCreateDirectory",
+        "originalWriteFile",
+        "getSourceFileWithCache",
+        "readFileWithCache"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 781,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ cache, host, compilerHost, extendedConfigCache, moduleResolutionCache, typeReferenceDirectiveResolutionCache, libraryResolutionCache } = state",
+      "members": [
+        "cache",
+        "host",
+        "compilerHost",
+        "extendedConfigCache",
+        "moduleResolutionCache",
+        "typeReferenceDirectiveResolutionCache",
+        "libraryResolutionCache"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 802,
+      "column": 51,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ projectPendingBuild }: SolutionBuilderState<T>",
+      "members": [
+        "projectPendingBuild"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1042,
+      "column": 15,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ host, compilerHost } = state",
+      "members": [
+        "host",
+        "compilerHost"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1083,
+      "column": 15,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ host, compilerHost } = state",
+      "members": [
+        "host",
+        "compilerHost"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1089,
+      "column": 15,
+      "type": "{ emitResult: EmitResult; diagnostics: SortedReadonlyArray<Diagnostic>; }",
+      "text": "{ emitResult, diagnostics } = emitFilesAndReportErrors(\r\n            program,\r\n            d => host.reportDiagnostic(d),\r\n            state.write,\r\n            /*reportSummary*/ undefined,\r\n            (name, text, writeByteOrderMark, onError, sourceFiles, data) => {\r\n                const path = toPath(state, name);\r\n                emittedOutputs.set(toPath(state, name), name);\r\n                if (data?.buildInfo) {\r\n                    // Update buildInfo cache\r\n                    now ||= getCurrentTime(state.host);\r\n                    const isChangedSignature = program!.hasChangedEmitSignature?.();\r\n                    const existing = getBuildInfoCacheEntry(state, name, projectPath);\r\n                    if (existing) {\r\n                        existing.buildInfo = data.buildInfo;\r\n                        existing.modifiedTime = now;\r\n                        if (isChangedSignature) existing.latestChangedDtsTime = now;\r\n                    }\r\n                    else {\r\n                        state.buildInfoCache.set(projectPath, {\r\n                            path: toPath(state, name),\r\n                            buildInfo: data.buildInfo,\r\n                            modifiedTime: now,\r\n                            latestChangedDtsTime: isChangedSignature ? now : undefined,\r\n                        });\r\n                    }\r\n                }\r\n                const modifiedTime = data?.differsOnlyInMap ? ts_getModifiedTime(state.host, name) : undefined;\r\n                (writeFileCallback || compilerHost.writeFile)(\r\n                    name,\r\n                    text,\r\n                    writeByteOrderMark,\r\n                    onError,\r\n                    sourceFiles,\r\n                    data,\r\n                );\r\n                // Revert the timestamp for the d.ts that is same but differs only in d.ts map URL\r\n                if (data?.differsOnlyInMap) state.host.setModifiedTime(name, modifiedTime!);\r\n                else if (!isIncremental && state.watch) {\r\n                    (outputTimeStampMap ||= getOutputTimeStampMap(state, projectPath)!).set(path, now ||= getCurrentTime(state.host));\r\n                }\r\n            },\r\n            cancellationToken,\r\n            /*emitOnlyDtsFiles*/ undefined,\r\n            customTransformers || state.host.getCustomTransformers?.(project),\r\n        )",
+      "members": [
+        "emitResult",
+        "diagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1211,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ options, projectPendingBuild } = state",
+      "members": [
+        "options",
+        "projectPendingBuild"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1351,
+      "column": 50,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ options, builderPrograms, compilerHost }: SolutionBuilderState<T>",
+      "members": [
+        "options",
+        "builderPrograms",
+        "compilerHost"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1512,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ host } = state",
+      "members": [
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1730,
+      "column": 20,
+      "type": "{ ref: ProjectReference; refStatus: Unbuildable | UpToDate | OutputMissing | ErrorReadingFile | OutOfDateWithSelf | ... 6 more ... | ForceBuild; resolvedRefPath: ResolvedConfigFilePath; resolvedConfig: ParsedCommandLine; }",
+      "text": "{ ref, refStatus, resolvedConfig, resolvedRefPath }",
+      "members": [
+        "ref",
+        "refStatus",
+        "resolvedConfig",
+        "resolvedRefPath"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 1839,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ host } = state",
+      "members": [
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 2004,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ options, host } = state",
+      "members": [
+        "options",
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 2061,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ hostWithWatch } = state",
+      "members": [
+        "hostWithWatch"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 2295,
+      "column": 49,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ host }: SolutionBuilderState<T>",
+      "members": [
+        "host"
+      ]
+    },
+    {
+      "path": "src/compiler/tsbuildPublic.ts",
+      "line": 2315,
+      "column": 11,
+      "type": "SolutionBuilderState<T>",
+      "text": "{ diagnostics } = state",
+      "members": [
+        "diagnostics"
+      ]
+    },
+    {
+      "path": "src/compiler/executeCommandLine.ts",
+      "line": 762,
+      "column": 15,
+      "type": "ParsedBuildCommand",
+      "text": "{ buildOptions, watchOptions, projects, errors } = parseBuildCommand(commandLineArgs)",
+      "members": [
+        "buildOptions",
+        "watchOptions",
+        "projects",
+        "errors"
+      ]
+    },
+    {
+      "path": "src/compiler/executeCommandLine.ts",
+      "line": 914,
+      "column": 11,
+      "type": "ParsedCommandLine",
+      "text": "{ fileNames, options, projectReferences } = config",
+      "members": [
+        "fileNames",
+        "options",
+        "projectReferences"
+      ]
+    },
+    {
+      "path": "src/compiler/executeCommandLine.ts",
+      "line": 947,
+      "column": 11,
+      "type": "ParsedCommandLine",
+      "text": "{ options, fileNames, projectReferences } = config",
+      "members": [
+        "options",
+        "fileNames",
+        "projectReferences"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 199,
+      "column": 15,
+      "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+      "text": "{ finalizeBoundary, startRecoveryScope, hadError, markError } = resolver.createRecoveryBoundary(context)",
+      "members": [
+        "finalizeBoundary",
+        "startRecoveryScope",
+        "hadError",
+        "markError"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 269,
+      "column": 19,
+      "type": "{ introducesError: boolean; node: EntityName; }",
+      "text": "{ introducesError, node: exprName } = resolver.trackExistingEntityName(context, node.exprName)",
+      "members": [
+        "introducesError",
+        "node"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 286,
+      "column": 23,
+      "type": "{ introducesError: boolean; node: EntityName; }",
+      "text": "{ introducesError, node: newName } = resolver.trackExistingEntityName(context, node.typeName)",
+      "members": [
+        "introducesError",
+        "node"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 401,
+      "column": 23,
+      "type": "{ introducesError: boolean; node: Identifier; }",
+      "text": "{ node: newName } = resolver.trackExistingEntityName(context, node.name)",
+      "members": [
+        "node"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 482,
+      "column": 23,
+      "type": "{ introducesError: boolean; node: EntityNameExpression; }",
+      "text": "{ node: result, introducesError } = resolver.trackExistingEntityName(context, node.expression)",
+      "members": [
+        "node",
+        "introducesError"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 517,
+      "column": 27,
+      "type": "{ introducesError: boolean; node: Identifier; }",
+      "text": "{ node: result, introducesError } = resolver.trackExistingEntityName(context, node.parameterName)",
+      "members": [
+        "node",
+        "introducesError"
+      ]
+    },
+    {
+      "path": "src/compiler/expressionToTypeNode.ts",
+      "line": 1126,
+      "column": 19,
+      "type": "{ introducesError: boolean; node: Identifier; }",
+      "text": "{ node: tpName } = resolver.trackExistingEntityName(context, tp.name)",
+      "members": [
+        "node"
+      ]
+    },
+    {
+      "path": "src/compiler/binder.ts",
+      "line": 2364,
+      "column": 27,
+      "type": "StringLiteral",
+      "text": "{ text } = node.name",
+      "members": [
+        "text"
+      ]
+    },
+    {
+      "path": "src/compiler/binder.ts",
+      "line": 2378,
+      "column": 23,
+      "type": "ModuleDeclaration",
+      "text": "{ symbol } = node",
+      "members": [
+        "symbol"
+      ]
+    },
+    {
+      "path": "src/compiler/binder.ts",
+      "line": 3619,
+      "column": 15,
+      "type": "ClassLikeDeclaration",
+      "text": "{ symbol } = node",
+      "members": [
+        "symbol"
+      ]
+    }
+  ]
+}

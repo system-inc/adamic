@@ -1,0 +1,106 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "tests": [
+      "TestCorpusShardCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "tests": [
+      "TestProduct_stage0"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "tests": [
+      "TestProduct_YAMLComposeGo"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "tests": [
+      "TestParserChildGuard_000"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "tests": [
+      "TestScannerShardCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "tests": [
+      "TestFixturesAssertions"
+    ]
+  }
+]
