@@ -198,7 +198,7 @@ func (e *emitter) asyncFunction(index int) string {
 	e.asyncSlots = nil
 	e.function = nil
 	e.scopes = nil
-	return out.String()
+	return e.canonicalAsyncDeclarations(out.String(), index)
 }
 
 func (e *emitter) promiseValue(expression ir.PromiseValue) string {

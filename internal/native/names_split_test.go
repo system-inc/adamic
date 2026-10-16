@@ -47,7 +47,7 @@ func stableSplitProduct(t *testing.T, name string) string {
 			if !found {
 				t.Fatal("missing async method identity witness")
 			}
-		} else {
+		} else if name == "entries_record_alias" {
 			found := false
 			for _, local := range program.Locals {
 				if local.Global && local.Name == "alias" {
@@ -121,4 +121,13 @@ func TestStableIdentityAsyncMethodsSplit(t *testing.T) {
 func TestStableIdentityEntriesRecordAliasSplit(t *testing.T) {
 	t.Parallel()
 	stableSplitWitness(t, "entries_record_alias")
+}
+
+func TestProduct_StableSplitAsyncCapture(t *testing.T) {
+	t.Parallel()
+	stableSplitProduct(t, "async_frame_capture_safe")
+}
+func TestStableSplitAsyncCapture(t *testing.T) {
+	t.Parallel()
+	stableSplitWitness(t, "async_frame_capture_safe")
 }

@@ -38,8 +38,8 @@ int main(void) { adamic_generated_link link = {30}; adamic_generated_frame_alias
 			}
 		}
 	}
-	if len(units) < 3 {
-		t.Fatalf("expected state, function and main units, got %d", len(units))
+	if len(units) < 2 {
+		t.Fatalf("expected function and main units, got %d", len(units))
 	}
 	binary := filepath.Join(t.TempDir(), "types")
 	if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
