@@ -1382,6 +1382,9 @@
     ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsGoOracle": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_DecodedOptionsNative": [
+      "stage1/cohere/lint TestProduct_DecodedOptionsLowered"
     ]
   }
 }
