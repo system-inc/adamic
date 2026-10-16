@@ -378,6 +378,30 @@ func TestGoTestKeysAModulesTestBinary(t *testing.T) {
 	}
 }
 
+// goProduct names a request's -overlay as a file its key holds (keyedOutside): its test writes it before the build, in a
+// directory of its own, and the key holds its map and its replacements' content, so its read in the build's window is
+// no input the key lacks. Without it every overlay oracle would refuse, a temporary file its build didn't make
+// (#mmpt615, Mentat's M1). Mutant: keyedOutside naming nothing.
+func TestAGoRequestsOverlayIsAFileItsKeyHolds(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlay, []byte(`{"Replace":{}}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	request := goRequest{verb: "test -c", module: "internal/buildcache/testdata/module", output: "greet.test", pkg: "./greet"}
+	for _, arguments := range [][]string{{"-overlay=" + overlay}, {"-trimpath", "-overlay", overlay}} {
+		request.arguments = arguments
+		if got := request.keyedOutside(root); !slices.Equal(got, []string{overlay}) {
+			t.Errorf("arguments %q: the files its key holds are %q; want the overlay", arguments, got)
+		}
+	}
+	request.arguments = []string{"-trimpath"}
+	if got := request.keyedOutside(root); got != nil {
+		t.Errorf("a request without an overlay holds %q", got)
+	}
+}
+
 // A process keys a request once, and a planner's index keys it with no go at all (#pc0jvv4): what a tree build records
 // (ADAMIC_BUILD_INPUTS_RECORD) a unit reads (ADAMIC_BUILD_INPUTS), and with neither it keys with go as before.
 // Not parallel: points the build cache and the store at this test, and PATH and ADAMIC_TOOLS, through t.Setenv.

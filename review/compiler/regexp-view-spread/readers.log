@@ -1,0 +1,63 @@
+=== RUN   TestClassFeaturesThrowingAccessorSpread
+=== PAUSE TestClassFeaturesThrowingAccessorSpread
+=== RUN   TestLibrarySpreadRegExpUnion
+=== PAUSE TestLibrarySpreadRegExpUnion
+=== RUN   TestLibrarySpreadErrorView
+=== PAUSE TestLibrarySpreadErrorView
+=== RUN   TestLibrarySpreadPlainProducers
+=== PAUSE TestLibrarySpreadPlainProducers
+=== RUN   TestLibrarySpreadMapView
+=== PAUSE TestLibrarySpreadMapView
+=== RUN   TestLibrarySpreadSetView
+=== PAUSE TestLibrarySpreadSetView
+=== RUN   TestLibrarySpreadDateView
+=== PAUSE TestLibrarySpreadDateView
+=== RUN   TestLibrarySpreadTypedArrayView
+=== PAUSE TestLibrarySpreadTypedArrayView
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== CONT  TestClassFeaturesThrowingAccessorSpread
+=== CONT  TestLibrarySpreadSetView
+=== CONT  TestOptionalWideningSpreadOverwrite
+=== CONT  TestLibrarySpreadTypedArrayView
+=== CONT  TestLibrarySpreadDateView
+--- PASS: TestLibrarySpreadTypedArrayView (0.33s)
+=== CONT  TestLibrarySpreadPlainProducers
+--- PASS: TestOptionalWideningSpreadOverwrite (0.34s)
+=== CONT  TestLibrarySpreadMapView
+--- PASS: TestLibrarySpreadSetView (0.44s)
+=== CONT  TestLibrarySpreadErrorView
+--- PASS: TestLibrarySpreadDateView (0.43s)
+=== CONT  TestLibrarySpreadRegExpUnion
+--- PASS: TestLibrarySpreadMapView (0.25s)
+--- PASS: TestLibrarySpreadPlainProducers (0.26s)
+--- PASS: TestLibrarySpreadRegExpUnion (0.20s)
+--- PASS: TestLibrarySpreadErrorView (0.25s)
+--- PASS: TestClassFeaturesThrowingAccessorSpread (0.89s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.939s
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestRegexProgramsKeepCheckedFieldReads
+=== PAUSE TestRegexProgramsKeepCheckedFieldReads
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestRegexProgramsKeepCheckedFieldReads
+=== NAME  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 32 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.03s)
+--- PASS: TestRegexProgramsKeepCheckedFieldReads (14.94s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	14.976s
+=== RUN   TestRegexOperationsDoNotPoisonTreeWrites
+=== PAUSE TestRegexOperationsDoNotPoisonTreeWrites
+=== RUN   TestRegexOperandsStillJudgeCycleWrites
+=== PAUSE TestRegexOperandsStillJudgeCycleWrites
+=== CONT  TestRegexOperationsDoNotPoisonTreeWrites
+=== CONT  TestRegexOperandsStillJudgeCycleWrites
+--- PASS: TestRegexOperandsStillJudgeCycleWrites (0.00s)
+--- PASS: TestRegexOperationsDoNotPoisonTreeWrites (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.099s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.023s [no tests to run]

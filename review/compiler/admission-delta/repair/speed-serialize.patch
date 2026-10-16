@@ -1,0 +1,11 @@
+--- classify.go
++++ classify.go
+@@ -9,7 +9,7 @@
+ func classifyPrograms(tree, base, head string, programs []entry, workers int, limit time.Duration) {
+ 	jobs := make(chan int)
+ 	var group sync.WaitGroup
+-	for worker := 0; worker < workers; worker++ {
++	for worker := 0; worker < 1; worker++ {
+ 		group.Add(1)
+ 		go func() {
+ 			defer group.Done()

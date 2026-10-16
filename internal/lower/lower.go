@@ -77,6 +77,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkLibrarySpreads(modules); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
@@ -90,6 +93,8 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	librarySpreads []librarySpread
+
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
 
