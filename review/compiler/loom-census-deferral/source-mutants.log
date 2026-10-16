@@ -1,0 +1,5 @@
+no-caller: caught by unused generic instantiated assertion
+plain-map: caught by speculative depth/continuation assertion
+missing inventory: caught by original census-check.py
+premature: caught by original census-check.py deferred status assertion
+PASS: all four independent census mutants caught by assertions

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/instantiation-proof/census-check.py", line 13, in <module>
+    assert by_name[name]['status'] == 'deferred_generic_instantiation', by_name[name]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'measurement': 'measured on a checker-rejected program', 'where': '/tmp/instantiation-adapted/src/compiler/core.ts:1083:1', 'kind': 'KindFunctionDeclaration', 'body_start': 38479, 'body_end': 38562, 'status': 'attempted', 'checker_diagnostics': [], 'name': 'firstOrUndefined', 'top': '/tmp/instantiation-adapted/src/compiler/core.ts:1083:1'}

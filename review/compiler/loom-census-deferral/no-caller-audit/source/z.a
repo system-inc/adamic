@@ -1,0 +1,2 @@
+import { called, outer } from "./a.a";
+export function caller(): number { return called(7) + outer(8); }

@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "latent"))
+from unit_status import deferred_summary
 """Recount unique sites, depth tables, source coverage, and independent AST depth."""
 from collections import Counter, defaultdict
 import gzip
@@ -90,7 +93,15 @@ for row in rows[1:]:
 missing = [{"file":str(p.relative_to(root)),"bytes":p.stat().st_size,"reason":"per-file measurement incomplete; see stream inventory" if p.suffix in (".ts", ".a") else "non-TypeScript input; no lowering sites"}
            for p in sorted(root.rglob('*')) if p.is_file() and str(p.relative_to(root)) not in {f['file'] for f in files}]
 total_bytes = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
-examined_bytes = sum(f['source_bytes'] for f in files)
+deferred = deferred_summary([u for row in rows[1:] for u in row['units']])
+def deferred_bytes(units):
+    end = total = 0
+    for left, right in sorted((u.get('body_start', 0), u.get('body_end', 0)) for u in units if u['status'] == 'deferred_generic_instantiation'):
+        total += max(0, right - max(end, left))
+        end = max(end, right)
+    return total
+unexamined_generic_bytes = sum(deferred_bytes(row['units']) for row in rows[1:])
+examined_bytes = sum(f['source_bytes'] for f in files) - unexamined_generic_bytes
 typescript_bytes = sum(p.stat().st_size for p in root.rglob('*') if p.is_file() and p.suffix in ('.ts','.a'))
 ranking = sorted(reasons, key=lambda key: (-sum(reasons[key].values()),key))[:20]
 result = dict(base=rows[0].get('compiler_base', 'historical census base a5630a90'),
@@ -101,9 +112,10 @@ result = dict(base=rows[0].get('compiler_base', 'historical census base a5630a90
               counts={kind:[counts[kind][d] for d in range(5)] for kind in counts},
               top20=[dict(kind=kind,root_kind=reason,counts=[reasons[(kind,reason)][d] for d in range(5)]) for kind,reason in ranking],
               source_bytes=total_bytes,examined_bytes=examined_bytes,
+              **deferred,
               examined_share=examined_bytes/total_bytes,
               typescript_source_bytes=typescript_bytes,typescript_examined_share=examined_bytes/typescript_bytes,
-              coverage_definition='Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.',
+              coverage_definition='Every TypeScript AST child visited; value/statement/signature/binding positions attempted. Deferred generic body bytes are excluded from examined bytes despite AST traversal. This is speculative examination, not successful production lowering.',
               independent_depth_matches=depth_matches,independent_depth_unmatched=depth_unmatched,
               independent_depth_without_source=depth_without_source,
               files=files,unexamined=missing)
@@ -126,6 +138,7 @@ for kind,reason in ranking:
     text += f'| {kind} | {html.escape(reason, quote=False).replace(chr(124), "&#124;").replace(chr(10), "<br>")} | '+ ' | '.join(f'{v:,}' for v in values+[sum(values)])+' |\n'
 text += f'\nExamined **{examined_bytes:,} / {typescript_bytes:,} TypeScript source bytes ({100*examined_bytes/typescript_bytes:.6f}%)**, in {len(files)} files. '
 text += f'Including non-TypeScript inputs, that is **{examined_bytes:,} / {total_bytes:,} bytes ({100*examined_bytes/total_bytes:.6f}%)**. '
+text += f'Deferred generic body bytes: {unexamined_generic_bytes:,}, neither examined nor blocked. Never reached (unexamined coverage gaps): {deferred["never_reached"]}. '
 text += 'Every AST child in every completed TypeScript file was visited, including checker-rejected bodies. '
 text += 'Comments and whitespace are included in those parsed source bytes. Structural and type syntax is examined by traversal and the refusal scanner; it is not passed to a value lowerer.\n\n'
 text += 'Unexamined inputs:\n\n'

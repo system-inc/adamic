@@ -71,6 +71,7 @@ type LatentUnit struct {
 	Kind               string   `json:"kind"`
 	BodyStart          int      `json:"body_start,omitempty"`
 	BodyEnd            int      `json:"body_end,omitempty"`
+	Instantiated       bool     `json:"instantiated"`
 	Status             string   `json:"status"`
 	CheckerDiagnostics []string `json:"checker_diagnostics"`
 	Name               string   `json:"name,omitempty"`
@@ -209,7 +210,27 @@ func (l *lowering) latentRegister(files []*ast.SourceFile) {
 
 // Latent attempts each eligible top-level unit independently. A returned error never
 // stops the next unit. No function with a checker diagnostic in its body is lowered.
+// Buffer records until all callers have run, including callers in later files.
+var latentInstantiated map[string]bool
+var latentConcreteCallDepth int
+
 func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+    latentInstantiated = map[string]bool{}
+    latentConcreteCallDepth = 0
+    records := []LatentFile{}
+    latentRun(ctx, program, func(record LatentFile) { records = append(records, record) })
+    for _, record := range records {
+        for index := range record.Units {
+            unit := &record.Units[index]
+            if unit.Status == "deferred_generic_instantiation" {
+                unit.Instantiated = latentInstantiated[unit.Where]
+            }
+        }
+        emit(record)
+    }
+}
+
+func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 	if latentSpeculativeEnabled() {
 		latentSpeculative(ctx, program, emit)
 		return
@@ -237,6 +258,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 		for _, node := range file.Statements.Nodes {
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}}
+			if node.Name() != nil { unit.Name = node.Name().Text() }
 			if node.Kind == ast.KindFunctionDeclaration {
 				if body := node.Body(); body != nil {
 					unit.BodyStart, unit.BodyEnd = body.Pos(), body.End()
@@ -244,12 +266,20 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 					if unit.CheckerDiagnostics == nil {
 						unit.CheckerDiagnostics = []string{}
 					}
-					if len(unit.CheckerDiagnostics) > 0 {
+					if len(unit.CheckerDiagnostics) > 0 && len(node.TypeParameters()) == 0 {
 						unit.Status = "skipped_checker_body"
 						record.Units = append(record.Units, unit)
 						continue
 					}
 				}
+			}
+			// Independent units have no call witness for a generic binder. Keep the
+			// declaration in the census, but lower it only through instantiateFunction
+			// when a concrete caller reaches it.
+			if node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0 {
+				unit.Status = "deferred_generic_instantiation"
+				record.Units = append(record.Units, unit)
+				continue
 			}
 			func() {
 				defer func() {
@@ -276,7 +306,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 						l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
 						l.functions[l.symbol(node.Name())] = index
 					}
-					// Attempt generic declarations as written, without invented instantiations.
+					// Nongeneric declarations lower directly; generic bodies are reached at calls.
 					latentRecord(l.lowerFunction(index, node, -1))
 				} else {
 					_, err := l.statement(node)

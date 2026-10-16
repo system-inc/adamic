@@ -3,7 +3,7 @@
 import argparse,collections,functools,hashlib,importlib.util,json
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('manifest',type=Path);p.add_argument('latent',type=Path);p.add_argument('full',type=Path);p.add_argument('stock',type=Path);p.add_argument('hidden_tool',type=Path);p.add_argument('output',type=Path);a=p.parse_args()
-spec=importlib.util.spec_from_file_location('closure_hidden',a.hidden_tool);hidden=importlib.util.module_from_spec(spec);spec.loader.exec_module(hidden)
+spec=importlib.util.spec_from_file_location('closure_hidden',Path(__file__).with_name('hidden.py'));hidden=importlib.util.module_from_spec(spec);spec.loader.exec_module(hidden)
 m=json.loads(a.manifest.read_text());root=Path(m['root']);expected={f['file'] for f in m['files']};stock=hidden.read_json(a.stock)
 def coverage(rows):
  observed=[Path(r['file']).relative_to(root).as_posix() for r in rows[1:]]
@@ -27,7 +27,7 @@ def census(path):
 first=census(a.latent);full=census(a.full);rows=hidden.read_rows(a.full)
 result=hidden.calculate(rows,stock,root)
 def totals(names):
- fields=['bytes','hidden_bytes','blocked_union_bytes','independently_examined_bytes'];d={key:sum(result['files'][name][key] for name in names) for key in fields};d['files']=len(names);d['hidden_share']=d['hidden_bytes']/d['bytes'] if d['bytes'] else 0;return d
+ fields=['bytes','hidden_bytes','blocked_union_bytes','independently_examined_bytes','deferred_body_bytes'];d={key:sum(result['files'][name][key] for name in names) for key in fields};d['files']=len(names);d['hidden_share']=d['hidden_bytes']/d['bytes'] if d['bytes'] else 0;return d
 inside={f for f in expected if f.startswith('src/compiler/')};outside=expected-inside
 result['groups']={'all':totals(expected),'compiler':totals(inside),'outside_compiler':totals(outside)}
 result['provenance']={'compiler_root':str(root),'source_root':str(root),'definition':'Only reached source files, including all outside src/compiler; UTF-8 union of blocked ranges minus independent coverage. Non-imported JSON and other assets excluded.'}

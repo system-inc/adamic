@@ -1,0 +1,51 @@
+=== RUN   TestUnknownMutableContainerFailsLoudly
+=== PAUSE TestUnknownMutableContainerFailsLoudly
+=== RUN   TestUnknownForeignPointerFailsLoudly
+=== PAUSE TestUnknownForeignPointerFailsLoudly
+=== RUN   TestPublishedCopyModeIsPrivate
+    publication_unix_test.go:37: build go_build_./stage3/census/latent/statecopy_statecopy f71d61f77604 miss 2.74
+--- PASS: TestPublishedCopyModeIsPrivate (3.83s)
+=== CONT  TestUnknownMutableContainerFailsLoudly
+=== CONT  TestUnknownForeignPointerFailsLoudly
+    main_test.go:59: build go_build_./stage3/census/latent/statecopy_statecopy f71d61f77604 hit 0.00
+=== NAME  TestUnknownMutableContainerFailsLoudly
+    main_test.go:28: build go_build_./stage3/census/latent/statecopy_statecopy f71d61f77604 hit 0.00
+--- PASS: TestUnknownForeignPointerFailsLoudly (0.01s)
+--- PASS: TestUnknownMutableContainerFailsLoudly (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statecopy	3.874s
+=== RUN   TestMissingStatementFailsWithMethodName
+=== PAUSE TestMissingStatementFailsWithMethodName
+=== CONT  TestMissingStatementFailsWithMethodName
+    main_test.go:25: build go_build_./stage3/census/latent/statementrewrite_statementrewrite fd01e1218638 miss 2.79
+--- PASS: TestMissingStatementFailsWithMethodName (3.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statementrewrite	3.828s
+=== RUN   TestFullOwnerGuardRequiresFunctionDeclaration
+=== PAUSE TestFullOwnerGuardRequiresFunctionDeclaration
+=== RUN   TestRewriteAcceptsTwoOuterRefusalReturns
+=== PAUSE TestRewriteAcceptsTwoOuterRefusalReturns
+=== RUN   TestCompiler41231d51Shape
+=== PAUSE TestCompiler41231d51Shape
+=== RUN   TestMissingFunctionMutantFailsLoudly
+=== PAUSE TestMissingFunctionMutantFailsLoudly
+=== RUN   TestChangedVisitorMutantFailsLoudly
+=== PAUSE TestChangedVisitorMutantFailsLoudly
+=== RUN   TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== PAUSE TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== CONT  TestFullOwnerGuardRequiresFunctionDeclaration
+=== CONT  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== CONT  TestMissingFunctionMutantFailsLoudly
+--- PASS: TestMissingFunctionMutantFailsLoudly (0.00s)
+=== CONT  TestChangedVisitorMutantFailsLoudly
+--- PASS: TestChangedVisitorMutantFailsLoudly (0.00s)
+=== CONT  TestCompiler41231d51Shape
+=== CONT  TestRewriteAcceptsTwoOuterRefusalReturns
+--- PASS: TestFullOwnerGuardRequiresFunctionDeclaration (0.01s)
+--- PASS: TestRewriteAcceptsTwoOuterRefusalReturns (0.00s)
+--- PASS: TestCompiler41231d51Shape (0.01s)
+=== NAME  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+    rewrite_test.go:92: build refusalrewrite_behavior_probe 3c25e8e805a7 miss 3.24
+--- PASS: TestVisitorsCollectContinueAndSkipDiagnosedBodies (3.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	3.297s

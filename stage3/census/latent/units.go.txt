@@ -151,15 +151,29 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 			if node.Name() != nil {
 				unit.Name = node.Name().Text()
 			}
+			// A standalone generic, or a nested unit whose lexical types depend on
+			// one, has no concrete call witness. Registration still makes the generic
+			// available to nongeneric callers in this census.
+			deferred := node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0
+			for ancestor := range candidate.ancestors {
+				deferred = deferred || len(ancestor.TypeParameters()) > 0
+			}
 			if node.Kind == ast.KindFunctionDeclaration && node.Body() != nil {
 				unit.BodyStart, unit.BodyEnd = node.Body().Pos(), node.Body().End()
 				diagnostics := program.LatentOwnDiagnosticsIn(node.Body())
 				if len(diagnostics) > 0 {
 					unit.CheckerDiagnostics = diagnostics
+				}
+				if len(diagnostics) > 0 && !deferred {
 					unit.Status = "split_checker_body"
 					record.Units = append(record.Units, unit)
 					continue
 				}
+			}
+			if deferred {
+				unit.Status = "deferred_generic_instantiation"
+				record.Units = append(record.Units, unit)
+				continue
 			}
 			func() {
 				defer func() {
