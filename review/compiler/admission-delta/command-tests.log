@@ -1,0 +1,46 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestCompilerTimeoutIsError
+=== CONT  TestSampling
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestEmptyCorpus
+=== CONT  TestHeadInputIsolation
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestSampling (0.00s)
+=== CONT  TestNewlyRefusedIsInformational
+--- PASS: TestNewlyRefusedIsInformational (0.05s)
+=== CONT  TestBuildRevisions
+--- PASS: TestEmptyCorpus (0.05s)
+=== CONT  TestManifestMismatch
+--- PASS: TestHeadInputIsolation (0.09s)
+--- PASS: TestCompilerTimeoutIsError (0.10s)
+--- PASS: TestManifestMismatch (0.05s)
+--- PASS: TestNewAdmissionMismatch (0.13s)
+--- PASS: TestBuildRevisions (0.25s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.295s
