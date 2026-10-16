@@ -73,9 +73,23 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	return executeOne(t, environment, name, arguments...)
 }
 
+// bounded prepares a child; execute and combinedOutput run it with progress-based guards.
+func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	// The child guard owns hang detection, including for Go test children.
+	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
+		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
+	}
+	return exec.Command(name, arguments...)
+}
+
+func combinedOutput(command *exec.Cmd) ([]byte, error) {
+	return childguard.CombinedOutput(command, childguard.Options{})
+}
+
 func executeOne(t *testing.T, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
-	command := oracles.Bounded(t, name, arguments...)
+	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
