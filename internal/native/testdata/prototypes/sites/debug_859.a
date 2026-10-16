@@ -1,0 +1,5 @@
+// debug.ts:859: live edge mapper -> DebugTypeMapper.prototype.
+class DebugTypeMapper {}
+const mapper = { kind: 2 };
+Object.setPrototypeOf(mapper, DebugTypeMapper.prototype);
+console.log("linked");

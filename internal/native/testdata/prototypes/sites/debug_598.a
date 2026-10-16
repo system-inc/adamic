@@ -1,0 +1,4 @@
+// debug.ts:598: creation edge nodeArrayProto -> Array.prototype.
+// Isolate the call; the outside Node shape fixture tests its inherited reads.
+Object.create(Array.prototype);
+console.log("created");

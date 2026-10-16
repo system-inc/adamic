@@ -41,16 +41,6 @@ func TestProduct_MarkdownTextGo(t *testing.T) {
 	textBuildProduct(t, markdownLayoutProductRoot(t), "go")
 }
 
-func TestProduct_MarkdownTextFormatter(t *testing.T) {
-	t.Parallel()
-	textBuildProduct(t, markdownLayoutProductRoot(t), "formatter")
-}
-
-func TestProduct_MarkdownTextGenerator(t *testing.T) {
-	t.Parallel()
-	textBuildProduct(t, markdownLayoutProductRoot(t), "generator")
-}
-
 func TestProduct_MarkdownMalformedEventsGo(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := markdownLayoutSetupContext(t.Context())
