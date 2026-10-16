@@ -14,6 +14,8 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 type repositoryJSON struct {
@@ -136,43 +138,7 @@ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPi
 }
 
 func validateCorpusState(state repositoryJSON, cases []textCase, expected corpusPin) (corpusPin, int, error) {
-	if len(state.dirty) > 0 {
-		return corpusPin{}, 0, fmt.Errorf("repository dirty JSON: %s", strings.Join(state.dirty, ", "))
-	}
-	allowed := map[string]bool{}
-	for _, item := range expected.Cases {
-		allowed[item.Path] = true
-	}
-	seen, tracked := map[string]bool{}, map[string]bool{}
-	var pinned []textCase
-	for _, item := range cases {
-		if seen[item.Name] {
-			return corpusPin{}, len(tracked), fmt.Errorf("duplicate corpus path: %s", item.Name)
-		}
-		seen[item.Name] = true
-		if state.paths[item.Name] {
-			tracked[item.Name] = true
-			continue
-		}
-		group := caseGroup(item.Name)
-		if group == "cohere" || group == "TypeScript" || allowed[item.Name] {
-			pinned = append(pinned, item)
-			continue
-		}
-		return corpusPin{}, len(tracked), fmt.Errorf("unexpected untracked JSON: %s", item.Name)
-	}
-	var missing []string
-	for path := range state.paths {
-		if !tracked[path] {
-			missing = append(missing, path)
-		}
-	}
-	if len(missing) > 0 {
-		sort.Strings(missing)
-		return corpusPin{}, len(tracked), fmt.Errorf("repository missing tracked JSON from walk: %s", strings.Join(missing, ", "))
-	}
-	pin := pinForCases(pinned)
-	return pin, len(tracked), corpusPinError(expected, pin)
+	return oracles.ValidateCorpusState(state.paths, state.dirty, oracleCases(cases), expected)
 }
 
 type repositoryFixture struct {
