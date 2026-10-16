@@ -214,7 +214,11 @@ func compilerAgreementCheckerSanitized(t *testing.T, slug string) {
 
 func TestProduct_CompilerAgreementLowered(t *testing.T) {
 	t.Parallel()
-	compilerAgreementMeasureProduct(t, compilerAgreementLowered)
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
+		directory := compilerAgreementLowered(t)
+		requireLintArtifacts(t, directory, "lint.c", "lint.mjs")
+		return directory
+	})
 }
 
 func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {

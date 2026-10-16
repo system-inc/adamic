@@ -275,17 +275,8 @@ func TestProduct_CompilerAgreementCombinedOutputMutant(t *testing.T) {
 	t.Parallel()
 	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
 		binary := compilerAgreementCombinedOutputNative(t)
-		for _, path := range []string{binary, filepath.Join(filepath.Dir(binary), "lint.c")} {
-			info, err := os.Stat(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if !info.Mode().IsRegular() || info.Size() == 0 {
-				t.Fatalf("product artifact %s is not a non-empty regular file", path)
-			}
-		}
-		// No smoke run here: a product settles in a traced process, and LeakSanitizer refuses to run under ptrace. The
-		// output witness tests run this binary outside the tracer.
+		requireLintArtifacts(t, filepath.Dir(binary), "lint.c")
+		requireLintExecutable(t, binary)
 		return binary
 	})
 }
