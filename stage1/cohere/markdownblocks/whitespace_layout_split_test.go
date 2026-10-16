@@ -26,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const testMarkdownWhitespaceLayoutShards = 24
@@ -283,56 +284,8 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	if target == "lowered" {
 		return products
 	}
-	// GoBuild is not on this base. Cache the unchanged Go overlay build commands as products.
-	dir := filepath.Join(artifactDirectory, "whitespace-products")
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
-	}
-	cohere := filepath.Join(root, "cohere")
-	for _, mode := range []struct{ name, driver, command string }{
-		{"lists", "list_go.go", "adamic_markdown_lists"},
-		{"layout", "document_go.go", "adamic_markdown_doclayout"},
-	} {
-		if target != "" && target != mode.name {
-			continue
-		}
-		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		mainPath := filepath.Join(cohere, "cmd", mode.command, "main.go")
-		replace := map[string]string{mainPath: driver}
-		if mode.name == "lists" {
-			bridge, err := filepath.Abs("testdata/list_bridge.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		overlayPath := filepath.Join(dir, mode.name+".json")
-		write(t, overlayPath, overlay)
-		goInputs := whitespaceLayoutSetupInputs(t)
-		goInputs.Name = "markdown-whitespace-layout-go-" + mode.name
-		goInputs.Flags = append(goInputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay="+mode.driver, "CGO_ENABLED="+os.Getenv("CGO_ENABLED"), "GOFLAGS="+os.Getenv("GOFLAGS"))
-		product := buildcache.Product(t, goInputs, func(product string) error {
-			command := whitespaceLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)...)
-			command.Dir = cohere
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
-			}
-			return nil
-		})
-		binary := filepath.Join(product, "oracle")
-		if mode.name == "lists" {
-			products.goBinary = binary
-		} else {
-			products.goLayout = binary
-		}
-	}
+	goProducts := oracles.WhitespaceLayoutGoProducts(t, ctx, root, target)
+	products.goBinary, products.goLayout = goProducts.List, goProducts.Document
 	return products
 }
 
