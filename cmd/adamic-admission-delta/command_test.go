@@ -33,6 +33,30 @@ func TestCommandHelper(t *testing.T) {
 	os.Exit(0)
 }
 
+// Publish only a closed executable, so parallel forks cannot see its write in progress.
+func writeExecutable(t *testing.T, path, script string) {
+	t.Helper()
+	file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(file.Name())
+	if _, err := file.WriteString(script); err != nil {
+		file.Close()
+		t.Fatal(err)
+	}
+	if err := file.Chmod(0700); err != nil {
+		file.Close()
+		t.Fatal(err)
+	}
+	if err := file.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Rename(file.Name(), path); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func commandFixture(t *testing.T) (string, string, string, string) {
 	t.Helper()
 	dir := t.TempDir()
@@ -68,8 +92,8 @@ func commandFixture(t *testing.T) (string, string, string, string) {
 		t.Fatal(err)
 	}
 	write("manifest.json", string(data))
-	write("base", "#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n")
-	write("head", "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) cp \"$0\" \"$4\"; printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4\";;\nesac\n")
+	writeExecutable(t, filepath.Join(dir, "base"), "#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n")
+	writeExecutable(t, filepath.Join(dir, "head"), "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
 	return dir, sha, filepath.Join(dir, "base"), filepath.Join(dir, "head")
 }
 func invokeCommand(t *testing.T, dir string, args ...string) observation {
@@ -149,12 +173,10 @@ case "$line" in *changed*) echo "panic: dirty source" >&2; exit 1;; esac
 case "$1" in
 admission-lower) exit 0;;
 js) printf "console.log('42');\n";;
-build) printf '#!/bin/sh\nprintf "42\\n"\n' > "$4"; chmod +x "$4";;
+build) printf '#!/bin/sh\nprintf "42\\n"\n' > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
 esac
 `
-	if err := os.WriteFile(head, []byte(script), 0755); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, head, script)
 	o = invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", head, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
 	if o.Exit != 0 {
 		t.Fatal("working-tree edits changed inputs", o.Stderr, o.Stdout)

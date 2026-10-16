@@ -1,0 +1,9 @@
+=== RUN   TestProduct_AdmissionCompilerReady
+=== PAUSE TestProduct_AdmissionCompilerReady
+=== CONT  TestProduct_AdmissionCompilerReady
+    command_test.go:323: the admission compiler is cmd/adamic-admission-delta TestProduct_AdmissionCompiler's to build, and it isn't here: is this test in the tree's product order after it? built by another package's product test
+--- FAIL: TestProduct_AdmissionCompilerReady (1.10s)
+FAIL
+
+traced: 0 settled, 0 refused; journal and report in /workspace/scratch/admission-busy-products/traces/20261016T223727Z-2075756342
+exit status 1

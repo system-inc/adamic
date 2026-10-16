@@ -35,15 +35,31 @@ func TestParallelLoweringOnly(t *testing.T) {
 	compiler := filepath.Join(dir, "compiler")
 	// Both inputs must start before either finishes. A serial worker times out.
 	script := "#!/bin/sh\n[ \"$1\" = admission-lower ] || { echo 'panic: C emission reached' >&2; exit 1; }\n: > \"$2.started\"\nwhile [ ! -f one.started ] || [ ! -f two.started ]; do :; done\n"
-	if err := os.WriteFile(compiler, []byte(script), 0700); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, compiler, script)
 	programs := []entry{{program: program{Path: "one"}}, {program: program{Path: "two"}}}
 	classifyPrograms(dir, compiler, compiler, programs, 2, time.Second)
 	for _, p := range programs {
 		if p.Class != "accepted-by-both" || p.Base.WallSeconds <= 0 {
 			t.Fatalf("parallel lowering failed: %+v", p)
 		}
+	}
+}
+
+func TestExecutableReplacement(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	path := filepath.Join(dir, "compiler")
+	writeExecutable(t, path, "#!/bin/sh\necho before\n")
+	// A sibling fork can retain a writer to the previous executable after our close.
+	writer, err := os.OpenFile(path, os.O_WRONLY, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer writer.Close()
+	writeExecutable(t, path, "#!/bin/sh\necho after\n")
+	o := execute(dir, time.Second, path)
+	if o.Exit != 0 || o.Error != "" || o.Stdout != "after\n" {
+		t.Fatalf("replacement executable is not ready: %+v", o)
 	}
 }
 

@@ -1,0 +1,8 @@
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== CONT  TestParallelLoweringOnly
+    speed_test.go:43: parallel lowering failed: {program:{Path:one Blob:} Corpus: Class:compiler-timeout Base:{WallSeconds:1.001684444 Exit:-1 Stdout: Stderr: Error:timeout} Head:{WallSeconds:1.001684444 Exit:-1 Stdout: Stderr: Error:timeout} Node:<nil> JavaScript:<nil> Native:<nil> JavaScriptCompile:<nil> NativeCompile:<nil> Agree:<nil> NegativeRelated:false NegativeWitness:false Sampled:false}
+--- FAIL: TestParallelLoweringOnly (1.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	1.015s
+FAIL
