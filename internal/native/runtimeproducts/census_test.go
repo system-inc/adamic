@@ -849,9 +849,8 @@ const archiveProbe = "ADAMIC_RUNTIMEPRODUCTS_ARCHIVE_PROBE"
 // it (Node's and Tests' condition on b899f0c51c). Each build runs in a process of its own, this binary run again, since
 // native opens the jobserver once a process. Mutants: a compile's flags naming whether a jobserver is open; the archive
 // listing its objects as they finished.
-// Not parallel: it builds the release archive three times, each in a process of its own, and their clang compiles would
-// contend with every parallel test's.
 func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
+	t.Parallel()
 	if directory := os.Getenv(archiveProbe); directory != "" {
 		request, err := native.RuntimeRequestFor(native.Options{})
 		if err != nil {
@@ -862,7 +861,6 @@ func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 		}
 		return
 	}
-	t.Parallel()
 	var first map[string][]byte
 	for _, tokens := range []int{0, 1, 8} {
 		directory := t.TempDir()
