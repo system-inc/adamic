@@ -58,6 +58,8 @@ def attribute(report, rows, stock):
                 label = family(kind, reason)
             causes[file].append((end-start, start, end, label))
         for unit in row['units']:
+            if unit['status'] == 'deferred_generic_instantiation':
+                continue  # Deferred body bytes have their own bucket.
             if unit['status'] in ('split_checker_body', 'skipped_checker_body'):
                 file = name(unit['where'])
                 start, end = unit['body_start'], unit['body_end']

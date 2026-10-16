@@ -17,6 +17,8 @@ import sys
 root, runs, output, binary = (Path(p).resolve() for p in sys.argv[1:5])
 scopes = ('_namespaces', 'factory', 'transformers/declarations', 'transformers/module')
 scripts = Path(__file__).resolve().parent
+sys.path.insert(0, str(scripts.parent / 'latent'))
+from unit_status import deferred_summary, audit_deferred
 output.mkdir(parents=True, exist_ok=True)
 
 
@@ -32,6 +34,7 @@ def run(command, log, **flags):
 projects = []
 unique = {}
 files = []
+all_units = []
 for scope in scopes:
     source = root / scope
     folder = runs / scope
@@ -39,6 +42,7 @@ for scope in scopes:
     raw = folder / 'speculative.jsonl'
     assert raw.exists(), scope
     rows = [json.loads(line) for line in raw.read_text().splitlines()]
+    all_units.extend(u for row in rows[1:] for u in row['units'])
     expected = {str(p) for p in source.rglob('*') if p.is_file() and p.suffix in ('.ts', '.a')}
     assert {row['file'] for row in rows[1:]} == expected, (scope, 'unfinished run')
     stock = folder / 'stock.json'
@@ -91,8 +95,9 @@ covered = {row['file'] for row in files}
 all_files = {str(p.relative_to(root)): p for p in root.rglob('*') if p.is_file()}
 source_bytes = sum(p.stat().st_size for p in all_files.values())
 typescript_bytes = sum(p.stat().st_size for p in all_files.values() if p.suffix in ('.ts', '.a'))
-examined = sum(all_files[name].stat().st_size for name in covered)
-result = dict(status='partial; four separately loaded directory census projects, not a whole-compiler run',
+deferred = deferred_summary(all_units)
+examined = sum(all_files[name].stat().st_size for name in covered) - deferred['deferred_body_bytes']
+result = dict(**deferred, status='partial; four separately loaded directory census projects, not a whole-compiler run',
               base='a5630a90d05abe85670ba1e00bff3643a2742e53',
               mapper_fix='69501280a81259fb512edbb8dd0e52c6eb0d88c8',
               upstream='050880ce59e30b356b686bd3144efe24f875ebc8',
@@ -124,7 +129,8 @@ def verify(artifact):
     assert [(row['kind'], row['root_kind']) for row in artifact['top20']] == expected_ranking
     for row in artifact['top20']:
         assert row['counts'] == [sum(f['kind'] == row['kind'] and f['reason'] == row['root_kind'] and min(4, f['depth']) == d for f in unique.values()) for d in range(5)]
-    assert artifact['examined_bytes'] == sum(all_files[row['file']].stat().st_size for row in artifact['files'])
+    audit_deferred(artifact, all_units)
+    assert artifact['examined_bytes'] == sum(all_files[row['file']].stat().st_size for row in artifact['files']) - deferred['deferred_body_bytes']
     assert artifact['source_bytes'] == sum(p.stat().st_size for p in all_files.values())
     assert artifact['examined_share'] == artifact['examined_bytes']/artifact['source_bytes']
     assert artifact['typescript_examined_share'] == artifact['examined_bytes']/typescript_bytes
@@ -171,6 +177,7 @@ for project in projects:
 text += f'\nExamined **{examined:,} / {typescript_bytes:,} TypeScript bytes ({100*examined/typescript_bytes:.6f}%)**, in **{len(files)} / 79 files**. Including non-TypeScript files: **{examined:,} / {source_bytes:,} bytes ({100*examined/source_bytes:.6f}%)**. All covered AST children were visited. Comments and whitespace are included in parsed source bytes; type and structural nodes are traversed rather than passed to a value lowerer. This is speculative examination, not successful production lowering.\n'
 text += '\nThese are four independent directory-root projects on the original adapted bytes. Imports remain available to the checker, but registration and the census walk use each directory\'s roots. Isolated binding context can change observed reasons and depths compared with a whole-compiler project; these counts must not be presented as the final full-corpus totals. Attempts attributed outside a project directory are excluded from its site tables.\n'
 text += '\nThe previous whole-compiler run stopped during checker.ts without emitting its buffered records. Completed progress lines are not depth evidence and are not included. The earlier PARTIAL.json and legacy raw evidence from e46fa73d have unverified depth tags and are superseded only for these measured directory projects.\n'
+text += f"\nDeferred body bytes: {deferred['deferred_body_bytes']}, neither examined nor blocked. Never reached (unexamined coverage gaps): {deferred['never_reached']}.\n"
 text += '\nUnexamined files, including all remaining TypeScript sources:\n\n'
 for row in result['unexamined']:
     text += f'- `{row["file"]}`: {row["bytes"]:,} bytes; {row["reason"]}.\n'
