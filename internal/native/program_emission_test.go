@@ -117,6 +117,12 @@ func programCompilerWitness(t *testing.T, source string, mutant func(string) str
 			t.Fatalf("membership regions: %s, want 2", diagnostic)
 		}
 	}
+	if source == programContainerSource {
+		fields := leakcheck.CountsLine.FindStringSubmatch(string(diagnostic))
+		if len(fields) != 7 || fields[6] != "6" {
+			t.Fatalf("container membership regions: %s, want 6", diagnostic)
+		}
+	}
 	t.Logf("%s", diagnostic)
 	return program
 }
@@ -163,4 +169,21 @@ function mapped():string {const source:Node[]=[{id:1,children:[]},{id:2,children
 func TestProgramCompilerMemberMapperStorage(t *testing.T) {
 	t.Parallel()
 	programCompilerWitness(t, programMapperSource, nil)
+}
+
+// None of these containers has a backlink from its element. Their concrete
+// element, key or value type selects them after the owning SCC is established.
+const programContainerSource = `interface Link {next:Link|undefined;}
+function run():void {
+ const root:Link={next:undefined};root.next=root;
+ const keys=new Map<Link,string>();keys.set(root,'root'+1);
+ const values=new Map<string,Link>();values.set('root',root);
+ const nodes=new Set<Link>();nodes.add(root);
+ const tuple:[Link,number]=[root,1];const list:Link[]=[root];
+ console.log(String(keys.get(root))+String(values.get('root')===root)+String(nodes.has(root))+String(tuple[0]===root)+String(list[0]===root));
+}run();`
+
+func TestProgramCompilerContainerPropagation(t *testing.T) {
+	t.Parallel()
+	programCompilerWitness(t, programContainerSource, nil)
 }

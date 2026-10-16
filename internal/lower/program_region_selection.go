@@ -134,8 +134,60 @@ func (f *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNode]boo
 		queue = append(queue, links...)
 	}
 	selected := ProgramRegionSCC(edges, owning)
-
+	// Compiler's container rule is applied after SCC selection, to concrete
+	// allocation-site types after monomorphization. Views cannot admit a container
+	// whose elements/keys/values are outside the selected component.
+	for node := range selected {
+		if node.proven != nil && f.programContainer(node.proven) {
+			delete(selected, node)
+		}
+	}
+	for node := range edges {
+		if node.proven != nil && f.programContainerMember(node.proven, selected) {
+			selected[node] = true
+		}
+	}
 	return selected
+}
+
+func (f *cycleFinder) programContainer(proven *checker.Type) bool {
+	return f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+}
+
+// Container chains and unions can connect to a selected graph without being an
+// SCC themselves. An unknown generic argument supplies no positive evidence, but
+// a concrete selected Map key does (Node keys are held strongly).
+func (f *cycleFinder) programContainerMember(proven *checker.Type, selected map[cycleNode]bool) bool {
+	if !f.programContainer(proven) {
+		return false
+	}
+	active := map[*checker.Type]bool{}
+	var member func(*checker.Type) bool
+	member = func(value *checker.Type) bool {
+		if active[value] {
+			return false
+		}
+		active[value] = true
+		defer delete(active, value)
+		if value.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+			for _, part := range value.Types() {
+				if member(part) {
+					return true
+				}
+			}
+			return false
+		}
+		if f.programContainer(value) {
+			for _, argument := range f.graphArguments(value) {
+				if member(argument) {
+					return true
+				}
+			}
+			return false
+		}
+		return !f.template(value) && !f.weak(value) && selected[cycleNode{proven: value}]
+	}
+	return member(proven)
 }
 
 // sameProgramLinks prevents an acyclic structural view from bridging unrelated

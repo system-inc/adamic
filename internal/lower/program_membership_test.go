@@ -113,7 +113,7 @@ console.log('end');`
 	}
 }
 
-// Containers with no back edge stay counted even when their contents are members.
+// Containers follow the ruled element/key/value membership at concrete allocation sites.
 func TestProgramRegionAllocationSiteContainers(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "main.a")
@@ -166,7 +166,7 @@ function run():void {
 			return true
 		})
 	}
-	if memberMaps != 0 || countedMaps != 3 || memberSets != 0 || genericArrays != 1 || memberTuples != 0 {
+	if memberMaps != 2 || countedMaps != 1 || memberSets != 1 || genericArrays != 1 || memberTuples != 1 {
 		t.Fatalf("containers after monomorphization: member Maps=%d counted Maps=%d member Sets=%d generic Node arrays=%d member tuples=%d", memberMaps, countedMaps, memberSets, genericArrays, memberTuples)
 	}
 }
