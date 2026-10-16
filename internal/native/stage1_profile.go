@@ -130,7 +130,7 @@ func profileMatches(record, current Stage1ProfileManifest) bool {
 		record.CompilerSHA256 == current.CompilerSHA256 && slices.Equal(record.LinkFlags, current.LinkFlags) &&
 		slices.Equal(record.TrainingFlags, current.TrainingFlags) && slices.Equal(record.TrainingLinkFlags, current.TrainingLinkFlags) &&
 		record.Runtime == current.Runtime &&
-		record.Profile == current.Profile && record.Compiler == current.Compiler && record.Target == current.Target &&
+		record.Profile == current.Profile && profileCompilerIdentity(record.Compiler) == profileCompilerIdentity(current.Compiler) && record.Target == current.Target &&
 		slices.Equal(record.Flags, current.Flags)
 }
 
@@ -289,3 +289,15 @@ func ReadStage1Profile(path string) ([]byte, error) {
 
 // Stage1ProfileDataTool resolves the profile converter beside the selected clang.
 func Stage1ProfileDataTool() (string, error) { return profileDataTool() }
+
+// InstalledDir is provenance, not compiler identity. The executable hash, version,
+// target and thread model still have to agree across tool installations.
+func profileCompilerIdentity(version string) string {
+	var identity []string
+	for _, line := range strings.Split(version, "\n") {
+		if !strings.HasPrefix(line, "InstalledDir:") {
+			identity = append(identity, line)
+		}
+	}
+	return strings.Join(identity, "\n")
+}
