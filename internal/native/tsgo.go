@@ -127,8 +127,8 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments = append(arguments, units...)
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
 	command := toolchain.CommandIn(directory, "clang", arguments...)
-	combined, err := command.CombinedOutput()
-	if err != nil {
+	var combined []byte
+	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
 	return nil

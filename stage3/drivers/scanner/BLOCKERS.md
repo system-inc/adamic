@@ -1,3 +1,42 @@
+## Main 87ad5a4f, October 14
+
+Follow-up: the literal one-command rerun now prepares its own gate inputs and
+reaches the identical seven stops from a cold stage3 cache, without PYTHONPATH
+or manual preparation. Exit 1 is scanner-blocked after 166.323s on the same main.
+[Regression failure, fixed-run summary and diagnostics](evidence/main-2026-10-14/rerun-2/REPORT.md).
+
+Native scanner remains blocked: both split modes refuse MapLike at
+`corePublic.ts:9:5`. Node still emits 509,014 skipped-trivia tokens and
+860,418 retained-trivia tokens (1,369,432 total), with 466 errors across 81 files.
+Both full-tree Node comparisons exit 0; both token-end mutants exit 1.
+No native scanner comparison, native-output mutant or runtime timing is available.
+
+Ordered stops from the unchanged runner, in discovery order:
+
+1. `corePublic.ts:9:5` (October 8 #1 (MapLike index signature)): Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+2. `debug.ts:14:14` (October 8 #3 (Debug unchecked Error cast)): Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+3. `diagnosticInformationMap.generated.ts:13:34` (October 8 #4 (diagnostic factory unchecked cast)): Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+4. `utilities.ts:65:22` (October 8 #5 (Uint16Array element type)): stage 0 can't lower typed array element type Uint16Array yet
+5. `scanner.ts:3510:67` (October 8 #7 (UTF16 worker unchecked String cast)): Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+6. `core.ts:107:20` (October 8 #8 (new Array(length) with holes)): stage 0 can't lower new an Identifier yet
+7. `scanner.ts:778:15` (new): stage 0 can't lower destructuring a string yet
+
+Only stop 1 is on the unchanged scanner. Stops 2 through 7 are behind
+discovery placeholders. Stops 1 through 6 have freshly rerun Node-success
+and matching build-failure witnesses; stop 7, `{ length } = scanIdentifierParts()`,
+halts the walk because the catalogue supplies no freshly verified witness.
+This seven-stop walk is not an exhaustive census. Unreached October 8 stops
+are not claimed retired.
+
+The literal first rerun on d072c133 failed at apply because its copied pipeline
+could not import caches. A helper-path retry then required pinned gate inputs.
+Preparing those scratch prerequisites allowed the measured run on fetched main
+`87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4`; no extra refs were merged. nproc=5.
+Compiler build passed in 4.431s; runner setup passed in 59.532s; total 128.141s.
+No phase exceeded 30 minutes. The initial fetch took 1174.462s and was watched.
+
+[Summary, all phase timings, prerequisite failures and raw diagnostics](evidence/main-2026-10-14/REPORT.md).
+
 ## October 8: scanner-owned any sites removed
 
 Permanent adaptation 42 types the private diagnostic payload as string | number

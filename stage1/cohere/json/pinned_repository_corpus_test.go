@@ -1,12 +1,10 @@
 package json
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -29,8 +27,8 @@ import (
 const repositoryCorpusCommit = "2b4dbde172c1c2f23c065ecae8b906f8fcb72a20"
 
 // SHA256 of sorted name<TAB>SHA256(bytes)<LF>, including upstream inputs and
-// generated controls. This is the original 3,900-case working-tree identity.
-const repositoryCorpusIdentity = "09cd6c1c6a0fb423c2bf9cc1a56f5670218eca4088f0ba7a49ac26b58652cae6"
+// generated controls: 3,919 cases at cohere 0183ccf8, where 7945d102 had 3,900.
+const repositoryCorpusIdentity = "0ebc69862856a18e2af48e2a27ebfba868f642da3b4e48c218b99bd0a09236bf"
 
 // The corpus files corpus.pin names under stage3/api/node_modules: npm ci --prefix stage3/api installs them from
 // stage3/api's lockfile, so no archive of tracked files carries them.
@@ -263,113 +261,22 @@ func provisionedCorpusFiles(root string) ([]textCase, error) {
 }
 
 // repositoryCasesAtPin reads the pin's JSON from the checkout's own objects, on the corpus product's builder, through
-// buildcache.PinnedGit: as key-time work, since inputs names the pin, so a traced build never reads .git (#jwn3n9q).
-// PinnedGit also runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript
-// corpusfiles selector returns live paths, not pinned bytes.
+// buildcache.PinnedFiles: as key-time work, since inputs names the pin, so a traced build never reads .git (#jwn3n9q).
+// It runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript corpusfiles selector
+// returns live paths, not pinned bytes.
 func repositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]textCase, error) {
-	if len(pin) != 40 || strings.Trim(pin, "0123456789abcdef") != "" {
-		return nil, fmt.Errorf("repository JSON: invalid commit pin %q", pin)
-	}
-	if _, err := buildcache.PinnedGit(root, inputs, pin, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)", pin, root, pin, err)
-	}
-	tree, err := buildcache.PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
+	files, err := buildcache.PinnedFiles(root, inputs, pin, "JSON", func(name string) bool { return strings.HasSuffix(name, ".json") })
 	if err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	var names []string
-	blobs := map[string]string{}
-	for _, entry := range strings.Split(string(tree), "\x00") {
-		// <mode> <type> <object>TAB<path>
-		header, name, found := strings.Cut(entry, "\t")
-		fields := strings.Fields(header)
-		if found && len(fields) == 3 && fields[1] == "blob" && strings.HasSuffix(name, ".json") {
-			names = append(names, name)
-			blobs[name] = fields[2]
-		}
-	}
-	if len(names) == 0 {
-		return nil, fmt.Errorf("repository JSON pin %s has no JSON files", pin)
-	}
-	sort.Strings(names)
-	if err := pinnedBlobsPresent(root, inputs, pin, names, blobs); err != nil {
 		return nil, err
 	}
-	var requests strings.Builder
-	for _, name := range names {
-		if strings.ContainsAny(name, "\r\n") {
-			return nil, fmt.Errorf("repository JSON pin %s: unsupported newline in path %q", pin, name)
+	cases := make([]textCase, 0, len(files))
+	for _, file := range files {
+		if !utf8.Valid(file.Data) {
+			return nil, fmt.Errorf("non-UTF-8 corpus file %s at pin %s", file.Path, pin)
 		}
-		fmt.Fprintf(&requests, "%s:%s\n", pin, name)
-	}
-	batch, err := buildcache.PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
-	if err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	reader := bufio.NewReader(bytes.NewReader(batch))
-	cases := make([]textCase, 0, len(names))
-	for _, name := range names {
-		header, err := reader.ReadString('\n')
-		if err != nil {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: %w", pin, name, err)
-		}
-		fields := strings.Fields(header)
-		if len(fields) != 3 || fields[1] != "blob" {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: invalid blob header %q", pin, name, header)
-		}
-		size, err := strconv.Atoi(fields[2])
-		if err != nil || size < 0 {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: invalid blob size %q", pin, name, fields[2])
-		}
-		data := make([]byte, size)
-		if _, err := io.ReadFull(reader, data); err != nil {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: %w", pin, name, err)
-		}
-		newline, err := reader.ReadByte()
-		if err != nil || newline != '\n' {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: missing blob terminator", pin, name)
-		}
-		if !utf8.Valid(data) {
-			return nil, fmt.Errorf("non-UTF-8 corpus file %s at pin %s", name, pin)
-		}
-		cases = append(cases, textCase{Name: name, Text: string(data)})
-	}
-	if _, err := reader.ReadByte(); err != io.EOF {
-		return nil, fmt.Errorf("repository JSON pin %s: trailing batch output", pin)
+		cases = append(cases, textCase{Name: file.Path, Text: string(file.Data)})
 	}
 	return cases, nil
-}
-
-// Loom's pool units are blobless clones (--filter=blob:none): the pin's commit and trees are there, but only the
-// blobs a checkout wrote. cat-file would try to fetch each missing one on its own, which PinnedGit refuses; this
-// names every JSON file whose blob is missing first, so the failure says which inputs the checkout lacks.
-func pinnedBlobsPresent(root string, inputs buildcache.Inputs, pin string, names []string, blobs map[string]string) error {
-	// --no-walk: the pin's own tree, not every object reachable through its history. --missing=print lists an absent
-	// object rather than fetching it.
-	objects, err := buildcache.PinnedGit(root, inputs, pin, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
-	if err != nil {
-		return fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	absent := map[string]bool{}
-	for _, line := range strings.Split(string(objects), "\n") {
-		if object, found := strings.CutPrefix(line, "?"); found {
-			absent[object] = true
-		}
-	}
-	var missing []string
-	for _, name := range names {
-		if absent[blobs[name]] {
-			missing = append(missing, name)
-		}
-	}
-	if len(missing) == 0 {
-		return nil
-	}
-	named := strings.Join(missing, ", ")
-	if len(missing) > 5 {
-		named = strings.Join(missing[:5], ", ") + fmt.Sprintf(" and %d more", len(missing)-5)
-	}
-	return fmt.Errorf("repository JSON pin %s: environment: %d of its %d JSON files have no blob in the checkout at %s, and the corpus never fetches: %s", pin, len(missing), len(names), root, named)
 }
 
 // pinnedCorpusFiles is every non-generated input: the pin's repository JSON and the provisioned files from the
@@ -422,10 +329,10 @@ func repositoryCorpusIdentityError(pin string, cases []textCase, count int, iden
 func TestPinnedRepositoryCorpusIdentity(t *testing.T) {
 	t.Parallel()
 	cases := corpusCases(t)
-	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3900, repositoryCorpusIdentity); err != nil {
+	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3919, repositoryCorpusIdentity); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("3900 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
+	t.Logf("3919 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
 }
 
 // fixtureCasesAtPin is repositoryCasesAtPin on a fixture repository, under a key that names the fixture's pin, as the

@@ -48,6 +48,11 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"sizing window past the queue's", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 201}}, "restack": {"on": false}}`, "window from 1 to 200"},
 		{"sizing window fraction", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 2.5}}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
 		{"first not a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": "chg_2tps70xcxmasvvbzer45mfhtd4"}`, "cannot unmarshal string"},
+		{"depth one", `{"blocks": {"on": true, "budget": 2, "depth": 1}, "restack": {"on": false}}`, "from 2 to 32"},
+		{"depth past the queue's", `{"blocks": {"on": true, "budget": 2, "depth": 33}, "restack": {"on": false}}`, "from 2 to 32"},
+		{"depth null", `{"blocks": {"on": true, "budget": 2, "depth": null}, "restack": {"on": false}}`, "a whole number from 2 to 32"},
+		{"depth fraction", `{"blocks": {"on": true, "budget": 2, "depth": 2.5}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
+		{"depth string", `{"blocks": {"on": true, "budget": 2, "depth": "3"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -60,5 +65,22 @@ func TestRulesRefuseMistakes(t *testing.T) {
 				t.Fatalf("%s was refused with %q, not naming %q", testCase.file, err, testCase.says)
 			}
 		})
+	}
+}
+
+// A depth the lander takes reads here too (Loom 0.8.71, #wpcbqpd): from 2 to 32, and absent as absent.
+func TestRulesTakeADepth(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 2}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Depth == nil || *rules.Blocks.Depth != 2 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 32}, "restack": {"on": false}}`))
+	if err != nil || *rules.Blocks.Depth != 32 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Depth != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }

@@ -16,11 +16,12 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 )
 
 func init() {
 	if runtime.GOOS == "linux" {
-		runtimeOptions = append(runtimeOptions, runtimeOption{"parallel_tsan", native.Options{ThreadSanitize: true}, ""})
+		runtimeproducts.Variants = append(runtimeproducts.Variants, runtimeproducts.Variant{Name: "parallel_tsan", Options: native.Options{ThreadSanitize: true}})
 	}
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
 	if err != nil {
@@ -414,19 +415,19 @@ func TestProduct_ParallelTSanRuntime0(t *testing.T) {
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux TSan fixture runtime")
 	}
-	runtimeProducts(t, "parallel_tsan", 0)
+	runtimeproducts.Build(t, "parallel_tsan", 0)
 }
 func TestProduct_ParallelTSanRuntime1(t *testing.T) {
 	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux TSan fixture runtime")
 	}
-	runtimeProducts(t, "parallel_tsan", 1)
+	runtimeproducts.Build(t, "parallel_tsan", 1)
 }
 func TestProduct_ParallelTSanRuntime2(t *testing.T) {
 	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux TSan fixture runtime")
 	}
-	runtimeProducts(t, "parallel_tsan", 2)
+	runtimeproducts.Build(t, "parallel_tsan", 2)
 }

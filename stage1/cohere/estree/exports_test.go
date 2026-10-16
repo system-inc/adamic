@@ -1,13 +1,12 @@
 package estree
 
 import (
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"path/filepath"
 	"testing"
 )
 
-func decoratedExports() []string {
-	return []string{"@d export class C {}", "@d export default class C {}", "export @d class C {}", "export default @d class C {}", "@a @b() export abstract class C {}", "// first\n@d\nexport default class {}"}
-}
+func decoratedExports() []string { return oracles.DecoratedExports() }
 
 const testDecoratedExportsShards = 32
 

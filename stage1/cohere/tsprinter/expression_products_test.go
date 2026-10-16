@@ -88,7 +88,7 @@ func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, fam
 }
 
 func tsPrinterOutputLabel(label, root, external string, canonical bool) string {
-	for _, pair := range [][2]string{{root, "repo"}, {external, "typescript"}} {
+	for _, pair := range tsPrinterLabelRoots(root, external, canonical) {
 		if pair[0] == "" {
 			continue
 		}
@@ -141,7 +141,7 @@ func tsPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 		}
 		rewritten := make(map[string]string, len(refusals))
 		var replacements []string
-		for _, pair := range [][2]string{{root, "repo"}, {external, "typescript"}} {
+		for _, pair := range tsPrinterLabelRoots(root, external, canonical) {
 			if pair[0] == "" {
 				continue
 			}

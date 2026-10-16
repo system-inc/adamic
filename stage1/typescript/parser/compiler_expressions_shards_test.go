@@ -127,11 +127,18 @@ func compilerExpressionsEnumeration(t *testing.T) ([][]string, string, int) {
 	return shards, paths[0], files
 }
 
-func TestCompilerExpressionsAgreeUnion(t *testing.T) {
+// TestCompilerExpressionsAgree_* and TestWholeCompilerAgrees_* both run compilerExpressionsPartition's shards, so one
+// union holds both: each family has a top-level test per shard, every compiler file is in exactly one shard, and a
+// planted disagreement is caught by exactly one.
+func TestCompilerShardsHoldEveryFileOnce(t *testing.T) {
 	t.Parallel()
-	functions := []func(*testing.T){TestCompilerExpressionsAgree_000, TestCompilerExpressionsAgree_001, TestCompilerExpressionsAgree_002, TestCompilerExpressionsAgree_003, TestCompilerExpressionsAgree_004, TestCompilerExpressionsAgree_005, TestCompilerExpressionsAgree_006, TestCompilerExpressionsAgree_007, TestCompilerExpressionsAgree_008, TestCompilerExpressionsAgree_009, TestCompilerExpressionsAgree_010, TestCompilerExpressionsAgree_011, TestCompilerExpressionsAgree_012, TestCompilerExpressionsAgree_013, TestCompilerExpressionsAgree_014, TestCompilerExpressionsAgree_015}
-	if len(functions) != testCompilerExpressionsAgreeShards {
-		t.Fatal("top-level shard enumeration differs")
+	for _, functions := range [][]func(*testing.T){
+		{TestCompilerExpressionsAgree_000, TestCompilerExpressionsAgree_001, TestCompilerExpressionsAgree_002, TestCompilerExpressionsAgree_003, TestCompilerExpressionsAgree_004, TestCompilerExpressionsAgree_005, TestCompilerExpressionsAgree_006, TestCompilerExpressionsAgree_007, TestCompilerExpressionsAgree_008, TestCompilerExpressionsAgree_009, TestCompilerExpressionsAgree_010, TestCompilerExpressionsAgree_011, TestCompilerExpressionsAgree_012, TestCompilerExpressionsAgree_013, TestCompilerExpressionsAgree_014, TestCompilerExpressionsAgree_015},
+		{TestWholeCompilerAgrees_000, TestWholeCompilerAgrees_001, TestWholeCompilerAgrees_002, TestWholeCompilerAgrees_003, TestWholeCompilerAgrees_004, TestWholeCompilerAgrees_005, TestWholeCompilerAgrees_006, TestWholeCompilerAgrees_007, TestWholeCompilerAgrees_008, TestWholeCompilerAgrees_009, TestWholeCompilerAgrees_010, TestWholeCompilerAgrees_011, TestWholeCompilerAgrees_012, TestWholeCompilerAgrees_013, TestWholeCompilerAgrees_014, TestWholeCompilerAgrees_015},
+	} {
+		if len(functions) != testCompilerExpressionsAgreeShards {
+			t.Fatal("top-level shard enumeration differs")
+		}
 	}
 	shards, planted, files := compilerExpressionsEnumeration(t)
 	count, catches, caught := 0, 0, -1

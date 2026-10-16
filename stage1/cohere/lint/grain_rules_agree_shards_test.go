@@ -65,7 +65,7 @@ func rulesAgreeSourceInputsAt(t *testing.T, root string) []string {
 			}
 			name := entry.Name()
 			if entry.IsDir() {
-				if name == ".git" || name == "testdata" || name == "performance" || name == "evidence" {
+				if name == ".git" || name == "testdata" || name == "performance" || name == "evidence" || lintRuleSubdirectory(path) {
 					return filepath.SkipDir
 				}
 				return nil
@@ -126,6 +126,13 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 	write("stage1/cohere/lint/new_shards_test.go", "package lint // a moved test")
 	if key() != original {
 		t.Fatal("test-only moves invalidated the lowered product")
+	}
+	// A rule's evidence, validation and completion notes are not its sources: their churn keeps the key (#s57yq6y).
+	write("stage1/cohere/lint/rules/probe/evidence/report-mutant.json", "{}")
+	write("stage1/cohere/lint/rules/probe/validation/run.json", "{}")
+	write("stage1/cohere/lint/rules/probe/evidence-completion/notes.json", "{}")
+	if key() != original {
+		t.Fatal("a rule's evidence, validation or completion notes invalidated the lowered product")
 	}
 	for _, name := range sources {
 		write(name, "changed")

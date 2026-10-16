@@ -91,7 +91,10 @@ func adamicCohereTexts(t *testing.T) []string {
 // Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	t.Parallel()
-	var request struct{ Cases, Answers, IDs, Repository, Fixtures string }
+	var request struct {
+		Cases, Answers, IDs, Repository, Fixtures string
+		Roots                                     []string
+	}
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
 		t.Skip("run by Adamic CSS slice")
@@ -116,7 +119,16 @@ func TestAdamicPortCases(t *testing.T) {
 	}
 	files := map[string]int{}
 	repositoryFiles := 0
-	roots := []string{request.Repository}
+	// The repository's corpus is its corpus roots (css's cssCorpusRoots), walked in order, never the whole repository,
+	// whose listings would enter every product's read set that reads the corpus (#t128y5x). Keys stay relative to the
+	// repository, so the corpus is the one a whole-repository walk found.
+	if len(request.Roots) == 0 {
+		t.Fatal("the request names no corpus roots")
+	}
+	var roots []string
+	for _, root := range request.Roots {
+		roots = append(roots, filepath.Join(request.Repository, filepath.FromSlash(root)))
+	}
 	if request.Fixtures != "" {
 		roots = append(roots, request.Fixtures)
 	} else {
@@ -145,14 +157,14 @@ func TestAdamicPortCases(t *testing.T) {
 				return fmt.Errorf("%s is not UTF-8", path)
 			}
 			texts = append(texts, string(data))
-			relative, err := filepath.Rel(root, path)
+			base, prefix := request.Fixtures, "fixtures/"
+			if root != request.Fixtures {
+				base, prefix = request.Repository, "repository/"
+				repositoryFiles++
+			}
+			relative, err := filepath.Rel(base, path)
 			if err != nil {
 				return err
-			}
-			prefix := "fixtures/"
-			if root == request.Repository {
-				prefix = "repository/"
-				repositoryFiles++
 			}
 			keys = append(keys, prefix+filepath.ToSlash(relative)+":0")
 			files[ext]++

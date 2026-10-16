@@ -198,19 +198,6 @@ func sortedEntries(lists ...[]readEntry) []readEntry {
 	return all
 }
 
-// mergeReads adds sets fetched from the store to nameKey's, after the cache's own, skipping any it already holds.
-func mergeReads(cache, nameKey, name string, sets []readSet) error {
-	return withReads(cache, nameKey, func(file *readsFile) error {
-		file.Name = name
-		for _, set := range sets {
-			if !slices.ContainsFunc(file.Sets, func(kept readSet) bool { return kept.Key == set.Key && sameEntries(kept.Entries, set.Entries) }) {
-				file.Sets = append(file.Sets, set)
-			}
-		}
-		return nil
-	})
-}
-
 func sameEntries(one, other []readEntry) bool {
 	return slices.EqualFunc(one, other, func(a, b readEntry) bool { return a.Kind == b.Kind && a.Path == b.Path })
 }
@@ -268,6 +255,11 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 			return treeValue(root, "exists", entry.Path), nil
 		}
 		return "link " + target, nil
+	case nodeInstallKind:
+		if !local(entry.Path) {
+			return "", fmt.Errorf("a node install %q isn't inside the tree", entry.Path)
+		}
+		return treeValue(root, nodeInstallKind, entry.Path), nil
 	case "above":
 		return existence(filepath.Join(root, filepath.FromSlash(entry.Path))), nil
 	case "above cache":
@@ -295,6 +287,17 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		// of both read sets, which moves its key and not its bytes, and a reader keyed by the key went stale with it
 		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
 		return productDigest(found.directory)
+	case productKeyKind:
+		// A test read set's product, by the key it's found under: its set holds every read of the window the test's set
+		// leaves out, so the key is what moves with them (#mmpt615).
+		found, err := productFor(root, cache, entry.Path, depth+1, known)
+		if err != nil {
+			return "", err
+		}
+		if found.key == "" {
+			return "", fmt.Errorf("it used product %s, which has no product for this tree (%s)", entry.Path[:12], found.why)
+		}
+		return found.key, nil
 	case "tool":
 		tools, err := toolsRoot()
 		if err != nil {
@@ -393,19 +396,6 @@ var treeValuesRead atomic.Int64
 // productDigests holds each product directory's digest once a process has it: a key's bytes never change.
 var productDigests sync.Map
 
-// ProductRoot is where a walk over a product directory starts: what directory resolves to when it is a link, and every
-// walk rooted at a product goes through it, a test's included (graphql/printer's printerWalk, mega's run 2). Loom's runner
-// links each product a unit fetched into the unit's cache from the box's shared products, and filepath.WalkDir visits a
-// link at its root as one entry, never what it points to. Mega's run 1 (Oct 12): every product read through another
-// was valued as one link line naming that box's path, and missed on every runner; run 2: Resolved found no text file
-// in estree's mutant port, so node read its <repository> imports raw. Links inside a product are its own, and stay.
-func ProductRoot(directory string) (string, error) {
-	if info, err := os.Lstat(directory); err != nil || info.Mode()&fs.ModeSymlink == 0 {
-		return directory, nil
-	}
-	return filepath.EvalSymlinks(directory)
-}
-
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
 // content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
 // directory reached through a link is valued by what it links to (ProductRoot).
@@ -492,6 +482,9 @@ func treeValue(root, kind, name string) string {
 
 func readTreeValue(root, kind, name string) string {
 	treeValuesRead.Add(1)
+	if kind == nodeInstallKind {
+		return nodeInstallValue(filepath.Join(root, filepath.FromSlash(name), "node_modules"))
+	}
 	path := filepath.Join(root, filepath.FromSlash(name))
 	info, err := os.Stat(path)
 	if err != nil || name != "." && !Tracked(root, path, info.IsDir()) {
@@ -508,6 +501,51 @@ func readTreeValue(root, kind, name string) string {
 		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
 	}
 	return "other " + info.Mode().Type().String()
+}
+
+// nodeInstallValue is an installed node_modules at top as its manifest names it: each file's path, sha256 and executable
+// bit, and each link's target, sorted, hashed whole (#qx8fkaf). It's what's there, not what the lockfile meant, so
+// any byte npm made, any platform or install script that made another, and a file no lockfile names each move it. A
+// tree holds Loom's copy of the install and a runner the chunk it unpacked, the same entries, so the two value alike
+// at any checkout path, and no file the install holds stands in for its bytes.
+func nodeInstallValue(top string) string {
+	if real, err := filepath.EvalSymlinks(top); err == nil {
+		top = real
+	}
+	var lines []string
+	err := filepath.WalkDir(top, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil || path == top {
+			return err
+		}
+		relative := filepath.ToSlash(strings.TrimPrefix(path, top+string(filepath.Separator)))
+		switch {
+		case entry.Type()&fs.ModeSymlink != 0:
+			target, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			lines = append(lines, "link "+relative+" "+target)
+		case entry.Type().IsRegular():
+			info, err := entry.Info()
+			if err != nil {
+				return err
+			}
+			content, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			lines = append(lines, fmt.Sprintf("file %s %x %t", relative, sha256.Sum256(content), info.Mode()&0o111 != 0))
+		}
+		return nil
+	})
+	switch {
+	case errors.Is(err, fs.ErrNotExist):
+		return "absent"
+	case err != nil:
+		return "unreadable: " + err.Error()
+	}
+	sort.Strings(lines)
+	return fmt.Sprintf("install %x", sha256.Sum256([]byte(strings.Join(lines, "\n"))))
 }
 
 // fileValue is a file's content entry in a read set: gitValue, or why the file couldn't be read.
@@ -667,10 +705,53 @@ func toolsRoot() (string, error) {
 }
 
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key
-// names a product in the cache, or why none did, and the keys each set gave (for the store to try).
+// names a product in the cache, or why none did, and the keys each set gave (for the store to try). With the product,
+// its upstreams: every product the set that found it reads, through their sets in turn; with each key, the same for
+// the set that gave it (keyUpstreams).
 type found struct {
 	key, directory, why string
 	keys                []string
+	upstreams           []upstream
+	keyUpstreams        [][]upstream
+}
+
+// An upstream is a product a found product's set reads, by name key and the directory this process found it in. A run
+// that finds a product journals its upstreams as found too, so it names every product its lookup valued: a runner
+// values the same set and needs each one's read set and product (#mmpt615, 2e95d29e's void: tsprinter's mutant
+// corpora were found whole, their Go oracle was never named, and no runner could value them).
+type upstream struct {
+	nameKey, directory string
+}
+
+// setUpstreams is the upstreams of set, which evaluate valued already on this pass (known), each once, in its entries'
+// order, each followed by its own.
+func setUpstreams(root, cache string, set readSet, depth int, known productMemo) []upstream {
+	var all []upstream
+	seen := map[string]bool{}
+	for _, entry := range set.Entries {
+		if entry.Kind != "product" && entry.Kind != productKeyKind {
+			continue
+		}
+		read, err := productFor(root, cache, entry.Path, depth+1, known)
+		if err != nil || read.directory == "" {
+			continue
+		}
+		for _, one := range append([]upstream{{nameKey: entry.Path, directory: read.directory}}, read.upstreams...) {
+			if !seen[one.nameKey] {
+				seen[one.nameKey] = true
+				all = append(all, one)
+			}
+		}
+	}
+	return all
+}
+
+// journalFound journals the product nameKey (name, when known) as found in directory, and each of its upstreams.
+func journalFound(nameKey, name, directory string, upstreams []upstream) {
+	journal(journalEntry{Event: "found", NameKey: nameKey, Name: name, Directory: directory})
+	for _, one := range upstreams {
+		journal(journalEntry{Event: "found", NameKey: one.nameKey, Directory: one.directory})
+	}
 }
 
 // A productMemo holds each product one pass has looked up, by name key (Home's dry run, Oct 11: nine traces settled for
@@ -681,10 +762,10 @@ type productMemo map[string]*productLookup
 
 // readProducts holds each product a process whose tree can't change under it (heldForLife) has found, by root, cache and
 // name key, so a test that looks up several products, or one product many times, values each one's read set once
-// (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process, its directory is never
-// taken away, and a read set joined from the store later goes after the cache's own, so the set that found it still
-// finds it first. A missing one is looked up again, since a joined set can find what the cache's own didn't. What a
-// traced build reads is never changed by it: a lookup is keying, which no read set takes (trace.go).
+// (#szswjtc, #47ykkmr). Only a found product is held: its tree never changes under the process and its directory is
+// never taken away, so the set that found it still finds it. A missing one is looked up again, since a product that
+// arrives later is found. What a traced build reads is never changed by it: a lookup is keying, which no read set takes
+// (trace.go).
 var readProducts sync.Map
 
 // productsLookedUp counts the products this process looked up by their read sets rather than held: a test asks it.
@@ -750,9 +831,10 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 		if index == 0 {
 			newest = evaluated
 		}
-		result.keys = append(result.keys, evaluated.key)
+		upstreams := setUpstreams(root, cache, set, depth, known)
+		result.keys, result.keyUpstreams = append(result.keys, evaluated.key), append(result.keyUpstreams, upstreams)
 		if _, err := os.Stat(filepath.Join(cache, evaluated.key)); err == nil {
-			result.key, result.directory = evaluated.key, filepath.Join(cache, evaluated.key)
+			result.key, result.directory, result.upstreams = evaluated.key, filepath.Join(cache, evaluated.key), upstreams
 			return result, nil
 		}
 	}

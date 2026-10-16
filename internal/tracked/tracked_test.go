@@ -444,3 +444,35 @@ func TestACallersGitVariablesNeverRedirectAnAnswer(t *testing.T) {
 			gotHead, len(gotFiles), len(gotRecursive), wantHead, len(wantFiles), len(wantRecursive))
 	}
 }
+
+// A directory skip names is left unentered below root, and nothing under it is listed, in git's answer and in the
+// walk Workshop's trace takes alike; a file or directory that only shares the name, and root itself, stay (#hp8gq3e).
+// Not parallel: it sets ADAMIC_BUILD_TRACE, which buildcache.Tracing reads for the whole process.
+func TestPathsUnderLeavesSkippedDirectoriesUnentered(t *testing.T) {
+	directory := repository(t, map[string]string{
+		"stage1/a.ts": "a;\n", "stage1/evidence.ts": "named like the folder;\n", "stage1/evidence-based/b.ts": "b;\n",
+		"stage1/rules/x/rule.ts": "rule;\n", "stage1/rules/x/evidence/log.txt": "evidence\n",
+		"stage1/rules/x/testdata/witness.ts": "witness;\n", "stage1/testdata/deep/fixture.ts": "fixture;\n",
+		"other/evidence/kept.ts": "outside root;\n",
+	})
+	want := []string{"stage1/a.ts", "stage1/evidence-based/b.ts", "stage1/evidence.ts", "stage1/rules/x/rule.ts"}
+	listed, err := PathsUnder(directory, "stage1", "evidence", "testdata")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(listed, want) {
+		t.Fatalf("git's answer: %q, want %q", listed, want)
+	}
+	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
+	walked, err := PathsUnder(directory, "stage1", "evidence", "testdata")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(walked, want) {
+		t.Fatalf("the traced walk: %q, want %q", walked, want)
+	}
+	// A root that is itself a skipped name is still listed: skip applies below root.
+	if rooted, err := PathsUnder(directory, "stage1/rules/x/evidence", "evidence"); err != nil || !reflect.DeepEqual(rooted, []string{"stage1/rules/x/evidence/log.txt"}) {
+		t.Fatalf("a skipped name as root: %q %v", rooted, err)
+	}
+}

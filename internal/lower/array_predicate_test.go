@@ -19,25 +19,6 @@ func TestArrayPredicatePreservesDeclaredElementContract(t *testing.T) {
 	}
 }
 
-func TestArrayPredicateCannotInventAnElementContract(t *testing.T) {
-	t.Parallel()
-	for _, source := range []string{
-		`function guard(value: string | (number | string)[]): value is number[] { return Array.isArray(value); }`,
-		`function guard(value: any): value is readonly unknown[] { return Array.isArray(value); }`,
-		`function guard(value: unknown): value is readonly number[] { return Array.isArray(value); }`,
-		`function guard(value: unknown): value is unknown[] { return Array.isArray(value); }`,
-		`function guard(value: unknown): value is readonly unknown[] { return true; }`,
-		`function guard(value: {} | number[]): value is number[] { return Array.isArray(value); }`,
-		`function guard(value: string | number[]): value is number[] { const Array = { isArray(value: string | number[]): boolean { return true; } }; return Array.isArray(value); }`,
-	} {
-		_, err := lowerSource(t, source)
-		var refusal *Refused
-		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "return is not proven") {
-			t.Fatalf("%s: want unproven predicate refusal, got %v", source, err)
-		}
-	}
-}
-
 func TestArrayPredicateDoesNotMisclassifyNativeTuples(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{

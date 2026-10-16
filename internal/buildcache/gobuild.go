@@ -51,11 +51,6 @@ func GoBuildIn(t testing.TB, module, output, pkg string, arguments []string, env
 	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
 }
 
-// A Mutation is one planted change a product is built with: File, a file of the repository the build reads (a
-// package's source or an overlay's replacement), relative to the repository, with Before, which must occur in it exactly
-// once, replaced by After. It is how a test proves a check can fail, built ahead like any other product.
-type Mutation struct{ File, Before, After string }
-
 // GoTestMutated is GoTest with mutations planted. Each mutated copy is written inside the product while it builds and
 // laid over the original by an overlay of its own, so the product names no machine. The key is GoTest's with each
 // mutation's file, before and after: a changed after-string is another product.
@@ -83,6 +78,52 @@ func Adamic(t testing.TB) string {
 	return GoBuild(t, "adamic", "./cmd/adamic", nil)
 }
 
+// errBuiltElsewhere is BuiltElsewhere's build: the one product test that builds the product is its owner.
+var errBuiltElsewhere = errors.New("built by another package's product test")
+
+// AdamicOwner is the one product test that builds Adamic under the trace: every other package's product test that
+// reads it waits for it in the tree's product order (cloud/fast-gate/product-order.json), which Loom's build-tree reads,
+// so it has finished before they start.
+const AdamicOwner = "internal/native TestProduct_WASICompiler"
+
+// AdamicBuiltElsewhere is Adamic for a product test whose package reads the stage 0 compiler that AdamicOwner, another
+// package's product test, builds (BuiltElsewhere), and outside a trace Adamic. Four product tests each building Adamic in their own process settled
+// it under four keys, and a unit of one package missed the key another's set gave it (chg_35f264p7's void on tree
+// 29b74b3d, Oct 14: internal/fuzz, cmd/adamic-test262 and internal/oracle against internal/native's).
+func AdamicBuiltElsewhere(t testing.TB) string {
+	t.Helper()
+	if traceDirectory() == "" {
+		return Adamic(t)
+	}
+	request := goRequest{verb: "build", output: "adamic", pkg: "./cmd/adamic"}
+	request.arguments = reproducible(request.arguments)
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go build ./cmd/adamic: %v", err)
+	}
+	return filepath.Join(BuiltElsewhere(t, "the stage 0 compiler", inputs, AdamicOwner, func(string) error { return errBuiltElsewhere }), request.output)
+}
+
+// BuiltElsewhere is a product, what, that another package's product test, owner, builds and settles, for a product
+// test whose package reads it: found by its name key and never built here, so the tree holds one settlement under one
+// key, and its unit fetches that one. Two packages' product tests that each build one name key settle it twice, and the
+// tree's read sets keep only the newest, so the other package's units value to a key only the first ships: oracle's
+// and stage3/fixtures' runtime archives voided 3 of oracle's 11 units on tree b89a9632 (#43k99f8). The tree's product
+// order starts this test only once owner has finished, so under the trace it looks once, and a product that isn't there
+// fails it at once, naming the owner: never a wait. Outside a trace (a developer's run, the tree's untraced fallback) it
+// is Product, with build, since nothing else will build it.
+func BuiltElsewhere(t testing.TB, what string, inputs Inputs, owner string, build func(directory string) error) string {
+	t.Helper()
+	if traceDirectory() == "" {
+		return Product(t, inputs, build)
+	}
+	directory, err := Get(inputs, func(string) error { return errBuiltElsewhere })
+	if err != nil {
+		t.Fatalf("%s is %s's to build, and it isn't here: is this test in the tree's product order after it? %v", what, owner, err)
+	}
+	return directory
+}
+
 // GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
 // type-checks against the compiler's export data (go/importer) without running go: listing.json holds one
 // ListedPackage per package go list reported, in its order, each Export a file the product holds and each Dir
@@ -99,79 +140,7 @@ func GoExports(t testing.TB, packages ...string) string {
 		t.Fatalf("go list -export %s: %v", request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	return Product(t, inputs, func(directory string) error {
-		command := toolchain.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
-		command.Dir = root
-		output, err := command.Output()
-		if err != nil {
-			var exit *exec.ExitError
-			if errors.As(err, &exit) {
-				return fmt.Errorf("go list -export: %v\n%s", err, exit.Stderr)
-			}
-			return err
-		}
-		if err := os.Mkdir(filepath.Join(directory, "exports"), 0o755); err != nil {
-			return err
-		}
-		real := resolved(root)
-		var listing []ListedPackage
-		decoder := json.NewDecoder(strings.NewReader(string(output)))
-		for {
-			var listed ListedPackage
-			if err := decoder.Decode(&listed); err == io.EOF {
-				break
-			} else if err != nil {
-				return err
-			}
-			// A product holds no absolute path: a directory outside the repository (the standard library's, go's module
-			// cache) is left out, since only its export data is read.
-			relative := ""
-			for _, spelling := range []string{root, real} {
-				if spelling != "" && inside(spelling, listed.Dir) {
-					relative = filepath.ToSlash(mustRelative(spelling, listed.Dir))
-					break
-				}
-			}
-			listed.Dir = relative
-			// Likewise a file go generated in its own cache (a test main) is named absolutely and left out.
-			for _, names := range []*[]string{&listed.GoFiles, &listed.TestGoFiles, &listed.XTestGoFiles} {
-				*names = slices.DeleteFunc(*names, filepath.IsAbs)
-			}
-			if listed.Export != "" {
-				content, err := os.ReadFile(listed.Export)
-				if err != nil {
-					return err
-				}
-				listed.Export = fmt.Sprintf("exports/%d.a", len(listing))
-				if err := os.WriteFile(filepath.Join(directory, listed.Export), content, 0o644); err != nil {
-					return err
-				}
-			}
-			listing = append(listing, listed)
-		}
-		encoded, err := json.MarshalIndent(listing, "", "\t")
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, request.output), encoded, 0o644)
-	})
-}
-
-// A ListedPackage is one package of a GoExports listing, as go list reports it, except that Dir is relative to the
-// repository (empty for a package outside it), a file go generated in its own cache is left out, and Export names a
-// file in the product.
-type ListedPackage struct {
-	ImportPath, Dir, Export, ForTest   string
-	Standard                           bool
-	GoFiles, TestGoFiles, XTestGoFiles []string
-}
-
-// A goRequest is one go invocation a product is built by: 'go build', or 'go test -c', of pkg in module (a directory
-// of the repository, its root when empty), with arguments and environment added.
-type goRequest struct {
-	verb, module, output, pkg string
-	arguments, environment    []string
-	mutations                 []Mutation
+	return Product(t, inputs, func(directory string) error { return goExports(root, packages, request.output, directory) })
 }
 
 func goProduct(t testing.TB, request goRequest) string {
@@ -182,122 +151,15 @@ func goProduct(t testing.TB, request goRequest) string {
 		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	arguments := request.arguments
-	if slices.Contains(inputs.Flags, rebuildEverything) {
-		arguments = append([]string{"-a"}, arguments...)
-	}
 	directory := Product(t, inputs, func(directory string) error {
-		arguments := arguments
-		if len(request.mutations) > 0 {
-			planted, cleanup, err := request.plant(root, directory, arguments)
-			if err != nil {
-				return err
-			}
-			defer cleanup()
-			arguments = planted
+		arguments, cleanup, err := request.withOutsideHeaders(root, inputs)
+		if err != nil {
+			return err
 		}
-		command := toolchain.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
-		command.Dir = filepath.Join(root, request.module)
-		command.Env = toolchain.Env(request.environment...)
-		if combined, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("go %s %s: %v\n%s", request.verb, request.pkg, err, combined)
-		}
-		return nil
+		defer cleanup()
+		return request.build(root, directory, arguments)
 	})
 	return filepath.Join(directory, request.output)
-}
-
-// plant writes each mutated file inside directory, the product, under mutations/<its path in the repository>, and
-// returns arguments whose overlay lays the copies over what they mutate: the request's own overlay with every
-// replacement that is a mutated file pointed at its copy, and a mutated package source replaced by its copy. The
-// overlay names this checkout's paths, so it sits in a temporary directory and leaves with the build (#tqrqx60).
-func (request goRequest) plant(root, directory string, arguments []string) ([]string, func(), error) {
-	replace := map[string]string{}
-	var kept []string
-	for index := 0; index < len(arguments); index++ {
-		path := ""
-		switch argument := arguments[index]; {
-		case argument == "-overlay" && index+1 < len(arguments):
-			path = arguments[index+1]
-			index++
-		case strings.HasPrefix(argument, "-overlay="):
-			path = strings.TrimPrefix(argument, "-overlay=")
-		default:
-			kept = append(kept, argument)
-			continue
-		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return nil, nil, err
-		}
-		var declared struct{ Replace map[string]string }
-		if err := json.Unmarshal(content, &declared); err != nil {
-			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
-		}
-		maps.Copy(replace, declared.Replace)
-	}
-	texts, err := request.mutated(root)
-	if err != nil {
-		return nil, nil, err
-	}
-	for file, text := range texts {
-		original := filepath.Join(root, file)
-		copied := filepath.Join(directory, "mutations", filepath.FromSlash(file))
-		if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
-			return nil, nil, err
-		}
-		if err := os.WriteFile(copied, []byte(text), 0o644); err != nil {
-			return nil, nil, err
-		}
-		pointed := false
-		for from, to := range replace {
-			if !filepath.IsAbs(to) {
-				to = filepath.Join(root, request.module, to)
-			}
-			if filepath.Clean(to) == original {
-				replace[from], pointed = copied, true
-			}
-		}
-		if !pointed {
-			replace[original] = copied
-		}
-	}
-	scratch, err := os.MkdirTemp("", "buildcache-mutations-")
-	if err != nil {
-		return nil, nil, err
-	}
-	cleanup := func() { os.RemoveAll(scratch) }
-	encoded, err := json.Marshal(map[string]any{"Replace": replace})
-	if err == nil {
-		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
-	}
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	return append(kept, "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
-}
-
-// mutated is each file the request's mutations change, by its path in the repository, with every mutation of it
-// applied in order. A mutation whose Before isn't in its file exactly once is refused, since it would plant nothing
-// or plant it in the wrong place.
-func (request goRequest) mutated(root string) (map[string]string, error) {
-	texts := map[string]string{}
-	for _, mutation := range request.mutations {
-		text, ok := texts[mutation.File]
-		if !ok {
-			content, err := os.ReadFile(filepath.Join(root, mutation.File))
-			if err != nil {
-				return nil, fmt.Errorf("mutation of %s: %v", mutation.File, err)
-			}
-			text = string(content)
-		}
-		if count := strings.Count(text, mutation.Before); count != 1 {
-			return nil, fmt.Errorf("mutation of %s: %q occurs %d times, not once", mutation.File, mutation.Before, count)
-		}
-		texts[mutation.File] = strings.Replace(text, mutation.Before, mutation.After, 1)
-	}
-	return texts, nil
 }
 
 // mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after
@@ -310,27 +172,93 @@ func (request goRequest) mutationKeys() []string {
 	return keys
 }
 
-// reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
-// without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
-// (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
-// hex), which the key leaves out on purpose, so two commits with the same inputs shared a key and differed in those
-// bytes: floor1's audit rebuild of bridge/tsgo/oracle called it poisoning (Oct 9 04:52Z, same size, other bytes).
-func reproducible(arguments []string) []string {
-	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
-	for _, argument := range arguments {
-		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
-			panic("buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")
-		}
-	}
-	return append(kept, arguments...)
+// outsideHeaders begins the flag a key carries for each package that reads a header through '#cgo CFLAGS: -I' outside
+// its own directory, followed by an outsideHeaderPackage as JSON. Go's build cache keys a package by its own directory's
+// files, so after such a header changes, go build alone links the object compiled from the old one (measured Oct 9 by
+// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild built such a
+// product with -a, which compiled the standard library again too, 20.8 s of that test on Cloud and the floor of this
+// package's unit (#dzpzyme, #hqxje9h). It now lays a header into the package instead (withOutsideHeaders), which moves
+// that package alone in go's cache.
+const outsideHeaders = "cgo headers outside the package: "
+
+// An outsideHeaderPackage is a package directory and the include directories outside it its cgo reads, each relative
+// to the repository.
+type outsideHeaderPackage struct {
+	Package  string   `json:"package"`
+	Includes []string `json:"includes"`
 }
 
-// rebuildEverything is the flag a key carries when the build reads a header through '#cgo CFLAGS: -I' outside the
-// package's own directory. Go's build cache keys a package by its own directory's files, so after such a header
-// changes, go build alone links the object compiled from the old one (measured Oct 9 by
-// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild builds such a
-// product with -a, which compiles every package again, and the flag in the key retires a product built without it.
-const rebuildEverything = "go build -a: a header outside its package"
+// outsideHeaderName is the header withOutsideHeaders lays into a package: read by nothing, so the product's bytes are
+// a plain build's (measured on Linux, go1.27.1: byte-identical to a fresh build, as -a's were).
+const outsideHeaderName = "zz_buildcache_outside_headers.h"
+
+// withOutsideHeaders returns the build's arguments for a key that names packages reading headers outside themselves:
+// the request's own overlay with one more file in each such package, a header holding Key over its include
+// directories, so go's cache, which hashes a cgo package's own headers, compiles that package again exactly when one
+// of those directories changes. The overlay names this checkout's paths, so it sits in a temporary directory and leaves
+// with the build, as a mutation's does.
+func (request goRequest) withOutsideHeaders(root string, inputs Inputs) ([]string, func(), error) {
+	var packages []outsideHeaderPackage
+	for _, flag := range inputs.Flags {
+		if encoded, found := strings.CutPrefix(flag, outsideHeaders); found {
+			var listed outsideHeaderPackage
+			if err := json.Unmarshal([]byte(encoded), &listed); err != nil {
+				return nil, nil, fmt.Errorf("%s: %v", flag, err)
+			}
+			packages = append(packages, listed)
+		}
+	}
+	if len(packages) == 0 {
+		return request.arguments, func() {}, nil
+	}
+	_, overlay, err := request.identity(root)
+	if err != nil {
+		return nil, nil, err
+	}
+	replace := map[string]string{}
+	if overlay.path != "" {
+		path := overlay.path
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(root, path)
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil, nil, err
+		}
+		var declared struct{ Replace map[string]string }
+		if err := json.Unmarshal(content, &declared); err != nil {
+			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		replace = declared.Replace
+	}
+	scratch, err := os.MkdirTemp("", "buildcache-headers-")
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanup := func() { os.RemoveAll(scratch) }
+	for index, listed := range packages {
+		var digest string
+		keying(func() { digest, err = Key(root, Inputs{Name: outsideHeaders + listed.Package, Files: listed.Includes}) })
+		header := filepath.Join(scratch, fmt.Sprintf("%d.h", index))
+		if err == nil {
+			err = os.WriteFile(header, []byte("/* buildcache: the headers outside this package are "+digest+" */\n"), 0o644)
+		}
+		if err != nil {
+			cleanup()
+			return nil, nil, err
+		}
+		replace[filepath.Join(root, filepath.FromSlash(listed.Package), outsideHeaderName)] = header
+	}
+	encoded, err := json.Marshal(map[string]any{"Replace": replace})
+	if err == nil {
+		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
+	}
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	return append(slices.Clone(overlay.arguments), "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
+}
 
 // goSettings runs go env for names in directory (the working directory when empty) with environment, the whole
 // environment go runs with (toolchain.Env for a product, this process's own for Tool), and returns each variable as
@@ -571,7 +499,8 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		return path
 	}
 	files := map[string]bool{}
-	outsideHeaders := false
+	// Each package that reads headers outside its own directory, with those include directories (outsideHeaders).
+	outside := map[string][]string{}
 	add := func(directory string, names []string) error {
 		for _, name := range names {
 			// go list -test names some files absolutely, in go's own cache (a test variant's generated sources): not the
@@ -638,7 +567,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 						return Inputs{}, err
 					}
 					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
-						outsideHeaders = true
+						pkg := filepath.ToSlash(mustRelative(root, listed.Dir))
+						if relative := filepath.ToSlash(mustRelative(root, include)); !slices.Contains(outside[pkg], relative) {
+							outside[pkg] = append(outside[pkg], relative)
+						}
 					}
 				}
 			}
@@ -691,8 +623,13 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
 	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
-	if outsideHeaders {
-		inputs.Flags = append(inputs.Flags, rebuildEverything)
+	for _, pkg := range slices.Sorted(maps.Keys(outside)) {
+		includes := slices.Sorted(slices.Values(outside[pkg]))
+		encoded, err := json.Marshal(outsideHeaderPackage{Package: pkg, Includes: includes})
+		if err != nil {
+			return Inputs{}, err
+		}
+		inputs.Flags = append(inputs.Flags, outsideHeaders+string(encoded))
 	}
 	inputs.Flags = append(inputs.Flags, settings...)
 	if compiler := strings.Fields(values["CC"]); len(compiler) > 0 {
@@ -834,16 +771,6 @@ func listArguments(arguments []string) []string {
 		}
 	}
 	return kept
-}
-
-func inside(root, path string) bool {
-	relative, err := filepath.Rel(root, path)
-	return err == nil && relative != ".." && !strings.HasPrefix(relative, "../") && !filepath.IsAbs(relative)
-}
-
-func mustRelative(root, path string) string {
-	relative, _ := filepath.Rel(root, path)
-	return relative
 }
 
 func existing(directory string, names ...string) []string {
