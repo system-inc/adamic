@@ -1,0 +1,6 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [2, 5];
+console.log(parallelMap(items, (item) => {
+	const children: readonly number[] = [1, 2, 3];
+	return parallelMap(children, (child) => child + item).join(',');
+}).join('|'));
