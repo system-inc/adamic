@@ -82,3 +82,21 @@ func checkGraphAdmission(t *testing.T, path string, program *ir.Program) {
 		t.Fatal(report)
 	}
 }
+
+// Admission cannot weaken the independent escape proof in internal/fresh.
+func TestMethodKeepsArgumentAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "1\n" || len(truth.stderr) != 0 {
+		t.Fatalf("Node: %+v", truth)
+	}
+	checkGraphAdmission(t, path, program)
+}
