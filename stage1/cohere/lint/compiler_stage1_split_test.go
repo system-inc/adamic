@@ -3,9 +3,10 @@ package lint
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
+
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -332,71 +333,16 @@ func compilerAgreementOracle(t *testing.T, owner int, path string, owned []compi
 	return execution{output: answer.output, duration: answer.duration}
 }
 
-// compilerAgreementCheckerAllInputs keys the Go oracle's answer to checker.ts's combined-rule rows by the oracle binary's
-// bytes and each row's, by its repository-relative key, its file's bytes and its rule: a different oracle or a changed
-// file is a different product.
-func compilerAgreementCheckerAllInputs(oracle []byte, owned []compilerAgreementCase, files [][]byte) buildcache.Inputs {
-	flags := []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), "--manifest"}
-	for i, c := range owned {
-		flags = append(flags, fmt.Sprintf("row %s sha256 %x rule %s", c.key, sha256.Sum256(files[i]), c.rule))
-	}
-	return buildcache.Inputs{Name: "compiler agreement checker.ts combined-rule Go answer", Files: []string{"stage1/cohere/lint/compiler_stage1_split_test.go"}, Flags: flags}
-}
-
-// compilerAgreementCheckerPath stands for a row's file in the stored answer. The oracle opens each finding with its
-// file's absolute path (path:line:column), and checker.ts sits in ADAMIC_TYPESCRIPT_SOURCE, which differs by machine, so
-// the product holds this instead and its reader writes back the path its own sides print.
-const compilerAgreementCheckerPath = "<compiler agreement checker.ts row>"
-
 // compilerAgreementCheckerAllAnswer is the Go oracle's answer for checker.ts's combined-rule rows, as its sides would run
 // it live: one manifest of those rows, in their order. The product holds the answer only, its one row's path written as
 // compilerAgreementCheckerPath, refused when the raw answer already holds that text, so the stand-in reads back exactly;
 // the manifest it ran names this machine's paths, so it stays in a scratch directory.
 func compilerAgreementCheckerAllAnswer(t *testing.T, owned []compilerAgreementCase) []byte {
-	t.Helper()
-	oracle := lintGoOracleProduct(t)
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		t.Fatal(err)
-	}
-	files := make([][]byte, len(owned))
-	var rows []string
+	rows := make([]oracles.CheckerRow, len(owned))
 	for i, c := range owned {
-		if c.key != compilerAgreementCheckerKey || c.rule != "all" {
-			t.Fatalf("the checker.ts combined-rule owner holds %s/%s", c.key, c.rule)
-		}
-		if files[i], err = os.ReadFile(c.path); err != nil {
-			t.Fatal(err)
-		}
-		rows = append(rows, c.path+"\t"+c.rule)
+		rows[i] = oracles.CheckerRow{Path: c.path, Key: c.key, Rule: c.rule}
 	}
-	if len(rows) != 1 {
-		t.Fatalf("the checker.ts combined-rule owner holds %d rows, want one", len(rows))
-	}
-	directory := buildcache.Product(t, compilerAgreementCheckerAllInputs(binary, owned, files), func(directory string) error {
-		scratch, err := os.MkdirTemp("", "compiler-agreement-checker-")
-		if err != nil {
-			return err
-		}
-		defer os.RemoveAll(scratch)
-		path := filepath.Join(scratch, "manifest.txt")
-		if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-			return err
-		}
-		output, err := testShardsAgreeRun("", nil, oracle, "--manifest", path)
-		if err != nil {
-			return err
-		}
-		if bytes.Contains(output, []byte(compilerAgreementCheckerPath)) {
-			return fmt.Errorf("the Go answer for checker.ts already holds %q, so its path can't stand in for it", compilerAgreementCheckerPath)
-		}
-		return os.WriteFile(filepath.Join(directory, "answer"), bytes.ReplaceAll(output, []byte(owned[0].path), []byte(compilerAgreementCheckerPath)), 0644)
-	})
-	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return bytes.ReplaceAll(answer, []byte(compilerAgreementCheckerPath), []byte(owned[0].path))
+	return oracles.CheckerAllAnswer(t, rows)
 }
 
 // compilerAgreementCheckerAllOwned is the checker.ts combined-rule owner's rows, in corpus order, as its sides gather them.
@@ -411,9 +357,11 @@ func compilerAgreementCheckerAllOwned(t *testing.T) []compilerAgreementCase {
 	return owned
 }
 
-func TestProduct_CompilerAgreementCheckerAllAnswer(t *testing.T) {
+func TestProduct_LintFindsCompilerAgreementCheckerAllAnswer(t *testing.T) {
 	t.Parallel()
-	compilerAgreementCheckerAllAnswer(t, compilerAgreementCheckerAllOwned(t))
+	// The owner and the live-answer equality test use this identical pinned fixture.
+	// Finding the answer needs no walk of the external compiler corpus.
+	compilerAgreementCheckerAllAnswer(t, []compilerAgreementCase{{path: filepath.Join(repository, "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts"), key: compilerAgreementCheckerKey, rule: "all"}})
 }
 
 func compilerAgreementShard(t *testing.T, shard int) {

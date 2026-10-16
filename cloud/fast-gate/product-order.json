@@ -212,6 +212,66 @@
     "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
       "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
     ],
+    "stage1/cohere/lint TestProduct_DecodedOptionsNative": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsCompilerAgreementCheckerAllAnswer": [
+      "stage1/cohere/lint/oracles TestProduct_CompilerAgreementCheckerAllAnswer"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsCompleteSuggestionGoOracle": [
+      "stage1/cohere/lint/oracles TestProduct_CompleteSuggestionGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsGoOracle": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsJSXMembership": [
+      "stage1/cohere/lint/oracles TestProduct_jsx_membership"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsJSXParser": [
+      "stage1/cohere/lint/oracles TestProduct_jsx_parser"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsProfileOracleOutputs": [
+      "stage1/cohere/lint/oracles TestProduct_ProfileCompilationOracleOutputs"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsRulesAgreeCapture": [
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsShardsAgreeCapture": [
+      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsSuggestionAlongsideGoOracle": [
+      "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_LintFindsYepestaSetup": [
+      "stage1/cohere/lint/oracles TestProduct_YepestaSetup"
+    ],
+    "stage1/cohere/lint TestProduct_ShardsAgreePrepared": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
+      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+    ],
+    "stage1/cohere/lint TestProduct_ShardsAgreeReferences": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
+      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+    ],
+    "stage1/cohere/lint TestProduct_SuggestionAlongsideLowered": [
+      "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_SuggestionAlongsideNative": [
+      "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
+    ],
+    "stage1/cohere/lint TestProduct_jsx_tree_setup": [
+      "stage1/cohere/lint/oracles TestProduct_jsx_membership",
+      "stage1/cohere/lint/oracles TestProduct_jsx_parser"
+    ],
+    "stage1/cohere/lint/oracles TestProduct_CompilerAgreementCheckerAllAnswer": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
+    "stage1/cohere/lint/oracles TestProduct_ProfileCompilationOracleOutputs": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
+    "stage1/cohere/lint/oracles TestProduct_YepestaSetup": [
+      "stage1/cohere/lint/oracles TestProduct_LintGoOracle"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_lists"
