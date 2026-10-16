@@ -1,0 +1,75 @@
+// Admission census: each source file is an entry, with no native build or execution.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"strings"
+)
+
+type result struct {
+	Path       string
+	Admitted   bool
+	Diagnostic string
+}
+
+func main() {
+	encoder := json.NewEncoder(os.Stdout)
+	seen := map[string]bool{}
+	if len(os.Args) > 1 {
+		file, err := os.Open(os.Args[1])
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+		decoder := json.NewDecoder(file)
+		for {
+			var row result
+			if decoder.Decode(&row) != nil {
+				break
+			}
+			seen[row.Path] = true
+		}
+	}
+	err := filepath.WalkDir("internal/oracle/testdata", func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() || (!strings.HasSuffix(path, ".a") && !strings.HasSuffix(path, ".ts")) || strings.HasSuffix(path, ".d.ts") {
+			return nil
+		}
+		if seen[path] {
+			return nil
+		}
+		row := inspect(path)
+		return encoder.Encode(row)
+	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func inspect(path string) (row result) {
+	row.Path = path
+	defer func() {
+		if failure := recover(); failure != nil {
+			row.Admitted = false
+			row.Diagnostic = fmt.Sprintf("PANIC: %v", failure)
+		}
+	}()
+	program, failure := load.Load([]string{path})
+	if failure == nil {
+		_, failure = lower.Lower(context.Background(), program)
+	}
+	row.Admitted = failure == nil
+	if failure != nil {
+		row.Diagnostic = failure.Error()
+	}
+	return row
+}

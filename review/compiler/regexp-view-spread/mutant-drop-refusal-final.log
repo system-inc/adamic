@@ -1,0 +1,10 @@
+=== RUN   TestRegExpViewSpreadIsRefused
+=== PAUSE TestRegExpViewSpreadIsRefused
+=== CONT  TestRegExpViewSpreadIsRefused
+    library_spread_test.go:19: gate cache node miss
+    library_spread_test.go:26: want library spread refusal, got <nil>
+--- FAIL: TestRegExpViewSpreadIsRefused (4.97s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
