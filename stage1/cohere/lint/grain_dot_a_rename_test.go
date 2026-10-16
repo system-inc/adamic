@@ -170,28 +170,28 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 func TestProduct_DotARenameSource(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	dotARenameSource(t)
+	requireLintArtifacts(t, dotARenameSource(t), "main.ts", "rules/no-var/rule.ts")
 	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
 }
 
 func TestProduct_DotARenameOriginalLowered(t *testing.T) {
 	t.Parallel()
-	dotARenameLowered(t, false)
+	requireLintArtifacts(t, dotARenameLowered(t, false), "lint.c", "lint.mjs")
 }
 
 func TestProduct_DotARenameRenamedLowered(t *testing.T) {
 	t.Parallel()
-	dotARenameLowered(t, true)
+	requireLintArtifacts(t, dotARenameLowered(t, true), "lint.c", "lint.mjs")
 }
 
 func TestProduct_DotARenameOriginalNative(t *testing.T) {
 	t.Parallel()
-	dotARenameNative(t, false)
+	requireLintExecutable(t, filepath.Join(dotARenameNative(t, false), "scanner"))
 }
 
 func TestProduct_DotARenameRenamedNative(t *testing.T) {
 	t.Parallel()
-	dotARenameNative(t, true)
+	requireLintExecutable(t, filepath.Join(dotARenameNative(t, true), "scanner"))
 }
 
 // dotARenameFiles is every file under directory by its slash path, as Absolute reads it back, so a product and the

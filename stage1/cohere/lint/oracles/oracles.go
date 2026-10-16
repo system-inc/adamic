@@ -43,7 +43,32 @@ func ensureEnvironment() {
 }
 
 func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	return oracleProductDirectory(t, inputs, build)
+}
+
+// A nil build resolves a product the caller already prepared, without building it again.
+// Both producers and artifact rows use this one owner identity.
+func oracleProductDirectory(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	t.Helper()
 	inputs.Name += " oracle-owner-v1"
+	if build == nil {
+		// Get deliberately rebuilds every request in uncached mode. Absolute also resolves
+		// directories already held by this process, including uncached products.
+		if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
+			root, err := filepath.Abs(repository)
+			if err != nil {
+				t.Fatal(err)
+			}
+			return buildcache.Absolute("<build cache>/" + buildcache.NameKey(root, inputs))
+		}
+		directory, err := buildcache.Get(inputs, func(string) error {
+			return fmt.Errorf("prepare oracle product before checking its artifacts: %s", inputs.Name)
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return directory
+	}
 	if oracleProducer {
 		return buildcache.Product(t, inputs, build)
 	}
@@ -223,6 +248,12 @@ func testShardsAgreeUpstream(t *testing.T) []string {
 	return rows
 }
 
+func compilationOracleInputs(t *testing.T, binary, source []byte) buildcache.Inputs {
+	t.Helper()
+	witness := strings.SplitN(compilationCase(t), "\t", 2)[0]
+	return buildcache.Inputs{Name: "lint-profile-oracle-outputs", Files: []string{witness, "stage1/cohere/lint/oracles"}, Flags: []string{"mode=no-var", fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("case-sha256=%x", sha256.Sum256(source))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
+}
+
 func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
 	t.Helper()
 	binary, err := os.ReadFile(oracle)
@@ -238,8 +269,7 @@ func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte
 	if err != nil {
 		t.Fatal(err)
 	}
-	witness := strings.SplitN(compilationCase(t), "\t", 2)[0]
-	inputs := buildcache.Inputs{Name: "lint-profile-oracle-outputs", Files: []string{witness, "stage1/cohere/lint/oracles"}, Flags: []string{"mode=no-var", fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("case-sha256=%x", sha256.Sum256(source))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
+	inputs := compilationOracleInputs(t, binary, source)
 	product := oracleProduct(t, inputs, func(dir string) error {
 		for _, mode := range []string{"wire", "count"} {
 			args := []string{"--manifest", manifestPath}
