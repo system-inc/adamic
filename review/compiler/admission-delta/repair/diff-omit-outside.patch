@@ -1,0 +1,11 @@
+--- diff.go
++++ diff.go
+@@ -10,7 +10,7 @@
+ // Changed programs come from Git, including paths outside the generated corpora.
+ // Disabling rename detection treats a renamed program as an added head input.
+ func changedPrograms(root, base, head string) ([]program, error) {
+-	listing := execute(root, time.Minute, "git", "diff", "--name-only", "--diff-filter=AM", "--no-renames", "-z", base, head, "--", "*.a")
++	listing := execute(root, time.Minute, "git", "diff", "--name-only", "--diff-filter=AM", "--no-renames", "-z", base, head, "--", "corpus/*.a")
+ 	if listing.Exit != 0 || listing.Error != "" {
+ 		return nil, fmt.Errorf("diff corpus: %s %s", listing.Error, listing.Stderr)
+ 	}
