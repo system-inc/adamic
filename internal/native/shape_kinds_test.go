@@ -158,11 +158,11 @@ func shapeProbeProduct(t *testing.T) string {
 		for index, descriptor := range producerDescriptors(t, producerSource(t, producer.name, producer.path)) {
 			fmt.Fprintf(&code, "if(strcmp(argv[1],%s)==0 && index==%d) {\n%s", strconv.Quote(producer.name), index, descriptor.code)
 			if descriptor.count > 0 {
-				code.WriteString("adamic_field_kind changed[shape.count];\nmemcpy(changed,shape.kinds,sizeof changed);\nif(mutation==1 || mutation==5 || mutation==7) { changed[0]=shape.references[0]?adamic_field_number:adamic_field_reference; shape.kinds=changed; }\nif(mutation==2) shape.kinds=NULL;\nif(mutation==3) { changed[0]=255; shape.kinds=changed; }\n")
+				code.WriteString("adamic_field_kind changed[shape.count];\nmemcpy(changed,shape.kinds,sizeof changed);\nif(mutation==1 || mutation==5 || mutation==7) { changed[0]=shape.references[0]?adamic_field_number:adamic_field_reference; shape.kinds=changed; }\nif(mutation==2) shape.kinds=NULL;\nif(mutation==3) { changed[0]=255; shape.kinds=changed; }\nif(mutation>=100) { size_t field=(size_t)(mutation-100); if(field>=shape.count) return 5; changed[field]=shape.references[field]?adamic_field_number:adamic_field_reference; shape.kinds=changed; }\n")
 			} else {
 				code.WriteString("if(mutation) return 3;\n")
 			}
-			code.WriteString("if(mutation>=4) { adamic_region region={0}; adamic_object *object=mutation<6 ? adamic_object_new_in(&region,&shape) : adamic_object_new_filled_in(&region,&shape); memset(object->slots,0,shape.count*sizeof(adamic_value)); adamic_region_end(&region); } else { adamic_object *object=adamic_object_new(&shape); adamic_release(object); } return 0;\n}\n")
+			code.WriteString("if(mutation>=4 && mutation<=7) { adamic_region region={0}; adamic_object *object=mutation<6 ? adamic_object_new_in(&region,&shape) : adamic_object_new_filled_in(&region,&shape); memset(object->slots,0,shape.count*sizeof(adamic_value)); adamic_region_end(&region); } else { adamic_object *object=adamic_object_new(&shape); adamic_release(object); } return 0;\n}\n")
 		}
 	}
 	code.WriteString("return 4;\n}\n")
@@ -190,7 +190,7 @@ func shapeProbeProduct(t *testing.T) string {
 		if strings.Count(string(scaling), before) != 1 {
 			return fmt.Errorf("scaling mutation is stale")
 		}
-		changed := strings.Replace(string(scaling), before, "kinds[0]=adamic_field_reference;\n"+before, 1)
+		changed := strings.Replace(string(scaling), before, "kinds[count-1]=adamic_field_reference;\n"+before, 1)
 		if err := Build(changed, filepath.Join(directory, "scaling-mutant"), Options{Count: true}); err != nil {
 			return err
 		}
@@ -229,7 +229,11 @@ func checkShapeProducer(t *testing.T, name string) {
 		if descriptor.count == 0 {
 			continue
 		} // An empty layout has no ownership bit to contradict.
-		for _, mutation := range []string{"1", "2", "3"} {
+		mutations := []string{"1", "2", "3"}
+		for field := 1; field < descriptor.count; field++ {
+			mutations = append(mutations, strconv.Itoa(100+field))
+		}
+		for _, mutation := range mutations {
 			mutant := inlineArrayRun(t, binary, name, strconv.Itoa(index), mutation)
 			if mutant.exit == 0 || !strings.Contains(string(mutant.stderr), "adamic: inconsistent shape kind for field") {
 				t.Fatalf("%s descriptor %d mutation %s survived: %+v", name, index, mutation, mutant)
@@ -332,7 +336,7 @@ func TestShapeKindsParallelScaling(t *testing.T) {
 		t.Fatalf("control: %+v", control)
 	}
 	mutant := inlineArrayRun(t, filepath.Join(directory, "scaling-mutant"))
-	if mutant.exit == 0 || !strings.Contains(string(mutant.stderr), "inconsistent shape kind for field padding") {
+	if mutant.exit == 0 || !strings.Contains(string(mutant.stderr), "inconsistent shape kind for field value") {
 		t.Fatalf("dynamic bitmap mutant survived: %+v", mutant)
 	}
 }
