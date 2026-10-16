@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 // Repository JSON grows independently of the pinned upstream corpus. Keep the
@@ -216,28 +218,7 @@ func TestJSONPortShardDisagreement(t *testing.T) {
 
 // Decode the Go driver's escaped protocol for optional per-case calibration.
 func jsonPortAnswers(protocol string, count int) ([]answer, error) {
-	lines := strings.Split(strings.TrimSuffix(protocol, "\n"), "\n")
-	if len(lines) != count {
-		return nil, fmt.Errorf("Go answered %d/%d cases", len(lines), count)
-	}
-	unescape := strings.NewReplacer("\\\\", "\\", "\\n", "\n", "\\r", "\r", "\\t", "\t")
-	answers := make([]answer, count)
-	for index, line := range lines {
-		parts := strings.SplitN(line, "\t", 2)
-		if len(parts) != 2 {
-			return nil, fmt.Errorf("Go case %d malformed answer", index)
-		}
-		value := unescape.Replace(parts[1])
-		switch parts[0] {
-		case "ok":
-			answers[index].Output = value
-		case "error":
-			answers[index].Error = value
-		default:
-			return nil, fmt.Errorf("Go case %d unknown answer kind %q", index, parts[0])
-		}
-	}
-	return answers, nil
+	return oracles.ParseAnswers(protocol, count)
 }
 
 func TestJSONHashShardsStayStable(t *testing.T) {
