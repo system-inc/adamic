@@ -18,12 +18,12 @@ import (
 // Build-phase units and ordinary shards use these exact recipes and keys.
 func TestProduct_WitnessScriptKindLowered(t *testing.T) {
 	t.Parallel()
-	witnessScriptKindLoweredProduct(t)
+	requireLintArtifacts(t, witnessScriptKindLoweredProduct(t), "main.c", "lint.mjs")
 }
 
 func TestProduct_WitnessScriptKindNative(t *testing.T) {
 	t.Parallel()
-	witnessScriptKindNativeProduct(t)
+	requireLintExecutable(t, filepath.Join(witnessScriptKindNativeProduct(t), "scanner"))
 }
 
 func witnessScriptKindLoweredProduct(t *testing.T) string {
