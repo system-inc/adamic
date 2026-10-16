@@ -104,8 +104,8 @@ func inlineLateTicks(start, end time.Time) []inlineLateTick {
 var inlineDumpOnce sync.Once
 
 // watchInlineUnit logs, if the test is still running inlineWatchAfter into its own work, that it is, and the first
-// such test in the process logs the goroutines' stacks. It returns the function that stops the watch, after which
-// nothing logs.
+// such test in the process logs the goroutines' stacks, unless the watch itself fired late. It returns the function
+// that stops the watch, after which nothing logs.
 func watchInlineUnit(t *testing.T, start time.Time) func() {
 	var mutex sync.Mutex
 	finished := false
@@ -115,7 +115,14 @@ func watchInlineUnit(t *testing.T, start time.Time) func() {
 		if finished {
 			return
 		}
-		t.Logf("still running %.1fs into its own work", time.Since(start).Seconds())
+		elapsed := time.Since(start)
+		t.Logf("still running %.1fs into its own work", elapsed.Seconds())
+		// A watch that fires late was stopped with the whole process (the clock logs how long), and the stacks now
+		// would show only what runs after it, so it leaves them out.
+		if late := elapsed - inlineWatchAfter; late > inlineClockLate {
+			t.Logf("this watch fired %.1fs late, so the whole process was stopped: no goroutine dump", late.Seconds())
+			return
+		}
 		inlineDumpOnce.Do(func() { t.Logf("goroutines not waiting to start:\n%s", inlineStacks()) })
 	})
 	return func() {
