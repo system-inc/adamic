@@ -128,8 +128,7 @@ func graphMeasureFixture(t *testing.T, path string, million bool) {
 
 // Not parallel: compare resident sets without overlapping large witnesses.
 func TestGraphMeasurementMillion(t *testing.T) {
-	graphMeasureFixture(t, graphMillionPath, true)
-	graphOracleCounts(t, graphMillionPath)
+	graphOracleWitnessWithLayout(t, graphMillionPath, true)
 }
 func TestGraphMeasurementLinks(t *testing.T) {
 	t.Parallel()

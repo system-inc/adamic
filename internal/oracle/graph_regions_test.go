@@ -81,6 +81,11 @@ var graphOracleFixtures = []string{
 // One complete witness per test keeps both sanitizer and counted work bounded.
 func graphOracleWitness(t *testing.T, path string) {
 	t.Helper()
+	graphOracleWitnessWithLayout(t, path, false)
+}
+
+func graphOracleWitnessWithLayout(t *testing.T, path string, million bool) {
+	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
 		t.Fatal(err)
@@ -122,7 +127,7 @@ func graphOracleWitness(t *testing.T, path string) {
 		t.Fatal(report)
 	}
 	graphOracleCounts(t, path)
-	graphMeasureFixture(t, path, false)
+	graphMeasureFixture(t, path, million)
 }
 
 func graphOracleCounts(t *testing.T, path string) {
