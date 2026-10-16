@@ -1,0 +1,9 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+function build(item: number): { value: number; label: string } {
+	const made = { value: item, label: `item${item}` };
+	made.value += 10;
+	return made;
+}
+const made = parallelMap(items, build);
+for (const item of made) { console.log(`${item.value}:${item.label}`); }
