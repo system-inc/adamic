@@ -2598,10 +2598,12 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
 	}
 }
 
-// A windowed lean build is keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved design), asked for
-// with its lean caller, never by the recipe of the binary that settled it. A build that isn't lean, and a lean build
-// whose window opened late, keep the binary's whole recipe. Mutants that each fail it: a windowed lean build given the
-// whole recipe; its caller never handed on; a late window given the lean recipe.
+// A windowed lean build of buildcache's own is keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved
+// design), never by the recipe of the binary that settled it. A build that isn't lean, a lean build whose window opened
+// late, and a lean caller's windowed build keep the binary's whole recipe: a caller's code is keyed lean only once its
+// census holds, and native's archives reach the jobserver until it's handed in (#yzwm4rj, Node's reading 1). Mutants
+// that each fail it: a windowed lean build given the whole recipe; a late window given the lean recipe; a caller's
+// windowed build given the lean recipe.
 // Not parallel: newRig, and it replaces recipeFor and leanRecipeFor.
 func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 	caller := modulePath + "/internal/native/runtimeproducts"
@@ -2638,11 +2640,15 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 		return Report{}, nil, nil
 	}
-	report, entries, asked := run(&leanBuild{caller: caller}, false)
-	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean " + caller}) {
-		t.Errorf("a windowed lean build: taken as %q, entries %q, recipes asked %q; want the lean recipe alone, asked with its caller", report.Window, entries, asked)
+	report, entries, asked := run(&leanBuild{}, false)
+	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean "}) {
+		t.Errorf("a windowed lean build of buildcache's own: taken as %q, entries %q, recipes asked %q; want the lean recipe alone", report.Window, entries, asked)
 	}
-	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {caller: caller}} {
+	report, entries, asked = run(&leanBuild{caller: caller}, false)
+	if report.Window != BuildWindowed || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
+		t.Errorf("a lean caller's windowed build: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe", report.Window, entries, asked)
+	}
+	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {}} {
 		_, entries, asked := run(lean, lean != nil)
 		if !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
 			t.Errorf("%s: entries %q, recipes asked %q; want the binary's whole recipe", name, entries, asked)
