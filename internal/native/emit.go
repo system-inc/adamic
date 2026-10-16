@@ -263,6 +263,7 @@ type emitter struct {
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.
 	asyncSlots    map[int]int
+	asyncBorrows  map[int]bool
 	asyncHandler  string
 	function      *ir.Function
 	functionDepth int

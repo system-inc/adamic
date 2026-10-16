@@ -105,7 +105,12 @@ func (e *emitter) closureThrown(holds ...string) {
 // throwStatement emits throw: the error is the pending word's, and the jump is made.
 func (e *emitter) throwStatement(statement ir.Throw) {
 	value := e.value(statement.Value)
-	e.line("adamic_thrown = adamic_retain(%s);", value)
+	if e.asyncSlots != nil {
+		// The pending exception takes the statement's owner before cleanup.
+		e.line("adamic_thrown = %s;", e.kept(value))
+	} else {
+		e.line("adamic_thrown = adamic_retain(%s);", value)
+	}
 	e.end()
 	e.jumpThrown()
 }

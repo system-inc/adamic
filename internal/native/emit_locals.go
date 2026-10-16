@@ -37,6 +37,14 @@ func (e *emitter) store(local int, value string, owned bool) {
 			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value))
 			return
 		}
+		if e.asyncBorrows[local] {
+			// The source slot owns this alias until the whole frame finishes.
+			e.line("%s.reference = %s;", slot, value)
+			if owned {
+				e.line("adamic_release(%s);", value)
+			}
+			return
+		}
 		if e.program.Locals[local].GraphCell {
 			old := e.temporary()
 			e.line("void *%s = %s.reference;", old, slot)
@@ -53,7 +61,11 @@ func (e *emitter) store(local int, value string, owned bool) {
 		old := e.temporary()
 		e.line("void *%s = %s.reference;", old, slot)
 		e.line("%s.reference = %s;", slot, value)
-		e.line("adamic_release(%s);", old)
+		if _, framed := e.asyncSlots[local]; framed {
+			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+		} else {
+			e.line("adamic_release(%s);", old)
+		}
 		return
 	}
 	if !e.program.Locals[local].Type.IsReference() {
@@ -123,6 +135,12 @@ func (e *emitter) read(read ir.Read) string {
 			return e.snapshot(read.Of, fmt.Sprintf("(%s)%s", cType(read.Of), value))
 		}
 		if read.Of.IsReference() {
+			// An uncaptured suspension slot has the same statement lifetime as
+			// an ordinary local: this resume holds the frame, and no callee can
+			// replace the binding. Expression writes still require a snapshot.
+			if _, framed := e.asyncSlots[read.Local]; framed && !e.program.Locals[read.Local].Captured && !e.program.Locals[read.Local].ExpressionAssigned {
+				return fmt.Sprintf("((%s)%s)", cType(read.Of), value)
+			}
 			return e.own(read.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(read.Of), value))
 		}
 		snapshot := e.temporary()

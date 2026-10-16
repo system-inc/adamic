@@ -73,10 +73,8 @@ void adamic_async_await(adamic_async_frame *frame, adamic_async_promise *promise
     reaction->frame = adamic_retain(frame);
     reaction->promise = NULL;
     reaction->next = NULL;
-    frame->waiting = adamic_retain(promise);
     if (promise->settled) {
         reaction->promise = adamic_retain(promise);
-        clear_wait(reaction);
 #ifdef ADAMIC_ASYNC_INLINE_MUTANT
         frame->resume(frame, promise->value, promise->rejected);
         adamic_release(reaction);
@@ -85,6 +83,7 @@ void adamic_async_await(adamic_async_frame *frame, adamic_async_promise *promise
 #endif
         return;
     }
+    frame->waiting = adamic_retain(promise);
     if (promise->first == NULL) {
         pending *entry = malloc(sizeof *entry);
         if (entry == NULL) adamic_panic("out of memory", 13);
@@ -96,7 +95,9 @@ void adamic_async_await(adamic_async_frame *frame, adamic_async_promise *promise
 }
 void adamic_async_settle(adamic_async_promise *promise, adamic_value value, bool references, bool rejected) {
     if (promise->settled) return;
-    adamic_retain(promise); /* Protect against clearing the last frame/registry edges. */
+    /* Each queued reaction takes its promise before clear_wait releases the
+     * frame edge. Those owners survive unregister; no temporary self-hold is
+     * needed. Without reactions there is no registry or waiting edge to drop. */
     promise->settled = true;
     promise->rejected = rejected;
     promise->references = references;
@@ -116,7 +117,6 @@ void adamic_async_settle(adamic_async_promise *promise, adamic_value value, bool
         reaction = next;
     }
     unregister(promise);
-    adamic_release(promise);
 }
 static void abandon(adamic_async_promise *promise, bool cancelling) {
     adamic_retain(promise);
@@ -181,19 +181,22 @@ void adamic_async_free_children(void *value, void (*drop)(void *)) {
         case adamic_kind_async_frame: {
             adamic_async_frame *frame = value;
             adamic_async_forget_cleanup(frame);
-            drop(frame->waiting); drop(frame->output);
+            if (frame->waiting != NULL) drop(frame->waiting);
+            if (frame->output != NULL) drop(frame->output);
             frame->children(frame, drop);
             break;
         }
         case adamic_kind_async_promise: {
             adamic_async_promise *promise = value;
             if (promise->references) drop(promise->value.reference);
-            drop(promise->first);
+            if (promise->first != NULL) drop(promise->first);
             break;
         }
         case adamic_kind_async_reaction: {
             adamic_async_reaction *reaction = value;
-            drop(reaction->frame); drop(reaction->promise); drop(reaction->next);
+            drop(reaction->frame);
+            if (reaction->promise != NULL) drop(reaction->promise);
+            if (reaction->next != NULL) drop(reaction->next);
             break;
         }
         default: abort();

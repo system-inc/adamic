@@ -16,6 +16,7 @@ func (e *emitter) asyncFunction(index int) string {
 	regions := flow.CutAsync(graph)
 	cells := slices.Clone(function.FrameEnvironment)
 	e.asyncSlots = map[int]int{}
+	e.asyncBorrows = asyncBorrowedSlots(e.program, index)
 	for position, local := range cells {
 		e.asyncSlots[local] = position
 		e.program.Locals[local].Borrowed = false
@@ -27,14 +28,19 @@ func (e *emitter) asyncFunction(index int) string {
 	e.scopes = [][]string{nil}
 	var out strings.Builder
 	fmt.Fprintf(&out, "typedef struct { adamic_async_frame base; adamic_closure *self; adamic_object *error; size_t count; adamic_cell cells[%d]; } adamic_generated_frame_%d;\n", max(1, len(cells)), index)
-	fmt.Fprintf(&out, "static void adamic_async_children_%d(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%d *frame = (void *)base; drop(frame->self); drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", index, index)
+	fmt.Fprintf(&out, "static void adamic_async_children_%d(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%d *frame = (void *)base; if (frame->self != NULL) drop(frame->self); if (frame->error != NULL) drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", index, index)
 	fmt.Fprintf(&out, "static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", index, index)
 	for position, local := range cells {
 		if e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured) {
-			fmt.Fprintf(&out, " void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; adamic_release(adamic_slot_%d);\n", position, position, position, position)
+			if e.asyncBorrows[local] {
+				fmt.Fprintf(&out, " frame->cells[%d].value.reference = NULL;\n", position)
+			} else {
+				fmt.Fprintf(&out, " void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; if (adamic_slot_%d != NULL) adamic_release(adamic_slot_%d);\n", position, position, position, position, position)
+			}
+			fmt.Fprintf(&out, " frame->cells[%d].references = false;\n", position)
 		}
 	}
-	out.WriteString(" void *self = frame->self; frame->self = NULL; adamic_release(self); void *error = frame->error; frame->error = NULL; adamic_release(error); void *output = frame->base.output; frame->base.output = NULL; adamic_release(output);\n}\n")
+	out.WriteString(" void *self = frame->self; frame->self = NULL; if (self != NULL) adamic_release(self); void *error = frame->error; frame->error = NULL; if (error != NULL) adamic_release(error); void *output = frame->base.output; frame->base.output = NULL; adamic_release(output);\n}\n")
 	fmt.Fprintf(&out, "static void adamic_async_abandon_%d(adamic_async_frame *base) { adamic_async_finish_%d((void *)base); }\n", index, index)
 	fmt.Fprintf(&out, "static void adamic_async_resume_%d(adamic_async_frame *base, adamic_value resumed, bool rejected) {\n adamic_generated_frame_%d *frame = (void *)base; adamic_closure *self = frame->self; (void)self; (void)resumed; (void)rejected;\n switch (base->state) {\n", index, index)
 	// One state names each region entry. Fulfillment and rejection bind before jumping.
@@ -164,7 +170,7 @@ func (e *emitter) asyncFunction(index int) string {
 		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
 	}
 	for position, local := range cells {
-		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference() || e.program.Locals[local].IterationCell)
+		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, (e.program.Locals[local].Type.IsReference() || e.program.Locals[local].IterationCell) && !e.asyncBorrows[local])
 	}
 	if function.ArgumentsCount != 0 {
 		local := function.ArgumentsCount - 1
@@ -204,6 +210,7 @@ func (e *emitter) asyncFunction(index int) string {
 		out.WriteString(" return output;\n}\n")
 	}
 	e.asyncSlots = nil
+	e.asyncBorrows = nil
 	e.function = nil
 	e.scopes = nil
 	return out.String()
@@ -225,6 +232,6 @@ func (e *emitter) asyncMain() {
 	}
 	e.line("adamic_async_promise *root = %s();", e.functionName(e.program.AsyncEntry-1))
 	e.line("adamic_async_run();")
-	e.line("if (root->rejected) { adamic_thrown = adamic_retain(root->value.reference); adamic_uncaught(); }")
+	e.line("if (root->rejected) { adamic_thrown = root->value.reference; adamic_uncaught(); }")
 	e.line("adamic_release(root);")
 }
