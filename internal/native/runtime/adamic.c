@@ -5,6 +5,8 @@
 
 #include "adamic.h"
 #include "count.h"
+#include "host_runtime.h"
+#include <stdio.h>
 
 #include <errno.h>
 #ifndef ADAMIC_TARGET_WASI
@@ -160,6 +162,7 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 
 void adamic_start(int count, char **values) {
 	adamic_arguments_save(count, values);
+	adamic_host_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
@@ -204,4 +207,32 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 _Noreturn void adamic_unreachable(void) {
 	static const char message[] = "compiler bug: a function ended without returning";
 	adamic_panic(message, sizeof message - 1);
+}
+
+// An explicit process exit bypasses all atexit hooks, worker joins, finally blocks and releases.
+_Noreturn void adamic_process_exit_now(int code) {
+	adamic_output_flush();
+	(void)fflush(stdout);
+	(void)fflush(stderr);
+#ifdef ADAMIC_COUNT
+	bool report = true;
+#else
+	bool report = getenv("ADAMIC_LEAK_CHECK") != NULL;
+#endif
+	if (report) {
+		char line[80];
+		int length = snprintf(line, sizeof line, "\nadamic: intentional exit: status %d\n", (unsigned char)code);
+		if (length > 0 && (size_t)length < sizeof line) { (void)write_all(2, line, (size_t)length); }
+	}
+	ADAMIC_COUNT_REPORT();
+	_exit(code);
+}
+
+// Checked stream binding: preserve stdout/stderr order and complete the write synchronously.
+bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text) {
+	flush();
+	write_text(stream, text->bytes, text->length);
+	flush();
+	bool ok = !broken[stream];
+	return ok;
 }
