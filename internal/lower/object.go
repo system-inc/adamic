@@ -30,10 +30,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if spread.Type() != ir.Object {
+				modules, err := l.moduleOrder(l.program.Files()[0])
+				if err != nil {
+					return nil, err
+				}
+				if err := l.librarySpreadRefusal(librarySpread{node: property, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))}, l.librarySpreadCandidates(modules)); err != nil {
+					return nil, err
+				}
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
 			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
+			l.librarySpreads = append(l.librarySpreads, librarySpread{node: property, source: spread, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindMethodDeclaration:
 			name, known := l.methodName(property)
