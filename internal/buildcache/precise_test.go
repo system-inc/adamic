@@ -2658,11 +2658,13 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 	}
 }
 
-// A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache by its make files and every
-// package of the tree it links whole, and a lean caller's own package, never what the caller links. So a runtime archive
-// keys runtimeproducts and internal/toolchain and no file of the compiler, where the settling binary's whole recipe
-// keys the compiler's. buildcache's own lean build keys no caller. Mutants that each fail it: the caller listed with
-// what it links; buildcache keyed whole; the caller left out.
+// A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the tree
+// it links, each by every non-test file, and a lean caller's own package, never what the caller links. So a runtime
+// archive keys runtimeproducts, internal/toolchain and buildcache's gobuild.go (goProduct's closure and
+// withOutsideHeaders, which run a go build) and no file of the compiler, where the settling binary's whole recipe keys
+// the compiler's. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no package
+// is refused, as recipeOf refuses it. Mutants that each fail it: the caller listed with what it links; buildcache keyed
+// by its make files alone; the caller left out; the refusal dropped.
 func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 	t.Parallel()
 	root := repositoryRootForTest(t)
@@ -2679,22 +2681,26 @@ func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 		sort.Strings(listed)
 		return listed
 	}
-	lean, own := paths(leanRecipeOf(root, caller, journalEntry{})), paths(leanRecipeOf(root, "", journalEntry{}))
-	whole := paths(recipeOf(root, journalEntry{Package: caller + ".test"}))
+	settling := journalEntry{Package: caller + ".test"}
+	lean, own := paths(leanRecipeOf(root, caller, settling)), paths(leanRecipeOf(root, "", journalEntry{Package: buildcachePackage + ".test"}))
+	whole := paths(recipeOf(root, settling))
+	if refused := leanRecipeOf(root, caller, journalEntry{Executable: "/tmp/go-build1/b001/exe/main"}); refused.reason == "" {
+		t.Errorf("a process naming no package has a lean recipe: %d entries", len(refused.entries))
+	}
 	has := func(listed []string, prefix string) bool {
 		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
 	}
-	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod"} {
+	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod"} {
 		if !has(lean, want) {
 			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
 		}
 	}
-	for _, unwanted := range []string{"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ir/", "content internal/flow/", "content bridge/", "content internal/buildcache/settle.go"} {
+	for _, unwanted := range []string{"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ir/", "content internal/flow/", "content bridge/", "content internal/buildcache/precise_test.go"} {
 		if has(lean, unwanted) {
 			t.Errorf("a runtime archive's lean recipe holds %q", unwanted)
 		}
 	}
-	if has(own, "content internal/native/runtimeproducts/") || !has(own, "content internal/buildcache/make_go.go") {
+	if has(own, "content internal/native/runtimeproducts/") || !has(own, "content internal/buildcache/gobuild.go") {
 		t.Errorf("buildcache's own lean recipe: %q", own)
 	}
 	if !has(whole, "content internal/native/emit_expressions.go") {
