@@ -105,6 +105,9 @@ type journalEntry struct {
 	Lean bool `json:"lean,omitempty"`
 	// Keyed are a lean build's files outside Declared whose bytes its name key holds (leanBuild), as absolute paths.
 	Keyed []string `json:"keyed,omitempty"`
+	// LeanCaller is a lean build's caller outside buildcache (leanBuild), by import path: its package's code is the
+	// build's, keyed in its recipe (leanRecipeOf). Empty for buildcache's own lean builds.
+	LeanCaller string `json:"leanCaller,omitempty"`
 }
 
 var journalProcess sync.Once
