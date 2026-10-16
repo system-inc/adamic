@@ -201,11 +201,11 @@ static void stop_start(void) {
 	}
 }
 
-// Node resets inherited ignored SIGINT, SIGHUP and SIGTERM at startup. Other ignored signals
-// stay ignored; they would not terminate the process with their inherited disposition.
+// stop_with installs stopped for a signal, unless the program itself ignores it (SIGPIPE, SIGXFSZ
+// and SIGUSR1, as Node does). What a parent ignored was reset at startup (adamic_start).
 static void stop_with(int signal_number) {
 	struct sigaction current;
-	if (sigaction(signal_number, NULL, &current) != 0 || (current.sa_handler == SIG_IGN && signal_number != SIGINT && signal_number != SIGHUP && signal_number != SIGTERM)) {
+	if (sigaction(signal_number, NULL, &current) != 0 || current.sa_handler == SIG_IGN) {
 		return;
 	}
 	struct sigaction handler;
@@ -258,16 +258,29 @@ void adamic_start(int count, char **values) {
 	}
 #endif
 	adamic_arguments_save(count, values);
-	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
+	default_action.sa_handler = SIG_DFL;
+	sigemptyset(&default_action.sa_mask);
+	// Node resets every signal its parent ignored (under nohup, or as a background job) to its
+	// default at startup, so the program still stops on them; it then sets its own below.
+#if defined(SIGRTMAX)
+	int last = SIGRTMAX;
+#else
+	int last = 31;
+#endif
+	for (int signal_number = 1; signal_number <= last; signal_number++) {
+		struct sigaction current;
+		if (signal_number != SIGKILL && signal_number != SIGSTOP && sigaction(signal_number, NULL, &current) == 0 && current.sa_handler == SIG_IGN) {
+			(void)sigaction(signal_number, &default_action, NULL);
+		}
+	}
+	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 	signal(SIGPIPE, SIG_IGN);
 	// Node also ignores file-size-limit signals: writes report EFBIG instead.
 	signal(SIGXFSZ, SIG_IGN);
 	// SIGUSR1 starts Node's inspector, and the program goes on. There's no inspector here, but the
 	// program goes on too.
 	signal(SIGUSR1, SIG_IGN);
-	default_action.sa_handler = SIG_DFL;
-	sigemptyset(&default_action.sa_mask);
 	stop_start();
 	for (size_t index = 0; index < sizeof stop_signals / sizeof stop_signals[0]; index++) {
 		stop_with(stop_signals[index]);
