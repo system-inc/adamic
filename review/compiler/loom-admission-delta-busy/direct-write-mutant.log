@@ -1,0 +1,8 @@
+=== RUN   TestExecutableReplacement
+=== PAUSE TestExecutableReplacement
+=== CONT  TestExecutableReplacement
+    speed_test.go:62: replacement executable is not ready: {WallSeconds:0.000352697 Exit:-1 Stdout: Stderr: Error:fork/exec /tmp/adamic-gate/TestExecutableReplacement3643765269/001/compiler: text file busy}
+--- FAIL: TestExecutableReplacement (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.012s
+FAIL
