@@ -153,6 +153,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	// billed reads, every one a 404).
 	if looked.directory != "" {
 		journalFound(nameKey, inputs.Name, looked.directory, looked.upstreams)
+		rerecord(cache, nameKey, inputs.Name, looked.refound)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
@@ -178,6 +179,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 				return "", "", err
 			}
 			journalFound(nameKey, inputs.Name, product, looked.keyUpstreams[index])
+			rerecord(cache, nameKey, inputs.Name, looked.keyRefound[index])
 			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}

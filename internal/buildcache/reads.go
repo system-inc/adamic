@@ -707,12 +707,15 @@ func toolsRoot() (string, error) {
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key
 // names a product in the cache, or why none did, and the keys each set gave (for the store to try). With the product,
 // its upstreams: every product the set that found it reads, through their sets in turn; with each key, the same for
-// the set that gave it (keyUpstreams).
+// the set that gave it (keyUpstreams). With each, the set that gave it as it values on this tree, when it stored another
+// key (refound, keyRefound): the set the caller re-records once it has the product (rerecord).
 type found struct {
 	key, directory, why string
 	keys                []string
 	upstreams           []upstream
 	keyUpstreams        [][]upstream
+	refound             *readSet
+	keyRefound          []*readSet
 }
 
 // An upstream is a product a found product's set reads, by name key and the directory this process found it in. A run
@@ -832,9 +835,11 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 			newest = evaluated
 		}
 		upstreams := setUpstreams(root, cache, set, depth, known)
+		refound := revalued(set, evaluated)
 		result.keys, result.keyUpstreams = append(result.keys, evaluated.key), append(result.keyUpstreams, upstreams)
+		result.keyRefound = append(result.keyRefound, refound)
 		if _, err := os.Stat(filepath.Join(cache, evaluated.key)); err == nil {
-			result.key, result.directory, result.upstreams = evaluated.key, filepath.Join(cache, evaluated.key), upstreams
+			result.key, result.directory, result.upstreams, result.refound = evaluated.key, filepath.Join(cache, evaluated.key), upstreams, refound
 			return result, nil
 		}
 	}
@@ -842,6 +847,41 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 		result.why = changed(file.Sets[0], newest)
 	}
 	return result, nil
+}
+
+// revalued is set as it values on this tree (evaluated), under the key it gave, when that isn't the key it stored: the
+// set to record again if it finds or fetches a product there. Nil when it gave its own key, and in read mode, which
+// never writes the cache's read sets.
+func revalued(set readSet, evaluated evaluation) *readSet {
+	if set.Key == evaluated.key || readMode() {
+		return nil
+	}
+	again := readSet{Recorded: now(), Key: evaluated.key, Trace: set.Trace, Drift: set.Drift, Entries: make([]readEntry, len(set.Entries))}
+	for index, entry := range set.Entries {
+		again.Entries[index] = readEntry{Kind: entry.Kind, Path: entry.Path, Value: shortValue(evaluated.values[index])}
+	}
+	return &again
+}
+
+// rerecorded holds each name key and key this process has recorded again (rerecord), so a product looked up many times
+// writes its file once.
+var rerecorded sync.Map
+
+// rerecord records again, first among nameKey's sets, the set that found or fetched its product under a key it didn't
+// store (#xaz1487, system_adamic's yes on #2dkn3fb): each set stores what it valued to when it was recorded, so a product
+// found by one that values otherwise now sits under a key no set in the file names, and once newer sets push that set
+// past the file's keptSets, nothing finds the product any more. A failure to write is noted and never fails the
+// lookup.
+func rerecord(cache, nameKey, name string, set *readSet) {
+	if set == nil {
+		return
+	}
+	if _, done := rerecorded.LoadOrStore(cache+"\x00"+nameKey+"\x00"+set.Key, true); done {
+		return
+	}
+	if err := recordReads(cache, nameKey, name, *set); err != nil {
+		note("reads %s %s: recording the set that found %s again: %v", name, nameKey[:min(12, len(nameKey))], set.Key[:12], err)
+	}
 }
 
 // differing is the entries of a set whose values on this tree differ from the ones it recorded.
