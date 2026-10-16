@@ -29,6 +29,8 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -52,20 +54,61 @@ func Product(t testing.TB, inputs Inputs, build func(directory string) error) st
 // (leanCallers, held by a test): a closure over a test's own bytes would be keyed without them.
 func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	return product(t, inputs, build, &leanBuild{})
+	return product(t, inputs, build, leanCalled(1))
 }
 
 // LeanGet is Get for a lean build (LeanProduct).
 func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
-	directory, _, err := get(inputs, build, &leanBuild{})
+	directory, _, err := get(inputs, build, leanCalled(1))
 	return directory, err
 }
 
 // A leanBuild is a build Settle keys by its own window (LeanProduct), with keyed the files outside its declared Files
 // whose bytes its name key already holds: a lean build's window counts a file its test wrote before the window as an
 // input, never as the build's own output, unless it is one of these (goProduct's -overlay file, whose map the key holds).
+//
+// caller is the lean caller whose package holds the build's code, as an import path (leanCalled), or "" when it is
+// buildcache's own: Settle keys a lean build by the recipe of the code that makes it (leanRecipeOf, #earlycut), never by
+// the recipe of the test binary that settled it.
 type leanBuild struct {
-	keyed []string
+	keyed  []string
+	caller string
+}
+
+// leanCalled is the lean build its caller asks for, skip frames above leanCalled's own: built from buildcache's code, or
+// from the package that called, when it's one of leanCallers. Any other package's build isn't lean (nil): its code is
+// unreviewed, so it keeps the settling binary's whole recipe.
+func leanCalled(skip int) *leanBuild {
+	pc, _, _, ok := runtime.Caller(skip + 1)
+	if !ok {
+		return nil
+	}
+	return leanBuildOf(functionPackage(runtime.FuncForPC(pc).Name()))
+}
+
+// leanBuildOf is the lean build caller, a package's import path, asks for: buildcache's own, a reviewed lean caller's
+// (leanCallers), or none.
+func leanBuildOf(caller string) *leanBuild {
+	switch {
+	case caller == buildcachePackage:
+		return &leanBuild{}
+	case slices.Contains(leanCallers, strings.TrimPrefix(caller, modulePath+"/")):
+		return &leanBuild{caller: caller}
+	}
+	return nil
+}
+
+// modulePath is the repository's module, the prefix of every package of it as go names one.
+const modulePath = "github.com/system-inc/adamic"
+
+// functionPackage is the import path of the package defining the function a symbol names, as the runtime spells it
+// (github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1).
+func functionPackage(symbol string) string {
+	slash := strings.LastIndex(symbol, "/")
+	if dot := strings.Index(symbol[slash+1:], "."); dot >= 0 {
+		return symbol[:slash+1+dot]
+	}
+	return symbol
 }
 
 // leanCallers are the packages outside buildcache that may build lean (LeanProduct, LeanGet), each reviewed to take
@@ -243,7 +286,7 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean *leanBuild) {
 	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean != nil}
 	if lean != nil {
-		entry.Keyed = lean.keyed
+		entry.Keyed, entry.LeanCaller = lean.keyed, lean.caller
 	}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)

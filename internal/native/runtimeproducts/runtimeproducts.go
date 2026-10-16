@@ -104,11 +104,17 @@ func Declared(request native.RuntimeRequest) error {
 func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "native-runtime",
-		Files:     []string{"internal/native/runtime", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"},
+		Files:     slices.Clone(runtimeFiles),
 		Flags:     slices.Clone(request.Portable),
 		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
 	}
 }
+
+// runtimeFiles are what an archive's build reads and runs of internal/native, which its lean recipe keys as files
+// (buildcache.LeanProduct, #earlycut): the runtime's sources, and the files defining all the build reaches from
+// native.RuntimeRequest.Build, which TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them. The rest of
+// internal/native, the compiler, is no input of an archive.
+var runtimeFiles = []string{"internal/native/runtime", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
 
 // Build builds ahead the archives of the sets group owns (every third, from group) with the named variant's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives
