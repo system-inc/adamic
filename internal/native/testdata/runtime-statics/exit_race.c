@@ -1,6 +1,8 @@
 #include "harness.h"
 #include <stdatomic.h>
 
+_Static_assert(ATOMIC_BOOL_LOCK_FREE == 2, "fixture requires lock-free bool atomics");
+
 static pthread_t caller;
 static atomic_flag writer_selected = ATOMIC_FLAG_INIT;
 static _Atomic bool writer_ready;
@@ -8,7 +10,8 @@ static _Atomic bool writer_released;
 static _Thread_local bool hold_writer;
 static adamic_string line = ADAMIC_STRING("signal worker line");
 
-// No happens-before edge from the writer to finish: the runtime must supply it.
+// Hold one actual buffer writer while it owns output_lock. The exit hook releases
+// it before the protected shutdown, or after the mutant's unlocked flush.
 void adamic_test_exit_writer(void) {
  if (!hold_writer) { return; }
  hold_writer = false;

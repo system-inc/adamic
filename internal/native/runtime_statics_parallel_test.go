@@ -62,13 +62,18 @@ func runRuntimeStaticsProtectionMutant(t *testing.T, unit int) {
 		}
 		t.Run(mutant.name, func(t *testing.T) {
 			if strings.HasPrefix(mutant.name, "normalization_") {
-				source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, mutant.file))
-				if err != nil {
-					t.Fatal(err)
+				for _, unsafe := range []bool{false, true} {
+					name := "guarded"
+					if unsafe {
+						name = "mutant"
+					}
+					t.Run(name, func(t *testing.T) {
+						library, root := staticsNormalizationRaceLibrary(t, mutant.name, mutant.old, mutant.changed, unsafe)
+						binary := staticsRaceFixture(t, root, library, "normalization_race")
+						staticsSteadyRun(t, binary, mutant.name, unsafe)
+					})
 				}
-				if !strings.Contains(string(source), mutant.old) {
-					t.Skip("this runtime has const Unicode tables without the area branch's thread-local lookup caches")
-				}
+				return
 			}
 			library, root := staticsRaceLibrary(t, mutant.file, mutant.old, mutant.changed)
 			binary := staticsRaceFixture(t, root, library, mutant.fixture)
@@ -113,10 +118,14 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 	}
 	// A relaxed readiness gate exposes the exit race without a long print workload.
 	for _, mutant := range []bool{false, true} {
-		t.Run(fmt.Sprintf("exit_flush_%t", mutant), func(t *testing.T) {
+		name := "exit_flush_guarded"
+		if mutant {
+			name = "exit_flush_mutant"
+		}
+		t.Run(name, func(t *testing.T) {
 			library, root := staticsExitRaceLibrary(t, mutant)
 			binary := staticsRaceFixture(t, root, library, "exit_race")
-			staticsSignalRun(t, binary, false, 0, mutant)
+			staticsSteadyRun(t, binary, "exit_flush", mutant)
 		})
 	}
 }
@@ -189,31 +198,6 @@ func staticsSignalRaceLibrary(t *testing.T, mutant bool) (string, string) {
 		flush = "\n\tflush();"
 	}
 	patch("int saved_errno = errno;", "int saved_errno = errno;"+flush+"\n\tadamic_test_signal_release();")
-	return staticsRaceLibrary(t, "adamic.c", string(source), changed)
-}
-
-// The writer is paused inside buffer with output_lock held. Readiness and release
-// are relaxed, so only the runtime's join and lock can order finish's buffer reads.
-func staticsExitRaceLibrary(t *testing.T, mutant bool) (string, string) {
-	t.Helper()
-	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, "adamic.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	changed := string(source)
-	patch := func(old, replacement string) {
-		t.Helper()
-		if strings.Count(changed, old) != 1 {
-			t.Fatalf("missing or ambiguous exit race seam: %q", old)
-		}
-		changed = strings.Replace(changed, old, replacement, 1)
-	}
-	patch("static void finish(void) {", "extern void adamic_test_exit_release(void);\nstatic void finish(void) {\n\tadamic_test_exit_release();")
-	patch("static void buffer(const char *bytes, size_t length) {", "extern void adamic_test_exit_writer(void);\nstatic void buffer(const char *bytes, size_t length) {")
-	patch("output_used += length;", "output_used += length;\n\tadamic_test_exit_writer();")
-	if mutant {
-		patch("adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
-	}
 	return staticsRaceLibrary(t, "adamic.c", string(source), changed)
 }
 
