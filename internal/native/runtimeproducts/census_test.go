@@ -82,8 +82,9 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 //     parameter's or a result's (M4). An interface call reaches every type of the package's own files that implements
 //     it (M3);
 //   - each write to a reached package variable, through an index, a selector, a star or its address handed on, from a
-//     file declared doesn't name, whatever reaches it, any use there of one a copy shares storage with, and each reached
-//     package variable another package could write, an exported one (M1, M2);
+//     file declared doesn't name, whatever reaches it, or from code of a declared one the reach doesn't take; any use
+//     in an undeclared file of one a copy shares storage with; and each reached package variable another package could
+//     write, an exported one (M1, M2);
 //   - each package of the tree it reaches outside leanSlice, and each interface call some type of such a package
 //     implements;
 //   - and each thing the census can't follow, which fails closed: a type error, a call it couldn't type, a call through a
@@ -372,8 +373,23 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 	// M1 and M2: a write to a reached package variable, anywhere in the package's files and its test files, whatever
 	// reaches it, from a file the build's key doesn't declare. So is any use there of one whose storage a copy shares (a
 	// slice, a map, a pointer), since a local holding it writes what the build reads where no write names the variable.
+	// In a declared file, whose content is keyed, a write is the build's own inside a reached function, an init or an
+	// initializer the reach took, which run as it does; anywhere else the value it stores isn't keyed, an unreached
+	// setter's that a test calls before the window (Tests' must on 929af5812d).
 	for _, file := range files {
-		if !read(file) || declares(root, declared, fileOf(file)) {
+		if !read(file) {
+			continue
+		}
+		if declares(root, declared, fileOf(file)) {
+			for _, declaration := range file.Decls {
+				if !takenByTheReach(declaration, info, reached) {
+					eachWrite(declaration, info, true, func(root types.Object, node ast.Node) {
+						if variable, ok := root.(*types.Var); ok && reached[variable] {
+							findings[fmt.Sprintf("%s: writes %s, which the build reads, in code the reach doesn't take", at(node), variable.Name())] = true
+						}
+					})
+				}
+			}
 			continue
 		}
 		eachWrite(file, info, true, func(root types.Object, node ast.Node) {
@@ -398,6 +414,28 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 	}
 	sort.Strings(census)
 	return census, nil
+}
+
+// takenByTheReach says whether declaration runs as the reach does: a reached function or method, an init, or package
+// variables the reach took, every one of them.
+func takenByTheReach(declaration ast.Decl, info *types.Info, reached map[types.Object]bool) bool {
+	switch declaration := declaration.(type) {
+	case *ast.FuncDecl:
+		return declaration.Recv == nil && declaration.Name.Name == "init" || reached[info.Defs[declaration.Name]]
+	case *ast.GenDecl:
+		if declaration.Tok != token.VAR {
+			return true
+		}
+		for _, spec := range declaration.Specs {
+			for _, name := range spec.(*ast.ValueSpec).Names {
+				if !reached[info.Defs[name]] {
+					return false
+				}
+			}
+		}
+		return true
+	}
+	return false
 }
 
 // sharesStorage says whether a copy of a value of typ shares storage with it, so writing the copy writes the original:
@@ -648,22 +686,24 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	}
 }
 
-// The census follows a build's reach with real types and fails closed on what it can't (Node's rails, and Mentat's M1
-// to M4 on 4de7029d15). Each of these names a finding: a function moved into an undeclared file; an init there calling
-// os.Setenv, writing a variable the build reads, through an index too, or taking its address; a write to one from code
-// nothing reaches, through a selector, a pointer method or clear, or through a local copy sharing its storage; an
-// exported variable the build reads; a test file's write when the package's tests build lean; a call through a function
-// value held in a package variable, called or handed on; an interface call, reaching a type of an undeclared file that
-// implements it, or one a package of the tree implements; reflection; a package of the tree outside buildcache's slice;
-// a reached type's other methods, and the methods of a type reached only as a field's or a variable's; and a type
-// error. A call through a parameter given a literal names none, nor does a test file's write when the tests don't build
-// lean, nor an initializer that only sets its own variable from a literal or a pure constructor in an undeclared file.
-// Mutants: rail (c) off (the os.Setenv init passes); rail (b) off; a pure constructor taken as an effect; package
+// The census follows a build's reach with real types and fails closed on what it can't (Node's rails, Mentat's M1 to M4
+// on 4de7029d15, Tests' must on 929af5812d). Each of these names a finding: a function moved into an undeclared file;
+// an init there calling os.Setenv, writing a variable the build reads, through an index too, or taking its address; a
+// write to one from code nothing reaches, through a selector, a pointer method or clear, or through a local copy
+// sharing its storage; an unreached setter writing one in a declared file; an exported variable the build reads; a test
+// file's write when the package's tests build lean; a call through a function value held in a package variable, called
+// or handed on; an interface call, reaching a type of an undeclared file that implements it, or one a package of the
+// tree implements; reflection; a package of the tree outside buildcache's slice; a reached type's other methods, and
+// the methods of a type reached only as a field's or a variable's; and a type error. A call through a parameter given a
+// literal names none, nor does a reached function's write in a declared file, a test file's write when the tests don't
+// build lean, or an initializer that only sets its own variable from a literal or a pure constructor in an undeclared
+// file. Mutants: rail (c) off (the os.Setenv init passes); rail (b) off; a pure constructor taken as an effect; package
 // variables' function values followed silently; a write's root read through bare names alone; an address taken, a
-// pointer method's receiver or a builtin's argument not a write; writes from code nothing reaches unread; uses of a
-// variable sharing its storage unread, and a slice taken as not sharing it; the exported rule off; test files read
-// whether or not the tests build lean, and never; an interface's implementers not reached; the tree's implementers
-// unread; a reached type's declaration unread; a reached variable's declared type unread; type errors dropped.
+// pointer method's receiver or a builtin's argument not a write; writes from code nothing reaches unread; declared
+// files' writes unread, and read in reached functions too; uses of a variable sharing its storage unread, and a slice
+// taken as not sharing it; the exported rule off; test files read whether or not the tests build lean, and never; an
+// interface's implementers not reached; the tree's implementers unread; a reached type's declaration unread; a reached
+// variable's declared type unread; type errors dropped.
 func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 	t.Parallel()
 	base := map[string]string{
@@ -680,31 +720,33 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 		lean  bool
 		want  string
 	}{
-		"complete by its declared files":        {nil, true, ""},
-		"a function moved to an undeclared":     {map[string]string{"helper.go": "", "moved.go": "package fixture\n\nfunc helper() string { return \"h\" }\n"}, true, "helper, defined in moved.go"},
-		"an init calling os.Setenv":             {map[string]string{"env.go": "package fixture\n\nimport \"os\"\n\nfunc init() { os.Setenv(\"CC\", \"gcc\") }\n"}, true, "init in env.go counts as reached"},
-		"an init writing what it reads":         {map[string]string{"set.go": "package fixture\n\nfunc init() { mode = \"slow\" }\n"}, true, "init in set.go counts as reached"},
-		"an init writing through an index":      {map[string]string{"set.go": "package fixture\n\nfunc init() { features[0] = \"b\" }\n"}, true, "init in set.go counts as reached"},
-		"an init taking an address":             {map[string]string{"set.go": "package fixture\n\nfunc init() { p := &mode; _ = p }\n"}, true, "init in set.go counts as reached"},
-		"a write from code nothing reaches":     {map[string]string{"other.go": "package fixture\n\nfunc SetMode(m string) { mode = m }\n"}, true, "writes mode"},
-		"a write through a selector":            {map[string]string{"other.go": "package fixture\n\nfunc tune() { settings.depth = 2 }\n"}, true, "writes settings"},
-		"a pointer method's call":               {map[string]string{"other.go": "package fixture\n\nfunc tidy() { settings.reset() }\n"}, true, "writes settings"},
-		"a builtin clearing it":                 {map[string]string{"other.go": "package fixture\n\nfunc wipe() { clear(features) }\n"}, true, "writes features"},
-		"a copy written in a local":             {map[string]string{"other.go": "package fixture\n\nfunc alias() { local := features; local[0] = \"b\" }\n"}, true, "uses features"},
-		"an exported variable the build reads":  {map[string]string{"helper.go": "package fixture\n\nvar Prefix = \"p\"\n\nfunc helper() string { return Prefix }\n"}, true, "Prefix, which the build reads, is exported"},
-		"a test file's write, tests built lean": {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, true, "writes mode"},
-		"a test file's write, tests never lean": {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, false, ""},
-		"a call through a function value":       {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return hook() }\n"}, true, "the function value hook"},
-		"a function value handed on":            {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return call(hook) }\n\nfunc call(f func() string) string { return f() }\n"}, true, "the function value hook"},
-		"a call through a parameter":            {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return call(func() string { return \"h\" }) }\n\nfunc call(f func() string) string { return f() }\n"}, true, ""},
-		"an interface call":                     {map[string]string{"helper.go": "package fixture\n\ntype namer interface{ name() string }\n\nvar current namer\n\nfunc helper() string { return current.name() }\n", "loud.go": "package fixture\n\ntype loud struct{}\n\nfunc (loud) name() string { return \"l\" }\n"}, true, "loud, defined in loud.go"},
-		"an interface call the tree implements": {map[string]string{"helper.go": "package fixture\n\nvar failure error\n\nfunc helper() string { return failure.Error() }\n"}, true, "a package of the tree no lean recipe keys"},
-		"reflection":                            {map[string]string{"helper.go": "package fixture\n\nimport \"reflect\"\n\nfunc helper() string { return reflect.TypeOf(1).Name() }\n"}, true, "reflection (reflect)"},
-		"a package of the tree":                 {map[string]string{"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/ir\"\n\nfunc helper() string { var f ir.Function; _ = f; return \"h\" }\n"}, true, "reaches github.com/system-inc/adamic/internal/ir"},
-		"a reached type's other methods":        {map[string]string{"methods.go": "package fixture\n\nfunc (r Request) Other() string { return \"o\" }\n"}, true, "Other, defined in methods.go"},
-		"a type reached as a field's":           {map[string]string{"methods.go": "package fixture\n\nfunc (l level) String() string { return \"l\" }\n"}, true, "String, defined in methods.go"},
-		"a type reached as a variable's":        {map[string]string{"helper.go": "package fixture\n\ntype counter int\n\nvar current counter\n\nfunc helper() string { _ = current; return \"h\" }\n", "methods.go": "package fixture\n\nfunc (c counter) String() string { return \"c\" }\n"}, true, "String, defined in methods.go"},
-		"a type error":                          {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return missing() }\n"}, true, "a type error, which fails the census closed"},
+		"complete by its declared files":         {nil, true, ""},
+		"a function moved to an undeclared":      {map[string]string{"helper.go": "", "moved.go": "package fixture\n\nfunc helper() string { return \"h\" }\n"}, true, "helper, defined in moved.go"},
+		"an init calling os.Setenv":              {map[string]string{"env.go": "package fixture\n\nimport \"os\"\n\nfunc init() { os.Setenv(\"CC\", \"gcc\") }\n"}, true, "init in env.go counts as reached"},
+		"an init writing what it reads":          {map[string]string{"set.go": "package fixture\n\nfunc init() { mode = \"slow\" }\n"}, true, "init in set.go counts as reached"},
+		"an init writing through an index":       {map[string]string{"set.go": "package fixture\n\nfunc init() { features[0] = \"b\" }\n"}, true, "init in set.go counts as reached"},
+		"an init taking an address":              {map[string]string{"set.go": "package fixture\n\nfunc init() { p := &mode; _ = p }\n"}, true, "init in set.go counts as reached"},
+		"a write from code nothing reaches":      {map[string]string{"other.go": "package fixture\n\nfunc SetMode(m string) { mode = m }\n"}, true, "writes mode"},
+		"a write through a selector":             {map[string]string{"other.go": "package fixture\n\nfunc tune() { settings.depth = 2 }\n"}, true, "writes settings"},
+		"a pointer method's call":                {map[string]string{"other.go": "package fixture\n\nfunc tidy() { settings.reset() }\n"}, true, "writes settings"},
+		"a builtin clearing it":                  {map[string]string{"other.go": "package fixture\n\nfunc wipe() { clear(features) }\n"}, true, "writes features"},
+		"a copy written in a local":              {map[string]string{"other.go": "package fixture\n\nfunc alias() { local := features; local[0] = \"b\" }\n"}, true, "uses features"},
+		"an unreached setter in a declared file": {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return \"h\" }\n\nfunc SetMode(m string) { mode = m }\n"}, true, "writes mode, which the build reads, in code the reach doesn't take"},
+		"a reached write in a declared file":     {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { mode = \"m\"; return \"h\" }\n"}, true, ""},
+		"an exported variable the build reads":   {map[string]string{"helper.go": "package fixture\n\nvar Prefix = \"p\"\n\nfunc helper() string { return Prefix }\n"}, true, "Prefix, which the build reads, is exported"},
+		"a test file's write, tests built lean":  {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, true, "writes mode"},
+		"a test file's write, tests never lean":  {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, false, ""},
+		"a call through a function value":        {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return hook() }\n"}, true, "the function value hook"},
+		"a function value handed on":             {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return call(hook) }\n\nfunc call(f func() string) string { return f() }\n"}, true, "the function value hook"},
+		"a call through a parameter":             {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return call(func() string { return \"h\" }) }\n\nfunc call(f func() string) string { return f() }\n"}, true, ""},
+		"an interface call":                      {map[string]string{"helper.go": "package fixture\n\ntype namer interface{ name() string }\n\nvar current namer\n\nfunc helper() string { return current.name() }\n", "loud.go": "package fixture\n\ntype loud struct{}\n\nfunc (loud) name() string { return \"l\" }\n"}, true, "loud, defined in loud.go"},
+		"an interface call the tree implements":  {map[string]string{"helper.go": "package fixture\n\nvar failure error\n\nfunc helper() string { return failure.Error() }\n"}, true, "a package of the tree no lean recipe keys"},
+		"reflection":                             {map[string]string{"helper.go": "package fixture\n\nimport \"reflect\"\n\nfunc helper() string { return reflect.TypeOf(1).Name() }\n"}, true, "reflection (reflect)"},
+		"a package of the tree":                  {map[string]string{"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/ir\"\n\nfunc helper() string { var f ir.Function; _ = f; return \"h\" }\n"}, true, "reaches github.com/system-inc/adamic/internal/ir"},
+		"a reached type's other methods":         {map[string]string{"methods.go": "package fixture\n\nfunc (r Request) Other() string { return \"o\" }\n"}, true, "Other, defined in methods.go"},
+		"a type reached as a field's":            {map[string]string{"methods.go": "package fixture\n\nfunc (l level) String() string { return \"l\" }\n"}, true, "String, defined in methods.go"},
+		"a type reached as a variable's":         {map[string]string{"helper.go": "package fixture\n\ntype counter int\n\nvar current counter\n\nfunc helper() string { _ = current; return \"h\" }\n", "methods.go": "package fixture\n\nfunc (c counter) String() string { return \"c\" }\n"}, true, "String, defined in methods.go"},
+		"a type error":                           {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return missing() }\n"}, true, "a type error, which fails the census closed"},
 	} {
 		root := t.TempDir()
 		directory := filepath.Join(root, "fixture")
