@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"syscall"
@@ -353,5 +354,26 @@ func TestUnboundedIgnoresGuardTimers(t *testing.T) {
 	output, err := CombinedOutput(child("finish"), Options{FirstOutput: time.Millisecond, Stall: time.Millisecond, Ceiling: time.Millisecond, Unbounded: true})
 	if err != nil || string(output) != "ready\ndone\n" {
 		t.Fatalf("unbounded child: %v, %q", err, output)
+	}
+}
+
+func TestStartedRegistersOnlySuccessfulStarts(t *testing.T) {
+	t.Parallel()
+	command := child("finish")
+	registered := 0
+	if err := Run(command, Options{Unbounded: true, Started: func(pid int) {
+		if command.Process == nil || command.Process.Pid != pid {
+			t.Fatalf("registered %d before the child was available", pid)
+		}
+		registered = pid
+	}}); err != nil {
+		t.Fatal(err)
+	}
+	if registered <= 0 || registered != command.Process.Pid {
+		t.Fatalf("registered pid %d, want %d", registered, command.Process.Pid)
+	}
+	missing := exec.Command(filepath.Join(t.TempDir(), "missing-child"))
+	if err := Run(missing, Options{Unbounded: true, Started: func(int) { t.Fatal("registered a child that did not start") }}); err == nil {
+		t.Fatal("missing child started")
 	}
 }

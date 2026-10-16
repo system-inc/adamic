@@ -3,12 +3,12 @@ package lint
 import "testing"
 
 // The build phase and independently selected shards use these same recipes.
-func TestProduct_jsx_membership(t *testing.T) {
+func TestProduct_LintFindsJSXMembership(t *testing.T) {
 	t.Parallel()
 	jsxMembershipOracle(t)
 }
 
-func TestProduct_jsx_parser(t *testing.T) {
+func TestProduct_LintFindsJSXParser(t *testing.T) {
 	t.Parallel()
 	jsxParserOracle(t)
 }

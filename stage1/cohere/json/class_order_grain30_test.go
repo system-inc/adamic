@@ -1,7 +1,6 @@
 package json
 
 import (
-	"crypto/sha256"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -11,11 +10,12 @@ import (
 	"runtime"
 	"slices"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 // An explicit repository-relative key keeps ownership stable as the corpus grows.
@@ -99,71 +99,17 @@ func jsonPortDedicatedUnion(all, ordinary []textCase, shards []nativeChunk, dedi
 // case's, so a different oracle or a changed fixture is a different product. The binary's digest is stricter than the
 // oracle product's key: an oracle rebuilt to the same bytes keeps the answer, which is the same answer.
 func jsonClassOrderAnswerInputs(oracle []byte, item textCase) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:  "json class-order Go answer",
-		Files: []string{"stage1/cohere/json/class_order_grain30_test.go", "stage1/cohere/json/port_test.go"},
-		Flags: []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), fmt.Sprintf("case %s sha256 %x", item.Name, sha256.Sum256([]byte(item.Text))), "--cases"},
-	}
+	return oracles.ClassOrderAnswerInputs(oracle, oracles.ComparisonCase(item))
 }
 
 // buildJSONClassOrderAnswer runs the Go oracle once over the class-order case, as _000 runs it live: the product holds
 // the case it was asked (cases.txt) and its answer (answer.txt).
-func buildJSONClassOrderAnswer(oracle string, item textCase) func(string) error {
-	return func(directory string) error {
-		input, _ := protocol([]textCase{item}, make([]answer, 1))
-		cases := filepath.Join(directory, "cases.txt")
-		if err := os.WriteFile(cases, []byte(input), 0644); err != nil {
-			return err
-		}
-		reference, err := executeResult(nil, oracle, "--cases", cases)
-		if err != nil {
-			return err
-		}
-		if reference.exitCode != 0 || len(reference.stderr) != 0 {
-			return fmt.Errorf("Go oracle: exit %d stderr %s", reference.exitCode, reference.stderr)
-		}
-		if _, err := jsonPortAnswers(string(reference.stdout), 1); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "answer.txt"), reference.stdout, 0644)
-	}
-}
-
-var jsonClassOrderAnswer struct {
-	once   sync.Once
-	answer string
-}
 
 // jsonClassOrderAnswerProduct is the Go oracle's answer to the class-order case, built once and read by the two
 // sanitizer passes, which compare against it instead of running the oracle and release again (#f42kzjr).
-func jsonClassOrderAnswerProduct(t *testing.T) string {
-	t.Helper()
-	jsonClassOrderAnswer.once.Do(func() {
-		oracle := portMatchesProduct(t, "oracle")
-		binary, err := os.ReadFile(oracle)
-		if err != nil {
-			t.Fatal(err)
-		}
-		all, _ := jsonTopCorpus(t)
-		_, _, dedicated := jsonPortDedicatedPartition(all)
-		items := jsonPortDedicatedCase(dedicated, jsonPortClassOrderKey)
-		if len(items) != 1 {
-			t.Fatalf("dedicated fixture count %d, want 1", len(items))
-		}
-		directory := buildcache.Product(t, jsonClassOrderAnswerInputs(binary, items[0]), buildJSONClassOrderAnswer(oracle, items[0]))
-		stored, err := os.ReadFile(filepath.Join(directory, "answer.txt"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		jsonClassOrderAnswer.answer = string(stored)
-	})
-	if jsonClassOrderAnswer.answer == "" {
-		t.Fatal("the class-order Go answer failed earlier in this process")
-	}
-	return jsonClassOrderAnswer.answer
-}
+func jsonClassOrderAnswerProduct(t *testing.T) string { return oracles.ClassOrderAnswer(t) }
 
-func TestProduct_JSONClassOrderAnswer(t *testing.T) {
+func TestProduct_JsonFindsClassOrderAnswer(t *testing.T) {
 	t.Parallel()
 	jsonClassOrderAnswerProduct(t)
 }

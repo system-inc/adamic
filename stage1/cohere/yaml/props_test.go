@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goProps(t *testing.T, cases string) []byte {
@@ -40,12 +42,9 @@ func goProps(t *testing.T, cases string) []byte {
 
 // goPropsOracle is formatter_comparison over testdata/props_go.go, with compose's numbers.go opened to it by
 // testdata/props_exports.txt, a product built ahead (#5qykzj5).
-func goPropsOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-props", "props_go.go", numbersExports(t, "\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "props_exports.txt")...)
-}
+func goPropsOracle(t *testing.T) string { return oracles.Properties(t) }
 
-func TestProduct_YAMLPropsGo(t *testing.T) {
+func TestProduct_YamlFindsPropsGo(t *testing.T) {
 	t.Parallel()
 	goPropsOracle(t)
 }
