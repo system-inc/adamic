@@ -1,6 +1,11 @@
 package oracles
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+)
 
 func TestProduct_CSSParserPostCSSAnswers_0(t *testing.T) { t.Parallel(); ParserPostCSSAnswers(t, 0) }
 
@@ -18,9 +23,21 @@ func TestProduct_CSSParserPostCSSAnswers_6(t *testing.T) { t.Parallel(); ParserP
 
 func TestProduct_CSSParserPostCSSAnswers_7(t *testing.T) { t.Parallel(); ParserPostCSSAnswers(t, 7) }
 
-func TestProduct_CSSPrinterParserOracle(t *testing.T) { t.Parallel(); ComparisonOracle(t, false) }
+func TestProduct_CSSPrinterParserOracle(t *testing.T) {
+	t.Parallel()
+	requireComparisonOracle(t, ComparisonOracle(t, false))
+}
 
-func TestProduct_CSSPrinterOracle(t *testing.T) { t.Parallel(); ComparisonOracle(t, true) }
+func TestProduct_CSSPrinterOracle(t *testing.T) {
+	t.Parallel()
+	requireComparisonOracle(t, ComparisonOracle(t, true))
+}
+
+// requireComparisonOracle proves a Go comparison oracle exists and runs: the test binary lists no tests (#n1g5604).
+func requireComparisonOracle(t *testing.T, binary string) {
+	t.Helper()
+	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"-test.list=^$"}})
+}
 
 func TestProduct_CSSParserGoOracle(t *testing.T) { t.Parallel(); cssParserOracle(t) }
 

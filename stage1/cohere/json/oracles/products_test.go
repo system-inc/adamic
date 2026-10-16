@@ -3,6 +3,7 @@ package oracles
 import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -18,8 +19,13 @@ func TestMain(m *testing.M) {
 // TestProduct_JSONGoOracle is shared with the parent json tests.
 func TestProduct_JSONGoOracle(t *testing.T) { t.Parallel(); FormatterOracle(t) }
 
-// TestProduct_JSONAuditOracle is shared with the parent json tests.
-func TestProduct_JSONAuditOracle(t *testing.T) { t.Parallel(); AuditOracle(t) }
+// TestProduct_JSONAuditOracle is shared with the parent json tests. AuditOracle returns the oracle binary's path, as
+// buildcache.GoTest does: its product directory holds it.
+func TestProduct_JSONAuditOracle(t *testing.T) {
+	t.Parallel()
+	binary := AuditOracle(t)
+	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"-test.list=^$"}})
+}
 
 // TestProduct_JSONClassOrderAnswer is shared with the parent json tests.
 func TestProduct_JSONClassOrderAnswer(t *testing.T) { t.Parallel(); ClassOrderAnswer(t) }
