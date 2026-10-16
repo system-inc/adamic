@@ -70,9 +70,23 @@ void adamic_heap_end(void);
 void *adamic_retain_slow(void *value);
 void adamic_release_slow(void *value);
 
+// ASan instruments every header access. Expanding these paths at every ownership
+// operation makes large sanitized translation units expensive to compile. Keep
+// them instrumented once per translation unit; release and TSan still inline.
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define ADAMIC_OWNERSHIP_NOINLINE
+#endif
+#endif
+#if defined(__SANITIZE_ADDRESS__) || defined(ADAMIC_OWNERSHIP_NOINLINE)
+#define ADAMIC_OWNERSHIP static __attribute__((noinline))
+#else
+#define ADAMIC_OWNERSHIP static inline
+#endif
+
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates.
-static inline void *adamic_retain(void *value) {
+ADAMIC_OWNERSHIP void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
@@ -82,7 +96,7 @@ static inline void *adamic_retain(void *value) {
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+ADAMIC_OWNERSHIP void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
@@ -91,6 +105,9 @@ static inline void adamic_release(void *value) {
 	}
 	adamic_release_slow(value);
 }
+
+#undef ADAMIC_OWNERSHIP
+#undef ADAMIC_OWNERSHIP_NOINLINE
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);

@@ -6,8 +6,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -79,6 +81,52 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 			t.Log("unsafe last-owner mutant compiles; ASan catches heap-use-after-free on dynamic shared text")
 		} else if err != nil || !bytes.Equal(output, expected) {
 			t.Fatalf("native and leak check: %v %s; Node %s", err, output, expected)
+		}
+	}
+}
+
+// Check emitted calls, not the spelling of inline in the header. ASan must retain
+// instrumentation inside the wrappers; release and TSan must keep their fast paths.
+func TestOwnershipInlining(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		if strings.HasSuffix(file.name, ".h") {
+			if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	source := filepath.Join(directory, "ownership.c")
+	if err := os.WriteFile(source, []byte(`#include "adamic.h"
+void *hold(void *value) { return adamic_retain(value); }
+void drop(void *value) { adamic_release(value); }
+`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	for _, options := range []Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		arguments := append(Flags(options), "-S", "-emit-llvm", "-o", "-", source)
+		output, err := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
+		cancel()
+		if err != nil {
+			t.Fatalf("%+v clang: %v %s", options, err, output)
+		}
+		for _, name := range []string{"retain", "release"} {
+			call := regexp.MustCompile(`call [^\n]*@adamic_` + name + `\(`)
+			if got := call.Match(output); got != options.Sanitize {
+				t.Errorf("%+v: %s call present=%t, want %t", options, name, got, options.Sanitize)
+			}
+			if options.Sanitize {
+				definition := regexp.MustCompile(`(?ms)^define [^\n]*@adamic_` + name + `\([^\n]*\n.*?^}`).Find(output)
+				if !bytes.Contains(definition, []byte("@__asan_report_load")) {
+					t.Errorf("%+v: %s ownership wrapper lost ASan instrumentation", options, name)
+				}
+			}
 		}
 	}
 }
