@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestExplainChecksDriver",
+    "seconds": 0.03523480599994855,
+    "exit": 0
+  },
+  {
+    "test": "TestUsageExitStatus",
+    "seconds": 0.026389597999923353,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "seconds": 0.12277335399994627,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "seconds": 0.09504215699996621,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "seconds": 1.4110087710000698,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "seconds": 0.11062552999999298,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "seconds": 0.009463825000011639,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "seconds": 0.01149501399993369,
+    "exit": 0
+  }
+]

@@ -1,0 +1,13 @@
+=== RUN   TestNonNullExplainChecks
+=== PAUSE TestNonNullExplainChecks
+=== CONT  TestNonNullExplainChecks
+=== RUN   TestNonNullExplainChecks/null
+=== PAUSE TestNonNullExplainChecks/null
+=== CONT  TestNonNullExplainChecks/null
+=== RUN   TestNonNullExplainChecks/null/build
+=== PAUSE TestNonNullExplainChecks/null/build
+=== CONT  TestNonNullExplainChecks/null/build
+--- PASS: TestNonNullExplainChecks (0.00s)
+    --- PASS: TestNonNullExplainChecks/null (0.00s)
+        --- PASS: TestNonNullExplainChecks/null/build (1.23s)
+PASS

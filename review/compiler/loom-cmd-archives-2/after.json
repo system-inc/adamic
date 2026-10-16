@@ -1,0 +1,121 @@
+[
+  {
+    "test": "TestExplainChecksOutput/overload_some_empty/build",
+    "temperature": "ahead",
+    "seconds": 2.6822482600000512,
+    "core_seconds": 3.224922,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "temperature": "ahead",
+    "seconds": 2.957371500000022,
+    "core_seconds": 3.7115149999999995,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "temperature": "ahead",
+    "seconds": 2.178042808999976,
+    "core_seconds": 2.7316300000000004,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput/overload_erased/build",
+    "temperature": "ahead",
+    "seconds": 2.1045616109998946,
+    "core_seconds": 2.6372910000000003,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput/overload_assertion/build",
+    "temperature": "ahead",
+    "seconds": 2.129704806999939,
+    "core_seconds": 2.638256,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/narrowed/build",
+    "temperature": "ahead",
+    "seconds": 2.62777901000004,
+    "core_seconds": 3.292652999999998,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/present/build",
+    "temperature": "ahead",
+    "seconds": 2.9130331190000334,
+    "core_seconds": 3.499188000000002,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/undefined/build",
+    "temperature": "ahead",
+    "seconds": 2.65324193999993,
+    "core_seconds": 3.232262999999998,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/null/build",
+    "temperature": "ahead",
+    "seconds": 2.0309588229999918,
+    "core_seconds": 2.511272,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/initializer/build",
+    "temperature": "ahead",
+    "seconds": 2.0756288029999723,
+    "core_seconds": 2.542956,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/let_initializer/build",
+    "temperature": "ahead",
+    "seconds": 2.417324289000021,
+    "core_seconds": 3.0588809999999995,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "temperature": "ahead",
+    "seconds": 2.307743215999949,
+    "core_seconds": 2.8689760000000035,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks/refuse_null/build",
+    "temperature": "ahead",
+    "seconds": 2.7466434709999703,
+    "core_seconds": 3.4283069999999967,
+    "exit": 0
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "temperature": "ahead",
+    "seconds": 3.8019431050000776,
+    "core_seconds": 4.4676860000000005,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest/request.a",
+    "temperature": "ahead",
+    "seconds": 2.509237588000019,
+    "core_seconds": 3.262588000000001,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest/request_alias.a",
+    "temperature": "ahead",
+    "seconds": 2.3422517569999854,
+    "core_seconds": 2.902752999999997,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "temperature": "ahead",
+    "seconds": 2.1947026630000437,
+    "core_seconds": 2.7646530000000027,
+    "exit": 0
+  }
+]

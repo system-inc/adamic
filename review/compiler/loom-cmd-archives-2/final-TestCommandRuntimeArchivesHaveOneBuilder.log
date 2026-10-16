@@ -1,0 +1,8 @@
+=== RUN   TestCommandRuntimeArchivesHaveOneBuilder
+=== PAUSE TestCommandRuntimeArchivesHaveOneBuilder
+=== CONT  TestCommandRuntimeArchivesHaveOneBuilder
+    runtime_owners_test.go:125: sanitized native-runtime name key f0fc5b52d9e32cd7abce46103aaf6f8b146cfb974811908cc7d71ff01df4f691 builder internal/oracle
+    runtime_owners_test.go:125: wasm native-runtime name key d7d9fcd639927c3306afb700f45a142cc8560db5ddd73e93773e0adc965286dd builder internal/oracle
+    runtime_owners_test.go:125: wasm-counted native-runtime name key e2db043dcba9fffcac305d19444bc3b1491b2b427b3f9bc7bf6decd3b1175a4f builder cmd/adamic
+--- PASS: TestCommandRuntimeArchivesHaveOneBuilder (4.07s)
+PASS
