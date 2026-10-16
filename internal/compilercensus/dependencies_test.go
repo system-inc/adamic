@@ -10,12 +10,14 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // The census on a stand-in repository: a package that imports the compiler, one that launches a process, one whose only
 // marker is in a testdata program, one naming cohere's cmd/adamic_path harness, and a clean one. The first three and the
-// compiler's own packages depend on Compiler; the last two don't. Mutants: cmd/adamic unbounded (adamic_path counts);
-// testdata skipped (its owner is missed); launching not counted (the launcher is missed).
+// compiler's own packages depend on Compiler; the last two don't. The census is the same read from a copy with no .git,
+// through its manifest, as a Loom runner's source is. Mutants: cmd/adamic unbounded (adamic_path counts); testdata
+// skipped (its owner is missed); launching not counted (the launcher is missed); git's listing alone (the copy fails).
 func TestDependenciesFollowTheMarkers(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
@@ -40,27 +42,43 @@ func TestDependenciesFollowTheMarkers(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	for _, arguments := range [][]string{{"init", "-q"}, {"add", "."}} {
+	for _, arguments := range [][]string{{"init", "-q"}, {"add", "."}, {"-c", "user.name=census", "-c", "user.email=census@example.com", "-c", "commit.gpgsign=false", "commit", "-qm", "stand-in"}} {
 		if output, err := toolchain.GitCommandIn(root, arguments...).CombinedOutput(); err != nil {
 			t.Fatalf("git %v: %v\n%s", arguments, err, output)
 		}
 	}
-	dependencies, err := Dependencies(root)
-	if err != nil {
+	// A runner's source: the tracked files and the manifest build-tree writes, with no .git.
+	source := t.TempDir()
+	for name, content := range files {
+		path := filepath.Join(source, filepath.FromSlash(name))
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := tracked.Write(root, source); err != nil {
 		t.Fatal(err)
 	}
 	want := append([]string{"fixture", "imports", "launches"}, Compiler...)
 	sort.Strings(want)
-	var got []string
-	for directory, inputs := range dependencies {
-		got = append(got, directory)
-		if !slices.Equal(inputs, Compiler) {
-			t.Errorf("%s depends on %v, want the whole compiler", directory, inputs)
+	for _, directory := range []string{root, source} {
+		dependencies, err := Dependencies(directory)
+		if err != nil {
+			t.Fatal(err)
 		}
-	}
-	sort.Strings(got)
-	if !slices.Equal(got, want) {
-		t.Fatalf("consumers %v, want %v", got, want)
+		var got []string
+		for consumer, inputs := range dependencies {
+			got = append(got, consumer)
+			if !slices.Equal(inputs, Compiler) {
+				t.Errorf("%s depends on %v, want the whole compiler", consumer, inputs)
+			}
+		}
+		sort.Strings(got)
+		if !slices.Equal(got, want) {
+			t.Fatalf("consumers in %s: %v, want %v", directory, got, want)
+		}
 	}
 }
 
