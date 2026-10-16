@@ -18,6 +18,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -312,6 +313,56 @@ func auditing() bool {
 		}
 	}
 	return rand.Float64() < rate
+}
+
+// auditListed says whether nameKey is one ADAMIC_BUILD_AUDIT_KEYS's file lists, one name key a line: a product a tree
+// built and a check rebuilds on its local hit (#earlycut's sampled key check). No file, or one that can't be read,
+// lists nothing.
+func auditListed(nameKey string) bool {
+	path := os.Getenv("ADAMIC_BUILD_AUDIT_KEYS")
+	if path == "" {
+		return false
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		note("audit keys %s: %v", path, err)
+		return false
+	}
+	return slices.Contains(strings.Fields(string(content)), nameKey)
+}
+
+// auditHit rebuilds a product found in the cache, directory under key, into a new directory under the process's
+// temporary directory, never beside the product, so a build that bakes in a path its key doesn't name differs too
+// (Tests' change 2), and appends the audit line Loom reads (builder.AuditTree's auditLine) to $ADAMIC_BUILD_LOG: clean
+// with the digest, or mismatch with the stored digest, the rebuilt one and where the rebuilt copy is kept. A rebuild
+// that fails is the lookup's error, since nothing was compared.
+func auditHit(key, name, directory string, build func(directory string) error) error {
+	rebuilt, err := os.MkdirTemp("", ".audit-"+key[:12]+"-")
+	if err != nil {
+		return err
+	}
+	if err = build(rebuilt); err != nil {
+		os.RemoveAll(rebuilt)
+		return fmt.Errorf("audit of %s (%s): its rebuild failed: %w", key[:12], name, err)
+	}
+	stored, err := productDigest(directory)
+	if err != nil {
+		os.RemoveAll(rebuilt)
+		return err
+	}
+	fresh, err := productDigest(rebuilt)
+	if err != nil {
+		os.RemoveAll(rebuilt)
+		return err
+	}
+	name = strings.ReplaceAll(name, " ", "_")
+	if fresh == stored {
+		os.RemoveAll(rebuilt)
+		note("audit %s %s clean %s", name, key, stored)
+		return nil
+	}
+	note("audit %s %s mismatch %s %s %s", name, key, stored, fresh, rebuilt)
+	return nil
 }
 
 // audit rebuilds a fetched product beside it and compares the two file by file.
