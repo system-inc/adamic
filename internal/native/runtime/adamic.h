@@ -4,6 +4,8 @@
 #define ADAMIC_H
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdatomic.h>
@@ -11,6 +13,29 @@
 #include "tsan_test.h"
 
 #include <math.h>
+
+// ir.Type representation ABI; TestIRTypeTags checks both inventories and numbers.
+enum adamic_ir_type {
+	adamic_ir_Number = 1,
+	adamic_ir_Boolean = 2,
+	adamic_ir_String = 3,
+	adamic_ir_Object = 4,
+	adamic_ir_Array = 5,
+	adamic_ir_Map = 6,
+	adamic_ir_MaybeNumber = 7,
+	adamic_ir_Closure = 8,
+	adamic_ir_MaybeBoolean = 9,
+	adamic_ir_Union = 10,
+	adamic_ir_Weak = 11,
+	adamic_ir_NullRepresentation = 12,
+	adamic_ir_UndefinedRepresentation = 13,
+	adamic_ir_Record = 14,
+	adamic_ir_Uint8Array = 15,
+	adamic_ir_Int32Array = 16,
+	adamic_ir_Float64Array = 17,
+	adamic_ir_Uint16Array = 18,
+	adamic_ir_Promise = 19,
+};
 
 enum adamic_stream {
 	adamic_stdout = 1,
@@ -63,8 +88,9 @@ _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require
 _Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
 	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
 // Values whose counts the inline paths below must not touch: shared ones count atomically, and a
-// graph member counts on its region too (graph_regions.c).
-#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG)
+// graph member counts on its region too (graph_regions.c). Program members stay
+// on the ownership dispatch path even though their slow operation is a no-op.
+#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)
 // Slab bits 31 and 30 are shared and statement-region flags. Bit 29 stays
 // reserved for graph storage; opt-in Program members use bit 28. With Program
 // regions on, chunk number + 1 must fit below bit 28 (heap_parallel.h).
@@ -101,25 +127,29 @@ void adamic_release_slow(void *value);
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates. A graph
 // member's header bit sends it the same way, to count on its region; an environment's interior cell
-// has count zero, so it too reaches the slow path, which counts its environment.
-static inline void *adamic_retain(void *value) {
+// has count zero, so it too reaches the slow path, which counts its environment or async frame.
+// Other zero-count values are immortal. Keep these wrappers inline so their no-op cases remain
+// visible to callers even when the slow ownership and destruction helpers grow.
+__attribute__((always_inline)) static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (adamic_program_is(heap)) { return value; }
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return value; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+		if (heap->kind != adamic_kind_cell) { return value; }
 	}
 	return adamic_retain_slow(value);
 }
 
-static inline void adamic_release(void *value) {
+__attribute__((always_inline)) static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (adamic_program_is(heap)) { return; }
-	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+	if (heap == NULL) { return; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
+		if (count == 0 && heap->kind != adamic_kind_cell) { return; }
 	}
 	adamic_release_slow(value);
 }
@@ -312,17 +342,36 @@ extern char adamic_literal_mark;
 #define ADAMIC_STRING_UNITS(text, units) {{0, adamic_kind_string, 0}, sizeof text - 1, text, (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
 #define ADAMIC_STRING_BYTES_UNITS(array, size, units) {{0, adamic_kind_string, 0}, size, (const char *)(array), (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
 
-// adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
+// adamic_shape records field names, storage kinds and reference ownership.
 //
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+// One byte per slot: optional scalars and unowned implementation words use number.
+enum adamic_field_kind { adamic_field_number, adamic_field_boolean, adamic_field_reference };
+typedef uint8_t adamic_field_kind;
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
 	const bool *references;
 	const adamic_methods *methods;
+	const adamic_field_kind *kinds;
 } adamic_shape;
+
+static inline void adamic_shape_check(const adamic_shape *shape) {
+#ifdef ADAMIC_COUNT
+	for (size_t i = 0; i < shape->count; i++) {
+		if (shape->kinds == NULL || shape->kinds[i] > adamic_field_reference ||
+			shape->references[i] != (shape->kinds[i] == adamic_field_reference)) {
+			fprintf(stderr, "adamic: inconsistent shape kind for field %s\n", shape->names[i]);
+			abort();
+		}
+	}
+#else
+	(void)shape;
+#endif
+}
+
 
 typedef struct adamic_object adamic_object;
 typedef struct adamic_accessor {
@@ -551,11 +600,12 @@ typedef struct adamic_array {
 } adamic_array;
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
-// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+// subarray return one owned reference. Arguments are borrowed; fill and sort return borrowed self.
 enum adamic_typed_array_kind {
 	adamic_typed_array_uint8 = 1,
 	adamic_typed_array_int32,
 	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
 };
 typedef struct adamic_typed_array {
 	adamic_heap heap;
@@ -568,13 +618,121 @@ typedef struct adamic_typed_array {
 
 adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
-adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
 // The check is also called by compiler-inserted write checks. set always checks itself.
 // Panic text is the plain-array form: index <index> is outside an array of length <length>.
 void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
-void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+// set_slow is set for what the inline path leaves: a bad index (it panics) or a value that
+// needs ToUint8, ToUint16 or ToInt32's modulo.
+void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value);
+// Converts the value at an index whose bounds the caller has already checked.
+void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index, double value);
+
+// Element reads and writes are inline, as adamic_array_at is, so a loop over a typed array is a
+// load or a store, not a call. The index test is adamic_array_at's: past the bounds,
+// (double)(size_t)index == index exactly when index is whole, and -0 is index 0.
+static inline adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return (adamic_maybe_number){false, 0};
+	}
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A proven integer counter needs only the bounds check.
+static inline adamic_maybe_number adamic_typed_array_get_integer(const adamic_typed_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A value already in an integer kind's range stores by plain conversion: C truncates toward zero
+// as ToUint8, ToUint16 and ToInt32 do, and in range the modulo is the identity. NaN, infinities
+// and out-of-range values fail the range test and take set_slow.
+static inline void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
+	if (index >= 0 && index < (double)array->length) {
+		size_t whole = (size_t)index;
+		if ((double)whole == index) {
+			switch (array->kind) {
+			case adamic_typed_array_float64:
+				((double *)array->data)[whole] = value;
+				return;
+			case adamic_typed_array_uint8:
+				if (value > -1.0 && value < 256.0) {
+					((uint8_t *)array->data)[whole] = (uint8_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_uint16:
+				if (value > -1.0 && value < 65536.0) {
+					((uint16_t *)array->data)[whole] = (uint16_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_int32:
+				if (value > -2147483649.0 && value < 2147483648.0) {
+					((int32_t *)array->data)[whole] = (int32_t)value;
+					return;
+				}
+				break;
+			}
+		}
+	}
+	adamic_typed_array_set_slow(array, index, value);
+}
+
+// Integer indices preserve the same panic and value conversion as the double form.
+static inline void adamic_typed_array_set_integer(adamic_typed_array *array, int64_t index, double value) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		adamic_typed_array_check_write(array, (double)index);
+		return;
+	}
+	size_t whole = (size_t)index;
+	switch (array->kind) {
+	case adamic_typed_array_float64:
+		((double *)array->data)[whole] = value;
+		return;
+	case adamic_typed_array_uint8:
+		if (value > -1.0 && value < 256.0) {
+			((uint8_t *)array->data)[whole] = (uint8_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_uint16:
+		if (value > -1.0 && value < 65536.0) {
+			((uint16_t *)array->data)[whole] = (uint16_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_int32:
+		if (value > -2147483649.0 && value < 2147483648.0) {
+			((int32_t *)array->data)[whole] = (int32_t)value;
+			return;
+		}
+		break;
+	}
+	adamic_typed_array_write_converted(array, whole, value);
+}
 double adamic_typed_array_length(const adamic_typed_array *array);
 adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+// Numeric ascending, stable for equal values; Float64 orders -0 before +0 and NaN last.
+adamic_typed_array *adamic_typed_array_sort(adamic_typed_array *array);
 void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
 adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
 
@@ -643,6 +801,7 @@ typedef struct adamic_map_iterator {
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+adamic_object *adamic_string_iterator(adamic_string *string);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.

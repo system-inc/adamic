@@ -229,6 +229,7 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	Uint16Array
 	Promise
 )
 
@@ -315,8 +316,12 @@ type Local struct {
 
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
-	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
+	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole invariant step.
 	Counter bool
+
+	// CounterGuard is a native-only integer specialization at this local's for
+	// block. The original double block is retained as its fallback.
+	CounterGuard *CounterGuard
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the
@@ -932,6 +937,8 @@ type (
 	// ParallelMap is structured fork-join; the callback takes item then index.
 	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
 	ParallelMap struct {
+		// Site identifies one instantiated parallel boundary for ownership validation.
+		Site int
 		// Moved is set by lowering only after proving exclusive, disjoint item
 		// graphs and consuming the source binding. Native skips item/result sharing.
 		Moved       bool
@@ -1384,3 +1391,14 @@ func (p *Program) HasInheritance() bool {
 }
 
 func (ParallelMap) Type() Type { return Array }
+
+// CounterGuard records the loop-entry conditions for a native integer path.
+// Dependencies must themselves be in their integer paths. A nil Bound means
+// only those dependencies are required; otherwise Bound and Step are pure,
+// loop-invariant numeric expressions validated by internal/lower.
+type CounterGuard struct {
+	Dependencies                 []int
+	Bound, Step                  Expression
+	Ascending, Inclusive, Square bool
+	MaxStep                      float64
+}

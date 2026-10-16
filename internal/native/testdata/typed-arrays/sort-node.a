@@ -1,0 +1,24 @@
+const Type = [undefined, Uint8Array, Int32Array, Float64Array, Uint16Array][Number(process.argv[2])];
+function number(value) { console.log(Object.is(value, -0) ? '-0' : String(value)); }
+function show(array) { number(array.length); for (const value of array) { number(value); } }
+function sort(array) { if (array.sort() !== array) throw new Error('receiver identity'); show(array); }
+const array = new Type([0, -0, NaN, 10, 2, -Infinity, Infinity, -1, 2, NaN, -0, 0, -1, 255, 65535, 2147483647, -2147483648]);
+sort(array); sort(array);
+const parent = new Type([77, 10, 2, 3, 2, 66]);
+const view = parent.subarray(1, -1), nested = view.subarray(0);
+sort(nested); show(parent); show(view); sort(nested);
+for (const length of [0, 1, 2, 3, 7, 16, 31, 32, 33, 127, 128, 129, 1025]) {
+ const values = new Type(length);
+ let state = 42;
+ for (let index = 0; index < length; index++) { state = (state * 1664525 + 1013904223) >>> 0; values[index] = state % 10001 - 5000; }
+ sort(values);
+}
+if (Type === Float64Array) {
+ const values = new Float64Array(5), bits = new DataView(values.buffer);
+ bits.setBigUint64(0, 0x7ff8000000000001n, true); values[1] = 2;
+ bits.setBigUint64(16, 0x7ff8000000000002n, true); values[3] = 1;
+ bits.setBigUint64(32, 0x7ff8000000000003n, true);
+ sort(values);
+ for (let index = 2; index < 5; index++) console.log(bits.getBigUint64(index * 8, true).toString(16).padStart(16, '0'));
+}
+console.log('balanced');

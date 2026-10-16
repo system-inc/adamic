@@ -117,9 +117,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		e.end()
 	case ir.Assign:
-		if e.program.Locals[statement.Local].Counter {
+		if e.integerCounter(statement.Local) {
 			// The loop's update, counter + step or counter - step, is the only write a counter has, and
-			// its step a whole constant within 2^53 (lower/counters.go), which the cast keeps exactly.
+			// its step whole and invariant within 2^53 (lower/counters.go), which the cast keeps exactly.
 			sum, isSum := statement.Value.(ir.Binary)
 			read, isRead := sum.Left.(ir.Read)
 			if !isSum || (sum.Operator != ir.Add && sum.Operator != ir.Subtract) || !isRead || read.Local != statement.Local {
@@ -185,7 +185,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
-			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
+			store := "adamic_typed_array_set"
+			if read, isRead := statement.Index.(ir.Read); isRead && e.integerCounter(read.Local) {
+				store, index = "adamic_typed_array_set_integer", e.localName(read.Local)
+			}
+			e.line("%s(%s, %s, %s);", store, array, index, value)
 			e.end()
 			break
 		}
@@ -300,6 +304,9 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Labeled:
 		e.labeled(statement)
 	case ir.Block:
+		if e.counterBlock(statement) {
+			break
+		}
 		e.line("{")
 		e.nested(statement.Body, nil)
 		e.line("}")
@@ -441,7 +448,9 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overRegex := statement.RegexIterator
 	overTyped := statement.Iterable.Type().IsTypedArray()
 	if overTyped {
-		e.line("adamic_typed_array_iterator *%s = adamic_typed_array_iterate(%s);", held, iterable)
+		// Typed-array length is fixed. Hold the original view even if the body
+		// reassigns its source, and read live storage through the integer helper.
+		e.line("adamic_typed_array *%s = %s;", held, e.kept(iterable))
 	} else if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
 	} else if e.elementBorrows[e.at] {
@@ -450,7 +459,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	} else {
 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
 	}
-	if !e.elementBorrows[e.at] {
+	if overTyped || !e.elementBorrows[e.at] {
 		e.hold(held)
 	}
 	e.end()
@@ -460,8 +469,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
 	entryKey, entryValue := e.temporary(), e.temporary()
 	if overTyped {
-		e.line("double %s;", entryValue)
-		e.line("while (adamic_typed_array_iterator_next(%s, &%s)) {", held, entryValue)
+		e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, held, index)
 	} else if overMap {
 		e.line("adamic_value %s, %s;", entryKey, entryValue)
 		e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", held, entryKey, entryValue)
@@ -522,7 +530,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 			e.declareLocal(binding.Local, field, false)
 		}
 	} else if overTyped {
-		e.declareLocal(statement.Local, entryValue, false)
+		e.declareLocal(statement.Local, fmt.Sprintf("adamic_typed_array_get_integer(%s, (int64_t)%s).number", held, index), false)
 	} else if overRegex {
 		e.declareLocal(statement.Local, entryValue, true)
 	} else if overString {

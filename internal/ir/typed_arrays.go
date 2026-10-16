@@ -2,7 +2,7 @@ package ir
 
 // IsTypedArray reports whether the counted value holds an unboxed numeric buffer.
 func (t Type) IsTypedArray() bool {
-	return t == Uint8Array || t == Int32Array || t == Float64Array
+	return t == Uint8Array || t == Uint16Array || t == Int32Array || t == Float64Array
 }
 
 // TypedArrayNew converts Source, a length or number[], to an owned typed array.
@@ -16,6 +16,11 @@ type TypedArrayNew struct {
 type TypedArrayFill struct {
 	Array     Expression
 	Arguments []Expression
+}
+
+// TypedArraySort orders the receiver numerically in place and returns it.
+type TypedArraySort struct {
+	Array Expression
 }
 
 // TypedArraySet copies a same-kind source into the receiver, safely across overlap.
@@ -32,5 +37,6 @@ type TypedArraySubarray struct {
 
 func (v TypedArrayNew) Type() Type      { return v.Of }
 func (v TypedArrayFill) Type() Type     { return v.Array.Type() }
+func (v TypedArraySort) Type() Type     { return v.Array.Type() }
 func (TypedArraySet) Type() Type        { return 0 }
 func (v TypedArraySubarray) Type() Type { return v.Array.Type() }

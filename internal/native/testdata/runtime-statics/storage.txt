@@ -97,6 +97,7 @@
 `map.c:key_cache:1`
 `map.c:value_cache:1`
 `map_set.c:collection_next:1`
+`map_set.c:string_next:1` Function prototype through adamic_code_function, like collection_next; no mutable state.
 `maybe.c:adamic_string_undefined:1`
 `node_fs_file.c:cache:1`
 `node_fs_file.c:cache:2`
@@ -205,6 +206,7 @@
 `runtime-file:tsgo.c`
 `runtime-file:tsgo_runtime.h`
 `runtime-file:typed_array.c`
+`runtime-file:typed_array_sort.c` Stable numeric merge sort; buffers and cursors are invocation-local, with no mutable static storage.
 `runtime-file:union.c`
 `runtime-file:utf8.c`
 `runtime-file:view_callables_contract.h`

@@ -47,7 +47,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	}
 	for _, names := range [][]string{
 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
+		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"}, {"string", "offset"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
