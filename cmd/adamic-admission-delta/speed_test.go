@@ -1,8 +1,10 @@
 package main
 
 import (
-	"os"
+	"context"
+	"os/exec"
 	"path/filepath"
+	"sync"
 	"testing"
 	"time"
 
@@ -45,21 +47,51 @@ func TestParallelLoweringOnly(t *testing.T) {
 	}
 }
 
-func TestExecutableReplacement(t *testing.T) {
+func TestExecutableForkIsolation(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
-	path := filepath.Join(dir, "compiler")
-	writeExecutable(t, path, "#!/bin/sh\necho before\n")
-	// A sibling fork can retain a writer to the previous executable after our close.
-	writer, err := os.OpenFile(path, os.O_WRONLY, 0)
+	// Resolve the host tool without naming a machine path in the test.
+	truth, err := exec.LookPath("true")
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer writer.Close()
-	writeExecutable(t, path, "#!/bin/sh\necho after\n")
-	o := execute(dir, time.Second, path)
-	if o.Exit != 0 || o.Error != "" || o.Stdout != "after\n" {
-		t.Fatalf("replacement executable is not ready: %+v", o)
+	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	var forks sync.WaitGroup
+	ready := make(chan struct{}, 8)
+	failures := make(chan error, 8)
+	for worker := 0; worker < 8; worker++ {
+		forks.Add(1)
+		go func() {
+			defer forks.Done()
+			ready <- struct{}{}
+			for ctx.Err() == nil {
+				if err := exec.CommandContext(ctx, truth).Run(); err != nil && ctx.Err() == nil {
+					failures <- err
+					return
+				}
+			}
+		}()
+	}
+	defer func() { cancel(); forks.Wait() }()
+	for worker := 0; worker < 8; worker++ {
+		<-ready
+	}
+	for program := 0; program < 200; program++ {
+		if err := ctx.Err(); err != nil {
+			t.Fatal("fork stress deadline", err)
+		}
+		path := filepath.Join(dir, "compiler")
+		writeExecutable(t, path, "#!/bin/sh\necho ready\n")
+		o := execute(dir, time.Second, path)
+		if o.Exit != 0 || o.Error != "" || o.Stdout != "ready\n" {
+			t.Fatalf("executable %d under concurrent forks: %+v", program, o)
+		}
+	}
+	cancel()
+	forks.Wait()
+	close(failures)
+	for err := range failures {
+		t.Errorf("fork pressure failed: %v", err)
 	}
 }
 

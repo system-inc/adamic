@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -33,26 +34,36 @@ func TestCommandHelper(t *testing.T) {
 	os.Exit(0)
 }
 
-// Publish only a closed executable, so parallel forks cannot see its write in progress.
+// Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
 func writeExecutable(t *testing.T, path, script string) {
 	t.Helper()
-	file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer os.Remove(file.Name())
-	if _, err := file.WriteString(script); err != nil {
-		file.Close()
-		t.Fatal(err)
-	}
-	if err := file.Chmod(0700); err != nil {
-		file.Close()
-		t.Fatal(err)
-	}
-	if err := file.Close(); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.Rename(file.Name(), path); err != nil {
+	var temporary string
+	defer func() {
+		if temporary != "" {
+			os.Remove(temporary)
+		}
+	}()
+	func() {
+		syscall.ForkLock.Lock()
+		defer syscall.ForkLock.Unlock()
+		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if err != nil {
+			t.Fatal(err)
+		}
+		temporary = file.Name()
+		if _, err := file.WriteString(script); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Chmod(0700); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+	if err := os.Rename(temporary, path); err != nil {
 		t.Fatal(err)
 	}
 }

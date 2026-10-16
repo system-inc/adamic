@@ -4,6 +4,8 @@ Stress before: 20 and 100 cohort repetitions plus 1,000 target repetitions all p
 Direct-write mutant fails the new regression with text file busy; serial-lowering mutant fails the retained barrier test with compiler-timeout.
 Not covered: the stochastic Loom failure did not reproduce locally; no whole gate or new compiler admission measurement was run. The reader guard passed in 2.47 s after its export product built in 44.03 s.
 
+Follow-up: this report records the rename-only checkpoint. Rename did not exclude a concurrent fork from inheriting the temporary file's writer. Its retained-writer model is replaced by same-process fork pressure and syscall.ForkLock; see [the corrected proof](fork-lock/REPORT.md).
+
 Changes and assumptions
 
 Only cmd/adamic-admission-delta's tests changed. writeExecutable creates a temporary file in the executable's own directory, writes and chmods it, checks Close, then renames it to the final name. commandFixture's base/head scripts, the dirty-input head replacement, the negative-witness head replacement and the parallel-lowering barrier script all use it. All three shell build modes also write to their unique output's .tmp sibling, finish the redirection, chmod the temporary executable, then mv it into place. The old copy-then-overwrite in commandFixture is removed. There are no retry loops.
