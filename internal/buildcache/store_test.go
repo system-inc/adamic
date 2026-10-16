@@ -1,6 +1,7 @@
 package buildcache
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -343,4 +344,130 @@ func TestTheSharedTierIsOffUnlessTurnedOn(t *testing.T) {
 	if content, _ := os.ReadFile(filepath.Join(Product(t, thisPackage, building("built here")), "product")); string(content) != "built here" {
 		t.Fatalf("an unset store's product reads %q", content)
 	}
+}
+
+// staleFinder fills the cache's read sets for thisPackage as a file whose oldest set (the last of keptSets) is the one
+// that values to a product on this tree, though it stored another key, the shape #2dkn3fb left: three newer sets that
+// find nothing here, each reading a different file. It returns the key the oldest set gives here.
+func staleFinder(t *testing.T) (string, string, string) {
+	t.Helper()
+	root := repositoryRootForTest(t)
+	cache, err := cacheDirectory()
+	if err != nil {
+		t.Fatal(err)
+	}
+	nameKey := NameKey(root, thisPackage)
+	finder := readSet{Key: strings.Repeat("0", 64), Entries: []readEntry{{Kind: "content", Path: "internal/buildcache/buildcache.go"}}}
+	evaluated, err := evaluate(root, cache, nameKey, finder, 0, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, set := range []readSet{finder, readOnly(t, root, cache, nameKey, "internal/buildcache/store.go"), readOnly(t, root, cache, nameKey, "internal/buildcache/find.go"),
+		readOnly(t, root, cache, nameKey, "internal/buildcache/reads.go")} {
+		if err := recordReads(cache, nameKey, thisPackage.Name, set); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return cache, nameKey, evaluated.key
+}
+
+// readOnly is a set that reads path alone, under the key it gives here, which names no product in the cache.
+func readOnly(t *testing.T, root, cache, nameKey, path string) readSet {
+	t.Helper()
+	set := readSet{Entries: []readEntry{{Kind: "content", Path: path}}}
+	evaluated, err := evaluate(root, cache, nameKey, set, 0, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	set.Key = evaluated.key
+	return set
+}
+
+// pushOut records one set newer than every set in nameKey's file, as a later settlement of the product would.
+func pushOut(t *testing.T, cache, nameKey string) {
+	t.Helper()
+	if err := recordReads(cache, nameKey, thisPackage.Name, readOnly(t, repositoryRootForTest(t), cache, nameKey, "internal/buildcache/settle.go")); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// A lookup that finds or fetches a product by a set that stored another key records that set again, first, under the
+// key it found (#xaz1487, system_adamic's yes on #2dkn3fb), so a newer set that would have pushed it past the file's
+// keptSets leaves it, and the product is still found. Found in the cache, fetched from the store and found by Find
+// alike. Mutants that each fail it: the set never recorded again (get's hit, get's fetch, Find's found); recorded again
+// under the key it stored.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestTheSetThatFoundAProductUnderAnotherKeyIsRecordedAgainFirst(t *testing.T) {
+	for _, how := range []string{"found in the cache", "fetched from the store", "found by Find"} {
+		t.Run(how, func(t *testing.T) {
+			store, _ := shared(t)
+			rerecorded.Clear()
+			cache, nameKey, key := staleFinder(t)
+			switch how {
+			case "fetched from the store":
+				store.put(t, key, map[string]string{"product": "stored"})
+				Product(t, thisPackage, func(string) error { t.Fatal("built what the store holds"); return nil })
+			case "found in the cache":
+				if err := os.MkdirAll(filepath.Join(cache, key), 0o755); err != nil {
+					t.Fatal(err)
+				}
+				os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
+				Product(t, thisPackage, func(string) error { t.Fatal("built what the cache holds"); return nil })
+			case "found by Find":
+				os.MkdirAll(filepath.Join(cache, key), 0o755)
+				os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
+				if findings, err := Find([]string{nameKey}); err != nil || findings[0].Outcome != FindingFound || findings[0].Key != key {
+					t.Fatalf("Find: %+v, %v", findings, err)
+				}
+			}
+			file, err := loadReads(cache, nameKey)
+			if err != nil || len(file.Sets) != keptSets || file.Sets[0].Key != key || file.Sets[0].Entries[0].Path != "internal/buildcache/buildcache.go" {
+				t.Fatalf("the file's sets after the lookup: %+v, %v; want the finding set first under %s", file.Sets, err, key[:12])
+			}
+			if file.Sets[0].Entries[0].Value == "" {
+				t.Fatal("the set recorded again holds no value to name a miss by")
+			}
+			pushOut(t, cache, nameKey)
+			directory := Product(t, thisPackage, func(string) error { t.Fatal("the product was lost once a newer set was recorded"); return nil })
+			if directory != filepath.Join(cache, key) {
+				t.Fatalf("found at %s, want %s", directory, filepath.Join(cache, key))
+			}
+		})
+	}
+}
+
+// A set that found its product under the key it stored, and any lookup in read mode, leave the file as it was: read
+// mode never writes the cache's read sets, and a set that names its own product needs nothing recorded. Mutants that
+// each fail it: read mode not asked; a set recorded again whatever key it gave.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestALookupThatFoundItsStoredKeyOrReadsOnlyLeavesTheFile(t *testing.T) {
+	t.Run("read mode", func(t *testing.T) {
+		shared(t)
+		rerecorded.Clear()
+		cache, nameKey, key := staleFinder(t)
+		os.MkdirAll(filepath.Join(cache, key), 0o755)
+		os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
+		before, _ := os.ReadFile(readsPath(cache, nameKey))
+		t.Setenv("ADAMIC_BUILD_CACHE", "read")
+		forgetHeldForLife()
+		t.Cleanup(forgetHeldForLife)
+		Product(t, thisPackage, func(string) error { t.Fatal("built in read mode"); return nil })
+		if after, _ := os.ReadFile(readsPath(cache, nameKey)); !bytes.Equal(before, after) {
+			t.Fatal("read mode wrote the read sets")
+		}
+	})
+	t.Run("its own key", func(t *testing.T) {
+		shared(t)
+		rerecorded.Clear()
+		key := recorded(t)
+		cache, _ := cacheDirectory()
+		nameKey := NameKey(repositoryRootForTest(t), thisPackage)
+		os.MkdirAll(filepath.Join(cache, key), 0o755)
+		os.WriteFile(filepath.Join(cache, key, "product"), []byte("cached"), 0o644)
+		before, _ := os.ReadFile(readsPath(cache, nameKey))
+		Product(t, thisPackage, func(string) error { t.Fatal("built what the cache holds"); return nil })
+		if after, _ := os.ReadFile(readsPath(cache, nameKey)); !bytes.Equal(before, after) {
+			t.Fatal("a set that found its own key was recorded again")
+		}
+	})
 }
