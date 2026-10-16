@@ -5,7 +5,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"go/ast"
@@ -371,28 +370,9 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 		}
 	}
 	if target == "" || target == "go" {
-		goDir := buildcache.Product(t, textGoProductInputs("go", markdownGoCompilers()), func(dir string) error {
-			cohere := filepath.Join(root, "cohere")
-			mainPath := filepath.Join(cohere, "cmd/adamic_text/main.go")
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"), filepath.Join(cohere, "internal/format/markdown/adamic_text.go"): filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_bridge.go")}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlayPath)
-			command := textGoCommand(t, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)...)
-			output, err := textCombinedOutput(command)
-			if err != nil {
-				return fmt.Errorf("Go splitText: %w\n%s", err, output)
-			}
-			return nil
-		})
-		products.goBinary = filepath.Join(goDir, "go-text")
+		products.goBinary = oracles.TextGoBuild(t, "go")
 	}
+
 	// Regeneration is independent of case partitioning and executes once, after its build inputs.
 	var formatterDir, generatorDir string
 	if target == "" || target == "formatter" {
@@ -416,17 +396,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 // toolchain.Env (textGoCommand), so its key names the C and C++ compilers that environment gives go, and the C compiler
 // by its report: one the key didn't name could change a cgo dependency's bytes unseen.
 func textGoProductInputs(target string, compilers markdownCompilers) buildcache.Inputs {
-	flags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus, "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}
-	tools := []string{buildcache.Tool("go", "version"), compilers.report}
-	switch target {
-	case "go":
-		return buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(flags, "overlay text_go.go,text_bridge.go"), Toolchain: tools}
-	case "formatter":
-		return buildcache.Inputs{Name: "markdownblocks-text-formatter", Files: []string{"cohere"}, Flags: flags, Toolchain: tools}
-	case "generator":
-		return buildcache.Inputs{Name: "markdownblocks-text-generator", Files: []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_classes"}, Flags: flags, Toolchain: tools}
-	}
-	panic("unknown text Go product " + target)
+	return oracles.TextGoProductInputs(target, compilers.c, compilers.cPlusPlus, compilers.report)
 }
 
 func textLeakReport(t *testing.T, products textProducts, cases string) string {

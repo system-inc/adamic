@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/lint/regex/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -136,11 +137,7 @@ func buildRunnerProduct(t *testing.T, mutant bool) string {
 // ahead, so the unit only runs it (#5qykzj5).
 func cohereProgram(t *testing.T, file, output string) string {
 	t.Helper()
-	path, err := filepath.Abs(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return buildcache.GoBuildIn(t, "cohere", output, path, nil)
+	return oracles.Program(t, file, output)
 }
 
 func firstRow(a, b []byte) int {

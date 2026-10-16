@@ -15,25 +15,32 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
-type textCase struct {
-	Name string `json:"name"`
-	Text string `json:"text"`
+type textCase oracles.ComparisonCase
+
+func oracleCases(cases []textCase) []oracles.ComparisonCase {
+	result := make([]oracles.ComparisonCase, len(cases))
+	for i, item := range cases {
+		result[i] = oracles.ComparisonCase(item)
+	}
+	return result
 }
-type answer struct {
-	Output string `json:"output"`
-	Error  string `json:"error"`
+func localCases(cases []oracles.ComparisonCase) []textCase {
+	result := make([]textCase, len(cases))
+	for i, item := range cases {
+		result[i] = textCase(item)
+	}
+	return result
 }
+
+type answer = oracles.ComparisonAnswer
 
 // Error messages have different APIs. Compare acceptance and successful output, never erase an error
 // into a successful empty output. This is a necessary condition for four-way formatter parity.
-func sameAnswer(left, right answer) bool {
-	if (left.Error == "") != (right.Error == "") {
-		return false
-	}
-	return left.Error != "" || left.Output == right.Output
-}
+func sameAnswer(left, right answer) bool { return oracles.SameAnswer(left, right) }
 
 // Go cohere refuses a numeric separator out of place in Babel's words since cohere 1ee5f944 (#w6vtsrn), so the
 // separator gap Prettier showed is closed: both refuse each of these, under both filenames.
@@ -97,44 +104,11 @@ func fileCorpus(root string) ([]textCase, error) {
 }
 
 // corpusCases validates the whole corpus before landing-gate sampling.
-func corpusCases(t *testing.T) []textCase {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	cases, err := pinnedCorpusFiles(t, root)
-	if err != nil {
-		t.Fatal(err)
-	}
-	// Generated boundary cases exercise both filename-selected printers, including the extension's
-	// JavaScript literal forms that a JSON.parse/JSON.stringify substitute would lose.
-	generated := []string{
-		"[]", "{}", "null", "true", "false", `{"a":1,"b":[2,3]}`,
-		strings.Repeat("[", 500) + "0" + strings.Repeat("]", 500),
-		"[" + strings.Repeat("1,", 4999) + "1]",
-		`["\u0000","\uD800","\uD83D\uDE00","é😀","\\","\""]`,
-		`[0,-0,1,-1,1.50,1E+03,1e-003,1e309,1e-400,9007199254740993]`,
-		`[+1,.5,1.,0x1f,0o17,0b101,1_000,Infinity,NaN,undefined]`,
-		"// leading\n{a:1,/* inside */b:[1,2,],}",
-		`[1__0]`, `[1_]`, `[0x_1]`, `{"a":`, ``,
-	}
-	for index, text := range generated {
-		for _, name := range []string{"probe.json", "package.json"} {
-			cases = append(cases, textCase{fmt.Sprintf("generated/%d/%s", index, name), text})
-		}
-	}
-	t.Logf("full corpus: %d cases before gate sampling", len(cases))
-	verifyCorpusPin(t, cases)
-	return cases
-}
+func corpusCases(t *testing.T) []textCase { return localCases(oracles.CorpusCases(t)) }
 
 // jsonUpstreamAllowed names the inputs Go and Prettier may disagree on: the generated empty-input cases above. How
 // each of them differs is known-upstream-differences.txt's, and upstream parity's key declares this file, so editing
 // the list rebuilds the verdict.
-func jsonUpstreamAllowed(name string) bool {
-	return strings.HasPrefix(name, "generated/16/")
-}
 
 func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
 	return cohereAnswers(t, cases, true, mutations...)
@@ -219,49 +193,41 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 
 // These mutate the upstream Go printer, not an Adamic port. They prove that the external comparison
 // notices real formatting changes while both sides still exit successfully.
-type printerMutation struct{ name, file, from, to string }
 
 // jsonPrinterMutations are the printer mutants the external comparison must catch, each a change to one file of
 // cohere's javascript package.
-var jsonPrinterMutations = []printerMutation{
-	{"missing final newline", "print_json.go", `return concatIn(path, print("node", nil), hardline)`, `return print("node", nil)`},
-	{"missing property space", "print_json.go", `print("key", nil), ": ", print("value", nil)`, `print("key", nil), ":", print("value", nil)`},
-	{"wrong filename parser", "printer.go", `return "json-stringify"`, `return "json"`},
-}
+type printerMutation struct{ name, file, from, to string }
+
+var jsonPrinterMutations = func() []printerMutation {
+	var result []printerMutation
+	for _, m := range oracles.PrinterMutations() {
+		result = append(result, printerMutation{m.Name, m.File, m.From, m.To})
+	}
+	return result
+}()
 
 // printerMutantOracle is cohere's javascript package's test binary with the audit harness laid over it and mutations
 // planted, a product built ahead (buildcache.GoTestMutated): the mutated sources live in the product, never in a
 // directory of this unit's.
 func printerMutantOracle(t *testing.T, mutations ...printerMutation) string {
-	t.Helper()
-	cohere, err := filepath.Abs("../../../cohere")
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	writeJSON(t, overlayPath, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
 	var planted []buildcache.Mutation
-	for _, mutation := range mutations {
-		planted = append(planted, buildcache.Mutation{File: "cohere/internal/format/javascript/" + mutation.file, Before: mutation.from, After: mutation.to})
+	for _, m := range mutations {
+		planted = append(planted, buildcache.Mutation{File: "cohere/internal/format/javascript/" + m.file, Before: m.from, After: m.to})
 	}
-	return buildcache.GoTestMutated(t, "cohere", "javascript.test", "./internal/format/javascript", []string{"-overlay=" + overlayPath}, planted)
+	return oracles.PrinterMutant(t, planted)
 }
 
-func TestProduct_JSONPrinterMutant_0(t *testing.T) {
+func TestProduct_JsonFindsPrinterMutant_0(t *testing.T) {
 	t.Parallel()
 	printerMutantOracle(t, jsonPrinterMutations[0])
 }
 
-func TestProduct_JSONPrinterMutant_1(t *testing.T) {
+func TestProduct_JsonFindsPrinterMutant_1(t *testing.T) {
 	t.Parallel()
 	printerMutantOracle(t, jsonPrinterMutations[1])
 }
 
-func TestProduct_JSONPrinterMutant_2(t *testing.T) {
+func TestProduct_JsonFindsPrinterMutant_2(t *testing.T) {
 	t.Parallel()
 	printerMutantOracle(t, jsonPrinterMutations[2])
 }
