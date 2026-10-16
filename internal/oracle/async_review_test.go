@@ -17,6 +17,7 @@ import (
 // Review witnesses are independent top-level units. Register the same sources in
 // main's oracle/count families; the module's two imported files are dependencies.
 var asyncReviewCases = []struct{ path, output, reason, location string }{
+	{"refused/hidden_mutated.a", "number\n", "Object.assign on a shape not proven by a plain literal or its const binding", "hidden_mutated.a:3:"},
 	{"accepted/parallel_catch.a", "caught:parallel1\n", "", ""},
 	{"accepted/conditional_throw.a", "caught:condition\n", "", ""},
 	{"accepted/loop.a", "total:3|caught:loop:0\n", "", ""},
@@ -232,4 +233,9 @@ func TestAsyncReviewRejectionSwallowedMutant(t *testing.T) {
 		t.Fatal(report)
 	}
 	t.Logf("Node %q; swallowed rejection %q", source.stdout, actual.stdout)
+}
+
+func TestAsyncReviewHiddenMutated(t *testing.T) {
+	t.Parallel()
+	asyncReview(t, "refused/hidden_mutated.a")
 }
