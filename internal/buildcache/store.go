@@ -316,20 +316,27 @@ func auditing() bool {
 }
 
 // auditListed says whether nameKey is one ADAMIC_BUILD_AUDIT_KEYS's file lists, one name key a line: a product a tree
-// built and a check rebuilds on its local hit (#earlycut's sampled key check). No file, or one that can't be read,
-// lists nothing.
-func auditListed(nameKey string) bool {
+// built and a check rebuilds on its local hit (#earlycut's sampled key check). Unset lists nothing. A file named that
+// can't be read is the lookup's error, naming it, since a check that audits nothing would read clean (Tests' must). The
+// file is read once a process, by its path (auditLists).
+func auditListed(nameKey string) (bool, error) {
 	path := os.Getenv("ADAMIC_BUILD_AUDIT_KEYS")
 	if path == "" {
-		return false
+		return false, nil
 	}
-	content, err := os.ReadFile(path)
-	if err != nil {
-		note("audit keys %s: %v", path, err)
-		return false
-	}
-	return slices.Contains(strings.Fields(string(content)), nameKey)
+	read, _ := auditLists.LoadOrStore(path, sync.OnceValues(func() ([]string, error) {
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil, fmt.Errorf("the audit's list of name keys (ADAMIC_BUILD_AUDIT_KEYS): %w", err)
+		}
+		return strings.Fields(string(content)), nil
+	}))
+	listed, err := read.(func() ([]string, error))()
+	return slices.Contains(listed, nameKey), err
 }
+
+// auditLists holds each ADAMIC_BUILD_AUDIT_KEYS file this process read, by its path, as its read.
+var auditLists sync.Map
 
 // auditHit rebuilds a product found in the cache, directory under key, into a new directory under the process's
 // temporary directory, never beside the product, so a build that bakes in a path its key doesn't name differs too

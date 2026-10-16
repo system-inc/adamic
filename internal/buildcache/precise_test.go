@@ -2735,8 +2735,9 @@ func TestALeanBuildIsBuildcachesOrAReviewedCallers(t *testing.T) {
 
 // A settled product whose name key ADAMIC_BUILD_AUDIT_KEYS lists is rebuilt on its local hit under the process's own
 // temporary directory and compared, and the audit line Loom reads says clean or mismatch, keeping the rebuilt copy on a
-// mismatch (#earlycut's sampled key check). A name key it doesn't list is never rebuilt. Mutants that each fail it: the
-// audit skipped on a hit; the rebuild placed beside the product; an unlisted name key audited.
+// mismatch (#earlycut's sampled key check). A name key it doesn't list is never rebuilt, and a list named that can't be
+// read fails the lookup. Mutants that each fail it: the audit skipped on a hit; the rebuild placed beside the product; an
+// unlisted name key audited; an unreadable list noted and passed over.
 // Not parallel: newRig.
 func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(t *testing.T) {
 	r := newRig(t)
@@ -2752,10 +2753,10 @@ func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("TMPDIR", temporary)
-	keys := filepath.Join(t.TempDir(), "keys")
 	look := func(listed string, content string) string {
 		t.Helper()
 		forgetHeldForLife()
+		keys := filepath.Join(t.TempDir(), "keys")
 		if err := os.WriteFile(keys, []byte(listed+"\n"), 0o644); err != nil {
 			t.Fatal(err)
 		}
@@ -2790,6 +2791,13 @@ func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(t *testing.T) {
 	}
 	if lines := look(strings.Repeat("0", 64), "built differently"); strings.Contains(lines, "audit ") {
 		t.Errorf("an unlisted product was audited: census %q", lines)
+	}
+	// A list named that can't be read fails the lookup, naming it, never an audit of nothing that reads clean.
+	forgetHeldForLife()
+	missing := filepath.Join(t.TempDir(), "no-such-list")
+	t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", missing)
+	if _, err := Get(port, building("built")); err == nil || !strings.Contains(err.Error(), missing) {
+		t.Errorf("a lookup under an unreadable audit list: %v, want an error naming %s", err, missing)
 	}
 }
 
