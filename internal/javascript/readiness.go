@@ -3,10 +3,13 @@ package javascript
 import "fmt"
 
 // Hidden readiness state leaves own keys and object spread unchanged.
-const fieldReadinessRuntime = `const adamicFieldReadiness = new WeakMap();
+const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
+const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
+const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
+const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
-const adamicViewWrite = (object, name, value, type) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
+const adamicViewWrite = (object, name, value, type, declared) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type, declared || adamicViewTypeNames[type] || "unknown"); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
 const adamicUninitializedFields = (object, names) => { adamicFieldReadiness.set(object, new Set(names)); return object; };
 const adamicReadField = (object, name, expression, optional = false, allowAbsent = false, fieldView = false) => {
     if (optional && (object === undefined || object === null)) return undefined;
@@ -19,7 +22,7 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
 const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
     const value = adamicReadField(object, name, expression, false, false, expected);
-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
+    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;

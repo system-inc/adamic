@@ -1,0 +1,61 @@
+{
+  "item": 152,
+  "source": "review/compiler/loom-views-fx-d/baseline-sources/702776fe1a62/scalar-tuple.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/702776fe1a62/scalar-tuple.a"
+    ],
+    "exit": 0,
+    "stdout": "7,1\n",
+    "stderr": "",
+    "seconds": 0.616
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "js",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/702776fe1a62/scalar-tuple.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.346
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/scalar-tuple-702776fe1a62/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n",
+    "seconds": 0.301
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "build",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/702776fe1a62/scalar-tuple.a",
+      "-o",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/scalar-tuple-702776fe1a62/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 4.655
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/scalar-tuple-702776fe1a62/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n",
+    "seconds": 0.006
+  },
+  "agrees": false
+}

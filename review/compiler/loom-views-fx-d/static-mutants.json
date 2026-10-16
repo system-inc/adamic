@@ -1,0 +1,19 @@
+[
+  {
+    "name": "native-scalar-static-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextScalarStatic$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 49.829
+  }
+]

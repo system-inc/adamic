@@ -443,6 +443,8 @@ func (e *emitter) prepareObjectMetadata() {
 		switch expression := expression.(type) {
 		case ir.ObjectCall:
 			needs.dynamic = needs.dynamic || expression.Checked
+		case ir.CheckedCast:
+			needs.fieldTypes = needs.fieldTypes || expression.CheckedFields
 		case ir.DynamicProperty:
 			needs.dynamic = true
 		case ir.Property:
