@@ -1,0 +1,12 @@
+=== RUN   TestFixedPatterns
+=== PAUSE TestFixedPatterns
+=== CONT  TestFixedPatterns
+    regex_test.go:162: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/oracle.go_regex-oracle 28210cca14ef hit 0.48
+    regex_test.go:85: build regex-runner 98215e478b12 miss 2.38
+    regex_test.go:182: 83 fixed patterns, 125829 match records, 2356121 identical bytes on Go, Node, emitted JS and sanitized native
+    regex_test.go:85: build regex-runner-mutant d65ca1e41cfb miss 1.21
+    regex_test.go:188: translation mutant caught by byte comparison on backend 0: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:188: translation mutant caught by byte comparison on backend 1: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:188: translation mutant caught by byte comparison on backend 2: base/consistency_require_pagination_argument_name.go:27
+--- PASS: TestFixedPatterns (10.67s)
+PASS

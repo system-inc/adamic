@@ -1,0 +1,17 @@
+=== RUN   TestPortMatchesGoCohereClassOrder_000
+    port_matches_prepared_split_test.go:210: build json_lowered_port_and_backend_sources 4310f1e6169c hit 0.39
+    port_matches_prepared_split_test.go:208: build go_build_cohere_./command/formatter_comparison_go-cohere 00a40869ef80 hit 0.00
+    port_matches_prepared_split_test.go:225: build json_native_release_port 559eba7555da miss 5.44
+    port_matches_prepared_split_test.go:225: build json_native_ASan_UBSan_port f8caba31160d miss 8.46
+    top_shared_test.go:46: full corpus: 3900 cases before gate sampling
+    top_shared_test.go:46: corpus repository: 2806 tracked JSON files; read from the corpus product at Git pin 2b4dbde172c1c2f23c065ecae8b906f8fcb72a20
+    top_shared_test.go:46: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    top_shared_test.go:46: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    top_shared_test.go:46: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    top_shared_test.go:46: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:46: TestPortMatchesGoCohere (setup): 19.842s
+    class_order_grain30_test.go:124: build json_class-order_Go_answer ae67697ceeb3 miss 3.51
+    class_order_grain30_test.go:248: shared setup: 23.382s; exact union: 3899 ordinary + 1 dedicated
+    class_order_grain30_test.go:248: cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json: own work 12.407s
+--- PASS: TestPortMatchesGoCohereClassOrder_000 (35.79s)
+PASS

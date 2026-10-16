@@ -1,0 +1,84 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    suppression_test.go:53: build go_test_-c_cohere_./internal/lint/suppression_suppression.test e131f1c48ee0 hit 0.32
+    suppression_test.go:53: seed 20261005, 2500 generated sources
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    suppression_test.go:91: 2646 sources, 1627 directives, 263343 questions (25984 suppressed): every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored
+    suppression_test.go:118: natively, caught: line 946: "comment 0 17 eslint-disable", Go cohere "comment 0 17 -"
+    suppression_test.go:118: on Node, caught: line 946: "comment 0 17 eslint-disable", Go cohere "comment 0 17 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace
+    suppression_test.go:118: natively, caught: line 6897: "query probe/reports-on-directives 0 0", Go cohere "comment 35 119 eslint-disable-next-line"
+    suppression_test.go:118: on Node, caught: line 6897: "query probe/reports-on-directives 0 0", Go cohere "comment 35 119 eslint-disable-next-line"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it
+    suppression_test.go:118: natively, caught: line 7476: "directive 0 file rules= reason=\"\" line=0 start=0 end=0 pos=0 end=20", Go cohere "directive 0 file rules= reason=\"\" line=0 start=0 end=1 pos=0 end=20"
+    suppression_test.go:118: on Node, caught: line 7476: "directive 0 file rules= reason=\"\" line=0 start=0 end=0 pos=0 end=20", Go cohere "directive 0 file rules= reason=\"\" line=0 start=0 end=1 pos=0 end=20"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself
+    suppression_test.go:118: natively, caught: line 35: "query probe/reports-on-directives 0 1", Go cohere "query probe/reports-on-directives 0 0"
+    suppression_test.go:118: on Node, caught: line 35: "query probe/reports-on-directives 0 1", Go cohere "query probe/reports-on-directives 0 0"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary
+    suppression_test.go:118: natively, caught: line 3454: "query no-enum 110 1", Go cohere "query no-enum 110 0"
+    suppression_test.go:118: on Node, caught: line 3454: "query no-enum 110 1", Go cohere "query no-enum 110 0"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace
+    suppression_test.go:118: natively, caught: line 1726: "comment 0 32 eslint-disable", Go cohere "comment 0 32 -"
+    suppression_test.go:118: on Node, caught: line 1726: "comment 0 32 eslint-disable", Go cohere "comment 0 32 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case
+    suppression_test.go:118: natively, caught: line 7808: "comment 210 275 eslint-disable", Go cohere "comment 210 275 -"
+    suppression_test.go:118: on Node, caught: line 7808: "comment 210 275 eslint-disable", Go cohere "comment 210 275 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored
+    suppression_test.go:118: natively, caught: line 8014: "comment 293 319 -", Go cohere "comment 294 319 -"
+    suppression_test.go:118: on Node, caught: line 8014: "comment 293 319 -", Go cohere "comment 294 319 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line
+    suppression_test.go:118: natively, caught: line 7637: "query probe/reports-on-directives 0 0", Go cohere "comment 144 216 -"
+    suppression_test.go:118: on Node, caught: line 7637: "query probe/reports-on-directives 0 0", Go cohere "comment 144 216 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space
+    suppression_test.go:118: natively, caught: line 7405: "comment 10 32 eslint-disable-line", Go cohere "comment 4 32 -"
+    suppression_test.go:118: on Node, caught: line 7405: "comment 10 32 eslint-disable-line", Go cohere "comment 4 32 -"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word
+    suppression_test.go:118: natively, caught: line 2137: "comment 0 32 -", Go cohere "comment 0 32 eslint-disable"
+    suppression_test.go:118: on Node, caught: line 2137: "comment 0 32 -", Go cohere "comment 0 32 eslint-disable"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression
+    suppression_test.go:118: natively, caught: line 8626: "comment 126 178 -", Go cohere "comment 122 286 -"
+    suppression_test.go:118: on Node, caught: line 8626: "comment 126 178 -", Go cohere "comment 122 286 -"
+--- PASS: TestThePortParsesAsGoCohereDoes (1.72s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (6.68s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored (3.27s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace (3.13s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it (3.89s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself (4.07s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary (3.21s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace (3.45s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case (3.33s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored (8.80s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line (4.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space (4.13s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word (5.31s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression (7.52s)
+PASS

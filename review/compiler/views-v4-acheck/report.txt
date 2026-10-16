@@ -1,0 +1,29 @@
+Moved all six V4 refusal witnesses into internal/oracle/testdata/views_v4_refused, with a-check headers and unchanged refusal assertions.
+Base: origin/compiler/views-v4 at 97c69648f71a76492897b22cd3cb63f85947e964; branch compiler/views-v4-acheck.
+Scoped oracle tests passed in 15.071s; TestCallTargetReaders passed in 11.021s; six direct a-check expectations matched.
+Three source mutants were caught by the existing refusal assertions; native and JavaScript adapter bypass mutants passed their existing catcher test.
+No full gate or whole package run; two existing pending tests remain skipped; no new counted fixtures or counts.md rows.
+
+Task #g78hsyw, V4 gate-read lane repair. All six witnesses have test readers, so none were renamed to .a.txt. Passing review evidence is unchanged. The test readers remove the expectation header so exact original source locations remain asserted. The more specific branch instruction takes precedence over the generic main-start instruction. No other worker branch was merged.
+
+Environment: nproc=5, cgroup quota=4 CPUs. source /workspace/adamic-tools/env.sh; GOPROXY=https://proxy.golang.org|direct.
+Initial bash cloud/setup.sh failed after shared cache ready (23.100s): pattern ./...: stat /workspace/adamic/cmd/adamic-gocacheprog: directory not found. Checkout changed while setup was warming the initial tree. Retried setup on the stable area branch: Node 0.111s, Go 0.126s, submodules 0.310s, markdown dependencies 0.334s, clang 0.722s, go build ready 301.810s, build cache warm 301.960s, done 301.985s. Initial targeted test and compiler attempts exhausted outer cold-compilation limits; final warm runs below passed.
+
+Final commands (output redirected to logs, then read):
+timeout 120 go test ./internal/oracle -run 'TestV4EscapeAdapter.*ConstructSignatureRefusal|TestV4Lane5' -count=1 -timeout 90s -v
+PASS; ok github.com/system-inc/adamic/internal/oracle 15.071s. Every test leaf under 60s; longest 15.06s. Existing pending tests: TestV4Lane5FactoryWiderWritePending and TestV4Lane5FactoryReadonlyTargetControl.
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v
+PASS; ok github.com/system-inc/adamic/internal/ir 11.021s.
+timeout 300 go build -o /tmp/v4-acheck-adamic ./cmd/adamic
+exit 0. Executed /tmp/v4-acheck-adamic c on all six moved files with a 60s subprocess limit; every declared outcome matched (expectations.log).
+
+Mutants, each restored before the final green run:
+construct-no-signature: replace new escaped with escaped; Node stdout unchanged; TestV4EscapeAdapterWithoutConstructSignatureRefusal fails checker refusal needs path and fix, exit 1.
+view-result-wrong: replace const callback = viewed.run with a direct-call wrapper; Node stdout unchanged; TestV4Lane5BoxedAdamicRefusal fails .a keeps the unproven-read refusal, exit 1.
+factory-165-wrong-arity: make Target.onEmitNode readonly; Node stdout unchanged; TestV4Lane5FactoryWiderWriteRefusal fails wider-write keeps path and fix, exit 1.
+Initial boxed-result trial changed boolean true to string true. It remained refused for the escaping read and did not kill the test; replaced with the direct-call-wrapper mutant above.
+TestV4Lane5SkipAdapterMutant: native and JavaScript adapter bypasses run like Node, unlike the required exit70; existing behavioral catcher passes, 15.06s. Factory and boxed positive controls also run their existing guard mutants; full observations in tests.log.
+
+Integration lane command from repository root, after committing:
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+exit 0: lane checks 13.0 s: gofmt and tools on 154 Go files, t.Parallel on 8 test packages; a-check 38 .a files; vet 8 packages. Zero a-check failures. Repair commit 80e75f1a.

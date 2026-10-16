@@ -1,0 +1,41 @@
+=== RUN   TestCheckedViewArrayReadMutants
+=== PAUSE TestCheckedViewArrayReadMutants
+=== CONT  TestCheckedViewArrayReadMutants
+=== RUN   TestCheckedViewArrayReadMutants/array-second
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 index checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-boolean
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 index checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-string-literal
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 literal checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-undefined
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 index checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-iteration-bad
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 consumer checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-map-bad
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 consumer checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/non-array
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 field checks; release C and JavaScript rejected the mutant
+=== RUN   TestCheckedViewArrayReadMutants/array-missing
+    checked_views_arrays_mutants_test.go:30: gate cache node miss
+    checked_views_arrays_mutants_test.go:35: removed 1 field checks; release C and JavaScript rejected the mutant
+--- PASS: TestCheckedViewArrayReadMutants (3.49s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-second (0.30s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-boolean (0.30s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-string-literal (0.43s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-undefined (0.39s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-iteration-bad (0.43s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-map-bad (0.58s)
+    --- PASS: TestCheckedViewArrayReadMutants/non-array (0.48s)
+    --- PASS: TestCheckedViewArrayReadMutants/array-missing (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.503s

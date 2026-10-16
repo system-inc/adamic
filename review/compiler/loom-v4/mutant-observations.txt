@@ -1,0 +1,355 @@
+TestV4DestructuredCallableArgument-fixed.log:     checked_views_v4_destructured_test.go:40: destructured adapter omission caught in native ASan/UBSan/LSan and JavaScript
+TestV4EscapeAdapterApplyArgument-fixed.log:     checked_views_v4_call_apply_test.go:63: native/ASan/UBSan/LSan apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+TestV4EscapeAdapterApplyArgument-fixed.log:     checked_views_v4_call_apply_test.go:63: JavaScript apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+TestV4EscapeAdapterApplyResult-fixed.log:     checked_views_v4_call_apply_test.go:67: native/ASan/UBSan/LSan apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+TestV4EscapeAdapterApplyResult-fixed.log:     checked_views_v4_call_apply_test.go:67: JavaScript apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+TestV4EscapeAdapterCallArgument-fixed.log:     checked_views_v4_call_apply_test.go:55: native/ASan/UBSan/LSan call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+TestV4EscapeAdapterCallArgument-fixed.log:     checked_views_v4_call_apply_test.go:55: JavaScript call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+TestV4EscapeAdapterCallReceiverCheck-fixed.log:     checked_views_v4_call_apply_test.go:152: receiver-domain omission caught in native/ASan/UBSan/LSan and JavaScript
+TestV4EscapeAdapterCallResult-fixed.log:     checked_views_v4_call_apply_test.go:59: native/ASan/UBSan/LSan call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+TestV4EscapeAdapterCallResult-fixed.log:     checked_views_v4_call_apply_test.go:59: JavaScript call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+TestV4EscapeAdapterIdentity-fixed.log:     checked_views_v4_escape_test.go:196: native/sanitized unequal-read mutant caught: "true:false:false:true\ntrue:true:true\n1:true:true:updated\n1:true:true\nok\nok\ntrue:true:0:0\n"
+TestV4EscapeAdapterIdentity-fixed.log:     checked_views_v4_escape_test.go:196: JavaScript unequal-read mutant caught: "true:false:false:true\ntrue:false:false\n2:true:false:updated\n2:true:false\nok\nok\nok\nok\nfalse:true:2:1\n"
+TestV4EscapeAdapterLength-fixed.log:     checked_views_v4_surface_test.go:56: native/ASan/UBSan/LSan own-surface mutant caught: expected "3\n", got "2\n"
+TestV4EscapeAdapterLength-fixed.log:     checked_views_v4_surface_test.go:56: JavaScript own-surface mutant caught: expected "3\n", got "2\n"
+TestV4EscapeAdapterName-fixed.log:     checked_views_v4_surface_test.go:67: native/ASan/UBSan/LSan own-surface mutant caught: expected "producer\n", got "\n"
+TestV4EscapeAdapterName-fixed.log:     checked_views_v4_surface_test.go:67: JavaScript own-surface mutant caught: expected "producer\n", got "\n"
+TestV4EscapeAdapterNoStacking-fixed.log:     checked_views_v4_escape_test.go:201: native/sanitized unconditional-wrap caught by bounded allocation: [2003 2003 5007 4009 5 0] vs [1003 1003 5007 4009 4 0]
+TestV4EscapeAdapterNoStacking-fixed.log:     checked_views_v4_escape_test.go:201: JavaScript unconditional-wrap caught by bounded allocation: "ok\nadapter-makes:1001\n"
+TestV4Lane5SkipAdapterMutant-fixed.log: === RUN   TestV4Lane5SkipAdapterMutant
+TestV4Lane5SkipAdapterMutant-fixed.log: === PAUSE TestV4Lane5SkipAdapterMutant
+TestV4Lane5SkipAdapterMutant-fixed.log: === CONT  TestV4Lane5SkipAdapterMutant
+TestV4Lane5SkipAdapterMutant-fixed.log:     checked_views_v4_lane5_test.go:134: native exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:94
+TestV4Lane5SkipAdapterMutant-fixed.log:     checked_views_v4_lane5_test.go:134: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:94
+TestV4Lane5SkipAdapterMutant-fixed.log:     checked_views_v4_lane5_test.go:134: javascript exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2389465536/001/identity.ts:4:94
+TestV4Lane5SkipAdapterMutant-fixed.log:     checked_views_v4_lane5_test.go:154: skip-adapter mutant caught in native ASan/UBSan/LSan and JavaScript
+TestV4Lane5SkipAdapterMutant-fixed.log: --- PASS: TestV4Lane5SkipAdapterMutant (6.67s)
+fixed.log: {'package': 'internal/oracle', 'test': 'TestV4Lane5SkipAdapterMutant', 'seconds': 6.69, 'exit': 0, 'grain': True}
+focused.log: TestViewArraySourceCertificateOmission 0 0.064
+focused.log: TestArrayElementKindRuntimeMutant 0 6.959
+focused.log: TestArrayHolesAbsentSlotMutant 0 7.087
+focused.log: TestArrayHolesRangeErrorMutant 0 9.22
+focused.log: TestArrayViewHolesAbsenceMutant 0 5.575
+focused.log: TestArrayViewMissingReceiverMutant 0 9.861
+focused.log: TestArrayViewPhysicalWriteMutant 0 10.341
+focused.log: TestCheckedViewArrayReadMutantsArrayBoolean 0 4.478
+focused.log: TestCheckedViewArrayReadMutantsArrayIterationBad 0 4.16
+focused.log: TestCheckedViewArrayReadMutantsArrayMapBad 0 2.825
+focused.log: TestCheckedViewArrayReadMutantsArrayMissing 0 3.029
+focused.log: TestCheckedViewArrayReadMutantsArraySecond 0 2.876
+focused.log: TestCheckedViewArrayReadMutantsArrayStringLiteral 0 2.974
+focused.log: TestCheckedViewArrayReadMutantsArrayUndefined 0 2.737
+focused.log: TestCheckedViewArrayReadMutantsNonArray 0 2.98
+focused.log: TestCheckedViewV2CallableProducerMutant 0 3.088
+focused.log: TestCheckedViewV2MembershipMutant 0 2.88
+internal-lower-TestViewArraySourceCertificateOmission.log: === RUN   TestViewArraySourceCertificateOmission
+internal-lower-TestViewArraySourceCertificateOmission.log: === PAUSE TestViewArraySourceCertificateOmission
+internal-lower-TestViewArraySourceCertificateOmission.log: === CONT  TestViewArraySourceCertificateOmission
+internal-lower-TestViewArraySourceCertificateOmission.log:     view_array_writes_test.go:56: source-slot certificate guard omitted; the pinned refusal rejects the mutant
+internal-lower-TestViewArraySourceCertificateOmission.log: --- PASS: TestViewArraySourceCertificateOmission (0.03s)
+internal-native-TestViewAdapterCacheBounded.log:     view_adapter_runtime_test.go:163: skip-intern caught sanitize=false: bounded allocation exceeded: repeated reads rebuilt adapters
+internal-native-TestViewAdapterCacheBounded.log:     view_adapter_runtime_test.go:163: skip-intern caught sanitize=true: bounded allocation exceeded: repeated reads rebuilt adapters
+internal-native-TestViewAdapterCacheCanonical.log:     view_adapter_runtime_test.go:208: canonical-factory omission caught by exit 0 instead of required exit 70
+internal-native-TestViewAdapterCacheDying.log:     view_adapter_runtime_test.go:184: dying-retain caught by ASan in the actual count-zero destruction window:
+internal-native-TestViewAdapterCacheIdentity.log:     view_adapter_runtime_test.go:261: identity-overread caught by ASan: =================================================================
+internal-native-TestViewAdapterCacheOrder.log:     view_adapter_runtime_test.go:194: release-before-remove caught: remove/release order violated
+internal-native-TestViewAdapterCacheRecheck.log:     view_adapter_runtime_test.go:174: skip-recheck caught: factory winner was not rechecked
+internal-native-TestViewAdapterCacheWeakLeakRoot.log:     view_adapter_runtime_test.go:222: strong-leak-root mutant caught: LeakSanitizer lost the required leak report
+internal-oracle-TestArrayElementKindRuntimeMutant.log: === RUN   TestArrayElementKindRuntimeMutant
+internal-oracle-TestArrayElementKindRuntimeMutant.log: === PAUSE TestArrayElementKindRuntimeMutant
+internal-oracle-TestArrayElementKindRuntimeMutant.log: === CONT  TestArrayElementKindRuntimeMutant
+internal-oracle-TestArrayElementKindRuntimeMutant.log:     array_runtime_mutants_test.go:92: gate cache node miss
+internal-oracle-TestArrayElementKindRuntimeMutant.log:     array_runtime_mutants_test.go:98: element-kind mismatch check removed; array-boolean rejects the mutant in C and JavaScript
+internal-oracle-TestArrayElementKindRuntimeMutant.log: --- PASS: TestArrayElementKindRuntimeMutant (6.91s)
+internal-oracle-TestArrayHolesAbsentSlotMutant.log: === RUN   TestArrayHolesAbsentSlotMutant
+internal-oracle-TestArrayHolesAbsentSlotMutant.log: === PAUSE TestArrayHolesAbsentSlotMutant
+internal-oracle-TestArrayHolesAbsentSlotMutant.log: === CONT  TestArrayHolesAbsentSlotMutant
+internal-oracle-TestArrayHolesAbsentSlotMutant.log:     array_holes_test.go:78: absent-slot check removed; Node's 4:true:true catches C and JavaScript mutants
+internal-oracle-TestArrayHolesAbsentSlotMutant.log: --- PASS: TestArrayHolesAbsentSlotMutant (7.06s)
+internal-oracle-TestArrayHolesRangeErrorMutant.log: === RUN   TestArrayHolesRangeErrorMutant
+internal-oracle-TestArrayHolesRangeErrorMutant.log: === PAUSE TestArrayHolesRangeErrorMutant
+internal-oracle-TestArrayHolesRangeErrorMutant.log: === CONT  TestArrayHolesRangeErrorMutant
+internal-oracle-TestArrayHolesRangeErrorMutant.log:     array_holes_test.go:106: invalid-length throw removed; Node's nominal RangeError observations reject both mutants
+internal-oracle-TestArrayHolesRangeErrorMutant.log: --- PASS: TestArrayHolesRangeErrorMutant (9.20s)
+internal-oracle-TestArrayViewHolesAbsenceMutant.log: === RUN   TestArrayViewHolesAbsenceMutant
+internal-oracle-TestArrayViewHolesAbsenceMutant.log: === PAUSE TestArrayViewHolesAbsenceMutant
+internal-oracle-TestArrayViewHolesAbsenceMutant.log: === CONT  TestArrayViewHolesAbsenceMutant
+internal-oracle-TestArrayViewHolesAbsenceMutant.log:     array_runtime_mutants_test.go:201: gate cache node miss
+internal-oracle-TestArrayViewHolesAbsenceMutant.log:     array_runtime_mutants_test.go:208: gate cache node miss
+internal-oracle-TestArrayViewHolesAbsenceMutant.log:     array_runtime_mutants_test.go:216: hole absence removed; Node's -1 then 7 rejects both checked-view mutants
+internal-oracle-TestArrayViewHolesAbsenceMutant.log: --- PASS: TestArrayViewHolesAbsenceMutant (5.53s)
+internal-oracle-TestArrayViewMissingReceiverMutant.log: === RUN   TestArrayViewMissingReceiverMutant
+internal-oracle-TestArrayViewMissingReceiverMutant.log: === PAUSE TestArrayViewMissingReceiverMutant
+internal-oracle-TestArrayViewMissingReceiverMutant.log: === CONT  TestArrayViewMissingReceiverMutant
+internal-oracle-TestArrayViewMissingReceiverMutant.log:     array_runtime_mutants_test.go:104: gate cache node miss
+internal-oracle-TestArrayViewMissingReceiverMutant.log:     array_runtime_mutants_test.go:114: gate cache node miss
+internal-oracle-TestArrayViewMissingReceiverMutant.log:     array_runtime_mutants_test.go:122: receiver presence check omitted; the pinned values[0] stop rejects both mutants
+internal-oracle-TestArrayViewMissingReceiverMutant.log: --- PASS: TestArrayViewMissingReceiverMutant (9.84s)
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: === RUN   TestArrayViewPhysicalWriteMutant
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: === PAUSE TestArrayViewPhysicalWriteMutant
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: === CONT  TestArrayViewPhysicalWriteMutant
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: === RUN   TestArrayViewPhysicalWriteMutant/scalar
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:182: gate cache node miss
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:187: gate cache node miss
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:193: physical write check omitted; the pinned array-write stop rejects both IR-boundary mutants
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: === RUN   TestArrayViewPhysicalWriteMutant/reference
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:182: gate cache node miss
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:187: gate cache node miss
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     array_runtime_mutants_test.go:193: physical write check omitted; the pinned array-write stop rejects both IR-boundary mutants
+internal-oracle-TestArrayViewPhysicalWriteMutant.log: --- PASS: TestArrayViewPhysicalWriteMutant (10.28s)
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     --- PASS: TestArrayViewPhysicalWriteMutant/scalar (9.93s)
+internal-oracle-TestArrayViewPhysicalWriteMutant.log:     --- PASS: TestArrayViewPhysicalWriteMutant/reference (0.35s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log: === RUN   TestCheckedViewArrayReadMutantsArrayBoolean
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log: === PAUSE TestCheckedViewArrayReadMutantsArrayBoolean
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log: === CONT  TestCheckedViewArrayReadMutantsArrayBoolean
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log:     checked_views_arrays_mutants_test.go:40: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log:     checked_views_arrays_mutants_test.go:40: removed 1 index checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayBoolean.log: --- PASS: TestCheckedViewArrayReadMutantsArrayBoolean (4.44s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log: === RUN   TestCheckedViewArrayReadMutantsArrayIterationBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log: === PAUSE TestCheckedViewArrayReadMutantsArrayIterationBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log: === CONT  TestCheckedViewArrayReadMutantsArrayIterationBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log:     checked_views_arrays_mutants_test.go:55: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log:     checked_views_arrays_mutants_test.go:55: removed 1 consumer checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayIterationBad.log: --- PASS: TestCheckedViewArrayReadMutantsArrayIterationBad (4.12s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log: === RUN   TestCheckedViewArrayReadMutantsArrayMapBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log: === PAUSE TestCheckedViewArrayReadMutantsArrayMapBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log: === CONT  TestCheckedViewArrayReadMutantsArrayMapBad
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log:     checked_views_arrays_mutants_test.go:60: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log:     checked_views_arrays_mutants_test.go:60: removed 1 consumer checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMapBad.log: --- PASS: TestCheckedViewArrayReadMutantsArrayMapBad (2.77s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log: === RUN   TestCheckedViewArrayReadMutantsArrayMissing
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log: === PAUSE TestCheckedViewArrayReadMutantsArrayMissing
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log: === CONT  TestCheckedViewArrayReadMutantsArrayMissing
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log:     checked_views_arrays_mutants_test.go:70: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log:     checked_views_arrays_mutants_test.go:70: removed 1 field checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayMissing.log: --- PASS: TestCheckedViewArrayReadMutantsArrayMissing (2.97s)
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log: === RUN   TestCheckedViewArrayReadMutantsArraySecond
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log: === PAUSE TestCheckedViewArrayReadMutantsArraySecond
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log: === CONT  TestCheckedViewArrayReadMutantsArraySecond
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log:     checked_views_arrays_mutants_test.go:35: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log:     checked_views_arrays_mutants_test.go:35: removed 1 index checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArraySecond.log: --- PASS: TestCheckedViewArrayReadMutantsArraySecond (2.82s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log: === RUN   TestCheckedViewArrayReadMutantsArrayStringLiteral
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log: === PAUSE TestCheckedViewArrayReadMutantsArrayStringLiteral
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log: === CONT  TestCheckedViewArrayReadMutantsArrayStringLiteral
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log:     checked_views_arrays_mutants_test.go:45: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log:     checked_views_arrays_mutants_test.go:45: removed 1 literal checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayStringLiteral.log: --- PASS: TestCheckedViewArrayReadMutantsArrayStringLiteral (2.95s)
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log: === RUN   TestCheckedViewArrayReadMutantsArrayUndefined
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log: === PAUSE TestCheckedViewArrayReadMutantsArrayUndefined
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log: === CONT  TestCheckedViewArrayReadMutantsArrayUndefined
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log:     checked_views_arrays_mutants_test.go:50: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log:     checked_views_arrays_mutants_test.go:50: removed 1 index checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsArrayUndefined.log: --- PASS: TestCheckedViewArrayReadMutantsArrayUndefined (2.71s)
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log: === RUN   TestCheckedViewArrayReadMutantsNonArray
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log: === PAUSE TestCheckedViewArrayReadMutantsNonArray
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log: === CONT  TestCheckedViewArrayReadMutantsNonArray
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log:     checked_views_arrays_mutants_test.go:65: gate cache node miss
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log:     checked_views_arrays_mutants_test.go:65: removed 1 field checks; release C and JavaScript rejected the mutant
+internal-oracle-TestCheckedViewArrayReadMutantsNonArray.log: --- PASS: TestCheckedViewArrayReadMutantsNonArray (2.95s)
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log: === RUN   TestCheckedViewV2CallableProducerMutant
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log: === PAUSE TestCheckedViewV2CallableProducerMutant
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log: === CONT  TestCheckedViewV2CallableProducerMutant
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log:     checked_views_v2_migration_test.go:258: producer certificate removal caught by native: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log:     checked_views_v2_migration_test.go:258: producer certificate removal caught by native-sanitized: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log:     checked_views_v2_migration_test.go:258: producer certificate removal caught by javascript: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2CallableProducerMutant.log: --- PASS: TestCheckedViewV2CallableProducerMutant (3.03s)
+internal-oracle-TestCheckedViewV2MembershipMutant.log: === RUN   TestCheckedViewV2MembershipMutant
+internal-oracle-TestCheckedViewV2MembershipMutant.log: === PAUSE TestCheckedViewV2MembershipMutant
+internal-oracle-TestCheckedViewV2MembershipMutant.log: === CONT  TestCheckedViewV2MembershipMutant
+internal-oracle-TestCheckedViewV2MembershipMutant.log:     checked_views_v2_migration_test.go:184: membership check removal caught by javascript: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2MembershipMutant.log:     checked_views_v2_migration_test.go:184: membership check removal caught by native: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2MembershipMutant.log:     checked_views_v2_migration_test.go:184: membership check removal caught by native-sanitized: exit 0 stdout "true\n"
+internal-oracle-TestCheckedViewV2MembershipMutant.log: --- PASS: TestCheckedViewV2MembershipMutant (2.83s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants/null
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants/null
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants/undefined
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants/undefined
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants/uint8
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants/uint8
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants/int32
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants/int32
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === RUN   TestCheckedViewV2RepresentationMutants/float64
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === PAUSE TestCheckedViewV2RepresentationMutants/float64
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants/null
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     checked_views_v2_migration_test.go:123: old-layout null caught: exit 1 stdout "" stderr "typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior typed_array.c:88:46 \n"
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants/int32
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     checked_views_v2_migration_test.go:123: old-layout int32 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants/float64
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     checked_views_v2_migration_test.go:123: old-layout float64 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants/uint8
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     checked_views_v2_migration_test.go:123: old-layout uint8 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: === CONT  TestCheckedViewV2RepresentationMutants/undefined
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     checked_views_v2_migration_test.go:123: old-layout undefined caught: exit 1 stdout "" stderr "typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior typed_array.c:88:46 \n"
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log: --- PASS: TestCheckedViewV2RepresentationMutants (0.00s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     --- PASS: TestCheckedViewV2RepresentationMutants/null (1.38s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     --- PASS: TestCheckedViewV2RepresentationMutants/int32 (0.31s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     --- PASS: TestCheckedViewV2RepresentationMutants/float64 (0.32s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     --- PASS: TestCheckedViewV2RepresentationMutants/uint8 (0.32s)
+internal-oracle-TestCheckedViewV2RepresentationMutants-remaining.log:     --- PASS: TestCheckedViewV2RepresentationMutants/undefined (0.33s)
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log: === RUN   TestCheckedViewV2TupleIdentityMutant
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log: === PAUSE TestCheckedViewV2TupleIdentityMutant
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log: === CONT  TestCheckedViewV2TupleIdentityMutant
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log:     checked_views_v2_migration_test.go:215: tuple flag removal caught by native-sanitized: exit 0 stdout "first\n"
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log:     checked_views_v2_migration_test.go:215: tuple flag removal caught by javascript: exit 0 stdout "first\n"
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log:     checked_views_v2_migration_test.go:215: tuple flag removal caught by native: exit 0 stdout "first\n"
+internal-oracle-TestCheckedViewV2TupleIdentityMutant-remaining.log: --- PASS: TestCheckedViewV2TupleIdentityMutant (3.30s)
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log: === RUN   TestCheckedViewV2WrongFamilyMutant
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log: === PAUSE TestCheckedViewV2WrongFamilyMutant
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log: === CONT  TestCheckedViewV2WrongFamilyMutant
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log:     checked_views_v2_migration_test.go:82: wrong family caught by native-sanitized: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log:     checked_views_v2_migration_test.go:82: wrong family caught by javascript: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log:     checked_views_v2_migration_test.go:82: wrong family caught by native: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+internal-oracle-TestCheckedViewV2WrongFamilyMutant-remaining.log: --- PASS: TestCheckedViewV2WrongFamilyMutant (3.29s)
+internal-oracle-TestNarrowedUnionMemberCheck-remaining.log:     narrowed_union_test.go:70: unchecked member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+internal-oracle-TestV4DestructuredCallableReadOnly-remaining.log:     checked_views_v4_destructured_test.go:48: guard mutant admitted in native: exit 0 output "run\n"
+internal-oracle-TestV4DestructuredCallableReadOnly-remaining.log:     checked_views_v4_destructured_test.go:48: guard mutant admitted in sanitized: exit 0 output "run\n"
+internal-oracle-TestV4DestructuredCallableReadOnly-remaining.log:     checked_views_v4_destructured_test.go:48: guard mutant admitted in javascript: exit 0 output "run\n"
+internal-oracle-TestV4DirectArgument-remaining.log:     checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+internal-oracle-TestV4DirectArgument-remaining.log:     checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+internal-oracle-TestV4DirectArgument-remaining.log:     checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+internal-oracle-TestV4DirectArrayArgument-remaining.log:     checked_views_v4_direct_test.go:222: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectArrayArgument-remaining.log:     checked_views_v4_direct_test.go:222: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectArrayArgument-remaining.log:     checked_views_v4_direct_test.go:222: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectObjectArgument-remaining.log:     checked_views_v4_direct_test.go:213: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectObjectArgument-remaining.log:     checked_views_v4_direct_test.go:213: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectObjectArgument-remaining.log:     checked_views_v4_direct_test.go:213: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+internal-oracle-TestV4DirectResult-remaining.log:     checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+internal-oracle-TestV4DirectResult-remaining.log:     checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+internal-oracle-TestV4DirectResult-remaining.log:     checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+internal-oracle-TestV4EscapeAdapterArgument-remaining.log:     checked_views_v4_escape_test.go:186: native argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+internal-oracle-TestV4EscapeAdapterArgument-remaining.log:     checked_views_v4_escape_test.go:186: sanitized argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+internal-oracle-TestV4EscapeAdapterArgument-remaining.log:     checked_views_v4_escape_test.go:186: javascript argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+internal-oracle-TestV4EscapeAdapterBindPrefix-remaining.log:     checked_views_v4_bind_test.go:52: guard mutant admitted in native: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+internal-oracle-TestV4EscapeAdapterBindPrefix-remaining.log:     checked_views_v4_bind_test.go:52: guard mutant admitted in sanitized: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+internal-oracle-TestV4EscapeAdapterBindPrefix-remaining.log:     checked_views_v4_bind_test.go:52: guard mutant admitted in javascript: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+internal-oracle-TestV4EscapeAdapterBindPrefix-remaining.log:     checked_views_v4_bind_test.go:53: prefix omission caught in both backends, native ASan/UBSan/LeakSanitizer clean; producer never invoked
+internal-oracle-TestV4EscapeAdapterBindRemainingArgument-remaining.log:     checked_views_v4_bind_test.go:102: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nvalue\n"
+internal-oracle-TestV4EscapeAdapterBindRemainingArgument-remaining.log:     checked_views_v4_bind_test.go:102: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nvalue\n"
+internal-oracle-TestV4EscapeAdapterBindRemainingArgument-remaining.log:     checked_views_v4_bind_test.go:102: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nvalue\n"
+internal-oracle-TestV4EscapeAdapterBindRemainingArgument-remaining.log:     checked_views_v4_bind_test.go:102: later argument omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+internal-oracle-TestV4EscapeAdapterBindResult-remaining.log:     checked_views_v4_bind_test.go:104: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterBindResult-remaining.log:     checked_views_v4_bind_test.go:104: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterBindResult-remaining.log:     checked_views_v4_bind_test.go:104: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterBindResult-remaining.log:     checked_views_v4_bind_test.go:104: later result omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+internal-oracle-TestV4EscapeAdapterBlameApply-remaining.log:     checked_views_v4_blame_test.go:99: native read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameApply-remaining.log:     checked_views_v4_blame_test.go:99: sanitized read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameApply-remaining.log:     checked_views_v4_blame_test.go:99: javascript read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameArgument-remaining.log:     checked_views_v4_blame_test.go:92: native read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameArgument-remaining.log:     checked_views_v4_blame_test.go:92: sanitized read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameArgument-remaining.log:     checked_views_v4_blame_test.go:92: javascript read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameBound-remaining.log:     checked_views_v4_blame_test.go:102: native read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameBound-remaining.log:     checked_views_v4_blame_test.go:102: sanitized read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameBound-remaining.log:     checked_views_v4_blame_test.go:102: javascript read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameCall-remaining.log:     checked_views_v4_blame_test.go:98: native read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameCall-remaining.log:     checked_views_v4_blame_test.go:98: sanitized read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameCall-remaining.log:     checked_views_v4_blame_test.go:98: javascript read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameResult-remaining.log:     checked_views_v4_blame_test.go:96: javascript read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameResult-remaining.log:     checked_views_v4_blame_test.go:96: native read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBlameResult-remaining.log:     checked_views_v4_blame_test.go:96: sanitized read-site omission caught; same exit/output, missing read site
+internal-oracle-TestV4EscapeAdapterBoxed-remaining.log:     checked_views_v4_escape_test.go:323: guard mutant admitted in sanitized: exit 0 output "5\n"
+internal-oracle-TestV4EscapeAdapterBoxed-remaining.log:     checked_views_v4_escape_test.go:323: guard mutant admitted in javascript: exit 0 output "5\n"
+internal-oracle-TestV4EscapeAdapterBoxed-remaining.log:     checked_views_v4_escape_test.go:323: guard mutant admitted in native: exit 0 output "5\n"
+internal-oracle-TestV4EscapeAdapterCounted-remaining.log:     checked_views_v4_escape_test.go:332: guard mutant admitted in native: exit 0 output "0:absent\n1:ok\n"
+internal-oracle-TestV4EscapeAdapterCounted-remaining.log:     checked_views_v4_escape_test.go:332: guard mutant admitted in sanitized: exit 0 output "0:absent\n1:ok\n"
+internal-oracle-TestV4EscapeAdapterCounted-remaining.log:     checked_views_v4_escape_test.go:332: guard mutant admitted in javascript: exit 0 output "0:absent\n1:ok\n"
+internal-oracle-TestV4EscapeAdapterNull-remaining.log:     checked_views_v4_escape_test.go:364: guard mutant admitted in native: exit 0 output "true\n"
+internal-oracle-TestV4EscapeAdapterNull-remaining.log:     checked_views_v4_escape_test.go:364: guard mutant admitted in sanitized: exit 0 output "true\n"
+internal-oracle-TestV4EscapeAdapterNull-remaining.log:     checked_views_v4_escape_test.go:364: guard mutant admitted in javascript: exit 0 output "true\n"
+internal-oracle-TestV4EscapeAdapterResult-remaining.log:     checked_views_v4_escape_test.go:191: sanitized result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterResult-remaining.log:     checked_views_v4_escape_test.go:191: javascript result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterResult-remaining.log:     checked_views_v4_escape_test.go:191: native result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+internal-oracle-TestV4EscapeAdapterReturned-remaining.log:     checked_views_v4_escape_test.go:314: guard mutant admitted in native: exit 0 output "ok\nok\n"
+internal-oracle-TestV4EscapeAdapterReturned-remaining.log:     checked_views_v4_escape_test.go:314: guard mutant admitted in sanitized: exit 0 output "ok\nok\n"
+internal-oracle-TestV4EscapeAdapterReturned-remaining.log:     checked_views_v4_escape_test.go:314: guard mutant admitted in javascript: exit 0 output "ok\nok\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+internal-oracle-TestV4EscapeAdapterScalarIdentityControls-remaining.log:     checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+internal-oracle-TestV4EscapeAdapterUnusedMisfit-remaining.log:     checked_views_v4_escape_test.go:305: guard mutant admitted in native: exit 0 output "read\n"
+internal-oracle-TestV4EscapeAdapterUnusedMisfit-remaining.log:     checked_views_v4_escape_test.go:305: guard mutant admitted in sanitized: exit 0 output "read\n"
+internal-oracle-TestV4EscapeAdapterUnusedMisfit-remaining.log:     checked_views_v4_escape_test.go:305: guard mutant admitted in javascript: exit 0 output "read\n"
+internal-oracle-TestV4EscapeAdapterVoid-remaining.log:     checked_views_v4_escape_test.go:373: guard mutant admitted in native: exit 0 output "done\n"
+internal-oracle-TestV4EscapeAdapterVoid-remaining.log:     checked_views_v4_escape_test.go:373: guard mutant admitted in sanitized: exit 0 output "done\n"
+internal-oracle-TestV4EscapeAdapterVoid-remaining.log:     checked_views_v4_escape_test.go:373: guard mutant admitted in javascript: exit 0 output "done\n"
+internal-oracle-TestV4EscapeTypeScriptBoundary-remaining.log:     checked_views_v4_escape_test.go:172: guard mutant admitted in sanitized: exit 0 output "read\n"
+internal-oracle-TestV4EscapeTypeScriptBoundary-remaining.log:     checked_views_v4_escape_test.go:172: guard mutant admitted in javascript: exit 0 output "read\n"
+internal-oracle-TestV4EscapeTypeScriptBoundary-remaining.log:     checked_views_v4_escape_test.go:172: guard mutant admitted in native: exit 0 output "read\n"
+internal-oracle-TestV4ExistingExplicitMethodReceiver-remaining.log:     checked_views_v4_method_receiver_test.go:14: guard mutant admitted in native: exit 0 output "7:99\n11\n"
+internal-oracle-TestV4ExistingExplicitMethodReceiver-remaining.log:     checked_views_v4_method_receiver_test.go:14: guard mutant admitted in sanitized: exit 0 output "7:99\n11\n"
+internal-oracle-TestV4ExistingExplicitMethodReceiver-remaining.log:     checked_views_v4_method_receiver_test.go:14: guard mutant admitted in javascript: exit 0 output "7:99\n11\n"
+internal-oracle-TestV4GenericProducerInstantiation-remaining.log:     checked_views_v4_generics_test.go:44: guard mutant admitted in native: exit 0 output "read\nproducer\nok\n"
+internal-oracle-TestV4GenericProducerInstantiation-remaining.log:     checked_views_v4_generics_test.go:44: guard mutant admitted in sanitized: exit 0 output "read\nproducer\nok\n"
+internal-oracle-TestV4GenericProducerInstantiation-remaining.log:     checked_views_v4_generics_test.go:44: guard mutant admitted in javascript: exit 0 output "read\nproducer\nok\n"
+internal-oracle-TestV4GenericProducerInstantiation-remaining.log:     checked_views_v4_generics_test.go:45: instantiation domain omission caught in both backends and sanitized native
+internal-oracle-TestV4GenericViewCallInstantiation-remaining.log:     checked_views_v4_generics_test.go:106: guard mutant admitted in native: exit 0 output "producer\nbad\n"
+internal-oracle-TestV4GenericViewCallInstantiation-remaining.log:     checked_views_v4_generics_test.go:106: guard mutant admitted in sanitized: exit 0 output "producer\nbad\n"
+internal-oracle-TestV4GenericViewCallInstantiation-remaining.log:     checked_views_v4_generics_test.go:106: guard mutant admitted in javascript: exit 0 output "producer\nbad\n"
+internal-oracle-TestV4HigherCallbackArgument-remaining.log:     checked_views_v4_higher_test.go:32: guard mutant admitted in sanitized: exit 0 output "bad\n"
+internal-oracle-TestV4HigherCallbackArgument-remaining.log:     checked_views_v4_higher_test.go:32: guard mutant admitted in javascript: exit 0 output "bad\n"
+internal-oracle-TestV4HigherCallbackArgument-remaining.log:     checked_views_v4_higher_test.go:32: guard mutant admitted in native: exit 0 output "bad\n"
+internal-oracle-TestV4HigherCallbackArgument-remaining.log:     checked_views_v4_higher_test.go:33: passing the callback unwrapped is caught in both backends, ASan/UBSan/LSan clean against Node
+internal-oracle-TestV4HigherCallbackNeverCalled-remaining.log:     checked_views_v4_higher_test.go:40: guard mutant admitted in native: exit 0 output "read\nnever\n"
+internal-oracle-TestV4HigherCallbackNeverCalled-remaining.log:     checked_views_v4_higher_test.go:40: guard mutant admitted in sanitized: exit 0 output "read\nnever\n"
+internal-oracle-TestV4HigherCallbackNeverCalled-remaining.log:     checked_views_v4_higher_test.go:40: guard mutant admitted in javascript: exit 0 output "read\nnever\n"
+internal-oracle-TestV4HigherCallbackResult-remaining.log:     checked_views_v4_higher_test.go:66: guard mutant admitted in native: exit 0 output "bad\n"
+internal-oracle-TestV4HigherCallbackResult-remaining.log:     checked_views_v4_higher_test.go:66: guard mutant admitted in sanitized: exit 0 output "bad\n"
+internal-oracle-TestV4HigherCallbackResult-remaining.log:     checked_views_v4_higher_test.go:66: guard mutant admitted in javascript: exit 0 output "bad\n"
+internal-oracle-TestV4IteratorPackedReceiver-remaining.log:     checked_views_v4_iterator_receiver_test.go:13: guard mutant admitted in native: exit 0 output "0\n1\n"
+internal-oracle-TestV4IteratorPackedReceiver-remaining.log:     checked_views_v4_iterator_receiver_test.go:13: guard mutant admitted in sanitized: exit 0 output "0\n1\n"
+internal-oracle-TestV4IteratorPackedReceiver-remaining.log:     checked_views_v4_iterator_receiver_test.go:13: guard mutant admitted in javascript: exit 0 output "0\n1\n"
+internal-oracle-TestV4IteratorPackedReceiver-remaining.log:     checked_views_v4_iterator_receiver_test.go:34: double receiver mutant caught by native sanitizer; JavaScript's existing packed ABI stays unchanged
+internal-oracle-TestV4Lane5BoxedParameter-remaining.log:     checked_views_v4_lane5_test.go:109: guard mutant admitted in native: exit 0 output "5\n"
+internal-oracle-TestV4Lane5BoxedParameter-remaining.log:     checked_views_v4_lane5_test.go:109: guard mutant admitted in sanitized: exit 0 output "5\n"
+internal-oracle-TestV4Lane5BoxedParameter-remaining.log:     checked_views_v4_lane5_test.go:109: guard mutant admitted in javascript: exit 0 output "5\n"
+internal-oracle-TestV4Lane5BoxedParameterMembers-remaining.log:     checked_views_v4_lane5_test.go:116: guard mutant admitted in native: exit 0 output "5\n"
+internal-oracle-TestV4Lane5BoxedParameterMembers-remaining.log:     checked_views_v4_lane5_test.go:116: guard mutant admitted in sanitized: exit 0 output "5\n"
+internal-oracle-TestV4Lane5BoxedParameterMembers-remaining.log:     checked_views_v4_lane5_test.go:116: guard mutant admitted in javascript: exit 0 output "5\n"
+internal-oracle-TestV4Lane5FactoryClone-remaining.log:     checked_views_v4_lane5_test.go:89: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryClone-remaining.log:     checked_views_v4_lane5_test.go:89: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryClone-remaining.log:     checked_views_v4_lane5_test.go:89: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryIdentifier-remaining.log:     checked_views_v4_lane5_test.go:50: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryIdentifier-remaining.log:     checked_views_v4_lane5_test.go:50: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryIdentifier-remaining.log:     checked_views_v4_lane5_test.go:50: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryImport-remaining.log:     checked_views_v4_lane5_test.go:71: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryImport-remaining.log:     checked_views_v4_lane5_test.go:71: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryImport-remaining.log:     checked_views_v4_lane5_test.go:71: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryModifier-remaining.log:     checked_views_v4_lane5_test.go:97: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryModifier-remaining.log:     checked_views_v4_lane5_test.go:97: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryModifier-remaining.log:     checked_views_v4_lane5_test.go:97: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryStringLiteral-remaining.log:     checked_views_v4_lane5_test.go:57: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryStringLiteral-remaining.log:     checked_views_v4_lane5_test.go:57: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryStringLiteral-remaining.log:     checked_views_v4_lane5_test.go:57: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryUniqueName-remaining.log:     checked_views_v4_lane5_test.go:64: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryUniqueName-remaining.log:     checked_views_v4_lane5_test.go:64: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryUniqueName-remaining.log:     checked_views_v4_lane5_test.go:64: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryYield-remaining.log:     checked_views_v4_lane5_test.go:78: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryYield-remaining.log:     checked_views_v4_lane5_test.go:78: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4Lane5FactoryYield-remaining.log:     checked_views_v4_lane5_test.go:78: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log: === RUN   TestV4Lane5SkipAdapterMutant
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log: === PAUSE TestV4Lane5SkipAdapterMutant
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log: === CONT  TestV4Lane5SkipAdapterMutant
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log:     checked_views_v4_lane5_test.go:134: native exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:94
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log:     checked_views_v4_lane5_test.go:134: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:94
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log:     checked_views_v4_lane5_test.go:134: javascript exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant4093142270/001/identity.ts:4:94
+internal-oracle-TestV4Lane5SkipAdapterMutant-remaining.log: --- FAIL: TestV4Lane5SkipAdapterMutant (6.31s)
+internal-oracle-TestV4MixedCallableFieldArgument-remaining.log:     checked_views_v4_mixed_test.go:40: guard mutant admitted in native: exit 0 output "7\n"
+internal-oracle-TestV4MixedCallableFieldArgument-remaining.log:     checked_views_v4_mixed_test.go:40: guard mutant admitted in sanitized: exit 0 output "7\n"
+internal-oracle-TestV4MixedCallableFieldArgument-remaining.log:     checked_views_v4_mixed_test.go:40: guard mutant admitted in javascript: exit 0 output "7\n"
+internal-oracle-TestV4MixedCallableFieldArgument-remaining.log:     checked_views_v4_mixed_test.go:41: mixed aggregate producer-domain omission caught against Node in both backends with sanitizers
+internal-oracle-TestV4MixedCallableFieldBoxing-remaining.log:     checked_views_v4_mixed_test.go:18: guard mutant admitted in javascript: exit 0 output "2\n"
+internal-oracle-TestV4MixedCallableFieldBoxing-remaining.log:     checked_views_v4_mixed_test.go:18: guard mutant admitted in native: exit 0 output "2\n"
+internal-oracle-TestV4MixedCallableFieldBoxing-remaining.log:     checked_views_v4_mixed_test.go:18: guard mutant admitted in sanitized: exit 0 output "2\n"
+internal-oracle-TestV4UnrelatedArrayFieldWrite-remaining.log:     checked_views_v4_unrelated_array_test.go:16: guard mutant admitted in native: exit 0 output "3\n2\ntrue\n"
+internal-oracle-TestV4UnrelatedArrayFieldWrite-remaining.log:     checked_views_v4_unrelated_array_test.go:16: guard mutant admitted in sanitized: exit 0 output "3\n2\ntrue\n"
+internal-oracle-TestV4UnrelatedArrayFieldWrite-remaining.log:     checked_views_v4_unrelated_array_test.go:16: guard mutant admitted in javascript: exit 0 output "3\n2\ntrue\n"
+javascript-order-fixed.log: {'mutant': 'javascript-order', 'test': 'TestV4DirectCalleeOrder', 'seconds': 11.739, 'exit': 1, 'killed': True}
+remaining.log: {'package': 'internal/oracle', 'test': 'TestCheckedViewV2RepresentationMutants', 'seconds': 2.698, 'exit': 0, 'grain': True}
+remaining.log: {'package': 'internal/oracle', 'test': 'TestCheckedViewV2TupleIdentityMutant', 'seconds': 3.336, 'exit': 0, 'grain': True}
+remaining.log: {'package': 'internal/oracle', 'test': 'TestCheckedViewV2WrongFamilyMutant', 'seconds': 3.336, 'exit': 0, 'grain': True}
+remaining.log: {'package': 'internal/oracle', 'test': 'TestV4Lane5SkipAdapterMutant', 'seconds': 6.367, 'exit': 1, 'grain': True}

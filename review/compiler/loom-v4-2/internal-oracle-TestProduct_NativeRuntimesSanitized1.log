@@ -1,0 +1,9 @@
+=== RUN   TestProduct_NativeRuntimesSanitized1
+=== PAUSE TestProduct_NativeRuntimesSanitized1
+=== CONT  TestProduct_NativeRuntimesSanitized1
+    runtimes_test.go:154: build native-runtime 0fe063cc0b47 miss 1.75
+    runtimes_test.go:154: build native-runtime 4d0d7cce407b miss 1.64
+    runtimes_test.go:154: build native-runtime 3db198619b0e miss 1.52
+    runtimes_test.go:154: build native-runtime 03dcba2e0bc5 miss 1.67
+--- PASS: TestProduct_NativeRuntimesSanitized1 (9.90s)
+PASS

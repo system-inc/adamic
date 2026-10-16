@@ -1,0 +1,7 @@
+=== RUN   TestV4EscapeAdapterWithoutConstructSignatureRefusal
+=== PAUSE TestV4EscapeAdapterWithoutConstructSignatureRefusal
+=== CONT  TestV4EscapeAdapterWithoutConstructSignatureRefusal
+    checked_views_v4_construct_refusals_test.go:54: Node succeeds; checker refuses before lowering: /tmp/adamic-gate/TestV4EscapeAdapterWithoutConstructSignatureRefusal1100815997/001/no-construct.ts:5:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly
+--- PASS: TestV4EscapeAdapterWithoutConstructSignatureRefusal (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.178s

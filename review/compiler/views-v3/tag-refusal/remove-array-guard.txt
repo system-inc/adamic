@@ -1,0 +1,16 @@
+=== RUN   TestNarrowedUnionObjectTagMisfit
+=== PAUSE TestNarrowedUnionObjectTagMisfit
+=== CONT  TestNarrowedUnionObjectTagMisfit
+    narrowed_union_test.go:98: native-sanitized: exit codes differ: exit 0 stdout "0\n" stderr ""
+    narrowed_union_test.go:98: native-sanitized: exit 0 stdout "0\n" stderr ""
+    narrowed_union_test.go:98: native-release: exit codes differ: exit 0 stdout "0\n" stderr ""
+    narrowed_union_test.go:98: native-release: exit 0 stdout "0\n" stderr ""
+    narrowed_union_test.go:98: JavaScript: exit codes differ: exit 0 stdout "undefined\n" stderr ""
+    narrowed_union_test.go:98: JavaScript: exit 0 stdout "undefined\n" stderr ""
+--- FAIL: TestNarrowedUnionObjectTagMisfit (0.43s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.438s
+FAIL

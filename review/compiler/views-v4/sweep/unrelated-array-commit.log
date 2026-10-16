@@ -1,0 +1,5 @@
+[compiler/views-v4 046a3a5aa] Keep unrelated reference fields outside checked array view writes
+ 9 files changed, 146 insertions(+), 9 deletions(-)
+ create mode 100644 internal/lower/view_array_field_schema.go
+ create mode 100644 internal/lower/view_unrelated_writes.go
+ create mode 100644 internal/oracle/checked_views_v4_unrelated_array_test.go

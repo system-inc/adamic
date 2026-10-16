@@ -1,0 +1,15 @@
+=== RUN   TestV4DirectResult
+=== PAUSE TestV4DirectResult
+=== CONT  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+    checked_views_v4_direct_test.go:113: gate cache node miss
+    checked_views_v4_direct_test.go:113: gate cache node miss
+    checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+--- PASS: TestV4DirectResult (1.01s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.028s

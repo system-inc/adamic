@@ -1,0 +1,7 @@
+=== RUN   TestPortAnswerPreparedUnitPlan
+=== PAUSE TestPortAnswerPreparedUnitPlan
+=== CONT  TestPortAnswerPreparedUnitPlan
+    answers_plan_test.go:15: union: 0 live case ids, each exactly once (0 trees, 0 pattern lists, 0 globs)
+    answers_plan_test.go:32: union: 32 live case ids, each exactly once (0 trees, 16 pattern lists, 0 globs)
+--- PASS: TestPortAnswerPreparedUnitPlan (0.00s)
+PASS

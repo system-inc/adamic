@@ -1,0 +1,18 @@
+=== RUN   TestProduct_SelectorGoAnswers
+=== PAUSE TestProduct_SelectorGoAnswers
+=== CONT  TestProduct_SelectorGoAnswers
+    selector_test.go:747: corpus-files: upstream /workspace/adamic/cohere root internal/format/css pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 157
+    selector_test.go:747: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8
+    selector_test.go:747: build go_test_-c_cohere_./internal/format/css/selector_selector.test b583234e5093 miss 3.26
+    selector_test.go:218: build go_test_-c_cohere_./internal/format/css/selector_selector.test b583234e5093 hit 0.00
+    selector_test.go:218: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:158: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:198: 1945 CSS test constants plus fixtures and generated selectors; total 26778
+            adamic_port_side_test.go:215: Go: 267780 selectors in 3.497289641s, 76568 selectors/s; 95460 parsed, 101900 root children
+        --- PASS: TestAdamicPortCases (4.30s)
+        PASS
+    selector_test.go:239: CSS corpus extraction skipped: set ADAMIC_SELECTOR_LIBRARY
+    selector_test.go:747: build selector_Go_oracle_answers 66453b7a0c14 miss 4.34
+    selector_test.go:747: seed 20261005, 4000 generated selectors
+--- PASS: TestProduct_SelectorGoAnswers (9.88s)
+PASS

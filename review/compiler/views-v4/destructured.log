@@ -1,0 +1,38 @@
+=== RUN   TestV4DestructuredCallableArgument
+=== PAUSE TestV4DestructuredCallableArgument
+=== RUN   TestV4DestructuredCallableReadOnly
+=== PAUSE TestV4DestructuredCallableReadOnly
+=== RUN   TestV4DestructuredCallableAdamicRefusal
+=== PAUSE TestV4DestructuredCallableAdamicRefusal
+=== CONT  TestV4DestructuredCallableArgument
+=== CONT  TestV4DestructuredCallableAdamicRefusal
+=== CONT  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: gate cache node miss
+=== NAME  TestV4DestructuredCallableAdamicRefusal
+    checked_views_v4_destructured_test.go:60: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+--- PASS: TestV4DestructuredCallableAdamicRefusal (0.27s)
+=== NAME  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: gate cache node miss
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: gate cache node miss
+=== NAME  TestV4DestructuredCallableReadOnly
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in native: exit 0 output "run\n"
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in sanitized: exit 0 output "run\n"
+    checked_views_v4_destructured_test.go:48: guard mutant admitted in javascript: exit 0 output "run\n"
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:20: native exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: sanitized exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:88
+    checked_views_v4_destructured_test.go:20: javascript exit70 at first call: adamic: panic: callable call failed: run (field run) at escaping call (read at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:66) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4DestructuredCallableArgument3484835803/001/identity.ts:4:88
+--- PASS: TestV4DestructuredCallableReadOnly (0.67s)
+=== NAME  TestV4DestructuredCallableArgument
+    checked_views_v4_destructured_test.go:21: gate cache node hit
+    checked_views_v4_destructured_test.go:36: gate cache node miss
+    checked_views_v4_destructured_test.go:40: destructured adapter omission caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4DestructuredCallableArgument (0.96s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.973s

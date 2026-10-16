@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/closure.c
++++ b/internal/native/runtime/closure.c
+@@ -214 +214 @@
+-	return value->view != NULL ? value->view->underlying : value;
++	return value; /* mutant: compare adapters rather than their root */

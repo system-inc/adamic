@@ -1,0 +1,6 @@
+=== RUN   TestProduct_SuppressionGoOracle
+=== PAUSE TestProduct_SuppressionGoOracle
+=== CONT  TestProduct_SuppressionGoOracle
+    suppression_test.go:461: build go_test_-c_cohere_./internal/lint/suppression_suppression.test e131f1c48ee0 miss 2.02
+--- PASS: TestProduct_SuppressionGoOracle (3.80s)
+PASS

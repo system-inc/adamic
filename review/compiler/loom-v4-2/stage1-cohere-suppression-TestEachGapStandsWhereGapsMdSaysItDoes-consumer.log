@@ -1,0 +1,13 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts (3.27s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts (0.31s)
+PASS

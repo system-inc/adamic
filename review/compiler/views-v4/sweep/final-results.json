@@ -1,0 +1,3164 @@
+[
+  {
+    "name": "oracle-TestCheckedViewArrayUnionMembership",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewArrayUnionMembership$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.486
+  },
+  {
+    "name": "oracle-TestCheckedViewArrayUnionNarrowing",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewArrayUnionNarrowing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.601
+  },
+  {
+    "name": "oracle-TestCheckedViewArrayReadMutants",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewArrayReadMutants$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.147
+  },
+  {
+    "name": "oracle-TestCheckedViewArrays",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewArrays$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.358
+  },
+  {
+    "name": "oracle-TestCheckedViewFlagDowncast",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewFlagDowncast$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.719
+  },
+  {
+    "name": "oracle-TestCheckedViewInterfaces",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewInterfaces$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.426
+  },
+  {
+    "name": "oracle-TestCheckedViewObjects",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewObjects$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.976
+  },
+  {
+    "name": "oracle-TestCheckedViewOptionalReadBoundary",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewOptionalReadBoundary$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.792
+  },
+  {
+    "name": "oracle-TestCheckedViewV2ReadsAfterWrites",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2ReadsAfterWrites$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 33.366
+  },
+  {
+    "name": "oracle-TestCheckedViewV2ArrayArmAdmission",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2ArrayArmAdmission$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 8.385
+  },
+  {
+    "name": "oracle-TestCheckedViewV2WrongFamilyMutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2WrongFamilyMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 1.32,
+    "repair_log": "v2-repaired-final.log",
+    "timing": "Go leaf seconds in grouped repair run"
+  },
+  {
+    "name": "oracle-TestCheckedViewV2RepresentationMutants",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2RepresentationMutants$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.861
+  },
+  {
+    "name": "oracle-TestCheckedViewV2MembershipMutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2MembershipMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.14
+  },
+  {
+    "name": "oracle-TestCheckedViewV2TupleIdentityMutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2TupleIdentityMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.448
+  },
+  {
+    "name": "oracle-TestCheckedViewV2CallableProducerMutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2CallableProducerMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 1.55,
+    "repair_log": "v2-repaired-final.log",
+    "timing": "Go leaf seconds in grouped repair run"
+  },
+  {
+    "name": "oracle-TestCheckedViewV2MovedStage3Results",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2MovedStage3Results$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.683
+  },
+  {
+    "name": "oracle-TestCheckedViewObjectPrimitiveSource",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewObjectPrimitiveSource$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.654
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedSourceDispatch",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedSourceDispatch$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.955
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedCallableUnion",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedCallableUnion$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 0.0,
+    "repair_log": "v2-repaired-final.log",
+    "timing": "Go leaf seconds in grouped repair run"
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedOptionalCallableControl",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedOptionalCallableControl$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 1.12,
+    "repair_log": "v2-repaired-final.log",
+    "timing": "Go leaf seconds in grouped repair run"
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedSourceFlows",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedSourceFlows$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.971
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedOwnClassData",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedOwnClassData$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.485
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedRecursive",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedRecursive$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.613
+  },
+  {
+    "name": "oracle-TestCheckedViewUntaggedArraySource",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewUntaggedArraySource$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.917
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundCallRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundCallRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.62
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundApplyRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundApplyRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.6
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundBindRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundBindRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.219
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundAliasCallRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundAliasCallRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.678
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundHelperApplyRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundHelperApplyRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.367
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundHelperBindRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundHelperBindRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 8.389
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoundViewRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoundViewRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.199
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindCompatible",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindCompatible$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.384
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindPrefix",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindPrefix$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.06
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindRemainingArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindRemainingArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.774
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.631
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindReceiverAndCapture",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindReceiverAndCapture$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.134
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindCountAndSurface",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindCountAndSurface$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.257
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindBoxed",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindBoxed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.113
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindAllArguments",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindAllArguments$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.173
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBindNameOwnership",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBindNameOwnership$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.178
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.561
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.563
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameCall",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameCall$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.562
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameApply",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameApply$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.511
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameBound",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameBound$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.217
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameNestedResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameNestedResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.8
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBlameRuntimeCallback",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBlameRuntimeCallback$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.319
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.097
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.116
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterApplyArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterApplyArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.116
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterApplyResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterApplyResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.37
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallApplyReceiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallApplyReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.021
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallApplyCount",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallApplyCount$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.1
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.616
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceSortCallback",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceSortCallback$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.83
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceRegExpCallback",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceRegExpCallback$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.842
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallReceiverCheck",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallReceiverCheck$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.251
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallReceiverRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallReceiverRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.477
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCallApplyZeroReceiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCallApplyZeroReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.172
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterConstructSignatureRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterConstructSignatureRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.601
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterWithoutConstructSignatureRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterWithoutConstructSignatureRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.79
+  },
+  {
+    "name": "oracle-TestV4DestructuredCallableArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DestructuredCallableArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.5
+  },
+  {
+    "name": "oracle-TestV4DestructuredCallableReadOnly",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DestructuredCallableReadOnly$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.286
+  },
+  {
+    "name": "oracle-TestV4DestructuredCallableAdamicRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DestructuredCallableAdamicRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.921
+  },
+  {
+    "name": "oracle-TestV4DirectArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.863
+  },
+  {
+    "name": "oracle-TestV4DirectResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.982
+  },
+  {
+    "name": "oracle-TestV4DirectCompatible",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectCompatible$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.104
+  },
+  {
+    "name": "oracle-TestV4DirectMethod",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectMethod$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.094
+  },
+  {
+    "name": "oracle-TestV4DirectObjectArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectObjectArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.482
+  },
+  {
+    "name": "oracle-TestV4DirectArrayArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectArrayArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.385
+  },
+  {
+    "name": "oracle-TestV4DirectCalleeOrder",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectCalleeOrder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.137
+  },
+  {
+    "name": "oracle-TestV4DirectBoxed",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectBoxed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.154
+  },
+  {
+    "name": "oracle-TestV4DirectUnused",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectUnused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.941
+  },
+  {
+    "name": "oracle-TestV4DirectOptionalReceiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectOptionalReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.867
+  },
+  {
+    "name": "oracle-TestV4DirectVoid",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectVoid$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.933
+  },
+  {
+    "name": "oracle-TestV4DirectNull",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectNull$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.875
+  },
+  {
+    "name": "oracle-TestV4DirectUnknownProducerParameter",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectUnknownProducerParameter$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.76
+  },
+  {
+    "name": "oracle-TestV4DirectClassResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectClassResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.715
+  },
+  {
+    "name": "oracle-TestV4DirectRecursiveRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectRecursiveRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.872
+  },
+  {
+    "name": "oracle-TestV4DirectProducerRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4DirectProducerRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.95
+  },
+  {
+    "name": "oracle-TestV4EscapeArgumentRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeArgumentRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.919
+  },
+  {
+    "name": "oracle-TestV4EscapeResultRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeResultRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.222
+  },
+  {
+    "name": "oracle-TestV4EscapePassedRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapePassedRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.021
+  },
+  {
+    "name": "oracle-TestV4EscapeReturnedRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeReturnedRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.071
+  },
+  {
+    "name": "oracle-TestV4EscapeMixedProducerRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeMixedProducerRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.245
+  },
+  {
+    "name": "oracle-TestV4EscapeCompatible",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeCompatible$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.327
+  },
+  {
+    "name": "oracle-TestV4EscapeTypeScriptBoundary",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeTypeScriptBoundary$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.327
+  },
+  {
+    "name": "oracle-TestV4EscapeOrdinaryRead",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeOrdinaryRead$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.067
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.296
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.341
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterIdentity",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterIdentity$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.114
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterNoStacking",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterNoStacking$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.806
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterUnusedMisfit",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterUnusedMisfit$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.864
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterReturned",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterReturned$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.811
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterBoxed",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterBoxed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.688
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCounted",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCounted$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.629
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterUncheckableRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterUncheckableRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.351
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterNull",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterNull$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.723
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterVoid",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterVoid$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.866
+  },
+  {
+    "name": "oracle-TestV4GenericProducerInstantiation",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4GenericProducerInstantiation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.255
+  },
+  {
+    "name": "oracle-TestV4GenericErasedReadRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4GenericErasedReadRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.648
+  },
+  {
+    "name": "oracle-TestV4GenericViewCallInstantiation",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4GenericViewCallInstantiation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.14
+  },
+  {
+    "name": "oracle-TestV4HigherCallbackArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherCallbackArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.257
+  },
+  {
+    "name": "oracle-TestV4HigherCallbackNeverCalled",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherCallbackNeverCalled$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.924
+  },
+  {
+    "name": "oracle-TestV4HigherCallbackResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherCallbackResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.287
+  },
+  {
+    "name": "oracle-TestV4HigherCallbackArgumentOrder",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherCallbackArgumentOrder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.989
+  },
+  {
+    "name": "oracle-TestV4HigherAdamicEscapeRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherAdamicEscapeRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.692
+  },
+  {
+    "name": "oracle-TestV4HigherReturnedCallable",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4HigherReturnedCallable$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.124
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterConstructorIdentity",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterConstructorIdentity$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.998
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterCollectionKeyContract",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterCollectionKeyContract$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.927
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterScalarIdentityControls",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterScalarIdentityControls$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.522
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryIdentifier",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryIdentifier$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.628
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryStringLiteral",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryStringLiteral$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.474
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryUniqueName",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryUniqueName$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.469
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryImport",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryImport$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.477
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryYield",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryYield$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.551
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.001
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryClone",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryClone$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.771
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryModifier",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryModifier$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.607
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryWiderWritePending",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryWiderWritePending$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.288
+  },
+  {
+    "name": "oracle-TestV4Lane5BoxedParameter",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5BoxedParameter$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.311
+  },
+  {
+    "name": "oracle-TestV4Lane5BoxedParameterMembers",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5BoxedParameterMembers$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.439
+  },
+  {
+    "name": "oracle-TestV4Lane5BoxedResult",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5BoxedResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.857
+  },
+  {
+    "name": "oracle-TestV4Lane5BoxedResultMembers",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5BoxedResultMembers$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.038
+  },
+  {
+    "name": "oracle-TestV4Lane5SkipAdapterMutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5SkipAdapterMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.369
+  },
+  {
+    "name": "oracle-TestV4Lane5BoxedAdamicRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5BoxedAdamicRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.735
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryWiderWriteRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryWiderWriteRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.639
+  },
+  {
+    "name": "oracle-TestV4Lane5FactoryReadonlyTargetControl",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4Lane5FactoryReadonlyTargetControl$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.336
+  },
+  {
+    "name": "oracle-TestV4MixedCallableFieldBoxing",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4MixedCallableFieldBoxing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.966
+  },
+  {
+    "name": "oracle-TestV4MixedCallableFieldArgument",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4MixedCallableFieldArgument$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.366
+  },
+  {
+    "name": "oracle-TestV4MixedLongFieldDiagnostic",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4MixedLongFieldDiagnostic$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.958
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterDynamicApplyRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterDynamicApplyRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.67
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterPrimitiveCallRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterPrimitiveCallRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.883
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterPrimitiveApplyRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterPrimitiveApplyRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.128
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterNullablePrimitiveCallRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterNullablePrimitiveCallRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.089
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterLength",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterLength$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.214
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterName",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterName$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.381
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceDefaults",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceDefaults$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.858
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceReturned",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceReturned$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.53
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceLengthRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceLengthRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.772
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceNameRefusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceNameRefusal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.673
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceComputedName",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceComputedName$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.749
+  },
+  {
+    "name": "oracle-TestV4EscapeAdapterSurfaceAnonymousName",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4EscapeAdapterSurfaceAnonymousName$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.292
+  },
+  {
+    "name": "oracle-TestViewAdapterBaselineCountsClosures",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewAdapterBaselineCountsClosures$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.187
+  },
+  {
+    "name": "oracle-TestViewAdapterBaselineCountsMethods",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewAdapterBaselineCountsMethods$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.6
+  },
+  {
+    "name": "oracle-TestViewAdapterBaselineCountsReceiverRest",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewAdapterBaselineCountsReceiverRest$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.589
+  },
+  {
+    "name": "oracle-TestDefaultTaggedSourceViews",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestDefaultTaggedSourceViews$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.536
+  },
+  {
+    "name": "oracle-TestNarrowedFieldUsesSharedReadiness",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNarrowedFieldUsesSharedReadiness$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.778
+  },
+  {
+    "name": "oracle-TestOriginalArrayWitnessExtensions",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestOriginalArrayWitnessExtensions$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.817
+  },
+  {
+    "name": "oracle-TestOriginalArrayWitnessNode",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestOriginalArrayWitnessNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 18.748
+  },
+  {
+    "name": "oracle-TestRequiredViewFieldOperandOnce",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestRequiredViewFieldOperandOnce$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.954
+  },
+  {
+    "name": "oracle-TestRequiredViewFieldPrimitive",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestRequiredViewFieldPrimitive$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.701
+  },
+  {
+    "name": "oracle-TestViewFieldInheritedStaticReadiness",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewFieldInheritedStaticReadiness$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.12
+  },
+  {
+    "name": "records-TestRecordsAgainstNode",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordsAgainstNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 38.54,
+    "log": "refresh-records-TestRecordsAgainstNode.log"
+  },
+  {
+    "name": "records-TestRecordReadMutants",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordReadMutants$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 24.088,
+    "log": "refresh-records-TestRecordReadMutants.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit00",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit00$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.633,
+    "log": "refresh-records-TestRecordMutantsUnit00.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit01",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit01$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.357,
+    "log": "refresh-records-TestRecordMutantsUnit01.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit02",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit02$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.339,
+    "log": "refresh-records-TestRecordMutantsUnit02.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit03",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit03$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.369,
+    "log": "refresh-records-TestRecordMutantsUnit03.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit04",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit04$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.469,
+    "log": "refresh-records-TestRecordMutantsUnit04.log"
+  },
+  {
+    "name": "records-TestRecordMutantsUnit05",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordMutantsUnit05$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.628,
+    "log": "refresh-records-TestRecordMutantsUnit05.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestPostfixValueGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestPostfixValueGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.217
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestMethodReplacementGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestMethodReplacementGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.539
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestRawInputGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestRawInputGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.979
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestParserRecoveryGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestParserRecoveryGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 30.504
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestInterfaceDefaultGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestInterfaceDefaultGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.439
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestInterfaceTypeMethodGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestInterfaceTypeMethodGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.769
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestRecoveryLibraryGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestRecoveryLibraryGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.225
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestPinnedNumericGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestPinnedNumericGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.169
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestTypeMemberLibraryGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestTypeMemberLibraryGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.242
+  },
+  {
+    "name": "gaps-stage1-cohere-estree-TestCookedSurrogateLibraryGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestCookedSurrogateLibraryGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.132
+  },
+  {
+    "name": "gaps-stage1-cohere-gitignore-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.596
+  },
+  {
+    "name": "gaps-stage1-cohere-json-TestUpstreamNumericSeparatorGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^TestUpstreamNumericSeparatorGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.459,
+    "log": "refresh-gaps-stage1-cohere-json-TestUpstreamNumericSeparatorGap.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-json-TestDocumentedStageZeroGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^TestDocumentedStageZeroGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.193,
+    "log": "refresh-gaps-stage1-cohere-json-TestDocumentedStageZeroGaps.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-json-TestClosedEmptyFallbackGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^TestClosedEmptyFallbackGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.762,
+    "log": "refresh-gaps-stage1-cohere-json-TestClosedEmptyFallbackGap.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-lint-TestClosedComparatorGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^TestClosedComparatorGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 27.306
+  },
+  {
+    "name": "gaps-stage1-cohere-lint-TestNestedConstructorGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^TestNestedConstructorGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.846
+  },
+  {
+    "name": "gaps-stage1-cohere-static_single_assignment-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 10.407
+  },
+  {
+    "name": "gaps-stage1-cohere-tsprinter-TestClassInterfaceMethodGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^TestClassInterfaceMethodGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 9.523
+  },
+  {
+    "name": "gaps-stage1-cohere-tsprinter-TestClosedOptionalBooleanFunctionGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.799
+  },
+  {
+    "name": "gaps-stage1-cohere-tsprinter-TestCompilerGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^TestCompilerGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.592
+  },
+  {
+    "name": "gaps-stage1-cohere-tsprinter-TestClosedPrefixUpdateValueGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 3.382
+  },
+  {
+    "name": "gaps-stage1-cohere-values-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 8.44
+  },
+  {
+    "name": "gaps-stage1-cohere-yaml-TestLexerGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestLexerGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 9.937,
+    "log": "refresh-gaps-stage1-cohere-yaml-TestLexerGaps.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-yaml-TestClosedStringPresenceGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestClosedStringPresenceGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 9.488,
+    "log": "refresh-gaps-stage1-cohere-yaml-TestClosedStringPresenceGap.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-yaml-TestClosedLexerGaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestClosedLexerGaps$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 5.106,
+    "log": "refresh-gaps-stage1-cohere-yaml-TestClosedLexerGaps.log"
+  },
+  {
+    "name": "gaps-stage1-cohere-yaml-TestClosedValuePresenceGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestClosedValuePresenceGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.73,
+    "log": "refresh-gaps-stage1-cohere-yaml-TestClosedValuePresenceGap.log"
+  },
+  {
+    "name": "gaps-stage1-typescript-parser-TestStrongAstParentGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestStrongAstParentGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.895
+  },
+  {
+    "name": "gaps-stage1-typescript-parser-TestPushSpreadGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestPushSpreadGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 7.71
+  },
+  {
+    "name": "gaps-stage1-typescript-parser-TestClassMethodInterfaceGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestClassMethodInterfaceGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.411
+  },
+  {
+    "name": "gaps-stage1-typescript-parser-TestClosedOptionalFunctionValueGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestClosedOptionalFunctionValueGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.585
+  },
+  {
+    "name": "gaps-stage1-typescript-parser-TestClosedConditionalEmptyArrayGap",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestClosedConditionalEmptyArrayGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 2.674
+  },
+  {
+    "name": "counts",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 56.115,
+    "log": "counts-verify.log",
+    "update_log": "counts-update-alone.log",
+    "update_seconds": 60.602
+  },
+  {
+    "name": "oracle-TestV4ExistingExplicitMethodReceiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4ExistingExplicitMethodReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.144
+  },
+  {
+    "name": "oracle-TestV4IteratorPackedReceiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4IteratorPackedReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.528
+  },
+  {
+    "name": "oracle-TestV4UnrelatedArrayFieldWrite",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestV4UnrelatedArrayFieldWrite$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.249
+  }
+]

@@ -1,0 +1,84 @@
+=== RUN   TestV4EscapeAdapterLength
+=== PAUSE TestV4EscapeAdapterLength
+=== RUN   TestV4EscapeAdapterName
+=== PAUSE TestV4EscapeAdapterName
+=== RUN   TestV4EscapeAdapterSurfaceDefaults
+=== PAUSE TestV4EscapeAdapterSurfaceDefaults
+=== RUN   TestV4EscapeAdapterSurfaceReturned
+=== PAUSE TestV4EscapeAdapterSurfaceReturned
+=== RUN   TestV4EscapeAdapterSurfaceLengthRefusal
+=== PAUSE TestV4EscapeAdapterSurfaceLengthRefusal
+=== RUN   TestV4EscapeAdapterSurfaceNameRefusal
+=== PAUSE TestV4EscapeAdapterSurfaceNameRefusal
+=== RUN   TestV4EscapeAdapterSurfaceComputedName
+=== PAUSE TestV4EscapeAdapterSurfaceComputedName
+=== RUN   TestV4EscapeAdapterSurfaceAnonymousName
+=== PAUSE TestV4EscapeAdapterSurfaceAnonymousName
+=== CONT  TestV4EscapeAdapterLength
+=== CONT  TestV4EscapeAdapterSurfaceDefaults
+=== CONT  TestV4EscapeAdapterSurfaceLengthRefusal
+=== CONT  TestV4EscapeAdapterSurfaceAnonymousName
+=== CONT  TestV4EscapeAdapterSurfaceComputedName
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: gate cache node hit
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: gate cache node hit
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: gate cache node hit
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: gate cache node hit
+=== NAME  TestV4EscapeAdapterSurfaceLengthRefusal
+    checked_views_v4_surface_test.go:95: gate cache node hit
+--- PASS: TestV4EscapeAdapterSurfaceLengthRefusal (0.32s)
+=== CONT  TestV4EscapeAdapterSurfaceNameRefusal
+    checked_views_v4_surface_test.go:103: gate cache node hit
+--- PASS: TestV4EscapeAdapterSurfaceNameRefusal (0.14s)
+=== CONT  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: gate cache node hit
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: native sanitized surface counts: [3 3 5 6 3 0]
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: native sanitized surface counts: [5 5 5 8 5 0]
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: native sanitized surface counts: [3 3 5 6 3 0]
+=== NAME  TestV4EscapeAdapterSurfaceAnonymousName
+    checked_views_v4_surface_test.go:125: gate cache node miss
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: native sanitized surface counts: [5 5 5 9 5 0]
+--- PASS: TestV4EscapeAdapterSurfaceAnonymousName (0.89s)
+=== CONT  TestV4EscapeAdapterSurfaceReturned
+=== NAME  TestV4EscapeAdapterSurfaceDefaults
+    checked_views_v4_surface_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: gate cache node hit
+--- PASS: TestV4EscapeAdapterSurfaceDefaults (1.00s)
+--- PASS: TestV4EscapeAdapterSurfaceComputedName (1.06s)
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: native sanitized surface counts: [3 3 6 8 3 0]
+    checked_views_v4_surface_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: native/ASan/UBSan/LSan own-surface mutant caught: expected "3\n", got "2\n"
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: native sanitized surface counts: [7 7 12 19 7 0]
+=== NAME  TestV4EscapeAdapterLength
+    checked_views_v4_surface_test.go:56: gate cache node miss
+    checked_views_v4_surface_test.go:56: JavaScript own-surface mutant caught: expected "3\n", got "2\n"
+--- PASS: TestV4EscapeAdapterLength (1.59s)
+=== NAME  TestV4EscapeAdapterSurfaceReturned
+    checked_views_v4_surface_test.go:90: gate cache node miss
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: native/ASan/UBSan/LSan own-surface mutant caught: expected "producer\n", got "\n"
+    checked_views_v4_surface_test.go:67: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceReturned (1.00s)
+=== NAME  TestV4EscapeAdapterName
+    checked_views_v4_surface_test.go:67: JavaScript own-surface mutant caught: expected "producer\n", got "\n"
+--- PASS: TestV4EscapeAdapterName (1.43s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=8 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.910s

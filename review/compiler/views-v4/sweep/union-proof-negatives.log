@@ -1,0 +1,58 @@
+=== RUN   TestCheckedViewV2CallableProducerMutant
+=== PAUSE TestCheckedViewV2CallableProducerMutant
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== PAUSE TestCheckedViewUntaggedCallableUnion
+=== CONT  TestCheckedViewV2CallableProducerMutant
+=== CONT  TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-number
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-string
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+=== PAUSE TestCheckedViewUntaggedCallableUnion/wrong
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+=== PAUSE TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-number
+=== CONT  TestCheckedViewUntaggedCallableUnion/wrong
+=== CONT  TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:97: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:97: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:93: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:225: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:93: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:234: gate cache node hit
+    checked_views_v2_migration_test.go:239: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:101: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:101: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:102: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: javascript: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:102: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:102: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.00s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (0.47s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (0.54s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (1.00s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (1.05s)
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:254: gate cache node miss
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by native-sanitized: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:258: producer certificate removal caught by javascript: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2CallableProducerMutant (1.33s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.368s

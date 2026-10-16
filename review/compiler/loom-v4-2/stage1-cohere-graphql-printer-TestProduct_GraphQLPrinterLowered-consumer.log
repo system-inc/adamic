@@ -1,0 +1,9 @@
+=== RUN   TestProduct_GraphQLPrinterLowered
+=== PAUSE TestProduct_GraphQLPrinterLowered
+=== CONT  TestProduct_GraphQLPrinterLowered
+    grain_asgo_test.go:52: build GraphQL_printer_source bacc03ded925 miss 0.16
+    shards_test.go:212: lowering wall 0.504s
+    shards_test.go:215: C emission wall 0.271s
+    grain_asgo_test.go:61: build lowered_GraphQL_printer 1604f61a467d miss 1.50
+--- PASS: TestProduct_GraphQLPrinterLowered (2.66s)
+PASS

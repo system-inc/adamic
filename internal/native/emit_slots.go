@@ -10,6 +10,27 @@ import (
 // that presence until typeof has classified it, while sharing the ordinary value read's lookup.
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 	array := e.value(expression.Array)
+	if expression.View != "" {
+		array = e.own(ir.Array, "adamic_retain("+array+")")
+		if expression.Optional {
+			snapshot, slot := e.temporary(), e.temporary()
+			e.line("adamic_value %s;", snapshot)
+			e.line("adamic_value *%s=NULL;", slot)
+			text, index, owned := e.aside(expression.Index)
+			e.line("if(%s!=NULL){", array)
+			e.out.WriteString(text)
+			expression.Optional = false
+			selected := e.emitViewArrayRead(expression, array, index)
+			e.line("if(%s!=NULL){%s=*%s;%s=&%s;}", selected, snapshot, selected, slot, snapshot)
+			for i := len(owned) - 1; i >= 0; i-- {
+				e.line("adamic_release(%s);", owned[i])
+			}
+			e.line("}")
+			return slot
+		}
+		index := e.value(expression.Index)
+		return e.emitViewArrayRead(expression, array, index)
+	}
 	if expression.Optional {
 		// Snapshot the receiver before the key can replace its binding. The key's
 		// work and temporary cleanup belong only to the present branch.
@@ -35,6 +56,9 @@ func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 		lookup = "adamic_array_at_relative"
 	} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
 		lookup, index = "adamic_array_at_integer", e.localName(read.Local)
+	}
+	if e.hasArrayHoles() {
+		lookup = "adamic_array_holes_at"
 	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 	return slot

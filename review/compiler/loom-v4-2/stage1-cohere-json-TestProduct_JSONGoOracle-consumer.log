@@ -1,0 +1,6 @@
+=== RUN   TestProduct_JSONGoOracle
+=== PAUSE TestProduct_JSONGoOracle
+=== CONT  TestProduct_JSONGoOracle
+    port_matches_prepared_split_test.go:208: build go_build_cohere_./command/formatter_comparison_go-cohere 00a40869ef80 miss 7.41
+--- PASS: TestProduct_JSONGoOracle (10.08s)
+PASS

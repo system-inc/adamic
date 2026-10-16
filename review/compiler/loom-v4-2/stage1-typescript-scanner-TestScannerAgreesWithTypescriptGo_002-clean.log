@@ -1,0 +1,14 @@
+=== RUN   TestScannerAgreesWithTypescriptGo_002
+=== PAUSE TestScannerAgreesWithTypescriptGo_002
+=== CONT  TestScannerAgreesWithTypescriptGo_002
+    scanner_products_test.go:51: build scanner-go-oracle 1b93e837224d hit 2.15
+    scanner_products_test.go:51: build scanner-native e465d3cf0477 hit 0.12
+    scanner_products_test.go:51: build scanner-native 694af6ae6a71 miss 3.52
+    scanner_products_test.go:340: corpus-files: upstream /workspace/scratch/loom-v4-2-typescript root src/compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8 count 77
+    scanner_products_test.go:340: corpus-files: repository /workspace/scratch/loom-v4-2-validation root stage1 pin f0ff59fe3f60068b85b057d0d69e79545598f968 count 478
+    scanner_products_test.go:340: 77 compiler files, 478 stage1 files, 18237 generated inputs
+    scanner_products_test.go:340: punctuator != scanned as == Node caught: line 351: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+    scanner_products_test.go:340: punctuator != scanned as == native caught: line 351: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+    scanner_products_test.go:340: shard 002: 1158 cases, 1 mutants; setup 6.148s / own work 3.307s
+--- PASS: TestScannerAgreesWithTypescriptGo_002 (9.49s)
+PASS

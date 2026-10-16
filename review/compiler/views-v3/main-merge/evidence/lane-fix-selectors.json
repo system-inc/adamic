@@ -1,0 +1,18 @@
+{
+  "./internal/lower": [
+    "TestViewArraySourceCertificateOmission",
+    "TestViewArrayWritesNeedSourceCertificate"
+  ],
+  "./internal/oracle": [
+    "TestArrayHolesAbsentSlotMutant",
+    "TestArrayHolesMilestone",
+    "TestArrayHolesRangeErrorMutant",
+    "TestArrayElementKindRuntimeMutant",
+    "TestArrayViewHolesAbsenceMutant",
+    "TestArrayViewMissingReceiverMutant",
+    "TestArrayViewPhysicalWriteMutant",
+    "TestOriginalArrayWitnessExtensions",
+    "TestOriginalArrayWitnessNode",
+    "TestCheckedViewArrayReadMutants"
+  ]
+}

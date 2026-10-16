@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewV2TupleIdentityMutant
+=== PAUSE TestCheckedViewV2TupleIdentityMutant
+=== CONT  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:191: gate cache node miss
+    checked_views_v2_migration_test.go:196: gate cache node miss
+    checked_views_v2_migration_test.go:211: gate cache node miss
+    checked_views_v2_migration_test.go:215: tuple flag removal caught by native: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:215: tuple flag removal caught by native-sanitized: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:215: tuple flag removal caught by javascript: exit 0 stdout "first\n"
+--- PASS: TestCheckedViewV2TupleIdentityMutant (0.72s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.727s

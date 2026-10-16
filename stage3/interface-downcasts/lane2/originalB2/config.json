@@ -1,0 +1,84 @@
+{
+  "targets": [
+    [
+      "ConfigFileSpecs",
+      "validatedFilesSpecBeforeSubstitution"
+    ],
+    [
+      "ConfigFileSpecs",
+      "validatedFilesSpec"
+    ],
+    [
+      "Bundle",
+      "syntheticTypeReferences"
+    ],
+    [
+      "Bundle",
+      "syntheticLibReferences"
+    ],
+    [
+      "Bundle",
+      "syntheticFileReferences"
+    ],
+    [
+      "Block | undefined",
+      "statements"
+    ],
+    [
+      "AnonymousType",
+      "properties"
+    ],
+    [
+      "AnonymousType",
+      "callSignatures"
+    ],
+    [
+      "SignatureDeclaration",
+      "typeParameters"
+    ],
+    [
+      "IndexSignatureDeclaration",
+      "typeParameters"
+    ],
+    [
+      "SourceFile",
+      "jsDocDiagnostics"
+    ],
+    [
+      "Identifier",
+      "jsDoc"
+    ],
+    [
+      "EmitNode | undefined",
+      "trailingComments"
+    ],
+    [
+      "EmitNode | undefined",
+      "tokenSourceMapRanges"
+    ],
+    [
+      "EmitNode | undefined",
+      "leadingComments"
+    ],
+    [
+      "EmitNode | undefined",
+      "identifierTypeArguments"
+    ],
+    [
+      "EmitNode | undefined",
+      "annotatedNodes"
+    ],
+    [
+      "EmitNode",
+      "trailingComments"
+    ],
+    [
+      "EmitNode",
+      "leadingComments"
+    ],
+    [
+      "EmitNode",
+      "annotatedNodes"
+    ]
+  ]
+}
