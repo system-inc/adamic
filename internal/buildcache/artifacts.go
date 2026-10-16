@@ -61,6 +61,12 @@ func requireArtifact(directory string, artifact Artifact) error {
 	command.WaitDelay = artifactProbeWaitDelay
 	command.Dir = directory
 	command.Stdin = strings.NewReader(artifact.Stdin)
+	if Tracing() {
+		// A traced build watches its processes with ptrace, which LeakSanitizer refuses to run under, so a sanitized
+		// product's probe would fail only because it is traced. The probe proves the product runs; the tests that
+		// run it untraced still check for leaks (#n1g5604, #yzeez0d).
+		command.Env = withoutLeakDetection(os.Environ())
+	}
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
 		return fmt.Errorf("probe: %w", ctx.Err())
@@ -73,4 +79,25 @@ func requireArtifact(directory string, artifact Artifact) error {
 		return fmt.Errorf("probe exited 0, want %d", artifact.ExitCode)
 	}
 	return nil
+}
+
+// withoutLeakDetection returns environment with LeakSanitizer turned off, keeping every other ASAN_OPTIONS setting;
+// a later detect_leaks wins over an earlier one.
+func withoutLeakDetection(environment []string) []string {
+	result := make([]string, 0, len(environment)+1)
+	found := false
+	for _, entry := range environment {
+		if value, ok := strings.CutPrefix(entry, "ASAN_OPTIONS="); ok {
+			found = true
+			if value != "" {
+				entry += ":"
+			}
+			entry += "detect_leaks=0"
+		}
+		result = append(result, entry)
+	}
+	if !found {
+		result = append(result, "ASAN_OPTIONS=detect_leaks=0")
+	}
+	return result
 }
