@@ -62,6 +62,9 @@ type readSet struct {
 	Trace    string      `json:"trace"`
 	Entries  []readEntry `json:"entries"`
 	Drift    *drift      `json:"drift,omitempty"`
+	// Lean is a set keyed by the lean recipe (leanRecipeOf, #earlycut), so a lookup under Loom's switch refuses it
+	// (leanKeysOff): while a lean hole is open, no lean key is matched, built or found.
+	Lean bool `json:"lean,omitempty"`
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
@@ -824,6 +827,12 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
+		if set.Lean && leanKeysOff() {
+			if index == 0 {
+				result.why = "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
+			}
+			continue
+		}
 		evaluated, err := evaluate(root, cache, nameKey, set, depth, known)
 		if err != nil {
 			if index == 0 {
