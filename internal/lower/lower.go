@@ -15,11 +15,18 @@ import (
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 	"path/filepath"
 )
 
 // Lower lowers a checked program from one entry, in ESM evaluation order.
+type Options struct{ ProgramRegion bool }
+
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1"})
+}
+
+func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
@@ -29,7 +36,28 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
 
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry}
+	var plan *programMembership
+	if options.ProgramRegion {
+		discovery, err := lowerChecked(program, typeChecker, entry, nil, true)
+		if err != nil {
+			return nil, err
+		}
+		plan = discovery.programPlan
+	}
+	built, err := lowerChecked(program, typeChecker, entry, plan, false)
+	if err != nil {
+		return nil, err
+	}
+	return built.result, nil
+}
+
+func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool) (*lowering, error) {
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	lowering.result.ProgramRegion = discovery || plan != nil
+	if plan != nil {
+		lowering.result.ProgramTypes = plan.types
+	}
+
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
 	modules, err := lowering.moduleOrder(entry)
@@ -87,6 +115,11 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		}
 		return nil, &NotYet{Where: lowering.program.Where(where), What: err.Error()}
 	}
+	if discovery || plan != nil {
+		if lowering.result.HasAsync() {
+			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+		}
+	}
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
@@ -96,13 +129,21 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.checkPromiseConsumption(); err != nil {
 		return nil, err
 	}
+	if plan != nil {
+		if err := lowering.applyProgramMetadata(plan); err != nil {
+			return nil, err
+		}
+	}
 	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
-	return lowering.result, nil
+	return lowering, nil
 }
 
 type lowering struct {
+	programPlan          *programMembership
+	programDiscovery     bool
+	programCandidates    map[*checker.Type]*ast.Node
 	entry                *ast.SourceFile
 	asyncSites           []*ast.Node
 	asyncPayloadFailures []error

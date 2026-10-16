@@ -107,7 +107,28 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
-	if err := finder.graphTypes(modules); err != nil {
+	if l.programDiscovery {
+		// Count forwarding appends locals, so finish the allocation layout first.
+		l.resolveCountTypes(modules)
+		l.programPlan = l.selectProgramMembership(finder, modules)
+		return nil
+	}
+	if l.programPlan != nil {
+		for _, proven := range finder.seen {
+			if l.programPlan.types[int(proven.Id())] {
+				continue
+			}
+			if err := finder.slotsOf(proven); err != nil {
+				return err
+			}
+		}
+		for local, declared := range l.result.Locals {
+			proven := l.localTypes[local]
+			if declared.Captured && !declared.Global && proven != nil && !finder.weak(proven) && !l.closedFrameInput(local) && !l.programPlan.cells[local] && finder.reaches(proven, cycleNode{cell: local + 1}) {
+				return &Refused{Where: l.program.Where(l.localNodes[local]), What: "a captured strong back-reference outside the Program region", Fix: "remove the back-reference or declare it Weak (adamic/cycle-capable)"}
+			}
+		}
+	} else if err := finder.graphTypes(modules); err != nil {
 		return err
 	}
 	l.resolveCountTypes(modules)
