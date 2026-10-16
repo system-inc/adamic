@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // Compiler is the compiler's packages, by repository directory: what a compiler consumer depends on. A change to any
@@ -57,16 +58,18 @@ func Dependencies(root string) (map[string][]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	tracked, err := output(toolchain.GitCommandIn(root, "ls-files", "-z", "--", "*.go"))
+	// tracked answers from git where root has .git, and from the tree's manifest on a runner, whose source has none.
+	entries, err := tracked.Files(root)
 	if err != nil {
-		return nil, fmt.Errorf("git ls-files: %w", err)
+		return nil, fmt.Errorf("tracked files: %w", err)
 	}
 	consumers := map[string]bool{}
 	for _, directory := range Compiler {
 		consumers[directory] = true
 	}
-	for _, name := range strings.Split(strings.TrimSuffix(string(tracked), "\x00"), "\x00") {
-		if name == "" {
+	for _, entry := range entries {
+		name := entry.Path
+		if entry.Submodule() || !strings.HasSuffix(name, ".go") {
 			continue
 		}
 		owner := path.Dir(name)
