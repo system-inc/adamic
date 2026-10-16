@@ -329,6 +329,17 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 			if info.Mode()&fs.ModeSymlink == 0 {
 				continue
 			}
+			// A link inside a project's installed node_modules (npm's .bin) is the install's, which nodeInstallValue values
+			// with each link by where it points; what it resolves to outside that node_modules is classed in its place, as
+			// any read is (#4gp2ytz: stage3/api's .bin/tsc and .bin/tsserver refused the adapted tree as untracked).
+			if project, ok := facts.nodeInstallOf(relative); ok {
+				found := []classed{{nodeInstallKind, project}}
+				install := filepath.Join(root, filepath.FromSlash(project), "node_modules")
+				if real := resolved(name); real != "" && !under(real, install) && !under(real, resolved(install)) {
+					found = append(found, facts.classify(real, kinds)...)
+				}
+				return found, true
+			}
 			found := []classed{{"link", relative}}
 			if !Tracked(facts.root, filepath.Join(facts.root, relative), false) {
 				found = []classed{{refusal + "untracked", relative}}
