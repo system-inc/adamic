@@ -7,6 +7,12 @@ func TestProduct_TSPrinterPinnedCorpus(t *testing.T) {
 	PinnedCorpusFiles(t)
 }
 
+// The Go doc oracle's corpus, an oracle product (#g7a9yd3).
+func TestProduct_TSPrinterDocumentCorpus(t *testing.T) {
+	t.Parallel()
+	DocumentCorpus(t)
+}
+
 func TestProduct_TSPrinterDocumentOracle(t *testing.T) {
 	t.Parallel()
 	DocumentOracle(t)
