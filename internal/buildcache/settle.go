@@ -165,6 +165,8 @@ type Report struct {
 	// Window is how a settled build's reads were taken (#mmpt615's census): BuildWindowed, BuildLeanSuperset or
 	// BuildSuperset.
 	Window string `json:"window,omitempty"`
+	// Lean is a settled build keyed by the lean recipe (leanRecipeOf): the products Loom's sampled key check draws from.
+	Lean bool `json:"lean,omitempty"`
 }
 
 // How a settled build's reads were taken: a lean build (LeanProduct) by its own window and declared files; a lean build
@@ -1454,7 +1456,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
 		settlement.Settled = append(settlement.Settled, line)
-		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window})
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window, Lean: leanRecipe})
 	}
 	for id, entry := range built {
 		if !settled[id] {
