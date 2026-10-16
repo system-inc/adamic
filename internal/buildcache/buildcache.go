@@ -84,11 +84,18 @@ func leanCalled(skip int) *leanBuild {
 	return leanBuildOf(functionPackage(runtime.FuncForPC(pc).Name()))
 }
 
+// leanKeysOff is Loom's switch while a lean hole is open (#earlycut, Node's ruling on Mentat's M4): no build is lean
+// (leanBuildOf) and no lookup matches a lean read set (lookupProduct), so every product is keyed by its whole recipe
+// again, built or found: a mass rekey.
+func leanKeysOff() bool {
+	return os.Getenv("ADAMIC_BUILD_LEAN") == "off"
+}
+
 // leanBuildOf is the lean build caller, a package's import path, asks for: buildcache's own, a reviewed lean caller's
 // (leanCallers), or none.
 func leanBuildOf(caller string) *leanBuild {
 	switch {
-	case os.Getenv("ADAMIC_BUILD_LEAN") == "off":
+	case leanKeysOff():
 		// Loom's switch while a lean mismatch is open (#earlycut's sampled key check): every product keys by the whole
 		// recipe, read once at a tree's start, since build-trees sets it there.
 		return nil
