@@ -173,15 +173,6 @@
     "retiring_task": "#xjdce2d"
   },
   {
-    "path": "internal/lower/load_time_reads.go",
-    "kind": "rule",
-    "rule_id": "nexus/correctness-no-import-cycle-load-time-read",
-    "counterpart": "cohere/internal/lint/rules/nexus/correctness_no_import_cycle_load_time_read.go",
-    "decision": "keep",
-    "reason": "This is a by-reference rule_runner consumer, recorded to distinguish the rule ID from a local implementation. Adamic separately proves ESM execution order and emits runtime dead-zone checks.",
-    "retiring_task": "#xjdce2d"
-  },
-  {
     "path": "internal/lower/invariance.go",
     "kind": "rule",
     "rule_id": "@typescript-eslint/method-signature-style",

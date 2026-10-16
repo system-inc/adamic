@@ -15,9 +15,7 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 	order, cyclic := esmModuleOrder(l.checker, entry)
 	l.cyclicModules = cyclic
 	if cyclic {
-		if err := l.loadTimeReads(order); err != nil {
-			return nil, err
-		}
+		l.proveModuleReads(order)
 	}
 	return order, nil
 }
