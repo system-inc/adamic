@@ -20,7 +20,8 @@ export function outer<T>(value: T): T { function nested(): T { return value; } r
 export class Box<T> { method<U>(value: U): U { return value; } }
 export const arrow = <T>(value: T): T => value;
 ''')
-(source/'z.a').write_text('''import { called, outer } from "./a.a";
+(source/'z.a').write_text('''// a-check: type error TS2322
+import { called, outer } from "./a.a";
 export function caller(): number { return called(7) + outer(8); }
 ''')
 spec = importlib.util.spec_from_file_location('hidden', Path(__file__).resolve().parents[1]/'tsc-closure/hidden.py')
