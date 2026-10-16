@@ -2873,6 +2873,28 @@ class CompilerDependenciesFlag(unittest.TestCase):
             self.assertEqual(json.loads(printed.getvalue()), {"version": 1, "packages": {
                 "declared": ["internal/load"], "internal/load": ["internal/load"], "launches": ["internal/load"], "refers": ["internal/load"]}})
 
+    def test_a_declared_launcher_that_lies_is_still_a_consumer(self):
+        # Planner's must: a declared launcher whose file names the compiler, already on the base, is named on stderr and
+        # stays in the printed map with the compiler, never out of it. Mutant: the refused launcher not derived (it
+        # leaves the map, and a compiler edit wouldn't move its keys).
+        with tempfile.TemporaryDirectory() as tree:
+            files = {"go.mod": "module " + run.module + "\n\ngo 1.24\n", "internal/load/load.go": "package load\n",
+                     "tool/launch/launch.go": 'package launch\n\nimport "os/exec"\n\nfunc run() error {\n\treturn exec.Command("adamic", "c", "x.a").Run()\n}\n',
+                     "cloud/fast-gate/compiler-dependencies.json": json.dumps({"version": 1, "packages": {}, "launchers": {
+                         "tool/launch": {"runs": ["node"], "why": "says it runs Node only"}}})}
+            for name, content in files.items():
+                os.makedirs(os.path.dirname(os.path.join(tree, name)), exist_ok=True)
+                with open(os.path.join(tree, name), "w") as handle:
+                    handle.write(content)
+            realRun(["git", "init", "-q", tree], check=True)
+            realRun(["git", "-C", tree, "add", "."], check=True)
+            printed, said = io.StringIO(), io.StringIO()
+            with mock.patch.object(sys, "argv", ["run.py", "--compiler-dependencies", "--tree", tree, "--tools", tree]), \
+                    mock.patch.object(sys, "stdout", printed), mock.patch.object(sys, "stderr", said):
+                run.main()
+            self.assertEqual(json.loads(printed.getvalue())["packages"]["tool/launch"], ["internal/load"])
+            self.assertIn("compiler_consumers_undeclared_on_base: tool/launch/launch.go (tool/launch is a declared launcher, refused at line 6", said.getvalue())
+
 
 class CensusLaunchers(unittest.TestCase):
     """A launcher declaration (#9qqvs57, system_adamic's ruling of Oct 14) lets a package that launches processes, and

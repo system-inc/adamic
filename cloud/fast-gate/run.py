@@ -352,6 +352,10 @@ def printCompilerDependencies():
     gate.arguments, gate.result = types.SimpleNamespace(tree=arguments.tree, tools=arguments.tools), {}
     gate.git = git  # The census alone, outside a gate run: no process lock or record, so git directly.
     packages = gate.compilerDependencies(directories)
+    # What the census named without refusing (nothing is touched here), to stderr, so the planner can log it.
+    for field in ("compiler_consumers_undeclared_on_base", "compiler_consumers_without_test_package"):
+        for path in gate.result.get(field, []):
+            print("%s: %s" % (field, path), file=sys.stderr)
     print(json.dumps({"version": 1, "packages": {package: packages[package] for package in sorted(packages)}}, indent=2))
 
 
@@ -1747,7 +1751,8 @@ class Gate:
                 if not refusal:
                     continue  # A declared launcher: it runs only what it names, and nothing here references the compiler.
                 missing.append((path, path + " (" + package + " is a declared launcher, refused at " + refusal + ")"))
-                continue
+            # A refused declaration narrows nothing: named above, the package is still a consumer, so a lie on the base, or
+            # any in --compiler-dependencies (which touches nothing), never leaves the map without the compiler.
             derived.add(package)
         # Only a lie this change adds or edits can turn its gate red; any already on the base are named, so one never reds
         # every worker's gate.
