@@ -1,0 +1,92 @@
+=== RUN   TestRuntimeCheckedLibraryPush
+=== PAUSE TestRuntimeCheckedLibraryPush
+=== RUN   TestRuntimeCheckedLibraryPushRejectsLiteral
+=== PAUSE TestRuntimeCheckedLibraryPushRejectsLiteral
+=== RUN   TestRuntimeCheckedReferenceArrayKeepsContract
+=== PAUSE TestRuntimeCheckedReferenceArrayKeepsContract
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestSizeClassesShareTheirChunks
+    heap_test.go:139: control: peak 5928 KiB, acquired 79 chunks, largest generation 79 chunks
+    heap_test.go:139: churn: peak 6296 KiB, acquired 85 chunks, largest generation 79 chunks
+    heap_test.go:150: peak 6296 KiB through every class, 5928 KiB at one size
+--- PASS: TestSizeClassesShareTheirChunks (0.19s)
+=== RUN   TestRuntimeKeyIncludesEveryInput
+=== PAUSE TestRuntimeKeyIncludesEveryInput
+=== RUN   TestRuntimeKeyKeepsBoundaries
+=== PAUSE TestRuntimeKeyKeepsBoundaries
+=== RUN   TestRuntimeCacheKeepsCountFlags
+=== PAUSE TestRuntimeCacheKeepsCountFlags
+=== RUN   TestRuntimeCacheRebuildsChangedSources
+=== PAUSE TestRuntimeCacheRebuildsChangedSources
+=== RUN   TestRuntimeCacheConcurrentBuilders
+=== PAUSE TestRuntimeCacheConcurrentBuilders
+=== RUN   TestRuntimeCacheConcurrentProcesses
+=== PAUSE TestRuntimeCacheConcurrentProcesses
+=== RUN   TestNodeBufferRuntimeWithoutDeclarations
+=== PAUSE TestNodeBufferRuntimeWithoutDeclarations
+=== RUN   TestRegExpIteratorResultShape
+=== PAUSE TestRegExpIteratorResultShape
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestRuntimeStringEquality
+=== PAUSE TestRuntimeStringEquality
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestTypedArrayRuntime
+=== PAUSE TestTypedArrayRuntime
+=== CONT  TestRuntimeCheckedLibraryPush
+=== CONT  TestRuntimeCacheKeepsCountFlags
+=== CONT  TestTypedArrayRuntime
+=== CONT  TestRuntimeStringViews
+=== CONT  TestRuntimeStringEquality
+=== RUN   TestTypedArrayRuntime/release
+--- PASS: TestRuntimeCacheKeepsCountFlags (0.53s)
+=== CONT  TestRuntimeReleasePaths
+--- PASS: TestRuntimeStringEquality (0.67s)
+=== CONT  TestRegExpIteratorResultShape
+--- PASS: TestRegExpIteratorResultShape (0.38s)
+=== CONT  TestNodeBufferRuntimeWithoutDeclarations
+=== RUN   TestTypedArrayRuntime/sanitized
+--- PASS: TestNodeBufferRuntimeWithoutDeclarations (1.34s)
+=== CONT  TestRuntimeCacheConcurrentProcesses
+--- PASS: TestRuntimeCacheConcurrentProcesses (0.28s)
+=== CONT  TestRuntimeCacheConcurrentBuilders
+--- PASS: TestRuntimeCacheConcurrentBuilders (2.77s)
+=== CONT  TestRuntimeCacheRebuildsChangedSources
+--- PASS: TestRuntimeCacheRebuildsChangedSources (0.33s)
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWeakerContract (0.26s)
+=== CONT  TestRuntimeKeyKeepsBoundaries
+--- PASS: TestRuntimeKeyKeepsBoundaries (0.00s)
+=== CONT  TestRuntimeKeyIncludesEveryInput
+--- PASS: TestRuntimeKeyIncludesEveryInput (0.11s)
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+--- PASS: TestRuntimeCheckedLibraryPush (10.35s)
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 32 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsLiteral
+--- PASS: TestRuntimeStringViews (10.34s)
+=== CONT  TestRuntimeCheckedReferenceArrayKeepsContract
+--- PASS: TestRuntimeReleasePaths (9.90s)
+=== CONT  TestRuntimeCheckedLibraryPushRejectsLiteral
+--- PASS: TestRuntimeCheckedReferenceArrayKeepsContract (0.19s)
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWrongElement
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsLiteral (0.21s)
+--- PASS: TestRuntimeCheckedLibraryPushRejectsLiteral (0.22s)
+--- PASS: TestTypedArrayRuntime (10.65s)
+    --- PASS: TestTypedArrayRuntime/release (0.93s)
+    --- PASS: TestTypedArrayRuntime/sanitized (9.59s)
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWrongElement (0.16s)
+--- PASS: TestFreedValuesAreCaughtWithSlabs (7.88s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	14.290s

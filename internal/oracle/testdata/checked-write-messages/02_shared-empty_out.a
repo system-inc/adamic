@@ -1,0 +1,12 @@
+// a-check: refused a value of type never[] seen as number[], which can write number where never is read
+// Survey never[]: 82 class-d sites; representative ID 37, src/compiler/builder.ts:2044:49.
+// TypeScript 6.0.3: core.ts:17, builder.ts:2044.
+// never has no fitting value. Positive takes the no-write branch; negative exercises a synthetic consumer of the real shared empty sentinel.
+const emptyArray: never[] = [] as never[];
+function consume(array: number[], write: boolean): void {
+    if (write) array.push(1);
+}
+
+console.log("before write");
+consume(emptyArray, true);
+console.log(`length ${emptyArray.length}`);

@@ -30,3 +30,26 @@ func TestObjectMetadataCacheIsPerEmission(t *testing.T) {
 		t.Fatal("new emission reused metadata after the field contract was removed")
 	}
 }
+
+// Checked writes need slot representation tags even without a checked read.
+func TestObjectMetadataCheckedWritesIsPerEmission(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Source: "metadata-writes", Main: []ir.Statement{
+		ir.Evaluate{Value: ir.ObjectLiteral{Fields: []ir.Field{
+			{Name: "value", Value: ir.NumberConstant{Value: 1}},
+		}}},
+	}}
+	plain := C(program)
+	program.CheckedWrites = ir.SortedMap[string, bool]{"value": true}
+	checked := C(program)
+	if !strings.Contains(checked, "adamic_object_field_types(") {
+		t.Fatal("checked write lost its slot representation metadata")
+	}
+	if strings.Contains(checked, "adamic_register_shape_types(") {
+		t.Fatal("checked write enabled dynamic-property metadata")
+	}
+	program.CheckedWrites = nil
+	if again := C(program); again != plain {
+		t.Fatal("new emission reused checked-write metadata after its removal")
+	}
+}

@@ -1,0 +1,2928 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_keep.a",
+    "previous": [
+      516,
+      516,
+      699,
+      1005,
+      35,
+      0
+    ],
+    "current": [
+      516,
+      516,
+      628,
+      934,
+      35,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -71,
+      -71,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_keep.a",
+    "previous": [
+      290,
+      290,
+      465,
+      600,
+      18,
+      0
+    ],
+    "current": [
+      290,
+      290,
+      385,
+      520,
+      18,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -80,
+      -80,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_objects.a",
+    "previous": [
+      732,
+      732,
+      1004,
+      1246,
+      63,
+      0
+    ],
+    "current": [
+      732,
+      732,
+      930,
+      1172,
+      63,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -74,
+      -74,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_objects.a",
+    "previous": [
+      368,
+      368,
+      631,
+      702,
+      30,
+      0
+    ],
+    "current": [
+      368,
+      368,
+      555,
+      626,
+      30,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -76,
+      -76,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_closures.a",
+    "previous": [
+      816,
+      816,
+      1210,
+      1443,
+      87,
+      0
+    ],
+    "current": [
+      816,
+      816,
+      1140,
+      1373,
+      87,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -70,
+      -70,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_closures.a",
+    "previous": [
+      411,
+      411,
+      750,
+      821,
+      39,
+      0
+    ],
+    "current": [
+      411,
+      411,
+      674,
+      745,
+      39,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -76,
+      -76,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_numbers.a",
+    "previous": [
+      373,
+      373,
+      223,
+      546,
+      14,
+      0
+    ],
+    "current": [
+      373,
+      373,
+      155,
+      478,
+      14,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -68,
+      -68,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_numbers.a",
+    "previous": [
+      214,
+      214,
+      214,
+      391,
+      11,
+      0
+    ],
+    "current": [
+      214,
+      214,
+      140,
+      317,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -74,
+      -74,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_arrays.a",
+    "previous": [
+      995,
+      995,
+      1096,
+      1519,
+      95,
+      0
+    ],
+    "current": [
+      995,
+      995,
+      1028,
+      1451,
+      95,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -68,
+      -68,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_arrays.a",
+    "previous": [
+      516,
+      516,
+      638,
+      827,
+      58,
+      0
+    ],
+    "current": [
+      516,
+      516,
+      564,
+      753,
+      58,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -74,
+      -74,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_more.a",
+    "previous": [
+      395,
+      395,
+      635,
+      885,
+      36,
+      0
+    ],
+    "current": [
+      395,
+      395,
+      569,
+      819,
+      36,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -66,
+      -66,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_more.a",
+    "previous": [
+      179,
+      179,
+      360,
+      441,
+      26,
+      0
+    ],
+    "current": [
+      179,
+      179,
+      297,
+      378,
+      26,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -63,
+      -63,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_objects.a",
+    "previous": [
+      165,
+      165,
+      221,
+      292,
+      31,
+      0
+    ],
+    "current": [
+      165,
+      165,
+      207,
+      278,
+      31,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -14,
+      -14,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_objects.a",
+    "previous": [
+      87,
+      87,
+      123,
+      162,
+      22,
+      0
+    ],
+    "current": [
+      87,
+      87,
+      110,
+      149,
+      22,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -13,
+      -13,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_closures.a",
+    "previous": [
+      117,
+      117,
+      188,
+      228,
+      29,
+      0
+    ],
+    "current": [
+      117,
+      117,
+      179,
+      219,
+      29,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -9,
+      -9,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_closures.a",
+    "previous": [
+      95,
+      95,
+      170,
+      202,
+      28,
+      0
+    ],
+    "current": [
+      95,
+      95,
+      155,
+      187,
+      28,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -15,
+      -15,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_fnexpr.a",
+    "previous": [
+      44,
+      44,
+      71,
+      107,
+      15,
+      0
+    ],
+    "current": [
+      44,
+      44,
+      64,
+      100,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -7,
+      -7,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_fnexpr.a",
+    "previous": [
+      32,
+      32,
+      59,
+      84,
+      10,
+      0
+    ],
+    "current": [
+      32,
+      32,
+      51,
+      76,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -8,
+      -8,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_numbers.a",
+    "previous": [
+      117,
+      117,
+      97,
+      201,
+      12,
+      0
+    ],
+    "current": [
+      117,
+      117,
+      73,
+      177,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -24,
+      -24,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_iterators.a",
+    "previous": [
+      57,
+      57,
+      35,
+      86,
+      13,
+      0
+    ],
+    "current": [
+      57,
+      57,
+      31,
+      82,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_flat_map.a",
+    "previous": [
+      50,
+      50,
+      81,
+      130,
+      17,
+      0
+    ],
+    "current": [
+      50,
+      50,
+      79,
+      128,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_spliced.a",
+    "previous": [
+      72,
+      72,
+      61,
+      135,
+      12,
+      0
+    ],
+    "current": [
+      72,
+      72,
+      60,
+      134,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_find_last.a",
+    "previous": [
+      43,
+      43,
+      30,
+      79,
+      10,
+      0
+    ],
+    "current": [
+      43,
+      43,
+      27,
+      76,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_function_expressions.a",
+    "previous": [
+      56,
+      56,
+      52,
+      99,
+      19,
+      0
+    ],
+    "current": [
+      56,
+      56,
+      49,
+      96,
+      19,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_fnexpr_loops.a",
+    "previous": [
+      182,
+      182,
+      234,
+      306,
+      82,
+      0
+    ],
+    "current": [
+      182,
+      182,
+      194,
+      266,
+      82,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -40,
+      -40,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_for_in.a",
+    "previous": [
+      79,
+      79,
+      154,
+      142,
+      65,
+      0
+    ],
+    "current": [
+      79,
+      79,
+      130,
+      118,
+      65,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -24,
+      -24,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_for_in_keys.a",
+    "previous": [
+      38,
+      38,
+      135,
+      104,
+      34,
+      0
+    ],
+    "current": [
+      38,
+      38,
+      108,
+      77,
+      34,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -27,
+      -27,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_for_in_live.a",
+    "previous": [
+      39,
+      39,
+      71,
+      88,
+      21,
+      0
+    ],
+    "current": [
+      39,
+      39,
+      59,
+      76,
+      21,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -12,
+      -12,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/load/testdata/0.1/compile/04_closures.ts",
+    "previous": [
+      18,
+      18,
+      22,
+      35,
+      14,
+      0
+    ],
+    "current": [
+      18,
+      18,
+      19,
+      32,
+      14,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/bitwise_sweep.a",
+    "previous": [
+      4152674,
+      4152674,
+      1686,
+      4154367,
+      9,
+      0
+    ],
+    "current": [
+      4152674,
+      4152674,
+      1260,
+      4153941,
+      9,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -426,
+      -426,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/closures.a",
+    "previous": [
+      58,
+      58,
+      51,
+      87,
+      26,
+      0
+    ],
+    "current": [
+      58,
+      58,
+      48,
+      84,
+      26,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/read_order.a",
+    "previous": [
+      37,
+      37,
+      32,
+      66,
+      13,
+      0
+    ],
+    "current": [
+      37,
+      37,
+      27,
+      61,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -5,
+      -5,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/string_index.a",
+    "previous": [
+      58,
+      58,
+      48,
+      145,
+      6,
+      0
+    ],
+    "current": [
+      58,
+      58,
+      44,
+      141,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/visits.a",
+    "previous": [
+      95,
+      95,
+      131,
+      215,
+      23,
+      0
+    ],
+    "current": [
+      95,
+      95,
+      124,
+      208,
+      23,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -7,
+      -7,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/searches.a",
+    "previous": [
+      106,
+      106,
+      84,
+      176,
+      19,
+      0
+    ],
+    "current": [
+      106,
+      106,
+      83,
+      175,
+      19,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/spreads.a",
+    "previous": [
+      36,
+      36,
+      42,
+      69,
+      18,
+      0
+    ],
+    "current": [
+      36,
+      36,
+      39,
+      66,
+      18,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/strings_more.a",
+    "previous": [
+      112,
+      112,
+      45,
+      170,
+      8,
+      0
+    ],
+    "current": [
+      112,
+      112,
+      38,
+      163,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -7,
+      -7,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_iteration.a",
+    "previous": [
+      146,
+      146,
+      219,
+      323,
+      21,
+      0
+    ],
+    "current": [
+      146,
+      146,
+      200,
+      304,
+      21,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -19,
+      -19,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/timsort.a",
+    "previous": [
+      2769,
+      2769,
+      49033,
+      51486,
+      308,
+      0
+    ],
+    "current": [
+      2769,
+      2769,
+      48733,
+      51186,
+      308,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -300,
+      -300,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/find_shrinks.a",
+    "previous": [
+      12,
+      7,
+      12,
+      20,
+      6,
+      0
+    ],
+    "current": [
+      12,
+      7,
+      10,
+      18,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/sort_top_level.a",
+    "previous": [
+      33,
+      33,
+      88,
+      105,
+      19,
+      0
+    ],
+    "current": [
+      33,
+      33,
+      79,
+      96,
+      19,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -9,
+      -9,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fills.a",
+    "previous": [
+      24,
+      24,
+      29,
+      52,
+      11,
+      0
+    ],
+    "current": [
+      24,
+      24,
+      28,
+      51,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/array_from.a",
+    "previous": [
+      94,
+      94,
+      59,
+      134,
+      25,
+      0
+    ],
+    "current": [
+      94,
+      94,
+      56,
+      131,
+      25,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/weak_parent.a",
+    "previous": [
+      86,
+      86,
+      254,
+      303,
+      41,
+      0
+    ],
+    "current": [
+      86,
+      86,
+      253,
+      302,
+      41,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/doubly_linked.a",
+    "previous": [
+      90,
+      90,
+      572,
+      605,
+      49,
+      0
+    ],
+    "current": [
+      90,
+      90,
+      558,
+      591,
+      49,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -14,
+      -14,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fresh_parser.a",
+    "previous": [
+      145,
+      145,
+      321,
+      491,
+      34,
+      0
+    ],
+    "current": [
+      145,
+      145,
+      316,
+      486,
+      34,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -5,
+      -5,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fresh_writes.a",
+    "previous": [
+      330,
+      330,
+      421,
+      537,
+      132,
+      0
+    ],
+    "current": [
+      330,
+      330,
+      386,
+      502,
+      132,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -35,
+      -35,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/exceptions.a",
+    "previous": [
+      133,
+      133,
+      182,
+      248,
+      20,
+      0
+    ],
+    "current": [
+      133,
+      133,
+      168,
+      234,
+      20,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -14,
+      -14,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/closures_throw.a",
+    "previous": [
+      418,
+      418,
+      1676,
+      1911,
+      142,
+      0
+    ],
+    "current": [
+      418,
+      418,
+      1572,
+      1807,
+      142,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -104,
+      -104,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/invariance_readonly.a",
+    "previous": [
+      30,
+      30,
+      42,
+      55,
+      16,
+      0
+    ],
+    "current": [
+      30,
+      30,
+      38,
+      51,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/tuples_kept.a",
+    "previous": [
+      31,
+      31,
+      48,
+      68,
+      13,
+      0
+    ],
+    "current": [
+      31,
+      31,
+      46,
+      66,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/undefined_keys.a",
+    "previous": [
+      122,
+      122,
+      222,
+      287,
+      24,
+      0
+    ],
+    "current": [
+      122,
+      122,
+      208,
+      273,
+      24,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -14,
+      -14,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/undefined_strings.a",
+    "previous": [
+      15,
+      15,
+      19,
+      41,
+      6,
+      0
+    ],
+    "current": [
+      15,
+      15,
+      18,
+      40,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/maybe_number_slots.a",
+    "previous": [
+      484,
+      484,
+      308,
+      801,
+      16,
+      0
+    ],
+    "current": [
+      484,
+      484,
+      305,
+      798,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/case_mapping.a",
+    "previous": [
+      203,
+      203,
+      277,
+      474,
+      16,
+      0
+    ],
+    "current": [
+      203,
+      203,
+      271,
+      468,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -6,
+      -6,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/undefined_elements.a",
+    "previous": [
+      19,
+      19,
+      47,
+      43,
+      8,
+      0
+    ],
+    "current": [
+      19,
+      19,
+      46,
+      42,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/adversarial_order.a",
+    "previous": [
+      105,
+      105,
+      90,
+      166,
+      31,
+      0
+    ],
+    "current": [
+      105,
+      105,
+      88,
+      164,
+      31,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/adversarial_exits.a",
+    "previous": [
+      120,
+      120,
+      66,
+      161,
+      25,
+      0
+    ],
+    "current": [
+      120,
+      120,
+      60,
+      155,
+      25,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -6,
+      -6,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/adversarial_iteration.a",
+    "previous": [
+      59,
+      59,
+      130,
+      162,
+      21,
+      0
+    ],
+    "current": [
+      59,
+      59,
+      118,
+      150,
+      21,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -12,
+      -12,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/string_positions.a",
+    "previous": [
+      327,
+      327,
+      546,
+      784,
+      97,
+      0
+    ],
+    "current": [
+      327,
+      327,
+      396,
+      634,
+      97,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -150,
+      -150,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/long_literals.a",
+    "previous": [
+      6117,
+      6117,
+      164,
+      14689,
+      8,
+      0
+    ],
+    "current": [
+      6117,
+      6117,
+      85,
+      14610,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -79,
+      -79,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_layouts.a",
+    "previous": [
+      70,
+      70,
+      109,
+      156,
+      27,
+      0
+    ],
+    "current": [
+      70,
+      70,
+      103,
+      150,
+      27,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -6,
+      -6,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/ascii_scan.a",
+    "previous": [
+      47,
+      47,
+      27,
+      66,
+      18,
+      0
+    ],
+    "current": [
+      47,
+      47,
+      15,
+      54,
+      18,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -12,
+      -12,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_map_overwrite.a",
+    "previous": [
+      29,
+      29,
+      27,
+      50,
+      13,
+      0
+    ],
+    "current": [
+      29,
+      29,
+      23,
+      46,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/sets.a",
+    "previous": [
+      224,
+      224,
+      13072,
+      13169,
+      65,
+      0
+    ],
+    "current": [
+      224,
+      224,
+      13010,
+      13107,
+      65,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -62,
+      -62,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_construct.a",
+    "previous": [
+      180,
+      180,
+      239,
+      285,
+      52,
+      0
+    ],
+    "current": [
+      180,
+      180,
+      236,
+      282,
+      52,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_group_by.a",
+    "previous": [
+      115,
+      115,
+      138,
+      222,
+      36,
+      0
+    ],
+    "current": [
+      115,
+      115,
+      137,
+      221,
+      36,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/maybe_collections.a",
+    "previous": [
+      64,
+      64,
+      176,
+      235,
+      20,
+      0
+    ],
+    "current": [
+      64,
+      64,
+      165,
+      224,
+      20,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -11,
+      -11,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_strings.a",
+    "previous": [
+      43,
+      43,
+      40,
+      81,
+      7,
+      0
+    ],
+    "current": [
+      43,
+      43,
+      37,
+      78,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/collections.a",
+    "previous": [
+      362,
+      362,
+      442,
+      600,
+      103,
+      0
+    ],
+    "current": [
+      362,
+      362,
+      415,
+      573,
+      103,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -27,
+      -27,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/gaps.a",
+    "previous": [
+      97,
+      97,
+      89,
+      158,
+      47,
+      0
+    ],
+    "current": [
+      97,
+      97,
+      87,
+      156,
+      47,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/tuple_values.a",
+    "previous": [
+      119,
+      119,
+      116,
+      197,
+      37,
+      0
+    ],
+    "current": [
+      119,
+      119,
+      115,
+      196,
+      37,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/search_from.a",
+    "previous": [
+      292,
+      292,
+      290,
+      451,
+      22,
+      0
+    ],
+    "current": [
+      292,
+      292,
+      287,
+      448,
+      22,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/shared_slices.a",
+    "previous": [
+      12236,
+      12236,
+      10745,
+      12864,
+      86,
+      0
+    ],
+    "current": [
+      12236,
+      12236,
+      10648,
+      12767,
+      86,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -97,
+      -97,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/integer_format.a",
+    "previous": [
+      106826,
+      106826,
+      76081,
+      164215,
+      20,
+      0
+    ],
+    "current": [
+      106826,
+      106826,
+      48056,
+      136190,
+      20,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -28025,
+      -28025,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_spread_method_alias.a",
+    "previous": [
+      8,
+      8,
+      8,
+      15,
+      6,
+      0
+    ],
+    "current": [
+      8,
+      8,
+      7,
+      14,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_string_existing.a",
+    "previous": [
+      34,
+      34,
+      606,
+      643,
+      9,
+      0
+    ],
+    "current": [
+      34,
+      34,
+      306,
+      343,
+      9,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -300,
+      -300,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_visit.a",
+    "previous": [
+      86,
+      86,
+      151,
+      210,
+      38,
+      0
+    ],
+    "current": [
+      86,
+      86,
+      129,
+      188,
+      38,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -22,
+      -22,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_zeros.a",
+    "previous": [
+      23,
+      23,
+      46,
+      65,
+      11,
+      0
+    ],
+    "current": [
+      23,
+      23,
+      40,
+      59,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -6,
+      -6,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_next.a",
+    "previous": [
+      82,
+      82,
+      77,
+      142,
+      57,
+      0
+    ],
+    "current": [
+      82,
+      82,
+      74,
+      139,
+      57,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/arguments_length_spread.a",
+    "previous": [
+      69,
+      69,
+      27,
+      95,
+      15,
+      0
+    ],
+    "current": [
+      69,
+      69,
+      26,
+      94,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/array_literal_empty_typed.a",
+    "previous": [
+      17,
+      17,
+      16,
+      34,
+      10,
+      0
+    ],
+    "current": [
+      17,
+      17,
+      14,
+      32,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_instance_key_region.a",
+    "previous": [
+      110,
+      109,
+      154,
+      215,
+      55,
+      1
+    ],
+    "current": [
+      110,
+      109,
+      104,
+      165,
+      55,
+      1
+    ],
+    "delta": [
+      0,
+      0,
+      -50,
+      -50,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_instance_key_region_alias.a",
+    "previous": [
+      110,
+      109,
+      154,
+      215,
+      55,
+      1
+    ],
+    "current": [
+      110,
+      109,
+      104,
+      165,
+      55,
+      1
+    ],
+    "delta": [
+      0,
+      0,
+      -50,
+      -50,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/enums_flags.a",
+    "previous": [
+      44,
+      44,
+      20,
+      61,
+      11,
+      0
+    ],
+    "current": [
+      44,
+      44,
+      19,
+      60,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/enums_open.a",
+    "previous": [
+      22,
+      22,
+      17,
+      37,
+      10,
+      0
+    ],
+    "current": [
+      22,
+      22,
+      16,
+      36,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/user_iterators.a",
+    "previous": [
+      663,
+      663,
+      490,
+      939,
+      64,
+      0
+    ],
+    "current": [
+      663,
+      663,
+      487,
+      936,
+      64,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_method_values.a",
+    "previous": [
+      137,
+      137,
+      155,
+      296,
+      42,
+      0
+    ],
+    "current": [
+      137,
+      137,
+      154,
+      295,
+      42,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/parameter_properties_ownership.a",
+    "previous": [
+      120,
+      120,
+      192,
+      232,
+      12,
+      0
+    ],
+    "current": [
+      120,
+      120,
+      184,
+      224,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -8,
+      -8,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/parameter_properties_kinds.a",
+    "previous": [
+      51,
+      51,
+      69,
+      104,
+      26,
+      0
+    ],
+    "current": [
+      51,
+      51,
+      65,
+      100,
+      26,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/params_namespaces_values.a",
+    "previous": [
+      43,
+      43,
+      87,
+      105,
+      23,
+      0
+    ],
+    "current": [
+      43,
+      43,
+      85,
+      103,
+      23,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/params_namespaces_shared/main.a",
+    "previous": [
+      16,
+      16,
+      31,
+      50,
+      11,
+      0
+    ],
+    "current": [
+      16,
+      16,
+      27,
+      46,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/proven_satisfies.a",
+    "previous": [
+      28,
+      28,
+      31,
+      58,
+      13,
+      0
+    ],
+    "current": [
+      28,
+      28,
+      30,
+      57,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/fresh/testdata/regexp_tree.ts",
+    "previous": [
+      91,
+      91,
+      84,
+      88,
+      35,
+      0
+    ],
+    "current": [
+      91,
+      91,
+      81,
+      85,
+      35,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -3,
+      -3,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_cycle_fields.a",
+    "previous": [
+      61,
+      61,
+      138,
+      136,
+      44,
+      0
+    ],
+    "current": [
+      61,
+      61,
+      132,
+      130,
+      44,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -6,
+      -6,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_cycle_collections.a",
+    "previous": [
+      31,
+      31,
+      89,
+      93,
+      23,
+      0
+    ],
+    "current": [
+      31,
+      31,
+      85,
+      89,
+      23,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "stage3/fixtures/taste/07_compact.a",
+    "previous": [
+      12,
+      12,
+      84,
+      92,
+      5,
+      0
+    ],
+    "current": [
+      12,
+      12,
+      80,
+      88,
+      5,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "stage3/fixtures/taste/13_void_callback.a",
+    "previous": [
+      4,
+      4,
+      9,
+      15,
+      4,
+      0
+    ],
+    "current": [
+      4,
+      4,
+      8,
+      14,
+      4,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/regex.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      15,
+      15,
+      23,
+      24,
+      13,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/map.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      9,
+      9,
+      19,
+      21,
+      9,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/set.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      10,
+      10,
+      19,
+      22,
+      9,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/fs.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      4,
+      4,
+      7,
+      9,
+      4,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/directory.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      5,
+      5,
+      7,
+      10,
+      5,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-runtime-fields/status.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      4,
+      4,
+      6,
+      10,
+      4,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-write-messages/03_flow-node_out.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      3,
+      0,
+      4,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      3,
+      0,
+      3,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      2,
+      0,
+      2,
+      2,
+      2,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a (TypeScript adapter)",
+    "previous": null,
+    "current": [
+      3,
+      0,
+      4,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "cause": "new source fixture measured through checked TypeScript adapter"
+  },
+  {
+    "fixture": "stage3/checked-writes/never-nullable-misfit.ts",
+    "previous": [
+      3,
+      0,
+      3,
+      2,
+      3,
+      0
+    ],
+    "current": [
+      3,
+      0,
+      2,
+      2,
+      3,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    "cause": "remove duplicate ArrayPush receiver retain/release from prior follow-up"
+  }
+]

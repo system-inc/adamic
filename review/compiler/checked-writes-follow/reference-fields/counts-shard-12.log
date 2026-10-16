@@ -1,0 +1,330 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_fit.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_fit.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a
+    counts_test.go:233: | internal/oracle/testdata/debugger_fail.a | 2 | 2 | 4 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a
+    counts_test.go:233: | internal/oracle/testdata/entries_checked_misfit.a | 7 | 1 | 3 | 2 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a
+    counts_test.go:233: | internal/oracle/testdata/entries_proven_import.a | 14 | 14 | 14 | 18 | 7 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a
+    counts_test.go:233: | internal/oracle/testdata/devirt_borrow_doc_claim.a | 15 | 13 | 6 | 13 | 5 | 2 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize.a | 43 | 39 | 22 | 62 | 10 | 4 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_factory.a | 8 | 5 | 12 | 19 | 2 | 3 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/callable-selection.a | 7 | 7 | 3 | 12 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_function_field.a | 13 | 13 | 21 | 29 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_accessors.a | 9 | 9 | 3 | 13 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_generic.a | 8 | 8 | 8 | 14 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_abstract.a | 9 | 9 | 18 | 21 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_fit.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_interfaces.a | 21 | 21 | 32 | 57 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_receivers.a | 22 | 21 | 41 | 57 | 7 | 1 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a
+    counts_test.go:233: | internal/oracle/testdata/devirtualize_modules/main.a | 5 | 2 | 8 | 10 | 2 | 3 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a
+    counts_test.go:233: | internal/oracle/testdata/element_access_reads.a | 42 | 42 | 17 | 51 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_fit.a
+    counts_test.go:233: | internal/oracle/testdata/entries_checked_fit.a | 54 | 54 | 20 | 42 | 12 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a
+    counts_test.go:233: | internal/oracle/testdata/entries_scanner.a | 18 | 18 | 8 | 14 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a
+    counts_test.go:233: | internal/oracle/testdata/entries_proven.a | 31 | 31 | 10 | 29 | 14 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a
+    counts_test.go:233: | internal/oracle/testdata/entries_record_misfit.a | 6 | 0 | 10 | 5 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/safe-constructor.a | 5 | 5 | 2 | 8 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a
+    counts_test.go:233: | internal/oracle/testdata/element_access_tuple.a | 76 | 76 | 73 | 123 | 16 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/safe-helper.a | 3 | 3 | 1 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/native-enum-map.a | 2 | 2 | 1 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a
+    counts_test.go:233: | internal/oracle/testdata/element_access_presence.a | 4 | 3 | 5 | 7 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/native-call-before-enum.a | 5 | 5 | 2 | 8 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a
+    counts_test.go:233: | internal/oracle/testdata/element_access_optional.a | 35 | 35 | 50 | 79 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a
+    counts_test.go:233: | internal/oracle/testdata/element_access_boolean.a | 38 | 38 | 17 | 50 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a
+    counts_test.go:233: | internal/oracle/testdata/enums_open_never.a | 3 | 0 | 2 | 1 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a
+    counts_test.go:233: | internal/oracle/testdata/enums_flags_modules/main.a | 9 | 9 | 5 | 11 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a
+    counts_test.go:233: | internal/oracle/testdata/enums_open_never_if.a | 3 | 0 | 2 | 1 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a
+    counts_test.go:233: | internal/oracle/testdata/enums_open_members.a | 2 | 2 | 4 | 5 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a
+    counts_test.go:233: | internal/oracle/testdata/enums_open.a | 22 | 22 | 16 | 36 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a
+    counts_test.go:233: | internal/oracle/testdata/enums_flags_never_default.a | 2 | 2 | 6 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/unknown-after.a | 4 | 4 | 4 | 11 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a
+    counts_test.go:233: | internal/oracle/testdata/entries_checked_literal.a | 6 | 0 | 5 | 1 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a
+    counts_test.go:233: | internal/oracle/testdata/enums_flags.a | 44 | 44 | 19 | 60 | 11 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a
+    counts_test.go:233: | internal/oracle/testdata/entries_record_alias.a | 65 | 65 | 89 | 118 | 28 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a
+    counts_test.go:233: | internal/oracle/testdata/entries_checked_boxed.a | 40 | 40 | 12 | 36 | 11 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a
+    counts_test.go:233: | stage3/fixtures/enum-init-reach/call-graph-24.a | 3 | 3 | 1 | 4 | 3 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a
+    counts_test.go:233: | internal/oracle/testdata/entries_checked_boolean.a | 18 | 18 | 5 | 18 | 7 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/debugger_fail.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_misfit.a (0.26s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven_import.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirt_borrow_doc_claim.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_factory.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/callable-selection.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_function_field.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_accessors.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_generic.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_abstract.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_interfaces.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_receivers.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/devirtualize_modules/main.a (0.26s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_reads.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_fit.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_scanner.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_proven.a (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_misfit.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-constructor.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_tuple.a (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/safe-helper.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-enum-map.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_presence.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/native-call-before-enum.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_optional.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/element_access_boolean.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_modules/main.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_never_if.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open_members.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_open.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags_never_default.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/unknown-after.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_literal.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/enums_flags.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_record_alias.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boxed.a (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/enum-init-reach/call-graph-24.a (0.26s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/entries_checked_boolean.a (0.30s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.293s

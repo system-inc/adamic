@@ -163,3 +163,5 @@ Reviewer R's round six (review/round6/REPORT.md, b1ef201) found the cases never 
 - Prettier's glue (parse-value.js, which turns the tree into Prettier's), which is language-css's.
 - The order of a node's keys. Both sides write them sorted, as cohere's oracle compares them.
 - Lone surrogates, and text that isn't UTF-8 (the Go reads a bad byte as U+FFFD), since the cases are UTF-8 text.
+
+The checked-writes rebuild on main revalidated the already closed `gaps/5_empty_array_default.ts` with `TestEachGapStandsWhereGapsMdSaysItDoes`. Its closed probes now also compare the JavaScript backend to source Node, alongside sanitized native and leak checks. `gaps/2_boolean_or_undefined_field.ts` still stops at a class field of type `boolean | undefined`; checked plain-object writes do not supply that class-field representation.

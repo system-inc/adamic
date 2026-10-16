@@ -121,7 +121,7 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 				out.WriteString("true,")
 			}
 			out.WriteString("};\n")
-			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,NULL};\n", name, len(names), name, name)
+			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,NULL,NULL};\n", name, len(names), name, name)
 		}
 		bits, filter := p.nativeFirstASCII()
 		prefix := p.nativePrefix()
