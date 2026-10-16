@@ -1,6 +1,7 @@
 {
   "version": 1,
   "packages": {
+    "cmd/adamic-admission-delta": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/compilercensus": ["cmd/adamic"],
     "internal/compilerinputs": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/lower/cycleledger": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
