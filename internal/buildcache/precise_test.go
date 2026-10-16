@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"runtime"
 	"slices"
 	"sort"
@@ -2603,7 +2604,7 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
 // late, and a lean caller's windowed build keep the binary's whole recipe: a caller's code is keyed lean only once its
 // census holds, and native's archives reach the jobserver until it's handed in (#yzwm4rj, Node's reading 1). Mutants
 // that each fail it: a windowed lean build given the whole recipe; a late window given the lean recipe; a caller's
-// windowed build given the lean recipe.
+// windowed build given the lean recipe; Report.Lean set for the whole recipe.
 // Not parallel: newRig, and it replaces recipeFor and leanRecipeFor.
 func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 	caller := modulePath + "/internal/native/runtimeproducts"
@@ -2641,11 +2642,11 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 		return Report{}, nil, nil
 	}
 	report, entries, asked := run(&leanBuild{}, false)
-	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean "}) {
+	if report.Window != BuildWindowed || !report.Lean || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean "}) {
 		t.Errorf("a windowed lean build of buildcache's own: taken as %q, entries %q, recipes asked %q; want the lean recipe alone", report.Window, entries, asked)
 	}
 	report, entries, asked = run(&leanBuild{caller: caller}, false)
-	if report.Window != BuildWindowed || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
+	if report.Window != BuildWindowed || report.Lean || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
 		t.Errorf("a lean caller's windowed build: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe", report.Window, entries, asked)
 	}
 	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {}} {
@@ -2729,5 +2730,82 @@ func TestALeanBuildIsBuildcachesOrAReviewedCallers(t *testing.T) {
 	}
 	if lean := leanBuildOf(modulePath + "/stage1/cohere/lint"); lean != nil {
 		t.Errorf("an unreviewed caller's build is lean: %+v", lean)
+	}
+}
+
+// A settled product whose name key ADAMIC_BUILD_AUDIT_KEYS lists is rebuilt on its local hit under the process's own
+// temporary directory and compared, and the audit line Loom reads says clean or mismatch, keeping the rebuilt copy on a
+// mismatch (#earlycut's sampled key check). A name key it doesn't list is never rebuilt. Mutants that each fail it: the
+// audit skipped on a hit; the rebuild placed beside the product; an unlisted name key audited.
+// Not parallel: newRig.
+func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	temporary, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("TMPDIR", temporary)
+	keys := filepath.Join(t.TempDir(), "keys")
+	look := func(listed string, content string) string {
+		t.Helper()
+		forgetHeldForLife()
+		if err := os.WriteFile(keys, []byte(listed+"\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
+		log := filepath.Join(t.TempDir(), "builds.log")
+		t.Setenv("ADAMIC_BUILD_LOG", log)
+		var rebuilt []string
+		if _, err := Get(port, func(directory string) error {
+			rebuilt = append(rebuilt, directory)
+			return building(content)(directory)
+		}); err != nil {
+			t.Fatal(err)
+		}
+		for _, directory := range rebuilt {
+			if !strings.HasPrefix(directory, temporary+string(filepath.Separator)) {
+				t.Errorf("rebuilt at %s, beside the product, not under the process's temporary directory", directory)
+			}
+		}
+		lines, _ := os.ReadFile(log)
+		return string(lines)
+	}
+	if lines := look(build.NameKey, "built"); !regexp.MustCompile(`(?m)^audit port [0-9a-f]{64} clean [0-9a-f]{64}$`).MatchString(lines) {
+		t.Errorf("a listed product rebuilt alike: census %q, want a clean audit line", lines)
+	}
+	lines := look(build.NameKey, "built differently")
+	match := regexp.MustCompile(`(?m)^audit port [0-9a-f]{64} mismatch ([0-9a-f]{64}) ([0-9a-f]{64}) (.+)$`).FindStringSubmatch(lines)
+	if match == nil || match[1] == match[2] {
+		t.Fatalf("a listed product rebuilt otherwise: census %q, want a mismatch audit line", lines)
+	}
+	if kept, err := os.ReadFile(filepath.Join(match[3], "product")); err != nil || string(kept) != "built differently" {
+		t.Errorf("the rebuilt copy isn't kept at %s: %q, %v", match[3], kept, err)
+	}
+	if lines := look(strings.Repeat("0", 64), "built differently"); strings.Contains(lines, "audit ") {
+		t.Errorf("an unlisted product was audited: census %q", lines)
+	}
+}
+
+// Under ADAMIC_BUILD_LEAN=off, Loom's switch while a lean mismatch is open, no build is lean: buildcache's own and a
+// reviewed caller's alike take the whole recipe. Mutant: the switch unread.
+// Not parallel: t.Setenv.
+func TestNoBuildIsLeanWhileLoomTurnsLeanOff(t *testing.T) {
+	for _, caller := range []string{buildcachePackage, modulePath + "/internal/native/runtimeproducts"} {
+		if leanBuildOf(caller) == nil {
+			t.Fatalf("%s's build isn't lean with lean on", caller)
+		}
+	}
+	t.Setenv("ADAMIC_BUILD_LEAN", "off")
+	for _, caller := range []string{buildcachePackage, modulePath + "/internal/native/runtimeproducts"} {
+		if lean := leanBuildOf(caller); lean != nil {
+			t.Errorf("%s's build is lean under ADAMIC_BUILD_LEAN=off: %+v", caller, lean)
+		}
 	}
 }
