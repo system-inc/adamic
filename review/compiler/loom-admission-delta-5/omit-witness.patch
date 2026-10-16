@@ -1,0 +1,11 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -509,7 +509,7 @@
+ 		if p.Corpus == "diff" {
+ 			diff = append(diff, i)
+ 		} else if p.Corpus == "witnesses" || p.NegativeRelated {
+-			witnesses = append(witnesses, i)
++			others = append(others, i)
+ 		} else {
+ 			others = append(others, i)
+ 		}

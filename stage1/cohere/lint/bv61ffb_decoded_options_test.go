@@ -229,21 +229,14 @@ func decodedOptionsSetupTest(t *testing.T) {
 	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	// Both original and mutant source copies live in the content-addressed
 	// product, rather than in a setup test's TempDir.
-	lowered := decodedOptionsSetupLowered(t, false)
+	lowered := decodedOptionsFoundLowered(t, false)
 	// Node runs the changed port, so it reads the copy whose imports name this checkout.
-	changed, err := buildcache.Resolved(decodedOptionsSetupLowered(t, true))
+	changed, err := buildcache.Resolved(decodedOptionsFoundLowered(t, true))
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
-	inputs.Flags = append(inputs.Flags, "registry=no-empty")
-	nativeProduct := buildcache.Product(t, inputs, func(output string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
-	})
+	inputs, build := decodedOptionsNative(t)
+	nativeProduct := buildcache.BuiltElsewhere(t, "decoded options' native scanner", inputs, decodedOptionsNativeOwner, build)
 	// The fixture and manifest belong to TestMain's directory and remain valid
 	// after the shard that prepares them finishes, until the process exits.
 	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
@@ -265,7 +258,57 @@ func decodedOptionsSetupTest(t *testing.T) {
 	t.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
 }
 
+// Each product here has one owner, the product test that builds it, and every other reader finds it by name, after its
+// owner in cloud/fast-gate/product-order.json. A product two tests each build is settled twice in one tree, under two
+// read sets, and the tree keeps only the newer: the native scanner, built where the decoded-options preparation also ran
+// the Go oracle, voided block 165 that way.
+const (
+	decodedOptionsLoweredOwner       = "stage1/cohere/lint TestProduct_DecodedOptionsLowered"
+	decodedOptionsMutantLoweredOwner = "stage1/cohere/lint TestProduct_DecodedOptionsMutantLowered"
+	decodedOptionsNativeOwner        = "stage1/cohere/lint TestProduct_DecodedOptionsNative"
+)
+
+// decodedOptionsNativeProduct is the sanitized native scanner, built from the lowered port it finds by name. Its owner,
+// TestProduct_DecodedOptionsNative, builds it and nothing else: no lowering, no oracle run.
+func decodedOptionsNativeProduct(t *testing.T) string {
+	t.Helper()
+	inputs, build := decodedOptionsNative(t)
+	return buildcache.Product(t, inputs, build)
+}
+
+func decodedOptionsNative(t *testing.T) (buildcache.Inputs, func(output string) error) {
+	t.Helper()
+	lowered := decodedOptionsFoundLowered(t, false)
+	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
+	inputs.Flags = append(inputs.Flags, "registry=no-empty")
+	return inputs, func(output string) error {
+		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		if err != nil {
+			return err
+		}
+		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+	}
+}
+
+// decodedOptionsSetupLowered builds a lowered port, the original or the mutant: only its owner calls it.
 func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
+	t.Helper()
+	inputs, build := decodedOptionsLowered(t, mutated)
+	return buildcache.Product(t, inputs, build)
+}
+
+// decodedOptionsFoundLowered is a lowered port for every reader but its owner.
+func decodedOptionsFoundLowered(t *testing.T, mutated bool) string {
+	t.Helper()
+	inputs, build := decodedOptionsLowered(t, mutated)
+	what, owner := "decoded options' lowered port", decodedOptionsLoweredOwner
+	if mutated {
+		what, owner = "decoded options' lowered mutant port", decodedOptionsMutantLoweredOwner
+	}
+	return buildcache.BuiltElsewhere(t, what, inputs, owner, build)
+}
+
+func decodedOptionsLowered(t *testing.T, mutated bool) (buildcache.Inputs, func(output string) error) {
 	t.Helper()
 	name := "lint-decoded-options-lowered-setup-v2"
 	if mutated {
@@ -273,7 +316,7 @@ func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
 	}
 	inputs := decodedOptionsInputs(t, name)
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
-	return buildcache.Product(t, inputs, func(output string) error {
+	return inputs, func(output string) error {
 		from, to := "", ""
 		if mutated {
 			from, to = "'allowemptycatch'", "'ignored-allowemptycatch'"
@@ -309,7 +352,7 @@ func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
 		}
 		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
 		return buildcache.RelativeFiles(output)
-	})
+	}
 }
 
 func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {

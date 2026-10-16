@@ -1,0 +1,6 @@
+=== RUN   TestCompilerCacheIgnoresBuildPolicy
+    speed_test.go:63: build and read policies key different compilers: ba10cd23c0ca718e4f541fcf87ed4e46c1cd8b328913c79baa552ddc7a1e87ba != 840cdf55de64401405526e788f15d92e8c5c8f85ac5ae0c7efe7aba38cf364dc: <nil>
+--- FAIL: TestCompilerCacheIgnoresBuildPolicy (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.006s
+FAIL

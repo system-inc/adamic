@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/gitignore/oracles"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -214,27 +215,7 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 // internal/gitignore: a buildcache.GoTest product, so go runs as toolchain resolves it in cohere, under its environment,
 // and the key is go's own answer there (cohere's go.mod, go.sum and go.work, the overlay's content, go's settings and
 // release), not the caller's GOFLAGS and a go version asked elsewhere.
-func portBuildOracleProduct(t *testing.T) string {
-	t.Helper()
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal", "gitignore", "adamic_port_side_test.go"): side}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	// The overlay names this checkout's paths: GoTest keys its map and the side file's content, never its own path.
-	path := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	return buildcache.GoTest(t, "cohere", "oracle", "./internal/gitignore", []string{"-overlay=" + path})
-}
+func portBuildOracleProduct(t *testing.T) string { return oracles.Binary(t) }
 
 func portOracle(t *testing.T, binary string, request map[string]any) {
 	t.Helper()

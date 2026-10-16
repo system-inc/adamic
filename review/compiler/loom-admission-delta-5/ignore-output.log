@@ -1,0 +1,9 @@
+--- FAIL: TestOutputsAgree (0.00s)
+    main_test.go:43: mismatch accepted: {WallSeconds:0 Exit:0 Stdout:41
+         Stderr: Error:}
+--- FAIL: TestNewAdmissionMismatch (1.43s)
+    command_test.go:118: missed mismatch: {NegativeWitnessCount:0 AcceptedWitnesses:0 NodeAgreements:1 CorpusFilter: Shard: CompleteCorpus:true Phases:map[base_build:1.294e-06 checkout:0.032406876 checkout_and_provision:0.032420759 classification:0.05887171 head_build:9.29e-07 manifest_and_verification:0.087590626 provision:1.1753e-05 runtime:0.742097222 total:0.93969345] Workers:4 Classification:lowering-only Diff:[] DiffCount:0 CompileTimeoutSeconds:45 RuntimeTimeoutSeconds:2 Base:8ab7010c00601b64e00ba503108a5c27b04dc7af Head:8ab7010c00601b64e00ba503108a5c27b04dc7af GeneratorRevision:8ab7010c00601b64e00ba503108a5c27b04dc7af GeneratorBlob:e23d21aba10fb9eebc17d63a046dfec17ee8c163 ManifestBlob:4bb914b94281425737e1365ae10a9b3401b0d0ce Admitted:1 Programs:[{program:{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad} Corpus:witnesses Class:newly-accepted Base:{WallSeconds:0.054517202 Exit:1 Stdout: Stderr:adamic: stage 0 can't lower witness yet
+         Error:} Head:{WallSeconds:0.004204639 Exit:0 Stdout: Stderr: Error:} Node:0x357d9b1a2440 JavaScript:0x357d9b1a2480 Native:0x357d9b1a24c0 JavaScriptCompile:0x357d9b1a2500 NativeCompile:0x357d9b1a2540 Agree:0x357d9b14297b NegativeRelated:false NegativeWitness:false Sampled:true}] Verdict:pass Corpora:[{Name:diff Programs:[]} {Name:witnesses Programs:[{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad}]} {Name:fuzz Programs:[]}] SamplingSeed:8ab7010c00601b64e00ba503108a5c27b04dc7af SamplingSize:1 Omitted:0 BudgetSeconds:1 BudgetUsedSeconds:0.742097222} negative witnesses: 0
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	1.505s
+FAIL

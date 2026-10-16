@@ -1,0 +1,5 @@
+--- FAIL: TestClassification (0.00s)
+    main_test.go:21: classify = newly-accepted, want compiler-error
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.004s
+FAIL

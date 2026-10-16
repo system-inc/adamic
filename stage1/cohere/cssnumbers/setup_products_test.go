@@ -2,8 +2,8 @@ package cssnumbers
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -109,7 +109,7 @@ type numbersAnswerProduct struct {
 	err       error
 }
 
-var numbersGoBatchAnswers, numbersPrettierBatchAnswers, numbersGoRawAnswers numbersAnswerProduct
+var numbersPrettierBatchAnswers numbersAnswerProduct
 
 func numbersBatchAnswerFile(unit numbersUnit) string {
 	return fmt.Sprintf("batch-%06d-%06d.txt", unit.lo, unit.hi-1)
@@ -120,34 +120,29 @@ func numbersRawAnswerFile(index int, preference string) string {
 }
 
 func numbersBatchCases(corpus numbersCorpus) []numbersAnswerCase {
-	var cases []numbersAnswerCase
-	for _, unit := range numbersUnits(corpus) {
-		if unit.kind == "batch" {
-			cases = append(cases, numbersAnswerCase{numbersBatchAnswerFile(unit), numbersInput(corpus.texts[unit.lo:unit.hi])})
-		}
+	var result []numbersAnswerCase
+	for _, c := range oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
+		result = append(result, numbersAnswerCase{c.File, c.Input})
 	}
-	return cases
+	return result
 }
 
 func numbersRawCases(corpus numbersCorpus) []numbersAnswerCase {
-	var cases []numbersAnswerCase
-	for index, text := range corpus.raw {
-		for _, preference := range []string{"d", "s"} {
-			cases = append(cases, numbersAnswerCase{numbersRawAnswerFile(index, preference), []byte(preference + numbersEncode.Replace(text) + "\n")})
-		}
+	var result []numbersAnswerCase
+	for _, c := range oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
+		result = append(result, numbersAnswerCase{c.File, c.Input})
 	}
-	return cases
+	return result
 }
 
 // numbersAnswerProductInputs keys an answer product by its oracle, every case's file name and input, and this file,
 // which holds the recipe.
 func numbersAnswerProductInputs(name, identity, toolchain string, files []string, cases []numbersAnswerCase) numbersInputs {
-	hash := sha256.New()
-	for _, each := range cases {
-		fmt.Fprintf(hash, "%s %d\n", each.file, len(each.input))
-		hash.Write(each.input)
+	var shared []oracles.AnswerCase
+	for _, c := range cases {
+		shared = append(shared, oracles.AnswerCase{File: c.file, Input: c.input})
 	}
-	return numbersInputs{Name: name, Files: append([]string{"setup_products_test.go"}, files...), Flags: []string{identity, fmt.Sprintf("cases-sha256=%x", hash.Sum(nil))}, Toolchain: toolchain}
+	return oracles.AnswerProductInputs(name, identity, toolchain, files, shared)
 }
 
 func numbersAnswerDirectory(t *testing.T, product *numbersAnswerProduct, prepare func() (numbersInputs, []numbersAnswerCase), command func(t *testing.T, input string) *exec.Cmd) string {
@@ -207,11 +202,7 @@ func numbersAnswerRun(t *testing.T, dir string, each numbersAnswerCase, oracleCo
 }
 
 func numbersGoBatchAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus numbersCorpus) string {
-	t.Helper()
-	return numbersAnswerDirectory(t, &numbersGoBatchAnswers, func() (numbersInputs, []numbersAnswerCase) {
-		cases := numbersBatchCases(corpus)
-		return numbersAnswerProductInputs("Go batch oracle answers", oracleIdentity, runtime.Version(), nil, cases), cases
-	}, func(t *testing.T, input string) *exec.Cmd { return numbersCommand(t, oracle, input) })
+	return oracles.BatchAnswers(t, oracle, oracleIdentity, oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
 }
 
 func numbersPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity string, corpus numbersCorpus) string {
@@ -227,11 +218,7 @@ func numbersPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity
 }
 
 func numbersGoRawAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus numbersCorpus) string {
-	t.Helper()
-	return numbersAnswerDirectory(t, &numbersGoRawAnswers, func() (numbersInputs, []numbersAnswerCase) {
-		cases := numbersRawCases(corpus)
-		return numbersAnswerProductInputs("Go raw oracle answers", oracleIdentity, runtime.Version(), nil, cases), cases
-	}, func(t *testing.T, input string) *exec.Cmd { return numbersCommand(t, oracle, input) })
+	return oracles.RawAnswers(t, oracle, oracleIdentity, oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
 }
 
 func numbersAnswer(t *testing.T, directory, file string) run {
@@ -374,14 +361,14 @@ func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
 	}
 }
 
-func TestProduct_CSSNumbersGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
-func TestProduct_CSSNumbersGoAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
+func TestProduct_CSSNumbersFindsGoAnswers(t *testing.T) {
 	t.Parallel()
 	corpus := enumerateNumbers(t)
 	oracle := numbersPreparedOracle(t)
 	clean(t, "Go", numbersSetupOracleAnswers(t, "Go", oracle, nil, numbersInput(corpus.texts), numbersOracleIdentity(t, oracle)))
 }
-func TestProduct_CSSNumbersGoBatchAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoBatchAnswers(t *testing.T) {
 	t.Parallel()
 	prepareNumbersAnswerInputs(t)
 	numbersGoBatchAnswersDirectory(t, numbersAnswerInputs.oracle, numbersAnswerInputs.oracleIdentity, numbersAnswerInputs.corpus)
@@ -397,7 +384,7 @@ func TestProduct_CSSNumbersPrettierBatchAnswers(t *testing.T) {
 	prepareNumbersAnswerInputs(t)
 	numbersPrettierBatchAnswersDirectory(t, numbersAnswerInputs.library, numbersAnswerInputs.libraryIdentity, numbersAnswerInputs.corpus)
 }
-func TestProduct_CSSNumbersGoRawAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoRawAnswers(t *testing.T) {
 	t.Parallel()
 	prepareNumbersAnswerInputs(t)
 	numbersGoRawAnswersDirectory(t, numbersAnswerInputs.oracle, numbersAnswerInputs.oracleIdentity, numbersAnswerInputs.corpus)

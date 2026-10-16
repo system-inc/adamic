@@ -1,0 +1,114 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNegativeContentHash
+=== PAUSE TestNegativeContentHash
+=== RUN   TestNegativeExactBackendStop
+=== PAUSE TestNegativeExactBackendStop
+=== RUN   TestNegativeRulingMetadata
+=== PAUSE TestNegativeRulingMetadata
+=== RUN   TestNegativeCommandAccepted
+=== PAUSE TestNegativeCommandAccepted
+=== RUN   TestNegativeTypeCorrectMutant
+=== PAUSE TestNegativeTypeCorrectMutant
+=== RUN   TestNegativeValidProgramCannotBeListed
+=== PAUSE TestNegativeValidProgramCannotBeListed
+=== RUN   TestNegativeEmptyListPrinted
+=== PAUSE TestNegativeEmptyListPrinted
+=== RUN   TestNegativeAlreadyAcceptedRepairMutant
+=== PAUSE TestNegativeAlreadyAcceptedRepairMutant
+=== RUN   TestNegativeEditedWitnessMandatory
+=== PAUSE TestNegativeEditedWitnessMandatory
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== RUN   TestShardPartitionKeepsDiff
+=== PAUSE TestShardPartitionKeepsDiff
+=== RUN   TestShardCommandScope
+=== PAUSE TestShardCommandScope
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestNegativeContentHash
+=== CONT  TestNegativeExactBackendStop
+--- PASS: TestNegativeExactBackendStop (0.00s)
+=== CONT  TestNegativeAlreadyAcceptedRepairMutant
+=== CONT  TestNegativeEditedWitnessMandatory
+=== CONT  TestDiffSamplingIsMandatory
+--- PASS: TestNegativeContentHash (0.00s)
+--- PASS: TestNegativeEditedWitnessMandatory (0.00s)
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+=== CONT  TestSampling
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestBuildRevisions
+--- PASS: TestSampling (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestEmptyCorpus
+=== CONT  TestCompilerTimeoutIsError
+=== CONT  TestDiffCoverage
+--- PASS: TestEmptyCorpus (0.08s)
+=== CONT  TestNewlyRefusedIsInformational
+--- PASS: TestCompilerTimeoutIsError (0.10s)
+=== CONT  TestManifestMismatch
+--- PASS: TestDiffCoverage (0.17s)
+=== CONT  TestHeadInputIsolation
+--- PASS: TestNewlyRefusedIsInformational (0.11s)
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestManifestMismatch (0.10s)
+=== CONT  TestNegativeTypeCorrectMutant
+=== NAME  TestNegativeAlreadyAcceptedRepairMutant
+    negative_test.go:185: type-correct input admitted by both compilers still demands Node agreement and rejects exit 70
+--- PASS: TestNegativeAlreadyAcceptedRepairMutant (0.28s)
+=== CONT  TestNegativeEmptyListPrinted
+--- PASS: TestNewAdmissionMismatch (0.25s)
+=== CONT  TestNegativeValidProgramCannotBeListed
+--- PASS: TestNegativeValidProgramCannotBeListed (0.00s)
+=== CONT  TestNegativeCommandAccepted
+=== NAME  TestNegativeTypeCorrectMutant
+    negative_test.go:152: type-correct copy demands Node agreement; backend exit 70 is a divergence
+--- PASS: TestNegativeTypeCorrectMutant (0.27s)
+=== CONT  TestNegativeRulingMetadata
+--- PASS: TestNegativeRulingMetadata (0.00s)
+=== CONT  TestShardCommandScope
+--- PASS: TestNegativeEmptyListPrinted (0.21s)
+=== CONT  TestParallelLoweringOnly
+--- PASS: TestParallelLoweringOnly (0.00s)
+=== CONT  TestCompilerCacheIncludesSHA
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== CONT  TestShardPartitionKeepsDiff
+--- PASS: TestShardPartitionKeepsDiff (0.00s)
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+--- PASS: TestHeadInputIsolation (0.35s)
+--- PASS: TestShardCommandScope (0.09s)
+--- PASS: TestNegativeCommandAccepted (0.17s)
+--- PASS: TestBuildRevisions (0.93s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.937s

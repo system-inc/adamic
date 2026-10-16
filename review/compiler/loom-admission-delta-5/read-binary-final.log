@@ -1,0 +1,141 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:280: build admission-compiler 3f32b560a890 hit 0.59
+--- PASS: TestProduct_AdmissionCompiler (0.64s)
+=== RUN   TestProduct_AdmissionCompilerReady
+=== PAUSE TestProduct_AdmissionCompilerReady
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNegativeContentHash
+=== PAUSE TestNegativeContentHash
+=== RUN   TestNegativeExactBackendStop
+=== PAUSE TestNegativeExactBackendStop
+=== RUN   TestNegativeRulingMetadata
+=== PAUSE TestNegativeRulingMetadata
+=== RUN   TestNegativeCommandAccepted
+=== PAUSE TestNegativeCommandAccepted
+=== RUN   TestNegativeTypeCorrectMutant
+=== PAUSE TestNegativeTypeCorrectMutant
+=== RUN   TestNegativeValidProgramCannotBeListed
+=== PAUSE TestNegativeValidProgramCannotBeListed
+=== RUN   TestNegativeEmptyListPrinted
+=== PAUSE TestNegativeEmptyListPrinted
+=== RUN   TestNegativeAlreadyAcceptedRepairMutant
+=== PAUSE TestNegativeAlreadyAcceptedRepairMutant
+=== RUN   TestNegativeEditedWitnessMandatory
+=== PAUSE TestNegativeEditedWitnessMandatory
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== RUN   TestShardPartitionKeepsDiff
+=== PAUSE TestShardPartitionKeepsDiff
+=== RUN   TestShardCommandScope
+=== PAUSE TestShardCommandScope
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== RUN   TestCompilerCacheIgnoresBuildPolicy
+--- PASS: TestCompilerCacheIgnoresBuildPolicy (0.00s)
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestParallelLoweringOnly
+=== CONT  TestNegativeContentHash
+=== CONT  TestProduct_AdmissionCompilerReady
+=== CONT  TestNegativeAlreadyAcceptedRepairMutant
+--- PASS: TestNegativeContentHash (0.00s)
+=== CONT  TestNegativeEmptyListPrinted
+--- PASS: TestParallelLoweringOnly (0.01s)
+=== CONT  TestCompilerCacheIncludesSHA
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== CONT  TestShardCommandScope
+=== NAME  TestProduct_AdmissionCompilerReady
+    command_test.go:300: build admission-compiler 3f32b560a890 hit 0.00
+--- PASS: TestProduct_AdmissionCompilerReady (0.04s)
+=== CONT  TestSampling
+--- PASS: TestSampling (0.00s)
+=== CONT  TestShardPartitionKeepsDiff
+--- PASS: TestShardPartitionKeepsDiff (0.00s)
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+=== CONT  TestNegativeEditedWitnessMandatory
+--- PASS: TestNegativeEditedWitnessMandatory (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestDiffSamplingIsMandatory
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+=== CONT  TestDiffCoverage
+--- PASS: TestShardCommandScope (0.09s)
+=== CONT  TestBuildRevisions
+    command_test.go:306: build admission-compiler 3f32b560a890 hit 0.00
+--- PASS: TestDiffCoverage (0.12s)
+=== CONT  TestNegativeValidProgramCannotBeListed
+--- PASS: TestNegativeValidProgramCannotBeListed (0.00s)
+=== CONT  TestNegativeTypeCorrectMutant
+=== NAME  TestNegativeAlreadyAcceptedRepairMutant
+    negative_test.go:185: type-correct input admitted by both compilers still demands Node agreement and rejects exit 70
+--- PASS: TestNegativeAlreadyAcceptedRepairMutant (0.19s)
+=== CONT  TestNegativeCommandAccepted
+--- PASS: TestNegativeEmptyListPrinted (0.19s)
+=== CONT  TestNegativeRulingMetadata
+--- PASS: TestNegativeRulingMetadata (0.00s)
+=== CONT  TestNegativeExactBackendStop
+--- PASS: TestNegativeExactBackendStop (0.00s)
+=== CONT  TestHeadInputIsolation
+=== NAME  TestBuildRevisions
+    command_test.go:311: unexpected end of JSON input negative witnesses: 0
+        product admission-compiler (name key e27c33959815) is not built: 58 of 97 entries it read differ from its newest traced build (by kind: content 53, exists 1, listing 4): exists cmd/adamic-admission-delta, listing cmd/adamic-admission-delta, content cmd/adamic-admission-delta/build.go, content cmd/adamic-admission-delta/classify.go, content cmd/adamic-admission-delta/command_test.go, content cmd/adamic-admission-delta/diff.go, content cmd/adamic-admission-delta/diff_test.go, content cmd/adamic-admission-delta/main.go, and 50 more, in /workspace/scratch/admission-delta-5-products, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name admission-compiler
+        flag 40b25f0411929152605c138cdca8123d8aa0b2d0
+        flag adapter=fd17ea5ed37137cf8666c675e74699284f529212114e9958f9d7005569da6bfd
+        flag -trimpath
+        flag -buildvcs=false
+        flag GOFLAGS=
+        flag CGO_ENABLED=
+        flag GOEXPERIMENT=
+        tool go1.27.1
+        tool linux
+        tool amd64
+        
+        
+--- FAIL: TestBuildRevisions (0.24s)
+=== CONT  TestCompilerTimeoutIsError
+=== NAME  TestNegativeTypeCorrectMutant
+    negative_test.go:152: type-correct copy demands Node agreement; backend exit 70 is a divergence
+--- PASS: TestNegativeTypeCorrectMutant (0.22s)
+=== CONT  TestEmptyCorpus
+--- PASS: TestNegativeCommandAccepted (0.23s)
+=== CONT  TestNewlyRefusedIsInformational
+--- PASS: TestEmptyCorpus (0.06s)
+=== CONT  TestManifestMismatch
+--- PASS: TestCompilerTimeoutIsError (0.10s)
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestHeadInputIsolation (0.27s)
+--- PASS: TestNewlyRefusedIsInformational (0.08s)
+--- PASS: TestManifestMismatch (0.07s)
+--- PASS: TestNewAdmissionMismatch (0.31s)
+FAIL

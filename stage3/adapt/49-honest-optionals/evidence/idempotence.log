@@ -1,0 +1,25 @@
+{
+  "idempotent": true,
+  "files": [
+    {
+      "file": "src/compiler/checker.ts",
+      "bytes": 3154767,
+      "sha256": "edb5d5577dc13166e836d3d123c2a443ec1c0f92f41069fde901e20f3e63e053"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "bytes": 92892,
+      "sha256": "f6ecaa3ae859d85d2fb72689f6f00b3bea63957797ed6a380bef5e03aad0f33b"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "bytes": 274710,
+      "sha256": "56b9970cba54c7dfce34e95f57d355a5c8e08c6de41a403eec703a76bb91fb30"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "bytes": 219459,
+      "sha256": "ba267201cdd9f4b88ef2deae9e8049decf695bc18e66006f34d9db026696d5c5"
+    }
+  ]
+}
