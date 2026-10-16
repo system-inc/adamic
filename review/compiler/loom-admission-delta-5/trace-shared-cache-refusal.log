@@ -1,0 +1,8 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:279: build admission-compiler 47dac25c0ba2 miss 2.08
+--- PASS: TestProduct_AdmissionCompiler (2.52s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	2.557s
+refused admission-compiler (name key 47dac25c0ba2): it read what no key can name, home: /home/agent/.cache/adamic-gocache/blobs/002608eff61c685f4919a389e40dd23efe9a29f236e845c8da3a9bf11a4c9bed, /home/agent/.cache/adamic-gocache/blobs/004c50657ad56d7fab3045e6ad466e50c7302d2f13c926c19f5ca843c39a0581, /home/agent/.cache/adamic-gocache/blobs/014e231f82d16b1a13423fcea88b6c4c01370e0640159fffad4215d1b65bf806, /home/agent/.cache/adamic-gocache/blobs/01fc0ba7e1763d742a7fcfa18247b83823eeaa67842377f33cc8b6d6079c94b3, /home/agent/.cache/adamic-gocache/blobs/04f4c8610d11637b8090892077032c92f3564bfaeac182c054cffef1f20c4b70, /home/agent/.cache/adamic-gocache/blobs/056314db03efb8ce3b5b50abc0a1034c0b6376a3748416f0d0aef67b7186cb9f, and 411 more; the machine's time zone: /etc/localtime
+traced: 0 settled, 1 refused; journal and report in /workspace/scratch/admission-delta-5-products/traces/20261016T125432Z-2581234946
+exit status 3

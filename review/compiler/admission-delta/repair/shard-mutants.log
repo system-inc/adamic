@@ -1,0 +1,18 @@
+--- FAIL: TestShardPartitionKeepsDiff (0.00s)
+    select_test.go:23: diff was split or lost
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.002s
+FAIL
+split-diff mutant exit 1
+--- FAIL: TestShardPartitionKeepsDiff (0.00s)
+    select_test.go:33: shards missed programs map[input-11.a:3 input-12.a:3 input-14.a:3 input-16.a:3 input-17.a:3 input-18.a:3 input-19.a:3 input-20.a:3 input-23.a:3 input-24.a:3 input-25.a:3 input-27.a:3 input-28.a:3 input-3.a:3 input-9.a:3]
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.002s
+FAIL
+repeat-first-shard mutant exit 1
+--- FAIL: TestShardCommandScope (0.05s)
+    select_test.go:65: partial run looks clean: {CorpusFilter:diff Shard: CompleteCorpus:false Phases:map[base_build:5.11e-07 checkout:0.005001017 checkout_and_provision:0.005016525 classification:2.156e-05 head_build:3.81e-07 manifest_and_verification:0.006301572 provision:1.2463e-05 runtime:1.9e-07 total:0.016697811] Workers:5 Classification:lowering-only Diff:[] DiffCount:0 CompileTimeoutSeconds:45 RuntimeTimeoutSeconds:10 Base:db50507328a0a6ef883a246955b1f2d62fe61f21 Head:db50507328a0a6ef883a246955b1f2d62fe61f21 GeneratorRevision:db50507328a0a6ef883a246955b1f2d62fe61f21 GeneratorBlob:e23d21aba10fb9eebc17d63a046dfec17ee8c163 ManifestBlob:cabcb405b56f222a810430bfc4a42344cfdb9edd Admitted:0 Programs:[] Verdict:pass Corpora:[{Name:diff Programs:[]}] SamplingSeed:db50507328a0a6ef883a246955b1f2d62fe61f21 SamplingSize:0 Omitted:0 BudgetSeconds:0 BudgetUsedSeconds:1.9e-07} 
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.049s
+FAIL
+claim-complete-verdict mutant exit 1

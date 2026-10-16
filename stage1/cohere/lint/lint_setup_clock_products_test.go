@@ -143,6 +143,6 @@ func TestProduct_DecodedOptionsMutantLowered(t *testing.T) {
 func TestProduct_DecodedOptionsNative(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	decodedOptionsPrepare(t)
+	decodedOptionsNativeProduct(t)
 	t.Logf("product wall=%s", time.Since(started))
 }

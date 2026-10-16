@@ -151,15 +151,31 @@ func goProduct(t testing.TB, request goRequest) string {
 		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	directory := Product(t, inputs, func(directory string) error {
+	// Lean: go builds from the files its key names, in a process of its own.
+	directory := product(t, inputs, func(directory string) error {
 		arguments, cleanup, err := request.withOutsideHeaders(root, inputs)
 		if err != nil {
 			return err
 		}
 		defer cleanup()
 		return request.build(root, directory, arguments)
-	})
+	}, &leanBuild{keyed: request.keyedOutside(root)})
 	return filepath.Join(directory, request.output)
+}
+
+// keyedOutside is what go reads in the build that its test wrote before it and its key holds: the -overlay file, which
+// a test writes into a temporary directory of its own, and whose map and replacements' content the key holds
+// (identity), never its temporary name. Its read in the build's window is the overlay's, never an input the key lacks.
+func (request goRequest) keyedOutside(root string) []string {
+	var overlay overlayKey
+	keying(func() { _, overlay, _ = request.identity(root) })
+	if overlay.path == "" {
+		return nil
+	}
+	if filepath.IsAbs(overlay.path) {
+		return []string{filepath.Clean(overlay.path)}
+	}
+	return []string{filepath.Join(root, overlay.path)}
 }
 
 // mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after

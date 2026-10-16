@@ -1,0 +1,16 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:279: build admission-compiler 9115e1aa0871 miss 0.51
+--- PASS: TestProduct_AdmissionCompiler (0.56s)
+=== RUN   TestProduct_AdmissionCompilerReady
+=== PAUSE TestProduct_AdmissionCompilerReady
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== CONT  TestProduct_AdmissionCompilerReady
+=== CONT  TestBuildRevisions
+    command_test.go:305: build admission-compiler 9115e1aa0871 hit 0.00
+=== NAME  TestProduct_AdmissionCompilerReady
+    command_test.go:299: build admission-compiler 9115e1aa0871 hit 0.00
+--- PASS: TestProduct_AdmissionCompilerReady (0.06s)
+--- PASS: TestBuildRevisions (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.685s

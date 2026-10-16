@@ -1,0 +1,33 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -429,25 +429,25 @@
+ 		record := &result.Programs[index]
+ 		record.Sampled = true
+ 		source := filepath.Join(headTree, record.Path)
+-		node := execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
++		node := execute(root, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
+ 		record.Node = &node
+-		jsCompile := execute(headTree, *limit, h, "js", record.Path)
++		jsCompile := execute(root, *limit, h, "js", record.Path)
+ 		jsPath := filepath.Join(scratch, fmt.Sprintf("program-%d.mjs", index))
+ 		javascript := observation{Exit: -1, Error: "JavaScript compilation failed"}
+ 		if jsCompile.Exit == 0 && jsCompile.Error == "" {
+ 			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
+ 				return e
+ 			}
+-			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
++			javascript = execute(root, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
+ 		}
+ 		jsCompile.Stdout = ""
+ 		record.JavaScriptCompile = &jsCompile
+ 		record.JavaScript = &javascript
+ 		nativePath := filepath.Join(scratch, fmt.Sprintf("program-%d", index))
+-		nativeCompile := execute(headTree, *limit, h, "build", record.Path, "-o", nativePath)
++		nativeCompile := execute(root, *limit, h, "build", record.Path, "-o", nativePath)
+ 		native := observation{Exit: -1, Error: "native compilation failed"}
+ 		if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
+-			native = execute(headTree, *limit, nativePath)
++			native = execute(root, *limit, nativePath)
+ 		}
+ 		record.NativeCompile = &nativeCompile
+ 		record.Native = &native

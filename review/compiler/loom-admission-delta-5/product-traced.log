@@ -1,0 +1,6 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:280: build admission-compiler e27c33959815 miss 0.80
+--- PASS: TestProduct_AdmissionCompiler (1.04s)
+PASS
+settled admission-compiler 3544adb72e4d: 95 reads
+traced: 1 settled, 0 refused; journal and report in /workspace/scratch/admission-delta-5-final-products/traces/20261016T130013Z-2698009865
