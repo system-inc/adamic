@@ -4,6 +4,7 @@ import json, os, subprocess, tempfile
 from pathlib import Path
 root = Path(__file__).resolve().parents[3]
 mutants = [
+ ('split-argument-buffer','outline.go','token.text == "[" && index > 0','token.text == "unused_array_token" && index > 0','TestInitializerAggregateBuffers'),
  ('missing-auxiliary-type','outline.go','"adamic_view_union_value", ','','TestInitializerAuxiliaryValueTypes'),
  ('missing-value-type','outline.go','"adamic_typed_array", ','','TestInitializerEveryValueType'),
  ('split-control-flow','outline.go','case "if", "for", "while", "do", "goto", "return":','case "unused_control_token":','TestInitializerFlatBoundaries'),

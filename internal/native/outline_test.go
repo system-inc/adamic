@@ -124,3 +124,15 @@ func TestInitializerAuxiliaryValueTypes(t *testing.T) {
 		}
 	}
 }
+
+func TestInitializerAggregateBuffers(t *testing.T) {
+	t.Parallel()
+	source := "const adamic_value adamic_temporary_allowed[] = {{.number=1}}; adamic_array *adamic_temporary_result = adamic_object_values_checked(NULL, 1, NULL, false, adamic_temporary_allowed, 1);"
+	if pieces := initializerStatements(source); len(pieces) != 1 || pieces[0] != source {
+		t.Fatal("split a statement-local argument buffer")
+	}
+	locals := initializerLocals(source)
+	if len(locals) != 1 || locals[0].name != "adamic_temporary_result" {
+		t.Fatalf("buffer locals: %+v", locals)
+	}
+}

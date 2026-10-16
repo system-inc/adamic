@@ -79,7 +79,12 @@ func initializerStatements(source string) []string {
 	if len(tokens) > 0 && tokens[0].text == "{" {
 		return []string{source}
 	}
-	for _, token := range tokens {
+	for index, token := range tokens {
+		// Emitter C arrays are statement-local argument buffers. Keep their
+		// declaration and consumer in one frame instead of lifting an array.
+		if token.text == "[" && index > 0 && strings.HasPrefix(tokens[index-1].text, "adamic_temporary_") {
+			return []string{source}
+		}
 		switch token.text {
 		case "if", "for", "while", "do", "goto", "return":
 			return []string{source}
@@ -140,6 +145,9 @@ func initializerLocals(source string) []initializerLocal {
 					local.end = tokens[j+1].end
 				case ";":
 					local.end = tokens[j+1].end
+				case "[":
+					// initializerStatements keeps this argument buffer with its consumer.
+					continue
 				case ",":
 					// Runtime iterator key/value pairs are used only within their
 					// structured source statement, which is never cut into chunks.
