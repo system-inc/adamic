@@ -84,3 +84,12 @@ func TestInitializerStorageSplit(t *testing.T)    { t.Parallel(); initializerWit
 func TestInitializerStorageWhole(t *testing.T)    { t.Parallel(); initializerWitness(t, false, false) }
 func TestInitializerExceptionsSplit(t *testing.T) { t.Parallel(); initializerWitness(t, true, true) }
 func TestInitializerExceptionsWhole(t *testing.T) { t.Parallel(); initializerWitness(t, false, true) }
+
+func TestInitializerTypedArrayChunks(t *testing.T) {
+	t.Parallel()
+	stableSplitWitness(t, "typed_arrays_uint16array")
+}
+func TestInitializerTypedArrayViewChunks(t *testing.T) {
+	t.Parallel()
+	stableSplitWitness(t, "typed_arrays_views")
+}

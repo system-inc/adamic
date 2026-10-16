@@ -4,6 +4,8 @@ import json, os, subprocess, tempfile
 from pathlib import Path
 root = Path(__file__).resolve().parents[3]
 mutants = [
+ ('missing-auxiliary-type','outline.go','"adamic_view_union_value", ','','TestInitializerAuxiliaryValueTypes'),
+ ('missing-value-type','outline.go','"adamic_typed_array", ','','TestInitializerEveryValueType'),
  ('split-control-flow','outline.go','case "if", "for", "while", "do", "goto", "return":','case "unused_control_token":','TestInitializerFlatBoundaries'),
  ('unbounded-chunks','outline.go','const initializerChunkStatements = 128','const initializerChunkStatements = 1000000','TestInitializerUnitOwnership'),
  ('inline-helpers','outline.go','const initializerAttribute = " __attribute__((noinline))"','const initializerAttribute = ""','TestInitializerStorageSplit'),

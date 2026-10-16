@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestInitializerFlatBoundaries(t *testing.T) {
@@ -95,5 +97,30 @@ func TestInitializerCrossModuleRoot(t *testing.T) {
 	truth := runWithInput(t, "", "node", "-e", "const root=[];root.push(7);console.log(root.length)")
 	if got := runWithInput(t, "", binary); got != truth {
 		t.Fatalf("root output %q Node %q", got, truth)
+	}
+}
+
+func TestInitializerEveryValueType(t *testing.T) {
+	t.Parallel()
+	for _, of := range []ir.Type{ir.Number, ir.Boolean, ir.String, ir.Array, ir.Object, ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array, ir.Promise, ir.Map, ir.Closure, ir.MaybeNumber, ir.MaybeBoolean, ir.Union, ir.Weak} {
+		source := cType(of) + " adamic_temporary_value = 0;"
+		locals := initializerLocals(source)
+		if len(locals) != 1 || locals[0].name != "adamic_temporary_value" {
+			t.Fatalf("initializer missed %s", cType(of))
+		}
+	}
+}
+
+func TestInitializerAuxiliaryValueTypes(t *testing.T) {
+	t.Parallel()
+	for _, of := range []string{"const adamic_accessor *", "adamic_method_entry", "adamic_environment *", "adamic_view_union_value", "const adamic_callable_signature *", "const adamic_value"} {
+		locals := initializerLocals(of + " adamic_temporary_aux = {0};")
+		expected := of
+		if !strings.Contains(of, "*") {
+			expected = strings.TrimPrefix(of, "const ")
+		}
+		if len(locals) != 1 || locals[0].of != expected {
+			t.Fatalf("initializer missed %s", of)
+		}
 	}
 }

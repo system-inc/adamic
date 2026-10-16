@@ -126,6 +126,11 @@ func initializerLocals(source string) []initializerLocal {
 			}
 			if j > i && j < len(tokens) && (strings.HasPrefix(tokens[j].text, "adamic_temporary_") || strings.HasPrefix(tokens[j].text, "adamic_local_")) {
 				local := initializerLocal{name: tokens[j].text, of: strings.TrimSpace(source[token.start:tokens[j].start]), start: token.start}
+				// Lifted initialization is an assignment into backing storage. Pointee
+				// qualifiers stay; a value itself needs writable initialization storage.
+				if !strings.Contains(local.of, "*") {
+					local.of = strings.TrimPrefix(local.of, "const ")
+				}
 				if j+1 >= len(tokens) {
 					panic("native: incomplete initializer declaration")
 				}
@@ -163,7 +168,7 @@ func initializerLocals(source string) []initializerLocal {
 }
 func initializerType(token string) bool {
 	switch token {
-	case "double", "bool", "void", "size_t", "int64_t", "adamic_value", "adamic_heap", "adamic_string", "adamic_object", "adamic_array", "adamic_map", "adamic_closure", "adamic_cell", "adamic_weak", "adamic_region", "adamic_map_iterator", "adamic_maybe_number", "adamic_maybe_boolean", "adamic_method":
+	case "const", "adamic_accessor", "adamic_method_entry", "adamic_environment", "adamic_view_union_value", "adamic_callable_signature", "double", "bool", "void", "size_t", "int64_t", "adamic_value", "adamic_heap", "adamic_string", "adamic_object", "adamic_array", "adamic_typed_array", "adamic_async_promise", "adamic_map", "adamic_closure", "adamic_cell", "adamic_weak", "adamic_region", "adamic_map_iterator", "adamic_maybe_number", "adamic_maybe_boolean", "adamic_method":
 		return true
 	}
 	return false
