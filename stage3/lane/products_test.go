@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -74,6 +75,14 @@ func adaptedTree(t testing.TB) string {
 		// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
 		// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
 		adapt := toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree)
+		// apply.py runs git itself (add, write-tree, update-ref), which would read the home's ~/.gitconfig: Workshop
+		// has one and Golem none, so tree 276cc52a refused the product. GitEnv's GIT_ settings keep every git
+		// configuration but the repository's out of reach, as toolchain's own git runs.
+		for _, setting := range toolchain.GitEnv() {
+			if strings.HasPrefix(setting, "GIT_") {
+				adapt.Env = append(adapt.Env, setting)
+			}
+		}
 		if err := described(adapt); err != nil {
 			return err
 		}
