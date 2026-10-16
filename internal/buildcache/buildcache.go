@@ -197,10 +197,12 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	// key the cache holds no read set for has nothing to fetch (Oct 14: asking the store for read sets was 96.7% of its
 	// billed reads, every one a 404).
 	if looked.directory != "" {
-		if auditListed(nameKey) {
-			if err := auditHit(looked.key, inputs.Name, looked.directory, build); err != nil {
-				return "", "", err
-			}
+		listed, err := auditListed(nameKey)
+		if err == nil && listed {
+			err = auditHit(looked.key, inputs.Name, looked.directory, build)
+		}
+		if err != nil {
+			return "", "", err
 		}
 		journalFound(nameKey, inputs.Name, looked.directory, looked.upstreams)
 		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
