@@ -518,7 +518,13 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		// parents of a product in a cache under the home, missed <the cache's parent>/node_modules/@types, which named the
 		// tree's own directory, so two checkouts keyed the adapted tree apart (#4gp2ytz, Compiler's Golem harness on
 		// 1412e316ed). Valued by whether it's there alone; a listing or a content read there is still the home's, refused.
+		// Only a miss: a path that's there keeps its own class, system, home or any other, since a test's temporary
+		// directories are its cache's siblings and on a runner they sit under the home, where this rule took an lstat
+		// of the machine's usr/cc ahead of its system class (chg_gp66hxpv's red, Tests' read).
 		for _, cache := range facts.caches {
+			if kinds != readAbsent {
+				break
+			}
 			for at := filepath.Dir(filepath.Dir(name)); at != "/" && at != "."; at = filepath.Dir(at) {
 				if !under(cache, at) {
 					continue
