@@ -1,0 +1,21 @@
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== CONT  TestBuildRevisions
+    command_test.go:306: build admission-compiler e27c33959815 missing 0.00
+    command_test.go:306: product admission-compiler (name key e27c33959815) is not built: no traced build has recorded what it reads, in /workspace/scratch/admission-delta-5-empty, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name admission-compiler
+        flag 40b25f0411929152605c138cdca8123d8aa0b2d0
+        flag adapter=fd17ea5ed37137cf8666c675e74699284f529212114e9958f9d7005569da6bfd
+        flag -trimpath
+        flag -buildvcs=false
+        flag GOFLAGS=
+        flag CGO_ENABLED=
+        flag GOEXPERIMENT=
+        tool go1.27.1
+        tool linux
+        tool amd64
+        
+--- FAIL: TestBuildRevisions (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.203s
+FAIL
