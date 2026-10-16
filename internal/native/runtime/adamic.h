@@ -1208,5 +1208,8 @@ void *adamic_library_identity(size_t index);
 #define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
 #endif
 #endif
+// Library host contracts, also needed by the generated entry point.
+#include "host_runtime.h"
+
 
 #endif
