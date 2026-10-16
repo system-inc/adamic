@@ -1,0 +1,9 @@
+// The source is dead after map and has reference slots: ordinary counted storage
+// can be reused, but Node[] must remain intact until Program teardown.
+interface Node { id: number; children: Node[]; }
+function mapped(): string {
+    const source: Node[] = [{id:1,children:[]},{id:2,children:[]}];
+    const result = source.map(node => `${node.id}`);
+    return result.join(',');
+}
+console.log(mapped());
