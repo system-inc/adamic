@@ -183,7 +183,9 @@ func TestCallTargetReaders(t *testing.T) {
 // tests included, a product built ahead so the test runs no go.
 func callTargetExports(t *testing.T) string {
 	t.Helper()
-	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow")
+	// leakcheck imports native and is otherwise listed only as a dependency of native's
+	// external test variant. Name it directly so its ordinary import path has export data.
+	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow", "./internal/leakcheck")
 }
 
 func TestProduct_CallTargetExports(t *testing.T) {
