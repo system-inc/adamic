@@ -10,14 +10,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func testMutant(t *testing.T, i int) {
 	t.Helper()
 	started := time.Now()
-	change := mutations[i]
-	cases, want := mutantOracleProduct(t, i)
+	change := oracles.Mutations[i]
+	cases, want := oracles.MutantOracleProduct(t, i)
 	t.Logf("grain oracle setup: %.3fs", time.Since(started).Seconds())
 	binary := mutantNativeProduct(t, i)
 	path := mutatedPort(t, change)
@@ -29,13 +31,13 @@ func testMutant(t *testing.T, i int) {
 	ownStarted := time.Now()
 	defer func() { t.Logf("grain own work: %.3fs", time.Since(ownStarted).Seconds()) }()
 	arguments := []string{cases}
-	if change.entry == "main.ts" {
+	if change.Entry == "main.ts" {
 		arguments = []string{"--cases", cases, "80"}
 	}
-	if change.entry == "statementsMain.ts" {
+	if change.Entry == "statementsMain.ts" {
 		arguments = []string{"--cases", cases, "80"}
 	}
-	if change.name == "hashbang loses its refusal" {
+	if change.Name == "hashbang loses its refusal" {
 		cases = filepath.Join(filepath.Dir(cases), "gaps.txt")
 		gapWant, err := os.ReadFile(filepath.Join(filepath.Dir(cases), "gap-answers.txt"))
 		if err != nil {
@@ -44,12 +46,12 @@ func testMutant(t *testing.T, i int) {
 		want = string(gapWant)
 		arguments = []string{"--cases", cases, "80"}
 	}
-	if change.entry != "docMain.ts" && change.name != "hashbang loses its refusal" {
+	if change.Entry != "docMain.ts" && change.Name != "hashbang loses its refusal" {
 		cases, want = mutantCorpus(t, change, cases, want)
 		arguments = []string{"--cases", cases, "80"}
 	}
-	t.Logf("mutant %d/%d: %s", i+1, testMutantsShards, change.name)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	t.Logf("mutant %d/%d: %s", i+1, oracles.MutantsShards, change.Name)
+	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,17 +59,17 @@ func testMutant(t *testing.T, i int) {
 	native := mutantExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
 	for _, side := range []struct {
 		name   string
-		result run
+		result oracles.Run
 	}{{"Node", node}, {"native", native}} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-			t.Fatalf("%s mutant must finish normally: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
+		if side.result.ExitCode != 0 || len(side.result.Stderr) != 0 {
+			t.Fatalf("%s mutant must finish normally: exit %d stderr %s", side.name, side.result.ExitCode, side.result.Stderr)
 		}
-		if string(side.result.stdout) == want {
+		if string(side.result.Stdout) == want {
 			t.Fatalf("%s mutant escaped the byte comparison", side.name)
 		}
-		difference := firstDifference(string(side.result.stdout), want)
+		difference := firstDifference(string(side.result.Stdout), want)
 		if filepath.Base(cases) != "gaps.txt" && filepath.Base(cases) != "witnesses.txt" {
-			difference = corpusDifference(t, cases, string(side.result.stdout), want)
+			difference = corpusDifference(t, cases, string(side.result.Stdout), want)
 		}
 		t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
 	}
@@ -78,7 +80,7 @@ func testMutant(t *testing.T, i int) {
 
 // The case-only context covers both output oracles. A killed or crashed child
 // is a test failure, never evidence that a mutant was caught.
-func mutantExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
+func mutantExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.WaitDelay = time.Second
@@ -95,5 +97,5 @@ func mutantExecute(t *testing.T, ctx context.Context, environment []string, name
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }

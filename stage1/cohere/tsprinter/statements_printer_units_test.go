@@ -1,6 +1,10 @@
 package tsprinter
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+)
 
 // Each shard is a gate-discoverable top-level leaf. ADAMIC_TEST_SHARD=i/n
 // selects shard numbers modulo n; unset runs all sixteen fixed hash slices.
@@ -83,13 +87,13 @@ func TestStatementsAgainstGoAndPrettierUnion(t *testing.T) {
 	t.Parallel()
 	products := statementReadyShared(t)
 	cases, want, specs := products.Cases, products.Want, products.Specs
-	shards := statementShards(t, cases, want, specs)
-	if len(shards) != testStatementsAgainstGoAndPrettierShards {
+	shards := oracles.StatementShards(t, cases, want, specs)
+	if len(shards) != oracles.StatementsAgainstGoAndPrettierShards {
 		t.Fatalf("enumerated %d shards", len(shards))
 	}
 	total := 0
 	for _, shard := range shards {
-		total += len(shard.indices)
+		total += len(shard.Indices)
 	}
 	t.Logf("live union: %d unique cases in %d shards", total, len(shards))
 }
