@@ -1118,21 +1118,13 @@ func (state *traceState) snapshotOf(processes map[int]map[string]*pathReads, own
 // build was open, by kinds, with when each path was last read, but what they wrote after the window opened and before
 // reading it. A write before the window is never the build's own output: the reads behind those bytes are outside the
 // window, so the file reads by content (Mentat's M1: a test that writes a fixed path from its own case and builds from
-// it), but for a file keyed names, whose bytes the build's name key holds (leanBuild).
-func (state *traceState) windowSnapshot(id string, keyed []string) (map[string]int, map[string]int) {
+// it).
+func (state *traceState) windowSnapshot(id string) (map[string]int, map[string]int) {
 	owner, opened := state.windowOwner[id], state.windowOpened[id]
-	var holds []string
-	for _, name := range keyed {
-		holds = append(holds, variants(name)...)
-	}
 	snapshot, last := map[string]int{}, map[string]int{}
 	for name, found := range state.windows[id] {
 		kinds := found.kinds
-		since := opened
-		if slices.Contains(holds, name) {
-			since = 0
-		}
-		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, since, found.firstRead) {
+		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, opened, found.firstRead) {
 			kinds &= readWrite
 		}
 		if kinds != 0 {
@@ -1448,7 +1440,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if entry.Lean {
 			window = BuildLeanSuperset
 			if !state.windowLate[id] {
-				inside, last := state.windowSnapshot(id, entry.Keyed)
+				inside, last := state.windowSnapshot(id)
 				var why string
 				if reads, lastReads, why = state.leanReads(entry, inside, last, state.endedAt[id]); why != "" {
 					refuse(entry, why)

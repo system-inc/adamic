@@ -2425,13 +2425,12 @@ func leanCallersIn(t *testing.T, root string) []string {
 	return callers
 }
 
-// leanSettle settles one lean build of inputs in a rig of its own, keyed naming the files its key holds beyond its Files
-// (leanBuild), with trace writing the run around the build's id. It returns the settlement, the settled report (empty
+// leanSettle settles one lean build of inputs in a rig of its own, with trace writing the run around the build's id. It returns the settlement, the settled report (empty
 // when none settled) and the settled set's entries.
-func leanSettle(t *testing.T, inputs Inputs, keyed []string, trace func(r *rig, id string)) (Settlement, Report, []string) {
+func leanSettle(t *testing.T, inputs Inputs, trace func(r *rig, id string)) (Settlement, Report, []string) {
 	t.Helper()
 	r := newRig(t)
-	product(t, inputs, building("built"), &leanBuild{keyed: keyed})
+	product(t, inputs, building("built"), &leanBuild{})
 	build := r.built(t)[inputs.Name]
 	trace(r, build.Build)
 	settlement := r.settle(t)
@@ -2445,10 +2444,8 @@ func leanSettle(t *testing.T, inputs Inputs, keyed []string, trace func(r *rig, 
 
 // A file a lean build's test wrote before its window is never the build's own output (Mentat's M1): the reads behind
 // those bytes are the test's, outside the window, so the file reads by content, and a temporary file no key can name
-// refuses the build. One the build's processes wrote in its window is theirs, whatever was written there before. A file
-// its key holds (goProduct's -overlay, written by its test into a directory of its own) is the build's to read wherever
-// its test wrote it. Mutants that each fail it: the window's writes counted since the run began; the keyed files left
-// out; a writer kept once a process for the whole run.
+// refuses the build. One the build's processes wrote in its window is theirs, whatever was written there before. Mutants
+// that each fail it: the window's writes counted since the run began; a writer kept once a process for the whole run.
 // Not parallel: newRig.
 func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 	const generated = "/tmp/adamic-written-before-the-window/gen.h"
@@ -2460,7 +2457,7 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 			r.open(r.pid, generated)
 		})
 	}
-	if settlement, _, _ := leanSettle(t, port, nil, before); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
+	if settlement, _, _ := leanSettle(t, port, before); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
 		t.Errorf("a lean build reading what its test wrote before its window: settled %q, refused %q; want it refused as temp not made by this run",
 			settlement.Settled, settlement.Refused)
 	}
@@ -2479,14 +2476,9 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 			})
 		},
 	} {
-		if settlement, report, _ := leanSettle(t, port, nil, trace); report.Window != BuildWindowed {
+		if settlement, report, _ := leanSettle(t, port, trace); report.Window != BuildWindowed {
 			t.Errorf("%s: settled %q, refused %q; want it the build's own output, settled windowed", name, settlement.Settled, settlement.Refused)
 		}
-	}
-	settlement, report, entries := leanSettle(t, port, []string{generated}, before)
-	if report.Window != BuildWindowed || slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "gen.h") }) {
-		t.Errorf("a file its key holds, written before its window: settled %q, refused %q, entries %q; want it settled windowed without it",
-			settlement.Settled, settlement.Refused, entries)
 	}
 }
 
@@ -2499,7 +2491,7 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 // Not parallel: newRig.
 func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 	thread := func(r *rig) int { return r.pid + 7 }
-	settlement, report, entries := leanSettle(t, port, nil, func(r *rig, id string) {
+	settlement, report, entries := leanSettle(t, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.marker(thread(r), "build-begin", id)
 		r.open(r.pid, "notes.txt")
@@ -2511,7 +2503,7 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 		t.Errorf("a marker on a thread placed after it: settled %q, refused %q, taken as %q, entries %q; want it windowed, holding notes.txt read before its thread was placed, never go.sum",
 			settlement.Settled, settlement.Refused, report.Window, entries)
 	}
-	settlement, report, entries = leanSettle(t, port, nil, func(r *rig, id string) {
+	settlement, report, entries = leanSettle(t, port, func(r *rig, id string) {
 		command := r.pid + 100
 		r.open(command, "go.sum")
 		r.marker(r.pid, "build-begin", id)
@@ -2524,7 +2516,7 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 			settlement.Settled, settlement.Refused, report.Window, entries)
 	}
 	other := func(r *rig) int { return r.pid + 50 }
-	settlement, report, _ = leanSettle(t, port, nil, func(r *rig, id string) {
+	settlement, report, _ = leanSettle(t, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
 		r.marker(thread(r), "build-begin", id)
@@ -2536,7 +2528,7 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 		t.Errorf("a window opened for the id's process, its thread placed in another while it's open: settled %q, refused %q, taken as %q; want the lean superset",
 			settlement.Settled, settlement.Refused, report.Window)
 	}
-	settlement, _, _ = leanSettle(t, port, nil, func(r *rig, id string) {
+	settlement, _, _ = leanSettle(t, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
 		r.marker(thread(r), "build-begin", id)
@@ -2591,7 +2583,7 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
 		}, "declared source can't be read whole"},
 		"a declared file that isn't there": {withFiles("source", "gone.h"), nil, ""},
 	} {
-		settlement, report, entries := leanSettle(t, test.inputs, nil, func(r *rig, id string) {
+		settlement, report, entries := leanSettle(t, test.inputs, func(r *rig, id string) {
 			if test.make != nil {
 				test.make(t, r)
 			}
