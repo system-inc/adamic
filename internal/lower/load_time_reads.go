@@ -1,46 +1,16 @@
 package lower
 
 import (
-	"fmt"
-	"sync"
-
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/microsoft/TypeScript/tsc/shim/compiler"
-	"github.com/system-inc/cohere/rule_runner"
 )
 
-const loadTimeReadRule = "nexus/correctness-no-import-cycle-load-time-read"
-
-type Finding = rule_runner.Finding
-
-type ruleRunner interface {
-	RunRule(*compiler.Program, *checker.Checker, []*ast.SourceFile, string) ([]Finding, error)
-}
-type cohereRuleRunner struct{}
-
-func (cohereRuleRunner) RunRule(program *compiler.Program, typeChecker *checker.Checker, files []*ast.SourceFile, name string) ([]Finding, error) {
-	return rule_runner.RunRule(program, typeChecker, files, name)
-}
-
-var loadTimeReadRunner ruleRunner = cohereRuleRunner{}
-var loadTimeReadLock sync.Mutex
-
-// The rule inventories hazardous cycle reads, but a finding does not reject the
-// program. The actual entry's ESM order can prove the provider finished; every
-// remaining global read keeps the existing runtime dead-zone check.
-func (l *lowering) loadTimeReads(files []*ast.SourceFile) error {
-	loadTimeReadLock.Lock()
-	defer loadTimeReadLock.Unlock()
-	findings, err := loadTimeReadRunner.RunRule(l.program.CompilerProgram(), l.checker, files, loadTimeReadRule)
-	if err != nil {
-		return fmt.Errorf("lower: import-cycle rule: %w", err)
-	}
-	l.cycleReadFindings = findings
-	l.proveModuleReads(files)
-	return nil
-}
-
+// proveModuleReads marks the global reads in a cyclic program that the entry's actual ESM order proves run after their
+// provider finished: a module function declaration, which is hoisted, or a value whose module runs before the reader's.
+// Every other global read keeps its runtime dead-zone check, so the program is accepted whatever a cycle reads at load.
+// Cohere's nexus/correctness-no-import-cycle-load-time-read inventories those reads lint-side; lowering never runs it,
+// so the compiler links none of cohere's lint (#321063n). The ledger in cycleledger holds the rule's findings beside these
+// decisions.
 func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 	l.provenModuleReads = map[*ast.Node]bool{}
 	positions := map[*ast.SourceFile]int{}
@@ -96,6 +66,13 @@ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 		}
 		visit(file.AsNode())
 	}
+}
+
+// ProvenModuleReads is proveModuleReads for the ledger in cycleledger, which links cohere's rule so lowering never has to.
+func ProvenModuleReads(typeChecker *checker.Checker, files []*ast.SourceFile) map[*ast.Node]bool {
+	analysis := &lowering{checker: typeChecker}
+	analysis.proveModuleReads(files)
+	return analysis.provenModuleReads
 }
 
 func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {

@@ -1,0 +1,2 @@
+// debug.ts:554: availability probe; no prototype ownership edge.
+console.log(`${typeof Object.setPrototypeOf === "function"}`);

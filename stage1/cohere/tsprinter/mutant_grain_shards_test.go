@@ -1,19 +1,23 @@
 package tsprinter
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+)
 
 // The explicitly generated mutant set has one bounded unit per mutation.
 // Repository corpus growth does not change these units.
 func TestMutantsUnion(t *testing.T) {
 	t.Parallel()
-	if len(mutations) != testMutantsShards {
-		t.Fatalf("%d mutants, want %d declared product pairs and leaves", len(mutations), testMutantsShards)
+	if len(oracles.Mutations) != oracles.MutantsShards {
+		t.Fatalf("%d mutants, want %d declared product pairs and leaves", len(oracles.Mutations), oracles.MutantsShards)
 	}
-	if len(mutantShardFunctions) != testMutantsShards {
-		t.Fatalf("%d top-level shards, want %d", len(mutantShardFunctions), testMutantsShards)
+	if len(mutantShardFunctions) != oracles.MutantsShards {
+		t.Fatalf("%d top-level shards, want %d", len(mutantShardFunctions), oracles.MutantsShards)
 	}
-	seen := make([]int, len(mutations))
-	for shard := 0; shard < testMutantsShards; shard++ {
+	seen := make([]int, len(oracles.Mutations))
+	for shard := 0; shard < oracles.MutantsShards; shard++ {
 		for _, index := range mutantShardIndices(shard) {
 			if index < 0 || index >= len(seen) {
 				t.Fatalf("shard %d: invalid mutant %d", shard, index)
@@ -23,7 +27,7 @@ func TestMutantsUnion(t *testing.T) {
 	}
 	for index, count := range seen {
 		if count != 1 {
-			t.Fatalf("mutant %q covered %d times", mutations[index].name, count)
+			t.Fatalf("mutant %q covered %d times", oracles.Mutations[index].Name, count)
 		}
 	}
 	if len(seen) == 0 {
@@ -33,7 +37,7 @@ func TestMutantsUnion(t *testing.T) {
 
 func mutantShardIndices(shard int) []int {
 	var indices []int
-	for index := shard; index < len(mutations); index += testMutantsShards {
+	for index := shard; index < len(oracles.Mutations); index += oracles.MutantsShards {
 		indices = append(indices, index)
 	}
 	return indices

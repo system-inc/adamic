@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -20,7 +22,7 @@ import (
 // can see it: the key has to name it. TestMutantNativeInputsCoverWhatItReads keeps the list complete, and every entry
 // needed, as markdownblocks' TestLoweringInputsCoverCompilerDependencies keeps its loweringCompilerInputs.
 var tsprinterCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript-shim",
+	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript-shim",
 	"cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript/tsc/internal/ast",
 	"cohere/TypeScript/tsc/internal/astnav", "cohere/TypeScript/tsc/internal/binder",
 	"cohere/TypeScript/tsc/internal/bundled", "cohere/TypeScript/tsc/internal/checker",
@@ -41,18 +43,11 @@ var tsprinterCompilerInputs = []string{
 	"cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers",
 	"cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath",
 	"cohere/TypeScript/tsc/internal/vfs",
-	"cohere/internal/lint/checking", "cohere/internal/lint/ecmascript/binding", "cohere/internal/lint/ecmascript/comments",
-	"cohere/internal/lint/ecmascript/control_flow_graph", "cohere/internal/lint/ecmascript/imports", "cohere/internal/lint/ecmascript/jsx",
-	"cohere/internal/lint/ecmascript/module", "cohere/internal/lint/ecmascript/module_roots", "cohere/internal/lint/ecmascript/nextjs",
-	"cohere/internal/lint/ecmascript/property", "cohere/internal/lint/ecmascript/react", "cohere/internal/lint/ecmascript/reference",
-	"cohere/internal/lint/ecmascript/regexsyntax", "cohere/internal/lint/ecmascript/scope", "cohere/internal/lint/ecmascript/text",
-	"cohere/internal/lint/linter", "cohere/internal/lint/rule", "cohere/internal/lint/rules/adamic", "cohere/internal/lint/rules/nexus",
-	"cohere/internal/types/sourcename", "cohere/policy", "cohere/rule_runner",
 }
 
-// mutantNativeRecipe are this package's files whose code makes a mutant native: the mutations and the port they
-// plant into, the product and its key, lowering, and the build wrapper.
-var mutantNativeRecipe = []string{"mutants_test.go", "mutant_products_test.go", "compiler_inputs_test.go", "helpers_test.go", "expressions_test.go"}
+// mutantNativeRecipe are this package's files whose code makes a mutant native: the port the mutations plant into, the
+// product and its key, and lowering; the mutations and the build wrapper are in oracles/oracles.go since #2ba0c20.
+var mutantNativeRecipe = []string{"mutants_test.go", "mutant_products_test.go", "compiler_inputs_test.go", "helpers_test.go", "expressions_test.go", "oracles/oracles.go"}
 
 // mutantNativeBuildFiles are what a mutant native's lowering and build read, relative to the repository: the compiler
 // (tsprinterCompilerInputs), the port's TypeScript, the parser's and the scanner's TypeScript it imports, and the
@@ -62,7 +57,7 @@ func mutantNativeBuildFiles(t *testing.T) []string {
 	t.Helper()
 	files := append([]string(nil), tsprinterCompilerInputs...)
 	for _, directory := range []string{"stage1/cohere/tsprinter", "stage1/typescript/parser", "stage1/typescript/scanner"} {
-		entries, err := os.ReadDir(filepath.Join(repository, directory))
+		entries, err := os.ReadDir(filepath.Join(oracles.Repository, directory))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -85,7 +80,7 @@ func mutantNativeBuildFiles(t *testing.T) []string {
 // the build files (the scanner the parser imports goes unkeyed); a compiler input dropped (a gap the guard names).
 func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 	t.Parallel()
-	root, err := filepath.Abs(repository)
+	root, err := filepath.Abs(oracles.Repository)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -129,14 +124,14 @@ func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 		}
 	}
 	read := map[string]bool{}
-	for _, change := range mutations {
-		if read[change.entry] {
+	for _, change := range oracles.Mutations {
+		if read[change.Entry] {
 			continue
 		}
-		read[change.entry] = true
-		program, err := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", change.entry)})
+		read[change.Entry] = true
+		program, err := load.Load([]string{filepath.Join(root, "stage1/cohere/tsprinter", change.Entry)})
 		if err != nil {
-			t.Fatalf("%s: %v", change.entry, err)
+			t.Fatalf("%s: %v", change.Entry, err)
 		}
 		// Every source the checked program holds, its imports' imports included. A bundled library (bundled:///libs/...)
 		// and the prelude (/adamic-prelude, internal/load's go:embed) are compiled into the binary, so the compiler inputs
@@ -150,14 +145,14 @@ func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 			}
 			relative, ok := inside(name)
 			if !ok {
-				t.Fatalf("%s reads %s, outside the repository", change.entry, name)
+				t.Fatalf("%s reads %s, outside the repository", change.Entry, name)
 			}
 			sources[relative] = true
 		}
 		if gaps := compilerInputGaps(declared, sources); len(gaps) > 0 {
-			t.Fatalf("lowering %s reads files the mutant natives' key misses: %s", change.entry, strings.Join(gaps, ", "))
+			t.Fatalf("lowering %s reads files the mutant natives' key misses: %s", change.Entry, strings.Join(gaps, ", "))
 		}
-		t.Logf("%s: %d repository source files, each keyed, and %d compiled in", change.entry, len(sources), compiledIn)
+		t.Logf("%s: %d repository source files, each keyed, and %d compiled in", change.Entry, len(sources), compiledIn)
 	}
 	t.Logf("%d compiler directories and module files covered; each of %d declared compiler inputs needed", len(needed), len(tsprinterCompilerInputs))
 }

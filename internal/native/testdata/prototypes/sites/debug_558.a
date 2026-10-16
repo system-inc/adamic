@@ -1,0 +1,4 @@
+// debug.ts:558: creation edge flowNodeProto -> Object.prototype.
+// Isolate the call; the outside Node shape fixture tests its inherited reads.
+Object.create(Object.prototype);
+console.log("created");

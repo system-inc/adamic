@@ -1,0 +1,5 @@
+// Amended step 22: prototype plus ordinary field is an ownership cycle, not a prototype-chain cycle.
+const a = {};
+const b = { a };
+Object.setPrototypeOf(a, b);
+console.log(`${Object.getPrototypeOf(a).a === a}`);
