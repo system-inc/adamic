@@ -105,7 +105,7 @@ var pinnedCorpus struct {
 	err       error
 }
 
-func pinnedCorpusFiles(t *testing.T) []string {
+func PinnedCorpusFiles(t *testing.T) []string {
 	t.Helper()
 	pinnedCorpus.once.Do(func() {
 		inputs := oracleInputs(TSPrinterPinnedCorpusInputs(RepositoryCorpusCommit))
@@ -195,7 +195,7 @@ func printerCorpusFiles(t *testing.T) []string {
 		t.Fatalf("TypeScript pin: %q %v", head, err)
 	}
 	// The repository's half is the pinned corpus product's files, never the working tree's (repositoryCorpusCommit).
-	files := pinnedCorpusFiles(t)
+	files := PinnedCorpusFiles(t)
 	listed, err := TrackedRootFiles(t, source, "src/compiler")
 	if err != nil {
 		t.Fatal(err)
@@ -208,7 +208,7 @@ func DocumentCorpus(t *testing.T) (string, string, string) {
 	directory := t.TempDir()
 	cohere, _ := filepath.Abs(Repository + "/cohere")
 	// The unit only runs the oracle, in the package's directory.
-	command := toolchain.Command(documentOracle(t), "-test.run=^TestAdamicDocuments$")
+	command := toolchain.Command(DocumentOracle(t), "-test.run=^TestAdamicDocuments$")
 	command.Dir = cohere + "/internal/format/doc"
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
@@ -222,13 +222,13 @@ func DocumentCorpus(t *testing.T) (string, string, string) {
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
 
-// documentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
-func documentOracle(t *testing.T) string {
+// DocumentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
+func DocumentOracle(t *testing.T) string {
 	t.Helper()
 	return goTestOracle(t, "TestProduct_TSPrinterDocumentOracle", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
 }
 
-// documentOracleInputs is documentOracle's key, computed without building it.
+// documentOracleInputs is DocumentOracle's key, computed without building it.
 func documentOracleInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	inputs, err := buildcache.GoTestInputs("cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
@@ -945,7 +945,7 @@ func MutantOracleProduct(t *testing.T, index int) (string, string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		// The corpus is the oracle's answers: the oracle is a product (mutantOracleBinary, or documentOracle for the doc
+		// The corpus is the oracle's answers: the oracle is a product (mutantOracleBinary, or DocumentOracle for the doc
 		// mutation), a deterministic build of what go compiles, so it stands in this key by its own key (mutantOracleKey),
 		// and only a build of the corpus resolves the binary. A reader keys the corpus without holding an oracle of about
 		// 53 MB (Tests, Oct 12). Then the gaps file, and the code that runs it and captures its output. Not cohere whole:
@@ -1007,7 +1007,7 @@ func MutantOracleCorpusInputs(root string, index int, oracle string) PrinterBuil
 	}
 }
 
-// mutantOracleKey is the key of mutation index's oracle product (documentOracle for the doc mutation, else
+// mutantOracleKey is the key of mutation index's oracle product (DocumentOracle for the doc mutation, else
 // mutantOracleBinary), computed without building or fetching it.
 func MutantOracleKey(t *testing.T, root string, index int) string {
 	t.Helper()
@@ -1109,7 +1109,7 @@ func printerGateTSCCorpus(t *testing.T, family string) {
 
 // The partition and the npm library's hash are the process's, made once; each
 // product writes only its own shard's files.
-func statementDeclaredLibraryOracle(t *testing.T, number, side int) {
+func StatementDeclaredLibraryOracle(t *testing.T, number, side int) {
 	t.Helper()
 	shard := StatementGateShardsOnce(t).Shard(t, number)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
@@ -1119,7 +1119,7 @@ func statementDeclaredLibraryOracle(t *testing.T, number, side int) {
 	StatementLibraryOracle(t, number, side, shard, StatementLibraryHashOnce(t), library)
 }
 
-func expressionDeclaredLibraryOracle(t *testing.T, number, side int) {
+func ExpressionDeclaredLibraryOracle(t *testing.T, number, side int) {
 	t.Helper()
 	units := ExpressionGateUnitsOnce(t)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
@@ -1369,7 +1369,7 @@ func StatementGateShardsOnce(t *testing.T) *StatementGateShards {
 	}
 	shared := &statementGateShardsShared
 	shared.once.Do(func() {
-		cases, want, specs := statementCorpus(t)
+		cases, want, specs := StatementCorpus(t)
 		gate := &StatementGateShards{Cases: cases, Want: want, Specs: specs, builder: t.Name()}
 		for _, shard := range StatementShards(t, cases, want, specs) {
 			text, err := os.ReadFile(shard.Text)
@@ -1845,7 +1845,7 @@ func StatementLibraryOracle(t *testing.T, number, side int, shard statementShard
 	})
 }
 
-func statementCorpus(t *testing.T) (string, string, string) {
+func StatementCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
 	directory := PrinterGateOnce(t, "statement-corpus", func() string { cases, _, _ := statementCorpusBuild(t); return filepath.Dir(cases) })
 	answers, err := os.ReadFile(directory + "/answers.txt")
