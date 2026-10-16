@@ -449,7 +449,16 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 		}
 		cases := filepath.Join(dir, "cases.txt")
 		write(t, cases, inlineInput(texts, shard.ids))
-		want := execute(t, nil, goBinary, cases)
+		// Each side's run is timed, and the times logged, so a shard that runs long names the child it waited on
+		// (#z9pt5mn).
+		var times []string
+		timed := func(side string, child func() run) run {
+			started := time.Now()
+			result := child()
+			times = append(times, fmt.Sprintf("%s %.2fs", side, time.Since(started).Seconds()))
+			return result
+		}
+		want := timed("Go", func() run { return execute(t, nil, goBinary, cases) })
 		clean(t, "Go", want)
 		compare := func(side string, r run) {
 			clean(t, side, r)
@@ -457,9 +466,10 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 				t.Fatal(err)
 			}
 		}
-		compare("native", inlineNativeRun(t, sanitized, fast, "--batch", cases))
-		compare("Node", onNode(t, filepath.Join(nodeDir, "main.mjs"), "--batch", cases))
-		compare("JavaScript backend", onNode(t, filepath.Join(lowerDir, "program.mjs"), "--batch", cases))
+		compare("native", timed("native", func() run { return inlineNativeRun(t, sanitized, fast, "--batch", cases) }))
+		compare("Node", timed("Node", func() run { return onNode(t, filepath.Join(nodeDir, "main.mjs"), "--batch", cases) }))
+		compare("JavaScript backend", timed("backend", func() run { return onNode(t, filepath.Join(lowerDir, "program.mjs"), "--batch", cases) }))
+		t.Logf("children: %s", strings.Join(times, ", "))
 		if library != "" {
 			compare("Prettier", execute(t, nil, "node", "testdata/library.mjs", library, cases))
 		}
