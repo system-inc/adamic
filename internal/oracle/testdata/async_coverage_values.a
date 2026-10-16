@@ -1,0 +1,21 @@
+async function text(value: string): Promise<string> {
+    const held = `${value}:λ`;
+    await Promise.resolve();
+    return held;
+}
+async function textRelay(value: string): Promise<string> { return await text(value); }
+async function truth(value: boolean): Promise<boolean> {
+    await Promise.resolve(value);
+    return !value;
+}
+async function truthRelay(value: boolean): Promise<boolean> { return await truth(value); }
+async function number(value: number): Promise<number> { return await Promise.resolve(value); }
+async function numberRelay(value: number): Promise<number> { return await number(value); }
+const empty = await textRelay('');
+const dynamic = await textRelay(`word${2}`);
+const yes = await truthRelay(false);
+const no = await truthRelay(true);
+const zero = await numberRelay(-0);
+const nan = await numberRelay(0 / 0);
+const infinity = await numberRelay(1 / 0);
+console.log(`${empty} ${dynamic} ${yes} ${no} ${zero} ${nan} ${infinity}`);
