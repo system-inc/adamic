@@ -105,3 +105,46 @@ func TestAReadUnderAnInstalledNodeModulesKeysAsItsInstall(t *testing.T) {
 		t.Fatalf("a changed file in the install: %v", err)
 	}
 }
+
+// A read through a link inside an installed node_modules, npm's .bin, is a read of the install, never an untracked link
+// refused (#4gp2ytz: stage3/api's .bin/tsc refused Compiler's adapted tree), and a lookup misses when the link points
+// elsewhere. A link that leads out of the install is the install and what it leads to, keyed in its place. Mutants that
+// fail it: the link walk asking for the install after the link (refused untracked), and the target outside left out
+// (the tree file it reads unkeyed).
+// Not parallel: newRig.
+func TestAReadThroughALinkInAnInstalledNodeModulesKeysAsItsInstall(t *testing.T) {
+	r := newRig(t)
+	write(t, r.root, "web/package-lock.json", "{}\n")
+	gitIn(t, r.root, "add", "web/package-lock.json")
+	gitIn(t, r.root, "commit", "-q", "-m", "a project's lockfile")
+	forgetTracked()
+	writeInstall(t, filepath.Join(r.root, "web"))
+	if err := os.Symlink("../../../source/a.c", filepath.Join(r.root, "web/node_modules/.bin/out")); err != nil {
+		t.Fatal(err)
+	}
+	Product(t, port, building("built"))
+	r.window(r.built(t)["port"].Build, func() {
+		r.open(r.pid, "web/node_modules/.bin/a")
+		r.open(r.pid, "web/node_modules/.bin/out")
+	})
+	r.add(r.pid, "+++ exited with 0 +++")
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	entries := r.entries(t, NameKey(r.root, port))
+	if !slices.Contains(entries, "node install web") || !slices.Contains(entries, "content source/a.c") ||
+		slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "web/node_modules") }) {
+		t.Fatalf("entries %q: want the install and the tree file the outward link reads", entries)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("an unchanged install: %v", err)
+	}
+	link := filepath.Join(r.root, "web/node_modules/.bin/a")
+	os.Remove(link)
+	if err := os.Symlink("../a/index.js", link); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("a .bin link pointed elsewhere: %v", err)
+	}
+}
