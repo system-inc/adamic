@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
@@ -22,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/typescript/parser/oracles"
 )
 
 // Build products are inputs. No package-local cache: Product addresses each
@@ -67,40 +67,7 @@ func wholeMutantBuildFlags() []string {
 
 func wholeMutantBuildOracleProduct(t *testing.T) string {
 	t.Helper()
-	files := append(wholeMutantBuildFiles(t), "stage1/typescript/parser/testdata/oracle.go")
-	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: append(wholeMutantBuildFlags(), "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")), Toolchain: []string{buildcache.Tool("go", "version")}}
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-		if err != nil {
-			return err
-		}
-		side, err := filepath.Abs("testdata/oracle.go")
-		if err != nil {
-			return err
-		}
-		virtual := filepath.Join(root, "adamic_parser_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-		command := wholeMutantCommandContext(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)...)
-		command.Dir = root
-		command.Env = append(command.Env, "PWD="+root)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
+	return filepath.Join(oracles.ParserOracleProduct(t), "oracle")
 }
 
 func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) {
