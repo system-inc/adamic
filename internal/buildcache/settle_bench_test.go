@@ -49,7 +49,7 @@ func BenchmarkTraceRead(b *testing.B) {
 	b.SetBytes(int64(len(trace)))
 	b.ResetTimer()
 	for range b.N {
-		state := newTraceState(&traceFacts{root: root, roots: []string{root}, ran: map[string]bool{}, executables: map[string]bool{}, searched: map[string]bool{}})
+		state := newTraceState(&traceFacts{root: root, roots: []string{root}, ran: map[string]bool{}, opened: map[string]bool{}, executables: map[string]bool{}, searched: map[string]bool{}})
 		if err := state.read(strings.NewReader(trace)); err != nil {
 			b.Fatal(err)
 		}

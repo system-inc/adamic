@@ -2244,3 +2244,27 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 		t.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
 	}
 }
+
+// TypeScript's JavaScript sys asks whether the file system is case-sensitive by looking for its own __filename with
+// every letter's case swapped: a file node read, not a program it ran (#4gp2ytz, Compiler's find in stage3/api's
+// typescript.js). That lookup is the file system's case, never an absolute path naming the checkout, so one tree at two
+// checkout paths keys alike. Mutant that fails it: caseProbe asking only of programs run, so the swapped path is keyed
+// absolute.
+// Not parallel: newRig.
+func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	read := filepath.Join(r.root, "source/a.c")
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, swapCase(read))
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	entries := r.entries(t, build.NameKey)
+	if !slices.Contains(entries, "filesystem case") || slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
+		t.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
+	}
+}
