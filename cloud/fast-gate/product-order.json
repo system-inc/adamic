@@ -134,6 +134,30 @@
       "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
       "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
     ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoOracle": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsPrettierBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
     "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
       "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
     ],
