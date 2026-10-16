@@ -1,6 +1,8 @@
 package markdowninline
 
 import (
+	"bytes"
+	"runtime"
 	"sync"
 	"testing"
 	"time"
@@ -28,13 +30,121 @@ func sharedInlineShards(t *testing.T) func(*testing.T, int) {
 // unit, so a hang is bounded by each child command's own 60 s limit (bounded) instead.
 func runInlineUnit(t *testing.T, ordinal int) {
 	run := sharedInlineShards(t)
+	startInlineClock()
 	start := time.Now()
+	// Stopped when run returns, and deferred too for a run that ends in t.Fatal or t.Skip, so nothing logs after the
+	// test has finished.
+	watch := watchInlineUnit(t, start)
+	defer watch()
 	run(t, ordinal)
+	watch()
 	elapsed := time.Since(start)
 	t.Logf("own work: %.6fs", elapsed.Seconds())
+	for _, tick := range inlineLateTicks(start, time.Now()) {
+		t.Logf("the process's 1 s clock ticked %.1fs late, arriving %.1fs into this test's own work: the whole process stopped running for that long", tick.late.Seconds(), tick.at.Sub(start).Seconds())
+	}
 	if elapsed > 60*time.Second {
 		t.Errorf("cooked: %s exceeded its own 60-second budget (%.3fs)", t.Name(), elapsed.Seconds())
 	}
+}
+
+// Diagnostics for a test that runs long, log-only (#z9pt5mn). On Oct 16 eight shards that take about 1 s each sat
+// 60 s in one Cloud unit while nothing else in its process finished and the box ran on. Two signals tell apart what
+// could do that. A 1 s clock in the process notes every tick that arrives more than 5 s late: only a stop of the
+// whole process from outside (a freeze, a cgroup stalled in reclaim, SIGSTOP) delays it, since its goroutine needs
+// nothing the tests hold. A test still running at 45 s of its own work dumps, once a process, the stack of every
+// goroutine that isn't waiting to start, which names a lock the tests share (Go's fork lock, if a child's exec hangs)
+// or the work a test is doing.
+const inlineWatchAfter = 45 * time.Second
+
+const inlineClockLate = 5 * time.Second
+
+type inlineLateTick struct {
+	at   time.Time
+	late time.Duration
+}
+
+var inlineClock struct {
+	once sync.Once
+	sync.Mutex
+	late []inlineLateTick
+}
+
+func startInlineClock() {
+	inlineClock.once.Do(func() {
+		go func() {
+			ticker := time.NewTicker(time.Second)
+			last := time.Now()
+			for range ticker.C {
+				now := time.Now()
+				if late := now.Sub(last) - time.Second; late > inlineClockLate {
+					inlineClock.Lock()
+					inlineClock.late = append(inlineClock.late, inlineLateTick{at: now, late: late})
+					inlineClock.Unlock()
+				}
+				last = now
+			}
+		}()
+	})
+}
+
+// inlineLateTicks are the late ticks that arrived between start and end.
+func inlineLateTicks(start, end time.Time) []inlineLateTick {
+	inlineClock.Lock()
+	defer inlineClock.Unlock()
+	var ticks []inlineLateTick
+	for _, tick := range inlineClock.late {
+		if !tick.at.Before(start) && !tick.at.After(end) {
+			ticks = append(ticks, tick)
+		}
+	}
+	return ticks
+}
+
+var inlineDumpOnce sync.Once
+
+// watchInlineUnit logs, if the test is still running inlineWatchAfter into its own work, that it is, and the first
+// such test in the process logs the goroutines' stacks, unless the watch itself fired late. It returns the function
+// that stops the watch, after which nothing logs.
+func watchInlineUnit(t *testing.T, start time.Time) func() {
+	var mutex sync.Mutex
+	finished := false
+	timer := time.AfterFunc(inlineWatchAfter, func() {
+		mutex.Lock()
+		defer mutex.Unlock()
+		if finished {
+			return
+		}
+		elapsed := time.Since(start)
+		t.Logf("still running %.1fs into its own work", elapsed.Seconds())
+		// A watch that fires late was stopped with the whole process (the clock logs how long), and the stacks now
+		// would show only what runs after it, so it leaves them out.
+		if late := elapsed - inlineWatchAfter; late > inlineClockLate {
+			t.Logf("this watch fired %.1fs late, so the whole process was stopped: no goroutine dump", late.Seconds())
+			return
+		}
+		inlineDumpOnce.Do(func() { t.Logf("goroutines not waiting to start:\n%s", inlineStacks()) })
+	})
+	return func() {
+		mutex.Lock()
+		finished = true
+		mutex.Unlock()
+		timer.Stop()
+	}
+}
+
+// inlineStacks is every goroutine's stack but those of tests paused in t.Parallel, about 2,000 of them, which only
+// wait for their turn.
+func inlineStacks() []byte {
+	buffer := make([]byte, 64<<20)
+	buffer = buffer[:runtime.Stack(buffer, true)]
+	var kept [][]byte
+	for _, stack := range bytes.Split(buffer, []byte("\n\n")) {
+		if !bytes.Contains(stack, []byte("testing.(*T).Parallel")) {
+			kept = append(kept, stack)
+		}
+	}
+	return bytes.Join(kept, []byte("\n\n"))
 }
 
 func TestMarkdownInline_0000(t *testing.T) {

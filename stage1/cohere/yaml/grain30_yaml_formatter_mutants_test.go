@@ -3,7 +3,6 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -25,6 +24,8 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 var testFormatterMutants = []struct{ name, file, from, to string }{
@@ -41,28 +42,6 @@ const testFormatterMutantsShards = 6
 var formatterMutantsOracle struct {
 	once    sync.Once
 	product string
-}
-
-// formatterMutantsSetupInputs keys the corpus and its expected answers by the Go oracle that answers them: goFormatOracle,
-// a product of its own keyed by go's answer, so this one reads its bytes rather than asking go again. Of cohere it reads
-// only lexCorpus's roots.
-func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs {
-	t.Helper()
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		t.Fatal(err)
-	}
-	files := []string{"internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"}
-	for _, corpus := range lexCorpus {
-		for _, root := range corpus.roots {
-			files = append(files, corpus.checkout+"/"+root)
-		}
-	}
-	return buildcache.Inputs{
-		Name:  "yaml-formatter-mutants-oracle-and-corpus-v3",
-		Files: files,
-		Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary))},
-	}
 }
 
 func formatterMutantsDeadline(t *testing.T) func() {
@@ -116,33 +95,10 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 func formatterMutantsOracleProduct(t *testing.T) string {
 	t.Helper()
 	formatterMutantsOracle.once.Do(func() {
-		// Shared setup is bounded by the product unit, before shard own work starts.
-		ctx := context.Background()
-		started := time.Now()
-		oracle := goFormatOracle(t)
-		product := buildcache.Product(t, formatterMutantsSetupInputs(t, oracle), func(directory string) error {
-			cases, _, count := formatCases(t)
-			data, err := os.ReadFile(cases)
-			if err != nil {
-				return err
-			}
-			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
-				return fmt.Errorf("corpus count disagrees with live enumeration")
-			}
-			expected, err := formatterMutantsCommand(ctx, "", oracle, "--cases", cases)
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
-		})
+		product := oracles.FormatterMutantAnswers(t)
 		data, _ := formatterMutantsReadCorpus(t, product)
 		formatterMutantsUnion(t, data)
 		formatterMutantsOracle.product = product
-		t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
-
 	})
 	if formatterMutantsOracle.product == "" {
 		t.Fatal("oracle preparation failed")
@@ -150,7 +106,7 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 	return formatterMutantsOracle.product
 }
 
-func TestProduct_YAMLFormatterMutantsOracle(t *testing.T) {
+func TestProduct_YamlFindsFormatterMutantsOracle(t *testing.T) {
 	t.Parallel()
 	formatterMutantsOracleProduct(t)
 }

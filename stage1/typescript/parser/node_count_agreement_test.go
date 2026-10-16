@@ -29,7 +29,7 @@ func nodeCountNativeProduct(t *testing.T) string {
 	})
 	return nodeCountNative.path
 }
-func TestProduct_NodeCountOracle(t *testing.T) { t.Parallel(); nodeCountOracleProduct(t) }
+func TestProduct_ParserFindsNodeCountOracle(t *testing.T) { t.Parallel(); nodeCountOracleProduct(t) }
 func TestProduct_NodeCountLower(t *testing.T) {
 	t.Parallel()
 	wholeMutantLowerProduct(t, compilerExpressionsProductDirectory(t))

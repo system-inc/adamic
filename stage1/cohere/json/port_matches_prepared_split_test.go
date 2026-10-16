@@ -3,7 +3,6 @@ package json
 import (
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -19,6 +18,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 var portMatchesShared struct {
@@ -186,26 +187,7 @@ func portMatchesProduct(t *testing.T, name string) string {
 	product.once.Do(func() {
 		switch name {
 		case "oracle":
-			// cohere's command/formatter_comparison with testdata/cohere_driver.go laid over its main, keyed by what go
-			// says the build compiles (GoBuildIn). The overlay names this checkout's paths, so it sits in a temporary
-			// directory: it builds the product and is never part of it (#tqrqx60).
-			root, err := filepath.Abs(repository)
-			if err != nil {
-				t.Fatal(err)
-			}
-			source, err := filepath.Abs("testdata/cohere_driver.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-			if err != nil {
-				t.Fatal(err)
-			}
-			path := filepath.Join(t.TempDir(), "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				t.Fatal(err)
-			}
-			product.dir = buildcache.GoBuildIn(t, "cohere", "go-cohere", "./command/formatter_comparison", []string{"-overlay=" + path})
+			product.dir = oracles.FormatterOracle(t)
 		case "lowered":
 			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
 		case "release", "sanitized":
@@ -233,7 +215,7 @@ func portMatchesProduct(t *testing.T, name string) string {
 	return product.dir
 }
 
-func TestProduct_JSONGoOracle(t *testing.T)        { t.Parallel(); portMatchesProduct(t, "oracle") }
+func TestProduct_JsonFindsGoOracle(t *testing.T)   { t.Parallel(); portMatchesProduct(t, "oracle") }
 func TestProduct_JSONLoweredPort(t *testing.T)     { t.Parallel(); portMatchesProduct(t, "lowered") }
 func TestProduct_JSONNativeRelease(t *testing.T)   { t.Parallel(); portMatchesProduct(t, "release") }
 func TestProduct_JSONNativeSanitized(t *testing.T) { t.Parallel(); portMatchesProduct(t, "sanitized") }

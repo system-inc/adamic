@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goWidth(t *testing.T, cases string) []byte {
@@ -16,12 +18,9 @@ func goWidth(t *testing.T, cases string) []byte {
 }
 
 // goWidthOracle is formatter_comparison over testdata/width_go.go, a product built ahead (#5qykzj5).
-func goWidthOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-width", "width_go.go")
-}
+func goWidthOracle(t *testing.T) string { return oracles.Width(t) }
 
-func TestProduct_YAMLWidthGo(t *testing.T) {
+func TestProduct_YamlFindsWidthGo(t *testing.T) {
 	t.Parallel()
 	goWidthOracle(t)
 }

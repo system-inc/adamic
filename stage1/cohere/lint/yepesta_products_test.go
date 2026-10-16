@@ -15,7 +15,7 @@ func TestProduct_JsxTextnodesMutantNative(t *testing.T) {
 	jsxTextnodesNative(t)
 }
 
-func TestProduct_YepestaSetup(t *testing.T) {
+func TestProduct_LintFindsYepestaSetup(t *testing.T) {
 	t.Parallel()
 	yepestaPrepare(t)
 }

@@ -7,7 +7,8 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
+
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -244,57 +245,7 @@ func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { t.Parallel(); jsx
 func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 14) }
 func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 15) }
 
-func yepestaPrepare(t *testing.T) string {
-	t.Helper()
-	directory := buildcache.Product(t, yepestaInputs(), func(out string) error {
-		oracle := lintGoOracleProduct(t)
-		rows := jsxTextnodesRows(t, oracle)
-		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
-		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle")}
-		data, err := os.ReadFile(oracle)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(bundle.Oracle, data, 0755); err != nil {
-			return err
-		}
-		persist := func(rows []string, prefix string) ([]string, error) {
-			var result []string
-			for i, row := range rows {
-				fields := strings.Split(row, "\t")
-				data, err := os.ReadFile(fields[0])
-				if err != nil {
-					return nil, err
-				}
-				name := filepath.Join(prefix, fmt.Sprintf("%03d", i), filepath.Base(fields[0]))
-				if err := os.MkdirAll(filepath.Dir(filepath.Join(out, name)), 0755); err != nil {
-					return nil, err
-				}
-				if err := os.WriteFile(filepath.Join(out, name), data, 0644); err != nil {
-					return nil, err
-				}
-				fields[0] = name
-				result = append(result, strings.Join(fields, "\t"))
-			}
-			return result, nil
-		}
-		bundle.Rows, err = persist(rows, "rows")
-		if err != nil {
-			return err
-		}
-		bundle.Witnesses, err = persist(witnesses, "witnesses")
-		if err != nil {
-			return err
-		}
-		bundle.Oracle = "oracle"
-		data, err = json.Marshal(bundle)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(out, "bundle.json"), data, 0644)
-	})
-	return directory
-}
+func yepestaPrepare(t *testing.T) string { t.Helper(); return oracles.YepestaSetup(t) }
 
 // yepestaBundle is the shards' shared preparation, every path in it relative to its product's directory: the Go
 // oracle and the rows and witnesses it judges. The mutated port, its JavaScript and its native build are products of
@@ -304,15 +255,9 @@ type yepestaBundle struct {
 	Rows, Witnesses []string
 }
 
-// yepestaInputs name what changes the bundle: the sources it reads and the Go that builds its oracle. Which shard
-// reads which rows is decided at run time, and the native build is jsx-textnodes-mutant-native's, so neither keys it.
-func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()}}
-}
-
 // Preparation runs once per process, including when a single shard is selected.
 // Product supplies content-addressed reuse across processes: Workshop builds it once
-// (TestProduct_YepestaSetup), and a runner reading with ADAMIC_BUILD_CACHE=read fails
+// (TestProduct_LintFindsYepestaSetup), and a runner reading with ADAMIC_BUILD_CACHE=read fails
 // naming it when it is missing rather than building it.
 var yepestaPrepared struct {
 	once      sync.Once

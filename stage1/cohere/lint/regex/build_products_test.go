@@ -2,17 +2,17 @@ package regex
 
 import "testing"
 
-func TestProduct_RegexOracle(t *testing.T) {
+func TestProduct_RegexFindsOracle(t *testing.T) {
 	t.Parallel()
 	cohereProgram(t, "testdata/oracle.go", "regex-oracle")
 }
 
-func TestProduct_RegexOptionDialects(t *testing.T) {
+func TestProduct_RegexFindsOptionDialects(t *testing.T) {
 	t.Parallel()
 	cohereProgram(t, "testdata/option_dialects.go", "regex-option-dialects")
 }
 
-func TestProduct_RegexInventory(t *testing.T) {
+func TestProduct_RegexFindsInventory(t *testing.T) {
 	t.Parallel()
 	cohereProgram(t, "testdata/inventory.go", "regex-inventory")
 }
