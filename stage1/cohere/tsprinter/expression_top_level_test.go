@@ -1,6 +1,10 @@
 package tsprinter
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+)
 
 func TestExpressionsAgainstGoAndPrettier_000(t *testing.T) { t.Parallel(); expressionGateShard(t, 0) }
 func TestExpressionsAgainstGoAndPrettier_001(t *testing.T) { t.Parallel(); expressionGateShard(t, 1) }
@@ -70,6 +74,6 @@ func TestExpressionsAgainstGoAndPrettier_064(t *testing.T) { t.Parallel(); expre
 
 func TestExpressionsAgainstGoAndPrettierUnion(t *testing.T) {
 	t.Parallel()
-	cases, want, _ := expressionCorpus(t, false)
-	expressionUnits(t, cases, want, testExpressionsAgainstGoAndPrettierShards-1)
+	cases, want, _ := oracles.ExpressionCorpus(t, false)
+	oracles.ExpressionUnits(t, cases, want, oracles.ExpressionsAgainstGoAndPrettierShards-1)
 }

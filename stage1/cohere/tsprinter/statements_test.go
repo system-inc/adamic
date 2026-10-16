@@ -2,120 +2,25 @@ package tsprinter
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
-
-func statementCorpusBuild(t *testing.T) (string, string, string) {
-	t.Helper()
-	directory := t.TempDir()
-	root, _ := filepath.Abs(repository)
-	files := printerCorpusFiles(t)
-	// This count is fixed by the upstream commit, never by the live case total.
-	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	upstreamFiles, repositoryFiles := 0, 0
-	for _, file := range files {
-		path, err := filepath.Abs(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		relative, err := filepath.Rel(upstream, path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			upstreamFiles++
-		} else {
-			repositoryFiles++
-		}
-	}
-	if upstreamFiles != 77 {
-		t.Fatalf("TypeScript 050880ce src/compiler: %d .ts files, want pinned 77", upstreamFiles)
-	}
-	if repositoryFiles == 0 {
-		t.Fatal("repository statement corpus is empty")
-	}
-	oracleDir := printerGateGoOracle(t)
-	flags := []string{"Go oracle sha256=" + statementFileHash(t, oracleDir+"/oracle"), "width=80"}
-	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it (#t37sw0f).
-	for _, file := range files {
-		path, err := filepath.Abs(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		flags = append(flags, "input="+tsPrinterOutputLabel(path, root, upstream, true)+" sha256="+statementFileHash(t, file))
-	}
-	product := statementProduct(t, buildcache.Inputs{
-		Name:  "tsprinter-statements-oracle-output-v1",
-		Files: []string{"stage1/cohere/tsprinter/statements_test.go", "stage1/cohere/tsprinter/statements_shards_test.go"},
-		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
-	}, func(dir string) error {
-		// Requests are scratch inputs. Publish only the oracle's four output files.
-		request, err := json.Marshal(map[string]any{"Files": files, "Directory": dir})
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-			return err
-		}
-		command := statementCommand(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
-		command.Dir = root + "/cohere"
-		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-		output, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
-		}
-		t.Log(string(output))
-		// The oracle labels each case by its file's path here; the product names it repo/ or typescript/ and the path
-		// inside, as the expression outputs do, so a runner reading Workshop's product keys the same cases (#tqrqx60).
-		return tsPrinterRewriteMetadata(dir, root, upstream, true)
-	})
-	directory = product
-	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
-		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
-		}
-		for _, name := range []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"} {
-			data, err := os.ReadFile(directory + "/" + name)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if err = os.WriteFile(keep+"/"+name, data, 0644); err != nil {
-				t.Fatal(err)
-			}
-		}
-	}
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	planCorpus(t, directory+"/cases.txt")
-	return directory + "/cases.txt", string(answers), directory + "/cases.json"
-}
-
-const testStatementsAgainstGoAndPrettierShards = 16
 
 // ADAMIC_TEST_SHARD=i/n runs the shards whose number modulo n is i;
 // unset runs all shards. The mixed live repository/pinned TypeScript corpus uses
 // a fixed 16 shards and SHA-256(relative path, file/mode-local index) modulo 16.
 // Build products are prepared once and shared by leaves. statementReadyShared
 // calls this once per process, after the partition and the ADAMIC_TS_PRETTIER skip.
-func statementPrepareCommon(t *testing.T, shards *statementGateShards) statementSharedProducts {
+func statementPrepareCommon(t *testing.T, shards *oracles.StatementGateShards) statementSharedProducts {
 	t.Helper()
 	setup := time.Now()
-	cpu := statementCPU()
-	t.Cleanup(func() { t.Logf("shared setup CPU including builds: %.3fs", statementCPU()-cpu) })
+	cpu := oracles.StatementCPU()
+	t.Cleanup(func() { t.Logf("shared setup CPU including builds: %.3fs", oracles.StatementCPU()-cpu) })
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	port, _ := filepath.Abs("statementsMain.ts")
 	loweredDir := printerGateLowered(t, "statements")
@@ -138,10 +43,10 @@ func statementPrepareCommon(t *testing.T, shards *statementGateShards) statement
 			}
 		}
 	}
-	libraryHash := statementLibraryHashOnce(t)
+	libraryHash := oracles.StatementLibraryHashOnce(t)
 	elapsed := time.Since(setup).Seconds()
-	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(shards.want, "\n"), len(shards.shards))
-	return statementSharedProducts{Cases: shards.cases, Want: shards.want, Specs: shards.specs, Port: port, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed, Shards: shards}
+	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(shards.Want, "\n"), len(shards.Shards))
+	return statementSharedProducts{Cases: shards.Cases, Want: shards.Want, Specs: shards.Specs, Port: port, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed, Shards: shards}
 }
 
 func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
@@ -151,10 +56,10 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	}
 	products := statementReadyShared(t)
 	setup := time.Now()
-	cpu := statementCPU()
-	t.Cleanup(func() { t.Logf("shard CPU: %.3fs", statementCPU()-cpu) })
+	cpu := oracles.StatementCPU()
+	t.Cleanup(func() { t.Logf("shard CPU: %.3fs", oracles.StatementCPU()-cpu) })
 	// The partition is the process's; only this shard's own files are written here.
-	shard := products.Shards.shard(t, shardNumber)
+	shard := products.Shards.Shard(t, shardNumber)
 	port := products.Port
 	binary, release, library := products.Binary, products.Release, products.Library
 	loweredDir := products.LoweredDir
@@ -169,95 +74,47 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	libraryHash := products.LibraryHash
 	var oracleAnswers [2][]byte
 	for side := 0; side < 2; side++ {
-		directory := statementLibraryOracle(t, shardNumber, side, shard, libraryHash, library)
+		directory := oracles.StatementLibraryOracle(t, shardNumber, side, shard, libraryHash, library)
 		answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
 		if err != nil {
 			t.Fatal(err)
 		}
 		oracleAnswers[side] = answers
 	}
-	t.Logf("shard-local input preparation: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(products.Want, "\n"), len(products.Shards.shards))
+	t.Logf("shard-local input preparation: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(products.Want, "\n"), len(products.Shards.Shards))
 	caseStart := time.Now()
 	caseContext, cancelCases := context.WithTimeout(context.Background(), 60*time.Second)
-	statementCaseContexts.Store(t, caseContext)
+	oracles.StatementCaseContexts.Store(t, caseContext)
 	t.Cleanup(func() {
 		cancelCases()
-		statementCaseContexts.Delete(t)
+		oracles.StatementCaseContexts.Delete(t)
 		t.Logf("case time after shared setup: %.3fs", time.Since(caseStart).Seconds())
 	})
-	compare := func(name string, result run) {
-		if err := statementDisagreement(name, result, shard.want, shard.labels); err != nil {
+	compare := func(name string, result oracles.Run) {
+		if err := statementDisagreement(name, result, shard.Want, shard.Labels); err != nil {
 			t.Fatal(err)
 		}
 	}
-	compare("Node", statementOnNode(t, port, "--cases", shard.text, "80"))
-	compare("native", statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
-	compare("backend", statementOnNode(t, backend, "--cases", shard.text, "80"))
+	compare("Node", statementOnNode(t, port, "--cases", shard.Text, "80"))
+	compare("native", oracles.StatementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.Text, "80"))
+	compare("backend", statementOnNode(t, backend, "--cases", shard.Text, "80"))
 	for _, side := range []struct {
 		name   string
-		result run
+		result oracles.Run
 	}{
 		{"Node gaps", statementOnNode(t, port, "--cases", gapPath, "80")},
-		{"native gaps", statementExecute(t, nil, binary, "--cases", gapPath, "80")},
+		{"native gaps", oracles.StatementExecute(t, nil, binary, "--cases", gapPath, "80")},
 		{"backend gaps", statementOnNode(t, backend, "--cases", gapPath, "80")},
 	} {
 		if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
 			t.Fatal(err)
 		}
 	}
-	if report := statementLeaks(t, binary, release, "--cases", shard.text, "80"); report != "" {
+	if report := statementLeaks(t, binary, release, "--cases", shard.Text, "80"); report != "" {
 		t.Fatal(report)
 	}
-	statementPrinterLibrary(t, "npm Prettier", run{stdout: oracleAnswers[0]}, shard.specs, false)
-	statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[1]}, shard.specs, true)
-	compare("release", statementExecute(t, nil, release, "--cases", shard.text, "80"))
-	t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
-}
-
-func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, libraryHash, library string) string {
-	t.Helper()
-	name, script, files, oracleFlags := "npm", "testdata/expressions.mjs", []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}
-	if side == 1 {
-		name, script = "embedded", "testdata/embedded.mjs"
-		library, _ = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-		files = []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}
-		oracleFlags = nil
-	}
-	script, _ = filepath.Abs(script)
-	return printerGateOnce(t, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
-		// The cases name their files by absolute path, hashed out of Key's reach, so the hash reads them as the tree spells
-		// them; the npm library is keyed by its bytes (npm bytes sha256), the embedded one by Files, neither by where it is,
-		// and NODE_PATH is a location (#t37sw0f). The test binary isn't an input: the oracle is node running the script over
-		// the cases, and hashing the binary keyed a product apart between Workshop's go test and a runner's prebuilt
-		// binary of the same package (landable-10, key check).
-		root, _ := filepath.Abs(repository)
-		upstream, _ := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-		specs, err := os.ReadFile(shard.specs)
-		if err != nil {
-			t.Fatal(err)
-		}
-		cases := strings.ReplaceAll(strings.ReplaceAll(string(specs), upstream+"/", "typescript/"), root+"/", "repo/")
-		flags := append(oracleFlags, "cases sha256="+statementBytesHash([]byte(cases)), "library="+name, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"))
-		return statementProduct(t, buildcache.Inputs{
-			Name:  fmt.Sprintf("tsprinter-statements-%s-oracle-shard-%03d-v1", name, number),
-			Files: files, Flags: flags,
-			Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
-		}, func(dir string) error {
-			result := statementExecute(t, nil, "node", script, library, shard.specs)
-			if result.exitCode != 0 || len(result.stderr) != 0 {
-				return fmt.Errorf("%s oracle exit %d: %s", name, result.exitCode, result.stderr)
-			}
-			return os.WriteFile(filepath.Join(dir, "answers.txt"), result.stdout, 0644)
-		})
-	})
-}
-
-func statementCorpus(t *testing.T) (string, string, string) {
-	t.Helper()
-	directory := printerGateOnce(t, "statement-corpus", func() string { cases, _, _ := statementCorpusBuild(t); return filepath.Dir(cases) })
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	return directory + "/cases.txt", string(answers), directory + "/cases.json"
+	statementPrinterLibrary(t, "npm Prettier", oracles.Run{Stdout: oracleAnswers[0]}, shard.Specs, false)
+	statementPrinterLibrary(t, "embedded Prettier", oracles.Run{Stdout: oracleAnswers[1]}, shard.Specs, true)
+	compare("release", oracles.StatementExecute(t, nil, release, "--cases", shard.Text, "80"))
+	t.Logf("%d statement/program fragments byte-identical", len(shard.Indices))
 }

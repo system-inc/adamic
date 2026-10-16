@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
@@ -23,7 +25,7 @@ func TestCompilerGaps(t *testing.T) {
 				t.Fatal(err)
 			}
 			node := onNode(t, path)
-			if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != item.output {
+			if node.ExitCode != 0 || len(node.Stderr) != 0 || string(node.Stdout) != item.output {
 				t.Fatalf("Node: %#v", node)
 			}
 			program, err := load.Load([]string{path})
@@ -50,8 +52,8 @@ func TestClosedPrefixUpdateValueGap(t *testing.T) {
 	}
 	program := lowered(t, path)
 	native, binary := natively(t, program)
-	for _, result := range []run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "2\n" {
+	for _, result := range []oracles.Run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
+		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "2\n" {
 			t.Fatalf("prefix update value: %+v", result)
 		}
 	}
@@ -68,8 +70,8 @@ func TestNumberConstructor(t *testing.T) {
 	}
 	program := lowered(t, path)
 	native, binary := natively(t, program)
-	for _, result := range []run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "17\n" {
+	for _, result := range []oracles.Run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
+		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "17\n" {
 			t.Fatalf("Number constructor: %+v", result)
 		}
 	}

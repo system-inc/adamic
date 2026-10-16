@@ -2,80 +2,17 @@ package tsprinter
 
 import (
 	"bytes"
-	"context"
-	"crypto/sha256"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
-
-func statementProduct(t *testing.T, inputs buildcache.Inputs, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, inputs, func(dir string) error {
-		start, cpu := time.Now(), statementCPU()
-		if err := build(dir); err != nil {
-			return err
-		}
-		t.Logf("build %s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), statementCPU()-cpu)
-		return nil
-	})
-}
-
-func statementBytesHash(data []byte) string { return fmt.Sprintf("%x", sha256.Sum256(data)) }
-
-func statementFileHash(t *testing.T, path string) string {
-	t.Helper()
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return statementBytesHash(data)
-}
-
-// External npm inputs cannot appear in repository-relative Inputs.Files.
-// WalkDir visits names lexically; hash every name and byte, refusing symlinks.
-func statementDirectoryHash(t *testing.T, directory string) string {
-	t.Helper()
-	hash := sha256.New()
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.Type()&os.ModeSymlink != 0 {
-			return fmt.Errorf("oracle input symlink: %s", path)
-		}
-		if entry.IsDir() {
-			return nil
-		}
-		name, err := filepath.Rel(directory, path)
-		if err != nil {
-			return err
-		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		fmt.Fprintf(hash, "%d:%s:%d:", len(name), name, len(data))
-		hash.Write(data)
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	return fmt.Sprintf("%x", hash.Sum(nil))
-}
 
 // Leak checks consume cached executable products, so a cache hit never needs
 // an in-memory lowered program or a build inside a leaf.
@@ -83,103 +20,20 @@ func statementLeaks(t *testing.T, sanitized, release string, arguments ...string
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		report := statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
+		report := oracles.StatementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		if report.ExitCode == 0 {
 			return ""
 		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+		return fmt.Sprintf("exit %d\n%s", report.ExitCode, report.Stderr)
 	case "darwin":
-		report := statementExecute(t, nil, "leaks", append([]string{"--atExit", "--", release}, arguments...)...)
-		if report.exitCode == 0 {
+		report := oracles.StatementExecute(t, nil, "leaks", append([]string{"--atExit", "--", release}, arguments...)...)
+		if report.ExitCode == 0 {
 			return ""
 		}
-		return string(report.stdout)
+		return string(report.Stdout)
 	}
 	t.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
-}
-
-// Linux accounting includes all reaped descendants (oracle, Node and clang).
-func statementCPU() float64 {
-	var self, children syscall.Rusage
-	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &self); err != nil {
-		panic(err)
-	}
-	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); err != nil {
-		panic(err)
-	}
-	return float64(self.Utime.Sec+self.Stime.Sec+children.Utime.Sec+children.Stime.Sec) + float64(self.Utime.Usec+self.Stime.Usec+children.Utime.Usec+children.Stime.Usec)/1e6
-}
-
-// Indices, rather than labels (which repeat in synthetic cases), are the case IDs.
-type statementShard struct {
-	indices           []int
-	labels            []string
-	text, specs, want string
-}
-
-// Keys use a file's relative path, node mode and ordinal within that file/mode.
-// Repository growth cannot change another file's assignment. Generated cases
-// use their generator file and mode, with an ordinal local to that mode. A label
-// names its file under root or upstream, or as the stored product does (#tqrqx60),
-// repo/ or typescript/ and the path inside it, and both spellings key alike.
-func statementCaseKeys(items []printerCase, root, upstream string) ([]string, error) {
-	keys := make([]string, len(items))
-	counts := map[string]int{}
-	for i, item := range items {
-		base := "stage1/cohere/tsprinter/testdata/statements_side_test.go:" + item.Label
-		end := strings.LastIndex(item.Label, ":")
-		if end >= 0 {
-			start := strings.LastIndex(item.Label[:end], ":")
-			if start < 0 {
-				return nil, fmt.Errorf("invalid statement label %q", item.Label)
-			}
-			path, err := filepath.Abs(tsPrinterOutputLabel(item.Label[:start], root, upstream, false))
-			if err != nil {
-				return nil, err
-			}
-			relative, err := filepath.Rel(root, path)
-			if err != nil {
-				return nil, err
-			}
-			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-				relative, err = filepath.Rel(upstream, path)
-				if err != nil {
-					return nil, err
-				}
-				if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-					return nil, fmt.Errorf("statement outside corpus roots: %s", path)
-				}
-				relative = "typescript@050880ce59e30b356b686bd3144efe24f875ebc8/" + filepath.ToSlash(relative)
-			}
-			base = filepath.ToSlash(relative) + ":" + item.Label[end+1:]
-		}
-		keys[i] = fmt.Sprintf("%s:%d", base, counts[base])
-		counts[base]++
-	}
-	return keys, nil
-}
-
-func statementPartition(keys []string) ([][]int, error) {
-	shards := make([][]int, testStatementsAgainstGoAndPrettierShards)
-	seen := map[string]bool{}
-	for id, key := range keys {
-		if seen[key] {
-			return nil, fmt.Errorf("repeated stable case key %q", key)
-		}
-		seen[key] = true
-		digest := sha256.Sum256([]byte(key))
-		var value uint64
-		for _, b := range digest[:8] {
-			value = value<<8 | uint64(b)
-		}
-		number := int(value % uint64(testStatementsAgainstGoAndPrettierShards))
-		shards[number] = append(shards[number], id)
-	}
-	if err := statementUnion(len(keys), shards); err != nil {
-		return nil, err
-	}
-	return shards, nil
 }
 
 func statementProofKeys(count int) []string {
@@ -193,20 +47,20 @@ func statementProofKeys(count int) []string {
 func TestStatementsShardAssignmentStable(t *testing.T) {
 	t.Parallel()
 	root, upstream := "/repository", "/typescript"
-	items := []printerCase{
+	items := []oracles.PrinterCase{
 		{Label: root + "/stage1/a.ts:0:SourceFile"},
 		{Label: root + "/stage1/a.ts:3:VariableStatement"},
 		{Label: root + "/stage1/a.ts:9:VariableStatement"},
 		{Label: upstream + "/src/compiler/b.ts:0:SourceFile"},
 		{Label: "program-sequence"}, {Label: "program-sequence"},
 	}
-	before, err := statementCaseKeys(items, root, upstream)
+	before, err := oracles.StatementCaseKeys(items, root, upstream)
 	if err != nil {
 		t.Fatal(err)
 	}
-	grown := append([]printerCase{{Label: root + "/bench/new.ts:0:SourceFile"}}, items...)
-	grown = append(grown, printerCase{Label: root + "/stage1/last.ts:0:SourceFile"})
-	after, err := statementCaseKeys(grown, root, upstream)
+	grown := append([]oracles.PrinterCase{{Label: root + "/bench/new.ts:0:SourceFile"}}, items...)
+	grown = append(grown, oracles.PrinterCase{Label: root + "/stage1/last.ts:0:SourceFile"})
+	after, err := oracles.StatementCaseKeys(grown, root, upstream)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -228,7 +82,7 @@ func TestStatementsShardAssignmentStable(t *testing.T) {
 	if err = os.WriteFile(filepath.Join(product, "coverage.json"), []byte(`{"file_refusals":{"`+root+`/stage1/bad.ts":"`+root+`/stage1/bad.ts: refused"}}`), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err = tsPrinterRewriteMetadata(product, root, upstream, true); err != nil {
+	if err = oracles.TSPrinterRewriteMetadata(product, root, upstream, true); err != nil {
 		t.Fatal(err)
 	}
 	for _, name := range []string{"cases.json", "coverage.json"} {
@@ -240,11 +94,11 @@ func TestStatementsShardAssignmentStable(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var stored []printerCase
+	var stored []oracles.PrinterCase
 	if err = json.Unmarshal(data, &stored); err != nil {
 		t.Fatal(err)
 	}
-	runner, err := statementCaseKeys(stored, "/srv/runner/adamic", "/opt/adamic-tools/typescript")
+	runner, err := oracles.StatementCaseKeys(stored, "/srv/runner/adamic", "/opt/adamic-tools/typescript")
 	if err != nil {
 		t.Fatalf("a runner reading Workshop's product: %v", err)
 	}
@@ -253,12 +107,12 @@ func TestStatementsShardAssignmentStable(t *testing.T) {
 	}
 	// Exercise actual modulo assignment and its union, with enough cases for all shards.
 	keys := statementProofKeys(256)
-	old, err := statementPartition(keys)
+	old, err := oracles.StatementPartition(keys)
 	if err != nil {
 		t.Fatal(err)
 	}
 	added := append([]string{"stage1/new.ts:SourceFile:0"}, keys...)
-	next, err := statementPartition(added)
+	next, err := oracles.StatementPartition(added)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -275,129 +129,9 @@ func TestStatementsShardAssignmentStable(t *testing.T) {
 			}
 		}
 	}
-	if _, err := statementPartition(append(keys, keys[0])); err == nil {
+	if _, err := oracles.StatementPartition(append(keys, keys[0])); err == nil {
 		t.Fatal("repeated stable key accepted")
 	}
-}
-
-func statementUnion(count int, shards [][]int) error {
-	if len(shards) != testStatementsAgainstGoAndPrettierShards {
-		return fmt.Errorf("enumerated %d shards, want %d", len(shards), testStatementsAgainstGoAndPrettierShards)
-	}
-	seen := make([]bool, count)
-	total := 0
-	for number, ids := range shards {
-		if len(ids) == 0 {
-			return fmt.Errorf("shard-%03d is empty", number)
-		}
-		for _, id := range ids {
-			if id < 0 || id >= count {
-				return fmt.Errorf("shard-%03d: extra case ID %d", number, id)
-			}
-			if seen[id] {
-				return fmt.Errorf("shard-%03d: repeated case ID %d", number, id)
-			}
-			seen[id] = true
-			total++
-		}
-	}
-	for id, found := range seen {
-		if !found {
-			return fmt.Errorf("missing case ID %d", id)
-		}
-	}
-	if total != count {
-		return fmt.Errorf("union count %d, want %d", total, count)
-	}
-	return nil
-}
-
-func statementShards(t *testing.T, cases, want, specs string) []statementShard {
-	t.Helper()
-	text, err := os.ReadFile(cases)
-	if err != nil {
-		t.Fatal(err)
-	}
-	data, err := os.ReadFile(specs)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var items []printerCase
-	if err := json.Unmarshal(data, &items); err != nil {
-		t.Fatal(err)
-	}
-	rows := strings.Split(strings.TrimSuffix(string(text), "\n"), "\n")
-	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
-	if len(rows) != len(items) || len(answers) != len(items) {
-		t.Fatalf("enumeration: %d inputs, %d specifications, %d answers", len(rows), len(items), len(answers))
-	}
-	// The shared comparator's full-corpus upstream-presence check belongs here;
-	// each leaf then checks the exact pinned outcomes for its own cases.
-	for _, record := range upstreamOutcomes(t) {
-		if record.Family != "statements" {
-			continue
-		}
-		found := false
-		for _, item := range items {
-			if strings.HasSuffix(item.Label, record.Label) && item.Source == record.Source {
-				if item.Want != record.Go {
-					t.Fatalf("%s: recorded Go outcome changed", record.Label)
-				}
-				found = true
-				break
-			}
-		}
-		if !found {
-			t.Fatalf("recorded upstream case absent: %s", record.Label)
-		}
-	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	keys, err := statementCaseKeys(items, root, upstream)
-	if err != nil {
-		t.Fatal(err)
-	}
-	partition, err := statementPartition(keys)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	result := make([]statementShard, len(partition))
-	projected := make([][]int, len(partition))
-	for number, ids := range partition {
-		shard := statementShard{indices: ids, text: filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.txt", number)), specs: filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.json", number))}
-		var input, expected strings.Builder
-		subset := make([]printerCase, 0, len(ids))
-		for _, id := range ids {
-			input.WriteString(rows[id] + "\n")
-			expected.WriteString(answers[id] + "\n")
-			subset = append(subset, items[id])
-			shard.labels = append(shard.labels, fmt.Sprintf("case %d %s", id, items[id].Label))
-			projected[number] = append(projected[number], id)
-		}
-		shard.want = expected.String()
-		encoded, err := json.Marshal(subset)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(shard.text, []byte(input.String()), 0644); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(shard.specs, encoded, 0644); err != nil {
-			t.Fatal(err)
-		}
-		result[number] = shard
-	}
-	if err := statementUnion(len(items), projected); err != nil {
-		t.Fatal(err)
-	}
-	return result
 }
 
 func statementShardSelection(t *testing.T) func(int) bool {
@@ -427,8 +161,8 @@ func statementSelection(value string) (func(int) bool, error) {
 
 func TestStatementsShardSelection(t *testing.T) {
 	t.Parallel()
-	for n := 1; n <= 2*testStatementsAgainstGoAndPrettierShards; n++ {
-		counts := make([]int, testStatementsAgainstGoAndPrettierShards)
+	for n := 1; n <= 2*oracles.StatementsAgainstGoAndPrettierShards; n++ {
+		counts := make([]int, oracles.StatementsAgainstGoAndPrettierShards)
 		for i := 0; i < n; i++ {
 			selected, err := statementSelection(fmt.Sprintf("%d/%d", i, n))
 			if err != nil {
@@ -450,7 +184,7 @@ func TestStatementsShardSelection(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for shard := 0; shard < testStatementsAgainstGoAndPrettierShards; shard++ {
+	for shard := 0; shard < oracles.StatementsAgainstGoAndPrettierShards; shard++ {
 		if !selected(shard) {
 			t.Fatalf("unset selection omitted shard-%03d", shard)
 		}
@@ -462,14 +196,14 @@ func TestStatementsShardSelection(t *testing.T) {
 	}
 }
 
-func statementDisagreement(name string, result run, want string, labels []string) error {
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		return fmt.Errorf("%s exit %d stderr %s", name, result.exitCode, result.stderr)
+func statementDisagreement(name string, result oracles.Run, want string, labels []string) error {
+	if result.ExitCode != 0 || len(result.Stderr) != 0 {
+		return fmt.Errorf("%s exit %d stderr %s", name, result.ExitCode, result.Stderr)
 	}
-	if string(result.stdout) == want {
+	if string(result.Stdout) == want {
 		return nil
 	}
-	gotLines, wantLines := strings.Split(string(result.stdout), "\n"), strings.Split(want, "\n")
+	gotLines, wantLines := strings.Split(string(result.Stdout), "\n"), strings.Split(want, "\n")
 	for i := 0; i < max(len(gotLines), len(wantLines)); i++ {
 		got, expected := "", ""
 		if i < len(gotLines) {
@@ -486,7 +220,7 @@ func statementDisagreement(name string, result run, want string, labels []string
 			return fmt.Errorf("%s %s: %s", name, label, firstDifference(got, expected))
 		}
 	}
-	return fmt.Errorf("%s: %s", name, firstDifference(string(result.stdout), want))
+	return fmt.Errorf("%s: %s", name, firstDifference(string(result.Stdout), want))
 }
 
 // A real Node run passes first. A child test process then plants one changed
@@ -494,7 +228,7 @@ func statementDisagreement(name string, result run, want string, labels []string
 func TestStatementsShardDisagreement(t *testing.T) {
 	t.Parallel()
 	const count, plantedID = 256, 17
-	partition, err := statementPartition(statementProofKeys(count))
+	partition, err := oracles.StatementPartition(statementProofKeys(count))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -513,10 +247,10 @@ func TestStatementsShardDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := statementExecute(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsAgainstGoAndPrettier_[0-9]{3}$", "-test.v", "-test.parallel=4", "-test.timeout=75s")
+	result := oracles.StatementExecute(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsAgainstGoAndPrettier_[0-9]{3}$", "-test.v", "-test.parallel=4", "-test.timeout=75s")
 	name := fmt.Sprintf("TestStatementsAgainstGoAndPrettier_%03d", target)
-	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), "--- FAIL: TestStatementsAgainstGoAndPrettier_") != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+name) || !strings.Contains(string(result.stdout), "planted case 17") {
-		t.Fatalf("expected exactly %s to catch planted disagreement: exit %d stdout %s stderr %s", name, result.exitCode, result.stdout, result.stderr)
+	if result.ExitCode != 1 || len(result.Stderr) != 0 || strings.Count(string(result.Stdout), "--- FAIL: TestStatementsAgainstGoAndPrettier_") != 1 || !strings.Contains(string(result.Stdout), "--- FAIL: "+name) || !strings.Contains(string(result.Stdout), "planted case 17") {
+		t.Fatalf("expected exactly %s to catch planted disagreement: exit %d stdout %s stderr %s", name, result.ExitCode, result.Stdout, result.Stderr)
 	}
 	t.Logf("planted case %d caught by exactly %s", plantedID, name)
 	return
@@ -525,7 +259,7 @@ func TestStatementsShardDisagreement(t *testing.T) {
 func statementRunShardProof(t *testing.T, number int) {
 	t.Helper()
 	const count, plantedID = 256, 17
-	partition, err := statementPartition(statementProofKeys(count))
+	partition, err := oracles.StatementPartition(statementProofKeys(count))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -552,9 +286,9 @@ func statementRunShardProof(t *testing.T, number int) {
 		t.Fatal(err)
 	}
 	if local >= 0 {
-		rows := strings.Split(string(result.stdout), "\n")
+		rows := strings.Split(string(result.Stdout), "\n")
 		rows[local] = "ok\tplanted disagreement"
-		result.stdout = []byte(strings.Join(rows, "\n"))
+		result.Stdout = []byte(strings.Join(rows, "\n"))
 	}
 	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
 		t.Fatal(err)
@@ -564,7 +298,7 @@ func statementRunShardProof(t *testing.T, number int) {
 func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
 	t.Parallel()
 	keys := statementProofKeys(256)
-	shards, err := statementPartition(keys)
+	shards, err := oracles.StatementPartition(keys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -584,7 +318,7 @@ func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
 			case "shard-count":
 				changed = changed[1:]
 			}
-			if err := statementUnion(len(keys), changed); err == nil {
+			if err := oracles.StatementUnion(len(keys), changed); err == nil {
 				t.Fatal("invalid union accepted")
 			}
 		})
@@ -592,24 +326,24 @@ func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
 }
 
 // Full-enumeration presence is checked in statementShards; leaves compare all their outcomes.
-func statementPrinterLibrary(t *testing.T, name string, result run, specs string, embedded bool) {
+func statementPrinterLibrary(t *testing.T, name string, result oracles.Run, specs string, embedded bool) {
 	t.Helper()
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("%s: exit %d stderr %s", name, result.exitCode, result.stderr)
+	if result.ExitCode != 0 || len(result.Stderr) != 0 {
+		t.Fatalf("%s: exit %d stderr %s", name, result.ExitCode, result.Stderr)
 	}
 	data, err := os.ReadFile(specs)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var cases []printerCase
+	var cases []oracles.PrinterCase
 	if err := json.Unmarshal(data, &cases); err != nil {
 		t.Fatal(err)
 	}
-	lines := strings.Split(strings.TrimSuffix(string(result.stdout), "\n"), "\n")
+	lines := strings.Split(strings.TrimSuffix(string(result.Stdout), "\n"), "\n")
 	if len(lines) != len(cases) {
 		t.Fatalf("%s: %d answers, want %d", name, len(lines), len(cases))
 	}
-	records := upstreamOutcomes(t)
+	records := oracles.UpstreamOutcomes(t)
 
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	differences, refusals := 0, 0
@@ -649,60 +383,11 @@ func statementPrinterLibrary(t *testing.T, name string, result run, specs string
 
 func statementShardProofEnabled() bool { return os.Getenv("ADAMIC_STATEMENTS_SHARD_PROOF") == "1" }
 
-// Case commands use the shard deadline. Setup has no clock of its own;
-// cancellation still kills the entire child process group.
-func statementCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+func statementOnNode(t *testing.T, path string, arguments ...string) oracles.Run {
 	t.Helper()
-	if value, ok := statementCaseContexts.Load(t); ok {
-		return statementContextCommand(value.(context.Context), name, arguments...)
-	}
-	ctx, cancel := context.WithCancel(context.Background())
-	t.Cleanup(cancel)
-	return statementContextCommand(ctx, name, arguments...)
-}
-
-func statementContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		group := command.Process.Pid
-		if command.SysProcAttr.Pgid != 0 {
-			group = command.SysProcAttr.Pgid
-		}
-		err := syscall.Kill(-group, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = 5 * time.Second
-	return command
-}
-
-func statementExecute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := statementCommand(t, name, arguments...)
-	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
-	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
-	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
-	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
-}
-
-func statementOnNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return statementExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return oracles.StatementExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }

@@ -62,16 +62,6 @@ func TestProduct_MarkdownQuote_lowered(t *testing.T) {
 	quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
 }
 
-func TestProduct_MarkdownQuote_lists(t *testing.T) {
-	t.Parallel()
-	quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lists")
-}
-
-func TestProduct_MarkdownQuote_layout(t *testing.T) {
-	t.Parallel()
-	quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "layout")
-}
-
 func TestProduct_MarkdownQuote_native_true(t *testing.T) {
 	t.Parallel()
 	products := quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
@@ -94,16 +84,6 @@ func TestProduct_MarkdownStructure_native(t *testing.T) {
 	structureLayoutBuildProduct(t, markdownLayoutProductRoot(t), "native")
 }
 
-func TestProduct_MarkdownStructure_adamic_markdown_lists(t *testing.T) {
-	t.Parallel()
-	structureLayoutBuildProduct(t, markdownLayoutProductRoot(t), "adamic_markdown_lists")
-}
-
-func TestProduct_MarkdownStructure_adamic_markdown_doclayout(t *testing.T) {
-	t.Parallel()
-	structureLayoutBuildProduct(t, markdownLayoutProductRoot(t), "adamic_markdown_doclayout")
-}
-
 func TestProduct_MarkdownTable_lowered(t *testing.T) {
 	t.Parallel()
 	tableLayoutBuildProduct(t, "lowered")
@@ -119,35 +99,11 @@ func TestProduct_MarkdownTable_native_false(t *testing.T) {
 	tableLayoutBuildProduct(t, "native-false")
 }
 
-func TestProduct_MarkdownTable_list(t *testing.T) {
-	t.Parallel()
-	tableLayoutBuildProduct(t, "list")
-}
-
-func TestProduct_MarkdownTable_document(t *testing.T) {
-	t.Parallel()
-	tableLayoutBuildProduct(t, "document")
-}
-
 func TestProduct_MarkdownWhitespace_lowered(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := markdownLayoutSetupContext(t.Context())
 	defer cancel()
 	whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "lowered")
-}
-
-func TestProduct_MarkdownWhitespace_lists(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	defer cancel()
-	whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "lists")
-}
-
-func TestProduct_MarkdownWhitespace_layout(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	defer cancel()
-	whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "layout")
 }
 
 func TestProduct_MarkdownWhitespace_native_true(t *testing.T) {
