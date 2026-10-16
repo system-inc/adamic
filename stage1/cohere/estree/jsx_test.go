@@ -4,15 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 )
 
-func jsxCases() []string {
-	return []string{"const x=<A<>/>;", "const x = <A/>;", "const x = <A> text </A>;", "const x = <><A/>{x}{/* comment */}</>;", "const x = <A.B.C ns:x='&amp;&#x1f600;' data-test={x} bool {...rest}><ns:a/>{...children}</A.B.C>;", "const x = <A<T,> x=\"\\n\"/>;", "const x = <A> // text /* not comment */ &amp;&unknown;&#1114112; </A>;", "let x = <A value={<B/>}/>;", "<A>\n é😀\r\n {x+1}\n</A>;"}
-}
+func jsxCases() []string              { return oracles.JSXCases() }
 func jsxManifest(t *testing.T) string { return jsxManifestCases(t, jsxCases()) }
 func jsxManifestCases(t *testing.T, cases []string) string {
 	t.Helper()

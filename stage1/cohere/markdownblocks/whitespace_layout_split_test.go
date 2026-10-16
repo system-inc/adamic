@@ -317,9 +317,9 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 		write(t, overlayPath, overlay)
 		goInputs := whitespaceLayoutSetupInputs(t)
 		goInputs.Name = "markdown-whitespace-layout-go-" + mode.name
-		goInputs.Flags = append(goInputs.Flags, "go build", "overlay="+mode.driver, "CGO_ENABLED="+os.Getenv("CGO_ENABLED"), "GOFLAGS="+os.Getenv("GOFLAGS"))
+		goInputs.Flags = append(goInputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay="+mode.driver, "CGO_ENABLED="+os.Getenv("CGO_ENABLED"), "GOFLAGS="+os.Getenv("GOFLAGS"))
 		product := buildcache.Product(t, goInputs, func(product string) error {
-			command := whitespaceLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)
+			command := whitespaceLayoutCommand(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)...)
 			command.Dir = cohere
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)

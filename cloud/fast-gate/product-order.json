@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "waits": {
+    "cmd/adamic-test262 TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/fuzz TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements00": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements01": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements02": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements03": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements04": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements05": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements06": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements07": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements08": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements09": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements10": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements11": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements12": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements13": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements14": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/oracle TestProduct_CountMeasurements15": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsCompositionCorpusOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSCompositionCorpusOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsCompositionGoOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSCompositionGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserCorpus": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserGoOracleAnswers": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_0": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_0",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_1": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_1",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_2": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_2",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_3": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_3",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_4": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_4",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_5": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_5",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_6": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_6",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsParserPostCSSAnswers_7": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserPostCSSAnswers_7",
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsPrinterOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSFindsPrinterParserOracle": [
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterParserOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserClosingBraceMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserCommentMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSParserCustomPropertyMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSParserGoOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterIndentMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterSemicolonMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/css TestProduct_CSSPrinterWidthMutantWitnesses": [
+      "stage1/cohere/css/oracles TestProduct_CSSParserCorpus",
+      "stage1/cohere/css/oracles TestProduct_CSSPrinterOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
+      "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsBoundedAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeBoundedAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsDeepMutantsFixture": [
+      "stage1/cohere/estree/oracles TestProduct_DeepMutantsFixture"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsExportAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeExportAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsJSXMutantAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_JSXMutantAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveredExpressionsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveredExpressionsAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveredGrammarAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveredGrammarAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveryLibraryGapsAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveryLibraryGapsAnswers"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsRecoveryMutantsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_RecoveryMutantsAnswer"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsScalarEdgesOracle": [
+      "stage1/cohere/estree/oracles TestProduct_scalar_edges_go_oracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsSyntaxMutantsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_EstreeFindsThreePortOracle": [
+      "stage1/cohere/estree/oracles TestProduct_ThreePortOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_000": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_001": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree TestProduct_SyntaxMutantsSetup_002": [
+      "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_DeepMutantsFixture": [
+      "stage1/cohere/estree/oracles TestProduct_ThreePortOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_EstreeBoundedAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_EstreeExportAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_JSXMutantAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveredExpressionsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveredGrammarAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveryLibraryGapsAnswers": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_RecoveryMutantsAnswer": [
+      "stage1/cohere/estree/oracles TestProduct_scalar_edges_go_oracle"
+    ],
+    "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
+      "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized1": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized1"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ]
+  }
+}

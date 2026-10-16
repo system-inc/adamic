@@ -1,31 +1,13 @@
 package estree
 
 import (
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"path/filepath"
 	"testing"
 )
 
-func recoveredGrammar() []string {
-	return []string{
-		"class C { readonly!: number; static #x=1; 1n=2; }",
-		"class C { private public x: number; protected public m(){} }",
-		"class C { constructor(static x: number, readonly y: number){} }",
-		"type X = { static x: number; new: string; #x: number; [a,b]: number; };",
-		"({ x=1, y?, z?:2 });",
-		"f<>(); new C<>(); class C<> {} function f<>(){}",
-		"class C { constructor<>(){} }",
-		"class C implements string, number {}",
-		"class C extends A extends B implements X implements Y {}",
-		"export {}; await(x); await 1; function f(){await(x);} namespace N {await(x);}",
-		"export default async(x); export default async () => 1; export default async;",
-		"declare\nmodule\n'x'\n{}",
-		"let obj = /** @satisfies {{ f(s:string):void }} */ ({f(s){}});",
-		"const expected = /** @type {{name:string}} */ (null);",
-		"a ? (b) : c => (d) : e => f;",
-		"class C { static { await(x); class D { x=await(x); } } }",
-	}
-}
+func recoveredGrammar() []string { return oracles.RecoveredGrammar() }
 
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredGrammar(t *testing.T) {
@@ -42,7 +24,7 @@ func TestRecoveredGrammar(t *testing.T) {
 }
 
 // recoveryLibraryGaps are sources Go accepts and the pinned typescript-estree refuses.
-func recoveryLibraryGaps() []string { return []string{"f<>();", "class C<> {}"} }
+func recoveryLibraryGaps() []string { return oracles.RecoveryLibraryGaps() }
 
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveryLibraryGaps(t *testing.T) {

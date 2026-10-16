@@ -30,7 +30,7 @@ func statementsSmallTypeScript(t *testing.T, path string) string {
 
 func init() {
 	for _, path := range statementsSmallTypeScriptFixtures {
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) string {
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) {
 			base, err := filepath.Abs(repository)
 			if err != nil {
 				t.Fatal(err)
@@ -40,8 +40,9 @@ func init() {
 			if err != nil {
 				t.Fatal(err)
 			}
-			row := counted(t, relative, false, nil, false, false)
-			return strings.Replace(row, "| "+relative+" |", "| "+path+" |", 1)
+			// The row is keyed by path, and its digest with it: relative is the scratch copy's, which moves every run.
+			runs, measure := counted(t, relative, false, nil, false, false)
+			return runs, func() string { return strings.Replace(measure(), "| "+relative+" |", "| "+path+" |", 1) }
 		}})
 	}
 }

@@ -13,7 +13,9 @@ import (
 
 // Inventory copied from TestVolumeProfileAgreementAndMutants at 7a10c877.
 // Read the actual execution tables, rather than maintaining a second purported
-// enumeration. Optional corpus checks remain owned even when their env is unset.
+// enumeration. Its four corpus checks (repository, compiler and their -asan
+// twins) left with TestVolumeProfileCorpora on Oct 14 (#testaudit, task hb0fpvd):
+// no gate set their manifests, and they return only through heavy unit #m9es0rv.
 func TestVolumeProfilePartition(t *testing.T) {
 	t.Parallel()
 	expected := []struct{ check, owner string }{
@@ -25,10 +27,6 @@ func TestVolumeProfilePartition(t *testing.T) {
 		{"index-kind", "TestVolumeProfileOverlays"},
 		{"root-kind", "TestVolumeProfileOverlays"},
 		{"index-end", "TestVolumeProfileOverlays"},
-		{"repository", "TestVolumeProfileCorpora"},
-		{"repository-asan", "TestVolumeProfileCorpora"},
-		{"compiler", "TestVolumeProfileCorpora"},
-		{"compiler-asan", "TestVolumeProfileCorpora"},
 	}
 	want := map[string]string{}
 	for _, row := range expected {
@@ -46,7 +44,6 @@ func TestVolumeProfilePartition(t *testing.T) {
 		{"volume_profile_Controls_test.go", "TestVolumeProfileControls", testVolumeProfileControlsShards},
 		{"volume_profile_Mutants_test.go", "TestVolumeProfileMutants", testVolumeProfileMutantsShards},
 		{"volume_profile_Overlays_test.go", "TestVolumeProfileOverlays", testVolumeProfileOverlaysShards},
-		{"volume_profile_Corpora_test.go", "TestVolumeProfileCorpora", testVolumeProfileCorporaShards},
 	} {
 		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Clean(slice.file), nil, 0)
 		if err != nil {
@@ -117,9 +114,6 @@ func TestVolumeProfilePartition(t *testing.T) {
 					continue
 				}
 				owners[key] = append(owners[key], slice.test)
-				if slice.test == "TestVolumeProfileCorpora" {
-					owners[key+"-asan"] = append(owners[key+"-asan"], slice.test)
-				}
 			}
 			return true
 		})

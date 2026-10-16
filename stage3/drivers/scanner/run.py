@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 
+sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from caches import stage3_cache
 
@@ -42,7 +43,7 @@ else:
     # Copy the pipeline so apply still owns construction and patch-set accounting.
     pipeline = out / 'pipeline'
     pipeline.mkdir()
-    for name in ['apply.sh', 'apply.py', 'source.json']:
+    for name in ['apply.sh', 'apply.py', 'caches.py', 'source.json']:
         shutil.copyfile(repository / 'stage3' / name, pipeline / name)
     shutil.copytree(repository / 'stage3/api', pipeline / 'api')
     (pipeline / 'adapt').mkdir()

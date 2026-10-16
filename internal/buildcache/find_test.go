@@ -151,34 +151,27 @@ func TestFindValuesTheTreeOncePerRun(t *testing.T) {
 	}
 }
 
-// Find joins the store's read sets to the cache's as a lookup does, so a cache holding a product without its read
-// sets finds it; a product only the store holds is missing, naming the store's key, since its test fetches it (with
-// its description, and its audit).
+// Find finds a product by the cache's read sets alone: a product only the store holds is missing, naming the store's
+// key, since its test fetches it (with its description, and its audit); a name key whose read sets the cache doesn't
+// hold is missing too, and the store is never asked for them.
 // Not parallel: newRig.
-func TestFindJoinsTheStoresReadSetsAndLeavesFetchesToTheTest(t *testing.T) {
+func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(t *testing.T) {
 	r := newRig(t)
-	shared(t)
+	store, _ := shared(t)
 	t.Setenv("ADAMIC_BUILD_STORE", "traced="+os.Getenv("ADAMIC_BUILD_STORE"))
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
-	token(t)
 	Product(t, port, building("port"))
 	build := r.built(t)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || strings.Contains(settlement.Settled[0], "publish failed") {
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
 	file, _ := loadReads(r.cache, build.NameKey)
 	key := file.Sets[0].Key
-	if err := os.Remove(readsPath(r.cache, build.NameKey)); err != nil {
-		t.Fatal(err)
-	}
 	findings, err := Find([]string{build.NameKey})
 	if err != nil || findings[0] != (Finding{NameKey: build.NameKey, Outcome: FindingFound, Key: key, Name: "port"}) {
-		t.Fatalf("a product whose read sets only the store holds: %+v, %v", findings, err)
-	}
-	if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) == 0 || file.Name != "port" {
-		t.Fatalf("the store's read sets weren't joined to the cache's: %+v", file)
+		t.Fatalf("a product the cache holds: %+v, %v", findings, err)
 	}
 	if err := os.RemoveAll(filepath.Join(r.cache, key)); err != nil {
 		t.Fatal(err)
@@ -189,6 +182,16 @@ func TestFindJoinsTheStoresReadSetsAndLeavesFetchesToTheTest(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(r.cache, key)); err == nil {
 		t.Fatal("Find fetched a product, which only its test may")
+	}
+	if err := os.Remove(readsPath(r.cache, build.NameKey)); err != nil {
+		t.Fatal(err)
+	}
+	findings, err = Find([]string{build.NameKey})
+	if err != nil || findings[0].Outcome != FindingMissing {
+		t.Fatalf("a product whose read sets the cache doesn't hold: %+v, %v", findings, err)
+	}
+	if len(store.reads)+len(store.writes) != 0 {
+		t.Fatalf("Find reached the store: read %q, wrote %q", store.reads, store.writes)
 	}
 }
 

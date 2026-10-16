@@ -298,13 +298,12 @@ func TestJSONHashShardsStayStable(t *testing.T) {
 	}
 }
 
-// Every top shard has one agreement test and one leak test, each bound to its own ordinal, so every case has exactly
-// one agreement owner and one leak owner. A wrapper lost, repeated or bound to another ordinal fails here.
-func TestEveryTopShardHasAnAgreementAndALeakTest(t *testing.T) {
+// Every top shard has one agreement test, bound to its own ordinal, so every case has exactly one owner, whose sanitized
+// run is also its leak check. A wrapper lost, repeated or bound to another ordinal fails here.
+func TestEveryTopShardHasAnAgreementTest(t *testing.T) {
 	t.Parallel()
 	for _, family := range []struct{ file, prefix, helper string }{
 		{"top_portmatchesgocohere_test.go", "TestPortMatchesGoCohere_", "jsonPortTopShard"},
-		{"top_portmatchesgocohereleak_test.go", "TestPortMatchesGoCohereLeak_", "jsonPortTopLeakShard"},
 	} {
 		tree, err := parser.ParseFile(token.NewFileSet(), family.file, nil, 0)
 		if err != nil {

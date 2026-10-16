@@ -71,17 +71,16 @@ func TestCacheAtomicBytes(t *testing.T) {
 	}
 }
 
-// Not parallel: the bypass changes process environment.
 func TestCacheBypass(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	t.Parallel()
 	cache := &resultCache{directory: t.TempDir()}
 	cache.observe("same", func() (execution, bool) { return execution{Stdout: "cached"}, true })
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	cache.bypass = true
 	got := cache.observe("same", func() (execution, bool) { return execution{Stdout: "fresh"}, true })
 	if got.Stdout != "fresh" {
 		t.Fatal("bypass reused evidence")
 	}
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	cache.bypass = false
 	got = cache.observe("same", func() (execution, bool) { t.Fatal("cache missing"); return execution{}, true })
 	if got.Stdout != "cached" {
 		t.Fatal("bypass wrote evidence")
@@ -96,14 +95,24 @@ func TestCacheBypass(t *testing.T) {
 	}
 }
 
-// Not parallel: compare both modes while changing the bypass environment.
 func TestParallelCachedMatchesSerial(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	t.Parallel()
 	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
 	e.cache = &resultCache{directory: t.TempDir()}
+	// Prime the passed program, then prove that the uncached serial run
+	// executes it again instead of consuming that observation.
+	text, err := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := e.attempt(classify("pass/pad.js", string(text), false)); got.Kind != outcomePass {
+		t.Fatal(got)
+	}
+	e.cache.bypass = true
+	e.profile = newRunProfile()
 	var serialLog bytes.Buffer
 	e.log = &serialLog
 	e.jobs = 1
@@ -114,21 +123,36 @@ func TestParallelCachedMatchesSerial(t *testing.T) {
 	if serial.Pass == 0 || serial.Refused == 0 || serial.Skipped == 0 || serial.Fail == 0 || serial.Crashed == 0 {
 		t.Fatalf("fixture lacks verdict coverage: %+v", serial)
 	}
+	assertFreshCacheProfile(t, e.profile)
 	document := reportDocument{Filters: []filterReport{serial}}
 	var serialJSON, serialTable bytes.Buffer
 	if err := writeJSON(&serialJSON, document); err != nil {
 		t.Fatal(err)
 	}
 	printTables(&serialTable, document)
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	e.cache.bypass = false
 	e.jobs = 4
 	e.inProcess = true
 	for round := 0; round < 2; round++ {
+		e.profile = newRunProfile()
 		var log, encoded, table bytes.Buffer
 		e.log = &log
 		parallel, err := e.runFilter("", 0, false)
 		if err != nil {
 			t.Fatal(err)
+		}
+		if round == 1 {
+			hit := false
+			for _, test := range e.profile.Tests {
+				for _, phase := range test.Phases {
+					if phase.Stage == "node" && phase.Hit {
+						hit = true
+					}
+				}
+			}
+			if !hit {
+				t.Fatal("cached parallel run did not reuse Node observations")
+			}
 		}
 		document.Filters = []filterReport{parallel}
 		if err := writeJSON(&encoded, document); err != nil {
@@ -287,9 +311,8 @@ func TestCompilerCacheProgram(t *testing.T) {
 	}
 }
 
-// Not parallel: explicitly enable reuse even in the uncached integration gate.
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	t.Parallel()
 	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
@@ -313,11 +336,14 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 	if result := other.attempt(test); result.Kind != outcomePass || other.compiler.command != nil {
 		t.Fatalf("worker C cache missed when only scratch compiler path changed: %+v", result)
 	}
+	other.cache.bypass = true
+	if result := other.attempt(test); result.Kind != outcomePass || other.compiler.command == nil {
+		t.Fatalf("bypassed worker reused C cache: %+v", result)
+	}
 }
 
-// Not parallel: changes the process-wide ADAMIC_GATE_UNCACHED environment.
 func TestCacheBypassPreservesIdentity(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	t.Parallel()
 	tools, err := resolveTools()
 	if err != nil {
 		t.Fatal(err)
@@ -326,17 +352,27 @@ func TestCacheBypassPreservesIdentity(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	before.bypass = false
 	after, versionAfter, contextAfter, err := prepareCache("../..", tools)
 	if err != nil {
 		t.Fatal(err)
 	}
+	after.bypass = true
 	if contextBefore != contextAfter || before.nodeContext != after.nodeContext {
 		t.Fatalf("cache bypass changed identity: context_equal=%t node_equal=%t",
 			contextBefore == contextAfter, before.nodeContext == after.nodeContext)
 	}
 	if before.directory != after.directory || versionBefore != versionAfter {
 		t.Fatal("cache bypass changed directory or Node version")
+	}
+	before.directory = t.TempDir()
+	after.directory = before.directory
+	before.observe("identity", func() (execution, bool) { return execution{Stdout: "cached"}, true })
+	if got := after.observe("identity", func() (execution, bool) { return execution{Stdout: "fresh"}, true }); got.Stdout != "fresh" {
+		t.Fatal("bypass reused identity observation")
+	}
+	if got := before.observe("identity", func() (execution, bool) { t.Fatal("cache identity observation missing"); return execution{}, true }); got.Stdout != "cached" {
+		t.Fatal("bypass changed identity observation")
 	}
 }
 
@@ -462,5 +498,60 @@ func TestChildrenSeeOnlyWhatTheKeyNames(t *testing.T) {
 		if !seen[name] {
 			t.Errorf("a child didn't see %s", name)
 		}
+	}
+}
+
+func TestCacheBypassProcessDefault(t *testing.T) {
+	t.Parallel()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, value := range []string{"0", "1"} {
+		command := exec.Command(executable, "-test.run=^TestCacheBypassProcessDefaultHelper$")
+		command.Env = append(os.Environ(), "ADAMIC_TEST262_CACHE_BYPASS_HELPER=1", "ADAMIC_GATE_UNCACHED="+value)
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("process default %s: %v: %s", value, err, output)
+		}
+	}
+}
+
+func TestCacheBypassProcessDefaultHelper(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_TEST262_CACHE_BYPASS_HELPER") != "1" {
+		return
+	}
+	tools, err := resolveTools()
+	if err != nil {
+		t.Fatal(err)
+	}
+	cache, _, _, err := prepareCache("../..", tools)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := os.Getenv("ADAMIC_GATE_UNCACHED") == "1"
+	if cache.bypass != want {
+		t.Fatalf("process default bypass=%t want %t", cache.bypass, want)
+	}
+	// This is a dedicated child process, not a change to the package's environment.
+	next := "1"
+	if want {
+		next = "0"
+	}
+	if err := os.Setenv("ADAMIC_GATE_UNCACHED", next); err != nil {
+		t.Fatal(err)
+	}
+	cache.directory = t.TempDir()
+	calls := 0
+	for range 2 {
+		cache.observe("default", func() (execution, bool) { calls++; return execution{}, true })
+	}
+	expected := 1
+	if want {
+		expected = 2
+	}
+	if calls != expected {
+		t.Fatalf("runner default changed with environment: %d executions want %d", calls, expected)
 	}
 }

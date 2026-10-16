@@ -383,7 +383,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			command := textGoCommand(t, cohere, "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)
+			command := textGoCommand(t, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-text"), mainPath)...)
 			output, err := textCombinedOutput(command)
 			if err != nil {
 				return fmt.Errorf("Go splitText: %w\n%s", err, output)
@@ -396,7 +396,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	var formatterDir, generatorDir string
 	if target == "" || target == "formatter" {
 		formatterDir = buildcache.Product(t, textGoProductInputs("formatter", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, filepath.Join(root, "cohere"), "build", "-o", filepath.Join(dir, "cohere"), "./command/cohere")
+			command := textGoCommand(t, filepath.Join(root, "cohere"), append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "cohere"), "./command/cohere")...)
 			output, err := textCombinedOutput(command)
 			if err != nil {
 				return fmt.Errorf("formatter: %w\n%s", err, output)
@@ -406,7 +406,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	}
 	if target == "" || target == "generator" {
 		generatorDir = buildcache.Product(t, textGoProductInputs("generator", markdownGoCompilers()), func(dir string) error {
-			command := textGoCommand(t, root, "build", "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")
+			command := textGoCommand(t, root, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")...)
 			output, err := textCombinedOutput(command)
 			if err != nil {
 				return fmt.Errorf("generator: %w\n%s", err, output)
@@ -429,11 +429,11 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 // toolchain.Env (textGoCommand), so its key names the C and C++ compilers that environment gives go, and the C compiler
 // by its report: one the key didn't name could change a cgo dependency's bytes unseen.
 func textGoProductInputs(target string, compilers markdownCompilers) buildcache.Inputs {
-	flags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus}
+	flags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus, "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}
 	tools := []string{buildcache.Tool("go", "version"), compilers.report}
 	switch target {
 	case "go":
-		return buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(flags, "go build", "overlay text_go.go,text_bridge.go"), Toolchain: tools}
+		return buildcache.Inputs{Name: "markdownblocks-text-go", Files: []string{"cohere", "stage1/cohere/markdownblocks/testdata/text_go.go", "stage1/cohere/markdownblocks/testdata/text_bridge.go"}, Flags: append(flags, "overlay text_go.go,text_bridge.go"), Toolchain: tools}
 	case "formatter":
 		return buildcache.Inputs{Name: "markdownblocks-text-formatter", Files: []string{"cohere"}, Flags: flags, Toolchain: tools}
 	case "generator":

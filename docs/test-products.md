@@ -37,19 +37,19 @@ Each keys what `go list` says it compiles (with `-test`, the test files too), th
 
 ## Keys: what a build read
 
-A product's key is its name key and the read set its last traced build measured, valued on the tree at hand (#vt46geg), so a change misses only the products that read it. Only Workshop's tree builder builds products for others; it opts in with `ADAMIC_BUILD_STORE=traced`, runs as main's (`ADAMIC_BUILD_STORE_TRUST=main`, without which everything it publishes lands in the candidate namespaces, `build-candidate` and `reads-candidate`, that a trusted reader never reads), and runs under the tracer:
+A product's key is its name key and the read set its last traced build measured, valued on the tree at hand (#vt46geg), so a change misses only the products that read it. Only Workshop's tree builder builds products for others; it opts in with `ADAMIC_BUILD_STORE=traced`, which refuses any product built outside a trace, and runs under the tracer:
 
 ```
-ADAMIC_BUILD_STORE=traced ADAMIC_BUILD_STORE_TRUST=main go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./...
+ADAMIC_BUILD_STORE=traced go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./...
 ```
 
 `traced` runs the command under `strace -f` (Linux). Each build is given every path its test process and the processes it started opened, listed, stat'ed or missed, up to the build's end, outside keying; what the build's own processes wrote first is output, not input, and a product is an input whoever wrote it. The read set holds tree paths (a file by git's blob id, a directory by its tracked listing, a lookup by whether it exists, a symbolic link by where it points), the recipe (every file of the packages the test binary links, and its build settings), other products by their keys, the Go release and each tool by its report, and what it read of the machine (a file a dpkg package installed, unchanged since by dpkg's md5, by the package's version; anything else under /usr, /lib, /bin and /etc by itself). A machine file outside dpkg (/etc/alternatives, /usr/local) is valued when the build settles, and the run's before-and-after state covers dpkg's packages but not such files, so one changed during a traced run is keyed as it is at the end. It is recorded beside the product as `<name key>.reads`; a set recorded on the same tree as an earlier one is their union.
 
-The store carries the read sets beside the products, as `refs/reads/<name key>.<day>.<n>`, each naming a blob that holds the whole file and the day. R2 expires refs and blobs seven days after they are written and the Worker never rewrites one it holds, so the tree builder publishes a set when it settles and again whenever it uses a product whose newest set is more than five days old; a reader takes the newest day within the lifetime, so it never depends on the oldest ref surviving. On every use the tree builder also checks that the product's ref, manifest and blobs are all still in the store, and publishes the product again, with its read sets, when any is gone. What the store still holds can't be refreshed through the Worker, which never rewrites a ref or blob it holds, so a product expires a week after it was first published and is back at the tree builder's next use; between the two a runner misses it loudly. Keeping it present throughout is Loom's to choose: a Worker that rewrites a held object's same bytes, or refs/build and blobs/ exempted from the lifecycle. A product unused by the tree builder for a week loses its read set from the store too.
+buildcache never writes to the store. The read sets travel with the cache a tree built: Loom's tree index carries each tree's read sets, unpacked into a unit's cache, and Loom serves the products themselves (`refs/build/<key>`, its manifest and blobs) from what it holds. A lookup reads only the cache's own read sets, so a name key the cache holds none for has no key to fetch and asks the store nothing. The store once carried read sets too, as `refs/reads/<name key>.<day>.<n>`, which the tree builder published; once nothing wrote them, every miss still probed eighteen of them, 96.7% of the store's billed reads and every one a 404 (Oct 14), so the reader and the writer went together.
 
-A build is refused, named, and neither placed, recorded nor published, when it read what no key can name: a file git doesn't track (installed node_modules included), `.git`, content in the home directory, a temp file no process of the build made, a path outside every known place, or a lost trace. A run that wrote into the tree, or whose tree changed before it ended (`HEAD`, status, the content of every modified or untracked file, each submodule's, or the machine's installed packages), refuses every build. A refused product is Loom's to fix, never the author's red. `traced` prints each settled product with how far its declared `Files` drift from its reads, and exits 3 when the command passed and a product was refused.
+A build is refused, named, and neither placed nor recorded, when it read what no key can name: a file git doesn't track (installed node_modules included), `.git`, content in the home directory, a temp file no process of the build made, a path outside every known place, or a lost trace. A run that wrote into the tree, or whose tree changed before it ended (`HEAD`, status, the content of every modified or untracked file, each submodule's, or the machine's installed packages), refuses every build. A refused product is Loom's to fix, never the author's red. `traced` prints each settled product with how far its declared `Files` drift from its reads, and exits 3 when the command passed and a product was refused.
 
-Everywhere else a product is found by its read sets, the cache's and then the store's (`ADAMIC_BUILD_CACHE=read` on a runner never builds). A miss builds as it always did, for this machine alone: keyed by its declared `Files`, never found by a read set, never published.
+Everywhere else a product is found by the cache's read sets, and fetched from the store by the keys they give when the cache lacks it (`ADAMIC_BUILD_CACHE=read` on a runner never builds). A miss builds as it always did, for this machine alone: keyed by its declared `Files`, never found by a read set.
 - A product test has no subtests and asserts nothing beyond the build succeeding. It is `t.Parallel()`.
 
 ## A product's bytes name no machine
@@ -71,18 +71,3 @@ A test calls the same recipe function (`tsgoChecker(t)` above). After the build 
 - Test units run with `-test.skip '^TestProduct_'` and launch only after every product has passed.
 - A product over 60 s is grain like a slow test: split it into smaller products, or cache its inputs.
 - Locally, `go test ./pkg` runs the product test like any other; the shared recipe means order doesn't matter.
-
-## Native runtime shards
-
-`internal/oracle/runtimes_test.go` declares six NativeRuntimes shards per option, with suffixes
-0 through 5. Each shard builds every sixth feature-set archive, starting at its suffix,
-so the eleven feature sets give each product at most two complete archives. Each archive
-still compiles all its translation units, four at a time. Splitting archives between
-products changes neither their inputs nor the keys consumers use to fetch them.
-
-`TestRuntimeProductShardsCoverEveryArchive` reads the actual product declarations and
-checks that each option has one product for every shard and their union holds every
-feature set exactly once. NativeRuntimes shards hold at most two archives. The independent
-ParallelTSanRuntime family keeps its three-product partition, with at most four archives
-per product; extending NativeRuntimes never changes another family's partition. Adding feature sets must
-keep this bound by extending the shards, rather than dropping files or raising a budget.

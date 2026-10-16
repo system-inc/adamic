@@ -28,59 +28,12 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 	root := parallelCheckRoot(t)
 	failures := make(map[string]bool)
 	tests := 0
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
+	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string) {
+		tests++
+		if parallelCheckFirstStatement(fn, param) || parallelCheckReason(fn, positions, lines) {
+			return
 		}
-		if entry.IsDir() {
-			if entry.Name() == ".git" || entry.Name() == "vendor" || entry.Name() == "testdata" || path == filepath.Join(root, "cohere") {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if !strings.HasSuffix(entry.Name(), "_test.go") {
-			return nil
-		}
-		source, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		positions := token.NewFileSet()
-		file, err := parser.ParseFile(positions, path, source, parser.ParseComments)
-		if err != nil {
-			return err
-		}
-		testingNames := make(map[string]bool)
-		for _, imp := range file.Imports {
-			if imp.Path.Value == `"testing"` {
-				name := "testing"
-				if imp.Name != nil {
-					name = imp.Name.Name
-				}
-				testingNames[name] = true
-			}
-		}
-		lines := strings.Split(string(source), "\n")
-		rel, err := filepath.Rel(root, path)
-		if err != nil {
-			return err
-		}
-		for _, decl := range file.Decls {
-			fn, ok := decl.(*ast.FuncDecl)
-			if !ok {
-				continue
-			}
-			param, ok := parallelCheckTestParameter(fn, testingNames)
-			if !ok {
-				continue
-			}
-			tests++
-			if parallelCheckFirstStatement(fn, param) || parallelCheckReason(fn, positions, lines) {
-				continue
-			}
-			failures[filepath.ToSlash(rel)+"\t"+fn.Name.Name] = true
-		}
-		return nil
+		failures[rel+"\t"+fn.Name.Name] = true
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -156,6 +109,59 @@ func parallelCheckRoot(t *testing.T) string {
 		}
 		dir = parent
 	}
+}
+
+// parallelCheckEachTest walks every _test.go under root, skipping .git, vendor, testdata and the cohere submodule,
+// and visits each top-level test with its slash-separated path from root and the name of its *testing.T parameter.
+func parallelCheckEachTest(root string, visit func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string)) error {
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if entry.IsDir() {
+			if entry.Name() == ".git" || entry.Name() == "vendor" || entry.Name() == "testdata" || path == filepath.Join(root, "cohere") {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if !strings.HasSuffix(entry.Name(), "_test.go") {
+			return nil
+		}
+		source, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		positions := token.NewFileSet()
+		file, err := parser.ParseFile(positions, path, source, parser.ParseComments)
+		if err != nil {
+			return err
+		}
+		testingNames := make(map[string]bool)
+		for _, imp := range file.Imports {
+			if imp.Path.Value == `"testing"` {
+				name := "testing"
+				if imp.Name != nil {
+					name = imp.Name.Name
+				}
+				testingNames[name] = true
+			}
+		}
+		lines := strings.Split(string(source), "\n")
+		rel, err := filepath.Rel(root, path)
+		if err != nil {
+			return err
+		}
+		for _, decl := range file.Decls {
+			fn, ok := decl.(*ast.FuncDecl)
+			if !ok {
+				continue
+			}
+			if param, ok := parallelCheckTestParameter(fn, testingNames); ok {
+				visit(filepath.ToSlash(rel), fn, param, positions, lines)
+			}
+		}
+		return nil
+	})
 }
 
 func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) (string, bool) {

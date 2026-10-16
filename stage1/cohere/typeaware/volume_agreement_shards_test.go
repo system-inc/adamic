@@ -147,7 +147,7 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlay)
-		cmd, cancel := volumeGuardCommand(context.Background(), "go", "build", "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)
+		cmd, cancel := volumeGuardCommand(context.Background(), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)...)
 		defer cancel()
 		cmd.Dir = filepath.Join(h.repository, "cohere")
 		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
@@ -267,7 +267,7 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 		inputs := volumeAgreementInputs("archive-"+archiveName, false)
 		inputs.Flags = append(inputs.Flags, archiveName)
 		dir := buildcache.Product(h.t, inputs, func(dir string) error {
-			command, cancel := volumeGuardCommand(context.Background(), "go", "build", "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")
+			command, cancel := volumeGuardCommand(context.Background(), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")...)
 			defer cancel()
 			command.Dir = h.repository
 			command.Env = append(command.Env, "PWD="+h.repository)

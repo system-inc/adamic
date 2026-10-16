@@ -3,13 +3,13 @@ package estree
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -254,7 +254,7 @@ func threePortOracleInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+		Flags:     []string{"repository=" + root(t), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
@@ -264,33 +264,7 @@ func threePortSetupContext() (context.Context, context.CancelFunc) {
 
 func threePortOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := threePortOracleInputs(t)
-	directory := buildcache.Product(t, inputs, func(dir string) error {
-		repo := root(t)
-		source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
-		virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		ctx, cancel := threePortSetupContext()
-		defer cancel()
-		command := threePortCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.Dir = filepath.Join(repo, "cohere")
-		command.Env = append(command.Env, "PWD="+command.Dir)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
+	return oracles.ThreePortMutantsOracle(t)
 }
 
 func threePortReady(t *testing.T) *threePortPrepared {
@@ -378,7 +352,7 @@ func threePortOwnWorkContext(budget time.Duration) (context.Context, context.Can
 	return context.WithTimeout(context.Background(), budget)
 }
 
-func TestProduct_ThreePortOracle(t *testing.T) { t.Parallel(); threePortOracleProduct(t) }
+func TestProduct_EstreeFindsThreePortOracle(t *testing.T) { t.Parallel(); threePortOracleProduct(t) }
 func TestProduct_ThreePortLowered0(t *testing.T) {
 	t.Parallel()
 	threePortLoweredProduct(t, threePortMutations()[0])

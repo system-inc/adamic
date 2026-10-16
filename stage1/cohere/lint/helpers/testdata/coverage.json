@@ -200,6 +200,7 @@
     "dot-notation",
     "func-name-matching",
     "grouped-accessor-pairs",
+    "id-length",
     "max-classes-per-file",
     "max-depth",
     "max-lines",
@@ -227,6 +228,7 @@
     "no-useless-computed-key",
     "no-useless-escape",
     "no-useless-rename",
+    "object-shorthand",
     "operator-assignment",
     "react-hooks/config",
     "react-hooks/error-boundaries",
@@ -261,5 +263,5 @@
     "sort-vars",
     "yoda"
   ],
-  "cases": 23539
+  "cases": 29399
 }

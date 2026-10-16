@@ -1,4 +1,4 @@
-// nexus/consistency_no_boolean_outcome.go:48; `(Interface|Type|Result|Response|Properties)+$`
+// nexus/shouting.go:162; `"[^"\n]*"`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "Interface", 4);
-observe(regex, "xInterface", 5);
-observe(regex, "Interface\n", 6);
-observe(regex, "AffectedFileResult", 7);
-observe(regex, "EmitResult", 8);
-observe(regex, "AnonymousType", 9);
+observe(regex, "\"\"", 4);
+observe(regex, "x\"\"", 5);
+observe(regex, "\"\"\n", 6);
+observe(regex, "className=\"flex-grow-2\"", 7);
+observe(regex, "// Skip for invalid syntax like this: export { \"x\" }", 8);
+observe(regex, "// typeof x === \"string\"", 9);

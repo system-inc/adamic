@@ -60,6 +60,45 @@ func volumeProfileStage0(h *harness) string {
 // rule packages cohere's oracle reads.
 var typeAwareCompilerFiles = []string{"go.mod", "go.work", "cmd/adamic", "internal", "bridge/tsgo", "cohere/go.mod", "cohere/go.sum", "cohere/internal", "cohere/policy", "cohere/rule_runner", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim"}
 
+// typeAwareTrackedTypeScript lists the .ts files the tree carries under each root, relative to repository, in roots'
+// order. The listing is key-time work (buildcache.Keying): every file it lists goes into a key's Files, so a .ts added
+// or changed under a root moves that key by its bytes. Walked under Workshop's trace, it put every directory under
+// stage1/cohere/lint into the read sets of the volume products and the type-symbol native, so deleting a doc file under
+// a rule's evidence/ moved all five keys (#xfvshc6).
+func typeAwareTrackedTypeScript(repository string, roots ...string) ([]string, error) {
+	var files []string
+	var err error
+	buildcache.Keying(func() {
+		for _, root := range roots {
+			err = filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
+				if err != nil {
+					return err
+				}
+				// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a checkout,
+				// which a runner's source never has, and keyed it on Workshop alone (Planner's diff of landable-7's tree).
+				if !buildcache.Tracked(repository, path, entry.IsDir()) {
+					if entry.IsDir() {
+						return filepath.SkipDir
+					}
+					return nil
+				}
+				if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+					relative, err := filepath.Rel(repository, path)
+					if err != nil {
+						return err
+					}
+					files = append(files, filepath.ToSlash(relative))
+				}
+				return nil
+			})
+			if err != nil {
+				return
+			}
+		}
+	})
+	return files, err
+}
+
 // typeAwareCompilerKey keys a volume product by its compilers' sources, the TypeScript it compiles, the Go release and
 // the C compiler the archive's cgo runs. It asks go nothing: go env and go list answer for the machine and checkout they
 // run in, and a runner's answers keyed Workshop's products apart (#nm31pcn: typeaware_volume_lowered, and the corpus's
@@ -67,32 +106,11 @@ var typeAwareCompilerFiles = []string{"go.mod", "go.work", "cmd/adamic", "intern
 func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) {
 	h.t.Helper()
 	inputs.Files = append(inputs.Files, typeAwareCompilerFiles...)
-	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
-		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a checkout,
-			// which a runner's source never has, and keyed it on Workshop alone (Planner's diff of landable-7's tree).
-			if !buildcache.Tracked(h.repository, path, entry.IsDir()) {
-				if entry.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				relative, err := filepath.Rel(h.repository, path)
-				if err != nil {
-					return err
-				}
-				inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
-			}
-			return nil
-		})
-		if err != nil {
-			h.t.Fatal(err)
-		}
+	files, err := typeAwareTrackedTypeScript(h.repository, "stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript")
+	if err != nil {
+		h.t.Fatal(err)
 	}
+	inputs.Files = append(inputs.Files, files...)
 	// cgo's C compiler: the CC toolchain.Env runs the archive's go build with (clang where the caller sets none, as on
 	// every Loom box), and clang for the sanitized archive, which sets CC itself. It reads no go: Env is this process's.
 	compiler := typeAwareBuildSetting("CC")
@@ -110,9 +128,10 @@ func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool
 		archiveName += " asan"
 		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
 	}
+	reproducible := strings.Join(buildcache.ReproducibleGoFlags(), " ")
 	inputs := buildcache.Inputs{
 		Name:  name,
-		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build ./cmd/adamic", "archive=" + archiveName, "go build -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
+		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build " + reproducible + " ./cmd/adamic", "archive=" + archiveName, "go build " + reproducible + " -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
 	}
 	typeAwareCompilerKey(h, &inputs, sanitize)
 	inputs.Flags = append(inputs.Flags, variant...)

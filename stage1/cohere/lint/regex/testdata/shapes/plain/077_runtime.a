@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:68; `^backdrop-blur$`
+// tailwind/no_deprecated_classes.go:92; `^bg-left-top$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "backdrop-blur", 4);
-observe(regex, "xbackdrop-blur", 5);
-observe(regex, "backdrop-blur\n", 6);
+observe(regex, "bg-left-top", 4);
+observe(regex, "xbg-left-top", 5);
+observe(regex, "bg-left-top\n", 6);

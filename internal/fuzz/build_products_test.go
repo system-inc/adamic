@@ -8,5 +8,5 @@ import (
 
 func TestProduct_Adamic(t *testing.T) {
 	t.Parallel()
-	buildcache.Adamic(t)
+	buildcache.AdamicBuiltElsewhere(t)
 }
