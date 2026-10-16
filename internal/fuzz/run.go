@@ -173,15 +173,27 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	expected := parallelRefusal(source)
+	moveWhat, moveFix := moveRefusal(source)
+	if (moveWhat == "") != (moveFix == "") || (moveWhat != "" && moveFix != "return it through the results" && moveFix != "don't use it after the parallelMap") {
+		return Outcome{Verdict: Finding, Key: "invalid move expectation"}
+	}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
-		outcome := compilerRefusal(lowered)
-		if expected != "" {
-			outcome = judgeParallelRefusal(expected, outcome, lowered)
+		var outcome Outcome
+		switch {
+		case moveWhat != "":
+			outcome = judgeMoveRefusal(moveWhat, moveFix, lowered)
+		case expected == "":
+			outcome = compilerRefusal(lowered)
+		default:
+			outcome = judgeParallelRefusal(expected, compilerRefusal(lowered), lowered)
 		}
 		outcome.retry = outcome.Verdict == Finding
 		return outcome
 	}
-	if expected != "" {
+	if expected != "" || moveWhat != "" {
+		if moveWhat != "" {
+			expected = moveWhat + "; " + moveFix
+		}
 		return Outcome{Verdict: Finding, Key: "compiler accepted a program it must refuse", Detail: "expected a refusal containing " + expected}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
