@@ -13,7 +13,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -27,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/testguard"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -46,7 +46,7 @@ const RepositoryCorpusCommit = "6f7d5d0ba4a7ccafb6ed69fd531d169f9effe443"
 func TSPrinterPinnedCorpusInputs(pin string) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:  "tsprinter pinned corpus",
-		Files: []string{"stage1/cohere/tsprinter/corpus_test.go"},
+		Files: []string{"stage1/cohere/tsprinter/oracles/oracles.go"},
 		Flags: []string{"repository TypeScript at " + pin, "roots " + strings.Join(repositoryCorpusRoots, " ")},
 	}
 }
@@ -208,10 +208,10 @@ func DocumentCorpus(t *testing.T) (string, string, string) {
 	directory := t.TempDir()
 	cohere, _ := filepath.Abs(Repository + "/cohere")
 	// The unit only runs the oracle, in the package's directory.
-	command := Bounded(t, documentOracle(t), "-test.run=^TestAdamicDocuments$")
+	command := toolchain.Command(documentOracle(t), "-test.run=^TestAdamicDocuments$")
 	command.Dir = cohere + "/internal/format/doc"
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
-	if output, err := CombinedOutput(command); err != nil {
+	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("Go doc corpus %v\n%s", err, output)
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
@@ -319,7 +319,7 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 	for _, file := range files {
 		flags = append(flags, "input-id="+tsPrinterOutputLabel(file, root, external, true))
 	}
-	inputs := append([]string{oracle, gaps, root + "/stage1/cohere/tsprinter/expression_products_test.go", root + "/stage1/cohere/tsprinter/expressions_test.go"}, files...)
+	inputs := append([]string{oracle, gaps, root + "/stage1/cohere/tsprinter/oracles/oracles.go"}, files...)
 	product := oracleExpressionBuild(t, PrinterBuildInputs{Name: "TS " + family + " oracle outputs", Files: inputs, Flags: flags, Toolchain: runtime.Version()}, func(directory string) error {
 		request, err := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
 		if err != nil {
@@ -330,10 +330,10 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 		if err := os.WriteFile(requestPath, request, 0644); err != nil {
 			return err
 		}
-		command := Bounded(t, oracle, "-test.v", "-test.count=1", "-test.run=^"+test+"$", "-test.timeout=0")
+		command := toolchain.Command(oracle, "-test.v", "-test.count=1", "-test.run=^"+test+"$", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), variable+"="+requestPath)
-		output, err := CombinedOutput(command)
+		output, err := childguard.CombinedOutput(command, childguard.Options{})
 		if err != nil {
 			return fmt.Errorf("Go %s corpus: %w\n%s", family, err, output)
 		}
@@ -817,20 +817,6 @@ func expressionKey(t *testing.T, inputs PrinterBuildInputs) buildcache.Inputs {
 
 const Repository = "../../.."
 
-// bounded prepares a child; execute and combinedOutput run it with progress-based guards.
-func Bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	// The child guard owns hang detection, including for Go test children.
-	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
-		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
-	}
-	return exec.Command(name, arguments...)
-}
-
-func CombinedOutput(command *exec.Cmd) ([]byte, error) {
-	return childguard.CombinedOutput(command, childguard.Options{})
-}
-
 type Run struct {
 	Stdout, Stderr []byte
 	ExitCode       int
@@ -865,10 +851,10 @@ func mutantOracle(t *testing.T, change Mutation, binary string) (string, string)
 		kind = "Statement"
 	}
 	// The test binary runs in its package's directory, as go test runs it.
-	command := Bounded(t, binary, "-test.count=1", "-test.timeout=0", "-test.run=^TestAdamic"+kind+"Corpus$")
+	command := toolchain.Command(binary, "-test.count=1", "-test.timeout=0", "-test.run=^TestAdamic"+kind+"Corpus$")
 	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json", "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-	if output, err := CombinedOutput(command); err != nil {
+	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("Go mutation oracle: %v\n%s", err, output)
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
@@ -1010,7 +996,7 @@ func MutantOracleProduct(t *testing.T, index int) (string, string) {
 // gaps file, and the code that runs the oracle and captures its output.
 func MutantOracleCorpusInputs(root string, index int, oracle string) PrinterBuildInputs {
 	inputs := []string{root + "/internal/childguard"}
-	for _, file := range []string{"mutants_test.go", "mutant_oracle_test.go", "mutant_products_test.go", "helpers_test.go", "doc_test.go", "shards_test.go", "testdata/notyet.json", "expressions_test.go"} {
+	for _, file := range []string{"oracles/oracles.go", "testdata/notyet.json"} {
 		inputs = append(inputs, root+"/stage1/cohere/tsprinter/"+file)
 	}
 	return PrinterBuildInputs{
@@ -1700,50 +1686,29 @@ func StatementShards(t *testing.T, cases, want, specs string) []statementShard {
 	return result
 }
 
-// Case commands use the shard deadline. Setup has no clock of its own;
-// cancellation still kills the entire child process group.
-func statementCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// statementContext is a case command's context: the shard's deadline, or a context the test cancels at its end. Setup
+// has no clock of its own; cancellation still kills the child's whole process group (childguard).
+func statementContext(t *testing.T) context.Context {
 	t.Helper()
 	if value, ok := StatementCaseContexts.Load(t); ok {
-		return statementContextCommand(value.(context.Context), name, arguments...)
+		return value.(context.Context)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)
-	return statementContextCommand(ctx, name, arguments...)
+	return ctx
 }
 
-func statementContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		group := command.Process.Pid
-		if command.SysProcAttr.Pgid != 0 {
-			group = command.SysProcAttr.Pgid
-		}
-		err := syscall.Kill(-group, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = 5 * time.Second
-	return command
-}
-
+// StatementExecute runs name with this process's environment and environment added, in its own process group under
+// the case's context, and returns what it printed and how it exited. A child that never started fails the test; one
+// that ran and failed is a result.
 func StatementExecute(t *testing.T, environment []string, name string, arguments ...string) Run {
 	t.Helper()
-	command := statementCommand(t, name, arguments...)
-	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
-	}
+	command := toolchain.CommandContextIn(statementContext(t), "", name, arguments...)
+	command.Env = append(os.Environ(), environment...)
+	command.WaitDelay = 5 * time.Second
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
-	var exitError *exec.ExitError
-	if err != nil && !errors.As(err, &exitError) {
+	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil && command.ProcessState == nil {
 		t.Fatalf("running %s: %v", name, err)
 	}
 	return Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
@@ -1793,7 +1758,7 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 	}
 	product := statementProduct(t, buildcache.Inputs{
 		Name:  "tsprinter-statements-oracle-output-v1",
-		Files: []string{"stage1/cohere/tsprinter/statements_test.go", "stage1/cohere/tsprinter/statements_shards_test.go"},
+		Files: []string{"stage1/cohere/tsprinter/oracles/oracles.go"},
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}, func(dir string) error {
 		// Requests are scratch inputs. Publish only the oracle's four output files.
@@ -1804,10 +1769,11 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 			return err
 		}
-		command := statementCommand(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
+		command := toolchain.CommandContextIn(statementContext(t), "", oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
+		command.WaitDelay = 5 * time.Second
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-		output, err := CombinedOutput(command)
+		output, err := childguard.CombinedOutput(command, childguard.Options{})
 		if err != nil {
 			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
 		}
@@ -1899,20 +1865,11 @@ type tscAgreementFamily struct {
 
 type TSCAgreementData struct{ Families []tscAgreementFamily }
 
-// tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build here, the TSC filter, the
-// oracle outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle
-// runs and its output is captured (statementContextCommand; bounded and combinedOutput). printerGateOnce, in
-// printer_gate_products_test.go, is only a per-process memo, and the oracle it builds is keyed by its bytes.
-var TSCAgreementRecipe = []string{
-	"stage1/cohere/tsprinter/tsc_corpus_split_test.go",
-	"stage1/cohere/tsprinter/tsc_corpus_test.go",
-	"stage1/cohere/tsprinter/tsc_units_test.go",
-	"stage1/cohere/tsprinter/expression_products_test.go",
-	"stage1/cohere/tsprinter/expressions_test.go",
-	"stage1/cohere/tsprinter/corpus_test.go",
-	"stage1/cohere/tsprinter/statements_shards_test.go",
-	"stage1/cohere/tsprinter/helpers_test.go",
-}
+// tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build, the TSC filter, the oracle
+// outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle runs and
+// its output is captured, all in this package since #2ba0c20. printerGateOnce is only a per-process memo, and the oracle
+// it builds is keyed by its bytes.
+var TSCAgreementRecipe = []string{"stage1/cohere/tsprinter/oracles/oracles.go"}
 
 // tscAgreementInputs are what the corpus product's build reads: the TSC corpus, the gaps file, the Go oracle that
 // answers every case, by its bytes as expressionBuild keys a generated input, and the recipe. Keying every tracked file
