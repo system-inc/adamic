@@ -1898,13 +1898,17 @@ var leanRecipeFor = leanRecipeOf
 
 // leanRecipeOf is a lean build's recipe (#earlycut, Node's approved design): the code that makes it, never the code of
 // the test binary that settled it, which keyed every native runtime archive and every go oracle built in a test linking
-// the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, as recipeOf keys
-// them (buildcache by its make files alone), and a lean caller's own package (caller, leanCallers), never what the
-// caller links: what its build calls there is in the Files it declares, which the window keys as read (leanReads), and
-// the caller's census holds the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles).
-// Under process's build settings, as the binary was built.
+// the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, all their non-test
+// files (buildcache whole, Tests' ruling of Oct 16: goProduct's closure and withOutsideHeaders run a go build, and
+// they're no make file), and a lean caller's own package (caller, leanCallers), never what the caller links: what its
+// build calls there is in the Files it declares, which the window keys as read (leanReads), and the caller's census holds
+// the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles). Under process's build
+// settings, as the binary was built, and refused as recipeOf refuses when process names no package.
 func leanRecipeOf(root, caller string, process journalEntry) recipe {
-	listings := []recipeListing{{pkg: buildcachePackage, deps: true}}
+	if pkg := strings.TrimSuffix(process.Package, ".test"); pkg == "" || pkg == "command-line-arguments" {
+		return recipe{reason: fmt.Sprintf("its process's binary (%s) names no package, so the code it ran can't be keyed", process.Executable)}
+	}
+	listings := []recipeListing{{pkg: buildcachePackage, deps: true, whole: true}}
 	if caller != "" && caller != buildcachePackage {
 		listings = append(listings, recipeListing{pkg: caller})
 	}
@@ -1912,10 +1916,11 @@ func leanRecipeOf(root, caller string, process journalEntry) recipe {
 }
 
 // A recipeListing is one package a recipe keys, as go list names it: with every package of the tree it links (deps), and
-// its test files with it, when it's a test binary's package (test).
+// its test files with it, when it's a test binary's package (test). Buildcache is keyed by its make files alone
+// (makeFilesOnly), unless it's the package under test or the listing keys it whole (whole, a lean build's).
 type recipeListing struct {
-	pkg        string
-	test, deps bool
+	pkg               string
+	test, deps, whole bool
 }
 
 // recipeListed is the recipe of listings, under process's build settings: every file of each listed package of the tree,
@@ -1962,7 +1967,7 @@ func recipeListed(root string, process journalEntry, listings []recipeListing) r
 		if err != nil {
 			return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
 		}
-		if reason := recipeEntries(root, pkg, test, output, add); reason != "" {
+		if reason := recipeEntries(root, pkg, test, listing.whole, output, add); reason != "" {
 			return recipe{reason: reason}
 		}
 	}
@@ -1993,9 +1998,9 @@ func recipeListed(root string, process journalEntry, listings []recipeListing) r
 }
 
 // recipeEntries adds to a recipe, through add, what output, go list's JSON of pkg (a test binary's when test), names of
-// the tree: each package's directory, its files, and its module's go.mod and go.sum. It's the reason the listing can't be
-// read, or "".
-func recipeEntries(root, pkg string, test bool, output []byte, add func(kind, name string)) string {
+// the tree: each package's directory, its files, and its module's go.mod and go.sum, buildcache's every non-test file
+// when whole. It's the reason the listing can't be read, or "".
+func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(kind, name string)) string {
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed struct {
@@ -2031,8 +2036,8 @@ func recipeEntries(root, pkg string, test bool, output []byte, add func(kind, na
 			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
 		}
 		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
-		// the package under test.
-		makeOnly := makeFilesOnly && name == buildcachePackage && !under
+		// the package under test or a lean build's recipe keys it whole.
+		makeOnly := makeFilesOnly && name == buildcachePackage && !under && !whole
 		for _, names := range files {
 			for _, name := range names {
 				if makeOnly && !isMakeFile(name) {
