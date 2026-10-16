@@ -13,9 +13,13 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 	if expression.Moved {
 		name = "adamic_parallel_map_move"
 	}
-	declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
-	if !slices.Contains(e.declarations, declaration) {
-		e.declarations = append(e.declarations, declaration)
+	// adamic.h already declares the ordinary runtime entry point. Repeating its
+	// external prototype in generated C violates the split-unit ownership grammar.
+	if expression.Moved {
+		declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
+		if !slices.Contains(e.declarations, declaration) {
+			e.declarations = append(e.declarations, declaration)
+		}
 	}
 	items := e.value(expression.Items)
 	original := e.value(expression.Work)

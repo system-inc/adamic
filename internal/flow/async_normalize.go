@@ -1,7 +1,6 @@
 package flow
 
 import (
-	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"reflect"
 	"slices"
@@ -12,7 +11,7 @@ import (
 func NormalizeAsync(program *ir.Program) error {
 	if containsAwait(reflect.ValueOf(program.Main)) {
 		index := len(program.Functions)
-		program.Functions = append(program.Functions, ir.Function{Name: "module", Async: true, Returns: ir.Promise, Body: program.Main})
+		program.Functions = append(program.Functions, ir.Function{Name: "module", Async: true, AsyncSite: asyncSourceSite(program.Main), Returns: ir.Promise, Body: program.Main})
 		program.AsyncEntry = index + 1
 		program.Main = nil
 	}
@@ -22,7 +21,7 @@ func NormalizeAsync(program *ir.Program) error {
 			continue
 		}
 		if function.NestedFrame || function.FrameIdentity != 0 {
-			return fmt.Errorf("async nested declarations need a canonical suspension environment")
+			return &AsyncError{Site: function.AsyncSite, What: "async nested declarations need a canonical suspension environment"}
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
 		body, err := normalizer.statements(function.Body)
@@ -33,7 +32,7 @@ func NormalizeAsync(program *ir.Program) error {
 		for local, declared := range program.Locals {
 			if !declared.Global && declared.Function == index {
 				if declared.Type == ir.MaybeBoolean {
-					return fmt.Errorf("async slots holding boolean or undefined are not yet proven")
+					return &AsyncError{Site: function.AsyncSite, What: "async slots holding boolean or undefined are not yet proven"}
 				}
 				if declared.Captured {
 					program.Locals[local].Preallocated = true
@@ -126,7 +125,7 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		}
 	})
 	if methodOperand {
-		n.failure = fmt.Errorf("await among structural method operands is not yet proven")
+		n.failure = n.errorAt(value, "await among structural method operands is not yet proven")
 	}
 	switch value := value.(type) {
 	case ir.Effects:
@@ -138,7 +137,7 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		*out = append(*out, body...)
 		return n.expression(value.Result, out, snapshot)
 	case ir.Logical, ir.LogicalAssignment:
-		n.failure = fmt.Errorf("await inside value-preserving logical operands is not yet proven")
+		n.failure = n.errorAt(value, "await inside value-preserving logical operands is not yet proven")
 		return value
 	case ir.ArrayLiteral:
 		for index, spread := range value.Spread {
@@ -162,9 +161,9 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		return changed
 	case ir.Await:
 		operand := n.expression(value.Value, out, true)
-		return n.snapshot(ir.Await{Value: operand, Of: value.Of}, out)
+		return n.snapshot(ir.Await{Value: operand, Of: value.Of, Site: value.Site}, out)
 	case ir.Conditional:
-		condition := n.expression(value.Condition, out, false)
+		condition := n.expression(value.Condition, out, true)
 		local := n.temporary(value.Type())
 		*out = append(*out, ir.Declare{Local: local})
 		var consequent, alternate []ir.Statement
@@ -192,6 +191,10 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		return result
 	case ir.Binary:
 		if value.Operator == ir.And || value.Operator == ir.Or {
+			if value.Left.Type() == ir.MaybeBoolean || value.Right.Type() == ir.MaybeBoolean {
+				n.failure = n.errorAt(value, "await inside maybe-boolean logical operands is not yet proven")
+				return value
+			}
 			condition := n.expression(value.Left, out, false)
 			local := n.temporary(ir.Boolean)
 			*out = append(*out, ir.Declare{Local: local, Value: condition})
@@ -287,11 +290,11 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				}
 			})
 			if captured {
-				return nil, fmt.Errorf("async per-iteration captured cells in a repeatedly executed body are not yet represented")
+				return nil, n.errorAt(value, "async per-iteration captured cells in a repeatedly executed body are not yet represented")
 			}
 			for _, local := range value.PerIteration {
 				if n.program.Locals[local].Captured {
-					return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
+					return nil, n.errorAt(value, "async per-iteration captured cells are not yet represented")
 				}
 			}
 			value.Condition = n.expression(value.Condition, &value.Test, true)
@@ -304,11 +307,14 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			value.Body, err = n.statements(value.Body)
 			statement = value
 		case ir.Try:
-			if containsAwait(reflect.ValueOf(value.Catch)) || containsAwait(reflect.ValueOf(value.Finally)) {
-				return nil, fmt.Errorf("await in catch or finally is not yet proven")
+			if containsAwait(reflect.ValueOf(value.Catch)) {
+				return nil, n.errorAt(value.Catch, "await in catch or finally is not yet proven")
+			}
+			if containsAwait(reflect.ValueOf(value.Finally)) {
+				return nil, n.errorAt(value.Finally, "await in catch or finally is not yet proven")
 			}
 			if value.HasFinally {
-				return nil, fmt.Errorf("async finally completion routing is not yet proven")
+				return nil, n.errorAt(value, "async finally completion routing is not yet proven")
 			}
 			value.Body, err = n.statements(value.Body)
 			if err == nil {
@@ -316,9 +322,9 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			}
 			statement = value
 		case ir.Labeled:
-			return nil, fmt.Errorf("async labeled regions are not yet proven")
+			return nil, n.errorAt(value, "async labeled regions are not yet proven")
 		case ir.ForOf, ir.Switch:
-			return nil, fmt.Errorf("async for-of and switch regions are not yet proven")
+			return nil, n.errorAt(value, "async for-of and switch regions are not yet proven")
 		default:
 			if containsAwait(reflect.ValueOf(statement)) {
 				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)
@@ -359,4 +365,28 @@ func inspectAsyncIR(value reflect.Value, visit func(any)) {
 			inspectAsyncIR(value.Index(index), visit)
 		}
 	}
+}
+
+// AsyncError preserves the construct's source site across the IR-only pass.
+type AsyncError struct {
+	Site int
+	What string
+}
+
+func (e *AsyncError) Error() string { return e.What }
+func asyncSourceSite(value any) int {
+	site := 0
+	inspectAsyncIR(reflect.ValueOf(value), func(node any) {
+		if awaited, ok := node.(ir.Await); ok && site == 0 {
+			site = awaited.Site
+		}
+	})
+	return site
+}
+func (n *asyncNormalizer) errorAt(value any, what string) error {
+	site := asyncSourceSite(value)
+	if site == 0 {
+		site = n.program.Functions[n.function].AsyncSite
+	}
+	return &AsyncError{Site: site, What: what}
 }

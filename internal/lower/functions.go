@@ -114,6 +114,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			return l.notYet(declaration, "full Promise compatibility")
 		}
 		function.Async = true
+		function.AsyncSite = l.asyncSite(declaration)
 		function.Returns = ir.Promise
 		if arguments[0].Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined|checker.TypeFlagsNever) == 0 {
 			var known bool

@@ -4,6 +4,7 @@ import "reflect"
 
 // Await remains an ordinary expression until normalization exposes its suspension point.
 type Await struct {
+	Site  int // one-based source site, resolved by lowering only for diagnostics
 	Value Expression
 	Of    Type
 }
