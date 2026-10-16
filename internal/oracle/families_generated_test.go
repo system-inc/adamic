@@ -765,6 +765,16 @@ func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	runNativeAgreesShard(t, -24)
 }
 
+func TestNativeAgreesWithNode_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -25)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -26)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -1520,6 +1530,16 @@ func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	runWASIAgreesShard(t, -22)
 }
 
+func TestWASIAgreesWithNode_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -23)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -24)
+}
+
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestWASIAgreesWithNode")
@@ -1828,6 +1848,16 @@ func TestCountsAreRecorded_async_snapshots(t *testing.T) {
 func TestCountsAreRecorded_async_void_value(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -16)
+}
+
+func TestCountsAreRecorded_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -17)
+}
+
+func TestCountsAreRecorded_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -18)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
