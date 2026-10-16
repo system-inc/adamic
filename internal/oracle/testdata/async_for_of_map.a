@@ -16,6 +16,10 @@ async function walk(): Promise<void> {
         await Promise.resolve();
         console.log(`value:${value}`);
     }
+    for (const entry of items) {
+        await Promise.resolve();
+        console.log(`tuple:${entry[0]}:${entry[1]}`);
+    }
     for (const [key, value] of items) {
         await Promise.resolve();
         console.log(`break:${key}:${value}`);
