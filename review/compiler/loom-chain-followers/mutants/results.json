@@ -1,0 +1,164 @@
+[
+  {
+    "topic": "non-null-check",
+    "file": "internal/lower/non_null.go",
+    "pattern": "^TestCheckedNonNullTypeScript/undefined$",
+    "failed_tests": [
+      "TestCheckedNonNullTypeScript/undefined",
+      "TestCheckedNonNullTypeScript"
+    ],
+    "errors": [
+      "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:0, Sites:[]ir.NonNullCheck(nil)}"
+    ]
+  },
+  {
+    "topic": "non-null-narrowing",
+    "file": "internal/lower/non_null.go",
+    "pattern": "^TestCheckedNonNullTypeScript/narrowed$",
+    "failed_tests": [
+      "TestCheckedNonNullTypeScript/narrowed",
+      "TestCheckedNonNullTypeScript"
+    ],
+    "errors": [
+      "non_null_checked_test.go:40: want proven 1 checked 0, got ir.NonNullCheckCounts{Proven:0, Checked:1, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_narrowed.ts:2:43\", Expression:\"value!\", Proven:false}}}"
+    ]
+  },
+  {
+    "topic": "nested-empty",
+    "file": "internal/lower/empty_literal.go",
+    "pattern": "^TestNestedEmptyArrayElementKinds$",
+    "failed_tests": [
+      "TestNestedEmptyArrayElementKinds/strings",
+      "TestNestedEmptyArrayElementKinds/objects",
+      "TestNestedEmptyArrayElementKinds"
+    ],
+    "errors": [
+      "empty_literal_test.go:35: empty element kind 1, want 3",
+      "empty_literal_test.go:35: empty element kind 1, want 4"
+    ]
+  },
+  {
+    "topic": "string-concatenation",
+    "file": "internal/lower/expression.go",
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+    "failed_tests": [
+      "TestNativeAgreesWithNode_081/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+      "TestNativeAgreesWithNode_081"
+    ],
+    "errors": [
+      "oracle_test.go:766: Lower: /workspace/adamic/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a:3:13: stage 0 can't lower a BinaryExpression with a string and a value yet"
+    ]
+  },
+  {
+    "topic": "phantom-primitive",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "pattern": "^TestPhantomCastsAreErased$",
+    "failed_tests": [
+      "TestPhantomCastsAreErased"
+    ],
+    "errors": [
+      "phantom_brands_test.go:64: /tmp/adamic-gate/TestPhantomCastsAreErased622513172/001/main.a:2:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    ]
+  },
+  {
+    "topic": "proven-predicates",
+    "file": "internal/lower/proven_relations.go",
+    "pattern": "^TestCensusComputedRelation$",
+    "failed_tests": [
+      "TestCensusComputedRelation"
+    ],
+    "errors": []
+  },
+  {
+    "topic": "generic-empty",
+    "file": "internal/lower/invariance.go",
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+/internal/oracle/testdata/generic_empty_array.a$",
+    "failed_tests": [
+      "TestNativeAgreesWithNode_059/internal/oracle/testdata/generic_empty_array.a",
+      "TestNativeAgreesWithNode_059"
+    ],
+    "errors": [
+      "oracle_test.go:766: Lower: /workspace/adamic/internal/oracle/testdata/generic_empty_array.a:33:22: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint { text: string; } can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+    ]
+  },
+  {
+    "topic": "debugger",
+    "file": "internal/lower/statements.go",
+    "pattern": "^TestDebuggerNativeEmitsNothing$",
+    "failed_tests": [
+      "TestDebuggerNativeEmitsNothing/.ts",
+      "TestDebuggerNativeEmitsNothing/.a",
+      "TestDebuggerNativeEmitsNothing"
+    ],
+    "errors": [
+      "debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.ts2547499085/001/main.ts:4:5: Adamic 0.1 refuses debugger; remove it",
+      "debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.a684804024/001/main.a:4:5: Adamic 0.1 refuses debugger; remove it"
+    ]
+  },
+  {
+    "topic": "generic-values",
+    "file": "internal/lower/expression.go",
+    "pattern": "^TestGenericFunctionValuesHaveSeparateInstances$",
+    "failed_tests": [
+      "TestGenericFunctionValuesHaveSeparateInstances"
+    ],
+    "errors": [
+      "generic_function_value_test.go:19: /tmp/adamic-gate/TestGenericFunctionValuesHaveSeparateInstances3286443157/001/main.a:4:47: stage 0 can't lower a generic function as a value yet"
+    ]
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "file": "internal/lower/generic_function_value.go",
+    "pattern": "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+    "failed_tests": [
+      "TestGenericFunctionValueNamespaceDirectCallsKeepIdentity"
+    ],
+    "errors": [
+      "generic_function_value_test.go:151: /tmp/adamic-gate/TestGenericFunctionValueNamespaceDirectCallsKeepIdentity2623227545/001/main.a:6:56: stage 0 can't lower function identity comparison in a program with specialized generic function values yet"
+    ]
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "file": "internal/lower/phantom_brands.go",
+    "pattern": "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+    "failed_tests": [
+      "TestPhantomOverloadOnlyBrandsKeepMainProof"
+    ],
+    "errors": [
+      "phantom_brands_test.go:156: /tmp/adamic-gate/TestPhantomOverloadOnlyBrandsKeepMainProof1180697418/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member pathBrand whose type is not void; make pathBrand void (or optional and typed undefined) so the brand is phantom"
+    ]
+  },
+  {
+    "topic": "proven-cleanup",
+    "file": "internal/lower/generic.go",
+    "pattern": "^TestCensusGenericRefusalInsideClosure$",
+    "failed_tests": [
+      "TestCensusGenericRefusalInsideClosure"
+    ],
+    "errors": []
+  },
+  {
+    "topic": "arrow-constructor-frame",
+    "file": "internal/lower/class_inheritance.go",
+    "pattern": "^TestArrowFieldCaptureFrames$",
+    "failed_tests": [
+      "TestArrowFieldCaptureFrames"
+    ],
+    "errors": [
+      "arrow_capture_frames_test.go:10: receiver frames: got 0 empty and 2 receiver arrows, want 1 and 1"
+    ]
+  },
+  {
+    "topic": "arrow-receiver-capture",
+    "file": "internal/lower/locals.go",
+    "pattern": "^TestArrow(Super|Stored)CaptureFrames$",
+    "failed_tests": [
+      "TestArrowSuperCaptureFrames",
+      "TestArrowStoredCaptureFrames"
+    ],
+    "errors": [
+      "arrow_capture_frames_test.go:15: receiver frames: got 1 empty and 0 receiver arrows, want 0 and 1",
+      "arrow_capture_frames_test.go:20: receiver frames: got 1 empty and 0 receiver arrows, want 0 and 1"
+    ]
+  }
+]

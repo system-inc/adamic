@@ -1,0 +1,11 @@
+--- internal/lower/proven_relations.go
++++ internal/lower/proven_relations.go
+@@ -173,7 +173,7 @@
+ 		return nil
+ 	}
+ 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
+-		if property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {
++		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
+ 			return property.AsPropertyAssignment().Initializer
+ 		}
+ 	}

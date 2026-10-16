@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -397,7 +397,7 @@
+ 	local := len(l.result.Locals)
+ 	l.locals[symbol] = local
+ 	l.result.Locals = append(l.result.Locals, ir.Local{Name: declaration.Name().Text(), Type: ir.Boolean, Global: true, Function: -1})
+-	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})
++	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: true}})
+ 	return local
+ }
+ 
