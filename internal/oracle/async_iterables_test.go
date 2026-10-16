@@ -1,11 +1,13 @@
 package oracle
 
 import (
+	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -536,4 +538,107 @@ func TestAsyncLiveSourceForOfMap(t *testing.T) {
 func TestAsyncLiveSourceForOfCollectionsMutation(t *testing.T) {
 	t.Parallel()
 	asyncLoopWitness(t, "async_for_of_collections_mutation", "")
+}
+
+// Drop only the frame's owned iterator, leaving all values and control flow intact.
+// The source oracle agrees; the counted and sanitizer cleanup checks must fail.
+func asyncLiveReleaseMutant(t *testing.T, name string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	function, local := -1, -1
+	var find func(reflect.Value)
+	find = func(v reflect.Value) {
+		if !v.IsValid() {
+			return
+		}
+		if v.Kind() == reflect.Interface {
+			if !v.IsNil() {
+				find(v.Elem())
+			}
+			return
+		}
+		if d, ok := v.Interface().(ir.Declare); ok {
+			switch d.Value.(type) {
+			case ir.CollectionIterator, ir.StringIterator:
+				local = d.Local
+			}
+		}
+		switch v.Kind() {
+		case reflect.Struct:
+			for i := 0; i < v.NumField(); i++ {
+				find(v.Field(i))
+			}
+		case reflect.Slice:
+			for i := 0; i < v.Len(); i++ {
+				find(v.Index(i))
+			}
+		}
+	}
+	for i, f := range p.Functions {
+		find(reflect.ValueOf(f.Body))
+		if local >= 0 {
+			function = i
+			break
+		}
+	}
+	if function < 0 {
+		t.Fatal("iterator slot not found")
+	}
+	slot := -1
+	for i, l := range p.Functions[function].FrameEnvironment {
+		if l == local {
+			slot = i
+		}
+	}
+	if slot < 0 {
+		t.Fatal("iterator not owned by frame")
+	}
+	code := native.C(p)
+	begin := strings.Index(code, fmt.Sprintf("static void adamic_async_finish_%d(", function))
+	end := strings.Index(code[begin:], fmt.Sprintf("static void adamic_async_abandon_%d(", function)) + begin
+	cleanup := fmt.Sprintf("adamic_release(adamic_slot_%d);", slot)
+	part := code[begin:end]
+	if strings.Count(part, cleanup) != 1 {
+		t.Fatal("cleanup slot not unique")
+	}
+	code = code[:begin] + strings.Replace(part, cleanup, "(void)0;", 1) + code[end:]
+	binary := filepath.Join(t.TempDir(), "leaked-iterator")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	report := leakcheck.Report(t, code, binary)
+	if !strings.Contains(report, "detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
+		t.Fatalf("iterator cleanup mutant survived: %s", report)
+	}
+	counted := filepath.Join(t.TempDir(), "counted-iterator")
+	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	if report := leakcheck.Unbalanced(leakRun(execute(t, counted))); !strings.Contains(report, "heap values leaked:") {
+		t.Fatalf("counted cleanup mutant survived: %s", report)
+	}
+	t.Log("dropping the iterator release is caught by sanitizer and counted cleanup")
+}
+func TestAsyncLiveReleaseMapBreak(t *testing.T) {
+	t.Parallel()
+	asyncLiveReleaseMutant(t, "async_iterable_map_break_function")
+}
+func TestAsyncLiveReleaseMapReturn(t *testing.T) {
+	t.Parallel()
+	asyncLiveReleaseMutant(t, "async_iterable_map_return_function")
+}
+func TestAsyncLiveReleaseStringBreak(t *testing.T) {
+	t.Parallel()
+	asyncLiveReleaseMutant(t, "async_iterable_string_break_function")
+}
+func TestAsyncLiveReleaseSetReturn(t *testing.T) {
+	t.Parallel()
+	asyncLiveReleaseMutant(t, "async_iterable_set_return_function")
 }
