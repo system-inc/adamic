@@ -1,0 +1,16 @@
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -422,12 +422,7 @@
+ // uses its instantiated type, or its constraint when the binder remains rigid.
+ // Neither operation relates unrelated objects merely because their names match.
+ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+-	receiver = l.concrete(receiver)
+-	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
+-		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
+-			receiver = l.concrete(constraint)
+-		}
+-	}
++	// Leave the receiver binder rigid.
+ 	return int(l.checker.GetNonNullableType(receiver).Id())
+ }
+ 

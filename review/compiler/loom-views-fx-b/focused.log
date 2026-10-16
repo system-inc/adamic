@@ -1,0 +1,26 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P35
+=== CONT  TestFX6P38
+=== CONT  TestFX6P51
+=== CONT  TestFX6P53
+=== CONT  TestFX6P37
+--- PASS: TestFX6P53 (0.78s)
+=== CONT  TestFX6P36
+--- PASS: TestFX6P37 (0.94s)
+--- PASS: TestFX6P51 (1.08s)
+--- PASS: TestFX6P35 (1.10s)
+--- PASS: TestFX6P38 (1.26s)
+--- PASS: TestFX6P36 (0.51s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.338s

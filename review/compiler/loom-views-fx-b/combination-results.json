@@ -1,0 +1,38 @@
+[
+  {
+    "source": "views_p05",
+    "backend": "c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/views_p05.a:6:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+  },
+  {
+    "source": "views_p05",
+    "backend": "js",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/views_p05.a:6:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+  },
+  {
+    "source": "native_p37",
+    "backend": "c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/native_p37.a:11:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  },
+  {
+    "source": "native_p37",
+    "backend": "js",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/native_p37.a:11:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  },
+  {
+    "source": "native_p21",
+    "backend": "c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/native_p21.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  },
+  {
+    "source": "native_p21",
+    "backend": "js",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic-views-b/review/compiler/loom-views-fx-b/native_p21.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  }
+]

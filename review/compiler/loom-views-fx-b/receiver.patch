@@ -1,0 +1,10 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -446,5 +446,5 @@
+ // A checked view member belongs to its static receiver type. Bare names remain
+ // reserved for record storage, which has its own representation boundary.
+ func checkedViewFieldKey(receiverTypeID int, name string) string {
+-	return strconv.Itoa(receiverTypeID) + ":" + name
+-}
++	return strconv.Itoa(0) + ":" + name
++}

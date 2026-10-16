@@ -1,0 +1,27 @@
+--- main/stage3/interface-downcasts/lane1/interfaces-good.a.c
++++ fixed/stage3/interface-downcasts/lane1/interfaces-good.a.c
+@@ -32,7 +32,6 @@
+ static const bool adamic_shape_1_references[] = {true, true};
+ static const adamic_shape adamic_shape_1 = {2, adamic_shape_1_names, adamic_shape_1_references, NULL};
+ static adamic_slot_cache adamic_cache_25;
+-static adamic_slot_cache adamic_cache_33;
+ 
+ static adamic_object * adamic_function_0_narrow(adamic_object * adamic_local_4_node) {
+ 	ADAMIC_CHECK_STACK();
+@@ -102,12 +101,10 @@
+ 	adamic_release(adamic_temporary_29);
+ 	adamic_object * adamic_temporary_30 = adamic_global_3_alias;
+ 	adamic_object * adamic_temporary_31 = adamic_global_0_raw;
+-	adamic_value adamic_temporary_32 = adamic_object_view(adamic_temporary_31, "child", &adamic_cache_33, 4, "Child", "raw.child");
+-	adamic_object * adamic_temporary_34 = adamic_retain((adamic_object *)adamic_temporary_32.reference);
+-	bool adamic_temporary_35 = (adamic_temporary_30 == adamic_temporary_34);
+-	adamic_string * adamic_temporary_36 = adamic_string_concat(1, (adamic_string *const[]){((adamic_temporary_35) ? &adamic_string_true : &adamic_string_false)});
+-	adamic_write_line(adamic_stdout, adamic_temporary_36);
+-	adamic_release(adamic_temporary_36);
++	adamic_object * adamic_temporary_32 = ((adamic_object *)(&adamic_temporary_31->slots[1])->reference);
++	bool adamic_temporary_33 = (adamic_temporary_30 == adamic_temporary_32);
++	adamic_string * adamic_temporary_34 = adamic_string_concat(1, (adamic_string *const[]){((adamic_temporary_33) ? &adamic_string_true : &adamic_string_false)});
++	adamic_write_line(adamic_stdout, adamic_temporary_34);
+ 	adamic_release(adamic_temporary_34);
+ 	adamic_release(adamic_global_3_alias);
+ 	adamic_global_3_alias = NULL;
