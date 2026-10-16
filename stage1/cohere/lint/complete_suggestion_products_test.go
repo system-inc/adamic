@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestProduct_CompleteSuggestionGoOracle(t *testing.T) {
+func TestProduct_LintFindsCompleteSuggestionGoOracle(t *testing.T) {
 	t.Parallel()
 	completeSuggestionProductUnit(t, func(ctx context.Context, directory string) {
 		completeSuggestionOracleProduct(ctx, t, directory)
