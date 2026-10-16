@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one manifest unit cold against a verified shared artifact."""
+"""Run one manifest unit cold against the adapted tree: stage3/lane's product, or a verified shared artifact."""
 import argparse
 from collections import Counter
 import difflib
@@ -38,6 +38,25 @@ def shared_artifact(plan):
     if runtime_hash() != plan['runtime']:
         raise ValueError('shard harness inputs changed; regenerate the manifest')
     return artifact.resolve(), ready
+
+
+def adapted_inputs(plan):
+    """The adapted tree a unit runs against, the stock API parser, and the producer's phases. With STAGE3_ADAPTED_TREE,
+    the tree is stage3/lane's TestProduct_Stage3AdaptedTree product, whose key is its identity, so none of the shared
+    artifact's identity checks apply; the parser is stage3/api's install, checked against the manifest's digest."""
+    supplied = os.environ.get('STAGE3_ADAPTED_TREE')
+    if not supplied:
+        artifact, ready = shared_artifact(plan)
+        return artifact / 'tree', artifact / 'api', ready['phases']
+    tree = Path(supplied).resolve()
+    if not (tree / 'built/local/run.js').is_file():
+        raise ValueError('the adapted tree product holds no built harness: ' + str(tree))
+    api = LANE.parent / 'api/node_modules/typescript'
+    if payload_digest(api) != plan['api_digest']:
+        raise ValueError('stage3/api\'s stock API parser differs from the manifest\'s')
+    if runtime_hash() != plan['runtime']:
+        raise ValueError('shard harness inputs changed; regenerate the manifest')
+    return tree, api, None
 
 
 def baseline_diff(tree):
@@ -112,14 +131,14 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
     report = dict(name=name, inputs_hash=wanted_hash, artifact=plan['artifact'], counts={}, errors=[], status='fail')
     try:
         check_unit_inputs(unit, plan, wanted_hash)
-        artifact, ready = shared_artifact(plan)
+        source, api, phases = adapted_inputs(plan)
         tree = output / 'adapted-tree'
         if mutant_case is not None:
             if mutant_case.is_absolute() or '..' in mutant_case.parts or not mutant_case.is_relative_to('tests/cases'):
                 raise ValueError('mutant case must be a relative tests/cases path')
             if mutant_content is None:
                 raise ValueError('mutant case requires content')
-        make_view(artifact / 'tree', tree, mutant_case)
+        make_view(source, tree, mutant_case)
         if mutant_case is not None:
             import hashlib
             content = mutant_content.read_bytes()
@@ -177,13 +196,13 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
                 stream.write(text)
         errors = []
         if name == 'stage3-lane-byte-comparisons':
-            os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
+            os.environ['TSC_ADAPT_TYPESCRIPT'] = str(api)
             errors, report['api'] = api_check(output, json.loads((LANE / 'sanctioned-api.json').read_text()))
         seconds = time.monotonic() - started
         errors += validate_observation(unit, counts, records, paths, failures, seconds, code)
         report.update(counts=counts, failed_tests=failures, baseline_diffs=paths,
                       upstream_exit=code, errors=errors, status='fail' if errors else 'pass',
-                      producer_phases=ready['phases'], command=command)
+                      producer_phases=phases, command=command)
         details = read_failures((oracle / 'tests.log').read_text(), diff, observations)
         report['failures'] = details
         (output / 'failures.md').write_text(markdown(details))
