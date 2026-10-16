@@ -6,6 +6,7 @@ import difflib
 import json
 import os
 from pathlib import Path
+import shutil
 import signal
 import subprocess
 import sys
@@ -143,6 +144,11 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
         make_view(source, tree, mutant_case)
         if modules is not None:
             (tree / 'node_modules').symlink_to(modules, target_is_directory=True)
+            # node's ESM loader resolves a module by its real path, so scripts/build/options.mjs reached through the
+            # view's link would look for minimist above the product, never in the view's node_modules: the watcher
+            # cases' run-prepared.mjs imports from scripts/, so it's the view's own copy.
+            (tree / 'scripts').unlink()
+            shutil.copytree(source / 'scripts', tree / 'scripts', symlinks=True)
         if mutant_case is not None:
             import hashlib
             content = mutant_content.read_bytes()
