@@ -304,6 +304,18 @@
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/typescript/parser TestProduct_ParserFindsExpressionsOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/parser TestProduct_ParserFindsNodeCountOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/parser TestProduct_ParserFindsOracle": [
+      "stage1/typescript/parser/oracles TestProduct_ParserOracle"
+    ],
+    "stage1/typescript/scanner TestProduct_ScannerFindsOracle": [
+      "stage1/typescript/scanner/oracles TestProduct_ScannerOracle"
+    ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],

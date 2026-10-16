@@ -24,7 +24,7 @@ func wholeMutantsProductSource(t *testing.T, index int) string {
 }
 
 // Each build-phase unit invokes the recipe used by the shards.
-func TestProduct_ParserOracle(t *testing.T) {
+func TestProduct_ParserFindsOracle(t *testing.T) {
 	t.Parallel()
 	wholeMutantBuildOracleProduct(t)
 }
