@@ -3,7 +3,6 @@ cmd/adamic-test262/cache_test.go	TestCompilerCacheAcrossScratchDirectories
 cmd/adamic-test262/cache_test.go	TestParallelCachedMatchesSerial
 cmd/adamic-test262/edit_test.go	TestEditCacheSeparation
 cmd/adamic-test262/edit_test.go	TestLoweringSourceEdit
-internal/lower/import_cycle_ledger_test.go	TestOriginalCycleLedger
 internal/native/normalize_benchmark_test.go	TestNormalizeLongMeasurements
 internal/oracle/cache_test.go	TestGateCacheUncached
 internal/oracle/enums_test.go	TestEnumSemanticMutants
