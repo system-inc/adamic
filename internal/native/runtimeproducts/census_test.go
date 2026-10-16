@@ -164,6 +164,11 @@ func leanCensus(root, directory, importPath, entry string, declared []string) ([
 					}
 					mark(object)
 				case nil:
+					// The census's one limit (Tests' and Node's on 4de7029d15): with every import empty, a selector whose
+					// receiver's type comes from an import doesn't resolve and is skipped here, never a finding. It's safe
+					// today because a type of this package reaches the walk through a declaration that names it, which
+					// takes all its methods. Closing it means type-checking with real imports, then failing closed on any
+					// selector still unresolved, on a box with a go that can load them (#wrr2dwd).
 				default:
 					mark(object)
 				}
