@@ -243,7 +243,7 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			if usesParallelMap(program) {
+			if emitsParallelMap(source) {
 				// One worker keeps peak liveness reproducible across machines.
 				result = executeParallel(t, "1", false, name, pinned...)
 			} else {
