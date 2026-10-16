@@ -1,0 +1,11 @@
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -317,7 +317,7 @@
+ 	// A failed whole-object adapter can leave an unsupported descriptor without
+ 	// its fields. Keep those names registered so demanded reads reach the lazy
+ 	// refusal instead of silently reading unchecked storage.
+-	if contract := l.result.ViewContracts[id-1]; contract.Unsupported != "" {
++	if contract := l.result.ViewContracts[id-1]; false && contract.Unsupported != "" {
+ 		if l.result.CheckedFields == nil {
+ 			l.result.CheckedFields = map[string]bool{}
+ 		}

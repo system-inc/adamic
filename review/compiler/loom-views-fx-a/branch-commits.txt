@@ -1,0 +1,458 @@
+origin/compiler/fx6-candidates fork a7448d73cd17f16362b6cbc5c5c111080da64e43
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-candidates-2 fork cf735d9fba9e38de6368575e5630e44375a86eaf
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-candidates-2-fix fork 157a43552015f41a79331949c2e82b6f8c7caaab
+708ec9c901b409625b054889699471db9cd364ad Record green delivery checks for candidate receiver fixes
+
+ad81d9b729eafaba1ca31ea54e2e3e9c6b4af5f7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+2912b5238a05affdae8259f6e1b2f6f1812b8231 Record candidate receiver regression counts and revert mutants
+
+aaca4be5e1e8b11b8c1bc476372ef644c37f06a6 Preserve checked view receiver identity through nullable generic and union reads
+
+98f9c270a0b3f7950be32655cfc1e0251924fd44 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-candidates-3 fork 38c09330585df1f71aebf0e87157d2d3382538b9
+d8ca3f0c3a58e71438f3e8704b86e6e2c539762c Record final constructor proof and green delivery checks
+
+473add81633510cabdc501c2cc9702021c1b4859 Record candidate rebuild verification and member mutant evidence
+
+bd2f5c32f50052495e304d497cd85519f2cf0457 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+c9d783700b615d1b91b3a1425d6b241d010459ec Refresh four constructor enumeration rows after restored execution
+
+da68e17e220a1d38e371d4ceae599e4cc4d6e277 Keep constructor built-ins outside checked own data slots
+
+6123efc1d552c6fc8aa1a119c330a2042023be6d Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+ffc58249877aaf3fb7fbbd037ec47755ab431e92 Merge remote-tracking branch 'origin/compiler/fx7-name-family' into compiler/fx6-candidates-3
+
+e5321aed6f5d725262e5d97b0fa61c7bff2dc538 Merge remote-tracking branch 'origin/compiler/fx7-callable-producers' into compiler/fx6-candidates-3
+
+1999c1db001dcad8785d686d1ee1276408124c9d Merge remote-tracking branch 'origin/compiler/fx7-scalar-union-view' into compiler/fx6-candidates-3
+
+30e8495d51f596037f17d7a0f600a0c81dc6364b Merge key reads while preserving candidate receiver checks
+
+708ec9c901b409625b054889699471db9cd364ad Record green delivery checks for candidate receiver fixes
+
+ad81d9b729eafaba1ca31ea54e2e3e9c6b4af5f7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+2912b5238a05affdae8259f6e1b2f6f1812b8231 Record candidate receiver regression counts and revert mutants
+
+aaca4be5e1e8b11b8c1bc476372ef644c37f06a6 Preserve checked view receiver identity through nullable generic and union reads
+
+98f9c270a0b3f7950be32655cfc1e0251924fd44 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-candidates-4 fork 38c09330585df1f71aebf0e87157d2d3382538b9
+b49c150bd0151c7d78eb42c1a6b3acefe7d95bf1 Record candidate 4 merge and restored mutant evidence
+
+9006981e6ac4023b340a79eb3fd67ed566efd972 Isolate checked cast metadata from redundant read summaries
+
+ca88bf56d2935cde1f68bf49ea19a94e5e2de575 Activate repaired wrong-abort witnesses and record their counts
+
+644b2de36f446bcf8cfb8297b03c52830e74270f Merge wrong-abort fixes into views candidate 4
+
+d8ca3f0c3a58e71438f3e8704b86e6e2c539762c Record final constructor proof and green delivery checks
+
+473add81633510cabdc501c2cc9702021c1b4859 Record candidate rebuild verification and member mutant evidence
+
+bd2f5c32f50052495e304d497cd85519f2cf0457 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+c9d783700b615d1b91b3a1425d6b241d010459ec Refresh four constructor enumeration rows after restored execution
+
+da68e17e220a1d38e371d4ceae599e4cc4d6e277 Keep constructor built-ins outside checked own data slots
+
+6123efc1d552c6fc8aa1a119c330a2042023be6d Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+ffc58249877aaf3fb7fbbd037ec47755ab431e92 Merge remote-tracking branch 'origin/compiler/fx7-name-family' into compiler/fx6-candidates-3
+
+e5321aed6f5d725262e5d97b0fa61c7bff2dc538 Merge remote-tracking branch 'origin/compiler/fx7-callable-producers' into compiler/fx6-candidates-3
+
+1999c1db001dcad8785d686d1ee1276408124c9d Merge remote-tracking branch 'origin/compiler/fx7-scalar-union-view' into compiler/fx6-candidates-3
+
+30e8495d51f596037f17d7a0f600a0c81dc6364b Merge key reads while preserving candidate receiver checks
+
+708ec9c901b409625b054889699471db9cd364ad Record green delivery checks for candidate receiver fixes
+
+ad81d9b729eafaba1ca31ea54e2e3e9c6b4af5f7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+2912b5238a05affdae8259f6e1b2f6f1812b8231 Record candidate receiver regression counts and revert mutants
+
+aaca4be5e1e8b11b8c1bc476372ef644c37f06a6 Preserve checked view receiver identity through nullable generic and union reads
+
+98f9c270a0b3f7950be32655cfc1e0251924fd44 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-cleanup fork 38c09330585df1f71aebf0e87157d2d3382538b9
+fb00e043a4a770f3041af6f5ea6ea34ed94d9174 Record cleanup checks, caller census and runtime ownership limits
+
+915a1f94473ee3c253291e92a963cd33047585b2 Pin view diagnostic locations and remove unused construction checks
+
+Keep array and callable hooks and the interface classifier used by compiler/views-v4. Conservatively retain dictionary, intersection and erasure attachment points for V5 and V6. Runtime edits change comments only.
+
+b49c150bd0151c7d78eb42c1a6b3acefe7d95bf1 Record candidate 4 merge and restored mutant evidence
+
+9006981e6ac4023b340a79eb3fd67ed566efd972 Isolate checked cast metadata from redundant read summaries
+
+ca88bf56d2935cde1f68bf49ea19a94e5e2de575 Activate repaired wrong-abort witnesses and record their counts
+
+644b2de36f446bcf8cfb8297b03c52830e74270f Merge wrong-abort fixes into views candidate 4
+
+d8ca3f0c3a58e71438f3e8704b86e6e2c539762c Record final constructor proof and green delivery checks
+
+473add81633510cabdc501c2cc9702021c1b4859 Record candidate rebuild verification and member mutant evidence
+
+bd2f5c32f50052495e304d497cd85519f2cf0457 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+c9d783700b615d1b91b3a1425d6b241d010459ec Refresh four constructor enumeration rows after restored execution
+
+da68e17e220a1d38e371d4ceae599e4cc4d6e277 Keep constructor built-ins outside checked own data slots
+
+6123efc1d552c6fc8aa1a119c330a2042023be6d Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-3
+
+ffc58249877aaf3fb7fbbd037ec47755ab431e92 Merge remote-tracking branch 'origin/compiler/fx7-name-family' into compiler/fx6-candidates-3
+
+e5321aed6f5d725262e5d97b0fa61c7bff2dc538 Merge remote-tracking branch 'origin/compiler/fx7-callable-producers' into compiler/fx6-candidates-3
+
+1999c1db001dcad8785d686d1ee1276408124c9d Merge remote-tracking branch 'origin/compiler/fx7-scalar-union-view' into compiler/fx6-candidates-3
+
+30e8495d51f596037f17d7a0f600a0c81dc6364b Merge key reads while preserving candidate receiver checks
+
+708ec9c901b409625b054889699471db9cd364ad Record green delivery checks for candidate receiver fixes
+
+ad81d9b729eafaba1ca31ea54e2e3e9c6b4af5f7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+2912b5238a05affdae8259f6e1b2f6f1812b8231 Record candidate receiver regression counts and revert mutants
+
+aaca4be5e1e8b11b8c1bc476372ef644c37f06a6 Preserve checked view receiver identity through nullable generic and union reads
+
+98f9c270a0b3f7950be32655cfc1e0251924fd44 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2-fix
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-key-read fork fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60
+b1d065bab1444e0bfda3516cdfb4bd88177d67e3 Audit entries and values ownership count changes
+
+c95e58a4a9f9cdb231114870078f431d98dfdd70 Record final view syntax lane validation
+
+cf3543036eddcecde555979112cfaddb09fab91c Cover callable and mixed view keys and preserve empty in keys
+
+218592bbc0c57a0396f372ba7e12082224557584 Check viewed member contracts before Object.entries
+
+577c3271c32ae821b701b577e34f4d3e63b2b3d4 Check viewed member contracts before Object.values
+
+785b665be087f355aaa1ffa44d969409045badf3 Check view members before Object.keys exposes their names
+
+2affad6630a44c4b7e8b460e9b850bcab688944d Check a viewed member before observing it with in
+
+54a37a21f39d20563bf34f47bf268d5235f855fb Preserve prototype method spreads and record checked spread counts
+
+239a3a8f6a948089b3bccec99541d9ab8f75bd98 Check view members before object spread copies them
+
+d587b09e301bdc1e4b94440eb7b61abc5fc041eb Record checked view routing delivery validation
+
+8d8861180c778956b4e6a1f8ccd69c451e36d623 Merge current main into checked view member reads
+
+d27482aa59759c131086810787053b767324aee5 Share checked member reads across named keys and object bindings
+
+Route dot reads, finite literal keys and object destructuring through the same member boundary. Preserve the P0 refusal as the separately pushed first commit. Enumeration syntaxes remain for the next routing phase.
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx6-valid-programs fork a7448d73cd17f16362b6cbc5c5c111080da64e43
+fb1d733914868cb670905e7a18588ee372536a3d Record p70 integration lane checks
+
+d1be75c63db2e9058a1c8d8fc2544a5e77a8264b Refuse tuple length object views at the demanded read
+
+Use the authorized narrow NotYet while tuple and object storage interoperability remains unsupported. Expose a scalar length view field and copy tuple length as the verified workaround.
+
+f4de16fe55e305dfd409a903bbfab5b41644a37a Record passing integration lane checks
+
+3d04df28450a13f3c78432543ead5fa76162213f Enable original view review witnesses and record checked-stop evidence
+
+fd3cf831542b254cf35fe3f4f21e05d894c4115c Merge remote-tracking branch 'origin/main' into compiler/fx6-valid-programs
+
+dd5712e290090bee345f774287b6703b8a993039 Key checked field reads by receiver type and preserve destructured contracts
+
+Assume static view type identity and member define checked reads, while record storage keeps its physical representation checks. Original p51 has incompatible callable parameters and must stop at its view check. Tuple length through an object view remains unsupported.
+
+origin/compiler/fx7-callable-producers fork cf735d9fba9e38de6368575e5630e44375a86eaf
+a030317e2c4bc18041e1cb0412c893131b40a391 Record assignable callable producer integration lane checks
+
+f58a2db6b4a3fca8a059210a9d20a31e77f4fce2 Certify assignable scalar callable producers and diagnose missing adapters
+
+Accept matching scalar ABIs and defer tagged unread descendants. Use located NotYet for known producers requiring arity, receiver, or unsupported result adapters. Correct the historically misnamed valid producer fixture to Node agreement while retaining its certificate-removal mutant.
+
+23b47088291cadf8888511e0e7d69267d6e77c05 Record callable producer identity lane checks
+
+a2f07e9bb2708aab347075d5bc30f25bf3ed9a76 Certify callable union producers through closure thunks
+
+32b8583facc362307049d182acc987dc42a02d35 Record scalar union view integration lane checks
+
+81cef234b7d5d994eaa248f4f9cee6d15c0f85d6 Check and convert maybe scalar union view fields
+
+Validate membership and runtime kind before constructing packed maybe number and boolean values. Keep absence distinct from zero and false, and pin wrong string payloads to the view check in both backends.
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx7-callable-union-result fork bfe0553300773c0b37db2c10df97adeb909705f8
+a5e685cfdb244ef054d6f4ea0c8c76e91aa5086d Box callable union results using each producer return representation
+
+Assume the existing closed program code identities identify every emitted closure and method producer. Keep unknown producer evidence loud rather than interpreting scalar slots as references.
+
+origin/compiler/fx7-depth-texts fork e77a4ae41f473c149aee910c51b73637686a804a
+2fa2a97fb49f1d12f1870d012dd68aa4846f9ca9 Preserve verification logs for runtime clearance
+
+5801d2591c40e51354a23dbf67312ca2cdaefc2c Record depth and diagnostic verification and mutant receipts
+
+97979aaff4d272efc4de1a1375e17d5f2738066e Use the declared shell for the constrained stack control
+
+a58836e8dd1782bf0f429a4a609cc101cbf3d8cd Merge remote-tracking branch 'origin/main' into compiler/fx7-depth-texts
+
+7ace5f465a6bb9df2719fe94d3f03096a87eca9b Fix recursive view depth and checked failure type text
+
+Use the existing runtime stack guard and preserve logical union depth while avoiding optional JavaScript union frames. Carry the printed declared field type into checked write diagnostics. Use the repository review witnesses as the supplied p09, p32, p33, p67 and p72 cases.
+
+origin/compiler/fx7-name-family fork cf735d9fba9e38de6368575e5630e44375a86eaf
+d0fa7138b274de281352624e2df87e54ff8315c8 Register name-family counts and record regression proofs
+
+3b8bfb89161bc181e52170e6b8e01240db54e009 Pin the name-family programs already fixed by receiver keying
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx7-scalar-union-view fork cf735d9fba9e38de6368575e5630e44375a86eaf
+32b8583facc362307049d182acc987dc42a02d35 Record scalar union view integration lane checks
+
+81cef234b7d5d994eaa248f4f9cee6d15c0f85d6 Check and convert maybe scalar union view fields
+
+Validate membership and runtime kind before constructing packed maybe number and boolean values. Keep absence distinct from zero and false, and pin wrong string payloads to the view check in both backends.
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
+origin/compiler/fx7-snapshot fork 76c59c81e8617cea1892a01841494895927a712c
+eb215549a2be66547b153d53e1b952c5519e2c74 Preserve unknown snapshot references for counted storage
+
+Keep record and typed-array snapshots unknown while copying their owned reference payload. Pin the current typed-array checked-view refusal and prove a dropped payload assignment fails the sanitized fallback probe.
+
+aab088229c1a0c817113cc372f4eaaec96e0c2d0 Record snapshot lane clearance
+
+d3d2e838e87fe21707c2ddfe39d23dfb2a0d6c8e Clear checked view snapshots and retain only reference tags
+
+Item 143 uses an erased base view with a mixed union target to exercise the boxed snapshot reader while the physical slot remains maybe-boolean or maybe-number. Both fixes pass alone and both restored stale-slot mutants fail against Node under release and sanitizer builds.
+
+origin/compiler/fx7-unsupported-view fork c4c5991448f93d9be6e17d9256617cea9a2a087a
+4a911179f147597dd257c7896186997d77623de8 Record passing integration lane checks
+
+149c78eabefe40b47ddc2882cddd76398bf5cce0 Record creation-site refusal for unsupported interface array view
+
+812eb7a3ec7f29c08f9855139c5c830d742e91b5 Merge remote-tracking branch 'origin/main' into compiler/fx7-unsupported-view
+
+243f24645da4f21a3e64f8ff1ebc7aa6e0de8adc Record unsupported view refusal and revert evidence
+
+9d1f1c3cdeba1c38c3b3da3d45a86fee8cb9a7eb Merge remote-tracking branch 'origin/main' into compiler/fx7-unsupported-view
+
+5483cc0aeab28404599cd74bdc251aab50b876db Hold unsupported view admission to fixtures and Node
+
+Cover p37, integration p21, unread members and a supported control. The all or nothing ruling makes the previous unread any and array admissions creation refusals.
+
+c8a7eb5dad82622b8d04e8e3a58821ce14ae406a Refuse views with unsupported members at creation
+
+Apply the all or nothing ruling conservatively to nested contracts and union arms, including unread members.
+
+origin/compiler/fx7-wrong-aborts fork cf735d9fba9e38de6368575e5630e44375a86eaf
+636b73978fde1916ec98a5c778d258ca655d750e Recognize object-backed tuples in checked JavaScript views
+
+56280072fcd847e8d1e26f47e893ffa5212f2bdb Keep callable view contracts through method calls
+
+Check members before arguments and adapt the argument slots to the selected producer. Checked callable spreads conservatively remain NotYet; ordinary receiver and rest calls retain their existing path.
+
+26df8dbc940c345e26359b4f3fde774b4fb4bca0 Record lane verification for checked cast field types
+
+36d9077491a8e3280fda4e661b3cc600f2fc1c91 Record field types for checked casts with field guards
+
+d0fa7138b274de281352624e2df87e54ff8315c8 Register name-family counts and record regression proofs
+
+3b8bfb89161bc181e52170e6b8e01240db54e009 Pin the name-family programs already fixed by receiver keying
+
+3e2166d51eec649396a004d95c91ae331763d8f5 Record passing second candidate integration lane checks
+
+86e479a51c913b1dff4c1e1eb521338e05435f73 Record second fx6 candidate checks and revert mutants
+
+536e0564909bcbc4239d860fa4d8fbb947d70ff7 Merge remote-tracking branch 'origin/main' into compiler/fx6-candidates-2
+
+3330e53800014c899c4b4b053a953ade6b1df862 Merge the located tuple object view refusal
+
+fec04922ecef0c8a2a39c80a6aebbe9bb19a35fe Merge checked member routing with receiver keyed view registration
+
+9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d Record passing candidate integration lane checks
+
+acef3a040ea7f64d37c865d49d7743778eb668c8 Record combined candidate checks and three revert mutants
+
+e36095a7fff33f54c147a0eaf92d5b3ed5a4b845 Merge valid view programs with the unchecked element-key refusal
+
+339c86b38bd9711d0fcf54c2962237a642ffcd72 Refuse unchecked view reads through literal element keys
+
+Use conservative whole-program field-name matching across aliases until member syntaxes share the checked read path. Deliver the P0 refusal first; routing the other syntaxes remains pending.
+
