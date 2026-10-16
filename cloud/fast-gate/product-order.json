@@ -304,6 +304,39 @@
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/cohere/yaml TestProduct_YamlFindsCSTGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLCSTGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsComposeGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLComposeGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsFormatGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsFormatterMutantsOracle": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatterMutantsOracle"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsLexerGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLLexerGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsPropsGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLPropsGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsScalarsGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLScalarsGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsSchemaGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLSchemaGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsUnistGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLUnistGo"
+    ],
+    "stage1/cohere/yaml TestProduct_YamlFindsWidthGo": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLWidthGo"
+    ],
+    "stage1/cohere/yaml/oracles TestProduct_YAMLFormatterMutantsOracle": [
+      "stage1/cohere/yaml/oracles TestProduct_YAMLFormatGo"
+    ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],
