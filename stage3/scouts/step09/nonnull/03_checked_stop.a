@@ -1,0 +1,9 @@
+// a-check: refused the non-null assertion !
+// TypeScript 6.0.3 src/compiler/core.ts:1896, the memoize callback reset.
+// Driver isolates the reset without consuming the invalidated callback.
+function clear(callback: () => number): void {
+    console.log(String(callback()));
+    callback = undefined!;
+    console.log("after");
+}
+clear(() => 42);

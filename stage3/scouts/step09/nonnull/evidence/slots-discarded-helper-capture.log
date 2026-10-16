@@ -1,0 +1,182 @@
+results: /tmp/nonnull-slot-final-results
+FAIL 088_baseConstraintOfDecorator: stdout
+--- golden.stdout
++++ actual.stdout
+@@ -1,4 +0,0 @@
+-baseConstraintOfDecorator.ts(2,5): error TS2322: Type 'typeof decoratorFunc' is not assignable to type 'TFunction'.
+-  'TFunction' could be instantiated with an arbitrary type which could be unrelated to 'typeof decoratorFunc'.
+-baseConstraintOfDecorator.ts(2,40): error TS2507: Type 'TFunction' is not a constructor function type.
+-baseConstraintOfDecorator.ts(12,18): error TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'.
+FAIL 088_baseConstraintOfDecorator: stderr
+--- golden.stderr
++++ actual.stderr
+@@ -0,0 +1,17 @@
++/tmp/nonnull-slots-final/slots.cjs:134365
++      throw e;
++      ^
++
++TypeError: Symbol.iterator is not defined.
++    at __values7 (/tmp/nonnull-slots-final/slots.cjs:15212:9)
++    at forEachEntry (/tmp/nonnull-slots-final/slots.cjs:15388:27)
++    at trySymbolTable (/tmp/nonnull-slots-final/slots.cjs:56301:21)
++    at getAccessibleSymbolChainFromSymbolTable (/tmp/nonnull-slots-final/slots.cjs:56278:21)
++    at _loop_2 (/tmp/nonnull-slots-final/slots.cjs:56182:22)
++    at forEachSymbolTableInScope (/tmp/nonnull-slots-final/slots.cjs:56235:21)
++    at getAccessibleSymbolChain (/tmp/nonnull-slots-final/slots.cjs:56271:18)
++    at getSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59115:37)
++    at lookupSymbolChainWorker (/tmp/nonnull-slots-final/slots.cjs:59102:36)
++    at lookupSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59096:14)
++
++Node.js v24.19.0
+FAIL 088_baseConstraintOfDecorator: exit
+--- golden.exit
++++ actual.exit
+@@ -1 +1 @@
+-2
++1
+FAIL 108_redeclareParameterInCatchBlock: stdout
+--- golden.stdout
++++ actual.stdout
+@@ -1,5 +0,0 @@
+-redeclareParameterInCatchBlock.ts(4,11): error TS2492: Cannot redeclare identifier 'e' in catch clause.
+-redeclareParameterInCatchBlock.ts(10,9): error TS2492: Cannot redeclare identifier 'e' in catch clause.
+-redeclareParameterInCatchBlock.ts(16,15): error TS2492: Cannot redeclare identifier 'b' in catch clause.
+-redeclareParameterInCatchBlock.ts(21,15): error TS2451: Cannot redeclare block-scoped variable 'x'.
+-redeclareParameterInCatchBlock.ts(21,21): error TS2451: Cannot redeclare block-scoped variable 'x'.
+FAIL 108_redeclareParameterInCatchBlock: stderr
+--- golden.stderr
++++ actual.stderr
+@@ -0,0 +1,17 @@
++/tmp/nonnull-slots-final/slots.cjs:134365
++      throw e;
++      ^
++
++TypeError: Symbol.iterator is not defined.
++    at __values7 (/tmp/nonnull-slots-final/slots.cjs:15212:9)
++    at forEachKey (/tmp/nonnull-slots-final/slots.cjs:15410:27)
++    at checkTryStatement (/tmp/nonnull-slots-final/slots.cjs:94617:13)
++    at checkSourceElementWorker (/tmp/nonnull-slots-final/slots.cjs:96984:16)
++    at checkSourceElement (/tmp/nonnull-slots-final/slots.cjs:96805:7)
++    at forEach (/tmp/nonnull-slots-final/slots.cjs:160:20)
++    at checkSourceFileWorker (/tmp/nonnull-slots-final/slots.cjs:97267:7)
++    at checkSourceFile (/tmp/nonnull-slots-final/slots.cjs:97226:69)
++    at checkSourceFileWithEagerDiagnostics (/tmp/nonnull-slots-final/slots.cjs:97377:5)
++    at getDiagnosticsWorker (/tmp/nonnull-slots-final/slots.cjs:97385:7)
++
++Node.js v24.19.0
+FAIL 108_redeclareParameterInCatchBlock: exit
+--- golden.exit
++++ actual.exit
+@@ -1 +1 @@
+-2
++1
+FAIL 110_importDeclWithExportModifierAndExportAssignment: stdout
+--- golden.stdout
++++ actual.stdout
+@@ -1,3 +0,0 @@
+-importDeclWithExportModifierAndExportAssignment.ts(5,19): error TS2708: Cannot use namespace 'x' as a value.
+-importDeclWithExportModifierAndExportAssignment.ts(5,21): error TS2694: Namespace 'x' has no exported member 'c'.
+-importDeclWithExportModifierAndExportAssignment.ts(6,1): error TS2309: An export assignment cannot be used in a module with other exported elements.
+FAIL 110_importDeclWithExportModifierAndExportAssignment: stderr
+--- golden.stderr
++++ actual.stderr
+@@ -0,0 +1,17 @@
++/tmp/nonnull-slots-final/slots.cjs:134365
++      throw e;
++      ^
++
++TypeError: Symbol.iterator is not defined.
++    at __values7 (/tmp/nonnull-slots-final/slots.cjs:15212:9)
++    at forEachEntry (/tmp/nonnull-slots-final/slots.cjs:15388:27)
++    at hasExportedMembers (/tmp/nonnull-slots-final/slots.cjs:96739:12)
++    at checkExternalModuleExports (/tmp/nonnull-slots-final/slots.cjs:96748:33)
++    at checkExportAssignment (/tmp/nonnull-slots-final/slots.cjs:96726:5)
++    at checkSourceElementWorker (/tmp/nonnull-slots-final/slots.cjs:97008:16)
++    at checkSourceElement (/tmp/nonnull-slots-final/slots.cjs:96805:7)
++    at forEach (/tmp/nonnull-slots-final/slots.cjs:160:20)
++    at checkSourceFileWorker (/tmp/nonnull-slots-final/slots.cjs:97267:7)
++    at checkSourceFile (/tmp/nonnull-slots-final/slots.cjs:97226:69)
++
++Node.js v24.19.0
+FAIL 110_importDeclWithExportModifierAndExportAssignment: exit
+--- golden.exit
++++ actual.exit
+@@ -1 +1 @@
+-2
++1
+FAIL 256_namespaceDisambiguationInUnion: stdout
+--- golden.stdout
++++ actual.stdout
+@@ -1,6 +0,0 @@
+-namespaceDisambiguationInUnion.ts(10,7): error TS2322: Type '{ type: string; }' is not assignable to type 'Foo.Yep | Bar.Yep'.
+-  Type '{ type: string; }' is not assignable to type 'Yep'.
+-    Types of property 'type' are incompatible.
+-      Type 'string' is not assignable to type '"bar.yep"'.
+-namespaceDisambiguationInUnion.ts(13,7): error TS2322: Type '{ type: string; }[]' is not assignable to type '[Foo.Yep, Bar.Yep]'.
+-  Target requires 2 element(s) but source may have fewer.
+FAIL 256_namespaceDisambiguationInUnion: stderr
+--- golden.stderr
++++ actual.stderr
+@@ -0,0 +1,17 @@
++/tmp/nonnull-slots-final/slots.cjs:134365
++      throw e;
++      ^
++
++TypeError: Symbol.iterator is not defined.
++    at __values7 (/tmp/nonnull-slots-final/slots.cjs:15212:9)
++    at forEachEntry (/tmp/nonnull-slots-final/slots.cjs:15388:27)
++    at trySymbolTable (/tmp/nonnull-slots-final/slots.cjs:56301:21)
++    at getAccessibleSymbolChainFromSymbolTable (/tmp/nonnull-slots-final/slots.cjs:56278:21)
++    at forEachSymbolTableInScope (/tmp/nonnull-slots-final/slots.cjs:56239:12)
++    at getAccessibleSymbolChain (/tmp/nonnull-slots-final/slots.cjs:56271:18)
++    at getSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59115:37)
++    at lookupSymbolChainWorker (/tmp/nonnull-slots-final/slots.cjs:59102:36)
++    at lookupSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59096:14)
++    at symbolToTypeNode (/tmp/nonnull-slots-final/slots.cjs:59283:19)
++
++Node.js v24.19.0
+FAIL 256_namespaceDisambiguationInUnion: exit
+--- golden.exit
++++ actual.exit
+@@ -1 +1 @@
+-2
++1
+FAIL 283_errorsWithInvokablesInUnions01: stdout
+--- golden.stdout
++++ actual.stdout
+@@ -1,7 +0,0 @@
+-errorsWithInvokablesInUnions01.ts(14,12): error TS2322: Type '(x: string) => void' is not assignable to type 'ConstructableA | IDirectiveLinkFn<number> | IDirectivePrePost<number>'.
+-  Type '(x: string) => void' is not assignable to type 'IDirectiveLinkFn<number>'.
+-    Types of parameters 'x' and 'scope' are incompatible.
+-      Type 'number' is not assignable to type 'string'.
+-errorsWithInvokablesInUnions01.ts(16,12): error TS2322: Type 'typeof ctor' is not assignable to type 'ConstructableA | IDirectiveLinkFn<number> | IDirectivePrePost<number>'.
+-  Type 'typeof ctor' is not assignable to type 'ConstructableA'.
+-    Property 'somePropA' is missing in type 'ctor' but required in type '{ somePropA: any; }'.
+FAIL 283_errorsWithInvokablesInUnions01: stderr
+--- golden.stderr
++++ actual.stderr
+@@ -0,0 +1,17 @@
++/tmp/nonnull-slots-final/slots.cjs:134365
++      throw e;
++      ^
++
++TypeError: Symbol.iterator is not defined.
++    at __values7 (/tmp/nonnull-slots-final/slots.cjs:15212:9)
++    at forEachEntry (/tmp/nonnull-slots-final/slots.cjs:15388:27)
++    at trySymbolTable (/tmp/nonnull-slots-final/slots.cjs:56301:21)
++    at getAccessibleSymbolChainFromSymbolTable (/tmp/nonnull-slots-final/slots.cjs:56278:21)
++    at _loop_2 (/tmp/nonnull-slots-final/slots.cjs:56182:22)
++    at forEachSymbolTableInScope (/tmp/nonnull-slots-final/slots.cjs:56235:21)
++    at getAccessibleSymbolChain (/tmp/nonnull-slots-final/slots.cjs:56271:18)
++    at getSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59115:37)
++    at lookupSymbolChainWorker (/tmp/nonnull-slots-final/slots.cjs:59102:36)
++    at lookupSymbolChain (/tmp/nonnull-slots-final/slots.cjs:59096:14)
++
++Node.js v24.19.0
+FAIL 283_errorsWithInvokablesInUnions01: exit
+--- golden.exit
++++ actual.exit
+@@ -1 +1 @@
+-2
++1
+{"command": ["/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node", "/tmp/nonnull-slots-final/slots.cjs"], "cases": 301, "passed": 296, "failed": ["088_baseConstraintOfDecorator", "108_redeclareParameterInCatchBlock", "110_importDeclWithExportModifierAndExportAssignment", "256_namespaceDisambiguationInUnion", "283_errorsWithInvokablesInUnions01"], "seconds": 322.692}

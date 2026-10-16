@@ -1,0 +1,9 @@
+// a-check: refused the non-null assertion !
+// Reduced from TypeScript 6.0.3 src/compiler/builder.ts:1793.
+// Program and emit kind are scalar scaffolding; the asserted assignment is retained.
+function pending(state: { program: number }, emitKind: boolean): number {
+    let affected = 0;
+    if (emitKind) affected = state.program!;
+    return affected;
+}
+console.log(String(pending({ program: 7 }, true)));

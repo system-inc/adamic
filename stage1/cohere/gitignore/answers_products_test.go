@@ -5,19 +5,19 @@ import (
 	"testing"
 )
 
-func TestProduct_GitignoreOracle(t *testing.T)     { t.Parallel(); portOracleProduct(t) }
-func TestProduct_GitignoreCorrect(t *testing.T)    { t.Parallel(); portProducts(t, nil) }
-func TestProduct_GitignoreMutant_000(t *testing.T) { t.Parallel(); portProducts(t, &mutants[0]) }
-func TestProduct_GitignoreMutant_001(t *testing.T) { t.Parallel(); portProducts(t, &mutants[1]) }
-func TestProduct_GitignoreMutant_002(t *testing.T) { t.Parallel(); portProducts(t, &mutants[2]) }
-func TestProduct_GitignoreMutant_003(t *testing.T) { t.Parallel(); portProducts(t, &mutants[3]) }
-func TestProduct_GitignoreMutant_004(t *testing.T) { t.Parallel(); portProducts(t, &mutants[4]) }
-func TestProduct_GitignoreMutant_005(t *testing.T) { t.Parallel(); portProducts(t, &mutants[5]) }
-func TestProduct_GitignoreMutant_006(t *testing.T) { t.Parallel(); portProducts(t, &mutants[6]) }
-func TestProduct_GitignoreMutant_007(t *testing.T) { t.Parallel(); portProducts(t, &mutants[7]) }
-func TestProduct_GitignoreMutant_008(t *testing.T) { t.Parallel(); portProducts(t, &mutants[8]) }
-func TestProduct_GitignoreMutant_009(t *testing.T) { t.Parallel(); portProducts(t, &mutants[9]) }
-func TestProduct_GitignoreMutant_010(t *testing.T) { t.Parallel(); portProducts(t, &mutants[10]) }
+func TestProduct_GitignoreFindsOracle(t *testing.T) { t.Parallel(); portOracleProduct(t) }
+func TestProduct_GitignoreCorrect(t *testing.T)     { t.Parallel(); portProducts(t, nil) }
+func TestProduct_GitignoreMutant_000(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[0]) }
+func TestProduct_GitignoreMutant_001(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[1]) }
+func TestProduct_GitignoreMutant_002(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[2]) }
+func TestProduct_GitignoreMutant_003(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[3]) }
+func TestProduct_GitignoreMutant_004(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[4]) }
+func TestProduct_GitignoreMutant_005(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[5]) }
+func TestProduct_GitignoreMutant_006(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[6]) }
+func TestProduct_GitignoreMutant_007(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[7]) }
+func TestProduct_GitignoreMutant_008(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[8]) }
+func TestProduct_GitignoreMutant_009(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[9]) }
+func TestProduct_GitignoreMutant_010(t *testing.T)  { t.Parallel(); portProducts(t, &mutants[10]) }
 
 // The build phase and isolated units share these exact recipes and keys.
 var portProductStates sync.Map
