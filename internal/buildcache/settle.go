@@ -1862,7 +1862,7 @@ var leanRecipeFor = leanRecipeOf
 // leanRecipeOf is a lean build's recipe (#earlycut, Node's approved design): the code that makes it, never the code of
 // the test binary that settled it, which keyed every native runtime archive and every go oracle built in a test linking
 // the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, all their non-test
-// files (buildcache whole, Tests' ruling of Oct 16: goProduct's closure and withOutsideHeaders run a go build, and
+// files (buildcache whole, Tests' ruling of Oct 16: goProduct's plan runs a go build, and
 // they're no make file), and a lean caller's own package (caller, leanCallers), never what the caller links: what its
 // build calls there is in the Files it declares, which the window keys as read (leanReads), and the caller's census holds
 // the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles). Under process's build

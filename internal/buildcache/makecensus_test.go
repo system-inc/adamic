@@ -198,7 +198,7 @@ func TestAGoProductsBuildReadsNoStateButItsInitializers(t *testing.T) {
 	}
 	census := leancensus.Census{
 		Root: root, Directory: filepath.Join(root, "internal", "buildcache"), ImportPath: buildcachePackage,
-		Entries:  []string{"goRequest.withOutsideHeaders", "goRequest.build"},
+		Entries:  []string{"goBuildPlan.run"},
 		Declared: []string{"internal/buildcache"},
 		Slice:    []string{buildcachePackage, modulePath + "/internal/buildcache/location", modulePath + "/internal/toolchain"},
 		Exports:  exports, Tree: tree, TestsBuildLean: true,
