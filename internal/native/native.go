@@ -65,6 +65,9 @@ func cLiteral(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// ProgramRegion enables only the one-shot CLI runtime core; no compiler membership is inferred.
+	ProgramRegion bool
+
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
 
@@ -117,6 +120,9 @@ func Flags(options Options) []string {
 	}
 	if options.Target != "wasm32-wasi" {
 		flags = append(flags, "-pthread")
+	}
+	if options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
 	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
