@@ -460,6 +460,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	{"internal/oracle/testdata/long_field_name.a", true, false},
 	{"internal/oracle/testdata/uncaught_names.a", true, false},
 	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
 	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},

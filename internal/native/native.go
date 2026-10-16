@@ -22,12 +22,29 @@ import (
 //go:embed runtime/*.c runtime/*.h
 var runtime embed.FS
 
-// cString is a C string literal holding exactly value's bytes.
+// cString is a NUL-terminated C expression. Long names use a compound literal,
+// with static storage at file scope and block storage through a call.
 //
 // Every byte outside printable ASCII becomes a three-digit octal escape, which can't run into the
 // character after it the way \x can, and quote, backslash and question mark are escaped too, the last
 // so no ?? can ever read as a trigraph.
 func cString(value string) string {
+	if len(value) > longestLiteral {
+		return "((const char[])" + cArray(value) + ")"
+	}
+	return cLiteral(value)
+}
+
+// cArray initializes a char array, including its terminator.
+func cArray(value string) string {
+	if len(value) > longestLiteral {
+		return "{" + cBytes(value) + ", 0}"
+	}
+	return cLiteral(value)
+}
+
+// cLiteral preserves the existing octal escaping and trigraph protection.
+func cLiteral(value string) string {
 	var builder strings.Builder
 	builder.WriteByte('"')
 	for index := 0; index < len(value); index++ {
