@@ -21,6 +21,8 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
 // "--version" or "-v"), passes without a reason.
 var compilerSites = map[string]string{
+	"internal/fuzz/confirm_test.go:TestFindingReproducesAlone":                                        "names clang as a fixture failure stage; compiles nothing",
+	"internal/fuzz/confirm_test.go:flakyCheckout":                                                     "writes fixture tools that simulate failed executions; compiles nothing",
 	"bench/run.go:describeMachine":                                                                    "prints clang's version for a benchmark's header; compiles nothing",
 	"cmd/adamic-gate/main.go:buildFlags":                                                              "records clang's version in a gate's machine line; compiles nothing",
 	"stage1/cohere/cssnumbers/shards_test.go:numbersClangToolchain":                                   "checks clang runs before naming it in a key; compiles nothing",
@@ -35,7 +37,7 @@ var compilerSites = map[string]string{
 	"internal/buildcache/precise_test.go:TestWhatABuildReadsOfTheMachineIsKeyed":                      "a fake system directory's cc link, a path in a trace; nothing runs",
 	"internal/buildcache/precise_test.go:TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed":         "a fake tools directory's clang script, run through a link in a trace; nothing compiles",
 	"internal/toolchain/toolchain_test.go:TestAToolsCompilersAreClangUnlessTheCallerNamesOne":         "checks Env names clang and clang++ as CC and CXX; compiles nothing",
-	"internal/fuzz/run.go:TryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
+	"internal/fuzz/run.go:tryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/runtimes_test.go:TestARuntimeProductKeyIsTheSameThroughEitherLink":               "finds clang to reach it through two links and key a runtime; compiles nothing",
 	"internal/oracle/counts_test.go:countMeasurementInputs":                                           "resolves clang to key a count product by its version report; compiles nothing",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                                       "the WASI SDK's clang, into a t.TempDir(), never a product",
