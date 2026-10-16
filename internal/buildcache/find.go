@@ -59,6 +59,7 @@ func Find(nameKeys []string) ([]Finding, error) {
 		case looked[index].directory != "":
 			file, _ := loadReads(cache, nameKey)
 			finding.Outcome, finding.Key, finding.Name = FindingFound, looked[index].key, file.Name
+			rerecord(cache, nameKey, file.Name, looked[index].refound)
 		case len(looked[index].keys) > 0 && storeAddress() != "":
 			keys := make([]string, len(looked[index].keys))
 			for position, key := range looked[index].keys {
