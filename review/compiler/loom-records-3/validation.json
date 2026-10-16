@@ -1,0 +1,159 @@
+[
+  {
+    "name": "guards",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "./internal/lower",
+      "./cmd/adamic-gate",
+      "./internal/oracle",
+      "-run",
+      "^(TestEveryMapAProgramHoldsIsSorted|TestNativeAgreementRowsNameRegisteredPrograms|TestEveryTestIsParallelOrSaysWhy|TestEveryDuplicatedProductDeclarationAgrees|TestRuntimeSetsAreEachUsed)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 22.264
+  },
+  {
+    "name": "lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestRecord.*|TestNamedRecord.*|TestPartialRecord.*|TestDetachedOwn.*|TestEntries.*|TestOptionalIndexing.*)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 2.981
+  },
+  {
+    "name": "oracle-fixtures",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(records_.*|detached_own_.*|json_replacer_duplicates_object\\.a)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 29.312
+  },
+  {
+    "name": "oracle-checks",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRecord.*|TestNamedRecord.*|TestPartialRecord.*|TestDetachedOwn.*|TestJSONReplacerDuplicates.*)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.218
+  },
+  {
+    "name": "native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestJSONReplacerDuplicates.*Mutant|TestRecordsAgainstNode|TestRecordMutantsUnit0[0-5]|TestRecordReadMutants)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 24.222
+  },
+  {
+    "name": "readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 20.497
+  },
+  {
+    "name": "flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 7.105
+  },
+  {
+    "name": "stage3",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesRecords$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 12.351
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/flow",
+      "./internal/fresh",
+      "./internal/ir",
+      "./internal/javascript",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/oracle"
+    ],
+    "exit": 0,
+    "seconds": 4.708
+  }
+]

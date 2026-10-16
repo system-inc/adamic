@@ -1,0 +1,20 @@
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:13
+// From TypeScript 6.0.3, src/compiler/core.ts:1278
+// Census reason: an index signature
+export interface MapLike<T> {
+    [index: string]: T;
+}
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+export function getProperty<T>(map: MapLike<T>, key: string): T | undefined {
+    return hasOwnProperty.call(map, key) ? map[key] : undefined;
+}
+
+// Driver.
+// Design boundary probe: the named view is a driver, not an upstream function.
+type Named = { baseUrl?: string };
+const map: Record<string, string> = {};
+map["baseUrl"] = "src";
+const named: Named = map;
+console.log(`${named.baseUrl} ${getProperty(map, "baseUrl")}`);
+map["baseUrl"] = "lib";
+console.log(`${named.baseUrl}`);
