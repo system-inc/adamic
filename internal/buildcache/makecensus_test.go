@@ -13,6 +13,8 @@ import (
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/leancensus"
 )
 
 // makeCensus is every use, in a make_*.go file, of something this package defines in a machinery file: each as
@@ -169,5 +171,43 @@ func TestABinaryLinkingBuildcacheKeysItsMakeFilesAlone(t *testing.T) {
 	own := recipeOf(root, journalEntry{Package: buildcachePackage + ".test"})
 	if own.reason != "" || !slices.Contains(own.entries, readEntry{Kind: "content", Path: "internal/buildcache/settle.go"}) {
 		t.Errorf("this package's own tests' recipe doesn't key settle.go (%s)", own.reason)
+	}
+}
+
+// goProductCensusExports is the export data of this package and every package it and its tests import, built ahead
+// (TestProduct_GoProductCensusExports), so goProduct's lean census type-checks with real types and runs no go.
+func goProductCensusExports(t testing.TB) string {
+	t.Helper()
+	return GoExports(t, "./internal/buildcache")
+}
+
+func TestProduct_GoProductCensusExports(t *testing.T) {
+	t.Parallel()
+	goProductCensusExports(t)
+}
+
+// A go product's build, goProduct's lean closure, reaches nothing its recipe doesn't key, and every package variable it
+// reads is written by its own initializer alone, anywhere in this package and its tests, which build lean in their own
+// binary (leancensus, Node's and Tests' ruling on adcc8fd771).
+func TestAGoProductsBuildReadsNoStateButItsInitializers(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	exports, tree, _, err := leancensus.Imports(goProductCensusExports(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	census := leancensus.Census{
+		Root: root, Directory: filepath.Join(root, "internal", "buildcache"), ImportPath: buildcachePackage,
+		Entries:  []string{"goRequest.withOutsideHeaders", "goRequest.build"},
+		Declared: []string{"internal/buildcache"},
+		Slice:    []string{buildcachePackage, modulePath + "/internal/buildcache/location", modulePath + "/internal/toolchain"},
+		Exports:  exports, Tree: tree, TestsBuildLean: true,
+	}
+	findings, err := census.Findings()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(findings) > 0 {
+		t.Fatalf("a go product's build reaches past what its key holds:\n%s", strings.Join(findings, "\n"))
 	}
 }
