@@ -1,10 +1,15 @@
 package oracle
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var statementsSmallTypeScriptFixtures = []string{
@@ -28,22 +33,57 @@ func statementsSmallTypeScript(t *testing.T, path string) string {
 	return typed
 }
 
+// Give the TypeScript adapter its logical name before lowering. Replacing a
+// scratch path in emitted C afterward leaves that path's string lengths behind.
+func statementsSmallTypeScriptCounted(t *testing.T, path string) (string, func() string) {
+	t.Helper()
+	typed := statementsSmallTypeScript(t, path)
+	logical := "<repository>/" + strings.TrimSuffix(path, ".a") + ".ts"
+	checked, err := load.LoadDisplayed([]string{typed}, func(name string) string {
+		if name == typed {
+			return logical
+		}
+		return name
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	return countPortable(t, source, ""), func() string {
+		return countedRun(t, path, typed, source, false, nil, false, false)
+	}
+}
+
 func init() {
 	for _, path := range statementsSmallTypeScriptFixtures {
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) {
-			base, err := filepath.Abs(repository)
-			if err != nil {
-				t.Fatal(err)
-			}
-			typed := statementsSmallTypeScript(t, path)
-			relative, err := filepath.Rel(base, typed)
-			if err != nil {
-				t.Fatal(err)
-			}
-			// The row is keyed by path, and its digest with it: relative is the scratch copy's, which moves every run.
-			runs, measure := counted(t, relative, false, nil, false, false)
-			return runs, func() string { return strings.Replace(measure(), "| "+relative+" |", "| "+path+" |", 1) }
+			return statementsSmallTypeScriptCounted(t, path)
 		}})
+	}
+}
+
+func TestStatementsSmallTypeScriptCountInputsAreStable(t *testing.T) {
+	t.Parallel()
+	recorded, err := recordedCounts()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, path := range statementsSmallTypeScriptFixtures {
+		first, measure := statementsSmallTypeScriptCounted(t, path)
+		second, _ := statementsSmallTypeScriptCounted(t, path)
+		if first != second {
+			t.Errorf("%s: count inputs depend on scratch location", path)
+		}
+		if strings.Contains(first, "TestStatementsSmallTypeScript") {
+			t.Errorf("%s: count inputs name the test's scratch location", path)
+		}
+		if row := measure(); row != recorded[path] {
+			t.Errorf("counts changed: got %s want %s", row, recorded[path])
+		}
 	}
 }
 
