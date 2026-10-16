@@ -212,6 +212,9 @@
     "stage1/cohere/estree/oracles TestProduct_SyntaxMutantsGoOracle": [
       "stage1/cohere/estree/oracles TestProduct_EstreeGoOracle"
     ],
+    "stage1/cohere/lint/helpers TestProduct_HelpersFindsGoOracle": [
+      "stage1/cohere/lint/helpers/oracles TestProduct_HelperOracle"
+    ],
     "stage1/cohere/markdownblocks TestProduct_MarkdownQuote_lowered": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_layout",
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksQuote_lists"
