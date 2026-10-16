@@ -304,6 +304,15 @@
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/cohere/selector TestProduct_SelectorFindsGoAnswers": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoAnswers"
+    ],
+    "stage1/cohere/selector TestProduct_SelectorFindsGoOracle": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoOracle"
+    ],
+    "stage1/cohere/selector/oracles TestProduct_SelectorGoAnswers": [
+      "stage1/cohere/selector/oracles TestProduct_SelectorGoOracle"
+    ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],
