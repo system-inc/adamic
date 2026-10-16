@@ -388,6 +388,9 @@
     "stage1/cohere/markdownblocks TestProduct_MarkdownblocksFindsWhitespace_lists": [
       "stage1/cohere/markdownblocks/oracles TestProduct_MarkdownblocksWhitespace_lists"
     ],
+    "stage1/cohere/mediaquery TestProduct_MediaQueryFindsGoOracle": [
+      "stage1/cohere/mediaquery/oracles TestProduct_MediaQueryGoOracle"
+    ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],
