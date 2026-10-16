@@ -60,11 +60,14 @@ func newRig(t *testing.T) *rig {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_BUILD_TRACE", trace)
-	original := recipeFor
+	original, originalLean := recipeFor, leanRecipeFor
 	recipeFor = func(string, journalEntry) recipe {
 		return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
 	}
-	t.Cleanup(func() { recipeFor = original })
+	leanRecipeFor = func(string, string, journalEntry) recipe {
+		return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+	}
+	t.Cleanup(func() { recipeFor, leanRecipeFor = original, originalLean })
 	return &rig{root: root, cache: cache, trace: trace, pid: os.Getpid()}
 }
 
@@ -2600,5 +2603,127 @@ func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
 		case test.refusal != "" && (len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], test.refusal)):
 			t.Errorf("%s: settled %q, refused %q; want it refused naming %q", name, settlement.Settled, settlement.Refused, test.refusal)
 		}
+	}
+}
+
+// A windowed lean build is keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved design), asked for
+// with its lean caller, never by the recipe of the binary that settled it. A build that isn't lean, and a lean build
+// whose window opened late, keep the binary's whole recipe. Mutants that each fail it: a windowed lean build given the
+// whole recipe; its caller never handed on; a late window given the lean recipe.
+// Not parallel: newRig, and it replaces recipeFor and leanRecipeFor.
+func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
+	caller := modulePath + "/internal/native/runtimeproducts"
+	run := func(lean *leanBuild, late bool) (Report, []string, []string) {
+		t.Helper()
+		r := newRig(t)
+		var asked []string
+		recipeFor = func(string, journalEntry) recipe {
+			asked = append(asked, "whole")
+			return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+		}
+		leanRecipeFor = func(_, called string, _ journalEntry) recipe {
+			asked = append(asked, "lean "+called)
+			return recipe{entries: []readEntry{{Kind: "content", Path: "notes.txt"}}}
+		}
+		product(t, port, building("built"), lean)
+		build := r.built(t)["port"]
+		if late {
+			command := r.pid + 100
+			r.open(command, "go.sum")
+			r.marker(r.pid, "build-begin", build.Build)
+			r.add(command, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, r.pid)
+			r.open(r.pid, "source/a.c")
+			r.marker(r.pid, "build-end", build.Build)
+		} else {
+			r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+		}
+		settlement := r.settle(t)
+		for _, report := range settlement.Reports {
+			if report.Outcome == ReportSettled {
+				return report, r.entries(t, build.NameKey), asked
+			}
+		}
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		return Report{}, nil, nil
+	}
+	report, entries, asked := run(&leanBuild{caller: caller}, false)
+	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean " + caller}) {
+		t.Errorf("a windowed lean build: taken as %q, entries %q, recipes asked %q; want the lean recipe alone, asked with its caller", report.Window, entries, asked)
+	}
+	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {caller: caller}} {
+		_, entries, asked := run(lean, lean != nil)
+		if !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
+			t.Errorf("%s: entries %q, recipes asked %q; want the binary's whole recipe", name, entries, asked)
+		}
+	}
+}
+
+// A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache by its make files and every
+// package of the tree it links whole, and a lean caller's own package, never what the caller links. So a runtime archive
+// keys runtimeproducts and internal/toolchain and no file of the compiler, where the settling binary's whole recipe
+// keys the compiler's. buildcache's own lean build keys no caller. Mutants that each fail it: the caller listed with
+// what it links; buildcache keyed whole; the caller left out.
+func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	caller := modulePath + "/internal/native/runtimeproducts"
+	paths := func(code recipe) []string {
+		t.Helper()
+		if code.reason != "" {
+			t.Fatalf("no recipe: %s", code.reason)
+		}
+		var listed []string
+		for _, entry := range code.entries {
+			listed = append(listed, entry.Kind+" "+entry.Path)
+		}
+		sort.Strings(listed)
+		return listed
+	}
+	lean, own := paths(leanRecipeOf(root, caller, journalEntry{})), paths(leanRecipeOf(root, "", journalEntry{}))
+	whole := paths(recipeOf(root, journalEntry{Package: caller + ".test"}))
+	has := func(listed []string, prefix string) bool {
+		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
+	}
+	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod"} {
+		if !has(lean, want) {
+			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
+		}
+	}
+	for _, unwanted := range []string{"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ir/", "content internal/flow/", "content bridge/", "content internal/buildcache/settle.go"} {
+		if has(lean, unwanted) {
+			t.Errorf("a runtime archive's lean recipe holds %q", unwanted)
+		}
+	}
+	if has(own, "content internal/native/runtimeproducts/") || !has(own, "content internal/buildcache/make_go.go") {
+		t.Errorf("buildcache's own lean recipe: %q", own)
+	}
+	if !has(whole, "content internal/native/emit_expressions.go") {
+		t.Errorf("the settling binary's whole recipe lacks the compiler: %q", whole)
+	}
+}
+
+// A lean build is buildcache's own when buildcache asks for it, a reviewed caller's when one of leanCallers does, and no
+// lean build when any other package does: its code is unreviewed, so it keeps the whole recipe. The caller is read from
+// the runtime's spelling of a function. Mutant: an unreviewed caller's build made lean.
+func TestALeanBuildIsBuildcachesOrAReviewedCallers(t *testing.T) {
+	t.Parallel()
+	for symbol, want := range map[string]string{
+		"github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1": modulePath + "/internal/native/runtimeproducts",
+		"github.com/system-inc/adamic/internal/buildcache.goProduct":               buildcachePackage,
+		"github.com/system-inc/adamic/internal/buildcache.(*goRequest).build":      buildcachePackage,
+		"main.main": "main",
+	} {
+		if got := functionPackage(symbol); got != want {
+			t.Errorf("%s is %q's, want %q", symbol, got, want)
+		}
+	}
+	if lean := leanBuildOf(buildcachePackage); lean == nil || lean.caller != "" {
+		t.Errorf("buildcache's own build: %+v", lean)
+	}
+	if lean := leanBuildOf(modulePath + "/internal/native/runtimeproducts"); lean == nil || lean.caller != modulePath+"/internal/native/runtimeproducts" {
+		t.Errorf("a reviewed caller's build: %+v", lean)
+	}
+	if lean := leanBuildOf(modulePath + "/stage1/cohere/lint"); lean != nil {
+		t.Errorf("an unreviewed caller's build is lean: %+v", lean)
 	}
 }
