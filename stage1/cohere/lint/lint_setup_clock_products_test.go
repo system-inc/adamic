@@ -2,6 +2,7 @@ package lint
 
 import (
 	"bytes"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"os"
 	"path/filepath"
 	"testing"
@@ -22,7 +23,7 @@ func TestProduct_ShardsAgreeNative(t *testing.T) {
 	t.Logf("product wall=%s", time.Since(started))
 }
 
-func TestProduct_ShardsAgreeCapture(t *testing.T) {
+func TestProduct_LintFindsShardsAgreeCapture(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	testShardsAgreeUpstream(t)
@@ -98,11 +99,9 @@ func TestProduct_ProfileCompilationProfiled(t *testing.T) {
 	}
 }
 
-func TestProduct_ProfileCompilationOracleOutputs(t *testing.T) {
+func TestProduct_LintFindsProfileOracleOutputs(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
-	compilationPrepare(t)
-	t.Logf("product wall=%s", time.Since(started))
+	oracles.FindProfileOracleOutputs(t)
 }
 
 func TestProduct_SuggestionAlongsideLowered(t *testing.T) {
@@ -119,11 +118,9 @@ func TestProduct_SuggestionAlongsideNative(t *testing.T) {
 	t.Logf("product wall=%s", time.Since(started))
 }
 
-func TestProduct_SuggestionAlongsideGoOracle(t *testing.T) {
+func TestProduct_LintFindsSuggestionAlongsideGoOracle(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
-	suggestionAlongsideSetup(t)
-	t.Logf("product wall=%s", time.Since(started))
+	oracles.FindSuggestionAlongsideOracle(t)
 }
 
 func TestProduct_DecodedOptionsLowered(t *testing.T) {

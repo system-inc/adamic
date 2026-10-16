@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"io"
 	"os"
@@ -269,43 +270,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 
 func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
 	t.Helper()
-	binary, err := os.ReadFile(oracle)
-	if err != nil {
-		t.Fatal(err)
-	}
-	text, err := os.ReadFile(manifestPath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	sourcePath := strings.SplitN(string(text), "\t", 2)[0]
-	source, err := os.ReadFile(sourcePath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	witness := strings.SplitN(compilationCase(t), "\t", 2)[0]
-	inputs := buildcache.Inputs{Name: "lint-profile-oracle-outputs", Files: []string{witness, "stage1/cohere/lint/profile_compilation_main_test.go"}, Flags: []string{"mode=no-var", fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("case-sha256=%x", sha256.Sum256(source))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
-	product := buildcache.Product(t, inputs, func(dir string) error {
-		for _, mode := range []string{"wire", "count"} {
-			args := []string{"--manifest", manifestPath}
-			if mode == "count" {
-				args = append(args, "--count")
-			}
-			data := execute(t, "", oracle, args...).output
-			data = bytes.ReplaceAll(data, []byte(sourcePath), []byte("@profile-case@"))
-			if err := os.WriteFile(filepath.Join(dir, mode), data, 0644); err != nil {
-				return err
-			}
-		}
-		return nil
-	})
-	read := func(name string) []byte {
-		data, err := os.ReadFile(filepath.Join(product, name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		return bytes.ReplaceAll(data, []byte("@profile-case@"), []byte(sourcePath))
-	}
-	return read("wire"), read("count")
+	return oracles.ProfileOracleOutputs(t, oracle, manifestPath)
 }
 
 func compilationLowered(t *testing.T, inputs buildcache.Inputs) string {
