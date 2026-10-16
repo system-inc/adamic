@@ -32,6 +32,12 @@ mutants = [
  ("comparator-counter", "names.go", 'name := stableName(prefix, "data", key)', 'name := stableName(prefix, "data", key + fmt.Sprint(e.temporaries))', "TestStableClosureComparatorIdentity"),
  ("wasi-reader", "wasm_test.go", 'adamic_function_[A-Za-z0-9_]*handleRequest_[a-f0-9]{32}', 'adamic_function_[0-9]+_handleRequest', "TestStableRequestHandlerIdentity"),
  ("region-facts", "emit.go", 'e.regionValues = map[string]bool{}', '// mutant: retain previous-body region facts', "TestStableCacheOwnersAndCounters"),
+
+ ("local-ordinal", "names.go", 'key := owner + "/" + local.Name + "/" + strconv.Itoa(occurrence)', 'key := owner + "/" + local.Name + "/" + strconv.Itoa(occurrence) + "/" + strconv.Itoa(i)', "TestSourceNamesDoNotMove"),
+ ("global-ordinal", "names.go", 'key = sourceKey(local.Source) + "/" + local.Name', 'key = strconv.Itoa(i)', "TestSourceNamesDoNotMove"),
+ ("module-counter", "emit.go", 'if module, ok := starts[index]; ok {\n\t\t\te.resetCounters()', 'if module, ok := starts[index]; ok {', "TestSourceNamesDoNotMove"),
+
+ ("declaration-ancestry", "names.go", 'fmt.Sprintf("%q", source.Declaration)', 'fmt.Sprintf("%q", []string{})', "TestStableDeclarationAncestry"),
 ]
 selected = os.environ.get("ADAMIC_IDENTITY_MUTANTS", "")
 if selected:

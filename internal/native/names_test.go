@@ -431,3 +431,18 @@ func TestStableClosureComparatorIdentity(t *testing.T) {
 		t.Fatal("closure comparator lost its content identity")
 	}
 }
+
+func TestStableDeclarationAncestry(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Functions: []ir.Function{
+		{Source: ir.SourceIdentity{Module: "same.a", Declaration: []string{"a_b", "c"}}},
+		{Source: ir.SourceIdentity{Module: "same.a", Declaration: []string{"a", "b_c"}}},
+	}}
+	e := &emitter{program: program}
+	if e.sourceReadable(0) != e.sourceReadable(1) {
+		t.Fatal("control must collide after readable escaping")
+	}
+	if e.functionName(0) == e.functionName(1) {
+		t.Fatal("declaration ancestry boundaries lost identity")
+	}
+}
