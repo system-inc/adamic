@@ -16,7 +16,7 @@ import (
 // The old isolated sweep rebuilt four products and selected leaf 001 in
 // one command. Each cold recipe and the isolated selection now has one owner.
 var grain30IsolationCases = []struct{ test, product string }{
-	{"TestProduct_CompleteSuggestionGoOracle", "complete-suggestion-go-oracle"},
+	{"TestProduct_LintFindsCompleteSuggestionGoOracle", "complete-suggestion-go-oracle_oracle-owner-v1"},
 	{"TestProduct_CompleteSuggestionLowered", "complete-suggestion-lowered-false"},
 	{"TestProduct_CompleteSuggestionMutantLowered", "complete-suggestion-lowered-true"},
 	{"TestProduct_CompleteSuggestionNative", "complete-suggestion-native"},

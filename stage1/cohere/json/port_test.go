@@ -21,6 +21,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 const repository = "../../.."
@@ -184,21 +186,9 @@ func portDirectory(t *testing.T, mutation *printerMutation) string {
 	}
 	return directory
 }
-func escape(text string) string {
-	return strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t").Replace(text)
-}
+
 func protocol(cases []textCase, answers []answer) (string, string) {
-	var inputs, outputs strings.Builder
-	for index, item := range cases {
-		fmt.Fprintf(&inputs, "%s\t%s\n", item.Name, escape(item.Text))
-		value := answers[index]
-		if value.Error != "" {
-			fmt.Fprintf(&outputs, "error\t%s\n", escape(value.Error))
-		} else {
-			fmt.Fprintf(&outputs, "ok\t%s\n", escape(value.Output))
-		}
-	}
-	return inputs.String(), outputs.String()
+	return oracles.Protocol(oracleCases(cases), answers)
 }
 func compare(t *testing.T, name string, result run, expected string, cases []textCase) {
 	t.Helper()

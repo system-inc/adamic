@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func schemaCases(t *testing.T) (string, int, int) {
@@ -39,12 +41,9 @@ func goSchema(t *testing.T, cases string) []byte {
 }
 
 // goSchemaOracle is formatter_comparison over testdata/schema_go.go, a product built ahead (#5qykzj5).
-func goSchemaOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-schema", "schema_go.go")
-}
+func goSchemaOracle(t *testing.T) string { return oracles.Schema(t) }
 
-func TestProduct_YAMLSchemaGo(t *testing.T) {
+func TestProduct_YamlFindsSchemaGo(t *testing.T) {
 	t.Parallel()
 	goSchemaOracle(t)
 }

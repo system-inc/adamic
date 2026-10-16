@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goCompose(t *testing.T, cases string) []byte {
@@ -41,41 +42,13 @@ func goCompose(t *testing.T, cases string) []byte {
 
 // goComposeOracle is formatter_comparison over testdata/compose_go.go, with compose's numbers.go opened to it by
 // testdata/compose_exports.txt, a product built ahead (#5qykzj5).
-func goComposeOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-compose", "compose_go.go", numbersExports(t, "\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "compose_exports.txt")...)
-}
+func goComposeOracle(t *testing.T) string { return oracles.Composition(t) }
 
-func TestProduct_YAMLComposeGo(t *testing.T) {
+func TestProduct_YamlFindsComposeGo(t *testing.T) {
 	t.Parallel()
 	goComposeOracle(t)
 }
-func composeCases(t *testing.T) (string, int, int) {
-	path, files, count := lexCases(t)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
-	var extra strings.Builder
-	for _, version := range []string{"", "%YAML 1.1\n---\n", "%YAML 1.2\n---\n"} {
-		for _, tag := range []string{"!!str", "!!int", "!!bool", "!!null", "!!timestamp", "!!binary", "!!merge", "!!set", "!!pairs", "!!omap", "!!map", "!!seq", "!<toString>", "!<constructor>", "!<__proto__>", "!<unknown>"} {
-			for _, value := range []string{"word", "2000-01-01", "null", "<<", "{}", "[]", "{a: null}", "{a: 1}", "[{a: 1}, {a: 2}]", "[{}, word]"} {
-				extra.WriteString("0\t" + escape.Replace(version+tag+" "+value+"\n") + "\n")
-				count++
-			}
-		}
-	}
-	for _, text := range []string{"%TAG !e! tag:example.com,2020:\n---\n!e!%E4%B8%AD value\n", "%TAG !e! tag:example.com,2020:\n---\n!e!%FF value\n", "--- a\n...\n# end\n--- b\n", "---\n" + strings.Repeat("k", 1025) + ": v\n"} {
-		extra.WriteString("0\t" + escape.Replace(text) + "\n")
-		count++
-	}
-	target := filepath.Join(t.TempDir(), "compose-cases.txt")
-	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		t.Fatal(err)
-	}
-	return target, files, count
-}
+func composeCases(t *testing.T) (string, int, int) { return oracles.CompositionCases(t) }
 
 // composeMatchGo compares compose's port build (port_products_test.go) with Go over composeCases, in two shards.
 var composeMatchGo = yamlMatchGo{family: "compose", shards: 2, cases: composeCases, oracle: goComposeOracle, build: yamlComposeBuild, entry: "compose_main.ts"}
