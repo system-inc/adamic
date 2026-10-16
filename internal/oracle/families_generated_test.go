@@ -795,6 +795,16 @@ func TestNativeAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
 	runNativeAgreesShard(t, -30)
 }
 
+func TestNativeAgreesWithNode_counters_shapes(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -31)
+}
+
+func TestNativeAgreesWithNode_counters_square_jump(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -32)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -1580,6 +1590,16 @@ func TestWASIAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
 	runWASIAgreesShard(t, -28)
 }
 
+func TestWASIAgreesWithNode_counters_shapes(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -29)
+}
+
+func TestWASIAgreesWithNode_counters_square_jump(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -30)
+}
+
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestWASIAgreesWithNode")
@@ -1918,6 +1938,16 @@ func TestCountsAreRecorded_typed_arrays_sort_int32array(t *testing.T) {
 func TestCountsAreRecorded_typed_arrays_sort_float64array(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -22)
+}
+
+func TestCountsAreRecorded_counters_shapes(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -23)
+}
+
+func TestCountsAreRecorded_counters_square_jump(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -24)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
