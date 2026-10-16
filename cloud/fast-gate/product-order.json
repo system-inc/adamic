@@ -158,6 +158,30 @@
     "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoRawAnswers": [
       "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle"
     ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoOracle": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsFindsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers"
+    ],
+    "stage1/cohere/cssstrings TestProduct_CSSStringsPrettierBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoBatchAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
+    "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoRawAnswers": [
+      "stage1/cohere/cssstrings/oracles TestProduct_CSSStringsGoOracle"
+    ],
     "stage1/cohere/estree TestProduct_EstreeFindsAcceptanceOracle": [
       "stage1/cohere/estree/oracles TestProduct_AcceptanceOracle"
     ],
@@ -331,694 +355,10 @@
     "stage1/cohere/mediaquery TestProduct_MediaQueryFindsGoOracle": [
       "stage1/cohere/mediaquery/oracles TestProduct_MediaQueryGoOracle"
     ],
-    "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
-      "internal/oracle TestProduct_NativeRuntimesSanitized0"
-    ],
-    "stage3/fixtures TestProduct_FixtureRuntimesSanitized1": [
-      "internal/oracle TestProduct_NativeRuntimesSanitized1"
-    ],
-    "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
-      "internal/oracle TestProduct_NativeRuntimesSanitized2"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsPinnedCorpus": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus"
-    ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsDocumentOracle": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentOracle"
     ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_000": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_000"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_001": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_001"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_002": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_002"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_003": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_003"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_004": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_004"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_005": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_005"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_006": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_006"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_007": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_007"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_008": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_008"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_009": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_009"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_010": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_010"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_011": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_011"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_012": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_012"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_013": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_013"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_014": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_014"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_015": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_015"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_016": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_016"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_017": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_017"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_018": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_018"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_019": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_019"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_020": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_020"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_021": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_021"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_022": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_022"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_023": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_023"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_024": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_024"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_025": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_025"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_026": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_026"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_027": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_027"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_028": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_028"
-    ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsCorpus": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsCorpus": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsTSCManifest": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterTSCManifest",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_000": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_000",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_001": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_001",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_002": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_002",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_003": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_003",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_004": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_004",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_005": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_005",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_006": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_006",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_007": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_007",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_008": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_008",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_009": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_009",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_010": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_010",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_011": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_011",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_012": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_012",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_013": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_013",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_014": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_014",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_015": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_015",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_000": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_000",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_001": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_001",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_002": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_002",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_003": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_003",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_004": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_004",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_005": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_005",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_006": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_006",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_007": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_007",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_008": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_008",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_009": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_009",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_010": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_010",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_011": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_011",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_012": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_012",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_013": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_013",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_014": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_014",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_015": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_015",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_000": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_000",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_001": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_001",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_002": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_002",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_003": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_003",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_004": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_004",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_005": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_005",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_006": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_006",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_007": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_007",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_008": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_008",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_009": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_009",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_010": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_010",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_011": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_011",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_012": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_012",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_013": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_013",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_014": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_014",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_015": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_015",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_016": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_016",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_017": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_017",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_018": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_018",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_019": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_019",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_020": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_020",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_021": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_021",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_022": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_022",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_023": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_023",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_024": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_024",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_025": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_025",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_026": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_026",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_027": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_027",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_028": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_028",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_029": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_029",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_030": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_030",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_031": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_031",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_032": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_032",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_033": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_033",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_034": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_034",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_035": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_035",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_036": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_036",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_037": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_037",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_038": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_038",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_039": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_039",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_040": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_040",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_041": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_041",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_042": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_042",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_043": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_043",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_044": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_044",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_045": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_045",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_046": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_046",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_047": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_047",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_048": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_048",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_049": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_049",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_050": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_050",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_051": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_051",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_052": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_052",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_053": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_053",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_054": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_054",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_055": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_055",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_056": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_056",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_057": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_057",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_058": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_058",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_059": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_059",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_060": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_060",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_061": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_061",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_062": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_062",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
-    ],
-    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_063": [
-      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_063",
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
@@ -1407,8 +747,692 @@
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
     ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_000": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_000",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_001": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_001",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_002": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_002",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_003": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_003",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_004": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_004",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_005": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_005",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_006": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_006",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_007": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_007",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_008": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_008",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_009": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_009",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_010": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_010",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_011": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_011",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_012": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_012",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_013": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_013",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_014": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_014",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_015": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_015",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_016": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_016",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_017": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_017",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_018": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_018",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_019": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_019",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_020": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_020",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_021": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_021",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_022": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_022",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_023": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_023",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_024": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_024",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_025": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_025",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_026": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_026",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_027": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_027",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_028": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_028",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_029": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_029",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_030": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_030",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_031": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_031",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_032": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_032",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_033": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_033",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_034": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_034",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_035": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_035",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_036": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_036",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_037": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_037",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_038": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_038",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_039": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_039",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_040": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_040",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_041": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_041",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_042": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_042",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_043": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_043",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_044": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_044",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_045": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_045",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_046": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_046",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_047": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_047",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_048": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_048",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_049": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_049",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_050": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_050",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_051": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_051",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_052": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_052",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_053": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_053",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_054": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_054",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_055": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_055",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_056": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_056",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_057": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_057",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_058": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_058",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_059": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_059",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_060": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_060",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_061": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_061",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_062": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_062",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsExpressionsNPM_063": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsNPM_063",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterExpressionsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
     "stage1/cohere/tsprinter TestProduct_TSPrinterFindsGoOracle": [
       "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_000": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_000"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_001": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_001"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_002": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_002"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_003": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_003"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_004": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_004"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_005": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_005"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_006": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_006"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_007": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_007"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_008": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_008"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_009": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_009"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_010": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_010"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_011": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_011"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_012": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_012"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_013": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_013"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_014": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_014"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_015": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_015"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_016": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_016"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_017": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_017"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_018": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_018"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_019": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_019"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_020": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_020"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_021": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_021"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_022": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_022"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_023": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_023"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_024": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_024"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_025": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_025"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_026": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_026"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_027": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_027"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsMutantOracle_028": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterMutantOracle_028"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsPinnedCorpus": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsCorpus": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_000": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_000",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_001": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_001",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_002": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_002",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_003": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_003",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_004": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_004",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_005": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_005",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_006": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_006",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_007": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_007",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_008": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_008",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_009": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_009",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_010": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_010",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_011": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_011",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_012": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_012",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_013": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_013",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_014": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_014",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsEmbedded_015": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsEmbedded_015",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_000": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_000",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_001": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_001",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_002": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_002",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_003": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_003",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_004": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_004",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_005": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_005",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_006": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_006",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_007": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_007",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_008": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_008",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_009": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_009",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_010": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_010",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_011": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_011",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_012": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_012",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_013": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_013",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_014": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_014",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsStatementsNPM_015": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsNPM_015",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterStatementsCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterPinnedCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsTSCManifest": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterTSCManifest",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterGoOracle"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized0": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized1": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized1"
+    ],
+    "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ]
   }
 }
