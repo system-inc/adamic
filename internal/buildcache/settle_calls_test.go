@@ -284,3 +284,58 @@ func literalExpression(literal *ast.BasicLit, stack []ast.Node) ast.Node {
 	}
 	return literal
 }
+
+// literalExpression keys each shape a literal sits in: a comparison by the comparison, a call by the call, a map entry
+// by its key and value, but a table's element, a case's list and a declaration by the literal alone (Mentat's should on
+// loom eb4decef: no committed exclusion keys one yet, so the rule is held here).
+func TestLiteralExpressionKeysEachShape(t *testing.T) {
+	t.Parallel()
+	source := `package p
+
+var declared = "declared"
+
+func f(x string) {
+	_ = x == "compared"
+	g("argument")
+	_ = map[string]bool{"key": true}
+	_ = []string{"element", "other"}
+	switch x {
+	case "cased":
+		_ = 1
+	}
+}
+`
+	want := map[string]string{
+		`"declared"`: `"declared"`,
+		`"compared"`: `x == "compared"`,
+		`"argument"`: `g("argument")`,
+		`"key"`:      `"key": true`,
+		`"element"`:  `"element"`,
+		`"other"`:    `"other"`,
+		`"cased"`:    `"cased"`,
+	}
+	files := token.NewFileSet()
+	file, err := parser.ParseFile(files, "p.go", source, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := map[string]string{}
+	var stack []ast.Node
+	ast.Inspect(file, func(node ast.Node) bool {
+		if node == nil {
+			stack = stack[:len(stack)-1]
+			return true
+		}
+		stack = append(stack, node)
+		if basic, ok := node.(*ast.BasicLit); ok && basic.Kind == token.STRING {
+			enclosing := literalExpression(basic, stack)
+			got[basic.Value] = source[files.Position(enclosing.Pos()).Offset:files.Position(enclosing.End()).Offset]
+		}
+		return true
+	})
+	for literal, key := range want {
+		if got[literal] != key {
+			t.Errorf("%s is keyed by %q, want %q", literal, got[literal], key)
+		}
+	}
+}
