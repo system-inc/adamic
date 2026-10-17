@@ -141,7 +141,26 @@ func GoExports(t testing.TB, packages ...string) string {
 		t.Fatalf("go list -export %s: %v", request.pkg, err)
 	}
 	root, _ := repositoryRoot()
-	return Product(t, inputs, func(directory string) error { return goExports(root, packages, request.output, directory) })
+	return Product(t, inputs, func(directory string) error { return goExports(root, packages, request.output, directory, false) })
+}
+
+// GoDirectExports is GoExports holding only what go/importer opens to type-check packages and their tests: the export
+// data of packages themselves (each test variant and external test package too) and of every package they import
+// directly, never the rest of -deps (#mtvmz1w). Export data carries what it references, so a type reached only through a
+// direct import's signature resolves from that import's file alone. For internal/ir's call-target guard that leaves out
+// 1.3 GB of the TypeScript port's tsc packages, which a direct import's signature only reaches. Its key is GoExports'
+// files, every file the packages compile, tests included, under a verb of its own, so its product never shares a key
+// with GoExports' whole one.
+func GoDirectExports(t testing.TB, packages ...string) string {
+	t.Helper()
+	request := goRequest{verb: "list -export direct", output: "listing.json", pkg: strings.Join(packages, " ")}
+	request.arguments = []string{"-trimpath", "-buildvcs=false"}
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go list -export %s: %v", request.pkg, err)
+	}
+	root, _ := repositoryRoot()
+	return Product(t, inputs, func(directory string) error { return goExports(root, packages, request.output, directory, true) })
 }
 
 func goProduct(t testing.TB, request goRequest) string {
