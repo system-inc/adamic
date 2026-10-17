@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -329,6 +329,20 @@ func refusedGettersCensusFixture(path string) bool {
 		"getters_census_snapshot_next.a", "getters_census_unary_function.a",
 		"getters_census_unary_node_function.a", "getters_census_update_comment_function.a",
 		"getters_census_update_node_function.a", "getters_census_update_type_function.a":
+		return true
+	}
+	return false
+}
+
+// Async unit 1's JavaScript backend has no flow instrumentation; unit 2 adds it.
+// Name only its current witnesses so later async fixtures still enter the corpus.
+func uninstrumentedAsyncFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "async_coverage_discard.a", "async_coverage_parameters.a",
+		"async_coverage_reject_eager.a", "async_coverage_reject_empty.a",
+		"async_coverage_reject_nested.a", "async_coverage_typeof.a",
+		"async_coverage_unions.a", "async_coverage_values.a",
+		"async_nested.a", "async_plain.a", "async_three.a", "async_throw.a", "async_typeof.a":
 		return true
 	}
 	return false
