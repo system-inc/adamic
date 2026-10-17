@@ -36,10 +36,7 @@ func TestRequireArtifacts(t *testing.T) {
 	if err := requireArtifact(directory, Artifact{Name: "data", Executable: true}); err == nil {
 		t.Fatal("accepted unusable executable")
 	}
-	script := filepath.Join(directory, "probe")
-	if err := os.WriteFile(script, []byte("#!/bin/sh\nread value\n[ \"$value\" = built ] || exit 3\nexit 7\n"), 0755); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, filepath.Join(directory, "probe"), "#!/bin/sh\nread value\n[ \"$value\" = built ] || exit 3\nexit 7\n")
 	RequireArtifacts(t, directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n", ExitCode: 7})
 	if err := requireArtifact(directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n"}); err == nil {
 		t.Fatal("accepted wrong exit")
