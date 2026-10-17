@@ -83,6 +83,12 @@ func UseJobserver(jobserver *Jobserver, err error) error {
 // defaultJobserver is the process's jobserver (UseJobserver): nil when none was set, or why the one named couldn't be
 // opened. It's read only where a compile outside the archive's build starts, and handed down from there, never in a
 // function RuntimeRequest.Build reaches (Node's rail on #yzwm4rj).
+//
+// Native's own test binary never imports internal/ccjobserver, which imports native, so none is set there and its
+// compiles run unbounded by the box's jobserver: under the unit's CPU share and go test's parallelism alone (Compiler's
+// ruling on #yzwm4rj, which keeps condition 3 whole; a repro of internal/native#4/8 on Oct 17 ran at its p50 so). Should
+// a native unit ever run more clang at once than twice its CPU share, the bound comes back through a test hook in
+// internal/ccjobserver.
 func defaultJobserver() (*Jobserver, error) {
 	processJobserver.mutex.Lock()
 	defer processJobserver.mutex.Unlock()
