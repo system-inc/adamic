@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
+	"path/filepath"
 	"slices"
 	"sort"
 	"strconv"
@@ -17,7 +18,7 @@ import (
 // settleCallsSum is testdata/settle-calls.txt's sha256. Loom's planner/testdata/settle-calls.txt holds the same bytes,
 // and loom's coverage tests hold every name in it to what its BPF tracer records (#9tr6c6j): a call Settle starts
 // parsing changes this list, this sum and loom's copy together, or a read in it is invisible to every BPF trace.
-const settleCallsSum = "bcaba1c42667fb4aa6cc2af30b55105ee35e7895c32e5e167be2875af0174c0d"
+const settleCallsSum = "3b1429cee2b83bd711bb4bbfc24a914c1defc5e39715fa987ece01b8a502eb63"
 
 // pinnedSettleCalls is the pinned list's names.
 func pinnedSettleCalls(t *testing.T) []string {
@@ -38,14 +39,16 @@ func pinnedSettleCalls(t *testing.T) []string {
 	return names
 }
 
-// settleParsedCalls is every call name settle.go matches, by the rule loom's coverage tests use on its own reader: the
-// string literals in the value of each var named *Calls, those a call is compared with by == or != (call, or x.call),
-// and the prefixes strings.HasPrefix tests a call against. It reads what the code matches, never a comment.
+// settleParsedCalls is every call name this package matches, in each of its non-test Go files, by the rule loom's
+// coverage tests use on its own reader: the string literals in the value of each var named *Calls, those a call is
+// compared with by == or != (call, or x.call), the case lists of a switch on a call, and the prefixes
+// strings.HasPrefix tests a call against. It reads what the code matches, never a comment, and a parse added in any
+// file of the package is seen.
 func settleParsedCalls(t *testing.T) []string {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "settle.go", nil, 0)
-	if err != nil {
-		t.Fatal(err)
+	paths, err := filepath.Glob("*.go")
+	if err != nil || len(paths) == 0 {
+		t.Fatalf("no Go files here: %v", err)
 	}
 	names := map[string]bool{}
 	literal := func(expression ast.Expr) {
@@ -66,7 +69,7 @@ func settleParsedCalls(t *testing.T) []string {
 		}
 		return false
 	}
-	ast.Inspect(file, func(node ast.Node) bool {
+	inspect := func(node ast.Node) bool {
 		switch node := node.(type) {
 		case *ast.GenDecl:
 			if node.Tok != token.VAR {
@@ -85,6 +88,14 @@ func settleParsedCalls(t *testing.T) []string {
 					}
 				}
 			}
+		case *ast.SwitchStmt:
+			if node.Tag != nil && isCall(node.Tag) {
+				for _, clause := range node.Body.List {
+					for _, expression := range clause.(*ast.CaseClause).List {
+						literal(expression)
+					}
+				}
+			}
 		case *ast.BinaryExpr:
 			if node.Op == token.EQL || node.Op == token.NEQ {
 				if isCall(node.X) {
@@ -100,11 +111,21 @@ func settleParsedCalls(t *testing.T) []string {
 			}
 		}
 		return true
-	})
+	}
+	for _, path := range paths {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		ast.Inspect(file, inspect)
+	}
 	for _, calls := range []map[string]bool{atCalls, plainCalls, statCalls, writeCalls, forkCalls} {
 		for name := range calls {
 			if !names[name] {
-				t.Fatalf("settle.go's sets hold %s and its syntax didn't yield it: the rule reads less than the code", name)
+				t.Fatalf("settle.go's sets hold %s and the package's syntax didn't yield it: the rule reads less than the code", name)
 			}
 		}
 	}
