@@ -1529,7 +1529,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
 		if reason == "" {
-			reason = refusedHandedRead(entry, set)
+			reason = refusedHandedRead(entry, set, facts.home)
 		}
 		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
 		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
@@ -2408,25 +2408,64 @@ func withRecipe(entries []readEntry, code recipe) ([]readEntry, string) {
 }
 
 // refusedHandedRead is why a LeanProductOf build's set can't be kept (#zb9268t, Node's and Tests' rulings), or "": the
-// window recorded an absolute read at or under one of its handed paths or its process's temporary directory. Settle's
-// window is the reader that records each read, and the census never sees a path, so this is where the invariant holds:
-// every read under a handed path is valued by its content (a product by its name key, an install by Loom's manifest, a
-// file of the tree by content), and one keyed by its spelling would key per box and per run. Every other build is
-// unaffected (entry.Temporary is empty).
-func refusedHandedRead(entry journalEntry, set readSet) string {
+// window recorded a read at or under one of its handed paths or its process's temporary directory that its set keys by
+// its spelling. Settle's window is the reader that records each read, and the census never sees a path, so this is
+// where the invariant holds: every read under a handed path is valued by its content (a product by its name key, an
+// install by Loom's manifest, a file of the tree by content), and one keyed by its spelling would key per box and per
+// run. An entry naming a machine path, as written or under home, is refused there unless its kind values it by content
+// (handedValued), so a kind added later is refused until it's named there. A root and an entry are each compared as
+// spelled and resolved (spellings), since classifyPath records a path through a link as what it resolves to and a root
+// handed through one (macOS's /tmp, a home or `TMPDIR` that's a link) never matches it as spelled. Every other build
+// is unaffected (entry.Temporary is empty).
+func refusedHandedRead(entry journalEntry, set readSet, home string) string {
 	if entry.Temporary == "" {
 		return ""
 	}
-	roots := append(slices.Clone(entry.Handed), entry.Temporary)
+	roots := []string{}
+	for _, root := range append(slices.Clone(entry.Handed), entry.Temporary) {
+		roots = append(roots, spellings(root)...)
+	}
 	for _, read := range set.Entries {
-		if read.Kind != "absolute" {
+		if handedValued[read.Kind] {
 			continue
 		}
-		for _, root := range roots {
-			if read.Path == root || strings.HasPrefix(read.Path, root+string(filepath.Separator)) {
-				return fmt.Sprintf("its window read %s under %s by its spelling, so its key would move per box and per run: a handed build reads there only what is valued by content", read.Path, root)
+		path := read.Path
+		if rest, ok := strings.CutPrefix(path, "~/"); ok && home != "" {
+			path = filepath.Join(home, rest)
+		}
+		if !filepath.IsAbs(path) {
+			continue
+		}
+		for _, spelling := range spellings(path) {
+			for _, root := range roots {
+				if under(spelling, root) {
+					return fmt.Sprintf("its window read %s under %s by its spelling, so its key would move per box and per run: a handed build reads there only what is valued by content", read.Path, root)
+				}
 			}
 		}
 	}
 	return ""
+}
+
+// handedValued are the entry kinds naming a machine path that value it by content, never by its spelling: a product by
+// its key, a system file by the package that owns it. Every other kind naming one is keyed by where it sits.
+var handedValued = map[string]bool{"product": true, "system": true}
+
+// spellings are path as written, clean, and as it resolves through any link: through its deepest ancestor that exists
+// when it doesn't (a lookup that missed), so /tmp/handed/missing.json reads as /private/tmp/handed/missing.json on macOS.
+func spellings(path string) []string {
+	path = filepath.Clean(path)
+	tail := ""
+	for at := path; ; at = filepath.Dir(at) {
+		if real, err := filepath.EvalSymlinks(at); err == nil {
+			if real = filepath.Join(real, tail); real != path {
+				return []string{path, real}
+			}
+			return []string{path}
+		}
+		if at == filepath.Dir(at) {
+			return []string{path}
+		}
+		tail = filepath.Join(filepath.Base(at), tail)
+	}
 }
