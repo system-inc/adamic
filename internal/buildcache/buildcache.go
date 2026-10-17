@@ -477,7 +477,7 @@ func places(root string) []place {
 	}
 	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
 		products.Range(func(directory, key any) bool {
-			add(directory.(string), "<build cache>/"+key.(string), resolvedOnce)
+			add(directory.(string), "<build cache>/"+key.(string), productResolved)
 			return true
 		})
 	}
@@ -490,11 +490,31 @@ func places(root string) []place {
 // process computes, and a resolution is a stat per path element, each one a stop under a trace and a record in the BPF
 // tracer's ring (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving
 // product directories for the keys it checks; Cloud, Oct 17: one of tsprinter's NPM tests lstat'ed /home and the home
-// directory 32,600 times each, 94% of its 127,613 stats repeats, and Adam's ring overflowed). None of them moves once a
-// process has met it, so each resolves once, by its path, so a variable that names another directory resolves that one.
+// directory 32,600 times each, 94% of its 127,613 stats repeats, and Adam's ring overflowed). Each resolves once, keyed
+// by its path as given, so a variable that names another directory resolves that one; sync.Map makes the memo safe for
+// the keys a process computes at once. A symlink retargeted mid-process can't matter: these are the process's own
+// roots, the repository and home before it starts and the cache and output from its environment, set before it keys
+// anything, and a product directory stays where the process located it.
 var directoryResolutions sync.Map
 
+// resolvedOnce is one of the process's own roots resolved, kept only when it worked: a root resolved before it exists
+// (an output or a cache made later) resolves again until it does, so a key never loses its resolved spelling for the
+// rest of the process (Tests' M1 and Node's must on 34635b121a).
 func resolvedOnce(directory string) string {
+	if value, ok := directoryResolutions.Load(directory); ok {
+		return value.(string)
+	}
+	value := resolved(directory)
+	if value != "" {
+		directoryResolutions.Store(directory, value)
+	}
+	return value
+}
+
+// productResolved is a product directory resolved, kept whether or not it worked, as since Oct 11: a directory the
+// process located exists while it's held, and one removed without being forgotten would otherwise cost a stat per path
+// element again for every key.
+func productResolved(directory string) string {
 	if value, ok := directoryResolutions.Load(directory); ok {
 		return value.(string)
 	}
