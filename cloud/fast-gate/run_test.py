@@ -137,10 +137,6 @@ class FailClosed(unittest.TestCase):
             handle.write("inert *.md\nstage3 stage3/*\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/tools.txt"), "w") as handle:
             handle.write("# declared tools\ngo\tall\tcommand -v go\n")
-        # The full gate runs stage 3's lane on every main, so the tree has one.
-        os.makedirs(os.path.join(self.tree, "stage3/lane"))
-        with open(os.path.join(self.tree, "stage3/lane/run.sh"), "w") as handle:
-            handle.write("exit 0\n")
         for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
@@ -336,7 +332,7 @@ class FailClosed(unittest.TestCase):
                                         "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
 
     def test_fast_phases_plan_only_themselves(self):
-        for phase in ("coverage", "tools", "build", "vet", "smoke", "census", "stage3", "catalog"):
+        for phase in ("coverage", "tools", "build", "vet", "smoke", "census", "catalog"):
             with self.subTest(phase=phase):
                 extra = {"phase": phase}
                 if phase == "census":
@@ -384,7 +380,7 @@ class FailClosed(unittest.TestCase):
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
         with mock.patch.object(run.Gate, "touched", lambda gate, paths: ([], paths)), \
                 mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("listing installs nothing")):
-            self.assertEqual(run.fastUnits(self.tree, base, self.sha), run.fastBasePhases + ["stage3", "workers", "a-check"])
+            self.assertEqual(run.fastUnits(self.tree, base, self.sha), run.fastBasePhases + ["workers", "a-check"])
             self.assertEqual(run.fastUnits(self.tree, self.sha, self.sha), run.fastBasePhases)
         gate, status, result = self.gate(base=base, extra={"phase": "coverage"})
         self.assertTrue(status.startswith("green:"), status)
@@ -655,9 +651,9 @@ class Products(unittest.TestCase):
                 self.assertIn("-test.timeout=30m", commands[1])
 
     def test_all_fast_stages_start_concurrently(self):
-        barrier = threading.Barrier(6)
+        barrier = threading.Barrier(5)
         stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests",
-                  "smoke": "smoke", "stage3": "stage3"}
+                  "smoke": "smoke"}
         def target(stage):
             def concurrent(gate, *args):
                 barrier.wait(2)
@@ -1488,36 +1484,6 @@ class ScopedEnvironment(unittest.TestCase):
         self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
 
 
-class Stage3Red(unittest.TestCase):
-    def test_a_lane_red_names_the_lanes_verdict_and_last_lines(self):
-        with tempfile.TemporaryDirectory() as root:
-            tree, out = os.path.join(root, "tree"), os.path.join(root, "out")
-            os.makedirs(os.path.join(tree, "stage3/lane"))
-            os.makedirs(out)
-            open(os.path.join(tree, "stage3/lane/run.sh"), "w").close()
-            for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
-                realRun(["git", "-C", tree] + command, check=True)
-            gate = run.Gate(types.SimpleNamespace(tree=tree, out=out, tools=tree, sha="a" * 40, base="a" * 40, full=False,
-                                                  complete=False, branch="", branch_source="", session="", session_source=""))
-
-            def spawn(command, stdout, stderr=None, directory=None, environment=None):
-                lane = command[:2] == ["bash", "stage3/lane/run.sh"]
-                if lane:
-                    os.makedirs(command[2], exist_ok=True)
-                    with open(os.path.join(command[2], "verdict.txt"), "w") as handle:
-                        handle.write("FAIL stage3 landing lane: test counts: expected 1 failing, observed 4\n")
-                stdout.write("".join("noise %d\n" % i for i in range(20)) + ("failed test names: observed ['unusedTypeParameters']\n" if lane else ""))
-                return types.SimpleNamespace(wait=lambda: 1 if lane else 0)
-
-            with mock.patch.object(gate, "spawn", spawn):
-                gate.stage3()
-            detail = gate.failure["detail"]
-            self.assertIn("stage3-lane exit 1", detail)
-            self.assertIn("FAIL stage3 landing lane: test counts", detail)
-            self.assertIn("failed test names: observed ['unusedTypeParameters']", detail)
-            self.assertNotIn("noise 3", detail)
-
-
 class LongTests(unittest.TestCase):
     def test_the_ledger_holds_units_over_the_budget_longest_first(self):
         # A test with subtests is split: its subtests are units, and so is its own time outside them.
@@ -2246,7 +2212,6 @@ class PhaseUnitTests(unittest.TestCase):
                 handle.write('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
             listed = subprocess.run([sys.executable, run.__file__, "--full", "--list-units", "--tree", tree], capture_output=True, text=True, check=True).stdout.split("\n")
             self.assertEqual([line for line in listed if line], ["coverage", "tools", "build", "vet", "wasi a.a", "wasi requests",
-                                                                "stage3 stage3-apply-tests", "stage3 stage3-lane-tests", "stage3 stage3-lane",
                                                                 "catalog 1", "catalog 12"])
 
     def test_the_pool_lists_fast_non_test_units_from_a_plain_checkout(self):
@@ -2691,9 +2656,10 @@ class PhaseInputs(unittest.TestCase):
             if full:
                 command.append("--full")
             expected = realRun(command, input=base, capture_output=True, text=True, check=True, timeout=90).stdout
-            # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s): the one
-            # line the base lists that this doesn't.
-            expected = "".join(line for line in expected.splitlines(keepends=True) if line != "determinism\n")
+            # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s), and stage 3's
+            # to stage3/lane's tests (#4gp2ytz): the lines the base lists that this doesn't.
+            expected = "".join(line for line in expected.splitlines(keepends=True)
+                               if line != "determinism\n" and line != "stage3\n" and not line.startswith("stage3 "))
             self.assertEqual(self.listing(full), expected)
 
     def test_every_listed_unit_has_nonempty_inputs(self):
