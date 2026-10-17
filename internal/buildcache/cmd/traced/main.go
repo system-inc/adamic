@@ -3,11 +3,13 @@
 //
 //	go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./stage1/cohere/...
 //
-// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS).
-// Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product built outside a trace; what settles
-// stays in the cache, which Loom ships, read sets and all, and nothing is written to the store. The command runs under
-// strace -f with ADAMIC_BUILD_TRACE naming a trace directory under the build cache, so every process that builds a
-// product marks it in the trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
+// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR,
+// ADAMIC_BUILD_OUTPUT_DIR, GOFLAGS). Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product
+// built outside a trace; what settles stays in the cache, which Loom ships, read sets and all, and nothing is written to
+// the store. With ADAMIC_BUILD_OUTPUT_DIR set, the run reads the cache and writes everything there instead, the trace
+// too, for Loom to copy into the cache. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
+// directory under the build cache (or the output directory), so every process that builds a product marks it in the
+// trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
 // GOENV is off unless set, so go never reads a configuration file in the home directory, which no key can name.
 //
 // The tree is taken as git sees it (HEAD, status, each submodule) before the run and after: a read set is valued when
@@ -50,6 +52,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 // The calls strace reports: every call that names a path (open, stat, access, readlink, exec, chdir, ...), directory
@@ -133,13 +136,11 @@ func run(command []string, report string) (int, error) {
 	if output, err := probe.CombinedOutput(); err != nil {
 		return 0, fmt.Errorf("this strace can't trace as Settle needs (strace 6 with --seccomp-bpf and --decode-fds=path): %v\n%s", err, output)
 	}
-	cache := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-	if cache == "" {
-		user, err := os.UserCacheDir()
-		if err != nil {
-			return 0, err
-		}
-		cache = filepath.Join(user, "adamic-build")
+	// The trace, its journal and what settled are written where the run writes its products (location.Output): the
+	// build cache, or the output directory of a run that only reads the cache, which Loom copies into it afterwards.
+	cache, err := location.Output()
+	if err != nil {
+		return 0, err
 	}
 	if err := os.MkdirAll(filepath.Join(cache, "traces"), 0o755); err != nil {
 		return 0, err

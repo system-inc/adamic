@@ -314,8 +314,10 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	lock.Lock()
 	defer lock.Unlock()
 	if !uncached {
-		if info, err := os.Stat(object); err == nil && info.Mode().IsRegular() {
-			return object, nil
+		// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it
+		// was found.
+		if found, ok := cachedFile(object); ok {
+			return found, nil
 		}
 	}
 	if err := os.WriteFile(filepath.Join(temporary, unit.name), preprocessed, 0o644); err != nil {
@@ -357,9 +359,11 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		return "", err
 	}
 	if err := os.Rename(published, entry); err != nil {
-		if info, statErr := os.Stat(object); statErr != nil || !info.Mode().IsRegular() {
+		found, ok := cachedFile(object)
+		if !ok {
 			return "", err
 		}
+		return found, nil
 	}
 	return object, nil
 }
