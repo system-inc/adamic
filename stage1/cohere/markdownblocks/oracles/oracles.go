@@ -932,7 +932,19 @@ func TokenizerEventAnswers(t *testing.T, goBinary string, batch []byte) []byte {
 		t.Fatal(err)
 	}
 	inputs := buildcache.Inputs{Name: "markdownblocks-tokenizer-events-answers", Files: []string{"stage1/cohere/markdownblocks/oracles/oracles.go"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("cases-sha256=%x", sha256.Sum256(batch))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
-	inputs.Files = append(inputs.Files, auditCorpusFiles(t, root(t))...)
+	// A key names its inputs relative to the repository root, while auditCorpusFiles returns the absolute paths
+	// AuditCorpus reads, so convert here (#y6ff7ea).
+	repositoryRoot := root(t)
+	for _, path := range auditCorpusFiles(t, repositoryRoot) {
+		relative, err := filepath.Rel(repositoryRoot, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			t.Fatalf("markdown corpus file %s is outside the repository", path)
+		}
+		inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
+	}
 	directory := oracleProduct(t, inputs, func(directory string) error {
 		scratch, err := os.MkdirTemp("", "markdown-events-cases-")
 		if err != nil {
