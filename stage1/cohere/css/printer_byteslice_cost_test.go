@@ -18,9 +18,13 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
-// Enough room for the sanitized allocator, but below the prefix-rebuild cost.
-// Both times are measured in this unit on the identical live, pinned fixture.
-const cssPrinterPreflightCostRatio = 48.0
+// Doubling these matched non-ASCII prefixes measures the same sanitized binary,
+// interleaved under the same load. On four CPUs, alone and beside three CPU
+// burners, clean scaling measured 2.10–2.13x and prefix rebuilding 3.05–3.12x.
+// Linear parsing and startup dilute the mutant's quadratic 4x printer cost;
+// 2.6x separates the measured ranges with headroom on both sides.
+const cssPrinterPreflightScalingBound = 2.6
+const cssPrinterPreflightSmallBytes = 6 * 1024
 
 const cssPrinterPrefixLookup = "return this.ascii ? byte : (this.characters[byte] ?? 0) + (this.partial[byte] ?? 0);"
 const cssPrinterPrefixRebuild = `if(this.ascii) return byte;
@@ -77,51 +81,77 @@ func TestProduct_CSSPrinterPrefixCostMutant(t *testing.T) {
 	cssPrinterCostMutant(t)
 }
 
-func cssPrinterPreflightCases(t *testing.T) string {
+func cssPrinterPreflightCases(t *testing.T) [2]string {
 	t.Helper()
 	source, err := os.ReadFile(filepath.Join(repository, "cohere/internal/lint/rules/tailwind/vendored/testdata/tailwindcss/index.css"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	escaped := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t").Replace(string(source))
+	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
+	escaped := escape.Replace(string(source))
 	if len(escaped) != 30736 || !strings.HasPrefix(escaped, "@layer theme, base, components, utilities;") || !strings.Contains(escaped, "color-mix(…)") {
 		t.Fatal("the cost witness must be the 30,736-byte Tailwind preflight with the ellipsis")
 	}
-	path := filepath.Join(t.TempDir(), "preflight.txt")
-	// Preserve both occurrences in the printer corpus: CSS and SCSS.
-	if err := os.WriteFile(path, []byte(">C"+escaped+"\n>S"+escaped+"\n"), 0644); err != nil {
-		t.Fatal(err)
+	// Keep the live ellipsis comment in both prefixes, so neither ByteView can
+	// select its ASCII path. Both cuts stay in @theme's declaration list.
+	ellipsis := strings.Index(string(source), "color-mix(…)")
+	commentStart := strings.LastIndex(string(source[:ellipsis]), "/*")
+	commentTail := strings.Index(string(source[ellipsis:]), "*/")
+	if commentStart < 0 || commentTail < 0 {
+		t.Fatal("missing ellipsis comment")
 	}
-	return path
+	commentEnd := ellipsis + commentTail + 2
+	comment := string(source[commentStart:commentEnd]) + "\n"
+	const closing = "\n  }\n}\n"
+	var paths [2]string
+	for index, size := range []int{cssPrinterPreflightSmallBytes, 2 * cssPrinterPreflightSmallBytes} {
+		cut := strings.LastIndex(string(source[:size-len(comment)-len(closing)]), ";") + 1
+		prefix := string(source[:cut])
+		if cut == 0 || strings.Count(prefix, "{") != 2 || strings.Contains(prefix, "}") || strings.Contains(prefix, "/*") {
+			t.Fatal("the preflight prefix must end at a declaration inside @layer theme / @theme")
+		}
+		text := prefix + closing + comment
+		// Whitespace makes the source byte lengths exactly 1:2; at most one partial
+		// declaration is padded, without changing the printer's document shape.
+		text += strings.Repeat(" ", size-len(text))
+		paths[index] = filepath.Join(t.TempDir(), "preflight.txt")
+		// Preserve both syntax modes from the original printer corpus.
+		if err := os.WriteFile(paths[index], []byte(">C"+escape.Replace(text)+"\n>S"+escape.Replace(text)+"\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return paths
 }
 
 func cssPrinterPreflightCost(t *testing.T, binary, oracle string) error {
 	t.Helper()
-	path := cssPrinterPreflightCases(t)
-	goBest, portBest := time.Duration(math.MaxInt64), time.Duration(math.MaxInt64)
-	// Minimum of three alternating samples reduces scheduler noise without an
-	// absolute time floor that could let a fast-machine cost regression pass.
-	for sample := 0; sample < 3; sample++ {
-		started := time.Now()
-		expected := cssPrinterAnswers(t, oracle, path, "default")
-		goElapsed := time.Since(started)
-		started = time.Now()
-		if err := cssPrinterSanitizedAgreement(t, binary, expected, path, "output", "once", "default"); err != nil {
-			return err
-		}
-		portElapsed := time.Since(started)
-		if goElapsed < goBest {
-			goBest = goElapsed
-		}
-		if portElapsed < portBest {
-			portBest = portElapsed
-		}
-		t.Logf("preflight cost sample %d: Go=%s sanitized=%s", sample+1, goElapsed, portElapsed)
+	paths := cssPrinterPreflightCases(t)
+	// Go remains the byte-for-byte oracle for each input; its speed is not the
+	// denominator of a sanitized cost comparison.
+	var expected [2]string
+	for index, path := range paths {
+		expected[index] = cssPrinterAnswers(t, oracle, path, "default")
 	}
-	ratio := float64(portBest) / float64(goBest)
-	t.Logf("preflight cost: Go=%s sanitized=%s ratio=%.2fx bound=%.0fx", goBest, portBest, ratio, cssPrinterPreflightCostRatio)
-	if ratio > cssPrinterPreflightCostRatio {
-		return fmt.Errorf("CSS preflight port cost %.2fx exceeds Go-relative bound %.0fx (Go %s, sanitized %s)", ratio, cssPrinterPreflightCostRatio, goBest, portBest)
+	best := [2]time.Duration{time.Duration(math.MaxInt64), time.Duration(math.MaxInt64)}
+	// Interleave sizes and keep the minimum of three samples of each, reducing
+	// scheduler noise without a machine-dependent absolute time floor.
+	for sample := 0; sample < 3; sample++ {
+		for index, path := range paths {
+			started := time.Now()
+			if err := cssPrinterSanitizedAgreement(t, binary, expected[index], path, "output", "once", "default"); err != nil {
+				return err
+			}
+			elapsed := time.Since(started)
+			if elapsed < best[index] {
+				best[index] = elapsed
+			}
+			t.Logf("preflight scaling sample %d: bytes=%d sanitized=%s", sample+1, (index+1)*cssPrinterPreflightSmallBytes, elapsed)
+		}
+	}
+	ratio := float64(best[1]) / float64(best[0])
+	t.Logf("preflight scaling: small=%s large=%s ratio=%.3fx bound=%.2fx", best[0], best[1], ratio, cssPrinterPreflightScalingBound)
+	if ratio > cssPrinterPreflightScalingBound {
+		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (small %s, large %s)", ratio, cssPrinterPreflightScalingBound, best[0], best[1])
 	}
 	return nil
 }
@@ -147,9 +177,9 @@ func TestCSSPrinterPreflightCostMutant(t *testing.T) {
 	binary := cssPrinterCostMutant(t)
 	err := cssPrinterPreflightCost(t, binary, oracle)
 	if err == nil {
-		t.Fatal("prefix-rebuild cost mutant survived the Go-relative guard")
+		t.Fatal("prefix-rebuild cost mutant survived the scaling guard")
 	}
-	if !strings.Contains(err.Error(), "exceeds Go-relative bound") {
+	if !strings.Contains(err.Error(), "exceeds scaling bound") {
 		t.Fatal(err)
 	}
 	t.Logf("cost mutant caught by the same guard: %v", err)
