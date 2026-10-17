@@ -32,7 +32,9 @@ func runPython(t *testing.T, directory string, modules ...string) {
 	defer cancel()
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
 	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B", "-m", "unittest"}, modules...)...)
-	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir())
+	// -B is this python's; the suites' own python children read PYTHONDONTWRITEBYTECODE, so none writes a
+	// __pycache__ into the tree (stage3/oracle's, on Cloud, before).
+	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir(), "PYTHONDONTWRITEBYTECODE=1")
 	// Ordinary apply clones the pinned TypeScript from the gate input, which the toolchain's environment doesn't carry.
 	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
 		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
