@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"runtime/debug"
 	"slices"
 	"sort"
@@ -169,8 +170,9 @@ func packageVersion(name string) string {
 	return "not installed"
 }
 
-// ldCache is the dynamic loader's cache, which ldconfig builds from every library the machine holds.
-const ldCache = "/etc/ld.so.cache"
+// ldCache is the dynamic loader's cache, which ldconfig builds from every library the machine holds (a var so a test
+// can value a cache of its own as the machine's).
+var ldCache = "/etc/ld.so.cache"
 
 // wslLibraries is where WSL mounts the Windows GPU driver's libraries, which ldconfig puts in ldCache: the driver is
 // Windows', each box's own version, and no build loads it (a build that opens one refuses its product, classifyPath).
@@ -184,16 +186,34 @@ var machineZone = []string{"/etc/localtime", "/etc/timezone"}
 // whether or not the cache names it.
 var loaderDirectories = []string{"/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux-gnu", "/lib", "/usr/lib", "/lib64", "/usr/lib64"}
 
-// ldCacheValue is the loader's cache as what only it can find: the soname map's entries outside loaderDirectories and
-// wslLibraries, each by flags, soname and path. A library in a loader directory is read by its own path when it's
-// loaded, and a soname the cache misses is looked for in each loader directory, each a read of its own, so neither
-// needs the cache's word; a library anywhere else (ld.so.conf.d's /usr/local/lib) is found through the cache alone, and
-// keyed by it. So two boxes that installed different libraries in the loader's directories, or run different Windows
-// GPU drivers, value it the same (#6eexfyv, measured Oct 12: Cloud's cache maps about 120 more libraries, QEMU's, and
-// Server's maps libnvidia-ngx). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte
-// entries whose string offsets are from the file's start; a cache in another format, or one that doesn't read, is
-// false, and it is then valued by its content.
+// loaderFlags are the flags an entry must have, exactly, for the build's own loader to take it, by the architecture
+// the build runs as: glibc's _dl_cache_check_flags, which on x86_64 is `(flags) == 0x303` (FLAG_ELF_LIBC6 with
+// FLAG_X8664_LIB64, sysdeps/x86_64/dl-cache.h). An architecture not here has no rule this knows, and its cache doesn't
+// read.
+var loaderFlags = map[string]int32{"amd64": 0x303}
+
+// ldCacheValue is the loader's cache as what only it can find: the soname map's entries the build's own loader takes
+// (loaderFlags), outside loaderDirectories and wslLibraries, each by flags, soname and path. A library in a loader
+// directory is read by its own path when it's loaded, and a soname the cache misses is looked for in each loader
+// directory, each a read of its own, so neither needs the cache's word; a library anywhere else (ld.so.conf.d's
+// /usr/local/lib) is found through the cache alone, and keyed by it. So two boxes that installed different libraries
+// in the loader's directories, or run different Windows GPU drivers, value it the same (#6eexfyv, measured Oct 12:
+// Cloud's cache maps about 120 more libraries, QEMU's, and Server's maps libnvidia-ngx). An entry for another
+// architecture is one this loader never takes: an arm64 Mac guest's ldconfig flags its own aarch64 libraries 0xa03,
+// and an amd64 build there sees none of them (#q4z4cmj, Oct 17: every one of Marin's and Zach's guests' 456 and 439
+// entries). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte entries whose string
+// offsets are from the file's start; a cache in another format, one that doesn't read, or one for an architecture
+// loaderFlags doesn't know, is false, and systemValue then calls it unreadable, never its content.
 func ldCacheValue(content []byte) (string, bool) {
+	wanted, known := loaderFlags[runtime.GOARCH]
+	if !known {
+		return "", false
+	}
+	return ldCacheValueFor(content, wanted)
+}
+
+// ldCacheValueFor is ldCacheValue for a loader that takes entries flagged exactly wanted.
+func ldCacheValueFor(content []byte, wanted int32) (string, bool) {
 	const magic, header, entrySize = "glibc-ld.so.cache1.1", 48, 24
 	if len(content) < header || string(content[:len(magic)]) != magic {
 		return "", false
@@ -226,10 +246,11 @@ func ldCacheValue(content []byte) (string, bool) {
 		if !ok {
 			return "", false
 		}
-		if library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
+		flags := int32(word(at))
+		if flags != wanted || library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
 			continue
 		}
-		lines = append(lines, fmt.Sprintf("%d %s %s", int32(word(at)), soname, library))
+		lines = append(lines, fmt.Sprintf("%d %s %s", flags, soname, library))
 	}
 	sort.Strings(lines)
 	sum := sha256.Sum256([]byte(strings.Join(lines, "\n")))
@@ -260,11 +281,17 @@ func systemValue(path string) string {
 	case err != nil:
 		return "absent"
 	case path == ldCache && info.Mode().IsRegular():
-		if content, err := os.ReadFile(path); err == nil {
-			if value, ok := ldCacheValue(content); ok {
-				return value
-			}
+		// The loader's cache is valued only as the loader reads it: a cache that won't read that way is a miss, never
+		// its content, whose bytes hold every architecture's entries and never equal across boxes that differ in one.
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return "unreadable: " + err.Error()
 		}
+		value, ok := ldCacheValue(content)
+		if !ok {
+			return "unreadable: not a loader cache this build's loader reads"
+		}
+		return value
 	case info.Mode()&os.ModeSymlink != 0:
 		target, _ := os.Readlink(path)
 		return "link " + target
