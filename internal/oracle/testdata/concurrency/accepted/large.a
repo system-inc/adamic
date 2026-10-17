@@ -1,0 +1,14 @@
+import { parallelMap } from 'adamic';
+const prepared: number[] = [];
+for (let index = 0; index < 2048; index++) { prepared.push(index); }
+const items: readonly number[] = prepared;
+const label = 'shared-string';
+function build(item: number, index: number): { value: number; label: string } {
+ const made = { value: item, label: label.slice(0, 6) };
+ made.value += index;
+ return made;
+}
+const result = parallelMap(items, build);
+let sum = 0;
+for (const item of result) { sum += item.value; }
+console.log(`${result.length}:${sum}:${result[1024]?.label}`);
