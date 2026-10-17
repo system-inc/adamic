@@ -166,8 +166,10 @@ func reproducible(arguments []string) []string {
 }
 
 // goExports writes the product GoExports makes into directory: the export data of packages and every package they
-// depend on, tests included, each under exports/, and their listing as listingName, every path relative to root.
-func goExports(root string, packages []string, listingName, directory string) error {
+// depend on, tests included, each under exports/, and their listing as listingName, every path relative to root. direct
+// keeps only packages themselves, their test variants and external tests, and what any of those imports directly
+// (GoDirectExports): the rest of -deps is listed by go and dropped, so neither its file nor its listing entry is kept.
+func goExports(root string, packages []string, listingName, directory string, direct bool) error {
 	command := toolchain.Command("go", append([]string{"list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json"}, packages...)...)
 	command.Dir = root
 	output, err := command.Output()
@@ -183,6 +185,12 @@ func goExports(root string, packages []string, listingName, directory string) er
 	}
 	real := resolved(root)
 	var listing []ListedPackage
+	keep := func(string) bool { return true }
+	if direct {
+		if keep, err = directPackages(root, real, packages, output); err != nil {
+			return err
+		}
+	}
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed ListedPackage
@@ -190,6 +198,9 @@ func goExports(root string, packages []string, listingName, directory string) er
 			break
 		} else if err != nil {
 			return err
+		}
+		if !keep(listed.ImportPath) {
+			continue
 		}
 		// A product holds no absolute path: a directory outside the repository (the standard library's, go's module
 		// cache) is left out, since only its export data is read.
@@ -222,6 +233,49 @@ func goExports(root string, packages []string, listingName, directory string) er
 		return err
 	}
 	return os.WriteFile(filepath.Join(directory, listingName), encoded, 0o644)
+}
+
+// directPackages says which of a go list -deps -test listing (output) GoDirectExports keeps, by import path: every
+// entry whose directory is one of packages (the package, its test variant, its external test, its test main), and every
+// path one of those imports, both as listed (a dependency go recompiled for a test, "path [p.test]") and plain, since
+// go/importer asks for a plain path.
+func directPackages(root, real string, packages []string, output []byte) (func(string) bool, error) {
+	named := map[string]bool{}
+	for _, pkg := range packages {
+		named[filepath.ToSlash(filepath.Clean(pkg))] = true
+	}
+	kept := map[string]bool{}
+	decoder := json.NewDecoder(strings.NewReader(string(output)))
+	for {
+		var listed struct {
+			ImportPath, Dir string
+			Imports         []string
+		}
+		if err := decoder.Decode(&listed); err == io.EOF {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		relative := ""
+		for _, spelling := range []string{root, real} {
+			if spelling != "" && inside(spelling, listed.Dir) {
+				relative = filepath.ToSlash(mustRelative(spelling, listed.Dir))
+				break
+			}
+		}
+		if relative == "" || !named[relative] {
+			continue
+		}
+		kept[listed.ImportPath] = true
+		for _, imported := range listed.Imports {
+			plain, _, _ := strings.Cut(imported, " [")
+			kept[imported], kept[plain] = true, true
+		}
+	}
+	if len(kept) == 0 {
+		return nil, fmt.Errorf("go list -export listed none of %s", strings.Join(packages, " "))
+	}
+	return func(importPath string) bool { return kept[importPath] }, nil
 }
 
 // A ListedPackage is one package of a GoExports listing, as go list reports it, except that Dir is relative to the
