@@ -1,0 +1,9 @@
+const initial = await combine(`seed${6}`, false, 2.5);
+console.log(initial);
+async function combine(text: string, flag: boolean, count: number): Promise<string> {
+    const held = text.toUpperCase(), truth = !flag, number = count * 2;
+    console.error(`prefix ${held} ${truth} ${number}`);
+    const resumed = await (Promise.resolve(held.slice(1)));
+    console.log(`${held} ${truth} ${number} ${resumed}`);
+    return `${resumed}:${truth}:${number}`;
+}

@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+interface Item { readonly cache: Readonly<Map<string, number>>; }
+const items: readonly Item[] = [{ cache: new Map<string, number>() }];
+parallelMap(items, (item) => item.cache.size);
