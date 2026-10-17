@@ -139,6 +139,8 @@ func TestTheLoadersCacheIsOnlyWhatItsOwnArchitectureTakes(t *testing.T) {
 // after #q4z4cmj's divert, a match across architectures that lies. It runs as each architecture whatever this machine
 // is. Mutants: an unreadable cache valued as no entries; one valued by a fixed string; an architecture with no rule
 // read with flags 0.
+//
+// Not parallel: it sets the package's ldCache and loaderArchitecture, which every systemValue in the package reads.
 func TestALoaderCacheThatDoesntReadIsUnreadable(t *testing.T) {
 	directory := t.TempDir()
 	originalCache, originalArchitecture := ldCache, loaderArchitecture
