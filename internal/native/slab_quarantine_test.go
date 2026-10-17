@@ -2,6 +2,7 @@ package native
 
 import (
 	"bytes"
+	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -123,7 +124,7 @@ func slabQuarantineOffLibrary(t *testing.T, compiler, original string, flags []s
 		if strings.Contains(string(file.contents), `#include "slab_quarantine.h"`) {
 			object = filepath.Join(directory, filepath.Base(object))
 			arguments := append(append([]string{}, flags...), "-I", root, "-c", filepath.Join(root, file.name), "-o", object)
-			if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+			if output, err := productCompilerCommand(t, context.Background(), compiler, arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("quarantine mutant must compile: %v\n%s", err, output)
 			}
 		}
@@ -145,7 +146,7 @@ func buildHarnessWithLibrary(t *testing.T, source string, flags []string, compil
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", binary, main)
 	arguments = append(append(arguments, RuntimeLinkFlags(library)...), "-lm")
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	if output, err := productCompilerCommand(t, context.Background(), compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("clang: %v\n%s", err, output)
 	}
 	return binary

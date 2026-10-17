@@ -341,7 +341,11 @@ func staticsCompile(t *testing.T, tool string, arguments ...string) {
 	defer func() { t.Logf("%s compile/link: %s", tool, time.Since(started)) }()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	if output, err := exec.CommandContext(ctx, tool, arguments...).CombinedOutput(); err != nil {
+	command := exec.CommandContext(ctx, tool, arguments...)
+	if strings.HasPrefix(filepath.Base(tool), "clang") {
+		command = productCompilerCommand(t, ctx, tool, arguments...)
+	}
+	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("fixture and mutant must compile: %v\n%s", err, output)
 	}
 }

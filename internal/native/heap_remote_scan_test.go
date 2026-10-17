@@ -25,7 +25,7 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("heap-remote-scan-%t", sanitized), Files: []string{"internal/native/runtime", "internal/native/heap_remote_scan_test.go", "internal/native/testdata/heap_remote_scan.c", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: fmt.Sprintf("heap-remote-scan-%t", sanitized), Files: []string{"internal/native/runtime", "internal/native/heap_remote_scan_test.go", "internal/native/slab_quarantine_test.go", "internal/native/runtime_statics_parallel_test.go", "internal/native/product_compile_test.go", "internal/native/testdata/heap_remote_scan.c", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		source, err := os.ReadFile("testdata/heap_remote_scan.c")
 		if err != nil {
