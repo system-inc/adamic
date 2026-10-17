@@ -47,7 +47,9 @@ func TestExecutableForkIsolation(t *testing.T) {
 			t.Fatal("fork stress deadline", err)
 		}
 		path := filepath.Join(dir, "compiler")
-		writeExecutable(t, path, []byte("#!/bin/sh\necho ready\n"))
+		if err := writeExecutable(path, []byte("#!/bin/sh\necho ready\n")); err != nil {
+			t.Fatal(err)
+		}
 		output, err := exec.CommandContext(ctx, path).CombinedOutput()
 		if err != nil || string(output) != "ready\n" {
 			t.Fatalf("executable %d under concurrent forks: %v, output %q", program, err, output)

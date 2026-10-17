@@ -306,7 +306,9 @@ func yepestaPrepare(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		writeExecutable(t, bundle.Oracle, data)
+		if err := writeExecutable(bundle.Oracle, data); err != nil {
+			return err
+		}
 		persist := func(rows []string, prefix string) ([]string, error) {
 			var result []string
 			for i, row := range rows {
@@ -1461,35 +1463,33 @@ type yepestaBundle struct {
 }
 
 // Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
-func writeExecutable(t *testing.T, path string, data []byte) {
-	t.Helper()
+func writeExecutable(path string, data []byte) error {
 	var temporary string
 	defer func() {
 		if temporary != "" {
 			os.Remove(temporary)
 		}
 	}()
-	func() {
+	err := func() error {
 		syscall.ForkLock.Lock()
 		defer syscall.ForkLock.Unlock()
 		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
 		if err != nil {
-			t.Fatal(err)
+			return err
 		}
 		temporary = file.Name()
 		if _, err := file.Write(data); err != nil {
 			file.Close()
-			t.Fatal(err)
+			return err
 		}
 		if err := file.Chmod(0755); err != nil {
 			file.Close()
-			t.Fatal(err)
+			return err
 		}
-		if err := file.Close(); err != nil {
-			t.Fatal(err)
-		}
+		return file.Close()
 	}()
-	if err := os.Rename(temporary, path); err != nil {
-		t.Fatal(err)
+	if err != nil {
+		return err
 	}
+	return os.Rename(temporary, path)
 }
