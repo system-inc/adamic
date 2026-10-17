@@ -34,7 +34,7 @@ func TestEntriesAcceptance(t *testing.T) {
 	}
 	contents, err := os.ReadFile(filepath.Join(directory, "expectations.json"))
 	if errors.Is(err, os.ErrNotExist) {
-		t.Skip("awaits codex/step12-entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c), stage3/fixtures/entries")
+		t.Skip("awaits compiler/loom-entries: typescript's Object.entries acceptance programs (8d864f9c, e61c738e there, since codex/step12-entries-fixtures was deleted before it landed; #tsdh6nb), stage3/fixtures/entries")
 	}
 	if err != nil {
 		t.Fatal(err)
