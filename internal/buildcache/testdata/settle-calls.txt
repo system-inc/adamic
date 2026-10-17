@@ -1,0 +1,65 @@
+# The calls adamic's Settle parses out of a trace line: every name its code matches, read at adamic f93a65fba5 from
+# internal/buildcache/settle.go by the rule both repositories' tests use: the string literals in each var named *Calls
+# (atCalls, plainCalls, statCalls, writeCalls, forkCalls, :764-775), and those a call is compared with (fchdir :882,
+# getdents and getdents64 :887, symlink and symlinkat :919 and :1303, the opens and execs of :938-946).
+# Loom's planner/testdata/settle-calls.txt and adamic's internal/buildcache/testdata/settle-calls.txt are these same
+# bytes, and each repository's test holds its copy to one sha256: adamic's to Settle's code, loom's to what's traced.
+access
+acct
+chdir
+chmod
+chown
+chroot
+clone
+clone3
+creat
+execve
+execveat
+faccessat
+faccessat2
+fchdir
+fchmodat
+fchownat
+fork
+fstatat64
+getdents
+getdents64
+getxattr
+inotify_add_watch
+lchown
+lgetxattr
+link
+linkat
+listxattr
+llistxattr
+lstat
+lstat64
+mkdir
+mkdirat
+mknod
+mknodat
+name_to_handle_at
+newfstatat
+open
+openat
+openat2
+readlink
+readlinkat
+rename
+renameat
+renameat2
+rmdir
+stat
+stat64
+statfs
+statx
+swapon
+symlink
+symlinkat
+truncate
+unlink
+unlinkat
+utime
+utimensat
+utimes
+vfork
