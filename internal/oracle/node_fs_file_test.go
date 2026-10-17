@@ -53,6 +53,15 @@ func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	if err := os.Chmod(filepath.Join(root, "closed"), 0000); err != nil {
 		t.Fatal(err)
 	}
+	// locked and closed keep their files from RemoveAll, so they get their permissions back first: this cleanup runs
+	// before the shared directory's, which the caller registered earlier.
+	t.Cleanup(func() {
+		for _, dir := range []string{"locked", "closed"} {
+			if err := os.Chmod(filepath.Join(root, dir), 0o755); err != nil {
+				t.Errorf("%s stays unremovable: %v", dir, err)
+			}
+		}
+	})
 	how := inputRun{directory: root, arguments: []string{root}}
 	if os.Geteuid() == 0 {
 		how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
