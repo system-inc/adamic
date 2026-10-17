@@ -132,38 +132,58 @@ func TestTheLoadersCacheIsOnlyWhatItsOwnArchitectureTakes(t *testing.T) {
 	}
 }
 
-// A loader cache that doesn't read as the build's loader reads it is unreadable, a miss, never valued by its bytes nor
-// as an empty cache: either would let two boxes whose loaders find different libraries value alike. Mutants: the
-// content's hash kept as the fallback; an unreadable cache valued as no entries.
+// A loader cache that doesn't read as the build's loader reads it is unreadable, a miss: never the empty cache's value,
+// and alike for two boxes only when their bytes are (Tests' M2 on 29627a4273). The loader may read what this can't, a
+// newer format, and a library found only through it would go unkeyed. A loader of an architecture with no rule reads
+// nothing (Tests' M1): no flag at all would keep no entry and value every cache as the empty one, the house's value
+// after #q4z4cmj's divert, a match across architectures that lies. It runs as each architecture whatever this machine
+// is. Mutants: an unreadable cache valued as no entries; one valued by a fixed string; an architecture with no rule
+// read with flags 0.
 func TestALoaderCacheThatDoesntReadIsUnreadable(t *testing.T) {
-	if _, known := loaderFlags[runtime.GOARCH]; !known {
-		t.Skipf("no loader rule for %s: the value is unreadable here by design", runtime.GOARCH)
-	}
 	directory := t.TempDir()
-	original := ldCache
-	t.Cleanup(func() { ldCache = original })
+	originalCache, originalArchitecture := ldCache, loaderArchitecture
+	t.Cleanup(func() { ldCache, loaderArchitecture = originalCache, originalArchitecture })
+	loaderArchitecture = "amd64"
 	empty, ok := ldCacheValueFor(ldCacheBytes(nil), 0x303)
 	if !ok {
 		t.Fatal("an empty cache in glibc's format didn't read")
 	}
-	for name, content := range map[string][]byte{
-		"another format": []byte("ld.so-1.7.0\x00 an old cache"),
-		"a cut one":      ldCacheBytes([][3]string{{"", "libextra.so.1", "/usr/local/lib/libextra.so.1"}})[:60],
-	} {
-		ldCache = filepath.Join(directory, strings.ReplaceAll(name, " ", "-"))
+	valueOf := func(name string, content []byte) string {
+		t.Helper()
+		ldCache = filepath.Join(directory, name)
 		if err := os.WriteFile(ldCache, content, 0o644); err != nil {
 			t.Fatal(err)
 		}
-		got := systemValue(ldCache)
+		return systemValue(ldCache)
+	}
+	other := valueOf("other-format", []byte("ld.so-1.7.0\x00 an old cache"))
+	cut := valueOf("cut", ldCacheBytes([][3]string{{"", "libextra.so.1", "/usr/local/lib/libextra.so.1"}})[:60])
+	again := valueOf("other-format-again", []byte("ld.so-1.7.0\x00 an old cache"))
+	for name, got := range map[string]string{"another format": other, "a cut one": cut} {
 		if !strings.HasPrefix(got, "unreadable: ") || got == empty {
 			t.Errorf("%s values as %q, want unreadable", name, got)
 		}
 	}
-	ldCache = filepath.Join(directory, "good")
-	if err := os.WriteFile(ldCache, ldCacheBytes([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}}), 0o644); err != nil {
-		t.Fatal(err)
+	if other == cut {
+		t.Errorf("two caches that don't read, with different bytes, value alike: %q", other)
 	}
-	if got := systemValue(ldCache); got != empty {
+	if other != again {
+		t.Errorf("two caches that don't read, with the same bytes, value apart: %q and %q", other, again)
+	}
+	if got := valueOf("guest", ldCacheBytes([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}})); got != empty {
 		t.Errorf("a guest's cache values as %q, want %q, the empty cache's", got, empty)
+	}
+	// A loader of an architecture with no rule reads no cache, a guest's or the house's.
+	loaderArchitecture = "arm64"
+	for name, content := range map[string][]byte{
+		"the house's after the divert": ldCacheBytes([][3]string{{"", "libc.so.6", "/usr/lib/x86_64-linux-gnu/libc.so.6"}}),
+		"a guest's":                    ldCacheBytes([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}}),
+	} {
+		if _, ok := ldCacheValueAs(content, "arm64"); ok {
+			t.Errorf("%s read for a loader with no rule", name)
+		}
+		if got := valueOf("arm64", content); !strings.HasPrefix(got, "unreadable: no loader rule for arm64") || got == empty {
+			t.Errorf("%s values as %q for a loader with no rule, want unreadable", name, got)
+		}
 	}
 }
