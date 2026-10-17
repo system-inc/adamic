@@ -1,0 +1,5 @@
+--- internal/lower/library_object.go
++++ mutant
+@@
+-call.Checked = !l.enumerationProven(written[0], element, 0)
++call.Checked = false

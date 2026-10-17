@@ -1,0 +1,215 @@
+[
+  {
+    "file": "01_scanner_keywords.a",
+    "reason": "Upstream scanner exact keyword allocation and Map(Object.entries) expression.",
+    "tsc": [
+      "src/compiler/scanner.ts:136",
+      "src/compiler/scanner.ts:222",
+      "src/compiler/corePublic.ts:13"
+    ],
+    "expected": {
+      "outcome": "Compiles",
+      "reflection": "proven",
+      "value_type": "KeywordSyntaxKind",
+      "runtime": {
+        "stdout": "count:84\nabstract:128\naccessor:129\nany:133\nas:130\nasserts:131\nassert:132\nbigint:163\nboolean:136\nbreak:83\ncase:84\ncatch:85\nclass:86\ncontinue:88\nconst:87\nconstructor:137\ndebugger:89\ndeclare:138\ndefault:90\ndefer:166\ndelete:91\ndo:92\nelse:93\nenum:94\nexport:95\nextends:96\nfalse:97\nfinally:98\nfor:99\nfrom:161\nfunction:100\nget:139\nif:101\nimplements:119\nimport:102\nin:103\ninfer:140\ninstanceof:104\ninterface:120\nintrinsic:141\nis:142\nkeyof:143\nlet:121\nmodule:144\nnamespace:145\nnever:146\nnew:105\nnull:106\nnumber:150\nobject:151\npackage:122\nprivate:123\nprotected:124\npublic:125\noverride:164\nout:147\nreadonly:148\nrequire:149\nglobal:162\nreturn:107\nsatisfies:152\nset:153\nstatic:126\nstring:154\nsuper:108\nswitch:109\nsymbol:155\nthis:110\nthrow:111\ntrue:112\ntry:113\ntype:156\ntypeof:114\nundefined:157\nunique:158\nunknown:159\nusing:160\nvar:115\nvoid:116\nwhile:117\nwith:118\nyield:127\nasync:134\nawait:135\nof:165\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "representation": "number"
+    },
+    "mutant": {
+      "find": "    await: SyntaxKind.AwaitKeyword,\n",
+      "replace": "",
+      "description": "Remove an actual keyword entry from the allocation.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "proven",
+        "value_type": "KeywordSyntaxKind",
+        "runtime": {
+          "stdout": "count:83\nabstract:128\naccessor:129\nany:133\nas:130\nasserts:131\nassert:132\nbigint:163\nboolean:136\nbreak:83\ncase:84\ncatch:85\nclass:86\ncontinue:88\nconst:87\nconstructor:137\ndebugger:89\ndeclare:138\ndefault:90\ndefer:166\ndelete:91\ndo:92\nelse:93\nenum:94\nexport:95\nextends:96\nfalse:97\nfinally:98\nfor:99\nfrom:161\nfunction:100\nget:139\nif:101\nimplements:119\nimport:102\nin:103\ninfer:140\ninstanceof:104\ninterface:120\nintrinsic:141\nis:142\nkeyof:143\nlet:121\nmodule:144\nnamespace:145\nnever:146\nnew:105\nnull:106\nnumber:150\nobject:151\npackage:122\nprivate:123\nprotected:124\npublic:125\noverride:164\nout:147\nreadonly:148\nrequire:149\nglobal:162\nreturn:107\nsatisfies:152\nset:153\nstatic:126\nstring:154\nsuper:108\nswitch:109\nsymbol:155\nthis:110\nthrow:111\ntrue:112\ntry:113\ntype:156\ntypeof:114\nundefined:157\nunique:158\nunknown:159\nusing:160\nvar:115\nvoid:116\nwhile:117\nwith:118\nyield:127\nasync:134\nof:165\n",
+          "stderr": "",
+          "exit": 0
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "quoted upstream allocation and entries statement"
+  },
+  {
+    "file": "02_hidden_same_type.a",
+    "reason": "Fresh const literal narrowed to Visible; enumerate the hidden number without a reflection check.",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "expected": {
+      "outcome": "Compiles",
+      "reflection": "proven",
+      "value_type": "number",
+      "runtime": {
+        "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\nafter entries\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "representation": "number"
+    },
+    "mutant": {
+      "find": "hidden: 2",
+      "replace": "hidden: 'wrong'",
+      "description": "The hidden field becomes an incompatible string.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "checked",
+        "value_type": "number",
+        "incompatible_field": "hidden",
+        "runtime": {
+          "stdout": "before entries\n",
+          "stderr_prefix": "adamic: panic: ",
+          "stderr_reason_nonempty": true,
+          "exit": 70
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "authored allocation-provenance probe motivated by the scanner entries call"
+  },
+  {
+    "file": "03_hidden_other_type.a",
+    "reason": "Open view hides an incompatible value; checked reflection stops before exposing any entries.",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "expected": {
+      "outcome": "Compiles",
+      "reflection": "checked",
+      "value_type": "number",
+      "incompatible_field": "hidden",
+      "runtime": {
+        "stdout": "before entries\n",
+        "stderr_prefix": "adamic: panic: ",
+        "stderr_reason_nonempty": true,
+        "exit": 70
+      },
+      "representation": "number"
+    },
+    "mutant": {
+      "find": "hidden: 'wrong'",
+      "replace": "hidden: 2",
+      "description": "Restore a homogeneous allocation, so the check must stop failing.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "proven",
+        "value_type": "number",
+        "runtime": {
+          "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\nafter entries\n",
+          "stderr": "",
+          "exit": 0
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "authored allocation-provenance probe motivated by the scanner entries call"
+  },
+  {
+    "file": "04_alias_add_key.a",
+    "reason": "An alias writes a new data property before entries; checked reflection succeeds and includes it.",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "expected": {
+      "outcome": "Compiles",
+      "reflection": "checked",
+      "value_type": "number",
+      "runtime": {
+        "stdout": "before entries\ncount:2\nvisible:1\nlate:2\nafter entries\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "representation": "number"
+    },
+    "mutant": {
+      "find": "alias['late'] = 2;",
+      "replace": "alias['late'] = 'wrong';",
+      "description": "A valid string write to the union-valued record is incompatible with the number-valued entries view.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "checked",
+        "value_type": "number",
+        "incompatible_field": "late",
+        "runtime": {
+          "stdout": "before entries\n",
+          "stderr_prefix": "adamic: panic: ",
+          "stderr_reason_nonempty": true,
+          "exit": 70
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "authored allocation-provenance probe motivated by the scanner entries call"
+  },
+  {
+    "file": "05_getter.a",
+    "reason": "Accessors are outside the first version, even when the getter returns the right value type.",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "expected": {
+      "outcome": "Refused",
+      "reflection": "refused",
+      "diagnostic_any_of": [
+        "getter",
+        "accessor"
+      ],
+      "runtime": null
+    },
+    "mutant": {
+      "find": "get hidden(): number { getterReads += 1; return 2; }",
+      "replace": "hidden: 2",
+      "description": "Replace the accessor with an ordinary data property.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "proven",
+        "value_type": "number",
+        "runtime": {
+          "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\ngetter reads:0\nafter entries\n",
+          "stderr": "",
+          "exit": 0
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "authored allocation-provenance probe motivated by the scanner entries call"
+  },
+  {
+    "file": "06_symbol_key.a",
+    "reason": "A symbol own key is outside the first version; Node intentionally omits it from entries.",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "expected": {
+      "outcome": "Refused",
+      "reflection": "refused",
+      "diagnostic_any_of": [
+        "symbol"
+      ],
+      "runtime": null
+    },
+    "mutant": {
+      "find": "[Symbol('hidden')]: 2",
+      "replace": "hidden: 2",
+      "description": "Replace the symbol key with an ordinary string key, now included in entries.",
+      "expected": {
+        "outcome": "Compiles",
+        "reflection": "proven",
+        "value_type": "number",
+        "runtime": {
+          "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\nafter entries\n",
+          "stderr": "",
+          "exit": 0
+        },
+        "representation": "number"
+      }
+    },
+    "origin": "authored allocation-provenance probe motivated by the scanner entries call"
+  }
+]

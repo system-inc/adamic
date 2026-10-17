@@ -1,0 +1,50 @@
+=== RUN   TestNativeAgreementRowsNameRegisteredPrograms
+=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms
+=== RUN   TestEntriesAllocationProof
+=== PAUSE TestEntriesAllocationProof
+=== RUN   TestEntriesRecordBoundaries
+=== PAUSE TestEntriesRecordBoundaries
+=== CONT  TestNativeAgreementRowsNameRegisteredPrograms
+=== CONT  TestEntriesRecordBoundaries
+=== CONT  TestEntriesAllocationProof
+=== RUN   TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestEntriesRecordBoundaries/closed_const_literal_origin
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesRecordBoundaries/closed_const_literal_origin
+=== PAUSE TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesRecordBoundaries/indexed_record_field_read
+=== PAUSE TestEntriesRecordBoundaries/indexed_record_field_read
+=== CONT  TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== CONT  TestEntriesRecordBoundaries/indexed_record_field_read
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== PAUSE TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesRecordBoundaries/closed_const_literal_origin
+--- PASS: TestNativeAgreementRowsNameRegisteredPrograms (0.02s)
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+--- PASS: TestEntriesRecordBoundaries (0.00s)
+    --- PASS: TestEntriesRecordBoundaries/indexed_record_field_read (0.06s)
+    --- PASS: TestEntriesRecordBoundaries/closed_const_literal_origin (0.06s)
+    --- PASS: TestEntriesRecordBoundaries/spread_into_record_storage (0.07s)
+=== CONT  TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== CONT  TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+--- PASS: TestEntriesAllocationProof (0.00s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.07s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.05s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source); (0.05s)
+    --- PASS: TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1}); (0.05s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source); (0.04s)
+    --- PASS: TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.155s
