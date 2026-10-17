@@ -329,9 +329,7 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 func run(t *testing.T, path string, content []byte) string {
 	t.Helper()
 	if content != nil {
-		if err := os.WriteFile(path, content, 0o755); err != nil {
-			t.Fatal(err)
-		}
+		writeExecutable(t, path, string(content))
 	}
 	output, err := exec.Command(path).Output()
 	if err != nil {

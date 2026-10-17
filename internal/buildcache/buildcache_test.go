@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"syscall"
 	"testing"
 	"time"
 
@@ -32,6 +33,24 @@ func write(t *testing.T, root, name, content string) {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// writeExecutable writes a program this process will run. On Linux a process forked by a parallel test holds every
+// descriptor open at its fork until it execs, so the program's own write descriptor can still be open in such a child
+// when this process execs the program, and exec fails with ETXTBSY (go.dev/issue/22315; TestRequireArtifacts,
+// #gh8v02z). Holding syscall.ForkLock for reading while the file is open keeps every fork out of that window. Running
+// the program again on ETXTBSY would only hide the race.
+func writeExecutable(t *testing.T, path, content string) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	syscall.ForkLock.RLock()
+	err := os.WriteFile(path, []byte(content), 0o755)
+	syscall.ForkLock.RUnlock()
+	if err != nil {
 		t.Fatal(err)
 	}
 }
@@ -684,13 +703,7 @@ func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
 	t.Parallel()
 	report := func(prefix, note string) string {
 		bin := filepath.Join(prefix, "bin")
-		if err := os.MkdirAll(bin, 0o755); err != nil {
-			t.Fatal(err)
-		}
-		script := "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: " + prefix + "/lib/fakecc/20\"\necho '" + note + "' >&2\n"
-		if err := os.WriteFile(filepath.Join(bin, "fakecc"), []byte(script), 0o755); err != nil {
-			t.Fatal(err)
-		}
+		writeExecutable(t, filepath.Join(bin, "fakecc"), "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+prefix+"/lib/fakecc/20\"\necho '"+note+"' >&2\n")
 		return Tool(filepath.Join(bin, "fakecc"), "--version")
 	}
 	workshop, runner := report(filepath.Join(t.TempDir(), "home/ahra/adamic-tools"), "fakecc: downloading 20.1.8"), report(filepath.Join(t.TempDir(), "opt/adamic-tools"), "")
@@ -699,7 +712,7 @@ func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
 	}
 	// A tool that writes only to standard error is named by it.
 	silent := filepath.Join(t.TempDir(), "quiet")
-	os.WriteFile(silent, []byte("#!/bin/sh\necho 'quiet 1.0' >&2\n"), 0o755)
+	writeExecutable(t, silent, "#!/bin/sh\necho 'quiet 1.0' >&2\n")
 	if got := Tool(silent, "-v"); got != "quiet -v: quiet 1.0" {
 		t.Fatalf("a tool reporting on standard error reported %q", got)
 	}
@@ -715,10 +728,7 @@ func TestAToolsReportIsTheSameThroughEitherLink(t *testing.T) {
 		t.Fatal(err)
 	}
 	tools := filepath.Join(home, "adamic-tools")
-	write(t, tools, "llvm/bin/fakecc", "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n")
-	if err := os.Chmod(filepath.Join(tools, "llvm/bin/fakecc"), 0o755); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, filepath.Join(tools, "llvm/bin/fakecc"), "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n")
 	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
 		t.Fatal(err)
 	}
