@@ -810,6 +810,18 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			unique[key] = row
 		}
 	}
+	// Every rule the registry names records a case, so a package or an upstream test the capture lost is a refusal,
+	// never a smaller corpus both agreements quietly pass over (#v20m3an: each of the 74 rules held cases in
+	// Adam's capture 2f99113b, core 2,603 of its 3,785).
+	captured := map[string]int{}
+	for _, row := range unique {
+		captured[row.Rule]++
+	}
+	for _, d := range descriptors {
+		if captured[d.Name] == 0 {
+			return nil, fmt.Errorf("capture recorded no case of %s (upstream %s %s)", d.Name, d.UpstreamPackage, d.UpstreamTest)
+		}
+	}
 	var keys []string
 	for key := range unique {
 		keys = append(keys, key)
