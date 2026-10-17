@@ -1,0 +1,33 @@
+cmd/adamic/runtimes_test.go:31:func init() { native.SupplyRuntimes(commandRuntime) }
+cmd/adamic/runtimes_test.go:69:		build := func(directory string) error { return request.Build(directory, 4) }
+cmd/adamic/runtime_owners_test.go:65:				if named && literal && key.Name == "Name" && value.Value == `"native-runtime"` && name != "internal/native/runtimeproducts/runtimeproducts.go" {
+internal/oracle/runtimes_test.go:23:	native.SupplyRuntimes(runtimeproducts.Supply)
+internal/oracle/runtimes_test.go:26:// Every variant's archives, built ahead a third of the sets at a time (runtimeproducts.Build).
+internal/oracle/runtimes_test.go:29:	runtimeproducts.Build(t, "sanitized", 0)
+internal/oracle/runtimes_test.go:33:	runtimeproducts.Build(t, "sanitized", 1)
+internal/oracle/runtimes_test.go:37:	runtimeproducts.Build(t, "sanitized", 2)
+internal/oracle/runtimes_test.go:41:	runtimeproducts.Build(t, "release", 0)
+internal/oracle/runtimes_test.go:45:	runtimeproducts.Build(t, "release", 1)
+internal/oracle/runtimes_test.go:49:	runtimeproducts.Build(t, "release", 2)
+internal/oracle/runtimes_test.go:53:	runtimeproducts.Build(t, "counted", 0)
+internal/oracle/runtimes_test.go:57:	runtimeproducts.Build(t, "counted", 1)
+internal/oracle/runtimes_test.go:61:	runtimeproducts.Build(t, "counted", 2)
+internal/oracle/runtimes_test.go:63:func TestProduct_NativeRuntimesWASI0(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 0) }
+internal/oracle/runtimes_test.go:64:func TestProduct_NativeRuntimesWASI1(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 1) }
+internal/oracle/runtimes_test.go:65:func TestProduct_NativeRuntimesWASI2(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 2) }
+internal/native/runtimeproducts/runtimeproducts.go:82:	return buildcache.Get(Inputs(request), func(directory string) error { return request.Build(directory, 1) })
+internal/native/runtimeproducts/runtimeproducts.go:104:		Name:      "native-runtime",
+internal/native/runtimeproducts/runtimeproducts.go:128:		buildcache.Product(t, Inputs(request), func(directory string) error { return request.Build(directory, 4) })
+internal/native/runtimeproducts/runtimeproducts.go:147:		buildcache.BuiltElsewhere(t, what, Inputs(request), owner, func(directory string) error { return request.Build(directory, 4) })
+internal/native/units_tsgo.go:39:	cache, err := cacheDirectory("native-runtime")
+internal/native/library_test.go:361:// A supplier (SupplyRuntimes) gives every archive of the embedded runtime, asked once per key however many builds
+internal/native/library_test.go:369:		SupplyRuntimes(func(request RuntimeRequest) (string, error) {
+internal/native/library.go:42:// A RuntimeRequest is one archive of the embedded runtime a build links, as a supplier (SupplyRuntimes) is asked for
+internal/native/library.go:67:// runtime cache (SupplyRuntimes).
+internal/native/library.go:79:// SupplyRuntimes has supplier provide every archive of the embedded runtime this process links, instead of the runtime
+internal/native/library.go:85:func SupplyRuntimes(supplier func(RuntimeRequest) (string, error)) {
+internal/native/library.go:169:	cache, err := cacheDirectory("native-runtime")
+stage3/fixtures/products_test.go:212:// binary the hook is; each test here finds one group of them by name (runtimeproducts.Find), after its oracle test in
+stage3/fixtures/products_test.go:217:	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized0")
+stage3/fixtures/products_test.go:222:	runtimeproducts.Find(t, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized1")
+stage3/fixtures/products_test.go:227:	runtimeproducts.Find(t, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized2")

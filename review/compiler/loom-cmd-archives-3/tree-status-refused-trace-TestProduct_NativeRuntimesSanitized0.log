@@ -1,0 +1,14 @@
+=== RUN   TestProduct_NativeRuntimesSanitized0
+=== PAUSE TestProduct_NativeRuntimesSanitized0
+=== CONT  TestProduct_NativeRuntimesSanitized0
+    runtimes_test.go:29: build native-runtime 3ac8c29ccf42 miss 8.53
+    runtimes_test.go:29: build native-runtime 19877fc5e50b miss 4.98
+    runtimes_test.go:29: build native-runtime 74c7e3895326 miss 4.65
+    runtimes_test.go:29: build native-runtime 9c3a08bf55d2 miss 4.84
+--- PASS: TestProduct_NativeRuntimesSanitized0 (37.09s)
+PASS
+refused native-runtime (name key 19877fc5e50b): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused native-runtime (name key 3ac8c29ccf42): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused native-runtime (name key 74c7e3895326): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused native-runtime (name key 9c3a08bf55d2): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+traced: 0 settled, 4 refused; journal and report in /tmp/adamic-recut3-cache/traces/20261017T123859Z-2218927116

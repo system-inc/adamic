@@ -1,0 +1,272 @@
+[
+  {
+    "test": "TestProduct_NativeRuntimesSanitized0",
+    "mode": "trace",
+    "seconds": 39.04843435199996,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_NativeRuntimesWASI0",
+    "mode": "trace",
+    "seconds": 34.651046621000035,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "trace",
+    "seconds": 24.684966724000105,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "trace",
+    "seconds": 20.19559518699998,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "trace",
+    "seconds": 12.23000935999994,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "mode": "build",
+    "seconds": 4.783580716000074,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "mode": "build",
+    "seconds": 0.011849203999986457,
+    "exit": 0
+  },
+  {
+    "test": "TestUsageExitStatus",
+    "mode": "build",
+    "seconds": 0.017283186000099704,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "mode": "build",
+    "seconds": 0.08073152999998001,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "mode": "build",
+    "seconds": 0.07338680199995906,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "mode": "build",
+    "seconds": 7.538888775000032,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "mode": "build",
+    "seconds": 1.1576201789999914,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest",
+    "mode": "build",
+    "seconds": 3.260559374999957,
+    "exit": 0
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "mode": "build",
+    "seconds": 2.5241424450000522,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "mode": "build",
+    "seconds": 0.151369774999921,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "mode": "build",
+    "seconds": 5.207518746999995,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeArchivesHaveOneBuilder",
+    "mode": "build",
+    "seconds": 7.430562857999917,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductsWaitForOwners",
+    "mode": "build",
+    "seconds": 0.015508465000038996,
+    "exit": 0
+  },
+  {
+    "test": "TestSharedCommandRuntimeCannotBuildItsOwnersArchive",
+    "mode": "build",
+    "seconds": 2.2834203449999677,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "build",
+    "seconds": 2.3983335409999427,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "build",
+    "seconds": 3.0797743419999506,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "build",
+    "seconds": 2.0949481830000423,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductKeyHoldsEveryPart",
+    "mode": "build",
+    "seconds": 1.7470992579999347,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "mode": "build",
+    "seconds": 0.010134094000022742,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "mode": "build",
+    "seconds": 0.01836740800001735,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "mode": "read",
+    "seconds": 10.129542995000065,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "mode": "read",
+    "seconds": 0.00837778300001446,
+    "exit": 0
+  },
+  {
+    "test": "TestUsageExitStatus",
+    "mode": "read",
+    "seconds": 0.020304176999957235,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "mode": "read",
+    "seconds": 0.12841524500004198,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "mode": "read",
+    "seconds": 0.10180578899996817,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "mode": "read",
+    "seconds": 10.265230161999966,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "mode": "read",
+    "seconds": 1.3788353929999175,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest",
+    "mode": "read",
+    "seconds": 3.7817265050000515,
+    "exit": 0
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "mode": "read",
+    "seconds": 2.650767880999979,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "mode": "read",
+    "seconds": 0.10900993600000675,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "mode": "read",
+    "seconds": 2.3272701559999405,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeArchivesHaveOneBuilder",
+    "mode": "read",
+    "seconds": 7.183720854999933,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductsWaitForOwners",
+    "mode": "read",
+    "seconds": 0.01996728400001757,
+    "exit": 0
+  },
+  {
+    "test": "TestSharedCommandRuntimeCannotBuildItsOwnersArchive",
+    "mode": "read",
+    "seconds": 2.3071147960000644,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "read",
+    "seconds": 3.08412123100004,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "read",
+    "seconds": 5.668517544999986,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "read",
+    "seconds": 2.0841910149999876,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductKeyHoldsEveryPart",
+    "mode": "read",
+    "seconds": 1.85723662099997,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "mode": "read",
+    "seconds": 0.010205575999975736,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "mode": "read",
+    "seconds": 0.009338020999962282,
+    "exit": 0
+  }
+]

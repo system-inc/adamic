@@ -1,0 +1,21 @@
+internal/native/runtimeproducts/runtimeproducts.go:106:		Name:      "native-runtime",
+internal/oracle/runtimes_test.go:23:	native.SupplyRuntimes(runtimeproducts.Supply)
+internal/oracle/runtimes_test.go:26:// Every variant's archives, built ahead a third of the sets at a time (runtimeproducts.Build).
+internal/oracle/runtimes_test.go:29:	runtimeproducts.Build(t, "sanitized", 0)
+internal/oracle/runtimes_test.go:33:	runtimeproducts.Build(t, "sanitized", 1)
+internal/oracle/runtimes_test.go:37:	runtimeproducts.Build(t, "sanitized", 2)
+internal/oracle/runtimes_test.go:41:	runtimeproducts.Build(t, "release", 0)
+internal/oracle/runtimes_test.go:45:	runtimeproducts.Build(t, "release", 1)
+internal/oracle/runtimes_test.go:49:	runtimeproducts.Build(t, "release", 2)
+internal/oracle/runtimes_test.go:53:	runtimeproducts.Build(t, "counted", 0)
+internal/oracle/runtimes_test.go:57:	runtimeproducts.Build(t, "counted", 1)
+internal/oracle/runtimes_test.go:61:	runtimeproducts.Build(t, "counted", 2)
+internal/oracle/runtimes_test.go:63:func TestProduct_NativeRuntimesWASI0(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 0) }
+internal/oracle/runtimes_test.go:64:func TestProduct_NativeRuntimesWASI1(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 1) }
+internal/oracle/runtimes_test.go:65:func TestProduct_NativeRuntimesWASI2(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 2) }
+internal/buildcache/precise_test.go:2716:		"github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1": modulePath + "/internal/native/runtimeproducts",
+internal/buildcache/buildcache.go:114:// (github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1).
+stage3/fixtures/products_test.go:212:// binary the hook is; each test here finds one group of them by name (runtimeproducts.Find), after its oracle test in
+stage3/fixtures/products_test.go:217:	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized0")
+stage3/fixtures/products_test.go:222:	runtimeproducts.Find(t, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized1")
+stage3/fixtures/products_test.go:227:	runtimeproducts.Find(t, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized2")

@@ -1,0 +1,17 @@
+{"test": "TestExplainChecksOutput/overload_some_empty/build", "temperature": "ahead", "seconds": 2.504447243999948, "core_seconds": 2.9026449999999997, "exit": 0}
+{"test": "TestExplainChecksOutput/overload_some_false_read/build", "temperature": "ahead", "seconds": 2.4705673890000526, "core_seconds": 2.873932, "exit": 0}
+{"test": "TestExplainChecksOutput/overload_some_true_only/build", "temperature": "ahead", "seconds": 4.649528790999966, "core_seconds": 5.465994999999999, "exit": 0}
+{"test": "TestExplainChecksOutput/overload_erased/build", "temperature": "ahead", "seconds": 4.290006048999999, "core_seconds": 5.216916, "exit": 0}
+{"test": "TestExplainChecksOutput/overload_assertion/build", "temperature": "ahead", "seconds": 3.2276759240000956, "core_seconds": 3.7398159999999994, "exit": 0}
+{"test": "TestNonNullExplainChecks/narrowed/build", "temperature": "ahead", "seconds": 3.3116027969999777, "core_seconds": 4.189653999999999, "exit": 0}
+{"test": "TestNonNullExplainChecks/present/build", "temperature": "ahead", "seconds": 2.8210684480000054, "core_seconds": 3.2159890000000004, "exit": 0}
+{"test": "TestNonNullExplainChecks/undefined/build", "temperature": "ahead", "seconds": 3.5308655659999886, "core_seconds": 4.092426999999999, "exit": 0}
+{"test": "TestNonNullExplainChecks/null/build", "temperature": "ahead", "seconds": 2.5654821800000036, "core_seconds": 3.0412619999999997, "exit": 0}
+{"test": "TestNonNullExplainChecks/initializer/build", "temperature": "ahead", "seconds": 5.642151969999986, "core_seconds": 4.789827999999996, "exit": 0}
+{"test": "TestNonNullExplainChecks/let_initializer/build", "temperature": "ahead", "seconds": 7.283202334000066, "core_seconds": 4.127469000000005, "exit": 0}
+{"test": "TestNonNullExplainChecks/refuse_undefined/build", "temperature": "ahead", "seconds": 5.860114015000022, "core_seconds": 3.7815090000000033, "exit": 0}
+{"test": "TestNonNullExplainChecks/refuse_null/build", "temperature": "ahead", "seconds": 4.106262972999957, "core_seconds": 3.945223000000002, "exit": 0}
+{"test": "TestRequestNativeStaysCommand", "temperature": "ahead", "seconds": 3.1913513209999564, "core_seconds": 3.491403000000002, "exit": 0}
+{"test": "TestWASIRequest/request.a", "temperature": "ahead", "seconds": 2.6109682239999756, "core_seconds": 3.082926999999998, "exit": 0}
+{"test": "TestWASIRequest/request_alias.a", "temperature": "ahead", "seconds": 2.765901146000033, "core_seconds": 3.084113000000002, "exit": 0}
+{"test": "TestWASIRequestThrows", "temperature": "ahead", "seconds": 2.42152135799995, "core_seconds": 2.6964979999999947, "exit": 0}

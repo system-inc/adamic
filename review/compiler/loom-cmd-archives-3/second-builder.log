@@ -1,0 +1,11 @@
+--- FAIL: TestSharedCommandRuntimeCannotBuildItsOwnersArchive (12.67s)
+    runtime_owners_test.go:198: a shared runtime product must fail for its missing owner, never build: <nil>
+        === RUN   TestProduct_CommandRuntimeSanitized
+        === PAUSE TestProduct_CommandRuntimeSanitized
+        === CONT  TestProduct_CommandRuntimeSanitized
+            runtimes_test.go:82: build native-runtime 3ac8c29ccf42 miss 6.15
+        --- PASS: TestProduct_CommandRuntimeSanitized (12.61s)
+        PASS
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	12.750s
+FAIL
