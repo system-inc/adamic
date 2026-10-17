@@ -227,24 +227,28 @@ func rulesAgreeCapture(t *testing.T) string {
 	return rulesAgreeCaptureDirectory
 }
 
+// testShardsAgreeUpstream is the upstream capture's rows for ShardsAgree, each case by its path in the capture product.
+// RulesAgree and ShardsAgree read one capture: the two products they read ran the same upstream tests, through the same
+// harness overlay, into the same deduplicated and sorted cases, so every cold tree captured everything twice (#v20m3an).
 func testShardsAgreeUpstream(t *testing.T) []string {
-	d := oracleProduct(t, testShardsAgreeInputs(t, "capture"), func(d string) error {
-		rows, err := testShardsAgreeCaptureUpstream(packageDirectory, d)
-		if err != nil {
-			return err
-		}
-		// Each row names a case in this product, by its key, wherever the reader's cache holds it (#tqrqx60).
-		return os.WriteFile(filepath.Join(d, "rows"), []byte(buildcache.Relative(strings.Join(rows, "\n"))), 0644)
-	})
-	data, err := os.ReadFile(filepath.Join(d, "rows"))
+	t.Helper()
+	directory := rulesAgreeCapture(t)
+	data, err := os.ReadFile(filepath.Join(directory, "rows.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	rows := strings.Split(buildcache.Absolute(string(data)), "\n")
-	for _, row := range rows {
-		if !strings.HasPrefix(row, d+"/case-") {
-			t.Fatalf("capture path: %q", row)
+	var captured []string
+	if err := json.Unmarshal(data, &captured); err != nil {
+		t.Fatal(err)
+	}
+	rows := make([]string, 0, len(captured))
+	for _, row := range captured {
+		fields := strings.SplitN(row, "\t", 2)
+		path := filepath.Join(directory, fields[0])
+		if len(fields) != 2 || !strings.HasPrefix(path, directory+"/case-") {
+			t.Fatalf("capture row: %q", row)
 		}
+		rows = append(rows, path+"\t"+fields[1])
 	}
 	return rows
 }
@@ -345,13 +349,6 @@ func yepestaPrepare(t *testing.T) string {
 		return os.WriteFile(filepath.Join(out, "bundle.json"), data, 0644)
 	})
 	return directory
-}
-
-func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
-	if name != "capture" {
-		t.Fatal("oracle owner only captures upstream")
-	}
-	return buildcache.Inputs{Name: "shards-agree-capture", Files: oracleFiles(t), Flags: []string{"asserted-cases-overlay"}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()}}
 }
 
 func yepestaInputs() buildcache.Inputs {
@@ -1243,141 +1240,6 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 		rows = append(rows, row)
 	}
 	return rows
-}
-
-func testShardsAgreeCaptureUpstream(sourceRoot, directory string) ([]string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return nil, err
-	}
-	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
-	data, err := os.ReadFile(harness)
-	if err != nil {
-		return nil, err
-	}
-	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
-	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
-	if strings.Count(string(data), original) != 1 {
-		return nil, fmt.Errorf("capture overlay anchor changed")
-	}
-	side := filepath.Join(directory, "rule_testing.go")
-	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
-		return nil, err
-	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		return nil, err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(overlayPath)
-	capture := filepath.Join(directory, "capture")
-	environment := []string{"COHERE_DOCS_CAPTURE=" + capture}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return nil, err
-	}
-	discovered := map[string]bool{}
-	packages := map[string][]string{}
-	for _, d := range descriptors {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
-	}
-	var names []string
-	for name := range packages {
-		names = append(names, name)
-	}
-	sort.Strings(names)
-	for _, name := range names {
-		if _, err := testShardsAgreeRun(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0"); err != nil {
-			return nil, err
-		}
-	}
-	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
-	if err != nil {
-		return nil, err
-	}
-	type record struct {
-		Rule, File, Source, Outcome, FixedSource string
-		Options                                  json.RawMessage
-	}
-	unique := map[string]record{}
-	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
-	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
-	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
-	defer os.RemoveAll(capture)
-	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return nil, err
-		}
-		for _, line := range bytes.Split(data, []byte("\n")) {
-			if len(line) == 0 {
-				continue
-			}
-			var row record
-			if err := json.Unmarshal(line, &row); err != nil {
-				return nil, err
-			}
-			if !discovered[row.Rule] {
-				continue
-			}
-			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
-			unique[key] = row
-		}
-	}
-	var keys []string
-	for key := range unique {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	var rows []string
-	for i, key := range keys {
-		row := unique[key]
-		// The case keeps its file name's directories, not only its base name: a rule that judges a
-		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
-		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
-		if name == "." || name == "" || strings.HasPrefix(name, "..") {
-			name = filepath.Base(name)
-		}
-		if name == "." || name == "" || name == ".." {
-			name = "source.ts"
-		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, err
-		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
-			return nil, err
-		}
-		var legacy struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
-		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				return nil, err
-			}
-		}
-		mode := ""
-		if row.Rule == "@typescript-eslint/method-signature-style" {
-			switch row.Source {
-			case "type T = { m: => void };":
-				mode = "recovery"
-			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
-			}
-		}
-		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
-			mode = "recovery"
-		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
-	}
-	if len(rows) < 150 {
-		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
-	}
-	return rows, nil
 }
 
 const goOraclePackage = "adamic_lint_oracle"
