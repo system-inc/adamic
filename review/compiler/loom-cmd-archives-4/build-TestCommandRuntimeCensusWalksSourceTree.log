@@ -1,0 +1,6 @@
+=== RUN   TestCommandRuntimeCensusWalksSourceTree
+=== PAUSE TestCommandRuntimeCensusWalksSourceTree
+=== CONT  TestCommandRuntimeCensusWalksSourceTree
+    runtime_owners_test.go:301: census: 4 Go files; skip testdata, vendor, node_modules, .git; ignored directories [.cache .idea /build artifacts/cache scratch-*]; submodules [cohere]
+--- PASS: TestCommandRuntimeCensusWalksSourceTree (0.00s)
+PASS

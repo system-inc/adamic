@@ -1,0 +1,5 @@
+--- a/cmd/adamic/runtime_owners_test.go
++++ b/cmd/adamic/runtime_owners_test.go
+@@ -80 +80 @@
+-			case "testdata", "vendor", "node_modules", ".git":
++			case "vendor", "node_modules", ".git":

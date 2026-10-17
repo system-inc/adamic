@@ -1,0 +1,6 @@
+--- FAIL: TestCommandRuntimeCensusWalksSourceTree (0.00s)
+    runtime_owners_test.go:301: census: 6 Go files; skip testdata, vendor, node_modules, .git; ignored directories [.cache .idea /build artifacts/cache scratch-*]; submodules [cohere]
+    runtime_owners_test.go:301: /tmp/adamic-gate/TestCommandRuntimeCensusWalksSourceTree2007457810/001/nested/testdata/decoy.go:1:1: expected 'package', found deliberately
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.012s
+FAIL
