@@ -866,8 +866,14 @@ type jsxProductInputs struct {
 	Toolchain []string
 }
 
+// jsxInputFiles names every input relative to the repository root, as an untraced build's key requires; the parent's
+// jsxProduct does the same conversion for its own products.
 func jsxInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
+	repositoryRoot, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	files := map[string]bool{}
 	for _, root := range roots {
 		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
@@ -889,7 +895,14 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 				if err != nil {
 					return err
 				}
-				files[absolute] = true
+				relative, err := filepath.Rel(repositoryRoot, absolute)
+				if err != nil {
+					return err
+				}
+				if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+					return fmt.Errorf("jsx input %s is outside the repository", absolute)
+				}
+				files[filepath.ToSlash(relative)] = true
 			}
 			return nil
 		})
