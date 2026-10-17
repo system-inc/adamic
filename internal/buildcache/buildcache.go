@@ -60,6 +60,40 @@ func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error
 	return product(t, inputs, build, leanCalled(1))
 }
 
+// Handed is a lean build's Inputs, which key it, and the Paths it's handed, which never do (#zb9268t, Node's and Tests'
+// rulings): machine paths (a file the test wrote, an install a variable names) whose content the build's window keys as
+// it reads them. A read the window can only record by its spelling would key per box and per run, so Settle refuses a
+// handed build whose set holds an absolute read at or under a handed path or its process's temporary directory
+// (refusedHandedRead). It's declared here, never in a make file, so adding it rekeys nothing.
+type Handed struct {
+	Inputs Inputs
+	Paths  []string
+}
+
+// LeanProductOf is LeanProduct for a build that is a function of what it's handed alone: build is a top-level function
+// of its package, named, never a function literal, so it takes nothing from its caller but handed (held by
+// TestOnlyReviewedPackagesBuildLean, its package one of leanCallers). It's keyed by its own window and handed.Inputs'
+// Files, never by what its test read before it (#zb9268t: keys that moved between two cold builds of one commit).
+func LeanProductOf(t testing.TB, handed Handed, build func(handed Handed, directory string) error) string {
+	t.Helper()
+	lean := leanCalled(1)
+	if lean != nil {
+		lean.handed = handedRoots(handed.Paths)
+	}
+	return product(t, handed.Inputs, func(directory string) error { return build(handed, directory) }, lean)
+}
+
+// handedRoots are paths as absolute, clean roots, the places a handed build's absolute reads may not be keyed under.
+func handedRoots(paths []string) []string {
+	roots := []string{}
+	for _, path := range paths {
+		if absolute, err := filepath.Abs(path); err == nil {
+			roots = append(roots, filepath.Clean(absolute))
+		}
+	}
+	return roots
+}
+
 // LeanGet is Get for a lean build (LeanProduct).
 func LeanGet(inputs Inputs, build func(directory string) error) (string, error) {
 	directory, _, err := get(inputs, build, leanCalled(1))
@@ -74,6 +108,9 @@ func LeanGet(inputs Inputs, build func(directory string) error) (string, error) 
 // the recipe of the test binary that settled it.
 type leanBuild struct {
 	caller string
+	// handed is a LeanProductOf build's handed paths, as absolute roots, nil for any other lean build: Settle refuses
+	// one whose set records an absolute read under them or its process's temporary directory.
+	handed []string
 }
 
 // leanCalled is the lean build its caller asks for, skip frames above leanCalled's own: built from buildcache's code, or
@@ -313,6 +350,9 @@ func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lea
 	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean != nil}
 	if lean != nil {
 		entry.LeanCaller = lean.caller
+		if lean.handed != nil {
+			entry.Handed, entry.Temporary = lean.handed, filepath.Clean(os.TempDir())
+		}
 	}
 	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
 	journal(entry)
