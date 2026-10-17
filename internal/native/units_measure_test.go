@@ -23,6 +23,7 @@ func TestMeasureClangUnits(t *testing.T) {
 	cache := filepath.Join(directory, "cache")
 	// The native caches live under the build cache, so this benchmark's scratch cache is one.
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	t.Setenv("ADAMIC_NATIVE_SPLIT", "0")
 	selected := os.Getenv("ADAMIC_CLANG_PROGRAM")

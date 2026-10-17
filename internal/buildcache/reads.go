@@ -1,6 +1,7 @@
 package buildcache
 
 import (
+	"cmp"
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
@@ -19,6 +20,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -112,8 +114,29 @@ func readsPath(cache, nameKey string) string {
 	return filepath.Join(cache, nameKey+".reads")
 }
 
+// loadReads is nameKey's read sets where this process writes them (cache), and, when that is an output directory of
+// its own, those the build cache holds after them (location.ReadPlaces): the union, the output directory's sets first,
+// then each of the cache's that reads other entries. withReads writes the whole union back to the output directory, so
+// what Loom copies into the cache holds every set either held.
 func loadReads(cache, nameKey string) (readsFile, error) {
-	content, err := os.ReadFile(readsPath(cache, nameKey))
+	var union readsFile
+	for index, path := range location.ReadPlaces(readsPath(cache, nameKey)) {
+		file, err := readsAt(path)
+		if err != nil {
+			return readsFile{}, err
+		}
+		if index == 0 {
+			union = file
+		} else {
+			union = unionReads(union, file)
+		}
+	}
+	return union, nil
+}
+
+// readsAt is the read sets file at path: none when it isn't there or is another version's.
+func readsAt(path string) (readsFile, error) {
+	content, err := os.ReadFile(path)
 	if errors.Is(err, fs.ErrNotExist) {
 		return readsFile{}, nil
 	}
@@ -122,12 +145,30 @@ func loadReads(cache, nameKey string) (readsFile, error) {
 	}
 	var file readsFile
 	if err = json.Unmarshal(content, &file); err != nil {
-		return readsFile{}, fmt.Errorf("%s: %v", readsPath(cache, nameKey), err)
+		return readsFile{}, fmt.Errorf("%s: %v", path, err)
 	}
 	if file.Version != readsVersion {
 		return readsFile{}, nil
 	}
 	return file, nil
+}
+
+// unionReads is newer's sets, then each of older's that reads entries none of newer's does: a set of the same entries
+// in both is the same set, valued later in newer, as recordReads keeps it.
+func unionReads(newer, older readsFile) readsFile {
+	switch {
+	case older.Version == "":
+		return newer
+	case newer.Version == "":
+		return older
+	}
+	union := readsFile{Version: newer.Version, Name: cmp.Or(newer.Name, older.Name), Sets: slices.Clone(newer.Sets)}
+	for _, set := range older.Sets {
+		if !slices.ContainsFunc(newer.Sets, func(kept readSet) bool { return sameEntries(kept.Entries, set.Entries) }) {
+			union.Sets = append(union.Sets, set)
+		}
+	}
+	return union
 }
 
 // recordReads puts set first among nameKey's sets, replacing one that reads the same entries.
@@ -141,7 +182,8 @@ func recordReads(cache, nameKey, name string, set readSet) error {
 
 // withReads changes nameKey's read sets under a lock every writer on the machine takes, so two settlements of one
 // product never lose each other's reads: change reads the file, changes it, and it is written whole by rename, the
-// newest keptSets sets kept.
+// newest keptSets sets kept. cache is where this process writes: the lock, the temporary file and the file itself are
+// all there, and the file read is loadReads' union with what the build cache holds.
 func withReads(cache, nameKey string, change func(file *readsFile) error) error {
 	lock, err := os.OpenFile(readsPath(cache, nameKey)+".lock", os.O_CREATE|os.O_RDWR, 0o644)
 	if err != nil {
@@ -266,7 +308,10 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 	case "above":
 		return existence(filepath.Join(root, filepath.FromSlash(entry.Path))), nil
 	case "above cache":
-		return existence(filepath.Join(cache, filepath.FromSlash(entry.Path))), nil
+		// Relative to the build cache, where the product is read once Loom copies what this process wrote into it, so
+		// a product built in an output directory of its own keys as one built in the cache.
+		places := location.ReadPlaces(cache)
+		return existence(filepath.Join(places[len(places)-1], filepath.FromSlash(entry.Path))), nil
 	case "absolute":
 		if !filepath.IsAbs(entry.Path) {
 			return "", fmt.Errorf("an absolute entry %q isn't an absolute path", entry.Path)
@@ -401,15 +446,18 @@ var productDigests sync.Map
 
 // productDigest is a product's bytes as one value: each file under directory by its path, kind, executable bit and
 // content (a link by where it points), kept beside it as <directory>.digest so each machine hashes a product once. A
-// directory reached through a link is valued by what it links to (ProductRoot).
+// directory reached through a link is valued by what it links to (ProductRoot). The digest is read beside the product
+// in the output directory, then in the build cache, and kept in the output directory (location.ReadPlaces).
 func productDigest(directory string) (string, error) {
 	if value, ok := productDigests.Load(directory); ok {
 		return value.(string), nil
 	}
-	kept := directory + ".digest"
-	if content, err := os.ReadFile(kept); err == nil && len(content) == 64 {
-		productDigests.Store(directory, string(content))
-		return string(content), nil
+	places := location.ReadPlaces(directory + ".digest")
+	for _, kept := range places {
+		if content, err := os.ReadFile(kept); err == nil && len(content) == 64 {
+			productDigests.Store(directory, string(content))
+			return string(content), nil
+		}
 	}
 	root, err := ProductRoot(directory)
 	if err != nil {
@@ -455,7 +503,16 @@ func productDigest(directory string) (string, error) {
 	}
 	value := hex.EncodeToString(hash.Sum(nil))
 	productDigests.Store(directory, value)
-	if temporary, err := os.CreateTemp(filepath.Dir(directory), filepath.Base(kept)+".*"); err == nil {
+	// Kept where this process writes, through a temporary file whose name starts with a dot, as every scratch name in
+	// the cache does, so nothing copying the output directory takes it for a digest. Keeping it is a convenience: a
+	// failure to is no error.
+	kept := places[0]
+	if kept != directory+".digest" {
+		if err := os.MkdirAll(filepath.Dir(kept), 0o755); err != nil {
+			return value, nil
+		}
+	}
+	if temporary, err := os.CreateTemp(filepath.Dir(kept), ".digest-*"); err == nil {
 		_, writeErr := temporary.WriteString(value)
 		if closeErr := temporary.Close(); writeErr != nil || closeErr != nil || os.Rename(temporary.Name(), kept) != nil {
 			os.Remove(temporary.Name())
@@ -790,7 +847,9 @@ type productLookup struct {
 // than at depth 16 down every branch.
 func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
 	held := heldForLife(root)
-	heldKey := root + "\x00" + cache + "\x00" + nameKey
+	// By every directory the lookup reads, so a process that reads a build cache through an output directory of its own
+	// and one that reads it alone never share an answer.
+	heldKey := root + "\x00" + strings.Join(location.ReadPlaces(cache), "\x00") + "\x00" + nameKey
 	if held {
 		if result, ok := readProducts.Load(heldKey); ok {
 			return result.(found), nil
@@ -847,8 +906,9 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 		refound := revalued(set, evaluated)
 		result.keys, result.keyUpstreams = append(result.keys, evaluated.key), append(result.keyUpstreams, upstreams)
 		result.keyRefound = append(result.keyRefound, refound)
-		if _, err := os.Stat(filepath.Join(cache, evaluated.key)); err == nil {
-			result.key, result.directory, result.upstreams, result.refound = evaluated.key, filepath.Join(cache, evaluated.key), upstreams, refound
+		// In the output directory first, then in the build cache: the product is wherever it was found.
+		if directory, ok := existingPlace(filepath.Join(cache, evaluated.key)); ok {
+			result.key, result.directory, result.upstreams, result.refound = evaluated.key, directory, upstreams, refound
 			return result, nil
 		}
 	}

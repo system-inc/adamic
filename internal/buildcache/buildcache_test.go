@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -299,6 +300,8 @@ func cached(t *testing.T) (string, string) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	// Products go to the test's cache itself, whatever output directory the process running the tests was given.
+	t.Setenv(location.OutputDirectoryVariable, "")
 	// The real store is never reached from a test; the store's own tests serve one.
 	t.Setenv("ADAMIC_BUILD_STORE", "off")
 	return cache, log
@@ -461,7 +464,7 @@ func TestASettledPlacementWaitsForAFillOfItsKey(t *testing.T) {
 	group.Add(1)
 	go func() {
 		defer group.Done()
-		built, fillError = filled(product, "inputs", func(scratch string) error {
+		_, built, fillError = filled(product, "inputs", func(scratch string) error {
 			close(filling)
 			<-release
 			return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
@@ -503,12 +506,12 @@ func TestAFillThatLosesItsRenameFindsTheProduct(t *testing.T) {
 	t.Parallel()
 	cache := t.TempDir()
 	product := filepath.Join(cache, strings.Repeat("cd", 32))
-	built, err := filled(product, "inputs", func(scratch string) error {
+	placed, built, err := filled(product, "inputs", func(scratch string) error {
 		write(t, product, "product", "placed")
 		return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
 	})
-	if err != nil || built {
-		t.Fatalf("the fill that lost its rename: built %t, %v", built, err)
+	if err != nil || built || placed != product {
+		t.Fatalf("the fill that lost its rename: placed at %s, built %t, %v", placed, built, err)
 	}
 	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "placed" {
 		t.Fatalf("the product reads %q, %v", content, err)
