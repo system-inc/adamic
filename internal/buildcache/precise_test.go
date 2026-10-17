@@ -2789,6 +2789,108 @@ func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
 	if found := leanCallersIn(t, aliased); !slices.Equal(found, []string{"caller", "dotted"}) {
 		t.Errorf("lean callers by an alias and a dot import: %v; want caller and dotted", found)
 	}
+	if findings := handedBuildsIn(t, root); len(findings) != 0 {
+		t.Errorf("a LeanProductOf build isn't a top-level function of its package, named: %q", findings)
+	}
+}
+
+// A LeanProductOf build is a top-level function of its package, by name, never a function literal, a variable or a
+// method value (#zb9268t, Node's ruling): so it takes nothing from its caller but what it's handed, and leancensus'
+// package-variable rule covers what it reads. The rule is the argument's syntax alone. Mutants that each fail it: a
+// literal let through; a package variable holding a function let through; a top-level function refused.
+func TestALeanProductOfBuildIsATopLevelFunctionByName(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	const header = "package %s\n\nimport \"github.com/system-inc/adamic/internal/buildcache\"\n\n"
+	for name, body := range map[string]string{
+		"named":    "func build(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, build)\n",
+		"literal":  "var _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, func(buildcache.Handed, string) error { return nil })\n",
+		"variable": "var build = func(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, build)\n",
+		"method":   "type maker struct{}\n\nfunc (maker) build(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, maker{}.build)\n",
+	} {
+		write(t, root, name+"/"+name+".go", fmt.Sprintf(header, name)+body)
+	}
+	findings := strings.Join(handedBuildsIn(t, root), "\n")
+	for _, refused := range []string{"literal", "variable", "method"} {
+		if !strings.Contains(findings, refused+"/"+refused+".go") {
+			t.Errorf("a %s build wasn't refused: %q", refused, findings)
+		}
+	}
+	if strings.Contains(findings, "named/") {
+		t.Errorf("a top-level function by name was refused: %q", findings)
+	}
+}
+
+// handedBuildsIn is each call of buildcache's LeanProductOf under root whose build argument isn't an identifier naming
+// a top-level function, with no receiver, declared in the same package, as "<file>:<line>: <why>".
+func handedBuildsIn(t *testing.T, root string) []string {
+	t.Helper()
+	const importPath = "github.com/system-inc/adamic/internal/buildcache"
+	type parsed struct {
+		name string
+		file *ast.File
+		set  *token.FileSet
+	}
+	packages := map[string][]parsed{}
+	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return nil
+		}
+		if entry.IsDir() && (entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
+			return filepath.SkipDir
+		}
+		if entry.IsDir() || !strings.HasSuffix(name, ".go") {
+			return nil
+		}
+		content, err := os.ReadFile(name)
+		if err != nil || !strings.Contains(string(content), "LeanProductOf") && !strings.Contains(string(content), importPath) {
+			return nil
+		}
+		set := token.NewFileSet()
+		file, err := parser.ParseFile(set, name, content, parser.SkipObjectResolution)
+		if err != nil {
+			return nil
+		}
+		packages[filepath.Dir(name)] = append(packages[filepath.Dir(name)], parsed{name, file, set})
+		return nil
+	})
+	var findings []string
+	for _, files := range packages {
+		functions := map[string]bool{}
+		for _, each := range files {
+			for _, declaration := range each.file.Decls {
+				if function, ok := declaration.(*ast.FuncDecl); ok && function.Recv == nil {
+					functions[function.Name.Name] = true
+				}
+			}
+		}
+		for _, each := range files {
+			relative, _ := filepath.Rel(root, each.name)
+			ast.Inspect(each.file, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				called := ""
+				switch function := call.Fun.(type) {
+				case *ast.SelectorExpr:
+					called = function.Sel.Name
+				case *ast.Ident:
+					called = function.Name
+				}
+				if called != "LeanProductOf" || len(call.Args) != 3 {
+					return true
+				}
+				at := each.set.Position(call.Pos()).Line
+				if build, ok := call.Args[2].(*ast.Ident); !ok || !functions[build.Name] {
+					findings = append(findings, fmt.Sprintf("%s:%d: its build isn't a top-level function of the package, by name", relative, at))
+				}
+				return true
+			})
+		}
+	}
+	slices.Sort(findings)
+	return findings
 }
 
 // leanCallersIn is every package under root, by its directory relative to root, a file of which calls buildcache's
@@ -2826,7 +2928,9 @@ func leanCallersIn(t *testing.T, root string) []string {
 				local = imported.Name.Name
 			}
 		}
-		lean := func(called string) bool { return called == "LeanProduct" || called == "LeanGet" }
+		lean := func(called string) bool {
+			return called == "LeanProduct" || called == "LeanGet" || called == "LeanProductOf"
+		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
 			case *ast.SelectorExpr:
@@ -3470,5 +3574,54 @@ func TestAReadThroughALinkThenDotDotIsKeyedWhereTheKernelLands(t *testing.T) {
 		if slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, " "+spelled) }) {
 			t.Fatalf("the read set %q keys the spelling's %s", got, spelled)
 		}
+	}
+}
+
+// handedBuilding is a LeanProductOf build, a top-level function of what it's handed: it writes port's product.
+func handedBuilding(_ Handed, directory string) error {
+	return building("built")(directory)
+}
+
+// A LeanProductOf build is keyed by its window and its declared files, as a lean build is, and its handed paths never
+// key it by their spelling (#zb9268t, Node's and Tests' rulings). Settle already refuses reading what a handed path
+// holds outside the tree's and the cache's places ("other"), and what's under the temporary directory that the run
+// didn't make; what it keys by spelling is a path only looked for, an absolute entry. So a handed build that looks for
+// a path at or under a handed root refuses the settle, named; one reading only the tree settles; and a lean build that
+// isn't handed keeps today's absolute entry for the same lookup. Mutants that each fail it: the refusal off; the
+// handed paths never journaled; a root matched by prefix without its separator.
+// Not parallel: newRig.
+func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
+	outside := "/var/lib/adamic-handed-zb9268t"
+	for _, each := range []struct {
+		name, path string
+		read       func(r *rig, pid int, path string)
+		handed     bool
+		refused    string
+	}{
+		{"looked for under a handed path", outside + "/specs.json", (*rig).missing, true, "by its spelling"},
+		{"looked for beside a handed path, not under it", outside + "-sibling/specs.json", (*rig).missing, true, ""},
+		{"content under a handed path", outside + "/specs.json", (*rig).open, true, "other"},
+		{"content under the temporary directory", filepath.Join(os.TempDir(), "adamic-handed-zb9268t", "specs.json"), (*rig).open, true, "temp not made by this run"},
+		{"the tree alone", "source/a.c", (*rig).open, true, ""},
+		{"looked for by a lean build that isn't handed", outside + "/specs.json", (*rig).missing, false, ""},
+	} {
+		t.Run(each.name, func(t *testing.T) {
+			r := newRig(t)
+			if each.handed {
+				LeanProductOf(t, Handed{Inputs: port, Paths: []string{outside}}, handedBuilding)
+			} else {
+				LeanProduct(t, port, building("built"))
+			}
+			build := r.built(t)["port"]
+			r.window(build.Build, func() { each.read(r, r.pid, each.path) })
+			settlement := r.settle(t)
+			refusals := strings.Join(settlement.Refused, "\n")
+			switch {
+			case each.refused != "" && (len(settlement.Refused) != 1 || !strings.Contains(refusals, each.refused)):
+				t.Fatalf("settled %q, refused %q; want refused for %q", settlement.Settled, settlement.Refused, each.refused)
+			case each.refused == "" && len(settlement.Settled) != 1:
+				t.Fatalf("settled %q, refused %q; want it settled", settlement.Settled, settlement.Refused)
+			}
+		})
 	}
 }
