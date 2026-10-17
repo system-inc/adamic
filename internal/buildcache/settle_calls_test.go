@@ -9,6 +9,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"sort"
 	"strconv"
@@ -164,11 +165,12 @@ var namedCallExclusions = map[string]string{
 }
 
 // Every string literal in this package's non-test files (import paths aside) that names a call strace 6.8's x86_64
-// table knows is either one the pinned list holds or a pinned exclusion, by file:line. It's the proof under the shape
-// reader above (Tests' and Node's rule, Oct 17): a parse that names its call is seen whatever carries the name, a
-// helper's parameter of any name, a map that isn't a *Calls, a switch, a table of its own. Its one blind spot is a call
-// name the code builds rather than writes, "open" + "at", which no literal spells. An exclusion that no longer matches
-// is red too, so the list stays exactly the literals there are.
+// table knows, whole or as "name(" the way strace's line spells it (namedCalls), is either one the pinned list holds or
+// a pinned exclusion, by file:line. It's the proof under the shape reader above (Tests' and Node's rule, Oct 17): a
+// parse that names its call is seen whatever carries the name, a helper's parameter of any name, a map that isn't a
+// *Calls, a switch, a table of its own. Its one blind spot is a call name the code builds rather than writes, "open" +
+// "at", which no literal spells. An exclusion that no longer matches is red too, so the list stays exactly the literals
+// there are.
 func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 	t.Parallel()
 	table, err := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
@@ -206,14 +208,19 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 				return true
 			}
 			value, err := strconv.Unquote(basic.Value)
-			if err != nil || !known[value] || slices.Contains(pinned, value) {
+			if err != nil {
 				return true
 			}
-			at := fmt.Sprintf("%s:%d %q", path, files.Position(basic.Pos()).Line, value)
-			if _, excluded := namedCallExclusions[at]; !excluded {
-				t.Errorf("%s names a call strace traces, and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", at)
+			for _, name := range namedCalls(value) {
+				if !known[name] || slices.Contains(pinned, name) {
+					continue
+				}
+				at := fmt.Sprintf("%s:%d %q", path, files.Position(basic.Pos()).Line, name)
+				if _, excluded := namedCallExclusions[at]; !excluded {
+					t.Errorf("%s names a call strace traces (in %q), and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", at, value)
+				}
+				seen[at] = true
 			}
-			seen[at] = true
 			return true
 		})
 	}
@@ -222,4 +229,19 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 			t.Errorf("namedCallExclusions holds %s, and no such literal is there now: take it out or move it", at)
 		}
 	}
+}
+
+// callInLine is a call as strace's line spells it, a name directly followed by its opening parenthesis, at a word
+// boundary: "fanotify_mark(" in a literal a parse matches line text with.
+var callInLine = regexp.MustCompile(`(?:^|[^A-Za-z0-9_])([a-z0-9_]+)\(`)
+
+// namedCalls are the call names a string literal spells: the whole literal, and every name in it followed by "(",
+// as strace writes a call in its line (Tests' mutant on fb94405b4c: a parse by HasPrefix(call.arguments,
+// "fanotify_mark(")).
+func namedCalls(value string) []string {
+	names := []string{value}
+	for _, match := range callInLine.FindAllStringSubmatch(value, -1) {
+		names = append(names, match[1])
+	}
+	return names
 }
