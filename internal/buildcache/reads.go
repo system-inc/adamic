@@ -886,9 +886,9 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
-		if set.Lean && leanKeysOff() {
+		if set.Lean && leanKeysOffFor(nameKey) {
 			if index == 0 {
-				result.why = "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
+				result.why = "lean keys are off (ADAMIC_BUILD_LEAN=off, or its name key in ADAMIC_BUILD_LEAN_OFF_KEYS), so its newest read set, keyed by the lean recipe, isn't matched"
 			}
 			continue
 		}

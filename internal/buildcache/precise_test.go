@@ -2958,6 +2958,98 @@ func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(t *testing.T) {
 	}
 }
 
+// A name key ADAMIC_BUILD_LEAN_OFF_KEYS lists is a lean hole's, and only it goes back to its whole recipe (#1qkz8gs):
+// its traced build journals itself not lean and a lookup of it matches no lean set, while a name key the list doesn't
+// name stays lean both ways. A list that can't be read turns every name key off. Mutants that each fail it: the list
+// unread in get; the list unread in the lookup; an unreadable list read as listing nothing.
+// Not parallel: newRig, t.Setenv.
+func TestOnlyAListedNameKeyGoesBackToItsWholeRecipe(t *testing.T) {
+	list := func(t *testing.T, nameKeys ...string) string {
+		t.Helper()
+		path := filepath.Join(t.TempDir(), "holes")
+		if err := os.WriteFile(path, []byte(strings.Join(nameKeys, "\n")+"\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return path
+	}
+	built := func(listed string) journalEntry {
+		t.Helper()
+		r := newRig(t)
+		write(t, r.root, "hello/main.go", "package main\n\nfunc main() {}\n")
+		gitIn(t, r.root, "add", ".")
+		gitIn(t, r.root, "commit", "-q", "-m", "hello")
+		forgetInputs()
+		t.Cleanup(forgetInputs)
+		t.Setenv("ADAMIC_BUILD_LEAN_OFF_KEYS", listed)
+		GoBuild(t, "hello", "./hello", nil)
+		for _, entry := range r.built(t) {
+			if strings.Contains(entry.Name, "./hello") {
+				return entry
+			}
+		}
+		t.Fatalf("no traced build of ./hello journaled: %v", r.built(t))
+		return journalEntry{}
+	}
+	unlisted := built("")
+	if !unlisted.Lean {
+		t.Fatalf("a go product's traced build with no hole listed isn't lean: %+v", unlisted)
+	}
+	if entry := built(list(t, unlisted.NameKey)); entry.Lean {
+		t.Errorf("a listed name key's traced build is lean: %+v", entry)
+	}
+	if entry := built(list(t, strings.Repeat("0", 64))); !entry.Lean {
+		t.Errorf("a traced build another name key's hole lists is whole: %+v", entry)
+	}
+	if entry := built(filepath.Join(t.TempDir(), "no-such-list")); entry.Lean {
+		t.Errorf("a traced build under a list that can't be read is lean: %+v", entry)
+	}
+
+	// The lookup: a product stored under a lean set is a hit with nothing listed or another name key listed, and a miss
+	// with its own name key listed or the list unreadable. Each in a rig of its own, since a build leaves a local pointer
+	// the next lookup would find.
+	lookup := func(listed func(nameKey string) string) int {
+		t.Helper()
+		r := newRig(t)
+		Product(t, port, building("built"))
+		build := r.built(t)["port"]
+		r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+		if settlement := r.settle(t); len(settlement.Settled) != 1 {
+			t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		}
+		if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
+			file.Sets[0].Lean = true
+			return nil
+		}); err != nil {
+			t.Fatal(err)
+		}
+		t.Setenv("ADAMIC_BUILD_TRACE", "")
+		t.Setenv("ADAMIC_BUILD_LEAN_OFF_KEYS", listed(build.NameKey))
+		forgetHeldForLife()
+		builds := 0
+		if _, err := Get(port, func(directory string) error {
+			builds++
+			return building("built")(directory)
+		}); err != nil {
+			t.Fatal(err)
+		}
+		return builds
+	}
+	for _, each := range []struct {
+		name   string
+		listed func(nameKey string) string
+		builds int
+	}{
+		{"nothing listed", func(string) string { return "" }, 0},
+		{"another name key listed", func(string) string { return list(t, strings.Repeat("0", 64)) }, 0},
+		{"its name key listed", func(nameKey string) string { return list(t, nameKey) }, 1},
+		{"a list that can't be read", func(string) string { return filepath.Join(t.TempDir(), "no-such-list") }, 1},
+	} {
+		if builds := lookup(each.listed); builds != each.builds {
+			t.Errorf("a lean set's lookup, %s: built %d times, want %d", each.name, builds, each.builds)
+		}
+	}
+}
+
 // A union is lean only when every set in it is (#earlycut): a lean set folded with an earlier whole one that still
 // values keys by the whole recipe's reads too, so it isn't lean; folded with a lean one, it is. Mutant: the new set's
 // Lean kept whatever it folds.
