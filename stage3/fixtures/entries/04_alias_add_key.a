@@ -1,0 +1,12 @@
+// a-check: refused an index signature
+// Step 12: an alias adds a data property before reflection; checked success must include it.
+interface Visible { readonly visible: number; }
+const source: { visible: number; [key: string]: number | string } = { visible: 1 };
+const alias = source;
+alias['late'] = 2;
+const view: Visible = source;
+console.log('before entries');
+const entries: [string, number][] = Object.entries(view);
+console.log('count:' + entries.length);
+entries.forEach(entry => console.log(entry[0] + ':' + entry[1]));
+console.log('after entries');

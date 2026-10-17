@@ -1,0 +1,8 @@
+PASS 01_scanner_keywords.a Node golden and source mutant; Refused
+PASS 02_hidden_same_type.a Node golden and source mutant; NotYet
+PASS 03_hidden_other_type.a Node golden and source mutant; NotYet
+PASS 04_alias_add_key.a Node golden and source mutant; Refused
+PASS 05_getter.a Node golden and source mutant; NotYet
+PASS 06_symbol_key.a Node golden and source mutant; NotYet
+PASS exact scanner spans and all 84 keyword rows
+Ruled acceptance: 0 / 12 matched; gaps: 01_scanner_keywords.a:baseline, 01_scanner_keywords.a:mutant, 02_hidden_same_type.a:baseline, 02_hidden_same_type.a:mutant, 03_hidden_other_type.a:baseline, 03_hidden_other_type.a:mutant, 04_alias_add_key.a:baseline, 04_alias_add_key.a:mutant, 05_getter.a:baseline, 05_getter.a:mutant, 06_symbol_key.a:baseline, 06_symbol_key.a:mutant

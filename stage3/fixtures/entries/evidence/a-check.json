@@ -1,0 +1,32 @@
+{
+  "stage3/fixtures/entries/01_scanner_keywords.a": {
+    "outcome": "refused",
+    "expected": "refused an index signature",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/01_scanner_keywords.a:95:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+  },
+  "stage3/fixtures/entries/02_hidden_same_type.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/02_hidden_same_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+  },
+  "stage3/fixtures/entries/03_hidden_other_type.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/03_hidden_other_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+  },
+  "stage3/fixtures/entries/04_alias_add_key.a": {
+    "outcome": "refused",
+    "expected": "refused an index signature",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/04_alias_add_key.a:4:34: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+  },
+  "stage3/fixtures/entries/05_getter.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/05_getter.a:11:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+  },
+  "stage3/fixtures/entries/06_symbol_key.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: stage 0 can't lower a computed field name yet"
+  }
+}

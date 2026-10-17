@@ -1,0 +1,140 @@
+{
+  "typescript": "6.0.3",
+  "stock_diagnostics": 0,
+  "fixtures": [
+    {
+      "file": "01_scanner_keywords.a",
+      "diagnostics": 0,
+      "sha256": "faec61ddadfc27ebda4d1651489d43d66b2176e7b7f244646f5dcfdbb08401e5",
+      "entries": [
+        {
+          "argument_type": "MapLike<KeywordSyntaxKind>",
+          "stock_result_type": "[string, KeywordSyntaxKind][]",
+          "contextual_type": "Iterable<readonly [string, KeywordSyntaxKind]> | null | undefined"
+        }
+      ]
+    },
+    {
+      "file": "02_hidden_same_type.a",
+      "diagnostics": 0,
+      "sha256": "5af1be5aee8804be232ad2ff20ff7bd7d3fac86c945cc40ec2501b096ca8ff6a",
+      "entries": [
+        {
+          "argument_type": "Visible",
+          "stock_result_type": "[string, any][]",
+          "contextual_type": "[string, number][]"
+        }
+      ],
+      "allocation_properties": [
+        {
+          "name": "visible",
+          "kind": "PropertyAssignment",
+          "value_type": "1"
+        },
+        {
+          "name": "hidden",
+          "kind": "PropertyAssignment",
+          "value_type": "2"
+        }
+      ]
+    },
+    {
+      "file": "03_hidden_other_type.a",
+      "diagnostics": 0,
+      "sha256": "59e18da695be0c15d3903580d95a94b428139bb177d4848f9e02025bc3a87357",
+      "entries": [
+        {
+          "argument_type": "Visible",
+          "stock_result_type": "[string, any][]",
+          "contextual_type": "[string, number][]"
+        }
+      ],
+      "allocation_properties": [
+        {
+          "name": "visible",
+          "kind": "PropertyAssignment",
+          "value_type": "1"
+        },
+        {
+          "name": "hidden",
+          "kind": "PropertyAssignment",
+          "value_type": "\"wrong\""
+        }
+      ]
+    },
+    {
+      "file": "04_alias_add_key.a",
+      "diagnostics": 0,
+      "sha256": "2f3c38cffe148e9a604d062e3650cfc32d8a3d6da156160fcd7c51093e6ee0e5",
+      "entries": [
+        {
+          "argument_type": "Visible",
+          "stock_result_type": "[string, any][]",
+          "contextual_type": "[string, number][]"
+        }
+      ],
+      "allocation_properties": [
+        {
+          "name": "visible",
+          "kind": "PropertyAssignment",
+          "value_type": "1"
+        }
+      ],
+      "alias_write": {
+        "receiver": "alias",
+        "key": "'late'",
+        "value_type": "2"
+      }
+    },
+    {
+      "file": "05_getter.a",
+      "diagnostics": 0,
+      "sha256": "85ba865f5c1d385d361375bf3d4e7e2fcb6a645d77e01f33edce03135d085906",
+      "entries": [
+        {
+          "argument_type": "Visible",
+          "stock_result_type": "[string, any][]",
+          "contextual_type": "[string, number][]"
+        }
+      ],
+      "allocation_properties": [
+        {
+          "name": "visible",
+          "kind": "PropertyAssignment",
+          "value_type": "1"
+        },
+        {
+          "name": "hidden",
+          "kind": "GetAccessor",
+          "value_type": null
+        }
+      ]
+    },
+    {
+      "file": "06_symbol_key.a",
+      "diagnostics": 0,
+      "sha256": "5f63496be455d9d8f6b7c9ee5c01518d0d9ab78732ff0bac8de880cd8b33f310",
+      "entries": [
+        {
+          "argument_type": "Visible",
+          "stock_result_type": "[string, any][]",
+          "contextual_type": "[string, number][]"
+        }
+      ],
+      "allocation_properties": [
+        {
+          "name": "visible",
+          "kind": "PropertyAssignment",
+          "value_type": "1"
+        },
+        {
+          "name": "[Symbol('hidden')]",
+          "kind": "PropertyAssignment",
+          "value_type": "2"
+        }
+      ]
+    }
+  ],
+  "scanner_keywords": 84,
+  "scanner_stdout_sha256": "86e540ba23fd97c76c9fd3edf112f3b1ef34acd3c43c9b1c55a3820ada02e5a3"
+}
