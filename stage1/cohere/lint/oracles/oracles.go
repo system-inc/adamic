@@ -11,6 +11,7 @@ import (
 	childguard "github.com/system-inc/adamic/internal/childguard"
 	testguard "github.com/system-inc/adamic/internal/testguard"
 	toolchain "github.com/system-inc/adamic/internal/toolchain"
+	executable "github.com/system-inc/adamic/stage1/cohere/executable"
 	registry "github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	fs "io/fs"
 	os "os"
@@ -305,7 +306,7 @@ func yepestaPrepare(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := os.WriteFile(bundle.Oracle, data, 0755); err != nil {
+		if err := executable.Write(bundle.Oracle, data); err != nil {
 			return err
 		}
 		persist := func(rows []string, prefix string) ([]string, error) {
