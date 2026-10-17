@@ -107,8 +107,8 @@ type journalEntry struct {
 	// build's, keyed in its recipe (leanRecipeOf). Empty for buildcache's own lean builds.
 	LeanCaller string `json:"leanCaller,omitempty"`
 	// Handed and Temporary are a LeanProductOf build's handed paths, as absolute roots, and its process's temporary
-	// directory: the places an absolute read of its may not be keyed under (refusedHandedRead). Temporary is empty for
-	// every other build.
+	// directory: the places a read of its may not be keyed under by its spelling (refusedHandedRead). Temporary is empty
+	// for every other build.
 	Handed    []string `json:"handed,omitempty"`
 	Temporary string   `json:"temporary,omitempty"`
 }
