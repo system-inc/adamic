@@ -361,7 +361,7 @@
       "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_LintFindsShardsAgreeCapture": [
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_LintFindsSuggestionAlongsideGoOracle": [
       "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
@@ -371,11 +371,11 @@
     ],
     "stage1/cohere/lint TestProduct_ShardsAgreePrepared": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_ShardsAgreeReferences": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_SuggestionAlongsideLowered": [
       "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
