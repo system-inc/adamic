@@ -299,7 +299,7 @@ def phaseInputs(tree, line, full=False, products=None):
         # Every phase enters runPhase's npm setup, and runs this runner/config.
         inputs["paths"] += ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json",
                             "stage3/api/package.json", "stage3/api/package-lock.json", "go.mod", "go.sum"]
-        if full and phase in ("wasi", "stage3", "catalog", "products"):
+        if full and phase in ("wasi", "catalog", "products"):
             # Same source discovery as wholeProducts. A newly added declaration is
             # visible on the next enumeration. Existing products need a runtime-read audit.
             sources, declared = products if products is not None else productInputSources(tree)
@@ -502,7 +502,7 @@ def main():
     phases = parser.add_mutually_exclusive_group()
     phases.add_argument("--phase", help="run only this non-test phase of the selected gate")
     phases.add_argument("--phases", help="run comma-separated non-test phases into one gate record")
-    parser.add_argument("--unit", help="with --phase wasi, stage3 or catalog: run only this unit (a fixture, a stage 3 command, a catalog entry number)")
+    parser.add_argument("--unit", help="with --phase wasi or catalog: run only this unit (a fixture or a catalog entry number)")
     parser.add_argument("--census", metavar="TEST_JSONL", help="the census and deferred checks over a merged test.jsonl; may accompany --phases")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
@@ -552,7 +552,7 @@ class Gate:
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
         self.watchers = []
-        self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full
+        self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "catalog", "census"] if arguments.full
                         else ["coverage", "tools", "build", "vet", "tests", "smoke", "census"])
         if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
             index = self.planned.index("tests") + 1
@@ -658,9 +658,6 @@ class Gate:
                 packages = sorted(set(packages) | {importPath})
                 self.onlyTests[importPath] = set(names)
                 self.packageDirectories.setdefault(importPath, os.path.join(tree, importPath[len(module) + 1:]))
-        if "stage3" in executors:
-            packages = sorted(set(packages) | set(self.goList("./stage3/...")))
-            self.planned.append("stage3")
         if selecting:
             # What the pool can run is the Go tests; every other executor this change needs is named, so a pool
             # verdict says what it didn't cover.
@@ -691,8 +688,6 @@ class Gate:
         threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
                    self.guarded("tests", self.testSplit, packages, log),
                    self.guarded("smoke", self.smoke, smoke, log)]
-        if "stage3" in executors:
-            threads.append(self.guarded("stage3", self.stage3))
         if executors & {"workers", "bench-workers"}:
             self.planned.append("workers")
             threads.append(self.guarded("workers", self.workers, executors))
@@ -748,7 +743,7 @@ class Gate:
                 self.fail(phase or "phase", "%s gate has no phase %r" % (self.kind, phase))
                 return
         unit = vars(self.arguments).get("unit")
-        if unit and (len(self.planned) != 1 or self.planned[0] not in ("wasi", "stage3", "catalog") or
+        if unit and (len(self.planned) != 1 or self.planned[0] not in ("wasi", "catalog") or
                      (not self.arguments.full and self.planned[0] == "catalog")):
             self.fail(self.planned[0], "--unit is unsupported for these phases")
             return
@@ -811,8 +806,6 @@ class Gate:
                 environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
             with open(logPath, "a") as log:
                 self.wasiSplit(log, environment)
-        elif phase == "stage3":
-            self.stage3()
         elif phase == "catalog":
             if self.arguments.full:
                 self.catalogFull()
@@ -934,7 +927,6 @@ class Gate:
                    # named in the status line as slow, so it never reads as a quiet pass.
                    self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", "^TestProduct_|" + wasiSkip] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
                    self.guarded("wasi", self.wasiSplit, log, wasi),
-                   self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
                    self.guarded("catalog", self.catalogFull)]
         for thread in threads:
@@ -1006,7 +998,7 @@ class Gate:
             # The map itself changed: every executor it names runs, so it can't quietly lose a path.
             executors.update(name for name, _ in rules if name not in ("inert", "build"))
         # Script executors also run for paths a package owns (bench/workers lives in bench's tree).
-        scripted = ("stage3", "cohere", "workers", "bench-workers", "catalog", "darwin")
+        scripted = ("cohere", "workers", "bench-workers", "catalog", "darwin")
         self.scriptedPaths = {}
         for path in changed:
             executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
@@ -1058,83 +1050,6 @@ class Gate:
     def goList(self, pattern):
         listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
         return listing.stdout.split() if listing.returncode == 0 else []
-
-    @declaresInputs("stage3", lambda tree, unit, full: treeInputs("stage3 runs Python/shell lane and adaptation programs; their runtime reads are not yet bounded"))
-    def stage3(self):
-        """Stage 3's tier-1 lane: apply's tests, the lane's own tests, and stage3/lane/run.sh, which
-        applies the adaptations to the pinned TypeScript and runs the upstream suite and the sanctioned
-        API check. Its results (an 81,500-file adapted tree among them) stay beside the tree; only the
-        verdict and the logs under 5 MB are copied into the published out directory."""
-        started = time.monotonic()
-        if not os.path.exists(os.path.join(self.arguments.tree, "stage3/lane/run.sh")):
-            self.steps["stage3"] = 0.0
-            self.exits["stage3"] = 1
-            self.fail("stage3", "this change touches stage3/, but its tree has no stage3/lane/run.sh to verify it with: rebase it onto main, which has the lane")
-            return
-        results = os.path.realpath(self.arguments.tree) + "-stage3-lane"
-        if os.path.lexists(results):
-            os.rename(results, "%s-%d" % (results, time.time()))
-        # Each run's adapted tree is about 700 MB: keep the last two runs' for triage, drop the older.
-        previous = sorted(glob.glob(glob.escape(results) + "-[0-9]*"), key=lambda path: int(path.rsplit("-", 1)[1]))
-        for path in previous[:-2]:
-            shutil.rmtree(path, ignore_errors=True)
-        # The lane's own tests import check and run from their directory (from the root both fail with
-        # ModuleNotFoundError), and read the pinned TypeScript API from STAGE3_CACHE/api, so they get
-        # the same npm ci of stage3/api that apply.py makes first: 32 of 32 on the box.
-        install = 'mkdir -p "$STAGE3_CACHE/api" && cp ../api/package.json ../api/package-lock.json "$STAGE3_CACHE/api/" && npm ci --prefix "$STAGE3_CACHE/api" --ignore-scripts --no-audit --no-fund'
-        commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"], None),
-                    ("stage3-lane-tests", ["bash", "-c", install + " && python3 -m unittest test_check test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
-                    ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
-        assert [name for name, _, _ in commands] == stage3Units
-        chosen = self.selectedUnits("stage3", [name for name, _, _ in commands])
-        commands = [command for command in commands if command[0] in chosen]
-        codes = {}
-        # Each command gets its own STAGE3_CACHE: apply runs npm ci into the cache's api/, which deletes
-        # node_modules first, so two applies sharing one (apply's test and the lane here, or another
-        # slot's gate) take typescript away from each other's adaptations mid-run (MODULE_NOT_FOUND,
-        # 5a5d4436's red). Only the bare TypeScript mirror is shared, and clone only reads it.
-        mirror = os.path.expanduser("~/.cache/adamic-stage3/typescript.git")
-
-        def one(name, command, directory):
-            cache = os.path.realpath(self.arguments.tree) + "-stage3-cache/" + name
-            if os.path.isdir(cache):
-                shutil.rmtree(cache)
-            os.makedirs(cache)
-            if os.path.isdir(mirror):
-                os.symlink(mirror, os.path.join(cache, "typescript.git"))
-            with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
-                codes[name] = self.spawn(command, output, subprocess.STDOUT, directory, {"STAGE3_CACHE": cache}).wait()
-
-        threads = [self.guarded("stage3", one, name, command, directory) for name, command, directory in commands]
-        for thread in threads:
-            thread.start()
-        for thread in threads:
-            thread.join()
-        # oracle/tests.log is tsc's own suite's output, each failure's title and message at its end: without
-        # it a lane red named a test and nothing more (area/library ca016bab, extractFunction1, Oct 8).
-        # The publish step gzips a log over 5 MB.
-        for name in ("execution.json", "report.json", "verdict.json", "verdict.txt", "patch-set.md", "oracle/tests.log"):
-            if os.path.isfile(os.path.join(results, name)):
-                with open(os.path.join(results, name), "rb") as source, open(os.path.join(self.arguments.out, "stage3-lane-" + name.replace("/", "-")), "wb") as target:
-                    target.write(source.read())
-        self.steps["stage3"] = round(time.monotonic() - started, 1)
-        self.result["stage3_exits"] = codes
-        failed = [name for name, _, _ in commands if codes.get(name) != 0]
-        self.exits["stage3"] = 1 if failed else 0
-        if failed:
-            # The red names what failed, not just an exit code (typescript, Oct 8: 'stage3-lane exit 1' said
-            # nothing): the lane's own verdict line, then each failed command's last lines.
-            detail = ["stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed))]
-            verdict = os.path.join(self.arguments.out, "stage3-lane-verdict.txt")
-            if "stage3-lane" in failed and os.path.isfile(verdict):
-                detail += [line for line in open(verdict, errors="replace").read().splitlines() if line.strip()][:2]
-            for name in failed:
-                try:
-                    lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
-                except OSError:
-                    continue
-                detail += ["%s, last lines:" % name] + [line[:300] for line in lines[-6:]]
-            self.fail("stage3", "\n".join(detail))
 
     @declaresInputs("workers", lambda tree, unit, full: treeInputs("conditional scripts and their runtime reads are not yet bounded"))
     def workers(self, executors):
@@ -2840,11 +2755,10 @@ def longTests(units):
 
 
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
-wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog"]
+wholePhases = ["coverage", "tools", "build", "vet", "wasi", "catalog"]
 # The unconditional non-test units; conditional executors are listed with --base.
 fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "census"]
-fastPhases = fastBasePhases + ["stage3", "workers", "a-check", "catalog-apply", "catalog", "darwin"]
-stage3Units = ["stage3-apply-tests", "stage3-lane-tests", "stage3-lane"]
+fastPhases = fastBasePhases + ["workers", "a-check", "catalog-apply", "catalog", "darwin"]
 
 
 def fastUnits(tree, base=None, sha=None, tools=None):
@@ -2861,8 +2775,6 @@ def fastUnits(tree, base=None, sha=None, tools=None):
                                        tools=tools or tree, out=out, full=False, branch="", branch_source="",
                                        session="", session_source=""))
         changed, executors = gate.fastPhaseInputs()
-        if "stage3" in executors:
-            units.append("stage3")
         if executors & {"workers", "bench-workers"}:
             units.append("workers")
         if "a-check" in executors and gate.result.get("unchecked_a_files"):
@@ -2890,13 +2802,11 @@ def productDeclarations(directories, packages=None):
 
 def wholeUnits(tree):
     """Every pool unit of the whole gate, as '<phase>' or '<phase> <unit>' (run.py --full --list-units): each wasi
-    fixture, stage 3's three commands, each catalog entry by number, and the other phases whole."""
+    fixture, each catalog entry by number, and the other phases whole."""
     units = []
     for phase in wholePhases:
         if phase == "wasi":
             units += ["wasi " + name for name in wasiFixtures(tree)]
-        elif phase == "stage3":
-            units += ["stage3 " + name for name in stage3Units]
         elif phase == "catalog" and os.path.exists(os.path.join(tree, "verify/catalog/check.sh")):
             units += ["catalog %d" % entry["number"] for entry in catalogEntries(tree)]
         elif phase != "catalog":
