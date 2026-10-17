@@ -461,23 +461,23 @@ func places(root string) []place {
 		}
 	}
 	if root != "" {
-		add(root, "<repository>", resolved)
+		add(root, "<repository>", resolvedOnce)
 	}
 	cache, cacheErr := cacheLocation()
 	if cacheErr == nil {
-		add(cache, "<build cache>", resolved)
+		add(cache, "<build cache>", resolvedOnce)
 	}
 	// The output directory is <build cache> too: Loom copies what this process writes there into the cache, so a key
 	// that names a product by its path names it alike from either.
 	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
-		add(output, "<build cache>", resolved)
+		add(output, "<build cache>", resolvedOnce)
 	}
 	if home, err := os.UserHomeDir(); err == nil {
-		add(home, "~", resolved)
+		add(home, "~", resolvedOnce)
 	}
 	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
 		products.Range(func(directory, key any) bool {
-			add(directory.(string), "<build cache>/"+key.(string), productResolved)
+			add(directory.(string), "<build cache>/"+key.(string), resolvedOnce)
 			return true
 		})
 	}
@@ -485,18 +485,21 @@ func places(root string) []place {
 	return found
 }
 
-// productResolutions holds what each product directory places has met resolves to. places runs for every key a process
-// computes, over every product it holds, and a resolution is a stat per path element, each one a stop under a trace
-// (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving product directories
-// for the keys it checks). A product directory doesn't move once a process holds it, so each resolves once.
-var productResolutions sync.Map
+// directoryResolutions holds what each directory places has met resolves to: the repository, the build cache, the output
+// directory, the home directory and each product directory. places runs for every name, flag and tool of every key a
+// process computes, and a resolution is a stat per path element, each one a stop under a trace and a record in the BPF
+// tracer's ring (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving
+// product directories for the keys it checks; Cloud, Oct 17: one of tsprinter's NPM tests lstat'ed /home and the home
+// directory 32,600 times each, 94% of its 127,613 stats repeats, and Adam's ring overflowed). None of them moves once a
+// process has met it, so each resolves once, by its path, so a variable that names another directory resolves that one.
+var directoryResolutions sync.Map
 
-func productResolved(directory string) string {
-	if value, ok := productResolutions.Load(directory); ok {
+func resolvedOnce(directory string) string {
+	if value, ok := directoryResolutions.Load(directory); ok {
 		return value.(string)
 	}
 	value := resolved(directory)
-	productResolutions.Store(directory, value)
+	directoryResolutions.Store(directory, value)
 	return value
 }
 

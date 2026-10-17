@@ -569,7 +569,9 @@ func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
 
 // places resolves each product directory a process holds once, not once per key: a test that keys many products while
 // holding many (bridge/tsgo's BridgeInputProofs, home-6's dry run, Oct 11) spent its 10 minutes resolving them again for
-// every key, a stat per path element, each a stop under a trace. Mutant: product directories resolved on every call.
+// every key, a stat per path element, each a stop under a trace. The fixed directories resolve once too (Cloud, Oct 17:
+// tsprinter's NPM tests lstat'ed /home 32,600 times each). Mutants: product directories resolved on every call; the
+// home directory resolved on every call.
 // Not parallel: it adds to productDirectories, which every key in the process reads.
 func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 	parent := t.TempDir()
@@ -585,14 +587,14 @@ func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 	t.Cleanup(func() {
 		for index, directory := range directories {
 			forgotten(fmt.Sprintf("%064x", index), directory)
-			productResolutions.Delete(directory)
+			directoryResolutions.Delete(directory)
 		}
 	})
 	first := places("")
 	before := resolutions.Load()
 	second := places("")
-	if again := resolutions.Load() - before; again > 3 {
-		t.Fatalf("places resolved %d paths the second time, with 50 product directories it had resolved already", again)
+	if again := resolutions.Load() - before; again != 0 {
+		t.Fatalf("places resolved %d paths the second time, with the repository, the cache, the home directory and 50 product directories it had resolved already", again)
 	}
 	if len(first) != len(second) || len(first) < 50 {
 		t.Fatalf("places gave %d, then %d", len(first), len(second))
