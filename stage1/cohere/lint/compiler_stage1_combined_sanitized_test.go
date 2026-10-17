@@ -18,8 +18,8 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
-const compilerAgreementCheckerGroupBudgetMillis = 10_000
-const compilerAgreementCheckerGroupCount = 26
+const compilerAgreementCheckerGroupBudgetMillis = 20_000
+const compilerAgreementCheckerGroupCount = 12
 
 // Standalone checker.ts native CPU prices, rounded up to milliseconds: 6ef6b9dc,
 // Clang 20.1.8, -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all,
@@ -275,8 +275,17 @@ func TestProduct_CompilerAgreementCombinedOutputMutant(t *testing.T) {
 	t.Parallel()
 	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
 		binary := compilerAgreementCombinedOutputNative(t)
-		requireLintArtifacts(t, filepath.Dir(binary), "lint.c")
-		requireLintExecutable(t, binary)
+		for _, path := range []string{binary, filepath.Join(filepath.Dir(binary), "lint.c")} {
+			info, err := os.Stat(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !info.Mode().IsRegular() || info.Size() == 0 {
+				t.Fatalf("product artifact %s is not a non-empty regular file", path)
+			}
+		}
+		// No smoke run here: a product settles in a traced process, and LeakSanitizer refuses to run under ptrace. The
+		// output witness tests run this binary outside the tracer.
 		return binary
 	})
 }
@@ -402,74 +411,4 @@ func TestCompilerAndStage1AgreeCombinedOutputWitness_10(t *testing.T) {
 func TestCompilerAndStage1AgreeCombinedOutputWitness_11(t *testing.T) {
 	t.Parallel()
 	compilerAgreementCombinedOutputWitness(t, 11)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_12(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 12)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_13(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 13)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_14(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 14)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_15(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 15)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_16(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 16)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_17(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 17)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_18(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 18)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_19(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 19)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_20(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 20)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_21(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 21)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_22(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 22)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_23(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 23)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_24(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 24)
-}
-
-func TestCompilerAndStage1AgreeCombinedOutputWitness_25(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 25)
 }

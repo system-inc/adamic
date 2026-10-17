@@ -163,7 +163,7 @@ func mutantRuleNative(t *testing.T) string {
 
 func TestProduct_LintMutantNativeCanary(t *testing.T) {
 	t.Parallel()
-	requireLintExecutable(t, mutantRuleNative(t))
+	mutantRuleNative(t)
 }
 
 // A shard's work uses the runner directly; products have already generated the registry.

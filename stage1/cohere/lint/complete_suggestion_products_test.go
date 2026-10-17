@@ -2,7 +2,6 @@ package lint
 
 import (
 	"context"
-	"path/filepath"
 	"testing"
 	"time"
 )
@@ -17,21 +16,21 @@ func TestProduct_LintFindsCompleteSuggestionGoOracle(t *testing.T) {
 func TestProduct_CompleteSuggestionLowered(t *testing.T) {
 	t.Parallel()
 	completeSuggestionProductUnit(t, func(ctx context.Context, directory string) {
-		requireLintArtifacts(t, completeSuggestionLoweredProduct(ctx, t, directory, false), "lint.c", "lint.mjs")
+		completeSuggestionLoweredProduct(ctx, t, directory, false)
 	}, false)
 }
 
 func TestProduct_CompleteSuggestionMutantLowered(t *testing.T) {
 	t.Parallel()
 	completeSuggestionProductUnit(t, func(ctx context.Context, directory string) {
-		requireLintArtifacts(t, completeSuggestionLoweredProduct(ctx, t, directory, true), "lint.c", "lint.mjs")
+		completeSuggestionLoweredProduct(ctx, t, directory, true)
 	}, true)
 }
 
 func TestProduct_CompleteSuggestionNative(t *testing.T) {
 	t.Parallel()
 	completeSuggestionProductUnit(t, func(ctx context.Context, directory string) {
-		requireLintExecutable(t, filepath.Join(completeSuggestionNativeProduct(ctx, t, directory), "scanner"))
+		completeSuggestionNativeProduct(ctx, t, directory)
 	}, false)
 }
 

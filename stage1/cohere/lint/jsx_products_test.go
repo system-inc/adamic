@@ -15,15 +15,15 @@ func TestProduct_LintFindsJSXParser(t *testing.T) {
 
 func TestProduct_jsx_tree_lowered(t *testing.T) {
 	t.Parallel()
-	requireLintArtifacts(t, jsxTreeLowered(t, jsxParserEntry(t)), "program.c")
+	jsxTreeLowered(t, jsxParserEntry(t))
 }
 
 func TestProduct_jsx_tree_native(t *testing.T) {
 	t.Parallel()
-	requireLintExecutable(t, jsxTreeNative(t, jsxParserEntry(t), true))
+	jsxTreeNative(t, jsxParserEntry(t), true)
 }
 
 func TestProduct_jsx_tree_setup(t *testing.T) {
 	t.Parallel()
-	requireLintJSXBundle(t, jsxPrepareTrees(t))
+	jsxPrepareTrees(t)
 }

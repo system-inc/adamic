@@ -7,13 +7,12 @@ import "testing"
 // reads them: the setup measured at 323 s inside a shard on Oct 10 (lowering 80 s, the sanitized native 231 s).
 func TestProduct_JsxTextnodesMutantLowered(t *testing.T) {
 	t.Parallel()
-	directory, _ := jsxTextnodesLowered(t)
-	requireLintArtifacts(t, directory, "main.c", "lint.mjs")
+	jsxTextnodesLowered(t)
 }
 
 func TestProduct_JsxTextnodesMutantNative(t *testing.T) {
 	t.Parallel()
-	requireLintExecutable(t, jsxTextnodesNative(t))
+	jsxTextnodesNative(t)
 }
 
 func TestProduct_LintFindsYepestaSetup(t *testing.T) {

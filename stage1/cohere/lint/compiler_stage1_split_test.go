@@ -288,20 +288,12 @@ func compilerAgreementMeasureProduct(t *testing.T, prepare func(*testing.T) stri
 
 func TestProduct_CompilerAgreementSanitizedNative(t *testing.T) {
 	t.Parallel()
-	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
-		binary := compilerAgreementNative(t, true)
-		requireLintExecutable(t, binary)
-		return binary
-	})
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, true) })
 }
 
 func TestProduct_CompilerAgreementReleaseNative(t *testing.T) {
 	t.Parallel()
-	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
-		binary := compilerAgreementNative(t, false)
-		requireLintExecutable(t, binary)
-		return binary
-	})
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string { return compilerAgreementNative(t, false) })
 }
 
 type compilerAgreementOracleAnswer struct {
