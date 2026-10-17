@@ -1,0 +1,43 @@
+package lane
+
+import (
+	"context"
+	"os"
+	"path/filepath"
+	"testing"
+	"time"
+)
+
+// The two Python suites phase:stage3 ran beside the upstream suite are Go tests of their own, so Planner places each
+// like any other test and a red names it: apply's tests (stage3/test_apply.py, whose ordinary-apply case adapts
+// 00-setup alone) and the lane's checker and table tests. The lane's normalize-api.cjs reads stage3/api's install,
+// which a tree holds, so neither needs the phase's npm ci.
+
+func TestApplyPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3", "test_apply")
+}
+
+func TestLanePython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_check", "test_table")
+}
+
+// runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
+// unittest's output when any of them fails.
+func runPython(t *testing.T, directory string, modules ...string) {
+	t.Helper()
+	root := repositoryRoot(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	defer cancel()
+	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
+	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B", "-m", "unittest"}, modules...)...)
+	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir())
+	// Ordinary apply clones the pinned TypeScript from the gate input, which the toolchain's environment doesn't carry.
+	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
+		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
+	}
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
+	}
+}
