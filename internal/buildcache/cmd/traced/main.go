@@ -57,9 +57,11 @@ import (
 
 // The calls strace reports: every call that names a path (open, stat, access, readlink, exec, chdir, ...), directory
 // listings, fchdir and forks, failed calls too (a missing file the build looked for is a read). Filtered in the
-// kernel (--seccomp-bpf), so untraced calls cost nothing; --decode-fds=path prints descriptors as their paths.
+// kernel (--seccomp-bpf), so untraced calls cost nothing; --decode-fds=path prints descriptors as their paths. Every
+// call Settle parses is here (TestSettleParsesOnlyAskedCalls): once strace is gone this list is what Loom's BPF tracer
+// records, so a call Settle reads and nobody asks for is a read no trace holds (getdents, #9tr6c6j).
 var straceArguments = []string{"-f", "--seccomp-bpf", "--decode-fds=path", "-q", "-e", "signal=none", "-e",
-	"trace=%file,getdents64,fchdir,clone,clone3,fork,vfork"}
+	"trace=%file,getdents,getdents64,fchdir,clone,clone3,fork,vfork"}
 
 func main() {
 	flag.Usage = func() {
