@@ -230,10 +230,7 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 			if err != nil {
 				return true
 			}
-			enclosing := ast.Node(basic)
-			if len(stack) > 1 {
-				enclosing = stack[len(stack)-2]
-			}
+			enclosing := literalExpression(basic, stack)
 			text := string(source[files.Position(enclosing.Pos()).Offset:files.Position(enclosing.End()).Offset])
 			for _, name := range namedCalls(value) {
 				if !known[name] || slices.Contains(pinned, name) {
@@ -268,4 +265,22 @@ func namedCalls(value string) []string {
 		names = append(names, match[1])
 	}
 	return names
+}
+
+// literalExpression is the expression a literal is pinned by: its parent when that's an expression, so
+// os.Getenv("X") == "read" keys a comparison and a map entry its own key and value; but the literal alone when it's
+// an element of a table or a case's list, whose parent is the whole table or the whole case, body and all, which any
+// edit in it would move (Reads' and Mentat's shoulds on loom 3203ee33, the same line as loom's). stack holds the literal
+// last.
+func literalExpression(literal *ast.BasicLit, stack []ast.Node) ast.Node {
+	if len(stack) < 2 {
+		return literal
+	}
+	switch parent := stack[len(stack)-2].(type) {
+	case *ast.CompositeLit, *ast.CaseClause:
+		return literal
+	case ast.Expr:
+		return parent
+	}
+	return literal
 }
