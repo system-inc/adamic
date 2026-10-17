@@ -1,7 +1,7 @@
 // Package leakcheck is the one leak check every test of a native program runs: the oracle's fixtures,
 // its input fixtures, and each stage-1 port. No garbage collector means every reference the compiler
 // hands out has to come back, and this is where a missing release shows. Only a program that finished
-// is asked; one that panicked stopped holding what it held.
+// is asked; one that panicked stopped holding what it held. Explicit process.exit is intentional teardown: the runtime reports it and releases nothing.
 //
 // It's a package of its own, not a _test.go file, because tests in one package can't import another
 // package's tests, and every caller has to run the same check, so a fix to it lands once.
@@ -36,6 +36,30 @@ import (
 
 // CountsLine is the line a counted build writes last to stderr (runtime/count.c).
 var CountsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
+
+// IntentionalExitLine is emitted only by the runtime exit primitive in counted/leak-check runs.
+var IntentionalExitLine = regexp.MustCompile(`(?m)^adamic: intentional exit: status (\d+)\n`)
+
+func intentionalExit(run Run) bool {
+	match := IntentionalExitLine.FindSubmatch(run.Stderr)
+	if match == nil {
+		return false
+	}
+	status, err := strconv.Atoi(string(match[1]))
+	if err != nil || status != run.ExitCode {
+		return false
+	}
+	// Only a terminal marker, optionally followed by the runtime's complete counts, is accepted.
+	tail := run.Stderr[bytes.Index(run.Stderr, match[0])+len(match[0]):]
+	if len(tail) == 0 {
+		return true
+	}
+	// Graph counters are a second, fixed runtime record, never arbitrary diagnostics.
+	graph := regexp.MustCompile(`^adamic: graph counts: regions \d+ merges \d+\n`)
+	tail = graph.ReplaceAll(tail, nil)
+	location := CountsLine.FindIndex(tail)
+	return location != nil && location[0] == 0 && location[1] == len(tail)
+}
 
 // Run is one execution's observable behavior.
 type Run struct {
@@ -87,8 +111,12 @@ func Check(program Program) (string, error) {
 		if err := build(program.C, program.Counted); err != nil {
 			return "", err
 		}
-		if report := Unbalanced(program.Execute(nil, program.Counted, arguments()...)); report != "" {
+		counted := program.Execute(nil, program.Counted, arguments()...)
+		if report := Unbalanced(counted); report != "" {
 			return report, nil
+		}
+		if intentionalExit(counted) {
+			return "", nil
 		}
 		report := program.Execute(nil, "leaks", append([]string{"--atExit", "--", program.Counted}, arguments()...)...)
 		if report.ExitCode == 0 {
@@ -96,8 +124,8 @@ func Check(program Program) (string, error) {
 		}
 		return string(report.Stdout), nil
 	case "linux":
-		report := program.Execute([]string{"ASAN_OPTIONS=detect_leaks=1"}, program.Sanitized, arguments()...)
-		if report.ExitCode == 0 {
+		report := program.Execute([]string{"ASAN_OPTIONS=detect_leaks=1", "ADAMIC_LEAK_CHECK=1"}, program.Sanitized, arguments()...)
+		if intentionalExit(report) || report.ExitCode == 0 {
 			return "", nil
 		}
 		return fmt.Sprintf("exit %d\n%s", report.ExitCode, report.Stderr), nil
@@ -109,6 +137,9 @@ func Check(program Program) (string, error) {
 // values, or "" when its allocations are its frees and its values in regions.
 func Unbalanced(counted Run) string {
 	match := CountsLine.FindSubmatch(counted.Stderr)
+	if match != nil && intentionalExit(counted) {
+		return ""
+	}
 	if counted.ExitCode != 0 || match == nil {
 		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.ExitCode, counted.Stderr)
 	}
