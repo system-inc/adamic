@@ -324,10 +324,10 @@
     "callers": [
       "TestEntriesAcceptance"
     ],
-    "message": "\"acceptance dependency: codex/step12-entries-fixtures 8d864f9c\"",
+    "message": "\"awaits compiler/loom-entries: typescript's Object.entries acceptance programs (8d864f9c, e61c738e there, since codex/step12-entries-fixtures was deleted before it landed; #tsdh6nb), stage3/fixtures/entries\"",
     "class": "pending",
-    "provides": "Pending (@system_adamic, Oct 8 22:43Z): the entries acceptance bucket, until codex/step12-entries-fixtures lands its expectations; compiler renames the skip to the awaits wording on the next slice (#whkxbc7).",
-    "awaits": "codex/step12-entries-fixtures"
+    "provides": "Pending: the entries acceptance bucket, until compiler/loom-entries lands its fixtures (#tsdh6nb). codex/step12-entries-fixtures, which it pinned until Oct 17, was deleted before it landed (Tests, #yzwm4rj's red).",
+    "awaits": "compiler/loom-entries"
   },
   {
     "file": "stage1/cohere/typeaware/volume_profile_Corpora_test.go",
