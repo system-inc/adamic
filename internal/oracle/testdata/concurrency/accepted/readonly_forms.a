@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+type Item = Readonly<{ name: string; pair: readonly [number, string]; flags: ReadonlySet<string> }>;
+const items: ReadonlyArray<Item> = [{ name: 'one', pair: [2, 'two'] as const, flags: new Set(['x']) }];
+console.log(parallelMap(items, (item) => `${item.name}:${item.pair[0]}:${item.flags.has('x')}`).join(','));
