@@ -207,6 +207,17 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 		}
 		files = kept
 	}
+	// Compiler harnesses compile these files directly. Ordinary archives need
+	// neither their empty translation units nor the large compiler-only tables.
+	if !slicesContain(extraFlags, "-DADAMIC_REGEXP_RUNTIME_COMPILER=1") {
+		kept := files[:0]
+		for _, file := range files {
+			if !strings.HasPrefix(file.name, "regexp_compile") {
+				kept = append(kept, file)
+			}
+		}
+		files = kept
+	}
 	// The program toolchain resolves is the one the key names and every step of the build runs.
 	compiler, err := toolchain.Path(compilerName(options))
 	if err != nil {
