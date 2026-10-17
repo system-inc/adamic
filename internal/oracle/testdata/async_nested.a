@@ -1,0 +1,12 @@
+async function inner(value: number): Promise<number> {
+    await Promise.resolve();
+    return value + 1;
+}
+async function outer(value: number): Promise<number> {
+    console.log('outer prefix');
+    const first = await inner(value);
+    const second = await inner(first);
+    return await inner(second);
+}
+const result = await outer(40);
+console.log(`result ${result}`);
