@@ -1,0 +1,6 @@
+import { programArguments } from 'adamic';
+import { mkdtempSync, rmSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+const dir = mkdtempSync(root + '/rm-force-');
+rmSync(dir, { recursive: true, force: undefined });
+console.log('removed');
