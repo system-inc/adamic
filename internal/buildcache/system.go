@@ -190,6 +190,10 @@ var loaderDirectories = []string{"/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux
 // read.
 var loaderFlags = map[string]int32{"amd64": 0x303}
 
+// loaderArchitecture is the architecture the build's loader runs as: this binary's own, an amd64 build under Rosetta in
+// an arm64 guest included (a var so a test can ask as another).
+var loaderArchitecture = runtime.GOARCH
+
 // ldCacheValue is the loader's cache as what only it can find: the soname map's entries the build's own loader takes
 // (loaderFlags), outside loaderDirectories and wslLibraries, each by flags, soname and path. A library in a loader
 // directory is read by its own path when it's loaded, and a soname the cache misses is looked for in each loader
@@ -201,9 +205,16 @@ var loaderFlags = map[string]int32{"amd64": 0x303}
 // and an amd64 build there sees none of them (#q4z4cmj, Oct 17: every one of Marin's and Zach's guests' 456 and 439
 // entries). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte entries whose string
 // offsets are from the file's start; a cache in another format, one that doesn't read, or one for an architecture
-// loaderFlags doesn't know, is false, and systemValue then calls it unreadable, never its content.
+// loaderFlags doesn't know, is false, and systemValue then calls it unreadable, with its reason and its content's hash,
+// never a value a cache that reads could have.
 func ldCacheValue(content []byte) (string, bool) {
-	wanted, known := loaderFlags[runtime.GOARCH]
+	return ldCacheValueAs(content, loaderArchitecture)
+}
+
+// ldCacheValueAs is ldCacheValue for the loader of architecture: false for one loaderFlags has no rule for, never a
+// guess at its flags (no flag at all would keep nothing, and value every cache as the empty one).
+func ldCacheValueAs(content []byte, architecture string) (string, bool) {
+	wanted, known := loaderFlags[architecture]
 	if !known {
 		return "", false
 	}
@@ -279,15 +290,21 @@ func systemValue(path string) string {
 	case err != nil:
 		return "absent"
 	case path == ldCache && info.Mode().IsRegular():
-		// The loader's cache is valued only as the loader reads it: a cache that won't read that way is a miss, never
-		// its content, whose bytes hold every architecture's entries and never equal across boxes that differ in one.
+		// The loader's cache is valued only as the loader reads it. One that won't read that way is unreadable, a miss,
+		// and never the empty cache's value: the loader may read what this can't (a newer format), and a library found
+		// only through it would go unkeyed. Two that don't read value alike only when their bytes are the same, so its
+		// reason and its content's hash are both in the value.
 		content, err := os.ReadFile(path)
 		if err != nil {
 			return "unreadable: " + err.Error()
 		}
 		value, ok := ldCacheValue(content)
 		if !ok {
-			return "unreadable: not a loader cache this build's loader reads"
+			reason := "not glibc's cache format as this reads it"
+			if _, known := loaderFlags[loaderArchitecture]; !known {
+				reason = "no loader rule for " + loaderArchitecture
+			}
+			return fmt.Sprintf("unreadable: %s, content %x", reason, sha256.Sum256(content))
 		}
 		return value
 	case info.Mode()&os.ModeSymlink != 0:
