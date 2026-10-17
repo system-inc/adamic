@@ -111,6 +111,14 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	if err != nil {
 		return "", "", err
 	}
+	// A declared File the machine's own key can't hash is refused here, before the build takes a path: a traced build
+	// keys by what it reads and never hashes its declared Files, so an absolute one was green in Loom's trees and red on
+	// every untraced build after it landed (lint's jsx owners, #j9st2ff; markdownblocks' answers, #y6ff7ea; #r7cb4bd).
+	for _, name := range inputs.Files {
+		if err := declaredFile(name); err != nil {
+			return "", "", err
+		}
+	}
 	var nameKey string
 	keying(func() { nameKey = NameKey(root, inputs) })
 	// Every build site, uncached, traced or for this machine alone, builds through relocating, and every directory
@@ -451,9 +459,18 @@ func withoutParallelShare(value string) string {
 	}
 }
 
-func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {
+// declaredFile refuses a declared File that names no path of the repository by its root-relative name: an absolute
+// path, or one that leaves the root.
+func declaredFile(name string) error {
 	if filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), "..") {
 		return fmt.Errorf("input %q must be inside the repository, relative to its root", name)
+	}
+	return nil
+}
+
+func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {
+	if err := declaredFile(name); err != nil {
+		return err
 	}
 	start := filepath.Join(root, name)
 	// WalkDir visits in lexical order, so the same tree always hashes the same.
