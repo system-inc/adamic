@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func TestExecutableForkIsolation(t *testing.T) {
+func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 	// The forks run this test binary with no test selected, so the pressure needs no host tool.
