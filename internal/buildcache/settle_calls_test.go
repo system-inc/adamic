@@ -3,6 +3,7 @@ package buildcache
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -150,6 +151,75 @@ func TestSettleParsesExactlyThePinnedCalls(t *testing.T) {
 	for _, name := range pinned {
 		if !slices.Contains(parsed, name) {
 			t.Errorf("testdata/settle-calls.txt lists %s, and Settle doesn't parse it", name)
+		}
+	}
+}
+
+// namedCallExclusions are the string literals in this package's non-test files that spell a call strace 6.8's x86_64
+// table knows and are no parse of a trace line, by file:line, with what each is. Every other such literal is one
+// Settle parses, so it's in testdata/settle-calls.txt.
+var namedCallExclusions = map[string]string{
+	`buildcache.go:254 "read"`: "ADAMIC_BUILD_CACHE=read, the cache mode that reads products and never builds them",
+	`reads.go:360 "read"`:      "ADAMIC_BUILD_CACHE=read, readMode's test of the same mode",
+}
+
+// Every string literal in this package's non-test files (import paths aside) that names a call strace 6.8's x86_64
+// table knows is either one the pinned list holds or a pinned exclusion, by file:line. It's the proof under the shape
+// reader above (Tests' and Node's rule, Oct 17): a parse that names its call is seen whatever carries the name, a
+// helper's parameter of any name, a map that isn't a *Calls, a switch, a table of its own. Its one blind spot is a call
+// name the code builds rather than writes, "open" + "at", which no literal spells. An exclusion that no longer matches
+// is red too, so the list stays exactly the literals there are.
+func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
+	t.Parallel()
+	table, err := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	known := map[string]bool{}
+	for _, line := range strings.Split(string(table), "\n") {
+		if fields := strings.Fields(line); len(fields) >= 2 && !strings.HasPrefix(line, "#") {
+			known[fields[1]] = true
+		}
+	}
+	pinned := pinnedSettleCalls(t)
+	paths, err := filepath.Glob("*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	seen := map[string]bool{}
+	for _, path := range paths {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		files := token.NewFileSet()
+		file, err := parser.ParseFile(files, path, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		imports := map[*ast.BasicLit]bool{}
+		for _, spec := range file.Imports {
+			imports[spec.Path] = true
+		}
+		ast.Inspect(file, func(node ast.Node) bool {
+			basic, ok := node.(*ast.BasicLit)
+			if !ok || basic.Kind != token.STRING || imports[basic] {
+				return true
+			}
+			value, err := strconv.Unquote(basic.Value)
+			if err != nil || !known[value] || slices.Contains(pinned, value) {
+				return true
+			}
+			at := fmt.Sprintf("%s:%d %q", path, files.Position(basic.Pos()).Line, value)
+			if _, excluded := namedCallExclusions[at]; !excluded {
+				t.Errorf("%s names a call strace traces, and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", at)
+			}
+			seen[at] = true
+			return true
+		})
+	}
+	for at := range namedCallExclusions {
+		if !seen[at] {
+			t.Errorf("namedCallExclusions holds %s, and no such literal is there now: take it out or move it", at)
 		}
 	}
 }
