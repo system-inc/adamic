@@ -11,8 +11,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "<scratch>/01_scanner_keywords.a:95:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   },
@@ -28,8 +28,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "<scratch>/02_hidden_same_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   },
@@ -45,8 +45,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "<scratch>/03_hidden_other_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   },
@@ -62,8 +62,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "<scratch>/04_alias_add_key.a:4:34: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   },
@@ -79,8 +79,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "<scratch>/05_getter.a:11:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   },
@@ -96,8 +96,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "<scratch>/06_symbol_key.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "caught_by": "source Node stdout golden comparison"
   }

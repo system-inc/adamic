@@ -1,4 +1,4 @@
-// a-check: checked
+// a-check: refused Object enumeration with symbol keys
 // Step 12: symbols are omitted by Node's Object.entries; Adamic's first version refuses symbol keys.
 interface Visible { readonly visible: number; }
 const source = { visible: 1, [Symbol('hidden')]: 2 };

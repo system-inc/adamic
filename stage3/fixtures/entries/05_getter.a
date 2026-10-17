@@ -1,4 +1,4 @@
-// a-check: checked
+// a-check: refused Object enumeration with a getter or accessor
 // Step 12: Object.entries invokes the getter on Node; Adamic's first version refuses accessors.
 interface Visible { readonly visible: number; }
 let getterReads = 0;
