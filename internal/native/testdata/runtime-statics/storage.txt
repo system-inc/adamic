@@ -265,3 +265,7 @@
 `runtime-file:regexp_compile_tables.h`
 `runtime-file:regexp_compile_v8.c`
 `runtime-file:regexp_compile_v8.h`
+
+# Constructor runtime and ownership helpers keep state in counted per-object storage.
+`runtime-file:regexp_compile_ownership.c`
+`runtime-file:regexp_compile_runtime.c`
