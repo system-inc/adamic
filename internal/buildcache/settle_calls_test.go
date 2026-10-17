@@ -156,21 +156,29 @@ func TestSettleParsesExactlyThePinnedCalls(t *testing.T) {
 	}
 }
 
-// namedCallExclusions are the string literals in this package's non-test files that spell a call strace 6.8's x86_64
-// table knows and are no parse of a trace line, by file:line, with what each is. Every other such literal is one
-// Settle parses, so it's in testdata/settle-calls.txt.
-var namedCallExclusions = map[string]string{
-	`buildcache.go:254 "read"`: "ADAMIC_BUILD_CACHE=read, the cache mode that reads products and never builds them",
-	`reads.go:360 "read"`:      "ADAMIC_BUILD_CACHE=read, readMode's test of the same mode",
+// A namedCallExclusion is a string literal in this package's non-test files that spells a call strace 6.8's x86_64
+// table knows and is no parse of a trace line: how many times its file holds it, in the same enclosing expression, and
+// what it is.
+type namedCallExclusion struct {
+	count  int
+	reason string
+}
+
+// namedCallExclusions are those literals, by file, the call they name, and the source text of the expression around
+// each (Tests' ruling on 873f35e1: what the literal is, never the line it sits on, so an edit above it moves nothing).
+// Every other such literal is one Settle parses, so it's in testdata/settle-calls.txt.
+var namedCallExclusions = map[string]namedCallExclusion{
+	`buildcache.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`: {1, "ADAMIC_BUILD_CACHE=read, the cache mode that reads products and never builds them"},
+	`reads.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`:      {1, "ADAMIC_BUILD_CACHE=read, readMode's test of the same mode"},
 }
 
 // Every string literal in this package's non-test files (import paths aside) that names a call strace 6.8's x86_64
 // table knows, whole or as "name(" the way strace's line spells it (namedCalls), is either one the pinned list holds or
-// a pinned exclusion, by file:line. It's the proof under the shape reader above (Tests' and Node's rule, Oct 17): a
-// parse that names its call is seen whatever carries the name, a helper's parameter of any name, a map that isn't a
-// *Calls, a switch, a table of its own. Its one blind spot is a call name the code builds rather than writes, "open" +
-// "at", which no literal spells. An exclusion that no longer matches is red too, so the list stays exactly the literals
-// there are.
+// a pinned exclusion, by file and enclosing expression, counted. It's the proof under the shape reader above (Tests'
+// and Node's rule, Oct 17): a parse that names its call is seen whatever carries the name, a helper's parameter of any
+// name, a map that isn't a *Calls, a switch, a table of its own. Its one blind spot is a call name the code builds
+// rather than writes, "open" + "at", which no literal spells. An exclusion whose expression is gone, or held a different
+// number of times, is red too, so the list stays exactly the literals there are.
 func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 	t.Parallel()
 	table, err := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
@@ -188,13 +196,17 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	seen := map[string]bool{}
+	seen := map[string]int{}
 	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
+		source, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
 		files := token.NewFileSet()
-		file, err := parser.ParseFile(files, path, nil, 0)
+		file, err := parser.ParseFile(files, path, source, 0)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -202,7 +214,14 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 		for _, spec := range file.Imports {
 			imports[spec.Path] = true
 		}
+		// The nodes enclosing the one inspected, outermost first: a literal's enclosing expression is the nearest.
+		var stack []ast.Node
 		ast.Inspect(file, func(node ast.Node) bool {
+			if node == nil {
+				stack = stack[:len(stack)-1]
+				return true
+			}
+			stack = append(stack, node)
 			basic, ok := node.(*ast.BasicLit)
 			if !ok || basic.Kind != token.STRING || imports[basic] {
 				return true
@@ -211,22 +230,27 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 			if err != nil {
 				return true
 			}
+			enclosing := ast.Node(basic)
+			if len(stack) > 1 {
+				enclosing = stack[len(stack)-2]
+			}
+			text := string(source[files.Position(enclosing.Pos()).Offset:files.Position(enclosing.End()).Offset])
 			for _, name := range namedCalls(value) {
 				if !known[name] || slices.Contains(pinned, name) {
 					continue
 				}
-				at := fmt.Sprintf("%s:%d %q", path, files.Position(basic.Pos()).Line, name)
+				at := fmt.Sprintf("%s %q in %s", path, name, text)
 				if _, excluded := namedCallExclusions[at]; !excluded {
-					t.Errorf("%s names a call strace traces (in %q), and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", at, value)
+					t.Errorf("%s:%d names a call strace traces (%s), and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", path, files.Position(basic.Pos()).Line, at)
 				}
-				seen[at] = true
+				seen[at]++
 			}
 			return true
 		})
 	}
-	for at := range namedCallExclusions {
-		if !seen[at] {
-			t.Errorf("namedCallExclusions holds %s, and no such literal is there now: take it out or move it", at)
+	for at, exclusion := range namedCallExclusions {
+		if seen[at] != exclusion.count {
+			t.Errorf("namedCallExclusions holds %s %d times, and the package holds it %d: an exclusion is exactly the literals there are", at, exclusion.count, seen[at])
 		}
 	}
 }
