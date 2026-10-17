@@ -101,3 +101,17 @@ func TestARunStraceFailedUnderIsLostToTheTracer(t *testing.T) {
 		}
 	}
 }
+
+// traced -machinery prints, of the paths it reads, exactly those buildcache.IsMachinery names, in order. Mutants: every
+// path printed; none.
+func TestMachineryPrintsOnlyTheMachinerysPaths(t *testing.T) {
+	t.Parallel()
+	var out strings.Builder
+	paths := "go.mod\ninternal/buildcache/settle.go\ninternal/buildcache/make_go.go\ninternal/buildcache/cmd/traced/main.go\nstage1/x.go\n"
+	if err := printMachinery(strings.NewReader(paths), &out); err != nil {
+		t.Fatal(err)
+	}
+	if want := "internal/buildcache/settle.go\ninternal/buildcache/cmd/traced/main.go\n"; out.String() != want {
+		t.Fatalf("printed %q, want %q", out.String(), want)
+	}
+}

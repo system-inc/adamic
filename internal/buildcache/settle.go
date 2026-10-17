@@ -1876,6 +1876,21 @@ func isMakeFile(name string) bool {
 	return strings.HasPrefix(name, "make_") && strings.HasSuffix(name, ".go") && !strings.HasSuffix(name, "_test.go")
 }
 
+// IsMachinery says whether file, slash-separated from the tree's root, is part of the build machinery: a file of this
+// package that no product's key reads (every one but its make files, under makeFilesOnly, as recipeOf leaves them
+// out), or anything under its cmd/ (traced, which decides what a read set records, and find, the skip), which no
+// product's process links. A product's key never says which machinery made it, so Loom seeds a tree from another only
+// when the diff between them names none of it (#kjgmzt8, Node's ruling): the same machinery, from the same inputs the
+// keys name.
+func IsMachinery(file string) bool {
+	directory := strings.TrimPrefix(buildcachePackage, "github.com/system-inc/adamic/")
+	if strings.HasPrefix(file, directory+"/cmd/") {
+		return true
+	}
+	parent, name := path.Split(file)
+	return makeFilesOnly && parent == directory+"/" && !isMakeFile(name)
+}
+
 func recipeOf(root string, process journalEntry) recipe {
 	pkg, test := strings.CutSuffix(process.Package, ".test")
 	if pkg == "" || pkg == "command-line-arguments" {

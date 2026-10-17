@@ -16,6 +16,11 @@
 // that file starts from it rather than taking its own (Loom's build-tree, once for each wave of product tests that start
 // together, so a wave's start never forks git in the hundreds, #2q48btg).
 //
+// traced -machinery reads paths on stdin, one a line, slash-separated from the tree's root, and prints those that are
+// the build machinery (buildcache.IsMachinery), nothing more, on any system: Loom seeds a tree from another only when
+// the diff between them names none (#kjgmzt8), asking this tree's traced and main's, so the machinery is defined once,
+// here, and grows with the split's exclusions. A traced without the flag exits 2, and Loom then seeds strictly.
+//
 // It prints one line per settled product (its key, how many reads, and how far its declared Files drift from them) and
 // one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are never
 // placed. It exits with the command's status, or 3 when the command passed and a product was refused. Linux only:
@@ -29,6 +34,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"flag"
@@ -54,11 +60,23 @@ var straceArguments = []string{"-f", "--seccomp-bpf", "--decode-fds=path", "-q",
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: traced -- <command> [arguments...]\n       traced -tree-state <file>")
+		fmt.Fprintln(os.Stderr, "usage: traced -- <command> [arguments...]\n       traced -tree-state <file>\n       traced -machinery < paths")
 		flag.PrintDefaults()
 	}
 	treeState := flag.String("tree-state", "", "write the tree's state to this file and exit, for every run of a wave to start from (ADAMIC_TRACE_TREE_STATE)")
+	machinery := flag.Bool("machinery", false, "read paths on stdin, one a line, and print those that are the build machinery (buildcache.IsMachinery), for Loom's seed rule")
 	flag.Parse()
+	if *machinery {
+		if flag.NArg() != 0 || *treeState != "" {
+			flag.Usage()
+			os.Exit(2)
+		}
+		if err := printMachinery(os.Stdin, os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, "traced:", err)
+			os.Exit(2)
+		}
+		return
+	}
 	if *treeState != "" && flag.NArg() == 0 {
 		if err := writeTreeState(*treeState); err != nil {
 			fmt.Fprintln(os.Stderr, "traced:", err)
@@ -89,6 +107,22 @@ func main() {
 		os.Exit(2)
 	}
 	os.Exit(status)
+}
+
+// printMachinery writes each line of paths that names the build machinery, in order, to out.
+func printMachinery(paths io.Reader, out io.Writer) error {
+	scanner := bufio.NewScanner(paths)
+	scanner.Buffer(make([]byte, 64*1024), 1024*1024)
+	writer := bufio.NewWriter(out)
+	for scanner.Scan() {
+		if buildcache.IsMachinery(scanner.Text()) {
+			fmt.Fprintln(writer, scanner.Text())
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	return writer.Flush()
 }
 
 func run(command []string, report string) (int, error) {
