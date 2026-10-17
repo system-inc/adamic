@@ -20,6 +20,7 @@ import (
 	sort "sort"
 	strings "strings"
 	sync "sync"
+	syscall "syscall"
 	testing "testing"
 	time "time"
 )
@@ -305,9 +306,7 @@ func yepestaPrepare(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := os.WriteFile(bundle.Oracle, data, 0755); err != nil {
-			return err
-		}
+		writeExecutable(t, bundle.Oracle, data)
 		persist := func(rows []string, prefix string) ([]string, error) {
 			var result []string
 			for i, row := range rows {
@@ -1459,4 +1458,38 @@ func jsxTextnodesRows(t *testing.T, oracle string) []string {
 type yepestaBundle struct {
 	Oracle          string
 	Rows, Witnesses []string
+}
+
+// Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
+func writeExecutable(t *testing.T, path string, data []byte) {
+	t.Helper()
+	var temporary string
+	defer func() {
+		if temporary != "" {
+			os.Remove(temporary)
+		}
+	}()
+	func() {
+		syscall.ForkLock.Lock()
+		defer syscall.ForkLock.Unlock()
+		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if err != nil {
+			t.Fatal(err)
+		}
+		temporary = file.Name()
+		if _, err := file.Write(data); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Chmod(0755); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+	if err := os.Rename(temporary, path); err != nil {
+		t.Fatal(err)
+	}
 }
