@@ -786,3 +786,28 @@ func TestToolNamesItselfOnce(t *testing.T) {
 		t.Fatalf("a missing tool reported %q", value)
 	}
 }
+
+// A product declaring a File outside the repository's root-relative names is refused on every path a build can take,
+// with one message, before it builds: traced, where the key never hashes declared Files and an absolute one landed green
+// twice (#j9st2ff, #y6ff7ea), as well as for this machine alone, cache off and read-only (#r7cb4bd). Mutant: the
+// check after the traced path is taken.
+// Not parallel: cached and each path's t.Setenv.
+func TestADeclaredFileOutsideTheRepositoryIsRefusedOnEveryPath(t *testing.T) {
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{filepath.Join(root, "go.mod"), "../outside", "internal/../../outside"} {
+		want := fmt.Sprintf("input %q must be inside the repository, relative to its root", name)
+		for _, path := range []struct{ name, cache, trace string }{{"this machine's key", "", ""}, {"traced", "", t.TempDir()}, {"cache off", "off", ""}, {"read-only", "read", ""}} {
+			cached(t)
+			t.Setenv("ADAMIC_BUILD_CACHE", path.cache)
+			t.Setenv("ADAMIC_BUILD_TRACE", path.trace)
+			built := false
+			_, err := Get(Inputs{Name: "declares " + name, Files: []string{"go.mod", name}}, func(string) error { built = true; return nil })
+			if err == nil || err.Error() != want || built {
+				t.Errorf("%s, declaring %s: built %t, error %v, want %q", path.name, name, built, err, want)
+			}
+		}
+	}
+}
