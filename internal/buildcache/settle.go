@@ -22,6 +22,7 @@ import (
 	"syscall"
 	"unicode"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -222,6 +223,10 @@ type traceFacts struct {
 	ran, opened map[string]bool
 	// goCaches are goCache's spellings, as written and resolved, each without its leading slash (goCacheJoined).
 	goCaches []string
+	// cache is where the run wrote products, and caches is every spelling of every directory its lookups read them in:
+	// the output directory and, when that is another, the build cache (location.ReadPlaces). cacheRoots is, for each
+	// spelling, the directory it spells, as the journal names it.
+	cacheRoots map[string]string
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
@@ -230,9 +235,18 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	if err != nil {
 		return nil, err
 	}
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}, opened: map[string]bool{}}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}, opened: map[string]bool{},
+		cacheRoots: map[string]string{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
-	facts.roots, facts.caches = variants(root), variants(cache)
+	// A read in the build cache through an output directory of this run's own is the cache's, as a read in that
+	// directory is: placed in the one, classified in either.
+	facts.roots = variants(root)
+	for _, place := range location.ReadPlaces(cache) {
+		for _, spelling := range variants(place) {
+			facts.caches = append(facts.caches, spelling)
+			facts.cacheRoots[spelling] = place
+		}
+	}
 	// Where a product's go keeps things: toolchain's go, under the environment GoBuild gives it.
 	output, err := toolchain.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
 	if err != nil {
@@ -297,6 +311,15 @@ func (facts *traceFacts) inTree(name string) (string, bool) {
 		}
 	}
 	return "", false
+}
+
+// cacheRoot is the directory spelling, one of caches, spells, as the journal names it: the run's cache when facts
+// don't know it.
+func (facts *traceFacts) cacheRoot(spelling string) string {
+	if root, ok := facts.cacheRoots[spelling]; ok {
+		return root
+	}
+	return facts.cache
 }
 
 func isGit(relative string) bool {
@@ -449,11 +472,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 		parts := strings.Split(strings.TrimPrefix(name, cache+"/"), "/")
 		switch {
-		// Named under the cache as the journal names it, whichever spelling the trace used.
+		// Named under the directory it was read in as the journal names it, whichever spelling the trace used: the output
+		// directory's or the build cache's, where the lookup that found it found it.
 		case isKey(parts[0]):
-			return classed{"product", filepath.Join(facts.cache, parts[0])}
+			return classed{"product", filepath.Join(facts.cacheRoot(cache), parts[0])}
 		case parts[0] == "pending" && len(parts) >= 3 && isKey(parts[2]):
-			return classed{"product", filepath.Join(facts.cache, "pending", parts[1], parts[2])}
+			return classed{"product", filepath.Join(facts.cacheRoot(cache), "pending", parts[1], parts[2])}
 		case parts[0] == "local" && len(parts) >= 2 && isKey(parts[1]):
 			return classed{refusal + "local product", name}
 		}
@@ -1652,7 +1676,9 @@ func leanSet(cache, nameKey, key string) bool {
 // placeSettled puts a settled build's product under its key and returns where it is: a product already there (the same
 // bytes, from a build of the same reads) stays and the build's copy goes; an uncached build's directory on another
 // file system stays where it was built. It looks and places under the key's lock, as filled does, so a lookup fetching
-// the same key never loses its rename to this one, nor this one to it (#bcae1e2).
+// the same key never loses its rename to this one, nor this one to it (#bcae1e2). cache is where the run writes: a
+// product already under the key in the build cache it reads through an output directory of its own is placed too, and
+// stays where it is; the lock, a rename and the rewritten <key>.inputs are the output directory's alone.
 func placeSettled(cache, key string, entry journalEntry) string {
 	product := filepath.Join(cache, key)
 	pending := under(entry.Directory, filepath.Join(cache, "pending"))
@@ -1661,20 +1687,48 @@ func placeSettled(cache, key string, entry journalEntry) string {
 		return entry.Directory
 	}
 	defer unlock()
-	switch _, err := os.Stat(product); {
-	case err == nil:
+	placed, already := existingPlace(product)
+	switch {
+	case already:
 		if pending {
 			os.RemoveAll(entry.Directory)
 		}
 	case os.Rename(entry.Directory, product) != nil:
 		return entry.Directory
+	default:
+		placed = product
 	}
 	if pending {
 		os.Remove(entry.Directory + ".inputs")
 		os.Remove(entry.Directory + ".lock")
 	}
-	os.WriteFile(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs), 0o644)
-	return product
+	writeWhole(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs))
+	return placed
+}
+
+// writeWhole writes content to path through a temporary file beside it, whose name starts with a dot as every scratch
+// name in the cache does, renamed into place, so a reader or a copy of the directory never meets half of it. A failure
+// leaves path as it was and is its error.
+func writeWhole(path string, content []byte) error {
+	temporary, err := os.CreateTemp(filepath.Dir(path), "."+filepath.Base(path)+"-")
+	if err != nil {
+		return err
+	}
+	if _, err = temporary.Write(content); err == nil {
+		err = temporary.Close()
+	} else {
+		temporary.Close()
+	}
+	if err == nil {
+		err = os.Chmod(temporary.Name(), 0o644)
+	}
+	if err == nil {
+		err = os.Rename(temporary.Name(), path)
+	}
+	if err != nil {
+		os.Remove(temporary.Name())
+	}
+	return err
 }
 
 // TestReadSetName is a test read set's name in its read sets file, and so in a Finding (#sfqdxvy).

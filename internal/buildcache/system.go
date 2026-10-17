@@ -14,6 +14,8 @@ import (
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 // What a build reads of the machine itself (#vt46geg, review 3): /usr, /lib, /bin, /etc. A linker from binutils, a
@@ -288,14 +290,17 @@ func systemValue(path string) string {
 		if value, ok := systemContents.Load(stamp); ok {
 			return value.(string)
 		}
-		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp.
+		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp. Read
+		// where this process writes, then in the build cache (location.ReadPlaces), and kept where it writes.
 		name := sha256.Sum256([]byte(fmt.Sprintf("%s\x00%s\x00%d\x00%d\x00%d", stamp.path, stamp.kind, stamp.inode, stamp.size, stamp.time)))
 		var kept string
-		if cache, err := cacheLocation(); err == nil {
-			kept = filepath.Join(cache, "machine", hex.EncodeToString(name[:]))
-			if value, err := os.ReadFile(kept); err == nil && len(value) > 0 {
-				systemContents.Store(stamp, string(value))
-				return string(value)
+		if output, err := outputLocation(); err == nil {
+			kept = filepath.Join(output, "machine", hex.EncodeToString(name[:]))
+			for _, place := range location.ReadPlaces(kept) {
+				if value, err := os.ReadFile(place); err == nil && len(value) > 0 {
+					systemContents.Store(stamp, string(value))
+					return string(value)
+				}
 			}
 		}
 		content, err := os.ReadFile(path)
