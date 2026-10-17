@@ -315,6 +315,21 @@
     "awaits": "codex/tsgo-errors-as-values"
   },
   {
+    "file": "internal/oracle/entries_acceptance_test.go",
+    "test": "TestEntriesAcceptance",
+    "id": "TestEntriesAcceptance:extra",
+    "line": 36,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestEntriesAcceptance"
+    ],
+    "message": "\"awaits compiler/loom-entries: typescript's Object.entries acceptance programs (8d864f9c, e61c738e there, since codex/step12-entries-fixtures was deleted before it landed; #tsdh6nb), stage3/fixtures/entries\"",
+    "class": "pending",
+    "provides": "Pending: the entries acceptance bucket, until compiler/loom-entries lands its fixtures (#tsdh6nb). codex/step12-entries-fixtures, which it pinned until Oct 17, was deleted before it landed (Tests, #yzwm4rj's red).",
+    "awaits": "compiler/loom-entries"
+  },
+  {
     "file": "stage1/cohere/typeaware/volume_profile_Corpora_test.go",
     "test": "volumeProfileCorporaRun",
     "id": "volumeProfileCorporaRun:219c5f14744b577c1592719b9668d6a90685b972eb6928649c0eeacd8b59c1c1:repository",
