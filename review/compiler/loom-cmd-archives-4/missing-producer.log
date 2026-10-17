@@ -1,0 +1,6 @@
+--- FAIL: TestCommandRuntimeCensusWalksSourceTree (0.00s)
+    runtime_owners_test.go:301: census: 3 Go files; skip testdata, vendor, node_modules, .git; ignored directories [.cache .idea /build artifacts/cache scratch-*]; submodules [cohere]
+    runtime_owners_test.go:302: census builder packages [.cache-source nested/build], want [.cache-source nested/build ordinary]
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.009s
+FAIL
