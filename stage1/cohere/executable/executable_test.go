@@ -1,4 +1,4 @@
-package oracles
+package executable
 
 import (
 	"context"
@@ -28,10 +28,7 @@ func TestExecutableForkIsolation(t *testing.T) {
 			defer forks.Done()
 			ready <- struct{}{}
 			for ctx.Err() == nil {
-				// TestMain changes to the lint directory, so each child must start in oracles.
-				command := exec.CommandContext(ctx, self, "-test.run=^$")
-				command.Dir = filepath.Join(packageDirectory, "oracles")
-				if err := command.Run(); err != nil && ctx.Err() == nil {
+				if err := exec.CommandContext(ctx, self, "-test.run=^$").Run(); err != nil && ctx.Err() == nil {
 					failures <- err
 					return
 				}
@@ -47,7 +44,7 @@ func TestExecutableForkIsolation(t *testing.T) {
 			t.Fatal("fork stress deadline", err)
 		}
 		path := filepath.Join(dir, "compiler")
-		if err := writeExecutable(path, []byte("#!/bin/sh\necho ready\n")); err != nil {
+		if err := Write(path, []byte("#!/bin/sh\necho ready\n")); err != nil {
 			t.Fatal(err)
 		}
 		output, err := exec.CommandContext(ctx, path).CombinedOutput()

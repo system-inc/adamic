@@ -16,7 +16,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -27,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 )
 
 // The upstream commit fixes the compiler population; this is a lost-corpus
@@ -244,7 +244,9 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	writeExecutable(h.t, path, data)
+	if err := executable.Write(path, data); err != nil {
+		h.t.Fatal(err)
+	}
 
 	return path
 }
@@ -772,38 +774,4 @@ func typeAwareUnsplitIDs(generated, compiler []string, rounds int, benchmark boo
 		}
 	}
 	return ids
-}
-
-// Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
-func writeExecutable(t *testing.T, path string, data []byte) {
-	t.Helper()
-	var temporary string
-	defer func() {
-		if temporary != "" {
-			os.Remove(temporary)
-		}
-	}()
-	func() {
-		syscall.ForkLock.Lock()
-		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			t.Fatal(err)
-		}
-		temporary = file.Name()
-		if _, err := file.Write(data); err != nil {
-			file.Close()
-			t.Fatal(err)
-		}
-		if err := file.Chmod(0755); err != nil {
-			file.Close()
-			t.Fatal(err)
-		}
-		if err := file.Close(); err != nil {
-			t.Fatal(err)
-		}
-	}()
-	if err := os.Rename(temporary, path); err != nil {
-		t.Fatal(err)
-	}
 }

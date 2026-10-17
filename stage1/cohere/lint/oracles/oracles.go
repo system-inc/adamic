@@ -11,6 +11,7 @@ import (
 	childguard "github.com/system-inc/adamic/internal/childguard"
 	testguard "github.com/system-inc/adamic/internal/testguard"
 	toolchain "github.com/system-inc/adamic/internal/toolchain"
+	executable "github.com/system-inc/adamic/stage1/cohere/executable"
 	registry "github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	fs "io/fs"
 	os "os"
@@ -20,7 +21,6 @@ import (
 	sort "sort"
 	strings "strings"
 	sync "sync"
-	syscall "syscall"
 	testing "testing"
 	time "time"
 )
@@ -306,7 +306,7 @@ func yepestaPrepare(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := writeExecutable(bundle.Oracle, data); err != nil {
+		if err := executable.Write(bundle.Oracle, data); err != nil {
 			return err
 		}
 		persist := func(rows []string, prefix string) ([]string, error) {
@@ -1460,36 +1460,4 @@ func jsxTextnodesRows(t *testing.T, oracle string) []string {
 type yepestaBundle struct {
 	Oracle          string
 	Rows, Witnesses []string
-}
-
-// Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
-func writeExecutable(path string, data []byte) error {
-	var temporary string
-	defer func() {
-		if temporary != "" {
-			os.Remove(temporary)
-		}
-	}()
-	err := func() error {
-		syscall.ForkLock.Lock()
-		defer syscall.ForkLock.Unlock()
-		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
-		if err != nil {
-			return err
-		}
-		temporary = file.Name()
-		if _, err := file.Write(data); err != nil {
-			file.Close()
-			return err
-		}
-		if err := file.Chmod(0755); err != nil {
-			file.Close()
-			return err
-		}
-		return file.Close()
-	}()
-	if err != nil {
-		return err
-	}
-	return os.Rename(temporary, path)
 }
