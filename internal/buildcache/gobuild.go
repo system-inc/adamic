@@ -153,7 +153,10 @@ func goProduct(t testing.TB, request goRequest) string {
 	}
 	root, _ := repositoryRoot()
 	// Lean: go builds from the files its key names, in a process of its own, by a plan made before the window opens.
-	directory := product(t, inputs, request.plan(root, inputs).Run, &leanBuild{})
+	// leanBuildOf, never a lean build made here, so Loom's switch reaches it: a go build settled lean under
+	// ADAMIC_BUILD_LEAN=off is a set no lookup matches, and every test reading it, its own included, refuses it (tree
+	// 62e5604f, Oct 17: internal/native's Adamic settled lean under the switch, and 64 product tests fell back).
+	directory := product(t, inputs, request.plan(root, inputs).Run, leanBuildOf(buildcachePackage))
 	return filepath.Join(directory, request.output)
 }
 

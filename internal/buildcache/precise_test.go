@@ -2818,6 +2818,46 @@ func TestNoBuildIsLeanWhileLoomTurnsLeanOff(t *testing.T) {
 	}
 }
 
+// Only leanBuildOf makes a lean build, so Loom's switch reaches every build: one made anywhere else settles lean under
+// ADAMIC_BUILD_LEAN=off, where no lookup matches it, so every test reading it refuses it (goProduct's, tree 62e5604f,
+// Oct 17: 64 product tests fell back). Mutant: goProduct handing product a leanBuild of its own.
+func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
+	t.Parallel()
+	entries, err := os.ReadDir(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var made []string
+	for _, entry := range entries {
+		name := entry.Name()
+		if !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
+			continue
+		}
+		fileSet := token.NewFileSet()
+		file, err := parser.ParseFile(fileSet, name, nil, parser.SkipObjectResolution)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if ok && function.Recv == nil && function.Name.Name == "leanBuildOf" {
+				continue
+			}
+			ast.Inspect(declaration, func(node ast.Node) bool {
+				if literal, ok := node.(*ast.CompositeLit); ok {
+					if named, ok := literal.Type.(*ast.Ident); ok && named.Name == "leanBuild" {
+						made = append(made, fileSet.Position(literal.Pos()).String())
+					}
+				}
+				return true
+			})
+		}
+	}
+	if len(made) > 0 {
+		t.Errorf("a leanBuild made outside leanBuildOf, which ADAMIC_BUILD_LEAN=off never reaches: %v", made)
+	}
+}
+
 // Under ADAMIC_BUILD_LEAN=off no lean read set is matched (#earlycut, Node's ruling on Mentat's M4): a product stored
 // under a lean set is a hit with lean on and a miss with it off, so the switch is the mass rekey Loom's page says. A
 // found product's report says whether its set is lean, so Loom's sample draws from hits too. Mutants that each fail it:
