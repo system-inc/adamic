@@ -1,0 +1,5 @@
+--- a/cmd/adamic/runtime_owners_test.go
++++ b/cmd/adamic/runtime_owners_test.go
+@@ -83 +83 @@
+-			if slices.Contains(submodules, name) {
++			if false && slices.Contains(submodules, name) {

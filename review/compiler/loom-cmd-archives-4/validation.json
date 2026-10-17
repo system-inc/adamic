@@ -1,0 +1,284 @@
+[
+  {
+    "test": "TestProduct_NativeRuntimesSanitized0",
+    "mode": "trace",
+    "seconds": 41.347130705999916,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_NativeRuntimesWASI0",
+    "mode": "trace",
+    "seconds": 44.40426318300024,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "trace",
+    "seconds": 24.817342878999625,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "trace",
+    "seconds": 20.6038518560008,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "trace",
+    "seconds": 13.648208469000565,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "mode": "build",
+    "seconds": 6.39164562499991,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "mode": "build",
+    "seconds": 0.01798914600021817,
+    "exit": 0
+  },
+  {
+    "test": "TestUsageExitStatus",
+    "mode": "build",
+    "seconds": 0.02377960699959658,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "mode": "build",
+    "seconds": 0.08523842500017054,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "mode": "build",
+    "seconds": 0.07304981400011457,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "mode": "build",
+    "seconds": 8.873860924999462,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "mode": "build",
+    "seconds": 1.52650383999935,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest",
+    "mode": "build",
+    "seconds": 3.2171395699997447,
+    "exit": 0
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "mode": "build",
+    "seconds": 2.628182542000104,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "mode": "build",
+    "seconds": 0.13256334000016068,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "mode": "build",
+    "seconds": 3.3402084039998954,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeArchivesHaveOneBuilder",
+    "mode": "build",
+    "seconds": 15.413693095999406,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductsWaitForOwners",
+    "mode": "build",
+    "seconds": 0.057313043999783986,
+    "exit": 0
+  },
+  {
+    "test": "TestSharedCommandRuntimeCannotBuildItsOwnersArchive",
+    "mode": "build",
+    "seconds": 3.7131151350004075,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeCensusWalksSourceTree",
+    "mode": "build",
+    "seconds": 0.011696499999743537,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "build",
+    "seconds": 2.367973202999565,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "build",
+    "seconds": 2.2310829099997136,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "build",
+    "seconds": 2.149939261000327,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductKeyHoldsEveryPart",
+    "mode": "build",
+    "seconds": 1.9489218049993724,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "mode": "build",
+    "seconds": 0.013612462000310188,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "mode": "build",
+    "seconds": 0.010627483000462234,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "mode": "read",
+    "seconds": 5.419988897000621,
+    "exit": 0
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "mode": "read",
+    "seconds": 0.01790797599915095,
+    "exit": 0
+  },
+  {
+    "test": "TestUsageExitStatus",
+    "mode": "read",
+    "seconds": 0.025878406999254366,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "mode": "read",
+    "seconds": 0.0843222630001037,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "mode": "read",
+    "seconds": 0.08588213299935887,
+    "exit": 0
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "mode": "read",
+    "seconds": 8.969791980000082,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "mode": "read",
+    "seconds": 1.2746939930002554,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequest",
+    "mode": "read",
+    "seconds": 3.041315604999909,
+    "exit": 0
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "mode": "read",
+    "seconds": 2.8802577910000764,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "mode": "read",
+    "seconds": 0.2021144580003238,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "mode": "read",
+    "seconds": 3.30958998099959,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeArchivesHaveOneBuilder",
+    "mode": "read",
+    "seconds": 7.662245398999403,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductsWaitForOwners",
+    "mode": "read",
+    "seconds": 0.016007684999749472,
+    "exit": 0
+  },
+  {
+    "test": "TestSharedCommandRuntimeCannotBuildItsOwnersArchive",
+    "mode": "read",
+    "seconds": 3.877485460000571,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeCensusWalksSourceTree",
+    "mode": "read",
+    "seconds": 0.29244546399968385,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeSanitized",
+    "mode": "read",
+    "seconds": 4.780260394999459,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASI",
+    "mode": "read",
+    "seconds": 2.364279021000584,
+    "exit": 0
+  },
+  {
+    "test": "TestProduct_CommandRuntimeWASICounted",
+    "mode": "read",
+    "seconds": 2.4773781730000337,
+    "exit": 0
+  },
+  {
+    "test": "TestCommandRuntimeProductKeyHoldsEveryPart",
+    "mode": "read",
+    "seconds": 1.831084775999443,
+    "exit": 0
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "mode": "read",
+    "seconds": 0.015993517999959295,
+    "exit": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "mode": "read",
+    "seconds": 0.016527370999938285,
+    "exit": 0
+  }
+]
