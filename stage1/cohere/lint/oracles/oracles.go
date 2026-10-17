@@ -505,6 +505,13 @@ func suggestionAlongsideFixture(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Removed with the test: a package that finds this oracle (FindSuggestionAlongsideOracle) runs no TestMain of
+	// this package, so sharedDirectory there is the system's temporary directory, which nothing else clears.
+	t.Cleanup(func() {
+		if err := os.RemoveAll(directory); err != nil {
+			t.Errorf("the suggestion-alongside fixture stays behind: %v", err)
+		}
+	})
 	copyPort(t, directory, "", "")
 	// This pinned case selects only no-debugger. Exclude unrelated rules from
 	// the generated dispatch so setup does not lower the entire live corpus.

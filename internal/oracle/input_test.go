@@ -103,7 +103,11 @@ func sharedDirectory(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { os.RemoveAll(directory) })
+	t.Cleanup(func() {
+		if err := os.RemoveAll(directory); err != nil {
+			t.Errorf("the shared directory stays behind: %v", err)
+		}
+	})
 	if err := os.Chmod(directory, 0o755); err != nil {
 		t.Fatal(err)
 	}
