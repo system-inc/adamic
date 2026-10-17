@@ -91,6 +91,37 @@ func leanKeysOff() bool {
 	return os.Getenv("ADAMIC_BUILD_LEAN") == "off"
 }
 
+// leanKeysOffFor says whether nameKey's lean keys are off: all of them (leanKeysOff), or its own, a name key
+// ADAMIC_BUILD_LEAN_OFF_KEYS lists (#1qkz8gs, Loom's ruling): that variable names a file of the open lean holes' name
+// keys, one a line, build-trees writes as a tree starts, so a hole costs its own product's lean key and never the
+// house's. A listed name key builds by its whole recipe (get) and matches no lean read set (lookupProduct), as every
+// one does under leanKeysOff. A product that reads a listed one needs no listing of its own: its read set values that
+// product by its bytes, so once the listed one builds whole, a set taken from the hole's bytes no longer matches. A file
+// named that can't be read turns every name key off, never none, since a hole nobody can read is never keyed past. The
+// file is read once a process, by its path (leanOffLists).
+func leanKeysOffFor(nameKey string) bool {
+	if leanKeysOff() {
+		return true
+	}
+	path := os.Getenv("ADAMIC_BUILD_LEAN_OFF_KEYS")
+	if path == "" {
+		return false
+	}
+	read, _ := leanOffLists.LoadOrStore(path, sync.OnceValues(func() ([]string, error) {
+		content, err := os.ReadFile(path)
+		if err != nil {
+			note("lean keys are off for every product: the open lean holes' list (ADAMIC_BUILD_LEAN_OFF_KEYS) can't be read: %v", err)
+			return nil, err
+		}
+		return strings.Fields(string(content)), nil
+	}))
+	listed, err := read.(func() ([]string, error))()
+	return err != nil || slices.Contains(listed, nameKey)
+}
+
+// leanOffLists holds each ADAMIC_BUILD_LEAN_OFF_KEYS file this process read, by its path, as its read.
+var leanOffLists sync.Map
+
 // leanBuildOf is the lean build caller, a package's import path, asks for: buildcache's own, a reviewed lean caller's
 // (leanCallers), or none.
 func leanBuildOf(caller string) *leanBuild {
@@ -173,6 +204,10 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	}
 	var nameKey string
 	keying(func() { nameKey = NameKey(root, inputs) })
+	// A name key whose lean hole is open builds by its whole recipe, whatever its caller asked (#1qkz8gs).
+	if lean != nil && leanKeysOffFor(nameKey) {
+		lean = nil
+	}
 	// Every build site, uncached, traced or for this machine alone, builds through relocating, and every directory
 	// returned is held under its name key: a product names itself and every other product by name key (relative.go).
 	build = relocating(inputs, nameKey, build)
