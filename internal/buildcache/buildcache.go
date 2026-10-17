@@ -122,6 +122,12 @@ func leanKeysOffFor(nameKey string) bool {
 	return err != nil || slices.Contains(listed, nameKey)
 }
 
+// LeanOffKeysCapability is this buildcache's word that it honors ADAMIC_BUILD_LEAN_OFF_KEYS (leanKeysOffFor), stated on
+// purpose for Loom's build-trees, which matches this declaration's line exactly before it hands a tree the open holes'
+// name keys, and turns lean off whole for a tree whose buildcache doesn't state it (#1qkz8gs, Node's must). Its version
+// moves when what the list does changes.
+const LeanOffKeysCapability = "honors ADAMIC_BUILD_LEAN_OFF_KEYS, version 1"
+
 // leanOffLists holds each ADAMIC_BUILD_LEAN_OFF_KEYS file this process read, by its path, as its read.
 var leanOffLists sync.Map
 
