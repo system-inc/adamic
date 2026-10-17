@@ -46,51 +46,42 @@ def selected_suite(index, count):
 
 class ApplyCheckoutTests(unittest.TestCase):
     def test_ordinary_apply_leaves_git_clean(self):
-        # Not parallel: this proof writes its own detached git worktree.
+        # A source checkout of the test's own: ordinary apply's inputs and stage3/adapt/00-setup alone, committed in a
+        # repository the test makes, so it needs no history of the tree it runs in (a Loom runner's tree has no .git)
+        # and runs at 28 s where every adaptation took 152 s (#4gp2ytz). What only the whole set showed, an adaptation
+        # writing into the source checkout, TestProduct_Stage3AdaptedTree's traced build refuses: its read set holds
+        # stage3/adapt whole, and a write into the tree refuses the run.
         with tempfile.TemporaryDirectory(prefix='stage3-apply-checkout-') as scratch:
             source = Path(scratch) / 'source'
             output = Path(scratch) / 'adapted'
-            subprocess.run(['git', '-C', str(ROOT), 'worktree', 'add', '--detach', str(source), 'HEAD'],
-                           check=True)
-            try:
-                # A worktree holds no npm packages; it builds with a copy of this checkout's, which
-                # stage3/api/.gitignore ignores as a directory (a symlink would show as untracked).
-                shutil.copytree(APPLY.pinned_packages(ROOT / 'stage3/api'), source / 'stage3/api/node_modules',
-                                symlinks=True)
-                table = source / 'stage3/patch-set.md'
-                table.write_text(table.read_text() + '\n<!-- Deliberately stale test table. -->\n')
-                # Exercise working changes too, before the delivery commit.
-                for name in ['apply.py', 'apply.sh', 'api/node_modules.sha256']:
-                    shutil.copyfile(ROOT / 'stage3' / name, source / 'stage3' / name)
-                helpers = subprocess.check_output(['git', '-C', str(ROOT), 'diff', '--name-only',
-                                                   'HEAD', '--', 'stage3/adapt'], text=True).splitlines()
-                helpers += subprocess.check_output(['git', '-C', str(ROOT), 'ls-files', '--others',
-                                                    '--exclude-standard', 'stage3/adapt'], text=True).splitlines()
-                for name in helpers:
-                    target = source / name
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(ROOT / name, target)
-                subprocess.run(['git', '-C', str(source), 'add', 'stage3/patch-set.md', 'stage3/apply.py',
-                                'stage3/apply.sh', 'stage3/api/node_modules.sha256', 'stage3/adapt'], check=True)
-                subprocess.run(['git', '-C', str(source), '-c', 'user.name=Apply test',
-                                '-c', 'user.email=apply-test@example.invalid', 'commit', '-m',
-                                'Seed the apply checkout test'], check=True)
-                before = table.read_bytes()
-                self.assertEqual(subprocess.check_output(['git', '-C', str(source), 'status', '--porcelain']), b'')
-                command = ['bash', str(source / 'stage3/apply.sh'), str(output)]
-                if os.environ.get('STAGE3_APPLY_MUTANT') == '1':
-                    # Force the real write-table path without altering build inputs:
-                    # changing apply.py's bytes must invalidate the product key.
-                    command.append('--write-table')
-                subprocess.run(command, check=True)
-                status = subprocess.check_output(['git', '-C', str(source), 'status', '--porcelain'], text=True)
-                self.assertEqual(status, '', 'ordinary apply dirtied the source checkout')
-                self.assertEqual(table.read_bytes(), before)
-                generated = (output / 'patch-set.md').read_text()
-                self.assertIn('| 75-optional-widening |', generated)
-                self.assertNotIn('Deliberately stale test table', generated)
-            finally:
-                subprocess.run(['git', '-C', str(ROOT), 'worktree', 'remove', '--force', str(source)], check=True)
+            for name in ['apply.py', 'apply.sh', 'caches.py', 'source.json', 'patch-set.md', 'api/.gitignore',
+                         'api/package.json', 'api/package-lock.json', 'api/node_modules.sha256']:
+                (source / 'stage3' / name).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(ROOT / 'stage3' / name, source / 'stage3' / name)
+            shutil.copytree(ROOT / 'stage3/adapt/00-setup', source / 'stage3/adapt/00-setup')
+            # stage3/api/.gitignore ignores node_modules as a directory (a symlink would show as untracked).
+            shutil.copytree(APPLY.pinned_packages(ROOT / 'stage3/api'), source / 'stage3/api/node_modules',
+                            symlinks=True)
+            table = source / 'stage3/patch-set.md'
+            table.write_text(table.read_text() + '\n<!-- Deliberately stale test table. -->\n')
+            git = ['git', '-C', str(source), '-c', 'user.name=Apply test', '-c', 'user.email=apply-test@example.invalid']
+            environment = dict(os.environ, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM='1')
+            for arguments in (['init', '--quiet', '--template='], ['add', '--all'], ['commit', '--quiet', '-m', 'Seed the apply checkout test']):
+                subprocess.run(git + arguments, check=True, env=environment)
+            before = table.read_bytes()
+            self.assertEqual(subprocess.check_output(git + ['status', '--porcelain'], env=environment), b'')
+            command = ['bash', str(source / 'stage3/apply.sh'), str(output)]
+            if os.environ.get('STAGE3_APPLY_MUTANT') == '1':
+                # Force the real write-table path without altering build inputs:
+                # changing apply.py's bytes must invalidate the product key.
+                command.append('--write-table')
+            subprocess.run(command, check=True)
+            status = subprocess.check_output(git + ['status', '--porcelain'], text=True, env=environment)
+            self.assertEqual(status, '', 'ordinary apply dirtied the source checkout')
+            self.assertEqual(table.read_bytes(), before)
+            generated = (output / 'patch-set.md').read_text()
+            self.assertIn('| 00-setup |', generated)
+            self.assertNotIn('Deliberately stale test table', generated)
 
 
 class ProductTests(unittest.TestCase):
