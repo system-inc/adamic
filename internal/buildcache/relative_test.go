@@ -616,7 +616,7 @@ func TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes(t *testing.T) {
 		t.Fatal(err)
 	}
 	link := filepath.Join(parent, "made-later")
-	t.Cleanup(func() { directoryResolutions.Delete(link) })
+	t.Cleanup(func() { rootResolutions.Delete(link) })
 	if got := resolvedOnce(link); got != "" {
 		t.Fatalf("a directory that isn't there resolved to %q", got)
 	}
@@ -630,8 +630,32 @@ func TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes(t *testing.T) {
 	if got := resolvedOnce(link); got != want {
 		t.Fatalf("once it exists it resolves to %q, want %q", got, want)
 	}
-	if value, ok := directoryResolutions.Load(link); !ok || value != want {
+	if value, ok := rootResolutions.Load(link); !ok || value != want {
 		t.Fatalf("the resolution that worked wasn't kept: %v %v", value, ok)
+	}
+}
+
+// A product directory's resolution that failed, kept by its own rule, never stands for a root of the same path: the two
+// are held apart (Tests' should on cb285d2e33). Mutant: one map for both.
+func TestAProductDirectorysFailureNeverStandsForARoot(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "both")
+	t.Cleanup(func() {
+		directoryResolutions.Delete(path)
+		rootResolutions.Delete(path)
+	})
+	if got := productResolved(path); got != "" {
+		t.Fatalf("a directory that isn't there resolved to %q", got)
+	}
+	if err := os.Mkdir(path, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	want, err := filepath.EvalSymlinks(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := resolvedOnce(path); got != want {
+		t.Fatalf("the root resolves to %q, want %q: the product directory's failure stood for it", got, want)
 	}
 }
 

@@ -485,8 +485,10 @@ func places(root string) []place {
 	return found
 }
 
-// directoryResolutions holds what each directory places has met resolves to: the repository, the build cache, the output
-// directory, the home directory and each product directory. places runs for every name, flag and tool of every key a
+// rootResolutions and directoryResolutions hold what each directory places has met resolves to: the repository, the
+// build cache, the output directory and the home directory in the first, each product directory in the second, two
+// maps so a product directory's kept failure can never stand for a root of the same path (Tests' should on
+// cb285d2e33). places runs for every name, flag and tool of every key a
 // process computes, and a resolution is a stat per path element, each one a stop under a trace and a record in the BPF
 // tracer's ring (home-6's dry run, Oct 11: bridge/tsgo's BridgeInputProofs spent its whole 10 minutes resolving
 // product directories for the keys it checks; Cloud, Oct 17: one of tsprinter's NPM tests lstat'ed /home and the home
@@ -495,18 +497,18 @@ func places(root string) []place {
 // the keys a process computes at once. A symlink retargeted mid-process can't matter: these are the process's own
 // roots, the repository and home before it starts and the cache and output from its environment, set before it keys
 // anything, and a product directory stays where the process located it.
-var directoryResolutions sync.Map
+var rootResolutions, directoryResolutions sync.Map
 
 // resolvedOnce is one of the process's own roots resolved, kept only when it worked: a root resolved before it exists
 // (an output or a cache made later) resolves again until it does, so a key never loses its resolved spelling for the
 // rest of the process (Tests' M1 and Node's must on 34635b121a).
 func resolvedOnce(directory string) string {
-	if value, ok := directoryResolutions.Load(directory); ok {
+	if value, ok := rootResolutions.Load(directory); ok {
 		return value.(string)
 	}
 	value := resolved(directory)
 	if value != "" {
-		directoryResolutions.Store(directory, value)
+		rootResolutions.Store(directory, value)
 	}
 	return value
 }
