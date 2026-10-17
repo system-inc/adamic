@@ -13,7 +13,9 @@
 // build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh directory: the uncached proof mode,
 // which is what lands main. ADAMIC_BUILD_CACHE=read never builds: a runner's mode, whose products and read sets arrive
 // built (ErrNotBuilt). The cache is local to the machine (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's
-// adamic-build), and a miss there fetches from the shared store by the keys its read sets give (store.go).
+// adamic-build), and a miss there fetches from the shared store by the keys its read sets give (store.go). A process
+// whose ADAMIC_BUILD_OUTPUT_DIR names another directory reads the cache and never writes it: everything it makes goes
+// there, at the place it would have in the cache, and every lookup reads there first (location.Output, location.Roots).
 package buildcache
 
 import (
@@ -38,6 +40,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -195,6 +198,8 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 		journalBuilt(root, inputs, nameKey, id, directory, lean)
 		return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
 	}
+	// Where this process writes products; every lookup below reads there first, then in the build cache when that is
+	// another directory (location.ReadPlaces).
 	cache, err := cacheDirectory()
 	if err != nil {
 		return "", "", err
@@ -226,8 +231,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	if storeAddress() != "" {
 		for index, key := range looked.keys {
 			outcome := "fetched"
-			product := filepath.Join(cache, key)
-			_, err := filled(product, described, func(scratch string) error {
+			product, _, err := filled(filepath.Join(cache, key), described, func(scratch string) error {
 				if err := fetch(key, scratch); err != nil {
 					return err
 				}
@@ -252,12 +256,11 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	}
 	switch {
 	case os.Getenv("ADAMIC_BUILD_CACHE") == "read":
-		return "", record(inputs.Name, nameKey, "missing", started), fmt.Errorf("product %s (name key %s) is %w: %s, in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:\n%s", inputs.Name, nameKey[:12], ErrNotBuilt, looked.why, cache, described)
+		return "", record(inputs.Name, nameKey, "missing", started), fmt.Errorf("product %s (name key %s) is %w: %s, in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:\n%s", inputs.Name, nameKey[:12], ErrNotBuilt, looked.why, strings.Join(location.ReadPlaces(cache), " and "), described)
 	case traceDirectory() != "":
 		// Built here under the trace, and found by every process under it, until Settle keys it by what it read.
-		product := filepath.Join(pendingDirectory(cache), nameKey)
 		var id string
-		built, err := filled(product, described, func(scratch string) (err error) {
+		product, built, err := filled(filepath.Join(pendingDirectory(cache), nameKey), described, func(scratch string) (err error) {
 			_, id, err = tracedBuild(root, inputs, scratch, build)
 			return err
 		})
@@ -282,8 +285,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	if err != nil {
 		return "", "", err
 	}
-	product := filepath.Join(cache, "local", key)
-	built, err := filled(product, described, build)
+	product, built, err := filled(filepath.Join(cache, "local", key), described, build)
 	if err != nil {
 		return "", "", err
 	}
@@ -318,44 +320,47 @@ func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lea
 
 // filled makes target by fill when it isn't there: into a private directory beside it, then whole by rename, so a
 // product on disk is always complete and a failed fill leaves nothing; one filler per target across every process on
-// the machine, the rest waiting to find it filled. It says whether this call filled it.
-func filled(target, inputs string, fill func(scratch string) error) (bool, error) {
-	if _, err := os.Stat(target); err == nil {
-		return false, nil
+// the machine, the rest waiting to find it filled. target is its place where this process writes (location.Output),
+// and a product already at the same place in the output directory or the build cache is the product, looked for
+// before anything is made or locked, so a hit in a build cache this process only reads writes nothing there. It returns
+// where the product is, and whether this call filled it.
+func filled(target, inputs string, fill func(scratch string) error) (string, bool, error) {
+	if placed, ok := existingPlace(target); ok {
+		return placed, false, nil
 	}
 	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
-		return false, err
+		return "", false, err
 	}
 	unlock, err := lockTarget(target)
 	if err != nil {
-		return false, err
+		return "", false, err
 	}
 	defer unlock()
-	if _, err = os.Stat(target); err == nil {
-		return false, nil
+	if placed, ok := existingPlace(target); ok {
+		return placed, false, nil
 	}
 	name := filepath.Base(target)
 	scratch, err := os.MkdirTemp(filepath.Dir(target), ".building-"+name[:min(12, len(name))]+"-")
 	if err != nil {
-		return false, err
+		return "", false, err
 	}
 	if err = fill(scratch); err != nil {
 		os.RemoveAll(scratch)
-		return false, err
+		return "", false, err
 	}
 	if err = os.WriteFile(target+".inputs", []byte(inputs), 0o644); err != nil {
 		os.RemoveAll(scratch)
-		return false, err
+		return "", false, err
 	}
 	if err = os.Rename(scratch, target); err != nil {
 		os.RemoveAll(scratch)
 		// A product another placer put there whole is the product: found, not a failure (#bcae1e2).
-		if _, found := os.Stat(target); found == nil {
-			return false, nil
+		if placed, ok := existingPlace(target); ok {
+			return placed, false, nil
 		}
-		return false, err
+		return "", false, err
 	}
-	return true, nil
+	return target, true, nil
 }
 
 // lockTarget takes target's lock, which every process that places a product at target holds from its look to its
@@ -458,8 +463,14 @@ func places(root string) []place {
 	if root != "" {
 		add(root, "<repository>", resolved)
 	}
-	if cache, err := cacheLocation(); err == nil {
+	cache, cacheErr := cacheLocation()
+	if cacheErr == nil {
 		add(cache, "<build cache>", resolved)
+	}
+	// The output directory is <build cache> too: Loom copies what this process writes there into the cache, so a key
+	// that names a product by its path names it alike from either.
+	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+		add(output, "<build cache>", resolved)
 	}
 	if home, err := os.UserHomeDir(); err == nil {
 		add(home, "~", resolved)
@@ -891,8 +902,11 @@ func installedAs(path, report string) string {
 	return report
 }
 
+// cacheDirectory is where this process writes products (outputLocation), made if it isn't there: the build cache, or
+// the output directory ADAMIC_BUILD_OUTPUT_DIR names, never both, so a build cache this process only reads is never
+// made or touched. Every lookup reads it first and the build cache after it (location.ReadPlaces).
 func cacheDirectory() (string, error) {
-	directory, err := cacheLocation()
+	directory, err := outputLocation()
 	if err != nil {
 		return "", err
 	}

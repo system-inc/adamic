@@ -80,8 +80,13 @@ func relativePlaces() []place {
 			add(directory.(string), "<build cache>/"+key.(string))
 			return true
 		})
-		if cache, err := cacheLocation(); err == nil {
+		cache, cacheErr := cacheLocation()
+		if cacheErr == nil {
 			add(cache, "<build cache>")
+		}
+		// Loom copies what this process writes into the build cache, so the output directory reads as the cache does.
+		if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+			add(output, "<build cache>")
 		}
 		if root, err := repositoryRoot(); err == nil {
 			add(root, "<repository>")
@@ -97,13 +102,21 @@ func relativePlaces() []place {
 
 // Absolute is Relative read back on this machine: <build cache>/<name key> is that product's directory here
 // (productDirectory), <build cache> the build cache, <repository> the repository, and <ADAMIC_NAME> where this
-// machine's ADAMIC_NAME locates it (left as it is when unset, so the read fails naming it).
+// machine's ADAMIC_NAME locates it (left as it is when unset, so the read fails naming it). While this process writes
+// to an output directory of its own (location.OutputDirectoryVariable), a path under <build cache> is read under the
+// first root that holds it (cachedPath).
 func Absolute(value string) string {
 	cache, _ := cacheLocation()
 	value = productName.ReplaceAllStringFunc(value, func(name string) string {
 		return productDirectoryOf(strings.TrimPrefix(name, "<build cache>/"))
 	})
-	value = strings.ReplaceAll(value, "<build cache>", cache)
+	if roots, err := location.Roots(); err == nil && len(roots) > 1 {
+		value = cachePath.ReplaceAllStringFunc(value, func(name string) string {
+			return cachedPath(roots, cache, strings.TrimPrefix(name, "<build cache>"))
+		})
+	} else {
+		value = strings.ReplaceAll(value, "<build cache>", cache)
+	}
 	if root, err := repositoryRoot(); err == nil {
 		value = strings.ReplaceAll(value, "<repository>", root)
 	}
@@ -119,8 +132,32 @@ func Absolute(value string) string {
 var productName = regexp.MustCompile(`<build cache>/[0-9a-f]{64}`)
 var locationName = regexp.MustCompile(`<ADAMIC_[A-Z0-9_]+>`)
 
+// cachePath is <build cache> and the path after it, by replacePath's path bytes.
+var cachePath = regexp.MustCompile(`<build cache>((?:/[A-Za-z0-9._+@~-]+)*)`)
+
+// cachedPath is rest, a path under <build cache> ("" for the cache itself), under the first of roots that holds it, the
+// output directory before the build cache, so a reader finds what this process wrote and what Loom copied into the cache
+// alike. A path neither holds, and the cache itself, are the build cache's, as they are with one root. Looking is
+// keying: where this machine keeps things is never what a product read.
+func cachedPath(roots []string, cache, rest string) string {
+	if rest == "" {
+		return cache
+	}
+	found := cache + rest
+	asKeying(func() {
+		for _, root := range roots {
+			if _, err := os.Stat(root + rest); err == nil {
+				found = root + rest
+				return
+			}
+		}
+	})
+	return found
+}
+
 // locations are the directories this machine's ADAMIC_ variables name (ADAMIC_TYPESCRIPT_SOURCE, a library's npm
-// install), by variable, absolute. The build cache's own variable is <build cache>. They're looked for once per
+// install), by variable, absolute. The build cache's own variable is <build cache>, and so is the output directory's
+// (location.OutputDirectoryVariable), whose products Loom copies into the cache. They're looked for once per
 // environment, as keying (relativePlaces): Absolute runs once per name it reads back, too.
 func locations() map[string]string {
 	environment := os.Environ()
@@ -132,7 +169,7 @@ func locations() map[string]string {
 	asKeying(func() {
 		for _, variable := range environment {
 			name, value, _ := strings.Cut(variable, "=")
-			if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || value == "" {
+			if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || name == location.OutputDirectoryVariable || value == "" {
 				continue
 			}
 			if info, err := statLocation(value); err == nil && info.IsDir() {
@@ -285,15 +322,28 @@ func Resolved(directory string) (string, error) {
 		return directory, err
 	}
 	// The copy depends on where this machine keeps what Absolute reads names against, so two checkouts sharing one
-	// cache each get their own.
+	// cache each get their own, and so does a process writing to an output directory of its own, whose copy reads a
+	// product there.
 	roots := []string{Absolute("<repository>"), Absolute("<build cache>")}
-	for name, location := range locations() {
-		roots = append(roots, name+"="+location)
+	for name, where := range locations() {
+		roots = append(roots, name+"="+where)
+	}
+	if output, err := outputLocation(); err == nil && output != Absolute("<build cache>") {
+		roots = append(roots, location.OutputDirectoryVariable+"="+output)
 	}
 	sort.Strings(roots)
 	sum := sha256.Sum256([]byte(strings.Join(roots, "\n")))
-	place := filepath.Join(filepath.Dir(directory), "."+filepath.Base(directory)+".resolved-"+hex.EncodeToString(sum[:6]))
-	if _, err := os.Stat(place); err != nil {
+	// Beside the product, at its place under the output directory when it sits in a build cache this process only reads
+	// (location.WritePlace), and found next time at either.
+	beside := filepath.Join(filepath.Dir(directory), "."+filepath.Base(directory)+".resolved-"+hex.EncodeToString(sum[:6]))
+	place, found := existingPlace(beside)
+	if !found {
+		place = location.WritePlace(beside)
+		if place != beside {
+			if err := os.MkdirAll(filepath.Dir(place), 0o755); err != nil {
+				return "", err
+			}
+		}
 		lock, err := os.OpenFile(place+".lock", os.O_CREATE|os.O_RDWR, 0o644)
 		if err != nil {
 			return "", err
@@ -303,10 +353,10 @@ func Resolved(directory string) (string, error) {
 			return "", err
 		}
 		defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
-		if _, err = os.Stat(place); err != nil {
-			if err = resolve(directory, place); err != nil {
-				return "", err
-			}
+		if existing, found := existingPlace(beside); found {
+			place = existing
+		} else if err = resolve(directory, place); err != nil {
+			return "", err
 		}
 	}
 	// Under a trace, reading the copy is reading the product (trace.go's found entries). A key names the copy as it names
@@ -413,6 +463,23 @@ func pathByte(b byte) bool {
 // live under too.
 func cacheLocation() (string, error) {
 	return location.BuildCache()
+}
+
+// outputLocation is where this process writes products (location.Output): the build cache, or the directory
+// ADAMIC_BUILD_OUTPUT_DIR names, whose products Loom copies into the cache afterwards.
+func outputLocation() (string, error) {
+	return location.Output()
+}
+
+// existingPlace is the first place path is at, under the output directory or the build cache (location.ReadPlaces), the
+// output directory's first.
+func existingPlace(path string) (string, bool) {
+	for _, place := range location.ReadPlaces(path) {
+		if _, err := os.Stat(place); err == nil {
+			return place, true
+		}
+	}
+	return "", false
 }
 
 var root struct {

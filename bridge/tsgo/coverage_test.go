@@ -116,6 +116,7 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 // a cache of its own, never the run's, so no TestProduct_ builds them and its census stays out of the run's.
 func TestBridgeProductCacheIsVerified(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
 	t.Setenv("ADAMIC_BUILD_LOG", filepath.Join(t.TempDir(), "builds.log"))
 	builds := 0
