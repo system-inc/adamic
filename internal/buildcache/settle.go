@@ -1477,6 +1477,9 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			}
 		}
 		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
+		if reason == "" {
+			reason = refusedHandedRead(entry, set)
+		}
 		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
 		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
 		// census holds: native's archives reach the jobserver, a package variable written outside its initializer, until it's
@@ -2321,4 +2324,28 @@ func withRecipe(entries []readEntry, code recipe) ([]readEntry, string) {
 		return nil, code.reason
 	}
 	return sortedEntries(entries, code.entries, []readEntry{{Kind: "settings", Path: "binary"}}), ""
+}
+
+// refusedHandedRead is why a LeanProductOf build's set can't be kept (#zb9268t, Node's and Tests' rulings), or "": the
+// window recorded an absolute read at or under one of its handed paths or its process's temporary directory. Settle's
+// window is the reader that records each read, and the census never sees a path, so this is where the invariant holds:
+// every read under a handed path is valued by its content (a product by its name key, an install by Loom's manifest, a
+// file of the tree by content), and one keyed by its spelling would key per box and per run. Every other build is
+// unaffected (entry.Temporary is empty).
+func refusedHandedRead(entry journalEntry, set readSet) string {
+	if entry.Temporary == "" {
+		return ""
+	}
+	roots := append(slices.Clone(entry.Handed), entry.Temporary)
+	for _, read := range set.Entries {
+		if read.Kind != "absolute" {
+			continue
+		}
+		for _, root := range roots {
+			if read.Path == root || strings.HasPrefix(read.Path, root+string(filepath.Separator)) {
+				return fmt.Sprintf("its window read %s under %s by its spelling, so its key would move per box and per run: a handed build reads there only what is valued by content", read.Path, root)
+			}
+		}
+	}
+	return ""
 }
