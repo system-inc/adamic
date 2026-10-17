@@ -1,0 +1,8 @@
+=== RUN   TestProduct_CommandRuntimeWASICounted
+=== PAUSE TestProduct_CommandRuntimeWASICounted
+=== CONT  TestProduct_CommandRuntimeWASICounted
+    runtimes_test.go:87: build native-runtime e2db043dcba9 miss 3.67
+--- PASS: TestProduct_CommandRuntimeWASICounted (6.08s)
+PASS
+settled native-runtime 35caba11b78a: 1068 reads; declared Files: 1 reads undeclared, 4 declared unread
+traced: 1 settled, 0 refused; journal and report in /tmp/adamic-recut-products/traces/20261016T092720Z-1946030900

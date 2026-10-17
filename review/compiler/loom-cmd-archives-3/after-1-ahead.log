@@ -1,0 +1,13 @@
+=== RUN   TestExplainChecksOutput
+=== PAUSE TestExplainChecksOutput
+=== CONT  TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/overload_some_false_read
+=== PAUSE TestExplainChecksOutput/overload_some_false_read
+=== CONT  TestExplainChecksOutput/overload_some_false_read
+=== RUN   TestExplainChecksOutput/overload_some_false_read/build
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/build
+=== CONT  TestExplainChecksOutput/overload_some_false_read/build
+--- PASS: TestExplainChecksOutput (0.00s)
+    --- PASS: TestExplainChecksOutput/overload_some_false_read (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/build (2.46s)
+PASS

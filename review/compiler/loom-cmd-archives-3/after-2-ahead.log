@@ -1,0 +1,13 @@
+=== RUN   TestExplainChecksOutput
+=== PAUSE TestExplainChecksOutput
+=== CONT  TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/overload_some_true_only
+=== PAUSE TestExplainChecksOutput/overload_some_true_only
+=== CONT  TestExplainChecksOutput/overload_some_true_only
+=== RUN   TestExplainChecksOutput/overload_some_true_only/build
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/build
+=== CONT  TestExplainChecksOutput/overload_some_true_only/build
+--- PASS: TestExplainChecksOutput (0.00s)
+    --- PASS: TestExplainChecksOutput/overload_some_true_only (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/build (4.63s)
+PASS

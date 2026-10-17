@@ -1,0 +1,13 @@
+=== RUN   TestNonNullExplainChecks
+=== PAUSE TestNonNullExplainChecks
+=== CONT  TestNonNullExplainChecks
+=== RUN   TestNonNullExplainChecks/refuse_undefined
+=== PAUSE TestNonNullExplainChecks/refuse_undefined
+=== CONT  TestNonNullExplainChecks/refuse_undefined
+=== RUN   TestNonNullExplainChecks/refuse_undefined/build
+=== PAUSE TestNonNullExplainChecks/refuse_undefined/build
+=== CONT  TestNonNullExplainChecks/refuse_undefined/build
+--- PASS: TestNonNullExplainChecks (0.00s)
+    --- PASS: TestNonNullExplainChecks/refuse_undefined (0.00s)
+        --- PASS: TestNonNullExplainChecks/refuse_undefined/build (1.81s)
+PASS

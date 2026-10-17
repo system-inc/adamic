@@ -1,0 +1,5 @@
+--- FAIL: TestCommandRuntimeProductsWaitForOwners (0.00s)
+    runtime_owners_test.go:182: cmd/adamic TestProduct_CommandRuntimeSanitized must wait for internal/oracle TestProduct_NativeRuntimesSanitized0 in product-order.json
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.032s
+FAIL

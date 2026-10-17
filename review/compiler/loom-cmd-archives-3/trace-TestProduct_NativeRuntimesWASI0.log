@@ -1,0 +1,14 @@
+=== RUN   TestProduct_NativeRuntimesWASI0
+=== PAUSE TestProduct_NativeRuntimesWASI0
+=== CONT  TestProduct_NativeRuntimesWASI0
+    runtimes_test.go:63: build native-runtime 6e08d061bac9 miss 5.15
+    runtimes_test.go:63: build native-runtime 7f0d666b1361 miss 4.80
+    runtimes_test.go:63: build native-runtime 21bf4c5826f5 miss 4.37
+    runtimes_test.go:63: build native-runtime a954e124b033 miss 3.87
+--- PASS: TestProduct_NativeRuntimesWASI0 (28.86s)
+PASS
+settled native-runtime 19a90fede0be: 1268 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime ff1de241ba3c: 1268 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime e973b75fd68d: 1268 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime a1d13612b20d: 1268 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+traced: 4 settled, 0 refused; journal and report in /tmp/adamic-recut3-cache-final/traces/20261017T124047Z-92920106

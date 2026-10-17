@@ -1,0 +1,5 @@
+--- a/cmd/adamic/runtimes_test.go
++++ b/cmd/adamic/runtimes_test.go
+@@ -26 +26 @@
+-	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
++	{"sanitized", native.Options{Sanitize: true}, nil, ""},

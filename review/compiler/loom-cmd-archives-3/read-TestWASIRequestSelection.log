@@ -1,0 +1,39 @@
+=== RUN   TestWASIRequestSelection
+=== RUN   TestWASIRequestSelection/exported
+=== RUN   TestWASIRequestSelection/alias
+=== RUN   TestWASIRequestSelection/alias_wrong_parameter
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionalias_wrong_parameter1294780843/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/alias_wrong_result
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionalias_wrong_result981398987/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/private
+=== RUN   TestWASIRequestSelection/wrong_parameter
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionwrong_parameter3957086936/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/wrong_result
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionwrong_result1973046646/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/literal_parameter
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionliteral_parameter2300443827/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/optional_parameter
+adamic: /tmp/adamic-gate/TestWASIRequestSelectionoptional_parameter2379615871/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/default_parameter
+adamic: /tmp/adamic-gate/TestWASIRequestSelectiondefault_parameter2898899049/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/two_parameters
+adamic: /tmp/adamic-gate/TestWASIRequestSelectiontwo_parameters1338607863/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/generic
+adamic: /tmp/adamic-gate/TestWASIRequestSelectiongeneric2344296506/001/program.a:1:1: request handler must take one required string parameter and return a string
+=== RUN   TestWASIRequestSelection/function_value
+adamic: not yet: handleRequest must export a named function declaration
+--- PASS: TestWASIRequestSelection (1.36s)
+    --- PASS: TestWASIRequestSelection/exported (0.15s)
+    --- PASS: TestWASIRequestSelection/alias (0.15s)
+    --- PASS: TestWASIRequestSelection/alias_wrong_parameter (0.10s)
+    --- PASS: TestWASIRequestSelection/alias_wrong_result (0.13s)
+    --- PASS: TestWASIRequestSelection/private (0.10s)
+    --- PASS: TestWASIRequestSelection/wrong_parameter (0.08s)
+    --- PASS: TestWASIRequestSelection/wrong_result (0.09s)
+    --- PASS: TestWASIRequestSelection/literal_parameter (0.10s)
+    --- PASS: TestWASIRequestSelection/optional_parameter (0.11s)
+    --- PASS: TestWASIRequestSelection/default_parameter (0.08s)
+    --- PASS: TestWASIRequestSelection/two_parameters (0.09s)
+    --- PASS: TestWASIRequestSelection/generic (0.08s)
+    --- PASS: TestWASIRequestSelection/function_value (0.10s)
+PASS

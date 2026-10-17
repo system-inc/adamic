@@ -1,0 +1,7 @@
+=== RUN   TestWASIRequest
+=== RUN   TestWASIRequest/request.a
+    request_test.go:96: {"rounds":10000,"live":2,"memory":524288,"regionObjects":630000,"moduleInitialization":"once"}
+        
+--- PASS: TestWASIRequest (2.49s)
+    --- PASS: TestWASIRequest/request.a (2.49s)
+PASS

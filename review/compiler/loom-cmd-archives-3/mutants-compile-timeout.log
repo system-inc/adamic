@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-cmd-archives-3/mutants.py", line 23, in <module>
+    assert result.returncode==1 and message in output,(name,result.returncode,output)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('second-builder', 124, '')
