@@ -1,5 +1,9 @@
 # Object.entries by allocation provenance
 
+The October 17 landing refresh and test/mutant timings are in [LANDING.md](LANDING.md).
+The October 8 measurements and saved evidence below describe the original import;
+`status.json` now records the landing compiler.
+
 These six fixtures hold the October 8, 11:01 ruling for step 12 (#xm3ywyc), compiler task #d9eemrs. A fresh literal bound to a const, with no writes through aliases, can prove every enumerable own data property and value type, including fields hidden by an open structural view. If that proof fails, ordinary data objects use checked reflection; an incompatible value stops loudly with exit 70. The first version refuses accessors and symbol keys.
 
 [expectations.json](expectations.json) is the implementation contract: one entry per fixture with the required compile outcome, reflection mode, value type, runtime result and a single-edit mutant's contract. [status.json](status.json) separately records **actual** source Node bytes and current-main compiler diagnostics. A current refusal or NotYet observation is not the ruled implementation behavior.

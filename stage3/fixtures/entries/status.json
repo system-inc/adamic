@@ -13,8 +13,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/entries/01_scanner_keywords.a:95:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -29,8 +29,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/entries/02_hidden_same_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -45,8 +45,9 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/entries/03_hidden_other_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "CheckedStop",
+      "what": "adamic: panic: Object enumeration key 'hidden': actual string, declared number\n",
+      "stdout": "before entries\n"
     }
   },
   {
@@ -61,8 +62,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/entries/04_alias_add_key.a:4:34: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -77,8 +78,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/entries/05_getter.a:11:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/entries/05_getter.a:7:5: Adamic 0.1 refuses Object enumeration with a getter or accessor; use own data properties"
     }
   },
   {
@@ -93,8 +94,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/entries/06_symbol_key.a:4:30: stage 0 can't lower a computed field name yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties"
     }
   }
 ]

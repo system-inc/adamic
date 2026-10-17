@@ -53,6 +53,14 @@ oracle_test.go or production compiler file was changed. Observations are uncache
 The hook transports bytes as base64 JSON and is dormant in ordinary oracle runs.
 Node and native execute with the same repository-root working directory.
 
+`CheckedStop` pins an intentional inserted runtime check separately from raw
+source Node. Its stage0 `what` is the complete stderr, its optional `stdout` is
+the exact output before the stop (omitted means empty), and its exit is 70. The
+runner executes generated JavaScript on Node and requires that complete checked
+observation and native's observation to agree with the pin and with each other.
+Raw source Node still runs and must match the original `node` record. A missing
+stop, changed output, or missing output fails; `-update` cannot bless any of them.
+
 ```sh
 go test ./stage3/fixtures -count=1 -timeout 10m -args -update > /tmp/stage3-fixtures-update.log 2>&1
 ```

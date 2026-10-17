@@ -87,13 +87,18 @@ for row in contracts:
     original = file.read_text()
     assert original.splitlines()[0].startswith('// a-check: ')
     node, stage, native, javascript = observe(file, file.stem, row['expected'])
-    if not args.record:
+    if recorded:
         assert node == recorded_by_file[row['file']]['node'], ('Node golden changed', row['file'])
+    # The raw lowering outcome is Compiles; the shared runner also pins an
+    # intentional inserted stop without replacing the source Node golden.
+    observation = stage
+    if native is not None and row['expected']['runtime']['exit'] == 70:
+        observation = dict(outcome='CheckedStop', what=native['stderr'], stdout=native['stdout'])
     if not args.record and not args.acceptance:
-        assert stage == recorded_by_file[row['file']]['stage0'], ('gap changed; review and refresh observations', row['file'], stage)
+        assert observation == recorded_by_file[row['file']]['stage0'], ('gap changed; review and refresh observations', row['file'], stage)
     if row['expected']['outcome'] == 'Compiles' and row['expected']['runtime']['exit'] == 0:
         assert node == row['expected']['runtime'], ('ruled success disagrees with Node', row['file'])
-    rows.append(dict(file=row['file'], tsc=row['tsc'], reason=row['reason'], node=node, stage0=stage))
+    rows.append(dict(file=row['file'], tsc=row['tsc'], reason=row['reason'], node=node, stage0=observation))
     matched = contracts_match(stage, row['expected'], native, javascript)
     acceptance.append(dict(file=row['file'], variant='baseline', expected=row['expected'], actual=stage, native=native, javascript=javascript, matched=matched))
     edit = row['mutant']

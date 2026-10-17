@@ -23,6 +23,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -39,6 +40,7 @@ type behavior struct {
 type stage0 struct {
 	Outcome string `json:"outcome"`
 	What    string `json:"what"`
+	Stdout  string `json:"stdout,omitempty"`
 }
 type fixture struct {
 	File     string   `json:"file"`
@@ -205,6 +207,10 @@ func TestFixturesCycles(t *testing.T) {
 	t.Parallel()
 	testFixtureDirectory(t, "cycles")
 }
+func TestFixturesEntries(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "entries")
+}
 func TestFixturesEnums(t *testing.T) {
 	t.Parallel()
 	testFixtureDirectory(t, "enums")
@@ -369,8 +375,13 @@ func testFixtureDirectory(t *testing.T, directory string) {
 					recordedNodeAgrees := t.Run("node", func(t *testing.T) { equal(t, "recorded Node", node, entry.Node) })
 					program, err := load.Load([]string{path})
 					actual := stage0{Outcome: "Compiles"}
+					var checkedJavaScript string
 					if err == nil {
-						_, err = lower.Lower(context.Background(), program)
+						lowered, lowerError := lower.Lower(context.Background(), program)
+						err = lowerError
+						if err == nil && entry.Stage0.Outcome == "CheckedStop" {
+							checkedJavaScript = javascript.JavaScript(lowered)
+						}
 					}
 					if err != nil {
 						var checker *load.CheckError
@@ -394,7 +405,7 @@ func testFixtureDirectory(t *testing.T, directory string) {
 					if actual.Outcome == "Compiles" {
 						nativeAgrees = t.Run("native", func(t *testing.T) {
 							resultPath := filepath.Join(t.TempDir(), "result.json")
-							result := execute(t, repository, []string{"ADAMIC_STAGE3_FIXTURE=" + path, "ADAMIC_STAGE3_RESULT=" + resultPath}, hook, "-test.run=^TestStage3FixtureHook$", "-test.count=1")
+							result := execute(t, repository, []string{"ADAMIC_STAGE3_FIXTURE=" + path, "ADAMIC_STAGE3_RESULT=" + resultPath}, hook, "-test.run=^TestStage3FixtureHook$", "-test.count=1", "-test.timeout=85s")
 							if result.Exit != 0 {
 								t.Fatalf("oracle native/sanitizer/leak hook failed: %s%s", result.Stdout, result.Stderr)
 							}
@@ -418,12 +429,19 @@ func testFixtureDirectory(t *testing.T, directory string) {
 							}
 							observed := behavior{string(stdout), string(stderr), exit}
 							if entry.Stage0.Outcome == "CheckedStop" {
-								// A ruled inserted check may stop source that Node accepts. Pin the
-								// entire stop separately; the source Node observation is still exact.
-								want := behavior{Stderr: entry.Stage0.What, Exit: 70}
+								// An inserted check may stop source that Node accepts. Pin the
+								// complete stop, including output before it, on both backends.
+								checkedPath := filepath.Join(t.TempDir(), "checked.mjs")
+								if err := os.WriteFile(checkedPath, []byte(checkedJavaScript), 0600); err != nil {
+									t.Fatal(err)
+								}
+								checkedNode := execute(t, repository, nil, "node", "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
+								want := behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
+								equal(t, "pinned Node check", checkedNode, want)
+								equal(t, "native versus checked Node", observed, checkedNode)
 								equal(t, "pinned native check", observed, want)
 								if observed == want {
-									actual = stage0{Outcome: "CheckedStop", What: string(stderr)}
+									actual = stage0{Outcome: "CheckedStop", What: string(stderr), Stdout: string(stdout)}
 								}
 							} else {
 								equal(t, "native versus Node", observed, node)

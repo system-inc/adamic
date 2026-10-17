@@ -1,4 +1,4 @@
-// a-check: refused an index signature
+// a-check: checked
 // Step 12: an alias adds a data property before reflection; checked success must include it.
 interface Visible { readonly visible: number; }
 const source: { visible: number; [key: string]: number | string } = { visible: 1 };
