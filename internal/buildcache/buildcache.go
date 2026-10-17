@@ -63,7 +63,7 @@ func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error
 // Handed is a lean build's Inputs, which key it, and the Paths it's handed, which never do (#zb9268t, Node's and Tests'
 // rulings): machine paths (a file the test wrote, an install a variable names) whose content the build's window keys as
 // it reads them. A read the window can only record by its spelling would key per box and per run, so Settle refuses a
-// handed build whose set holds an absolute read at or under a handed path or its process's temporary directory
+// handed build whose set keys a read at or under a handed path or its process's temporary directory by its spelling
 // (refusedHandedRead). It's declared here, never in a make file, so adding it rekeys nothing.
 type Handed struct {
 	Inputs Inputs
@@ -83,7 +83,8 @@ func LeanProductOf(t testing.TB, handed Handed, build func(handed Handed, direct
 	return product(t, handed.Inputs, func(directory string) error { return build(handed, directory) }, lean)
 }
 
-// handedRoots are paths as absolute, clean roots, the places a handed build's absolute reads may not be keyed under.
+// handedRoots are paths as absolute, clean roots, the places a handed build's reads may not be keyed under by their
+// spelling.
 func handedRoots(paths []string) []string {
 	roots := []string{}
 	for _, path := range paths {
