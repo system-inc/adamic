@@ -1460,3 +1460,5 @@ type yepestaBundle struct {
 	Oracle          string
 	Rows, Witnesses []string
 }
+
+// A proof for ahra loom check (#f7esvpd): products settle in the git worktree. Never merged.

@@ -90,3 +90,5 @@ func requestFunction(program *load.Program) (string, error) {
 	}
 	return "", nil
 }
+
+// A proof for ahra loom check (#f7esvpd): products settle in the git worktree. Never merged.

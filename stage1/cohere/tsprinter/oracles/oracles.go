@@ -2087,3 +2087,5 @@ func goTestOracle(t *testing.T, owner, output, pkg string, arguments []string, m
 	}
 	return buildcache.GoTest(t, "cohere", output, pkg, arguments)
 }
+
+// A proof for ahra loom check (#f7esvpd): products settle in the git worktree. Never merged.
