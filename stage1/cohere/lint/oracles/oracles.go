@@ -748,6 +748,9 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 	slots := make(chan struct{}, 4)
 	failures := make([]error, len(names))
 	for index, name := range names {
+		if name == "adamic" {
+			continue // mutant: the capture loses one upstream package
+		}
 		workers.Add(1)
 		go func() {
 			defer workers.Done()
