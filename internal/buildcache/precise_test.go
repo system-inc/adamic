@@ -3201,28 +3201,35 @@ func handedBuilding(_ Handed, directory string) error {
 // holds outside the tree's and the cache's places ("other"), and what's under the temporary directory that the run
 // didn't make; what it keys by spelling is a path only looked for, an absolute entry. So a handed build that looks for
 // a path at or under a handed root refuses the settle, named; one reading only the tree settles; and a lean build that
-// isn't handed keeps today's absolute entry for the same lookup. Mutants that each fail it: the refusal off; the
-// handed paths never journaled; a root matched by prefix without its separator.
+// isn't handed keeps today's absolute entry for the same lookup. A lookup under home, kept as a home entry by its ~/
+// spelling, refuses as an absolute one does. Mutants that each fail it: the refusal off; the handed paths never
+// journaled; a root matched by prefix without its separator; Settle handing the refusal no home.
 // Not parallel: newRig.
 func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 	outside := "/var/lib/adamic-handed-zb9268t"
+	home, err := os.UserHomeDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inHome := filepath.Join(home, "adamic-handed-zb9268t")
 	for _, each := range []struct {
-		name, path string
-		read       func(r *rig, pid int, path string)
-		handed     bool
-		refused    string
+		name, root, path string
+		read             func(r *rig, pid int, path string)
+		handed           bool
+		refused          string
 	}{
-		{"looked for under a handed path", outside + "/specs.json", (*rig).missing, true, "by its spelling"},
-		{"looked for beside a handed path, not under it", outside + "-sibling/specs.json", (*rig).missing, true, ""},
-		{"content under a handed path", outside + "/specs.json", (*rig).open, true, "other"},
-		{"content under the temporary directory", filepath.Join(os.TempDir(), "adamic-handed-zb9268t", "specs.json"), (*rig).open, true, "temp not made by this run"},
-		{"the tree alone", "source/a.c", (*rig).open, true, ""},
-		{"looked for by a lean build that isn't handed", outside + "/specs.json", (*rig).missing, false, ""},
+		{"looked for under a handed path", outside, outside + "/specs.json", (*rig).missing, true, "by its spelling"},
+		{"looked for beside a handed path, not under it", outside, outside + "-sibling/specs.json", (*rig).missing, true, ""},
+		{"content under a handed path", outside, outside + "/specs.json", (*rig).open, true, "other"},
+		{"content under the temporary directory", outside, filepath.Join(os.TempDir(), "adamic-handed-zb9268t", "specs.json"), (*rig).open, true, "temp not made by this run"},
+		{"the tree alone", outside, "source/a.c", (*rig).open, true, ""},
+		{"looked for by a lean build that isn't handed", outside, outside + "/specs.json", (*rig).missing, false, ""},
+		{"looked for under a handed path in home", inHome, inHome + "/node_modules/missing.js", (*rig).missing, true, "by its spelling"},
 	} {
 		t.Run(each.name, func(t *testing.T) {
 			r := newRig(t)
 			if each.handed {
-				LeanProductOf(t, Handed{Inputs: port, Paths: []string{outside}}, handedBuilding)
+				LeanProductOf(t, Handed{Inputs: port, Paths: []string{each.root}}, handedBuilding)
 			} else {
 				LeanProduct(t, port, building("built"))
 			}
@@ -3235,6 +3242,54 @@ func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 				t.Fatalf("settled %q, refused %q; want refused for %q", settlement.Settled, settlement.Refused, each.refused)
 			case each.refused == "" && len(settlement.Settled) != 1:
 				t.Fatalf("settled %q, refused %q; want it settled", settlement.Settled, settlement.Refused)
+			}
+		})
+	}
+}
+
+// refusedHandedRead holds a handed build's reads by where they sit, as spelled and as resolved, whatever kind keys them
+// by their spelling (Tests' musts on c4e510e52d): a root handed through a link against the path the window recorded
+// resolved, and the other way round; a temporary directory reached through a link; a lookup under home, which the window
+// keeps as a home entry by its ~/ spelling (Builder's npm installs sit at ~/loom-builder/node/<hash>); and a system
+// directory, keyed by whether it's there. A product and a system file are valued by content, and a tree entry is the
+// tree's, so those are kept. Mutants that each fail it: roots and reads compared only as spelled; a home entry left
+// unexpanded; only absolute entries checked.
+func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(t *testing.T) {
+	t.Parallel()
+	real, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	link := filepath.Join(t.TempDir(), "link")
+	if err := os.Symlink(real, link); err != nil {
+		t.Fatal(err)
+	}
+	home := "/home/adamic-handed-zb9268t"
+	install := home + "/loom-builder/node/abc"
+	elsewhere := "/var/lib/adamic-handed-zb9268t-temporary"
+	for _, each := range []struct {
+		name      string
+		handed    []string
+		temporary string
+		read      readEntry
+		refused   bool
+	}{
+		{"a root handed through a link, the read recorded resolved", []string{filepath.Join(link, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(real, "handed", "specs.json")}, true},
+		{"a root handed resolved, the read recorded through a link", []string{filepath.Join(real, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(link, "handed", "specs.json")}, true},
+		{"a temporary directory reached through a link", nil, link, readEntry{Kind: "absolute", Path: filepath.Join(real, "specs.json")}, true},
+		{"beside a root handed through a link", []string{filepath.Join(link, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(real, "handed-sibling", "specs.json")}, false},
+		{"a lookup under home kept by its spelling", []string{install}, elsewhere, readEntry{Kind: "home", Path: "~/loom-builder/node/abc/node_modules/missing.js"}, true},
+		{"a lookup under home beside the root", []string{install}, elsewhere, readEntry{Kind: "home", Path: "~/loom-builder/node/abcd/node_modules/missing.js"}, false},
+		{"a system directory under a root", []string{"/usr/lib/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "system directory", Path: "/usr/lib/adamic-handed-zb9268t/x"}, true},
+		{"a system file under a root", []string{"/usr/lib/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "system", Path: "/usr/lib/adamic-handed-zb9268t/x"}, false},
+		{"a product under a root", []string{"/var/cache/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "product", Path: "/var/cache/adamic-handed-zb9268t/0123456789ab"}, false},
+		{"a tree entry spelled like a root", []string{"source"}, elsewhere, readEntry{Kind: "exists", Path: "source/a.c"}, false},
+	} {
+		t.Run(each.name, func(t *testing.T) {
+			entry := journalEntry{Handed: handedRoots(each.handed), Temporary: each.temporary}
+			why := refusedHandedRead(entry, readSet{Entries: []readEntry{each.read}}, home)
+			if refused := why != ""; refused != each.refused {
+				t.Fatalf("refusedHandedRead(%q under %q) = %q; want refused %v", each.read.Path, each.handed, why, each.refused)
 			}
 		})
 	}
