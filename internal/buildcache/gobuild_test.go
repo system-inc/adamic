@@ -659,6 +659,57 @@ func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
 	}
 }
 
+// GoDirectExports keeps the named package, its tests and what they import directly, never the rest of -deps, while
+// GoExports keeps all of it (#mtvmz1w), and the two never share a key. tool imports lib/b, whose signature returns
+// lib/c's type, and tool's test imports lib/d. Mutants that each fail it: GoDirectExports keeping all of -deps; a test
+// file's import dropped; GoDirectExports' verb GoExports' own, so one product would answer both.
+// Not parallel: inRepository changes the working directory and repositoryRoot.
+func TestGoDirectExportsKeepOnlyWhatTheNamedPackagesImport(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.22\n")
+	write(t, root, "lib/c/c.go", "package c\n\ntype T struct{ Field int }\n")
+	write(t, root, "lib/b/b.go", "package b\n\nimport \"github.com/system-inc/adamic/lib/c\"\n\nfunc F() c.T { return c.T{} }\n")
+	write(t, root, "lib/d/d.go", "package d\n\nconst D = 1\n")
+	write(t, root, "tool/main.go", "package main\n\nimport \"github.com/system-inc/adamic/lib/b\"\n\nfunc main() { _ = b.F().Field }\n")
+	write(t, root, "tool/main_test.go", "package main\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/lib/d\"\n)\n\nfunc TestNothing(t *testing.T) { _ = d.D }\n")
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "one")
+	inRepository(t, root)
+	cached(t)
+	t.Setenv("GOFLAGS", "")
+	listed := func(directory string) []string {
+		t.Helper()
+		content, err := os.ReadFile(filepath.Join(directory, "listing.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var listing []ListedPackage
+		if err := json.Unmarshal(content, &listing); err != nil {
+			t.Fatal(err)
+		}
+		paths := []string{}
+		for _, one := range listing {
+			paths = append(paths, strings.TrimPrefix(one.ImportPath, "github.com/system-inc/adamic/"))
+		}
+		return paths
+	}
+	direct, whole := GoDirectExports(t, "./tool"), GoExports(t, "./tool")
+	if direct == whole {
+		t.Fatalf("GoDirectExports and GoExports answered one product, %s", direct)
+	}
+	kept, all := listed(direct), listed(whole)
+	if !slices.Contains(kept, "lib/b") || !slices.Contains(kept, "lib/d") || slices.Contains(kept, "lib/c") {
+		t.Fatalf("GoDirectExports listed %v; want tool's direct imports lib/b and lib/d, never lib/c", kept)
+	}
+	if !slices.Contains(all, "lib/c") {
+		t.Fatalf("GoExports listed %v; want all of -deps, lib/c included", all)
+	}
+}
+
 // A tool written a moment ago is asked again while it is busy (ETXTBSY: a descriptor open for writing, as a process
 // forked by a parallel test holds one until it execs), never named by the error and its path. Mutant: toolValue
 // running the tool once.

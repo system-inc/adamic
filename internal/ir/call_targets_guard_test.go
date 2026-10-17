@@ -182,11 +182,12 @@ func checkCallTargetReaders(t *testing.T, selected string) {
 	}
 }
 
-// callTargetExports is the export data of the packages TestCallTargetReaders reads and everything they import, their
-// tests included, a product built ahead so the test runs no go.
+// callTargetExports is the export data of the packages TestCallTargetReaders reads, their tests included, and of what
+// they import directly, a product built ahead so the test runs no go. go/importer opens only those: the rest of -deps
+// (tsc's export data, most of it) is what a direct import's signature reaches, carried in its own export data (#mtvmz1w).
 func callTargetExports(t *testing.T, selected string) string {
 	t.Helper()
-	return buildcache.GoExports(t, "./internal/"+selected, "./internal/leakcheck")
+	return buildcache.GoDirectExports(t, "./internal/"+selected, "./internal/leakcheck")
 }
 
 // Not parallel: prepare this export group before parallel reader checks on four CPUs.
