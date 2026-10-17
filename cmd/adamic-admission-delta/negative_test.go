@@ -103,10 +103,10 @@ func negativeCommand(t *testing.T, corrected, alreadyAccepted bool) (observation
 	if corrected {
 		source = []byte(strings.ReplaceAll(string(source), witness.RepairFrom, witness.RepairTo))
 	}
+	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo '// STOP';;\nbuild) printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: unset\" >&2\\nexit 70\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
 	for path, data := range map[string]string{
 		"corpus/input.a":  string(source),
 		"oracle/node.mjs": "import {readFileSync} from 'node:fs';const s=readFileSync(process.argv[2],'utf8');console.log('42');if(s.includes('STOP')){console.error('adamic: panic: unset');process.exit(70);}\n",
-		"head":            "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo '// STOP';;\nbuild) printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: unset\" >&2\\nexit 70\\n' > \"$4\"; chmod +x \"$4\";;\nesac\n",
 	} {
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
 			t.Fatal(err)

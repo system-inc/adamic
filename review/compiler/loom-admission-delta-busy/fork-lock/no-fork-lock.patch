@@ -1,0 +1,19 @@
+--- cmd/adamic-admission-delta/command_test.go
++++ cmd/adamic-admission-delta/command_test.go
+@@ -9,7 +9,6 @@
+ 	"os/exec"
+ 	"path/filepath"
+ 	"strings"
+-	"syscall"
+ 	"testing"
+ 	"time"
+ 
+@@ -44,8 +43,6 @@
+ 		}
+ 	}()
+ 	func() {
+-		syscall.ForkLock.Lock()
+-		defer syscall.ForkLock.Unlock()
+ 		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+ 		if err != nil {
+ 			t.Fatal(err)

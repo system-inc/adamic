@@ -1,0 +1,7 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:302: build admission-compiler e27c33959815 miss 4.55
+--- PASS: TestProduct_AdmissionCompiler (5.32s)
+PASS
+refused admission-compiler (name key e27c33959815): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+traced: 0 settled, 1 refused; journal and report in /workspace/scratch/admission-busy-products/traces/20261016T223714Z-1162088078
+exit status 3

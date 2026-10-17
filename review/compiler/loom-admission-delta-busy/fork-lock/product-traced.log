@@ -1,0 +1,6 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:313: build admission-compiler e27c33959815 miss 0.86
+--- PASS: TestProduct_AdmissionCompiler (1.17s)
+PASS
+settled admission-compiler 568fd1f81894: 95 reads, superset
+traced: 1 settled, 0 refused; journal and report in /workspace/scratch/admission-fork-lock-products/traces/20261016T225049Z-3397626232
