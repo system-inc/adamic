@@ -33,9 +33,13 @@ def main():
     started = time.monotonic()
     # The checkout's commit, recorded and never read, or None in a tree that isn't a checkout: a Loom runner's tree has
     # no .git, and the lane must reach its platform check there (test_check's and test_table's unknown-platform runs).
-    head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True)
-    execution = dict(commit=head.stdout.strip() if head.returncode == 0 else None,
-                     apply_exit=None, oracle_exit=None)
+    # check_output, not run, since test_table stands in for apply and the oracle through subprocess.run.
+    try:
+        commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True,
+                                         stderr=subprocess.DEVNULL).strip()
+    except subprocess.CalledProcessError:
+        commit = None
+    execution = dict(commit=commit, apply_exit=None, oracle_exit=None)
 
     def run(name, command, env=None):
         with (results / f'{name}.log').open('w') as log:
