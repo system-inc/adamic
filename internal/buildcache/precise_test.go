@@ -2818,9 +2818,41 @@ func TestNoBuildIsLeanWhileLoomTurnsLeanOff(t *testing.T) {
 	}
 }
 
-// Only leanBuildOf makes a lean build, so Loom's switch reaches every build: one made anywhere else settles lean under
-// ADAMIC_BUILD_LEAN=off, where no lookup matches it, so every test reading it refuses it (goProduct's, tree 62e5604f,
-// Oct 17: 64 product tests fell back). Mutant: goProduct handing product a leanBuild of its own.
+// Under ADAMIC_BUILD_LEAN=off a go product's traced build isn't lean: its journal entry, whose Lean is what Settle keys
+// the recipe by, says so, as it says lean with the switch on. A go build settled lean under the switch is a set no
+// lookup matches, so every test reading it refuses it (tree 62e5604f, Oct 17: 64 product tests fell back; Tests' must on
+// cc0d248aa3). Mutants that each fail it: goProduct handing product &leanBuild{} or new(leanBuild) of its own.
+// Not parallel: newRig, t.Setenv.
+func TestAGoProductIsntLeanWhileLoomTurnsLeanOff(t *testing.T) {
+	built := func(lean string) journalEntry {
+		t.Helper()
+		r := newRig(t)
+		write(t, r.root, "hello/main.go", "package main\n\nfunc main() {}\n")
+		gitIn(t, r.root, "add", ".")
+		gitIn(t, r.root, "commit", "-q", "-m", "hello")
+		forgetInputs()
+		t.Cleanup(forgetInputs)
+		t.Setenv("ADAMIC_BUILD_LEAN", lean)
+		GoBuild(t, "hello", "./hello", nil)
+		for _, entry := range r.built(t) {
+			if strings.Contains(entry.Name, "./hello") {
+				return entry
+			}
+		}
+		t.Fatalf("no traced build of ./hello journaled: %v", r.built(t))
+		return journalEntry{}
+	}
+	if entry := built(""); !entry.Lean {
+		t.Fatalf("a go product's traced build with lean on isn't lean: %+v", entry)
+	}
+	if entry := built("off"); entry.Lean {
+		t.Errorf("a go product's traced build is lean under ADAMIC_BUILD_LEAN=off, so no lookup would match it: %+v", entry)
+	}
+}
+
+// Only leanBuildOf makes a lean build, so Loom's switch reaches every build. A lint beside
+// TestAGoProductIsntLeanWhileLoomTurnsLeanOff, which is the proof: it reads the syntax only, so a leanBuild made another
+// way (a variable's address) gets past it. Mutant: goProduct handing product &leanBuild{} or new(leanBuild).
 func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 	t.Parallel()
 	entries, err := os.ReadDir(".")
@@ -2844,9 +2876,18 @@ func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 				continue
 			}
 			ast.Inspect(declaration, func(node ast.Node) bool {
-				if literal, ok := node.(*ast.CompositeLit); ok {
-					if named, ok := literal.Type.(*ast.Ident); ok && named.Name == "leanBuild" {
-						made = append(made, fileSet.Position(literal.Pos()).String())
+				leanBuildType := func(expression ast.Expr) bool {
+					named, ok := expression.(*ast.Ident)
+					return ok && named.Name == "leanBuild"
+				}
+				switch node := node.(type) {
+				case *ast.CompositeLit:
+					if leanBuildType(node.Type) {
+						made = append(made, fileSet.Position(node.Pos()).String())
+					}
+				case *ast.CallExpr:
+					if called, ok := node.Fun.(*ast.Ident); ok && called.Name == "new" && len(node.Args) == 1 && leanBuildType(node.Args[0]) {
+						made = append(made, fileSet.Position(node.Pos()).String())
 					}
 				}
 				return true
