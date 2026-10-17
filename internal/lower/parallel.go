@@ -16,6 +16,7 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	arguments := node.AsCallExpression().Arguments.Nodes
+	moved := l.parallelMoves(node)
 	items, err := l.expression(arguments[0])
 	if err != nil {
 		return nil, err
@@ -35,8 +36,10 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 	// the task's transitive call graph reads so runtime marking reaches them too.
 	proof := &parallelProof{l: l, active: map[*ast.Node]bool{}, checked: map[*ast.Node]bool{}, shareableFunctions: map[*ast.Node]bool{}}
 	body := proof.functionValue(arguments[1], map[*ast.Symbol]bool{})
-	if err := proof.function(body, nil); err != nil {
-		return nil, err
+	if !moved {
+		if err := proof.function(body, nil); err != nil {
+			return nil, err
+		}
 	}
 	shared := []ir.Expression{}
 	seen := map[*ast.Symbol]bool{}
@@ -61,7 +64,7 @@ func (l *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 		}
 		shared = append(shared, value)
 	}
-	return ir.ParallelMap{Items: items, Work: work, Shared: shared, Result: result}, nil
+	return ir.ParallelMap{Items: items, Work: work, Shared: shared, Result: result, Moved: moved}, nil
 }
 
 // Run before general refusals, so async work gets its concurrency diagnostic even
@@ -93,6 +96,9 @@ func (l *lowering) checkParallelMap(node *ast.Node) error {
 	items := l.concrete(l.checker.GetTypeAtLocation(arguments[0]))
 	if !l.checker.IsArrayType(items) {
 		return &Refused{Where: l.program.Where(arguments[0]), What: "parallelMap items must be an array", Fix: parallelMoveFix}
+	}
+	if l.parallelMoves(node) {
+		return l.checkMove(node)
 	}
 	// Even primitive elements need an immutable array: every task can capture the array itself.
 	if !l.isLibraryType(items, "ReadonlyArray") {
