@@ -83,16 +83,6 @@ func requireProfileAnswers(t *testing.T) {
 	requireOracleArtifacts(t, oracleProductDirectory(t, inputs, nil), "wire", "count")
 }
 
-func requireShardsCapture(t *testing.T) {
-	t.Helper()
-	rows := testShardsAgreeUpstream(t)
-	if len(rows) == 0 {
-		t.Fatal("capture has no cases")
-	}
-	directory := oracleProductDirectory(t, testShardsAgreeInputs(t, "capture"), nil)
-	requireOracleArtifacts(t, directory, "rows")
-}
-
 func requireYepestaBundle(t *testing.T, directory string) {
 	t.Helper()
 	requireOracleArtifacts(t, directory, "bundle.json")

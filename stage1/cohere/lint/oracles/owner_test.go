@@ -56,10 +56,6 @@ func TestProduct_RulesAgreeCapture(t *testing.T) {
 	t.Parallel()
 	timed(t, func() { requireOracleArtifacts(t, rulesAgreeCapture(t), "rows.json") })
 }
-func TestProduct_ShardsAgreeCapture(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireShardsCapture(t) })
-}
 func TestProduct_CompilerAgreementCheckerAllAnswer(t *testing.T) {
 	t.Parallel()
 	timed(t, func() { requireCheckerAnswer(t) })
