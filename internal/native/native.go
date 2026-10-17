@@ -64,6 +64,9 @@ type Options struct {
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
+	// ThreadSanitize enables the separate race-check build.
+	ThreadSanitize bool
+
 	// Count makes the binary count its allocations, frees, retains and releases, and write them to
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
@@ -95,6 +98,9 @@ func Flags(options Options) []string {
 	if options.Target == "wasm32-wasi" {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
 	}
+	if options.Target != "wasm32-wasi" {
+		flags = append(flags, "-pthread")
+	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
@@ -103,6 +109,12 @@ func Flags(options Options) []string {
 	}
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
+	}
+	if options.Sanitize && options.ThreadSanitize {
+		panic("native: ASan and TSan cannot be combined")
+	}
+	if options.ThreadSanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
 	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
@@ -131,16 +143,20 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 }
 
 func buildOne(source string, output string, options Options, flags []string) error {
+	library, err := RuntimeLibraryForSource("", source, options)
+	if err != nil {
+		return err
+	}
+	return buildOneWithRuntime(source, output, options, flags, library)
+}
+
+func buildOneWithRuntime(source string, output string, options Options, flags []string, library string) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibraryForSource("", source, options)
-	if err != nil {
-		return err
-	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}

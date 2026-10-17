@@ -9,9 +9,10 @@
 #include <time.h>
 #include <inttypes.h>
 
-static uint64_t loaded_ns, queried_ns, first_query_ns, run_started_ns;
-static size_t query_count;
-static uint64_t input_ns, call_ns, output_ns, facts_bytes;
+/* Profiling is shared across queries. Each accumulator access must be atomic. */
+static _Atomic uint64_t loaded_ns, queried_ns, first_query_ns, run_started_ns;
+static _Atomic size_t query_count;
+static _Atomic uint64_t input_ns, call_ns, output_ns, facts_bytes;
 static bool profiling(void) { return getenv("ADAMIC_TSGO_PROFILE") != NULL; }
 static bool timing(void) { return getenv("ADAMIC_TSGO_TIMING") != NULL; }
 static uint64_t now_ns(void) {

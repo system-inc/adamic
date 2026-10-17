@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"context"
 	"crypto/sha256"
 	"flag"
 	"fmt"
@@ -14,6 +15,8 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -182,7 +185,19 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, absolute)
+	// Name sources before lowering: a diagnostic string's encoded length also
+	// carries its path, so replacing paths in the emitted C is too late.
+	loaded, err := load.LoadDisplayed([]string{absolute}, func(name string) string {
+		if name == absolute {
+			// The extension selects the checked TypeScript assertion frontend.
+			return "<source>" + filepath.Ext(name)
+		}
+		return countPortable(t, name, "")
+	})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
 		t.Fatalf("Lower: %v", err)
 	}
