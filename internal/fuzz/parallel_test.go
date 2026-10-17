@@ -7,39 +7,44 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// The runner's refusal check has to be able to fail, and an accepted parallel program has to agree
-// at one thread, at the default, and under ThreadSanitizer when that build exists.
-func TestParallelRunnerAgreesAndCanFail(t *testing.T) {
-	t.Parallel()
+// Each runner case is independently selectable within the gate budget.
+func prepareParallelRunner(t *testing.T) (string, *Checkout) {
+	t.Helper()
 	directory := t.TempDir()
-	checkout, err := Prepare("../..", filepath.Join(directory, "checkout"))
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Logf("thread sanitizer: %s", checkout.TSan)
 
+	return directory, checkout
+}
+
+func TestParallelRunnerNumbersAgree(t *testing.T) {
+	t.Parallel()
+	directory, checkout := prepareParallelRunner(t)
 	accepted := "import { parallelMap } from 'adamic';\n" +
 		"const items: readonly number[] = [4, 2, 9, 1];\n" +
 		"console.log(parallelMap(items, (item, index) => item * 10 + index).join(','));\n"
 	if outcome := checkout.Try(accepted, filepath.Join(directory, "accepted")); outcome.Verdict != Agreed {
 		t.Fatalf("accepted parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
+}
 
+func TestParallelRunnerStringsAgree(t *testing.T) {
+	t.Parallel()
+	directory, checkout := prepareParallelRunner(t)
 	var generated *Program
-	var refused *Program
-	// Main added generator features; the captured-let witness now first appears at seed 114.
-	// Search 300 seeds, keeping both witnesses required.
+	// Search a bounded seed range so added generator features may shift the witness.
 	for seed := uint64(1); seed <= 300; seed++ {
-		candidate := Generate(seed)
+		candidate := GenerateWithout(seed, []string{"moves"})
 		if generated == nil && candidate.Refusal == "" && strings.Contains(candidate.Source(), "// parallel-shape: strings") {
 			generated = candidate
-		}
-		if refused == nil && strings.Contains(candidate.Refusal, "not an immutable binding") {
-			refused = candidate
 		}
 	}
 	if generated == nil {
@@ -48,20 +53,44 @@ func TestParallelRunnerAgreesAndCanFail(t *testing.T) {
 	if outcome := checkout.Try(generated.Source(), filepath.Join(directory, "generated")); outcome.Verdict != Agreed {
 		t.Fatalf("generated string parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
+}
+
+func TestParallelRunnerCapturedLetRefused(t *testing.T) {
+	t.Parallel()
+	directory, checkout := prepareParallelRunner(t)
+	var refused *Program
+	// Search a bounded seed range so added generator features may shift the witness.
+	for seed := uint64(1); seed <= 300; seed++ {
+		candidate := GenerateWithout(seed, []string{"moves"})
+		if refused == nil && strings.Contains(candidate.Refusal, "not an immutable binding") {
+			refused = candidate
+		}
+	}
 	if refused == nil {
 		t.Fatal("no captured-let refusal in seeds 1..300")
 	}
 	if outcome := checkout.Try(refused.Source(), filepath.Join(directory, "refused")); outcome.Verdict != Refused {
 		t.Fatalf("captured let: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
+}
 
+func TestParallelRunnerCatchesLyingRefusal(t *testing.T) {
+	t.Parallel()
+	directory, checkout := prepareParallelRunner(t)
+	accepted := "import { parallelMap } from 'adamic';\n" +
+		"const items: readonly number[] = [4, 2, 9, 1];\n" +
+		"console.log(parallelMap(items, (item, index) => item * 10 + index).join(','));\n"
 	// Mutant of the check: the comment names a path the program does not break, and the compiler
 	// accepts it. The runner must report a finding, not agreement.
 	lying := accepted + "// parallel-refuse: task capture 'missing' is not shareable: missing is not an immutable binding\n"
 	if outcome := checkout.Try(lying, filepath.Join(directory, "lying")); outcome.Verdict != Finding || outcome.Key != "compiler accepted a program it must refuse" {
 		t.Fatalf("lying refusal comment: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
+}
 
+func TestParallelRunnerCatchesWrongPath(t *testing.T) {
+	t.Parallel()
+	directory, checkout := prepareParallelRunner(t)
 	// A real refusal whose message names a different path must not count as the expected one.
 	wrongPath := "import { parallelMap } from 'adamic';\n" +
 		"// parallel-refuse: task capture 'step' is not shareable: step is not an immutable binding\n" +
