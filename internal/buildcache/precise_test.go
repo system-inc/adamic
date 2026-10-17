@@ -3050,6 +3050,106 @@ func TestOnlyAListedNameKeyGoesBackToItsWholeRecipe(t *testing.T) {
 	}
 }
 
+// buildcache states that it honors ADAMIC_BUILD_LEAN_OFF_KEYS in the one line Loom's build-trees matches exactly
+// (#1qkz8gs, Node's must), so a change to the declaration is a change Loom sees. Mutant: the line reworded.
+func TestTheLeanOffKeysCapabilityIsStatedInTheLineLoomReads(t *testing.T) {
+	t.Parallel()
+	content, err := os.ReadFile("buildcache.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const line = `const LeanOffKeysCapability = "honors ADAMIC_BUILD_LEAN_OFF_KEYS, version 1"`
+	if !slices.Contains(strings.Split(string(content), "\n"), line) || LeanOffKeysCapability != "honors ADAMIC_BUILD_LEAN_OFF_KEYS, version 1" {
+		t.Fatalf("buildcache.go doesn't state %s", line)
+	}
+}
+
+// A product reading a listed one needs no listing of its own (#1qkz8gs, Node's ruling): its read set values the listed
+// product by its bytes, so with the listed one's lean set no longer matched the reader misses, then misses still once
+// it's rebuilt whole with other bytes (the hole's case), and hits once it's rebuilt whole with the same bytes, since its
+// inputs didn't change. Mutant: the listing read for the product looked up alone, never for one a set reads, so the
+// reader still matches through the hole's lean set.
+// Not parallel: newRig, t.Setenv.
+func TestAReaderOfAListedProductMissesUntilItsBytesAreTheSame(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	headerProduct := Product(t, header, building("the hole's bytes"))
+	Product(t, port, building("port built from the hole's bytes"))
+	built := r.built(t)
+	goTest, first, second := r.pid, r.pid+1, r.pid+2
+	r.add(goTest, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, first)
+	r.marker(first, "build-begin", built["header"].Build)
+	r.open(first, "include/x.h")
+	r.marker(first, "build-end", built["header"].Build)
+	r.add(first, "+++ exited with 0 +++")
+	r.add(goTest, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, second)
+	r.marker(second, "build-begin", built["port"].Build)
+	r.open(second, filepath.Join(headerProduct, "product"))
+	r.open(second, "source/a.c")
+	r.marker(second, "build-end", built["port"].Build)
+	r.add(second, "+++ exited with 0 +++")
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if got := r.entries(t, built["port"].NameKey); !slices.Contains(got, "product "+built["header"].NameKey) {
+		t.Fatalf("port's read set %q doesn't name header's product", got)
+	}
+	// header's set is lean: the hole.
+	var lean readSet
+	if err := withReads(r.cache, built["header"].NameKey, func(file *readsFile) error {
+		file.Sets[0].Lean = true
+		lean = file.Sets[0]
+		return nil
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("port with nothing listed: %v", err)
+	}
+	listed := filepath.Join(t.TempDir(), "holes")
+	if err := os.WriteFile(listed, []byte(built["header"].NameKey+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_BUILD_LEAN_OFF_KEYS", listed)
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("port with header listed and no whole set of it: %v, want a miss", err)
+	}
+	// header rebuilt whole, its set the same reads under another key: with other bytes port misses, with the same it hits.
+	// header rebuilt whole: its whole recipe reads more than its window (a file it didn't read), so its set keys elsewhere, and its
+	// product is placed at the key that set values to.
+	whole := func(content, also string) {
+		t.Helper()
+		set := readSet{Entries: sortedEntries(lean.Entries, []readEntry{{Kind: "content", Path: also}})}
+		evaluated, err := evaluate(r.root, r.cache, built["header"].NameKey, set, 0, productMemo{})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if set.Key = evaluated.key; set.Key == lean.Key || slices.Equal(set.Entries, lean.Entries) {
+			t.Fatalf("the whole set reads %q, its window's %q, so it isn't another recipe", set.Entries, lean.Entries)
+		}
+		if err := os.MkdirAll(filepath.Join(r.cache, set.Key), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := building(content)(filepath.Join(r.cache, set.Key)); err != nil {
+			t.Fatal(err)
+		}
+		if err := withReads(r.cache, built["header"].NameKey, func(file *readsFile) error {
+			file.Sets = append([]readSet{set}, file.Sets...)
+			return nil
+		}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	whole("other bytes, as the hole's fix made", "notes.txt")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("port with header rebuilt whole to other bytes: %v, want a miss", err)
+	}
+	whole("the hole's bytes", "source/b.c")
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("port with header rebuilt whole to the same bytes: %v, want a hit", err)
+	}
+}
+
 // A union is lean only when every set in it is (#earlycut): a lean set folded with an earlier whole one that still
 // values keys by the whole recipe's reads too, so it isn't lean; folded with a lean one, it is. Mutant: the new set's
 // Lean kept whatever it folds.
