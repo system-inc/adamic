@@ -1,0 +1,93 @@
+{
+  "locked-100": {
+    "runs": 100,
+    "failures": 0,
+    "max_leaf_seconds": 4.23,
+    "package_seconds": [
+      216.106
+    ]
+  },
+  "no-fork-lock": {
+    "runs": 100,
+    "failures": 97,
+    "max_leaf_seconds": 1.12,
+    "package_seconds": [
+      21.971
+    ]
+  },
+  "build-mode": {
+    "TestProduct_AdmissionCompiler": 0.6,
+    "TestCompilerCacheIgnoresBuildPolicy": 0.0,
+    "TestCommandHelper": 0.0,
+    "TestNegativeContentHash": 0.0,
+    "TestSampling": 0.0,
+    "TestOutputsAgree": 0.0,
+    "TestClassification": 0.0,
+    "TestCompilerTimeoutIsError": 0.1,
+    "TestProduct_AdmissionCompilerReady": 0.11,
+    "TestManifestMismatch": 0.17,
+    "TestEmptyCorpus": 0.15,
+    "TestDiffSamplingIsMandatory": 0.0,
+    "TestNewlyRefusedIsInformational": 0.17,
+    "TestParallelLoweringOnly": 0.02,
+    "TestCompilerCacheIncludesSHA": 0.0,
+    "TestDiffCoverage": 0.31,
+    "TestShardPartitionKeepsDiff": 0.0,
+    "TestNodeDeclarationsArePinned": 0.0,
+    "TestNegativeEditedWitnessMandatory": 0.0,
+    "TestShardCommandScope": 0.24,
+    "TestNegativeAlreadyAcceptedRepairMutant": 0.52,
+    "TestNegativeValidProgramCannotBeListed": 0.0,
+    "TestNegativeEmptyListPrinted": 0.45,
+    "TestNegativeTypeCorrectMutant": 0.56,
+    "TestNegativeRulingMetadata": 0.0,
+    "TestNegativeExactBackendStop": 0.0,
+    "TestBuildRevisions": 0.29,
+    "TestNegativeCommandAccepted": 0.49,
+    "TestNewAdmissionMismatch": 0.44,
+    "TestHeadInputIsolation": 0.58,
+    "TestExecutableForkIsolation": 2.88
+  },
+  "read-mode": {
+    "TestProduct_AdmissionCompiler": 0.57,
+    "TestCompilerCacheIgnoresBuildPolicy": 0.0,
+    "TestCommandHelper": 0.0,
+    "TestNegativeContentHash": 0.0,
+    "TestShardCommandScope": 0.2,
+    "TestParallelLoweringOnly": 0.01,
+    "TestCompilerCacheIncludesSHA": 0.0,
+    "TestNodeDeclarationsArePinned": 0.0,
+    "TestShardPartitionKeepsDiff": 0.0,
+    "TestNegativeEditedWitnessMandatory": 0.0,
+    "TestNegativeEmptyListPrinted": 0.34,
+    "TestNegativeValidProgramCannotBeListed": 0.0,
+    "TestNegativeAlreadyAcceptedRepairMutant": 0.41,
+    "TestNegativeRulingMetadata": 0.0,
+    "TestNegativeExactBackendStop": 0.0,
+    "TestNewlyRefusedIsInformational": 0.2,
+    "TestSampling": 0.0,
+    "TestOutputsAgree": 0.0,
+    "TestClassification": 0.0,
+    "TestDiffSamplingIsMandatory": 0.0,
+    "TestNegativeCommandAccepted": 0.42,
+    "TestNegativeTypeCorrectMutant": 0.38,
+    "TestBuildRevisions": 0.17,
+    "TestProduct_AdmissionCompilerReady": 0.12,
+    "TestCompilerTimeoutIsError": 0.1,
+    "TestDiffCoverage": 0.3,
+    "TestEmptyCorpus": 0.15,
+    "TestManifestMismatch": 0.13,
+    "TestNewAdmissionMismatch": 0.32,
+    "TestHeadInputIsolation": 0.56,
+    "TestExecutableForkIsolation": 2.76
+  },
+  "product-traced": {
+    "TestProduct_AdmissionCompiler": 1.17
+  },
+  "reader-traced": {
+    "TestProduct_AdmissionCompilerReady": 11.87
+  },
+  "readers": {
+    "TestCallTargetReaders": 4.67
+  }
+}

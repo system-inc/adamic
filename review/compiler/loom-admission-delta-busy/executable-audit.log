@@ -1,0 +1,24 @@
+cmd/adamic-admission-delta/prepare_test.go:17:	if err := os.WriteFile(filepath.Join(dir, "index.d.ts"), nil, 0600); err != nil {
+cmd/adamic-admission-delta/prepare_test.go:21:	if err := os.WriteFile(metadata, []byte(`{"name":"@types/node","version":"25.3.3"}`), 0600); err != nil {
+cmd/adamic-admission-delta/prepare_test.go:27:	if err := os.WriteFile(metadata, []byte(`{"name":"@types/node","version":"24.0.0"}`), 0600); err != nil {
+cmd/adamic-admission-delta/build.go:85:	if err := os.WriteFile(filepath.Join(tree, "cmd", "adamic", "admission_adapter.go"), []byte(loweringAdapter), 0600); err != nil {
+cmd/adamic-admission-delta/negative_test.go:24:	if err = os.WriteFile(path, data, 0600); err != nil {
+cmd/adamic-admission-delta/negative_test.go:106:	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo '// STOP';;\nbuild) printf '#!/bin/sh\\necho 42\\necho \"adamic: panic: unset\" >&2\\nexit 70\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+cmd/adamic-admission-delta/negative_test.go:111:		if err := os.WriteFile(filepath.Join(dir, path), []byte(data), 0755); err != nil {
+cmd/adamic-admission-delta/diff_test.go:20:		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
+cmd/adamic-admission-delta/speed_test.go:37:	script := "#!/bin/sh\n[ \"$1\" = admission-lower ] || { echo 'panic: C emission reached' >&2; exit 1; }\n: > \"$2.started\"\nwhile [ ! -f one.started ] || [ ! -f two.started ]; do :; done\n"
+cmd/adamic-admission-delta/speed_test.go:52:	writeExecutable(t, path, "#!/bin/sh\necho before\n")
+cmd/adamic-admission-delta/speed_test.go:59:	writeExecutable(t, path, "#!/bin/sh\necho after\n")
+cmd/adamic-admission-delta/main.go:438:			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
+cmd/adamic-admission-delta/command_test.go:39:	file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+cmd/adamic-admission-delta/command_test.go:48:	if err := file.Chmod(0700); err != nil {
+cmd/adamic-admission-delta/command_test.go:55:	if err := os.Rename(file.Name(), path); err != nil {
+cmd/adamic-admission-delta/command_test.go:68:		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0755); err != nil {
+cmd/adamic-admission-delta/command_test.go:95:	writeExecutable(t, filepath.Join(dir, "base"), "#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n")
+cmd/adamic-admission-delta/command_test.go:96:	writeExecutable(t, filepath.Join(dir, "head"), "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+cmd/adamic-admission-delta/command_test.go:155:	if err := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); err != nil {
+cmd/adamic-admission-delta/command_test.go:170:	script := `#!/bin/sh
+cmd/adamic-admission-delta/command_test.go:176:build) printf '#!/bin/sh\nprintf "42\\n"\n' > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
+cmd/adamic-admission-delta/command_test.go:213:	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
+cmd/adamic-admission-delta/command_test.go:242:	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
+cmd/adamic-admission-delta/command_test.go:269:		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
