@@ -1,0 +1,45 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandIndexRefused
+=== CONT  TestStringBrandPlain
+=== CONT  TestStringBrandRealRefused
+=== CONT  TestStringBrandOptional
+=== NAME  TestStringBrandPlain
+    string_brand_test.go:51: /workspace/adamic/internal/oracle/testdata/string_brand_plain.a:3:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestStringBrandPlain (0.40s)
+=== CONT  TestStringBrandUnescape
+--- PASS: TestStringBrandRealRefused (0.46s)
+=== CONT  TestStringBrandReadRefused
+=== NAME  TestStringBrandOptional
+    string_brand_test.go:50: /workspace/adamic/internal/oracle/testdata/string_brand_optional.a:4:76: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestStringBrandOptional (0.46s)
+=== CONT  TestStringBrandMap
+--- PASS: TestStringBrandIndexRefused (0.48s)
+=== NAME  TestStringBrandEscape
+    string_brand_test.go:47: /workspace/adamic/internal/oracle/testdata/string_brand_escape.a:5:9: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestStringBrandEscape (0.51s)
+=== NAME  TestStringBrandUnescape
+    string_brand_test.go:48: /workspace/adamic/internal/oracle/testdata/string_brand_unescape.a:4:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestStringBrandUnescape (0.25s)
+--- PASS: TestStringBrandReadRefused (0.20s)
+=== NAME  TestStringBrandMap
+    string_brand_test.go:49: /workspace/adamic/internal/oracle/testdata/string_brand_map.a:6:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestStringBrandMap (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.742s
+FAIL

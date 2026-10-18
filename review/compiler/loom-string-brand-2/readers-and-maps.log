@@ -1,0 +1,15 @@
+=== RUN   TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== PAUSE TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== RUN   TestASortedMapIsNilWhereAPlainMapIs
+=== PAUSE TestASortedMapIsNilWhereAPlainMapIs
+=== RUN   TestEveryMapAProgramHoldsIsSorted
+=== PAUSE TestEveryMapAProgramHoldsIsSorted
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== CONT  TestASortedMapIsNilWhereAPlainMapIs
+=== CONT  TestCallTargetReaders
+=== CONT  TestEveryMapAProgramHoldsIsSorted
+--- PASS: TestEveryMapAProgramHoldsIsSorted (0.00s)
+--- PASS: TestASortedMapIsNilWhereAPlainMapIs (0.00s)
+--- PASS: TestAProgramIsTheSameBytesEveryTimeGobWritesIt (0.10s)

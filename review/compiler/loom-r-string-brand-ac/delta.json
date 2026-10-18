@@ -1,0 +1,15 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "2194037a6242a32e20f2f526fb9e9bf59d14b4c5",
+  "extra_tracked_changes": [
+    "internal/oracle/testdata/string_brand_refused/destructure.a",
+    "internal/oracle/testdata/string_brand_refused/index.a",
+    "internal/oracle/testdata/string_brand_refused/read.a",
+    "internal/oracle/testdata/string_brand_refused/real.a",
+    "internal/oracle/testdata/string_brand_refused/unknown.a"
+  ],
+  "compiler_go_unchanged": true,
+  "runtime_unchanged": true,
+  "program_bodies_unchanged": true,
+  "position_expectation_changes": []
+}

@@ -1,0 +1,27 @@
+=== RUN   TestProduct_NativeRuntimesSanitized0
+=== PAUSE TestProduct_NativeRuntimesSanitized0
+=== RUN   TestProduct_NativeRuntimesRelease0
+=== PAUSE TestProduct_NativeRuntimesRelease0
+=== RUN   TestProduct_NativeRuntimesCounted0
+=== PAUSE TestProduct_NativeRuntimesCounted0
+=== CONT  TestProduct_NativeRuntimesSanitized0
+    runtimes_test.go:145: build native-runtime 5b9d6e1aae44 hit 0.33
+    runtimes_test.go:145: build native-runtime 9cf4825759d8 miss 4.11
+    runtimes_test.go:145: build native-runtime c6dc10f9923b miss 4.09
+    runtimes_test.go:145: build native-runtime 4dad79be395c miss 15.76
+=== CONT  TestProduct_NativeRuntimesCounted0
+--- PASS: TestProduct_NativeRuntimesSanitized0 (32.46s)
+=== NAME  TestProduct_NativeRuntimesCounted0
+    runtimes_test.go:158: build native-runtime 0265013917fc miss 4.92
+    runtimes_test.go:158: build native-runtime 57b12e6cdede miss 3.91
+    runtimes_test.go:158: build native-runtime 9017402fe83a miss 3.76
+    runtimes_test.go:158: build native-runtime ad29faa511f3 miss 3.20
+--- PASS: TestProduct_NativeRuntimesCounted0 (28.78s)
+=== CONT  TestProduct_NativeRuntimesRelease0
+    runtimes_test.go:155: build native-runtime c55388a5e98d hit 0.02
+    runtimes_test.go:155: build native-runtime 25f5d7667f6a miss 3.36
+    runtimes_test.go:155: build native-runtime a1dbc3989e2b miss 2.54
+    runtimes_test.go:155: build native-runtime 95ff16d0f41f miss 2.53
+--- PASS: TestProduct_NativeRuntimesRelease0 (15.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	76.689s

@@ -1,0 +1,44 @@
+--- FAIL: TestCountsAreRecorded (155.28s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.11s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/overload_ancestor_directory.a (0.09s)
+            counts_test.go:149: Lower: /workspace/adamic/internal/oracle/testdata/overload_ancestor_directory.a:1:13: Adamic 0.1 refuses a string brand member pathBrand with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a (0.07s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_digest_twice.a (0.02s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_random.a (0.06s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_crypto.a (0.02s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_writes.a (0.01s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_bom.a (0.02s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf16.a (0.03s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf8.a (0.02s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_encodings.a (0.01s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closure_convention_host24.a (0.07s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (0.01s)
+            counts_test.go:168: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (0.02s)
+            counts_test.go:168: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (0.02s)
+            counts_test.go:168: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (0.02s)
+            counts_test.go:168: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_input.a (0.07s)
+            counts_test.go:158: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unknown_narrowing_host.a (0.02s)
+            counts_test.go:149: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_brand_optional.a (0.24s)
+            counts_test.go:149: Lower: /workspace/adamic/internal/oracle/testdata/string_brand_optional.a:4:102: Adamic 0.1 refuses an arbitrary number or a value from another enum assigned to InternalSymbolName.Call; its members are a closed union; use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	155.407s
+FAIL

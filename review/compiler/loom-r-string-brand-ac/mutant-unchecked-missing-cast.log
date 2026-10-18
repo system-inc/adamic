@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:46:40.482330249Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T08:46:40.486843408Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing"}
+{"Time":"2026-10-18T08:46:40.486896286Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Output":"=== RUN   TestStringBrandCastChecksMissing\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.486944508Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Output":"=== PAUSE TestStringBrandCastChecksMissing\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.486946791Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing"}
+{"Time":"2026-10-18T08:46:40.486949094Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing"}
+{"Time":"2026-10-18T08:46:40.486950757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Output":"=== CONT  TestStringBrandCastChecksMissing\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.517566235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Output":"    string_brand_test.go:71: missing checked undefined removal\n","OutputType":"error"}
+{"Time":"2026-10-18T08:46:40.517618523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Output":"--- FAIL: TestStringBrandCastChecksMissing (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.517632133Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastChecksMissing","Elapsed":0.03}
+{"Time":"2026-10-18T08:46:40.517649118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.517845192Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.035s\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:40.517886694Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.036}

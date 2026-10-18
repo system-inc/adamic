@@ -1,0 +1,49 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== RUN   TestStringBrandValue
+=== PAUSE TestStringBrandValue
+=== RUN   TestStringBrandDestructureRefused
+=== PAUSE TestStringBrandDestructureRefused
+=== RUN   TestStringBrandUnknownCastRefused
+=== PAUSE TestStringBrandUnknownCastRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandIndexRefused
+=== CONT  TestStringBrandOptional
+=== CONT  TestStringBrandReadRefused
+--- PASS: TestStringBrandReadRefused (0.27s)
+=== CONT  TestStringBrandPlain
+--- PASS: TestStringBrandIndexRefused (0.27s)
+=== CONT  TestStringBrandDestructureRefused
+--- PASS: TestStringBrandDestructureRefused (0.12s)
+=== CONT  TestStringBrandUnknownCastRefused
+--- PASS: TestStringBrandUnknownCastRefused (0.10s)
+=== CONT  TestStringBrandMap
+--- PASS: TestStringBrandEscape (10.01s)
+=== CONT  TestStringBrandUnescape
+--- PASS: TestStringBrandMap (9.67s)
+=== CONT  TestStringBrandValue
+--- PASS: TestStringBrandOptional (10.20s)
+=== CONT  TestStringBrandRealRefused
+--- PASS: TestStringBrandPlain (9.94s)
+--- PASS: TestStringBrandRealRefused (0.11s)
+--- PASS: TestStringBrandValue (1.02s)
+--- PASS: TestStringBrandUnescape (1.18s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.229s

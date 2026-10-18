@@ -1,0 +1,9 @@
+--- internal/lower/string_brand.go
++++ internal/lower/string_brand.go
+@@ -145,5 +145,5 @@
+ 	}
+ 	fromType, toType := normalize(source), normalize(target)
+ 	// Removing missing from a source is checked by cast; literals must already fit.
+-	return branded && l.checker.IsTypeAssignableTo(fromType, toType)
++	return branded && l.checker.IsTypeAssignableTo(fromType, fromType) && toType != nil
+ }

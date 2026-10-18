@@ -1,0 +1,21 @@
+{"Time":"2026-10-18T00:14:17.605017142Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilerinputs"}
+{"Time":"2026-10-18T00:14:17.6099359Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:14:17.610046307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== RUN   TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610076983Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== PAUSE TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610080138Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:14:17.61008802Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:14:17.610091094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== RUN   TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610095741Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== PAUSE TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610097935Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:14:17.610100989Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:14:17.610103463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== CONT  TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610106488Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:14:17.610108951Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== CONT  TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:17.610117164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"--- PASS: TestLoweringIsACopy (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:18.217541809Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Elapsed":0}
+{"Time":"2026-10-18T00:14:18.217597864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"    compilerinputs_test.go:84: 101 linked directories and module files, each under one of Lowering's 46 entries, each entry needed\n"}
+{"Time":"2026-10-18T00:14:18.21761518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"--- PASS: TestLoweringIsWhatTheCompilerLinks (0.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:18.217618194Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Elapsed":0.61}
+{"Time":"2026-10-18T00:14:18.217625946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:18.218612236Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilerinputs\t0.613s\n"}
+{"Time":"2026-10-18T00:14:18.218691746Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Elapsed":0.614}
