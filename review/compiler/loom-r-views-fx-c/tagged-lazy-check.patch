@@ -1,0 +1,5 @@
+--- internal/lower/view_callable_producers.go
++++ internal/lower/view_callable_producers.go
+@@ -136 +136 @@
+-		if contract.Kind == ir.ViewObject {
++		if contract.Kind == ir.ViewObject && false {

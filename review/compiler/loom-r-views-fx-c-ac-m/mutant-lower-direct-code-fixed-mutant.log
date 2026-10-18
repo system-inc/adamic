@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:36:32.561483801Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T22:36:32.567106776Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks"}
+{"Time":"2026-10-18T22:36:32.567182778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Output":"=== RUN   TestCallableProducerCertificatesUseClosureThunks\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.567214896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Output":"=== PAUSE TestCallableProducerCertificatesUseClosureThunks\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.567218972Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks"}
+{"Time":"2026-10-18T22:36:32.567224881Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks"}
+{"Time":"2026-10-18T22:36:32.567228276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Output":"=== CONT  TestCallableProducerCertificatesUseClosureThunks\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.69311475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Output":"    callable_producers_test.go:44: producer certificate includes direct function increment\n","OutputType":"error"}
+{"Time":"2026-10-18T22:36:32.693224693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Output":"--- FAIL: TestCallableProducerCertificatesUseClosureThunks (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.693267015Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerCertificatesUseClosureThunks","Elapsed":0.13}
+{"Time":"2026-10-18T22:36:32.693298061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.694710123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.133s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:36:32.694731144Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.133}

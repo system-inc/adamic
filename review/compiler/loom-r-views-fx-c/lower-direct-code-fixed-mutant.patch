@@ -1,0 +1,10 @@
+--- internal/lower/view_unions_untagged.go
++++ internal/lower/view_unions_untagged.go
+@@ -262 +262 @@
+-			if !function.Closure || function.Receiver {
++			if (!function.Closure || function.Receiver) && false {
+--- internal/lower/view_callable_producers.go
++++ internal/lower/view_callable_producers.go
+@@ -12 +12 @@
+-	if !function.Closure || function.Receiver || function.RestElement != 0 || len(function.Parameters) != len(contract.Parameters) {
++	if function.RestElement != 0 || len(function.Parameters) != len(contract.Parameters) {

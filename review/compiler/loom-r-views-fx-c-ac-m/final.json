@@ -1,0 +1,1073 @@
+[
+  {
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "status": "refused",
+    "reason": "a checked callable producer assignable to more than one union member",
+    "code": "",
+    "sha256": "d1d2257933de914f28ee5f2ac1333457ff46f6528bc43ad68f8b76549e8600ed",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_object_result.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a checked callable producer assignable to more than one union member",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_object_result.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9462
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p135_unique_object_result.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_unique_object_result.a:6:18: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet",
+    "code": "",
+    "sha256": "ddbf4df1fce0d515f663d3fa70c4124da5f757838338046d4271e9de85d1ecb6",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_unique_object_result.a:6:18: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_unique_object_result.a:6:18: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p21.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7857
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "status": "refused",
+    "reason": "a checked callable producer assignable to more than one union member",
+    "code": "",
+    "sha256": "d44633cf20401f2095486843e3860bdd8f22fe4580a1b68f1480565e074528d1",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p22.a:8:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a checked callable producer assignable to more than one union member",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p22.a:8:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6966
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p23.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7380
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p59.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p59.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet",
+    "code": "",
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p59.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p59.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8655
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p60.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7812
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p61.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 11969
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p62.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p62.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet",
+    "code": "",
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p62.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p62.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8655
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/callable_union_result_both.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10324
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/callable_union_result_number.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2179
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/callable_union_result_string.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2525
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/callable_union_result_zero.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2188
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/loom_views_c/snapshot-original.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f5c224407418928a4701d4ebc9fdc96636868dd8c48414e90811f0bf09c92f2b",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8098
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+    "status": "refused",
+    "reason": "a checked callable producer assignable to more than one union member",
+    "code": "",
+    "sha256": "d44633cf20401f2095486843e3860bdd8f22fe4580a1b68f1480565e074528d1",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a checked callable producer assignable to more than one union member",
+      "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result tha"
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "158a78dd8b4f69c077384f4a52efcb78d4582a2938612e26eddcd92fdfe5b3a2",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10331
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/166413c08ae4/p69.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9385
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7562
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet",
+    "code": "",
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the "
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/1b417795343f/fxspptb_oct9_native_p35_class_in_union.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "1b417795343fe3f886bca62f8c44352440fdfe47846cae1dfcec447eec7a03ff",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8729
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "1e717dc21ea220d94d578cf56050301743a56245fcd62158940ef6b0baaae416",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 12523
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/2212de141cf1/fxspptb_oct9_views_p68_object_view_over_tuple.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "2212de141cf18b551e3c040f0644375c6b53047248425bfb7c69b6a3ada22f68",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6896
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/236862030f83/fxspptb_oct9_native_p14_callable_union_no_view.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "236862030f83486e9e8a12cd85ecb3ddc41dc665605108dd7758cbaa48d4d379",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4205
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/23b93dc07994/p135_tagged_unread.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9462
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/27fe1106b197/wide.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5585
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/2ca18403dfcd/snapshot-maybe-number.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4789
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/2db1d7d06600/depth-200.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7560
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+    "status": "refused",
+    "reason": "a checked callable producer assignable to more than one union member",
+    "code": "",
+    "sha256": "d1d2257933de914f28ee5f2ac1333457ff46f6528bc43ad68f8b76549e8600ed",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a checked callable producer assignable to more than one union member",
+      "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member"
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/4311ed865723/callable_union_result_both.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10324
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/447b0fa4b1bb/fxspptb_oct9_native_p60_named_function_producer.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7856
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/4959ae25761c/callable_union_result_number.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2179
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/5907cb79c2f5/callable_union_result_zero.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2188
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "6a43453375e84720bc255c930b28af2d6dc907c3d4ff5638e2f3bb6dd7bf926d",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10002
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/6f7c7da4c8e2/callable_union_result_string.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2525
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/702776fe1a62/scalar-tuple.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4169
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/78a920f10d1e/depth-65.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7560
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/8d3e50ec301c/fxspptb_oct9_views_p32_boxed_slot_string_good.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "8d3e50ec301c637077fac0a96fa1d9fc3a0163937143305e490dd2af54e19239",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6454
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "939d79256bbbd745b38ef6059afd9de5a03a0658fedf26d5e472f5ddcd764b65",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9285
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/948f2e39c0b4/fxspptb_oct9_native_p20_callable_member_call_good.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "948f2e39c0b4c89050860b3fc06d93ce3cb027ce2b5024bddf854e3f41ed9c13",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4517
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/9889d0b80ce2/p62_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8655
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/98e2b7018f11/fxspptb_oct9_views_p23_callable_union_literal_result.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7429
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/ab0bf403ae83/p22_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6966
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 12011
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4435
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/ce11e85355d8/fxspptb_oct9_native_p33_map_in_union.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "ce11e85355d811112f7a5af89adc4cd5cd4c58674e87601d8f30a185cf683762",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6561
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8027
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "d7286c5c4c87de1b7ca0a4bec4c5d3e491413bb37a2c92554ce4df957a6f540a",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8332
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/d9df1651d811/fxspptb_oct9_native_p17_callable_call_first_half.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "d9df1651d8110c5d3d33f71ed0e4800aaecf3642abc122c05bdd2ab04e51973f",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5233
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/dc4b7e9bcfea/fxspptb_oct9_native_p70_recursive_depth_70.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "dc4b7e9bcfeabc2ee5f5311bc67048205d4a6b3e70125920a062ef123a893a08",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10000
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/de5047d3bc07/fxspptb_oct9_views_p62_union_member_arrow_inferred.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/de5047d3bc07/fxspptb_oct9_views_p62_union_member_arrow_inferred.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet",
+    "code": "",
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "diagnostic": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/de5047d3bc07/fxspptb_oct9_views_p62_union_member_arrow_inferred.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet\n",
+      "stdout_bytes": 0
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/de5047d3bc07/fxspptb_oct9_views_p62_union_member_arrow_inferred.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the vi"
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/dfe95dc594a1/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "dfe95dc594a1fdf671fda54148b7633499f8f2e13d5a92860d5bda3e459b57cc",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3533
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/e3f464103722/fxspptb_oct9_native_p34_typed_array_in_union.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "e3f464103722c2709a6a194000e7265bef09c7f92019c3a25d02ea16f3d9c06b",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5934
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f5c224407418928a4701d4ebc9fdc96636868dd8c48414e90811f0bf09c92f2b",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8125
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/f6246f3c1c42/fxspptb_oct9_views_p21_callable_union_function_declaration.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7912
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f8c1252799cab4bbf5a462cba4e32b79a172d336258a6447f425e4744aea163b",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6347
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/f93df345ed22/fxspptb_oct9_views_p09_tuple_destructure_wrong.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "f93df345ed229670a4824d783f6e160ed93e30a6bda395fbca077dcc30da277f",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8159
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/fb59d3aecf4e/p59_adapted.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8655
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/v2/snapshot-maybe-boolean.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8027
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/v2/snapshot-maybe-number.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "sha256": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "diagnostic": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4789
+    },
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  }
+]

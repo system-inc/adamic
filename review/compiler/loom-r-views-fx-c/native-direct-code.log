@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerRegistryFiltersDirectFunctions
+=== PAUSE TestCallableProducerRegistryFiltersDirectFunctions
+=== CONT  TestCallableProducerRegistryFiltersDirectFunctions
+    callable_producers_test.go:61: direct function 0 compared as closure code
+--- FAIL: TestCallableProducerRegistryFiltersDirectFunctions (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.044s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerUniqueObjectResultRefused
+=== PAUSE TestCallableProducerUniqueObjectResultRefused
+=== CONT  TestCallableProducerUniqueObjectResultRefused
+    callable_producers_assignable_test.go:87: want located producer adapter refusal, got <nil>
+--- FAIL: TestCallableProducerUniqueObjectResultRefused (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.114s
+FAIL

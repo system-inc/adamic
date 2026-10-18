@@ -1,0 +1,11 @@
+--- a/internal/lower/view_callable_producers.go
++++ b/internal/lower/view_callable_producers.go
+@@ -125,7 +125,7 @@
+ 				if len(assignableMembers) > 1 {
+ 					return &Refused{Where: read.ViewWhere, What: "a checked callable producer assignable to more than one union member", Fix: "wrap the producer in an arrow with parameters and result that select exactly one view member"}
+ 				}
+-				if len(assignableMembers) != 0 && !compatible {
++				if len(assignableMembers) != 0 && !compatible && false {
+ 					return &NotYet{Where: read.ViewWhere, What: "a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result"}
+ 				}
+ 			}

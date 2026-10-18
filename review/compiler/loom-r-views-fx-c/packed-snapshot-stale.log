@@ -1,0 +1,8 @@
+=== RUN   TestViewSnapshotPayloadOwnership
+=== PAUSE TestViewSnapshotPayloadOwnership
+=== CONT  TestViewSnapshotPayloadOwnership
+    view_snapshot_test.go:54: exit status 3: rep=9 present=0 got=0x1.a5a5a5a5a5ap+422 expected=0x0p+0
+--- FAIL: TestViewSnapshotPayloadOwnership (7.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	7.293s
+FAIL

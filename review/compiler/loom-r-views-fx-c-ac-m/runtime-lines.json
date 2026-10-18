@@ -1,0 +1,13 @@
+{
+  "source_own": [
+    "-        value.payload.boolean = boolean.boolean;",
+    "+        value.payload = (adamic_value){0};",
+    "+        if (boolean.present) { value.payload.boolean = boolean.boolean; }"
+  ],
+  "recut": [
+    "-        value.payload.boolean = boolean.boolean;",
+    "+        value.payload = (adamic_value){0};",
+    "+        if (boolean.present) { value.payload.boolean = boolean.boolean; }"
+  ],
+  "extra_resolution_lines": []
+}
