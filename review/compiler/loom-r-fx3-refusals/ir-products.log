@@ -1,0 +1,7 @@
+=== RUN   TestProduct_CallTargetExports
+=== PAUSE TestProduct_CallTargetExports
+=== CONT  TestProduct_CallTargetExports
+    call_targets_guard_test.go:193: build go_list_-export__./internal/native_./internal/lower_./internal/fresh_./internal/flow_./internal/leakcheck_listing.json 209cee9400e9 miss 43.70
+--- PASS: TestProduct_CallTargetExports (44.48s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	44.541s

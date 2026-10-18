@@ -1,0 +1,7 @@
+=== RUN   TestKnownGapsAreExplicit
+=== PAUSE TestKnownGapsAreExplicit
+=== CONT  TestKnownGapsAreExplicit
+    helper_mutants_test.go:72: build helper-native 54679a979c69 miss 2.98
+--- PASS: TestKnownGapsAreExplicit (3.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	3.207s

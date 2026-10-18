@@ -1,0 +1,8 @@
+=== RUN   TestNativeAgreementRowsNameRegisteredPrograms
+=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms
+=== CONT  TestNativeAgreementRowsNameRegisteredPrograms
+    agree_test.go:509: fx5_literal_test.go:32:2: lowersAndAgreesWithNodeNative must name a program in nativeAgreementPrograms by a literal, so TestProduct_LowerAgreementNative builds it
+--- FAIL: TestNativeAgreementRowsNameRegisteredPrograms (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.016s
+FAIL
