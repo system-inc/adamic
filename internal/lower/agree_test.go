@@ -95,11 +95,13 @@ for (const value of values) { console.log(value.toString()); }
 		return strings.ReplaceAll(code, "computed", "wrong"), nil
 	}},
 	"PlantedWrongExit": {source: "console.log('computed');", mutate: func(code string) (string, error) {
-		index := strings.LastIndex(code, "return 0;")
+		// main returns the host's exit status (process.exitCode, else 0); plant a fixed 7 there.
+		const exit = "return adamic_host_exit_status();"
+		index := strings.LastIndex(code, exit)
 		if index < 0 {
 			return "", errors.New("native main has no successful exit to mutate")
 		}
-		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1), nil
+		return code[:index] + strings.Replace(code[index:], exit, "return 7;", 1), nil
 	}},
 }
 
