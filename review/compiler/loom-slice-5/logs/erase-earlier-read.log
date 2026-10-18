@@ -1,0 +1,49 @@
+=== RUN   TestParserFactoryCompletionBeforeReturn
+=== PAUSE TestParserFactoryCompletionBeforeReturn
+=== RUN   TestParserFactoryCompletionAlias
+=== PAUSE TestParserFactoryCompletionAlias
+=== RUN   TestParserFactoryCompletionBothBranches
+=== PAUSE TestParserFactoryCompletionBothBranches
+=== RUN   TestParserFactoryCompletionOneBranch
+=== PAUSE TestParserFactoryCompletionOneBranch
+=== RUN   TestParserFactoryCompletionBeforeEscape
+=== PAUSE TestParserFactoryCompletionBeforeEscape
+=== RUN   TestParserFactoryCompletionWrongPayloadAssertion
+=== PAUSE TestParserFactoryCompletionWrongPayloadAssertion
+=== RUN   TestParserFactoryCompletionEarlyReturn
+=== PAUSE TestParserFactoryCompletionEarlyReturn
+=== RUN   TestParserFactoryCompletionLoopMayNotRun
+=== PAUSE TestParserFactoryCompletionLoopMayNotRun
+=== RUN   TestParserFactoryCompletionCaptured
+=== PAUSE TestParserFactoryCompletionCaptured
+=== RUN   TestParserFactoryCompletionShortCircuit
+=== PAUSE TestParserFactoryCompletionShortCircuit
+=== RUN   TestParserFactoryReadBeforeCompletion
+=== PAUSE TestParserFactoryReadBeforeCompletion
+=== CONT  TestParserFactoryCompletionBeforeReturn
+=== CONT  TestParserFactoryCompletionEarlyReturn
+=== CONT  TestParserFactoryCompletionOneBranch
+=== CONT  TestParserFactoryCompletionShortCircuit
+--- PASS: TestParserFactoryCompletionOneBranch (0.08s)
+=== CONT  TestParserFactoryCompletionBothBranches
+--- PASS: TestParserFactoryCompletionBeforeReturn (0.09s)
+=== CONT  TestParserFactoryCompletionAlias
+--- PASS: TestParserFactoryCompletionEarlyReturn (0.09s)
+=== CONT  TestParserFactoryCompletionLoopMayNotRun
+--- PASS: TestParserFactoryCompletionShortCircuit (0.13s)
+=== CONT  TestParserFactoryCompletionCaptured
+--- PASS: TestParserFactoryCompletionAlias (0.09s)
+=== CONT  TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryCompletionLoopMayNotRun (0.09s)
+=== CONT  TestParserFactoryCompletionWrongPayloadAssertion
+--- PASS: TestParserFactoryCompletionBothBranches (0.11s)
+=== CONT  TestParserFactoryCompletionBeforeEscape
+--- PASS: TestParserFactoryCompletionCaptured (0.09s)
+=== NAME  TestParserFactoryReadBeforeCompletion
+    factory_completion_test.go:117: later completion must not erase earlier read: {Required:[text] BeforeEscape:map[text:true] Escapes:[{Node:0x20daf9d5a750 Missing:[]}] Reads:[{Node:0x20daf47d9ad0 Field:text Checked:false}] Unknown:false}
+--- FAIL: TestParserFactoryReadBeforeCompletion (0.06s)
+--- PASS: TestParserFactoryCompletionWrongPayloadAssertion (0.05s)
+--- PASS: TestParserFactoryCompletionBeforeEscape (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.253s
+FAIL

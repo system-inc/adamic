@@ -1,0 +1,78 @@
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_possible_read.a b/internal/oracle/testdata/non_null_refused/non_null_possible_read.a
+index 2694742c..ae81f3ab 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_possible_read.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_possible_read.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a b/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a
+index b36e3ffb..a544791d 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a
+index ae89b147..0b79fe50 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a
+index 3efbdcaf..dd33038d 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a
+index b086f0f6..f34ced09 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a
+index 7a1655d3..51fb3375 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a
+index 860f916d..d0e723b2 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a
+index 94397f1d..9c79f244 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a
+index 21151f4a..6a517a78 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a
+index 334674e3..0df9a995 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a
+index d546da4c..b125c9eb 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a
+index 4716a8bb..a997596b 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !
+diff --git a/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a b/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a
+index ae89b147..0b79fe50 100644
+--- a/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a
++++ b/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a
+@@ -0,0 +1 @@
++// a-check: refused the non-null assertion !

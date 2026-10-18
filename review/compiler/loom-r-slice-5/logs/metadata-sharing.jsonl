@@ -1,0 +1,18 @@
+{"Time":"2026-10-18T00:14:59.423989248Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:14:59.429331606Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing"}
+{"Time":"2026-10-18T00:14:59.429415102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"=== RUN   TestParserNodeArrayMetadataSharing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:59.430274022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"=== PAUSE TestParserNodeArrayMetadataSharing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:59.430284799Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing"}
+{"Time":"2026-10-18T00:14:59.430287753Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing"}
+{"Time":"2026-10-18T00:14:59.430289616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"=== CONT  TestParserNodeArrayMetadataSharing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:07.338716372Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"    parser_sharing_test.go:32: native: clang failed: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-18T00:15:07.338800989Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"        main.c:18:2: error: no newline at end of file [-Werror,-Wnewline-eof]\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T00:15:07.338804244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"           18 | }\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T00:15:07.338810623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"              |  ^\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T00:15:07.338812516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"        1 error generated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T00:15:07.33881516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-18T00:15:07.338829752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Output":"--- FAIL: TestParserNodeArrayMetadataSharing (7.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:07.338835451Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserNodeArrayMetadataSharing","Elapsed":7.91}
+{"Time":"2026-10-18T00:15:07.338852967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:07.339527572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t7.915s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:07.339545188Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":7.916}

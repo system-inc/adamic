@@ -1,0 +1,11 @@
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== CONT  TestParserStackTinyLimit
+    parser_stack_test.go:93: 64 KiB sanitized=false: exit -1 stderr ""
+    parser_stack_test.go:93: 128 KiB sanitized=false: exit -1 stderr ""
+    parser_stack_test.go:93: 64 KiB sanitized=true: exit 1 stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==27076==ERROR: AddressSanitizer: stack-overflow on address 0x7ffd1c78bfd8 (pc 0x55b673937477 bp 0x7ffd1c78c840 sp 0x7ffd1c78bfe0 T0)\n    #0 0x55b673937477 in MemcmpInterceptorCommon(void*, int (*)(void const*, void const*, unsigned long), void const*, void const*, unsigned long) /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:868:"
+    parser_stack_test.go:93: 128 KiB sanitized=true: exit 1 stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==27078==ERROR: AddressSanitizer: stack-overflow on address 0x7fffd0c84fd8 (pc 0x563eae5e2477 bp 0x7fffd0c85840 sp 0x7fffd0c84fe0 T0)\n    #0 0x563eae5e2477 in MemcmpInterceptorCommon(void*, int (*)(void const*, void const*, unsigned long), void const*, void const*, unsigned long) /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:868:"
+--- FAIL: TestParserStackTinyLimit (10.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	10.666s
+FAIL

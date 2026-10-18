@@ -1,0 +1,189 @@
+{
+  "main": "98008bbba2881939e07a9d74031994102a3bbe36",
+  "rows": [
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+      "proof": "TestPlaceholderUseCheckAliasReset",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+      "proof": "TestPlaceholderUseCheckAssignmentResult",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+      "proof": "TestPlaceholderUseCheckBeforeUse",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_field.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_local.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+      "proof": "TestPlaceholderUseCheckNullBeforeUse",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+      "proof": "TestPlaceholderUseCheckNullSavedLeak",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_observe.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+      "proof": "TestPlaceholderUseCheckReturnAssignment",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+      "proof": "TestPlaceholderUseCheckSavedLeak",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "internal/oracle/testdata/placeholder_nonnull_scanner.a",
+      "proof": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/node-array/fields.a",
+      "proof": "TestParserAheadNodeArraySourceFields",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/factory-unset.a",
+      "proof": "TestParserConstructionSourceFactoryUnset",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/factory-use.a",
+      "proof": "TestParserConstructionUnsetUse",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/node-array-json.a",
+      "proof": "TestParserConstructionSourceNodeArrayJson",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/node-array-keys.a",
+      "proof": "TestParserConstructionSourceNodeArrayKeys",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/node-array-length.a",
+      "proof": "TestParserConstructionSourceNodeArrayLength",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/node-array-unset.a",
+      "proof": "TestParserConstructionSourceNodeArrayUnset",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/null-placeholder-pending.a",
+      "proof": "TestParserConstructionNullPlaceholderDelivered",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-ahead/rulings/own-key-order.a",
+      "proof": "TestParserConstructionSourceOwnKeyOrder",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-next/speculation/arrow-tryparse.a",
+      "proof": "TestParserSpeculationSourcesArrowTryparse",
+      "source_node_equality": true,
+      "contract": "Source Node stdout/stderr/exit agree across sanitized native and JavaScript; successful leak check"
+    },
+    {
+      "program": "stage3/parser-next/speculation/misfit.a",
+      "proof": "TestParserSpeculationMisfit",
+      "source_node_equality": false,
+      "contract": "Pinned typed-use exit 70 agrees across sanitized native and JavaScript; independent source Node observation retained"
+    }
+  ],
+  "ordinary_agreement": 21,
+  "explicit_checked_stops": 9,
+  "literal_all_programs_match_raw_Node": false,
+  "limitation": "Raw source Node erases type assertions. Nine newly admitted witnesses intentionally violate a typed-use contract and stop in both backends. They are not claimed as raw-Node equality."
+}

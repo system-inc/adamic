@@ -1,0 +1,30 @@
+[
+  {
+    "mutant": "removed-header",
+    "path": "internal/oracle/testdata/non_null_refused/non_null_possible_read.a",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac/check-headers.py",
+      "removed-header",
+      "internal/oracle/testdata/non_null_refused/non_null_possible_read.a"
+    ],
+    "exit": 1,
+    "caught_by": "unchanged Gate.aCheck using actual branch compiler",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/non_null_refused/non_null_possible_read.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:3:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and)",
+    "body_sha256": "83e60b805592839448e7fc6d3e4d899c045428b066c63573f35fe6601fa01fee"
+  },
+  {
+    "mutant": "wrong-reason",
+    "path": "internal/oracle/testdata/non_null_refused/non_null_possible_read.a",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac/check-headers.py",
+      "wrong-reason",
+      "internal/oracle/testdata/non_null_refused/non_null_possible_read.a"
+    ],
+    "exit": 1,
+    "caught_by": "unchanged Gate.aCheck using actual branch compiler",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/non_null_refused/non_null_possible_read.a: refused, expected refused deliberately wrong slice5 header reason (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and)",
+    "body_sha256": "83e60b805592839448e7fc6d3e4d899c045428b066c63573f35fe6601fa01fee"
+  }
+]

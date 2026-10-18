@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:17:10.477284532Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"}
+{"Time":"2026-10-18T00:17:10.479759914Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle"}
+{"Time":"2026-10-18T00:17:10.479826494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Output":"=== RUN   TestProduct_CSSNumbersGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:10.479842468Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Output":"=== PAUSE TestProduct_CSSNumbersGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:10.479845332Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle"}
+{"Time":"2026-10-18T00:17:10.479851632Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle"}
+{"Time":"2026-10-18T00:17:10.479854556Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Output":"=== CONT  TestProduct_CSSNumbersGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:12.111546832Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Output":"    products_test.go:15: build go_build_cohere_/workspace/adamic/cohere/cmd/adamic_stage_one/main.go_go-printer-oracle-owner-v1 2cc56234a38a miss 1.54\n"}
+{"Time":"2026-10-18T00:17:12.111707203Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Output":"--- PASS: TestProduct_CSSNumbersGoOracle (1.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:12.111712171Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Test":"TestProduct_CSSNumbersGoOracle","Elapsed":1.63}
+{"Time":"2026-10-18T00:17:12.11173176Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:12.114886072Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles\t1.637s\n"}
+{"Time":"2026-10-18T00:17:12.114906974Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles","Elapsed":1.638}

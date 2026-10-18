@@ -1,0 +1,15 @@
+{"Time":"2026-10-18T00:24:03.809177987Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-18T00:24:03.813752946Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000"}
+{"Time":"2026-10-18T00:24:03.813809521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"=== RUN   TestParserChildGuard_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:03.813825084Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"=== PAUSE TestParserChildGuard_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:03.813827979Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000"}
+{"Time":"2026-10-18T00:24:03.813832385Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000"}
+{"Time":"2026-10-18T00:24:03.813834118Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"=== CONT  TestParserChildGuard_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:07.180962123Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"    childguard_test.go:56: build compiler-expressions-lowered ed08a62644c9 miss 3.36\n"}
+{"Time":"2026-10-18T00:24:17.006296041Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"    childguard_test.go:56: build compiler-expressions-native 06ee668bb255 miss 9.83\n"}
+{"Time":"2026-10-18T00:24:17.672680535Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"    childguard_test.go:85: build typescript-parser-oracle oracle-owner-v1: settle stage1/typescript/parser/oracles TestProduct_ParserOracle before reading the oracle\n","OutputType":"error"}
+{"Time":"2026-10-18T00:24:17.672771251Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Output":"--- FAIL: TestParserChildGuard_000 (13.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:17.672780054Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestParserChildGuard_000","Elapsed":13.86}
+{"Time":"2026-10-18T00:24:17.67280378Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:17.678392884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t13.869s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:17.678424091Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":13.869}

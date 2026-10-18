@@ -1,0 +1,137 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 41.249786938
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 21.70788501300001
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowProgram____oracle_testdata_non_null_(initialized|static_initialized)_ts_",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.109729802000004
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshCorpusRemainder$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 8.806769478999968
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestViewMixedUnionSelectsNumber$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.2003870109999752
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestAsyncCompilerSuspensionsMatchNode|TestParallelCompilerSharedReferencesMatchNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 10.18295290399999
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestParallelSlotPairs$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 52.25565047500004
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestSlice5Witness",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 12.060064390999969
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestSmallStacksStillPanic|TestLongArgumentsLeaveTheStackItsLimit|TestCheckedNonNullAdamicRefusal)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 9.986404644000004
+  }
+]

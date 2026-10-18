@@ -554,20 +554,20 @@ var freshCorpusPaths = []string{
 	"../oracle/testdata/node_fs_file_write_positions.a",
 	"../oracle/testdata/node_options_const_capture.a",
 	"../oracle/testdata/node_options_widening.a",
-	"../oracle/testdata/non_null_possible_read.a",
-	"../oracle/testdata/non_null_possible_typeerror.a",
-	"../oracle/testdata/non_null_refuse_argument.a",
-	"../oracle/testdata/non_null_refuse_checked.a",
-	"../oracle/testdata/non_null_refuse_comparison.a",
-	"../oracle/testdata/non_null_refuse_conditional.a",
+	"../oracle/testdata/non_null_refused/non_null_possible_read.a",
+	"../oracle/testdata/non_null_refused/non_null_possible_typeerror.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_argument.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_checked.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_comparison.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_conditional.a",
 	"../oracle/testdata/non_null_refuse_default.a",
-	"../oracle/testdata/non_null_refuse_element.a",
-	"../oracle/testdata/non_null_refuse_expression.a",
-	"../oracle/testdata/non_null_refuse_logical.a",
-	"../oracle/testdata/non_null_refuse_null.a",
-	"../oracle/testdata/non_null_refuse_return.a",
-	"../oracle/testdata/non_null_refuse_spread.a",
-	"../oracle/testdata/non_null_refuse_undefined.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_element.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_expression.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_logical.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_null.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_return.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_spread.a",
+	"../oracle/testdata/non_null_refused/non_null_refuse_undefined.a",
 	"../oracle/testdata/normalize.a",
 	"../oracle/testdata/normalize_coverage_cache.a",
 	"../oracle/testdata/normalize_coverage_limit.a",
@@ -1386,20 +1386,20 @@ var freshCorpusTests = [][]func(*testing.T){
 		TestFreshWrites____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6,
 		TestFreshWrites____oracle_testdata_node_options_const_capture_a_b447d7f8507e,
 		TestFreshWrites____oracle_testdata_node_options_widening_a_8c6589169d21,
-		TestFreshWrites____oracle_testdata_non_null_possible_read_a_03dbf385a467,
-		TestFreshWrites____oracle_testdata_non_null_possible_typeerror_a_6a25b0740445,
-		TestFreshWrites____oracle_testdata_non_null_refuse_argument_a_5044636ebaa9,
-		TestFreshWrites____oracle_testdata_non_null_refuse_checked_a_15fb80217f3b,
-		TestFreshWrites____oracle_testdata_non_null_refuse_comparison_a_af272e60c968,
-		TestFreshWrites____oracle_testdata_non_null_refuse_conditional_a_9e4099a84016,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_possible_read_a_72e36be4a66c,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_possible_typeerror_a_be509029a57a,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_argument_a_f0d850484ee0,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_checked_a_3aa862f44c91,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_comparison_a_a84152537348,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_conditional_a_ed59101807c8,
 		TestFreshWrites____oracle_testdata_non_null_refuse_default_a_98ccbac0f2da,
-		TestFreshWrites____oracle_testdata_non_null_refuse_element_a_642d760771d2,
-		TestFreshWrites____oracle_testdata_non_null_refuse_expression_a_fd86ddc65e92,
-		TestFreshWrites____oracle_testdata_non_null_refuse_logical_a_d8ec7fe16365,
-		TestFreshWrites____oracle_testdata_non_null_refuse_null_a_bc3f0b62bf50,
-		TestFreshWrites____oracle_testdata_non_null_refuse_return_a_835892235f21,
-		TestFreshWrites____oracle_testdata_non_null_refuse_spread_a_3f0140d4d4aa,
-		TestFreshWrites____oracle_testdata_non_null_refuse_undefined_a_7b36c538740b,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_element_a_409e4a444a92,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_expression_a_b55b07a0a483,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_logical_a_0a0566b296fb,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_null_a_32e4e1708057,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_return_a_b81e9f6f2f0a,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_spread_a_dea22319f423,
+		TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_undefined_a_4a2f04eeea6f,
 		TestFreshWrites____oracle_testdata_normalize_a_b4c3474ee5d4,
 		TestFreshWrites____oracle_testdata_normalize_coverage_cache_a_6cafd4572235,
 		TestFreshWrites____oracle_testdata_normalize_coverage_limit_a_5b4a20c3aad5,
@@ -4967,37 +4967,37 @@ func TestFreshWrites____oracle_testdata_node_options_widening_a_8c6589169d21(t *
 	checkFreshProgram(t, freshCorpusPaths[549])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_possible_read_a_03dbf385a467(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_possible_read_a_72e36be4a66c(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[550])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_possible_typeerror_a_6a25b0740445(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_possible_typeerror_a_be509029a57a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[551])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_argument_a_5044636ebaa9(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_argument_a_f0d850484ee0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[552])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_checked_a_15fb80217f3b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_checked_a_3aa862f44c91(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[553])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_comparison_a_af272e60c968(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_comparison_a_a84152537348(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[554])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_conditional_a_9e4099a84016(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_conditional_a_ed59101807c8(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[555])
@@ -5009,43 +5009,43 @@ func TestFreshWrites____oracle_testdata_non_null_refuse_default_a_98ccbac0f2da(t
 	checkFreshProgram(t, freshCorpusPaths[556])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_element_a_642d760771d2(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_element_a_409e4a444a92(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[557])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_expression_a_fd86ddc65e92(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_expression_a_b55b07a0a483(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[558])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_logical_a_d8ec7fe16365(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_logical_a_0a0566b296fb(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[559])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_null_a_bc3f0b62bf50(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_null_a_32e4e1708057(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[560])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_return_a_835892235f21(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_return_a_b81e9f6f2f0a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[561])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_spread_a_3f0140d4d4aa(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_spread_a_dea22319f423(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[562])
 }
 
-func TestFreshWrites____oracle_testdata_non_null_refuse_undefined_a_7b36c538740b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_non_null_refused_non_null_refuse_undefined_a_4a2f04eeea6f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[563])
