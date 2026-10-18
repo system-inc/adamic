@@ -778,7 +778,10 @@ func sixWitnessProduct(t *testing.T, name string) {
 	if err := os.MkdirAll(directory, 0755); err != nil {
 		t.Fatal(err)
 	}
-	h := &harness{t: t, repository: repository, directory: directory, parallel: true}
+	// The witness search is the product's fill, shared setup the unit's own budget bounds, as six's corpus harness is,
+	// never typeAwareChildLimit's 90 s for case work: a mutant caught by output runs over the whole generated corpus in
+	// one command, and a builder's load would decide the product (#h4hrxpe).
+	h := &harness{t: t, repository: repository, directory: directory, parallel: true, sharedSetup: true}
 	corpus.witnesses(h, name, func() string { return corpus.mutants[name].build(h) })
 }
 func TestProduct_six_witnesses_wrong_node(t *testing.T) {
