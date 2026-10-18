@@ -485,6 +485,11 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		}
 		arguments = append(arguments, checkerArchive, "-lpthread", "-ldl")
 	}
+	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
+	if err != nil {
+		return err
+	}
+	arguments = append(arguments, compilerLink...)
 	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
 	link := toolchain.CommandIn(directory, compiler, arguments...)
