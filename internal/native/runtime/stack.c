@@ -11,6 +11,7 @@
 #include "adamic.h"
 
 #include <stdint.h>
+#include <string.h>
 #ifndef ADAMIC_TARGET_WASI
 #include <sys/resource.h>
 #endif
@@ -34,7 +35,26 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 // The least Linux allows arguments and environment, whatever the stack (32 pages, ARG_MAX's floor).
 #define ARGUMENTS_FLOOR ((uintptr_t)128 << 10)
 
-__attribute__((constructor)) static void find_stack_limit(void) {
+// Room above the last argument or variable string for what the system keeps there too: the
+// executable's path, macOS's apple strings, Linux's auxiliary vector.
+#define ABOVE_STRINGS ((uintptr_t)16 << 10)
+
+// reach is how far above base the strings of a NULL-ended list end, or 0 when none does.
+static uintptr_t reach(char **strings, uintptr_t base) {
+	uintptr_t farthest = 0;
+	for (size_t index = 0; strings != NULL && strings[index] != NULL; index++) {
+		uintptr_t end = (uintptr_t)strings[index] + strlen(strings[index]) + 1;
+		if (end > base && end - base > farthest) {
+			farthest = end - base;
+		}
+	}
+	return farthest;
+}
+
+// Both C libraries Adamic runs on, glibc and macOS's, hand a constructor main's arguments and
+// environment, so the strings can be measured before main runs.
+__attribute__((constructor)) static void find_stack_limit(int count, char **values, char **environment) {
+	(void)count;
 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
 	uintptr_t size = ASSUMED_STACK;
 	struct rlimit limit;
@@ -48,12 +68,20 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	// arguments and environment a quarter of the stack's limit, and macOS's ARG_MAX of 1 MB is less
 	// than a quarter of its default 8 MB), so a quarter is kept back for them, and never less than
 	// the 128 KiB Linux allows them on a small stack. Measuring where they really end would be closer,
-	// but then how deep a program gets would change with its environment, and this way it never does.
+	// so the quarter remains the floor and ordinary environments keep the same depth.
+	// macOS permits ARG_MAX even under a lowered limit, so measure both lists too.
+	// Keep the larger reservation before computing the panic margin.
 	//
 	// The margin shrinks with a small stack, so one of 1 MiB or 512 KiB still gets a limit: a fixed
 	// 256 KiB, with the quarter, once left nothing at 1 MiB, and recursion there crashed where Node
 	// panics. What's left to run in is then 5/8 of the stack, less on the smallest.
 	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
+	uintptr_t measured = reach(values, base);
+	uintptr_t variables = reach(environment, base);
+	measured = (variables > measured ? variables : measured) + ABOVE_STRINGS;
+	if (measured > arguments) {
+		arguments = measured;
+	}
 	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
 	uintptr_t reserved = arguments + margin;
 	// A stack too small to keep even that gets no check rather than one that fires at once.
