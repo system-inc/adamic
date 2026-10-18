@@ -1,0 +1,51 @@
+=== RUN   TestNullableObjectStorageArray
+=== PAUSE TestNullableObjectStorageArray
+=== RUN   TestNullableObjectStorageField
+=== PAUSE TestNullableObjectStorageField
+=== RUN   TestNullableObjectStorageCallable
+=== PAUSE TestNullableObjectStorageCallable
+=== RUN   TestNullableObjectStorageArraySpread
+=== PAUSE TestNullableObjectStorageArraySpread
+=== RUN   TestNullableObjectStorageObjectSpread
+=== PAUSE TestNullableObjectStorageObjectSpread
+=== RUN   TestNullableObjectStorageLookup
+=== PAUSE TestNullableObjectStorageLookup
+=== CONT  TestNullableObjectStorageArray
+=== CONT  TestNullableObjectStorageArraySpread
+=== CONT  TestNullableObjectStorageObjectSpread
+=== CONT  TestNullableObjectStorageCallable
+=== CONT  TestNullableObjectStorageField
+=== NAME  TestNullableObjectStorageCallable
+    scout_string_number_test.go:44: gate cache node miss
+=== NAME  TestNullableObjectStorageArraySpread
+    scout_string_number_test.go:48: gate cache node miss
+=== NAME  TestNullableObjectStorageField
+    scout_string_number_test.go:40: gate cache node miss
+=== NAME  TestNullableObjectStorageArray
+    scout_string_number_test.go:36: gate cache node miss
+=== NAME  TestNullableObjectStorageObjectSpread
+    scout_string_number_test.go:52: gate cache node miss
+    scout_string_number_test.go:52: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+--- PASS: TestNullableObjectStorageObjectSpread (0.45s)
+=== CONT  TestNullableObjectStorageLookup
+=== NAME  TestNullableObjectStorageArray
+    scout_string_number_test.go:36: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+--- PASS: TestNullableObjectStorageArray (0.46s)
+=== NAME  TestNullableObjectStorageField
+    scout_string_number_test.go:40: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+--- PASS: TestNullableObjectStorageField (0.46s)
+=== NAME  TestNullableObjectStorageCallable
+    scout_string_number_test.go:44: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+--- PASS: TestNullableObjectStorageCallable (0.46s)
+=== NAME  TestNullableObjectStorageArraySpread
+    scout_string_number_test.go:48: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_array_spread.a:3:56: stage 0 can't lower spreading an array of other elements yet
+--- PASS: TestNullableObjectStorageArraySpread (0.46s)
+=== NAME  TestNullableObjectStorageLookup
+    scout_string_number_test.go:56: gate cache node miss
+    scout_string_number_test.go:56: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet
+--- PASS: TestNullableObjectStorageLookup (0.18s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.642s

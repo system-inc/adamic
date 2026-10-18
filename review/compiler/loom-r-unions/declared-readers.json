@@ -1,0 +1,26 @@
+{
+  "packages": [
+    "internal/boundedrun",
+    "cmd/adamic-admission-delta",
+    "internal/compilercensus",
+    "cmd/adamic-gocacheprog",
+    "internal/buildcache/cmd/productidentity",
+    "internal/buildcache/cmd/traced",
+    "internal/buildcache/goplan",
+    "internal/tracked",
+    "internal/toolchain",
+    "stage1/cohere/executable",
+    "stage3/lane"
+  ],
+  "selected": {
+    "internal/boundedrun": "TestCommandDefaultDeadlineIncludesStartup",
+    "cmd/adamic-admission-delta": "TestCompilerCacheIncludesSHA",
+    "internal/compilercensus": "TestDependenciesCoverTheDeclaredMap",
+    "cmd/adamic-gocacheprog": "TestTrustSplit",
+    "internal/buildcache/cmd/traced": "TestSettleParsesOnlyAskedCalls",
+    "internal/tracked": "TestChangedNamesEveryDifference",
+    "internal/toolchain": "TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse",
+    "stage1/cohere/executable": "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec",
+    "stage3/lane": "TestApplyPython"
+  }
+}

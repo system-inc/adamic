@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -249,7 +249,7 @@
+ 		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+ 			parent = parent.Parent
+ 		}
+-		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || unionEqualityObservation(node) || l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
++		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
+ 		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+ 			// Calls and captured writes can invalidate the checker's narrowing. Check the
+ 			// held member before casting it, with ordinary IR shared by both backends.

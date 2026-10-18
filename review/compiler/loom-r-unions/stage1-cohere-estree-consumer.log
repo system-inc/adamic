@@ -1,0 +1,4 @@
+=== RUN   TestAcceptanceGrammar
+    oracles.go:172: build estree-go-oracle-v1 oracle-owner-v1: oracle estree-go-oracle-v1 oracle-owner-v1 is missing: settle stage1/cohere/estree/oracles owners first
+--- FAIL: TestAcceptanceGrammar (1.55s)
+FAIL

@@ -1,0 +1,79 @@
+{
+  "runtime-typeof": [
+    "oracle_test.go:745: stdout differs"
+  ],
+  "null-box": [
+    "oracle_test.go:745: stdout differs"
+  ],
+  "nullable-admission": [
+    "nullable_strings_test.go:14: /tmp/adamic-gate/TestNullableStringAdmission4079398263/001/main.a:1:15: stage 0 can't lower a value of type string | null yet"
+  ],
+  "lower-typeof": [
+    "oracle_test.go:710: Lower: /workspace/adamic/internal/oracle/testdata/scout_tsc_nullish_content.a:3:17: stage 0 can't lower typeof a value holding both null and undefined without a presence slot yet"
+  ],
+  "equality-observation": [
+    "oracle_test.go:745: exit codes differ",
+    "oracle_test.go:751: JavaScript backend: exit codes differ"
+  ],
+  "class-zero": [
+    "oracle_test.go:745: stdout differs",
+    "oracle_test.go:751: JavaScript backend: stdout differs"
+  ],
+  "class-optional": [
+    "scout_class_boolean_test.go:21: neighbor must remain stopped, got <nil>"
+  ],
+  "boxed-check": [
+    "oracle_test.go:736: stdout differs",
+    "oracle_test.go:740: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0"
+  ],
+  "boxed-observation": [
+    "oracle_test.go:745: exit codes differ",
+    "oracle_test.go:751: JavaScript backend: exit codes differ"
+  ],
+  "object-boundary": [
+    "oracle_test.go:745: stdout differs"
+  ],
+  "object-tag": [
+    "oracle_test.go:740: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0"
+  ],
+  "object-optional": [
+    "oracle_test.go:745: stdout differs",
+    "oracle_test.go:751: JavaScript backend: stdout differs"
+  ],
+  "object-null-field": [
+    "oracle_test.go:745: stdout differs"
+  ],
+  "string-check": [
+    "oracle_test.go:740: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0"
+  ],
+  "string-tag": [
+    "oracle_test.go:745: exit codes differ",
+    "oracle_test.go:751: JavaScript backend: exit codes differ"
+  ],
+  "local-nullish": [
+    "oracle_test.go:745: stdout differs",
+    "oracle_test.go:751: JavaScript backend: stdout differs"
+  ],
+  "regex-adapter": [
+    "oracle_test.go:710: Lower: /workspace/adamic/internal/oracle/testdata/regexp_replace/callback.a:34:31: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet"
+  ],
+  "shared-view": [
+    "scout_string_number_test.go:36: want explicit storage view stop, got <nil>"
+  ],
+  "lookup": [
+    "scout_string_number_test.go:56: want explicit storage view stop, got <nil>"
+  ],
+  "local-equality": [
+    "oracle_test.go:745: exit codes differ",
+    "oracle_test.go:751: JavaScript backend: exit codes differ"
+  ],
+  "object-local-runtime": [
+    "oracle_test.go:736: exit codes differ",
+    "oracle_test.go:740: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0"
+  ],
+  "object-local": [
+    "oracle_test.go:729: the release build: exit codes differ",
+    "oracle_test.go:745: exit codes differ",
+    "oracle_test.go:751: JavaScript backend: exit codes differ"
+  ]
+}

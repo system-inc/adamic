@@ -1,0 +1,26 @@
+{
+  "added": {
+    "internal/oracle/testdata/scout_nullable_object_stale_local.a": "| internal/oracle/testdata/scout_nullable_object_stale_local.a | 1 | 1 | 6 | 5 | 1 | 0 |",
+    "internal/oracle/testdata/scout_string_number_fields_locals.a": "| internal/oracle/testdata/scout_string_number_fields_locals.a | 157 | 157 | 137 | 295 | 5 | 0 |",
+    "internal/oracle/testdata/scout_string_number_stale_field.a": "| internal/oracle/testdata/scout_string_number_stale_field.a | 2 | 0 | 3 | 3 | 2 | 0 |",
+    "internal/oracle/testdata/scout_tsc_source_content.a": "| internal/oracle/testdata/scout_tsc_source_content.a | 0 | 0 | 2 | 2 | 0 | 0 |",
+    "internal/oracle/testdata/scout_selector_optional_boolean.a": "| internal/oracle/testdata/scout_selector_optional_boolean.a | 2 | 2 | 1 | 4 | 2 | 0 |",
+    "internal/oracle/testdata/scout_nullable_string_stale_field.a": "| internal/oracle/testdata/scout_nullable_string_stale_field.a | 1 | 0 | 4 | 3 | 1 | 0 |",
+    "internal/oracle/testdata/scout_nullable_objects.a": "| internal/oracle/testdata/scout_nullable_objects.a | 31 | 31 | 139 | 162 | 5 | 0 |",
+    "internal/oracle/testdata/scout_nullable_object_null_field.a": "| internal/oracle/testdata/scout_nullable_object_null_field.a | 2 | 2 | 11 | 12 | 2 | 0 |",
+    "internal/oracle/testdata/scout_class_boolean_fields.a": "| internal/oracle/testdata/scout_class_boolean_fields.a | 22 | 22 | 9 | 31 | 4 | 0 |",
+    "internal/oracle/testdata/scout_values_optional_boolean.a": "| internal/oracle/testdata/scout_values_optional_boolean.a | 2 | 2 | 2 | 5 | 2 | 0 |",
+    "internal/oracle/testdata/scout_boxed_scalar_stale_field.a": "| internal/oracle/testdata/scout_boxed_scalar_stale_field.a | 2 | 1 | 3 | 3 | 2 | 0 |",
+    "internal/oracle/testdata/scout_nullable_object_stale_field.a": "| internal/oracle/testdata/scout_nullable_object_stale_field.a | 2 | 1 | 6 | 5 | 2 | 0 |",
+    "internal/oracle/testdata/scout_tsc_nullish_content.a": "| internal/oracle/testdata/scout_tsc_nullish_content.a | 0 | 0 | 6 | 6 | 0 | 0 |",
+    "internal/oracle/testdata/scout_nullable_strings.a": "| internal/oracle/testdata/scout_nullable_strings.a | 34 | 34 | 130 | 156 | 5 | 0 |",
+    "internal/oracle/testdata/scout_boxed_scalar_fields.a": "| internal/oracle/testdata/scout_boxed_scalar_fields.a | 62 | 62 | 114 | 169 | 6 | 0 |",
+    "internal/oracle/testdata/scout_hir_optional_boolean.a": "| internal/oracle/testdata/scout_hir_optional_boolean.a | 1 | 1 | 0 | 1 | 1 | 0 |"
+  },
+  "changed_existing": {
+    "internal/oracle/testdata/taste_stage3_representations.a": {
+      "before": "| internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 34 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 13 | 36 | 10 | 0 |"
+    }
+  }
+}

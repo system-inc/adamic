@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_objects.go
++++ b/internal/lower/nullable_objects.go
+@@ -82,7 +82,7 @@
+ 		return value
+ 	}
+ 	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+-	if contextual == nil {
++	if true {
+ 		return value
+ 	}
+ 	target, known := l.representation(contextual)

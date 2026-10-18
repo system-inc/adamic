@@ -1,0 +1,61 @@
+bench/regex [('build', 0, 1.652)]
+bridge/tsgo [('build', 0, 26.559), ('test', 0, 0.094)]
+cloud/reports/decode-ascii [('build', 0, 23.698), ('test', 0, 19.408)]
+cmd/adamic [('build', 0, 28.353), ('test', 0, 0.1)]
+cmd/adamic-meter [('build', 0, 26.6), ('test', 0, 0.061)]
+cmd/adamic-test262 [('build', 0, 27.065), ('test', 0, 0.011)]
+internal/compilerinputs [('build', 0, 10.433), ('test', 0, 0.998)]
+internal/flow [('build', 0, 21.011)]
+internal/fresh [('build', 0, 22.59)]
+internal/fuzz [('build', 0, 19.453), ('test', 0, 0.116)]
+internal/leakcheck [('build', 0, 2.428), ('test', 0, 0.008)]
+internal/lower [('build', 0, 6.782)]
+internal/ir [('build', 0, 31.728)]
+internal/native [('build', 0, 36.75), ('test', 0, 0.252)]
+internal/native/runtimeproducts [('build', 0, 5.094), ('test', 0, 17.484)]
+internal/oracle [('build', 0, 7.41)]
+stage1/cohere/css [('build', 0, 16.552), ('test', 0, 0.549)]
+internal/lower/cycleledger [('build', 0, 90.999), ('test', 0, 0.042)]
+stage1/cohere/cssnumbers [('build', 0, 14.566), ('test', 0, 0.017)]
+stage1/cohere/cssstrings [('build', 0, 13.793), ('test', 0, 0.216)]
+stage1/cohere/formatfiles [('build', 0, 11.242), ('test', 0, 0.086)]
+stage1/cohere/estree [('build', 0, 12.959), ('test', 1, 1.607)]
+stage1/cohere/gitignore [('build', 0, 14.42), ('test', 0, 2.792)]
+stage1/cohere/graphql [('build', 0, 13.792), ('test', 0, 1.606)]
+stage1/cohere/graphql/printer [('build', 0, 12.504), ('test', 0, 0.386)]
+stage1/cohere/json [('build', 0, 13.663), ('test', 0, 0.409)]
+stage1/cohere/lint/helpers [('build', 0, 16.411), ('test', 0, 4.682)]
+stage1/cohere/lint [('build', 0, 21.393), ('test', 0, 2.513)]
+stage1/cohere/lint/helpers/comments [('build', 0, 16.104), ('test', 1, 0.492)]
+stage1/cohere/lint/regex [('build', 0, 16.763), ('test', 0, 0.402)]
+stage1/cohere/lint/rules/no-underscore-dangle [('build', 0, 14.508), ('test', 1, 18.723)]
+stage1/cohere/lint/rules/no-unsafe-negation [('build', 0, 14.146), ('test', 1, 18.114)]
+stage1/cohere/lint/rules/no-unsafe-optional-chaining [('build', 1, 7.425)]
+stage1/cohere/lint/rules/typescript-no-this-alias [('build', 1, 7.792)]
+stage1/cohere/markdownblocks [('build', 1, 8.796)]
+stage1/cohere/markdowninline [('build', 1, 8.592)]
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-unions/run-consumers.py", line 31, in <module>
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:rows=list(pool.map(run,consumers))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/loom-r-unions/run-consumers.py", line 11, in run
+    with (e/(name+'-build.log')).open('w') as log:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/workspace/adamic/review/compiler/loom-r-unions/stage1-cohere-mediaquery-build.log'
