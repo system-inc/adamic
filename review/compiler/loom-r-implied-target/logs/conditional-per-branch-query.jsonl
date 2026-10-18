@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:07:31.078188035Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:07:31.082440479Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce"}
+{"Time":"2026-10-18T00:07:31.082529642Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Output":"=== RUN   TestImpliedTargetConditionalQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.082559237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Output":"=== PAUSE TestImpliedTargetConditionalQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.08256159Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce"}
+{"Time":"2026-10-18T00:07:31.082564464Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce"}
+{"Time":"2026-10-18T00:07:31.082566778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Output":"=== CONT  TestImpliedTargetConditionalQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.118012149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Output":"    implied_target_test.go:37: implied target queried parent kind KindConditionalExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:31.118084717Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Output":"--- FAIL: TestImpliedTargetConditionalQueriesOnce (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.118088803Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetConditionalQueriesOnce","Elapsed":0.04}
+{"Time":"2026-10-18T00:07:31.11810679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.119155862Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:31.119194159Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.041}

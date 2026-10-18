@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:07:51.878099473Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:07:51.883359922Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:07:51.883437387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== RUN   TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.883462745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== PAUSE TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.88346616Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:07:51.883473631Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:07:51.883476175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== CONT  TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.92221715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"    implied_target_test.go:37: implied target queried parent kind KindArrayLiteralExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:51.922330107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"--- FAIL: TestImpliedTargetTupleCachesNil (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.922339741Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Elapsed":0.04}
+{"Time":"2026-10-18T00:07:51.922358559Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.926260443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.048s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:51.926305129Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.048}

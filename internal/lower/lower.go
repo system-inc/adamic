@@ -93,6 +93,12 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	// impliedTargets memoizes inferred parent targets only within this checker.
+	impliedTargets map[*ast.Node]*checker.Type
+	// A per-lowering query seam lets tests count actual checker calls without globals.
+	// Nil uses checker.GetTypeAtLocation.
+	impliedTargetQuery func(*ast.Node) *checker.Type
+
 	librarySpreads []librarySpread
 
 	// V2 retains exact logical producer types for union member certification.

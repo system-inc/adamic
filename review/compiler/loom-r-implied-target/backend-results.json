@@ -1,0 +1,88 @@
+[
+  {
+    "name": "node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.548
+  },
+  {
+    "name": "javascript-compile",
+    "command": [
+      "/tmp/loom-r-implied-target-adamic",
+      "js",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 1.197
+  },
+  {
+    "name": "javascript",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-r-implied-target/control.mjs"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.963
+  },
+  {
+    "name": "native-compile",
+    "command": [
+      "/tmp/loom-r-implied-target-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a",
+      "-o",
+      "/tmp/loom-r-implied-target-control-native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 34.786
+  },
+  {
+    "name": "native",
+    "command": [
+      "/tmp/loom-r-implied-target-control-native"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.444
+  },
+  {
+    "name": "sanitized-compile",
+    "command": [
+      "/tmp/loom-r-implied-target-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a",
+      "-o",
+      "/tmp/loom-r-implied-target-control-sanitized",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 21.114
+  },
+  {
+    "name": "sanitized",
+    "command": [
+      "/tmp/loom-r-implied-target-control-sanitized"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.276
+  }
+]

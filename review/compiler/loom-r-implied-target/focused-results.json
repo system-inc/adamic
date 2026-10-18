@@ -1,0 +1,3305 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/bench/regex",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.26788332100001355,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_bench_regex-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/bridge/tsgo",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/bridge/tsgo",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.636672407000006,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_bridge_tsgo-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.195591753999992,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cloud_reports_decode-ascii-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cmd/adamic",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.489450423000008,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cmd_adamic-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cmd/adamic-fuzz",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.2177451150000138,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cmd_adamic-fuzz-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cmd/adamic-meter",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.440987589000002,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cmd_adamic-meter-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-reduce",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cmd/adamic-reduce",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.11592503999997916,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cmd_adamic-reduce-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/cmd/adamic-test262",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.838933797999999,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_cmd_adamic-test262-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/compilerinputs",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/compilerinputs",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 1.472385624999987,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_compilerinputs-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "tests": [
+      "TestFlowCorpusUnitsCoverEveryProgram"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/flow",
+      "-run",
+      "^(TestFlowCorpusUnitsCoverEveryProgram)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 15.050875543999979,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:07:21.518823204Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/flow",
+        "Test": "TestFlowCorpusUnitsCoverEveryProgram",
+        "Elapsed": 0.01
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_flow-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "tests": [
+      "TestClassMethodOutsideSelfCycleRemainsUnproven",
+      "TestRegexOperandsStillJudgeCycleWrites",
+      "TestStatAtimeSelfCycleRemainsUnproven"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/fresh",
+      "-run",
+      "^(TestClassMethodOutsideSelfCycleRemainsUnproven|TestRegexOperandsStillJudgeCycleWrites|TestStatAtimeSelfCycleRemainsUnproven)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 5.234058094999995,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:07:26.767673239Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Test": "TestStatAtimeSelfCycleRemainsUnproven",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:07:26.76812521Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Test": "TestClassMethodOutsideSelfCycleRemainsUnproven",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:07:26.768151479Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Test": "TestRegexOperandsStillJudgeCycleWrites",
+        "Elapsed": 0
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_fresh-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fuzz",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/fuzz",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 6.075544354999977,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_fuzz-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/ir",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 16.830001358000004,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_ir-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/javascript",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.5206165189999865,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_javascript-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/leakcheck",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/leakcheck",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.32297473299999524,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_leakcheck-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestAMutableLocationSeenWiderIsRefused|TestAViewThatCantWriteIsNotRefused|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesStaticInterfaceCycle)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 20.404708235000015,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:05.341195868Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesAccessorCaptureCycle",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:05.346204261Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:05.362190632Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:05.364876885Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_parameter's_default",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-18T00:08:05.481357162Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:08:05.495608618Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:08:05.497944489Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:05.608375532Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider",
+        "Elapsed": 0.24
+      },
+      {
+        "Time": "2026-10-18T00:08:05.734455333Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class",
+        "Elapsed": 0.22
+      },
+      {
+        "Time": "2026-10-18T00:08:05.768784718Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element",
+        "Elapsed": 0.27
+      },
+      {
+        "Time": "2026-10-18T00:08:05.797587697Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-18T00:08:05.8313125Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_class_target",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-18T00:08:05.956396077Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_method's_return",
+        "Elapsed": 0.22
+      },
+      {
+        "Time": "2026-10-18T00:08:05.974213948Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-18T00:08:06.000822267Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-18T00:08:06.073266486Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider",
+        "Elapsed": 0.28
+      },
+      {
+        "Time": "2026-10-18T00:08:06.159824315Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_as",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:06.174948512Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_union_target",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-18T00:08:06.177786901Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_union_source",
+        "Elapsed": 0.22
+      },
+      {
+        "Time": "2026-10-18T00:08:06.235214975Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_object_spread",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:06.260880248Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:06.335132482Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_shorthand_property",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:06.345370928Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-18T00:08:06.349143129Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestClassFeaturesStaticInterfaceCycle",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-18T00:08:06.46353941Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:06.468996742Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-18T00:08:06.472881932Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:06.544382555Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-18T00:08:06.640895869Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-18T00:08:06.648342281Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:06.666905278Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:06.709017756Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:06.784312053Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:08:06.790629181Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:06.877101542Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-18T00:08:06.90217894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-18T00:08:06.947779235Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:06.951010583Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:07.073952314Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-18T00:08:07.082633912Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:07.082642775Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAMutableLocationSeenWiderIsRefused",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:08:07.25573069Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-18T00:08:07.686242971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names",
+        "Elapsed": 0.74
+      },
+      {
+        "Time": "2026-10-18T00:08:07.748935304Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field",
+        "Elapsed": 0.8
+      },
+      {
+        "Time": "2026-10-18T00:08:07.806443517Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter",
+        "Elapsed": 0.73
+      },
+      {
+        "Time": "2026-10-18T00:08:07.881995427Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself",
+        "Elapsed": 0.63
+      },
+      {
+        "Time": "2026-10-18T00:08:08.147022899Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type",
+        "Elapsed": 0.46
+      },
+      {
+        "Time": "2026-10-18T00:08:08.447074487Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write",
+        "Elapsed": 0.64
+      },
+      {
+        "Time": "2026-10-18T00:08:08.487794567Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type",
+        "Elapsed": 0.74
+      },
+      {
+        "Time": "2026-10-18T00:08:08.56537636Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write",
+        "Elapsed": 0.68
+      },
+      {
+        "Time": "2026-10-18T00:08:08.986506513Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_new_Map",
+        "Elapsed": 0.84
+      },
+      {
+        "Time": "2026-10-18T00:08:09.048042605Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_new_Map_passed",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-18T00:08:09.207452044Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs",
+        "Elapsed": 0.65
+      },
+      {
+        "Time": "2026-10-18T00:08:09.246671517Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies",
+        "Elapsed": 0.76
+      },
+      {
+        "Time": "2026-10-18T00:08:09.674877023Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays",
+        "Elapsed": 0.69
+      },
+      {
+        "Time": "2026-10-18T00:08:09.674890984Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field",
+        "Elapsed": 0.63
+      },
+      {
+        "Time": "2026-10-18T00:08:09.779100446Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map",
+        "Elapsed": 0.57
+      },
+      {
+        "Time": "2026-10-18T00:08:09.858277007Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice",
+        "Elapsed": 0.61
+      },
+      {
+        "Time": "2026-10-18T00:08:10.041455011Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:10.185451331Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:10.197460316Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-18T00:08:10.359329812Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:10.382258771Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-18T00:08:10.537472349Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type",
+        "Elapsed": 0.72
+      },
+      {
+        "Time": "2026-10-18T00:08:10.871757348Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:08:10.871805851Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider",
+        "Elapsed": 0.67
+      },
+      {
+        "Time": "2026-10-18T00:08:10.87181898Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-18T00:08:10.871823457Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestAViewThatCantWriteIsNotRefused",
+        "Elapsed": 0
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestCycleScalarLiteralShapesOnce",
+      "TestCycleScalarShapeKeysPreserveDistinctFields",
+      "TestEmptyNeverMapCannotGainWritableInhabitants",
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestCycleScalarLiteralShapesOnce|TestCycleScalarShapeKeysPreserveDistinctFields|TestEmptyNeverMapCannotGainWritableInhabitants|TestEnumNamespaceSharedCycle)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.445406840999993,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:14.534208274Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumNamespaceSharedCycle",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:14.555003865Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:15.331325861Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-18T00:08:15.331378019Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCycleScalarLiteralShapesOnce",
+        "Elapsed": 0.96
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestEnumSlotViews",
+      "TestImpliedTargetAndQueriesOnce",
+      "TestImpliedTargetConditionalQueriesOnce",
+      "TestImpliedTargetLargeArrayQueriesOnce"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestEnumSlotViews|TestImpliedTargetAndQueriesOnce|TestImpliedTargetConditionalQueriesOnce|TestImpliedTargetLargeArrayQueriesOnce)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 10.926504013999988,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:18.175018766Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/variable",
+        "Elapsed": 0.4
+      },
+      {
+        "Time": "2026-10-18T00:08:18.290152705Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/enum_object_writable_view",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:18.337263617Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/structural_enum_object_array",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-18T00:08:18.38831846Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/structural_string_enum_object",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-18T00:08:18.591904792Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetLargeArrayQueriesOnce",
+        "Elapsed": 0.83
+      },
+      {
+        "Time": "2026-10-18T00:08:18.597475837Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/structural_numeric_enum_object",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-18T00:08:18.664915655Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/generic_class_invariant",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-18T00:08:18.978238129Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/map_alias",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-18T00:08:19.00223667Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/mutable_field_alias",
+        "Elapsed": 0.4
+      },
+      {
+        "Time": "2026-10-18T00:08:19.382602161Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/class_field",
+        "Elapsed": 0.37
+      },
+      {
+        "Time": "2026-10-18T00:08:19.494241026Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/optional_union",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-18T00:08:19.64066388Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/object_assign",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:19.904841163Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/override",
+        "Elapsed": 0.53
+      },
+      {
+        "Time": "2026-10-18T00:08:20.191648379Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/function_view",
+        "Elapsed": 0.55
+      },
+      {
+        "Time": "2026-10-18T00:08:20.396312275Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/readonly_into_enum_array",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-18T00:08:20.56815167Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/array_alias",
+        "Elapsed": 0.38
+      },
+      {
+        "Time": "2026-10-18T00:08:20.738148131Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetAndQueriesOnce",
+        "Elapsed": 2.97
+      },
+      {
+        "Time": "2026-10-18T00:08:20.982702835Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/compound",
+        "Elapsed": 0.59
+      },
+      {
+        "Time": "2026-10-18T00:08:21.002263858Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/increment",
+        "Elapsed": 0.43
+      },
+      {
+        "Time": "2026-10-18T00:08:21.250909537Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/array_literal",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-18T00:08:21.478233832Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/literal_property",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-18T00:08:21.552307037Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/assignment",
+        "Elapsed": 0.55
+      },
+      {
+        "Time": "2026-10-18T00:08:21.85779456Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/argument",
+        "Elapsed": 0.46
+      },
+      {
+        "Time": "2026-10-18T00:08:22.051478665Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/member_initializer",
+        "Elapsed": 0.39
+      },
+      {
+        "Time": "2026-10-18T00:08:22.051528369Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews/initializer",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-18T00:08:26.254276184Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestEnumSlotViews",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T00:08:26.254330515Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetConditionalQueriesOnce",
+        "Elapsed": 8.49
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestImpliedTargetNullishQueriesOnce",
+      "TestImpliedTargetOrQueriesOnce",
+      "TestImpliedTargetTupleCachesNil",
+      "TestInheritanceCycleFinderIncludesInheritedFields"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestImpliedTargetNullishQueriesOnce|TestImpliedTargetOrQueriesOnce|TestImpliedTargetTupleCachesNil|TestInheritanceCycleFinderIncludesInheritedFields)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 3.198731381000016,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:28.081172297Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetTupleCachesNil",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-18T00:08:28.566227973Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestInheritanceCycleFinderIncludesInheritedFields",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-18T00:08:29.465819289Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetOrQueriesOnce",
+        "Elapsed": 0.57
+      },
+      {
+        "Time": "2026-10-18T00:08:29.465863424Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestImpliedTargetNullishQueriesOnce",
+        "Elapsed": 1.47
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-03.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestNamespaceCallGraphCycleUnion",
+      "TestNestedCallbackCycleIsRefused",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestLiteralMethodCapturesCannotMakeCycles|TestNamespaceCallGraphCycleUnion|TestNestedCallbackCycleIsRefused|TestNestedEnvironmentCycleIncludesDisjointSlots)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 2.9280699409999897,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:32.378231457Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedCallbackCycleIsRefused",
+        "Elapsed": 0.19
+      },
+      {
+        "Time": "2026-10-18T00:08:32.380585627Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestLiteralMethodCapturesCannotMakeCycles",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-18T00:08:32.399105426Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-18T00:08:32.399148761Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNamespaceCallGraphCycleUnion",
+        "Elapsed": 0.22
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-04.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestNestedFunctionCycleIsRefused",
+      "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "TestNodeHostOptionsRefusalBoundaries",
+      "TestOptionalWideningRefused"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestNestedFunctionCycleIsRefused|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeHostOptionsRefusalBoundaries|TestOptionalWideningRefused)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 5.34663224800002,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:34.983032867Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNestedFunctionCycleIsRefused",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:08:34.990252592Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/argument",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:35.097426606Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/initializer",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:08:35.098320942Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/tuple_element",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:08:35.166238182Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/spread",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:08:35.192611535Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/spread_other_missing",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:35.282174669Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/return",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-18T00:08:35.28853569Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/shorthand",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:35.34003697Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/readonly",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:08:35.355977155Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/property_write",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-18T00:08:35.408393792Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/parameter_default",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-18T00:08:35.466623859Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/nested",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:08:35.570237725Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/class_field",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:35.593316313Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/incompatible",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:35.593791988Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/captured_extra_reference",
+        "Elapsed": 0.73
+      },
+      {
+        "Time": "2026-10-18T00:08:35.635272992Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+        "Elapsed": 0.78
+      },
+      {
+        "Time": "2026-10-18T00:08:35.655857171Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/field_access_paths",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:08:35.659965953Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/field",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:08:35.671394058Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/generic",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:35.69009119Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/arrow",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:08:35.774192365Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/cast",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:08:35.783202354Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/assignment",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:35.783239349Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused/array_element",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-18T00:08:35.896881814Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningRefused",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:08:35.896941482Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/later_escape_refuses_all_consumers",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:36.20656598Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/let_binding",
+        "Elapsed": 0.31
+      },
+      {
+        "Time": "2026-10-18T00:08:36.471555694Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/prior_escape",
+        "Elapsed": 0.26
+      },
+      {
+        "Time": "2026-10-18T00:08:36.708386857Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/function_return",
+        "Elapsed": 0.24
+      },
+      {
+        "Time": "2026-10-18T00:08:37.012099876Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/hidden_field_cast",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:37.285062576Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/hidden_force",
+        "Elapsed": 0.27
+      },
+      {
+        "Time": "2026-10-18T00:08:37.306258781Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/ordinary_call",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:08:37.732671943Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries/stored_wider_view",
+        "Elapsed": 0.43
+      },
+      {
+        "Time": "2026-10-18T00:08:37.732684151Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNodeHostOptionsRefusalBoundaries",
+        "Elapsed": 2.87
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestOptionalWideningSpreadOverwrite",
+      "TestProvenRelationsErase",
+      "TestProvenRelationsRefuse",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestOptionalWideningSpreadOverwrite|TestProvenRelationsErase|TestProvenRelationsRefuse|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 3.2030315240000107,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:39.780130866Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestOptionalWideningSpreadOverwrite",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:39.780377785Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_mutable_array",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:39.847499979Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_nominal_identity",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:08:39.880037132Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_mutable_optional_field",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:39.994216265Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_nested_optional",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:40.034269333Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_mutable_optional_elements",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:08:40.0662872Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+        "Elapsed": 0.39
+      },
+      {
+        "Time": "2026-10-18T00:08:40.076413283Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_invariant_optional_class_argument",
+        "Elapsed": 0.09
+      },
+      {
+        "Time": "2026-10-18T00:08:40.133490793Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_hidden_optional",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:08:40.150202188Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_readonly_to_writable",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-18T00:08:40.187028771Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_hidden_optional",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:08:40.245680361Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_nominal_identity",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:08:40.286370907Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_function_parameter",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:08:40.310279805Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_mutable_field",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:08:40.446186622Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_nested_mutable_literal",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:40.447075074Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/upcast_mutable_array",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:08:40.454176597Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse/satisfies_function_parameter",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:08:40.942429842Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsRefuse",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:08:40.942530849Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestProvenRelationsErase",
+        "Elapsed": 1.26
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower",
+      "-run",
+      "^(TestUndecidedCycleReadsUseReadyChecks)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 15.104074023999999,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:08:54.14208596Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/early_value",
+        "Elapsed": 9.89
+      },
+      {
+        "Time": "2026-10-18T00:08:54.482221547Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/initialized_value",
+        "Elapsed": 0.34
+      },
+      {
+        "Time": "2026-10-18T00:08:54.802928972Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/indirect_value",
+        "Elapsed": 0.32
+      },
+      {
+        "Time": "2026-10-18T00:08:55.119732426Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/early_plain_class",
+        "Elapsed": 0.32
+      },
+      {
+        "Time": "2026-10-18T00:08:55.451596773Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class",
+        "Elapsed": 0.33
+      },
+      {
+        "Time": "2026-10-18T00:08:55.752962906Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/early_extends",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:56.054351265Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks/initialized_extends",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T00:08:56.05436153Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestUndecidedCycleReadsUseReadyChecks",
+        "Elapsed": 11.8
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower/cycleledger",
+    "tests": [
+      "TestOriginalCycleLedger"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 42.527971020999985,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:09:38.539020676Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/lower/cycleledger",
+        "Test": "TestOriginalCycleLedger",
+        "Elapsed": 0
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower_cycleledger-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "tests": [
+      "TestPrototypeMixedCountedCycleProbe"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/native",
+      "-run",
+      "^(TestPrototypeMixedCountedCycleProbe)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 10.82227766599999,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:09:49.445378869Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestPrototypeMixedCountedCycleProbe",
+        "Elapsed": 8.27
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_native-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.5150905539999826,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_native_runtimeproducts-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "tests": [
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestClosureMergeRefusals",
+      "TestFreshWriteProbesStayRefused",
+      "TestImportCycleLoadTimeReads"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/oracle",
+      "-run",
+      "^(TestCheckedViewUntaggedSourceDispatch|TestClosureMergeRefusals|TestFreshWriteProbesStayRefused|TestImportCycleLoadTimeReads)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 7.286636439000006,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:09:51.943129232Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-18T00:09:52.066902263Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a",
+        "Elapsed": 0.43
+      },
+      {
+        "Time": "2026-10-18T00:09:52.363133087Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a",
+        "Elapsed": 0.42
+      },
+      {
+        "Time": "2026-10-18T00:09:52.434918657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+        "Elapsed": 0.37
+      },
+      {
+        "Time": "2026-10-18T00:09:52.80343647Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a",
+        "Elapsed": 0.44
+      },
+      {
+        "Time": "2026-10-18T00:09:52.822881665Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a",
+        "Elapsed": 0.39
+      },
+      {
+        "Time": "2026-10-18T00:09:53.161946894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a",
+        "Elapsed": 0.36
+      },
+      {
+        "Time": "2026-10-18T00:09:53.181870528Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a",
+        "Elapsed": 0.36
+      },
+      {
+        "Time": "2026-10-18T00:09:53.53756135Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a",
+        "Elapsed": 0.36
+      },
+      {
+        "Time": "2026-10-18T00:09:53.538200869Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a",
+        "Elapsed": 0.38
+      },
+      {
+        "Time": "2026-10-18T00:09:53.887175396Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a",
+        "Elapsed": 0.35
+      },
+      {
+        "Time": "2026-10-18T00:09:53.895900219Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a",
+        "Elapsed": 0.36
+      },
+      {
+        "Time": "2026-10-18T00:09:53.931353759Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/ctor_set.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:53.936637056Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/another_view.a",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-18T00:09:53.956305321Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/wraps_argument.a",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:09:53.961301803Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/spread_old.a",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:09:53.982631693Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/spread_array.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:53.987291997Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/splice.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.013678347Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/set_iterator.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.015942786Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/set_add.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.052978153Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/returns_global.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.053024402Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/returns_argument.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.092569712Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/one_call.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.105252976Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/older_instance.a",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-18T00:09:54.124237587Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/next_iteration.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.132533884Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/map_set.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.151710039Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/map_key.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.166175086Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.185951662Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/map_iterator.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.19900149Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/map_callback.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.23286373Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/global_then_function.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.233891485Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/index_write.a",
+        "Elapsed": 0.05
+      },
+      {
+        "Time": "2026-10-18T00:09:54.266858457Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/escapes_after_return.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.26769006Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/fill.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.300430256Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/devirt_fresh_method_keeps_argument.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.300454883Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/ctor_wrapped.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.32908375Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_same.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.337347519Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/ctor_readonly.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.364286739Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/concat.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.364833299Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/constructor_tie.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.404912878Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/closure_captures.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.405133505Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/caught.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.443415832Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/captured_before.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.443829716Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_wrapper.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.476198851Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_then_throws.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.47991877Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_twice_deferred.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.514004881Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_targets_virtual.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.520526546Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_escaped_parent.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.543904254Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_returns_argument.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.559026595Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_owner.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.575632028Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_one_bad_site.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.592698453Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_leaks_parent.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.605080971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_grandchild.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.627914642Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/array_from.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.645512176Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_comparator.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T00:09:54.666208776Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused/call_clobbers.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T00:09:54.666219222Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestFreshWriteProbesStayRefused",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:09:54.983351361Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a",
+        "Elapsed": 3.49
+      },
+      {
+        "Time": "2026-10-18T00:09:54.983361416Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestClosureMergeRefusals",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:09:55.182658157Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/structural/absent",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-18T00:09:55.197100971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads/read/a.a",
+        "Elapsed": 3.7
+      },
+      {
+        "Time": "2026-10-18T00:09:55.275234567Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+        "Elapsed": 0.61
+      },
+      {
+        "Time": "2026-10-18T00:09:55.738079451Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-18T00:09:55.842315908Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads/classes/c.a",
+        "Elapsed": 0.64
+      },
+      {
+        "Time": "2026-10-18T00:09:55.907940563Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+        "Elapsed": 0.63
+      },
+      {
+        "Time": "2026-10-18T00:09:55.97087331Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+        "Elapsed": 1.33
+      },
+      {
+        "Time": "2026-10-18T00:09:56.16280935Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/absent",
+        "Elapsed": 0.26
+      },
+      {
+        "Time": "2026-10-18T00:09:56.292979042Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+        "Elapsed": 0.63
+      },
+      {
+        "Time": "2026-10-18T00:09:56.34139531Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads/classes/a.a",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-18T00:09:56.535456294Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+        "Elapsed": 0.56
+      },
+      {
+        "Time": "2026-10-18T00:09:56.718764661Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/absent",
+        "Elapsed": 0.18
+      },
+      {
+        "Time": "2026-10-18T00:09:56.749787767Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+        "Elapsed": 0.56
+      },
+      {
+        "Time": "2026-10-18T00:09:56.8372571Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads/indirect/b.a",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-18T00:09:57.00213555Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+        "Elapsed": 0.68
+      },
+      {
+        "Time": "2026-10-18T00:09:57.110487163Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+        "Elapsed": 0.39
+      },
+      {
+        "Time": "2026-10-18T00:09:57.214225251Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewUntaggedSourceDispatch",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:09:57.214274133Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads/hoisted/a.a",
+        "Elapsed": 0.38
+      },
+      {
+        "Time": "2026-10-18T00:09:57.214279591Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleLoadTimeReads",
+        "Elapsed": 5.72
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "tests": [
+      "TestImportCycleRuntimeCalls",
+      "TestNestedCycleRefusal",
+      "TestNestedSiblingCycleMutantIsCaught",
+      "TestStage3EnumBoundaries"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/internal/oracle",
+      "-run",
+      "^(TestImportCycleRuntimeCalls|TestNestedCycleRefusal|TestNestedSiblingCycleMutantIsCaught|TestStage3EnumBoundaries)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 11.175870911000004,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:09:58.780713782Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNestedCycleRefusal",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:09:58.781152712Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestStage3EnumBoundaries/06_set_node_flags.a",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:09:58.843881632Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestStage3EnumBoundaries/11_format_syntax_kind.a",
+        "Elapsed": 0.08
+      },
+      {
+        "Time": "2026-10-18T00:09:58.843937334Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestStage3EnumBoundaries/08_debug_format_enum.a",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-18T00:10:01.421118874Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestStage3EnumBoundaries",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:10:08.390684895Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestImportCycleRuntimeCalls",
+        "Elapsed": 2.96
+      },
+      {
+        "Time": "2026-10-18T00:10:08.390866345Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNestedSiblingCycleMutantIsCaught",
+        "Elapsed": 9.61
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/css",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.588681252000015,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_css-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.590586787999996,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_cssnumbers-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.479852435999987,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_cssstrings-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/estree",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.840370857000039,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_estree-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.435002846999964,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_formatfiles-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.918304868000007,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_gitignore-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.481062086999998,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_graphql-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.982620075,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_graphql_printer-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/json",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.84552211700003,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_json-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 6.041523555999959,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.443268672000045,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_helpers-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.2944108489999735,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_helpers_comments-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.488497085999995,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_regex-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.184040988999982,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_rules_no-underscore-dangle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.2934691760000305,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_rules_no-unsafe-negation-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.749915238000028,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_rules_no-unsafe-optional-chaining-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.336863451999989,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_lint_rules_typescript-no-this-alias-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.9850284240000065,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_markdownblocks-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.727372657000046,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_markdowninline-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.4418593270000315,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_mediaquery-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/selector",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.3305091999999945,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_selector-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.340838985999994,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_static_single_assignment-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/suppression",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.445115536000003,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_suppression-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.58203940300001,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_tsprinter-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.737417478999987,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_typeaware-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/values",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/values",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.493157082000039,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_values-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.634416729999998,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_cohere_yaml-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "tests": [
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/parser",
+      "-run",
+      "^(TestTypeOnlyImportCycleCompiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 5.798291688999996,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:12:18.959275037Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/parser",
+        "Test": "TestTypeOnlyImportCycleCompiles",
+        "Elapsed": 1.1
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_typescript_parser-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 4.493599259000007,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_typescript_scanner-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.1658159689999934,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_census_tool-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 0.1143734469999913,
+    "exit": 0,
+    "leaves": [],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_drivers_parser_probe-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "tests": [
+      "TestFixturesCycles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/fixtures",
+      "-run",
+      "^(TestFixturesCycles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 11.611110488999998,
+    "exit": 0,
+    "leaves": [
+      {
+        "Time": "2026-10-18T00:12:32.299393358Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.30130729Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.306190132Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.314401747Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/01_call_time/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.33410692Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.334150175Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:12:32.344854522Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.344867721Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:12:32.353156791Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.353164743Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:12:32.426369658Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/03_extensions/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.437779442Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:32.441350275Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.771581314Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/01_call_time/main.a/native",
+        "Elapsed": 1.42
+      },
+      {
+        "Time": "2026-10-18T00:12:33.771600903Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/01_call_time/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.771606061Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/01_call_time/main.a",
+        "Elapsed": 1.55
+      },
+      {
+        "Time": "2026-10-18T00:12:33.856682645Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.902283957Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/03_extensions/main.a/native",
+        "Elapsed": 1.44
+      },
+      {
+        "Time": "2026-10-18T00:12:33.90229932Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/03_extensions/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.902310326Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/03_extensions/main.a",
+        "Elapsed": 1.56
+      },
+      {
+        "Time": "2026-10-18T00:12:33.923629927Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/native",
+        "Elapsed": 1.45
+      },
+      {
+        "Time": "2026-10-18T00:12:33.923647673Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.923654954Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a",
+        "Elapsed": 1.57
+      },
+      {
+        "Time": "2026-10-18T00:12:33.942148429Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/native",
+        "Elapsed": 1.47
+      },
+      {
+        "Time": "2026-10-18T00:12:33.942237401Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:33.98910669Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a",
+        "Elapsed": 1.6
+      },
+      {
+        "Time": "2026-10-18T00:12:33.98918757Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:34.005375035Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:35.222919605Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/native",
+        "Elapsed": 1.34
+      },
+      {
+        "Time": "2026-10-18T00:12:35.222941197Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:35.360304993Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a",
+        "Elapsed": 1.45
+      },
+      {
+        "Time": "2026-10-18T00:12:35.360360566Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/native",
+        "Elapsed": 1.32
+      },
+      {
+        "Time": "2026-10-18T00:12:35.360387135Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364660401Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a",
+        "Elapsed": 1.44
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364680271Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/native",
+        "Elapsed": 1.35
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364700941Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364709304Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a",
+        "Elapsed": 1.47
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364714852Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles/cycles",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:12:35.364722964Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesCycles",
+        "Elapsed": 4.13
+      }
+    ],
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  }
+]
