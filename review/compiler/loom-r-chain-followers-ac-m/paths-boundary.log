@@ -1,0 +1,24 @@
+{"Time":"2026-10-18T19:40:52.508094464Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T19:40:52.514211087Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries"}
+{"Time":"2026-10-18T19:40:52.514281731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries","Output":"=== RUN   TestElementAccessCompilerAreaBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:52.514303343Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries","Output":"=== PAUSE TestElementAccessCompilerAreaBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:52.514305556Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries"}
+{"Time":"2026-10-18T19:40:52.51430802Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries"}
+{"Time":"2026-10-18T19:40:52.514309742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries","Output":"=== CONT  TestElementAccessCompilerAreaBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:52.514313047Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths"}
+{"Time":"2026-10-18T19:40:52.51431463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Output":"=== RUN   TestElementAccessCompilerAreaBoundaries/paths\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:52.514338214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Output":"=== PAUSE TestElementAccessCompilerAreaBoundaries/paths\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:52.514340187Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths"}
+{"Time":"2026-10-18T19:40:52.514455283Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths"}
+{"Time":"2026-10-18T19:40:52.514464496Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Output":"=== CONT  TestElementAccessCompilerAreaBoundaries/paths\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:54.951115277Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Output":"    element_access_boundaries_test.go:58: /workspace/adamic/internal/oracle/testdata/notyet_element_access/paths.a:3:95: stage 0 can't lower an ElementAccessExpression yet\n"}
+{"Time":"2026-10-18T19:40:54.951216416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Output":"--- PASS: TestElementAccessCompilerAreaBoundaries/paths (2.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:54.951221654Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries/paths","Elapsed":2.44}
+{"Time":"2026-10-18T19:40:54.951242004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries","Output":"--- PASS: TestElementAccessCompilerAreaBoundaries (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:54.95124637Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestElementAccessCompilerAreaBoundaries","Elapsed":0}
+{"Time":"2026-10-18T19:40:54.951248183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:40:54.951251788Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-18T19:40:54.951299008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-18T19:40:54.951301201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-18T19:40:54.953100435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.445s\n"}
+{"Time":"2026-10-18T19:40:54.953122818Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.445}

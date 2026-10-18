@@ -1,0 +1,98 @@
+[
+  {
+    "topic": "non-null-check",
+    "file": "internal/lower/non_null.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/non_null.go\n+++ b/internal/lower/non_null.go\n@@ -17,7 +17,7 @@\n \tif err != nil {\n \t\treturn nil, err\n \t}\n-\treturn l.nonNullValue(node, value)\n+\treturn value, nil\n }\n \n // nonNullValue also checks an already-held assignment target read.\n"
+  },
+  {
+    "topic": "non-null-narrowing",
+    "file": "internal/lower/non_null.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/non_null.go\n+++ b/internal/lower/non_null.go\n@@ -31,7 +31,8 @@\n \t\tcase ir.Defined:\n \t\t\tvalue = narrowed.Value\n \t\tdefault:\n-\t\t\t// Narrow and narrowing calls retain their representation and checks.\n+\t\t\t// Mutant restores the old look-through of representation-changing narrowing.\n+\t\t\tif call, ok := value.(ir.Call); ok && call.Returns == ir.Number && len(call.Arguments) == 1 && call.Arguments[0].Type() == ir.Union { value = call.Arguments[0] }\n \t\t\tgoto stored\n \t\t}\n \t}\n"
+  },
+  {
+    "topic": "nested-empty",
+    "file": "internal/lower/empty_literal.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/empty_literal.go\n+++ b/internal/lower/empty_literal.go\n@@ -6,6 +6,7 @@\n // A union contributes only array members: do not invent slots for a mixed\n // array/object context, or turn a tuple into an array.\n func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {\n+\tif true { return nil }\n \tif proven == nil {\n \t\treturn nil\n \t}\n"
+  },
+  {
+    "topic": "string-concatenation",
+    "file": "internal/lower/expression.go",
+    "description": "Isolated type-correct null spelling regression; archived whole-file overlay also reverted unrelated async/template main code, which is preserved here.",
+    "patch": "--- a/internal/lower/expression.go\n+++ b/internal/lower/expression.go\n@@ -944,7 +944,7 @@\n func (l *lowering) concatenated(value ir.Expression) ir.Expression {\n \tswitch value.(type) {\n \tcase ir.Null:\n-\t\treturn ir.StringConstant{Index: l.constant(\"null\")}\n+\t\treturn ir.StringConstant{Index: l.constant(\"wrong-null\")}\n \tcase ir.Undefined:\n \t\treturn ir.StringConstant{Index: l.constant(\"undefined\")}\n \t}\n"
+  },
+  {
+    "topic": "phantom-primitive",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/view_unions_primitive_brands.go\n+++ b/internal/lower/view_unions_primitive_brands.go\n@@ -39,6 +39,7 @@\n }\n \n func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {\n+ if true { return nil }\n \tprimitive, objects := l.phantomParts(proven)\n \tif primitive == nil {\n \t\treturn nil\n"
+  },
+  {
+    "topic": "proven-predicates",
+    "file": "internal/lower/proven_relations.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/proven_relations.go\n+++ b/internal/lower/proven_relations.go\n@@ -173,7 +173,7 @@\n \t\treturn nil\n \t}\n \tfor _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {\n-\t\tif property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {\n+\t\tif property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {\n \t\t\treturn property.AsPropertyAssignment().Initializer\n \t\t}\n \t}\n"
+  },
+  {
+    "topic": "generic-empty",
+    "file": "internal/lower/invariance.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/invariance.go\n+++ b/internal/lower/invariance.go\n@@ -44,7 +44,7 @@\n // written something it can't hold, or returns nil.\n func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {\n \tfrom, to = l.withoutUndefined(from), l.withoutUndefined(to)\n-\tif from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {\n+\tif from == to || visited[[2]*checker.Type{from, to}] {\n \t\treturn nil\n \t}\n \tvisited[[2]*checker.Type{from, to}] = true\n"
+  },
+  {
+    "topic": "debugger",
+    "file": "internal/lower/statements.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/statements.go\n+++ b/internal/lower/statements.go\n@@ -32,7 +32,7 @@\n \t\treturn l.namespaceBody(node)\n \tcase ast.KindDebuggerStatement:\n \t\t// Preserve it for JavaScript; native builds have no attached debugger.\n-\t\treturn []ir.Statement{ir.Debugger{}}, nil\n+\t\treturn nil, &Refused{Where:l.program.Where(node),What:\"debugger\",Fix:\"remove it\"}\n \tcase ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:\n \t\t// Types erase to nothing, and so does an empty statement.\n \t\treturn nil, nil\n"
+  },
+  {
+    "topic": "generic-values",
+    "file": "internal/lower/expression.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/expression.go\n+++ b/internal/lower/expression.go\n@@ -536,7 +536,7 @@\n \t\t\treturn l.functionValue(node, function)\n \t\t}\n \t\tif declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {\n-\t\t\treturn l.genericFunctionValue(node, declaration)\n+\t\t\t_ = declaration; return nil, l.notYet(node, \"a generic function as a value\")\n \t\t}\n \t\tif !isLocal && l.isLibraryGlobal(node, \"String\") {\n \t\t\treturn nil, l.notYet(node, \"reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)\")\n"
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "file": "internal/lower/generic_function_value.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/generic_function_value.go\n+++ b/internal/lower/generic_function_value.go\n@@ -43,10 +43,6 @@\n \t\t\t\t\t\tcontinue\n \t\t\t\t\t}\n \t\t\t\t\tparent, use := node.Parent, node\n-\t\t\t\t\t// A qualified generic direct call is not a detached function value.\n-\t\t\t\t\tif parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name() == node {\n-\t\t\t\t\t\tuse, parent = parent, parent.Parent\n-\t\t\t\t\t}\n \t\t\t\t\tfor parent != nil && parent.Kind == ast.KindParenthesizedExpression {\n \t\t\t\t\t\tuse, parent = parent, parent.Parent\n \t\t\t\t\t}\n"
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "file": "internal/lower/phantom_brands.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/phantom_brands.go\n+++ b/internal/lower/phantom_brands.go\n@@ -25,7 +25,7 @@\n \t\t\tobjects = append(objects, proven)\n \t\t}\n \t}\n-\tif primitive == nil || l.phantomOverloadOnly(node) {\n+\tif primitive == nil {\n \t\treturn nil\n \t}\n \tfor _, object := range objects {\n"
+  },
+  {
+    "topic": "proven-cleanup",
+    "file": "internal/lower/generic.go",
+    "description": "minimal recorded mutation over current source",
+    "patch": "--- a/internal/lower/generic.go\n+++ b/internal/lower/generic.go\n@@ -115,10 +115,6 @@\n \t// whatever function or closure called it.\n \touterSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper\n \tl.substitution, l.closures = substitution, nil\n-\t// Validation may return before body lowering; restore the caller on every exit.\n-\tdefer func() {\n-\t\tl.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper\n-\t}()\n \tif owner >= 0 {\n \t\tfor proven, held := range outerSubstitution {\n \t\t\tif _, ok := substitution[proven]; !ok {\n@@ -148,6 +144,7 @@\n \t}\n \tl.genericDepth++\n \tdefer func() {\n+\t\tl.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper\n \t\tl.genericDepth--\n \t}()\n \tif owner >= 0 {\n"
+  },
+  {
+    "topic": "constructor-context",
+    "file": "internal/lower/class_inheritance.go",
+    "description": "recorded arrow mutation, held by IR frame assertions before C emission",
+    "patch": "--- a/internal/lower/class_inheritance.go\n+++ b/internal/lower/class_inheritance.go\n@@ -194,9 +194,6 @@\n \t// Class initializers have their own receiver frame, even when instantiation\n \t// is discovered while lowering an unrelated closure. Only arrows created\n \t// inside this constructor may capture its locals.\n-\touterClosures := l.closures\n-\tl.closures = nil\n-\tdefer func() { l.closures = outerClosures }()\n \tinstance := l.instance\n \tvar constructor *ast.Node\n \tfor _, member := range declaration.Members() {\n"
+  },
+  {
+    "topic": "dropped-capture",
+    "file": "internal/lower/locals.go",
+    "description": "recorded arrow mutation, held by IR frame assertions before C emission",
+    "patch": "--- a/internal/lower/locals.go\n+++ b/internal/lower/locals.go\n@@ -215,7 +215,7 @@\n \tfor _, closure := range l.closures[start:] {\n \t\tfunction := &l.result.Functions[closure]\n \t\tif !slices.Contains(function.Environment, local) {\n-\t\t\tfunction.Environment = append(function.Environment, local)\n+\t\t\t// Mutant: omit captured cell.\n \t\t}\n \t}\n }\n"
+  },
+  {
+    "topic": "main-implied-target-cache",
+    "file": "internal/lower/invariance.go",
+    "description": "prove main cache retained across the conflict",
+    "patch": "--- a/internal/lower/invariance.go\n+++ b/internal/lower/invariance.go\n@@ -659,9 +659,6 @@\n // element targets. The checker and source tree stay fixed for this lowering;\n // branches share the parent's type and array elements share its element type.\n func (l *lowering) impliedExpressionTarget(parent *ast.Node) *checker.Type {\n-\tif target, ok := l.impliedTargets[parent]; ok {\n-\t\treturn target\n-\t}\n \tquery := l.impliedTargetQuery\n \tif query == nil {\n \t\tquery = l.checker.GetTypeAtLocation\n"
+  },
+  {
+    "topic": "generic-operand-context",
+    "file": "internal/lower/generic_function_value.go",
+    "description": "prove branch concrete checker-derived operand context",
+    "patch": "--- a/internal/lower/generic_function_value.go\n+++ b/internal/lower/generic_function_value.go\n@@ -142,7 +142,7 @@\n \tif len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {\n \t\treturn nil\n \t}\n-\treturn instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)\n+\treturn nil\n }\n \n //go:linkname typeFromSignature github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getOrCreateTypeFromSignature\n"
+  }
+]

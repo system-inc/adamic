@@ -1,0 +1,19 @@
+--- internal/lower/phantom_brands.go
++++ internal/lower/phantom_brands.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+@@ -25,7 +26,7 @@
+ 			objects = append(objects, proven)
+ 		}
+ 	}
+-	if primitive == nil || l.phantomOverloadOnly(node) {
++	if primitive == nil {
+ 		return nil
+ 	}
+ 	for _, object := range objects {

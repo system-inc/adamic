@@ -1,0 +1,582 @@
+internal/oracle/testdata/host_phantom_overload_primitive.a:33: new blank line at EOF.
+review/compiler/chain-followers/trunk/M14.patch:4: space before tab in indent.
++ 	local := len(l.result.Locals)
+review/compiler/chain-followers/trunk/M14.patch:5: space before tab in indent.
++ 	l.locals[symbol] = local
+review/compiler/chain-followers/trunk/M14.patch:6: space before tab in indent.
++ 	l.result.Locals = append(l.result.Locals, ir.Local{Name: declaration.Name().Text(), Type: ir.Boolean, Global: true, Function: -1})
+review/compiler/chain-followers/trunk/M14.patch:9: space before tab in indent.
++ 	return local
+review/compiler/chain-followers/trunk/M14.patch:11: trailing whitespace.
++ 
+review/compiler/chain-followers/trunk/M14.patch:11: new blank line at EOF.
+review/compiler/chain-followers/trunk/constructor-context.log:9: trailing whitespace.
++        
+review/compiler/chain-followers/trunk/constructor-context.patch:4: space before tab in indent.
++ 	// Class initializers have their own receiver frame, even when instantiation
+review/compiler/chain-followers/trunk/constructor-context.patch:5: space before tab in indent.
++ 	// is discovered while lowering an unrelated closure. Only arrows created
+review/compiler/chain-followers/trunk/constructor-context.patch:6: space before tab in indent.
++ 	// inside this constructor may capture its locals.
+review/compiler/chain-followers/trunk/constructor-context.patch:10: space before tab in indent.
++ 	instance := l.instance
+review/compiler/chain-followers/trunk/constructor-context.patch:11: space before tab in indent.
++ 	var constructor *ast.Node
+review/compiler/chain-followers/trunk/constructor-context.patch:12: space before tab in indent.
++ 	for _, member := range declaration.Members() {
+review/compiler/chain-followers/trunk/dropped-capture.log:9: trailing whitespace.
++        
+review/compiler/chain-followers/trunk/dropped-capture.patch:4: space before tab in indent.
++ 	for _, closure := range l.closures[start:] {
+review/compiler/chain-followers/trunk/dropped-capture.patch:5: space before tab in indent.
++ 		function := &l.result.Functions[closure]
+review/compiler/chain-followers/trunk/dropped-capture.patch:6: space before tab in indent.
++ 		if !slices.Contains(function.Environment, local) {
+review/compiler/chain-followers/trunk/dropped-capture.patch:9: space before tab in indent.
++ 		}
+review/compiler/chain-followers/trunk/dropped-capture.patch:10: space before tab in indent.
++ 	}
+review/compiler/chain-followers/trunk/host-22-node.stdout:4: new blank line at EOF.
+review/compiler/chain-followers/trunk/host-24-node.stdout:5: new blank line at EOF.
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:6: space before tab in indent.
++ 			}
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:7: space before tab in indent.
++ 		case ir.NodeFSFile:
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:8: space before tab in indent.
++ 			found = found || node.MayThrow()
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:11: space before tab in indent.
++ 		case ir.Throw:
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:12: space before tab in indent.
++ 			found = true
+review/compiler/loom-chain-followers-2/exceptions-landed.patch:13: space before tab in indent.
++ 		case ir.Call:
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:4: space before tab in indent.
++ 	// Class initializers have their own receiver frame, even when instantiation
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:5: space before tab in indent.
++ 	// is discovered while lowering an unrelated closure. Only arrows created
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:6: space before tab in indent.
++ 	// inside this constructor may capture its locals.
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:10: space before tab in indent.
++ 	instance := l.instance
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:11: space before tab in indent.
++ 	var constructor *ast.Node
+review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.patch:12: space before tab in indent.
++ 	for _, member := range declaration.Members() {
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:4: space before tab in indent.
++ 	if declared.Ready != 0 {
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:5: space before tab in indent.
++ 		l.touch(declared.Ready - 1)
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:9: space before tab in indent.
++ 		return
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.patch:11: space before tab in indent.
++ 	l.result.Locals[local].Captured = true
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:4: space before tab in indent.
++ 		return l.namespaceBody(node)
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:5: space before tab in indent.
++ 	case ast.KindDebuggerStatement:
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:6: space before tab in indent.
++ 		// Preserve it for JavaScript; native builds have no attached debugger.
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:9: space before tab in indent.
++ 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:10: space before tab in indent.
++ 		// Types erase to nothing, and so does an empty statement.
+review/compiler/loom-chain-followers-2/mutants/debugger.patch:11: space before tab in indent.
++ 		return nil, nil
+review/compiler/loom-chain-followers-2/mutants/generic-empty.patch:6: space before tab in indent.
++ 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
+review/compiler/loom-chain-followers-2/mutants/generic-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-2/mutants/generic-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/generic-empty.patch:11: space before tab in indent.
++ 	visited[[2]*checker.Type{from, to}] = true
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:4: space before tab in indent.
++ 						continue
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:5: space before tab in indent.
++ 					}
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:6: space before tab in indent.
++ 					parent, use := node.Parent, node
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:11: space before tab in indent.
++ 					for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:12: space before tab in indent.
++ 						use, parent = parent, parent.Parent
+review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.patch:13: space before tab in indent.
++ 					}
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:4: space before tab in indent.
++ 			return l.functionValue(node, function)
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:5: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:6: space before tab in indent.
++ 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:9: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:10: space before tab in indent.
++ 		if !isLocal && l.isLibraryGlobal(node, "String") {
+review/compiler/loom-chain-followers-2/mutants/generic-values.patch:11: space before tab in indent.
++ 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
+review/compiler/loom-chain-followers-2/mutants/nested-empty.patch:8: space before tab in indent.
++ 	if proven == nil {
+review/compiler/loom-chain-followers-2/mutants/nested-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-2/mutants/nested-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/non-null-check.patch:4: space before tab in indent.
++ 	if err != nil {
+review/compiler/loom-chain-followers-2/mutants/non-null-check.patch:5: space before tab in indent.
++ 		return nil, err
+review/compiler/loom-chain-followers-2/mutants/non-null-check.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/non-null-check.patch:10: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:4: space before tab in indent.
++ 		case ir.Defined:
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:5: space before tab in indent.
++ 			value = narrowed.Value
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:6: space before tab in indent.
++ 		default:
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:10: space before tab in indent.
++ 			goto stored
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:11: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.patch:12: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:5: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:8: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:9: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:10: space before tab in indent.
++ 	"github.com/system-inc/adamic/internal/ir"
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:12: space before tab in indent.
++ 			objects = append(objects, proven)
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:13: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:14: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:17: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:18: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.patch:19: space before tab in indent.
++ 	for _, object := range objects {
+review/compiler/loom-chain-followers-2/mutants/phantom-primitive.patch:5: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-2/mutants/phantom-primitive.patch:8: space before tab in indent.
++ 	primitive, objects := l.phantomParts(proven)
+review/compiler/loom-chain-followers-2/mutants/phantom-primitive.patch:9: space before tab in indent.
++ 	if primitive == nil {
+review/compiler/loom-chain-followers-2/mutants/phantom-primitive.patch:10: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:4: space before tab in indent.
++ 	// whatever function or closure called it.
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:5: space before tab in indent.
++ 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:6: space before tab in indent.
++ 	l.substitution, l.closures = substitution, nil
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:11: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:12: space before tab in indent.
++ 		for proven, held := range outerSubstitution {
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:13: space before tab in indent.
++ 			if _, ok := substitution[proven]; !ok {
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:15: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:16: space before tab in indent.
++ 	l.genericDepth++
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:17: space before tab in indent.
++ 	defer func() {
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:19: space before tab in indent.
++ 		l.genericDepth--
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:20: space before tab in indent.
++ 	}()
+review/compiler/loom-chain-followers-2/mutants/proven-cleanup.patch:21: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:4: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:5: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:6: space before tab in indent.
++ 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:9: space before tab in indent.
++ 			return property.AsPropertyAssignment().Initializer
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:10: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-2/mutants/proven-predicates.patch:11: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-2/mutants/string-concatenation.patch:28: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-3/counts.patch:1: trailing whitespace.
++--- 
+review/compiler/loom-chain-followers-3/counts.patch:3: trailing whitespace.
+++++ 
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:4: space before tab in indent.
++ 	// Class initializers have their own receiver frame, even when instantiation
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:5: space before tab in indent.
++ 	// is discovered while lowering an unrelated closure. Only arrows created
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:6: space before tab in indent.
++ 	// inside this constructor may capture its locals.
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:10: space before tab in indent.
++ 	instance := l.instance
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:11: space before tab in indent.
++ 	var constructor *ast.Node
+review/compiler/loom-chain-followers-3/mutants/arrow-constructor-frame.patch:12: space before tab in indent.
++ 	for _, member := range declaration.Members() {
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:4: space before tab in indent.
++ 	if declared.Ready != 0 {
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:5: space before tab in indent.
++ 		l.touch(declared.Ready - 1)
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:9: space before tab in indent.
++ 		return
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/arrow-receiver-capture.patch:11: space before tab in indent.
++ 	l.result.Locals[local].Captured = true
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:4: space before tab in indent.
++ 		return l.namespaceBody(node)
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:5: space before tab in indent.
++ 	case ast.KindDebuggerStatement:
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:6: space before tab in indent.
++ 		// Preserve it for JavaScript; native builds have no attached debugger.
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:9: space before tab in indent.
++ 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:10: space before tab in indent.
++ 		// Types erase to nothing, and so does an empty statement.
+review/compiler/loom-chain-followers-3/mutants/debugger.patch:11: space before tab in indent.
++ 		return nil, nil
+review/compiler/loom-chain-followers-3/mutants/generic-empty.patch:6: space before tab in indent.
++ 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
+review/compiler/loom-chain-followers-3/mutants/generic-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-3/mutants/generic-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/generic-empty.patch:11: space before tab in indent.
++ 	visited[[2]*checker.Type{from, to}] = true
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:4: space before tab in indent.
++ 						continue
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:5: space before tab in indent.
++ 					}
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:6: space before tab in indent.
++ 					parent, use := node.Parent, node
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:11: space before tab in indent.
++ 					for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:12: space before tab in indent.
++ 						use, parent = parent, parent.Parent
+review/compiler/loom-chain-followers-3/mutants/generic-namespace-interaction.patch:13: space before tab in indent.
++ 					}
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:4: space before tab in indent.
++ 			return l.functionValue(node, function)
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:5: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:6: space before tab in indent.
++ 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:9: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:10: space before tab in indent.
++ 		if !isLocal && l.isLibraryGlobal(node, "String") {
+review/compiler/loom-chain-followers-3/mutants/generic-values.patch:11: space before tab in indent.
++ 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
+review/compiler/loom-chain-followers-3/mutants/nested-empty.patch:8: space before tab in indent.
++ 	if proven == nil {
+review/compiler/loom-chain-followers-3/mutants/nested-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-3/mutants/nested-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/non-null-check.patch:4: space before tab in indent.
++ 	if err != nil {
+review/compiler/loom-chain-followers-3/mutants/non-null-check.patch:5: space before tab in indent.
++ 		return nil, err
+review/compiler/loom-chain-followers-3/mutants/non-null-check.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/non-null-check.patch:10: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:4: space before tab in indent.
++ 		case ir.Defined:
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:5: space before tab in indent.
++ 			value = narrowed.Value
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:6: space before tab in indent.
++ 		default:
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:10: space before tab in indent.
++ 			goto stored
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:11: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-3/mutants/non-null-narrowing.patch:12: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:5: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:8: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:9: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:10: space before tab in indent.
++ 	"github.com/system-inc/adamic/internal/ir"
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:12: space before tab in indent.
++ 			objects = append(objects, proven)
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:13: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:14: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:17: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:18: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/phantom-overload-interaction.patch:19: space before tab in indent.
++ 	for _, object := range objects {
+review/compiler/loom-chain-followers-3/mutants/phantom-primitive.patch:5: trailing whitespace.
++ 
+review/compiler/loom-chain-followers-3/mutants/phantom-primitive.patch:8: space before tab in indent.
++ 	primitive, objects := l.phantomParts(proven)
+review/compiler/loom-chain-followers-3/mutants/phantom-primitive.patch:9: space before tab in indent.
++ 	if primitive == nil {
+review/compiler/loom-chain-followers-3/mutants/phantom-primitive.patch:10: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:4: space before tab in indent.
++ 	// whatever function or closure called it.
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:5: space before tab in indent.
++ 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:6: space before tab in indent.
++ 	l.substitution, l.closures = substitution, nil
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:11: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:12: space before tab in indent.
++ 		for proven, held := range outerSubstitution {
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:13: space before tab in indent.
++ 			if _, ok := substitution[proven]; !ok {
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:15: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:16: space before tab in indent.
++ 	l.genericDepth++
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:17: space before tab in indent.
++ 	defer func() {
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:19: space before tab in indent.
++ 		l.genericDepth--
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:20: space before tab in indent.
++ 	}()
+review/compiler/loom-chain-followers-3/mutants/proven-cleanup.patch:21: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:4: space before tab in indent.
++ 		return nil
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:5: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:6: space before tab in indent.
++ 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:9: space before tab in indent.
++ 			return property.AsPropertyAssignment().Initializer
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:10: space before tab in indent.
++ 		}
+review/compiler/loom-chain-followers-3/mutants/proven-predicates.patch:11: space before tab in indent.
++ 	}
+review/compiler/loom-chain-followers-3/mutants/string-concatenation.patch:28: trailing whitespace.
++ 
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:4: trailing whitespace.
++internal/lower/testdata/census_panics/qualified.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:5: trailing whitespace.
++internal/lower/testdata/census_panics/types.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:6: trailing whitespace.
++internal/oracle/testdata/arrow_this_field.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:7: trailing whitespace.
++internal/oracle/testdata/arrow_this_stored.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:8: trailing whitespace.
++internal/oracle/testdata/arrow_this_super.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:9: trailing whitespace.
++internal/oracle/testdata/generic_empty_array.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:10: trailing whitespace.
++internal/oracle/testdata/generic_function_value.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:11: trailing whitespace.
++internal/oracle/testdata/generic_function_value_arms.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:12: trailing whitespace.
++internal/oracle/testdata/host_phantom_optional_array.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:13: trailing whitespace.
++internal/oracle/testdata/host_phantom_overload_primitive.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:14: trailing whitespace.
++internal/oracle/testdata/native-generic-empty-array.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:15: trailing whitespace.
++internal/oracle/testdata/phantom_brands.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:16: trailing whitespace.
++internal/oracle/testdata/phantom_catch.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:17: trailing whitespace.
++internal/oracle/testdata/phantom_undefined.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:18: trailing whitespace.
++internal/oracle/testdata/scanner_expressions/number_spellings.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:19: trailing whitespace.
++internal/oracle/testdata/scanner_expressions/primitive_concatenation.a	checked			
+review/compiler/loom-r-chain-followers-ac/statuses.tsv:20: trailing whitespace.
++internal/oracle/testdata/scanner_expressions/string-number-concatenation.a	checked			
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:4: space before tab in indent.
++ 	// Class initializers have their own receiver frame, even when instantiation
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:5: space before tab in indent.
++ 	// is discovered while lowering an unrelated closure. Only arrows created
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:6: space before tab in indent.
++ 	// inside this constructor may capture its locals.
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:10: space before tab in indent.
++ 	instance := l.instance
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:11: space before tab in indent.
++ 	var constructor *ast.Node
+review/compiler/loom-r-chain-followers/mutants/arrow-constructor-frame.patch:12: space before tab in indent.
++ 	for _, member := range declaration.Members() {
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:4: space before tab in indent.
++ 	if declared.Ready != 0 {
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:5: space before tab in indent.
++ 		l.touch(declared.Ready - 1)
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:9: space before tab in indent.
++ 		return
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/arrow-receiver-capture.patch:11: space before tab in indent.
++ 	l.result.Locals[local].Captured = true
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:4: space before tab in indent.
++ 		return l.namespaceBody(node)
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:5: space before tab in indent.
++ 	case ast.KindDebuggerStatement:
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:6: space before tab in indent.
++ 		// Preserve it for JavaScript; native builds have no attached debugger.
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:9: space before tab in indent.
++ 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:10: space before tab in indent.
++ 		// Types erase to nothing, and so does an empty statement.
+review/compiler/loom-r-chain-followers/mutants/debugger.patch:11: space before tab in indent.
++ 		return nil, nil
+review/compiler/loom-r-chain-followers/mutants/generic-empty.patch:6: space before tab in indent.
++ 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
+review/compiler/loom-r-chain-followers/mutants/generic-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-r-chain-followers/mutants/generic-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/generic-empty.patch:11: space before tab in indent.
++ 	visited[[2]*checker.Type{from, to}] = true
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:4: space before tab in indent.
++ 						continue
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:5: space before tab in indent.
++ 					}
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:6: space before tab in indent.
++ 					parent, use := node.Parent, node
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:11: space before tab in indent.
++ 					for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:12: space before tab in indent.
++ 						use, parent = parent, parent.Parent
+review/compiler/loom-r-chain-followers/mutants/generic-namespace-interaction.patch:13: space before tab in indent.
++ 					}
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:4: space before tab in indent.
++ 			return l.functionValue(node, function)
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:5: space before tab in indent.
++ 		}
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:6: space before tab in indent.
++ 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:9: space before tab in indent.
++ 		}
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:10: space before tab in indent.
++ 		if !isLocal && l.isLibraryGlobal(node, "String") {
+review/compiler/loom-r-chain-followers/mutants/generic-values.patch:11: space before tab in indent.
++ 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
+review/compiler/loom-r-chain-followers/mutants/nested-empty.patch:8: space before tab in indent.
++ 	if proven == nil {
+review/compiler/loom-r-chain-followers/mutants/nested-empty.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-r-chain-followers/mutants/nested-empty.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/non-null-check.patch:4: space before tab in indent.
++ 	if err != nil {
+review/compiler/loom-r-chain-followers/mutants/non-null-check.patch:5: space before tab in indent.
++ 		return nil, err
+review/compiler/loom-r-chain-followers/mutants/non-null-check.patch:6: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/non-null-check.patch:10: trailing whitespace.
++ 
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:4: space before tab in indent.
++ 		case ir.Defined:
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:5: space before tab in indent.
++ 			value = narrowed.Value
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:6: space before tab in indent.
++ 		default:
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:10: space before tab in indent.
++ 			goto stored
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:11: space before tab in indent.
++ 		}
+review/compiler/loom-r-chain-followers/mutants/non-null-narrowing.patch:12: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:4: space before tab in indent.
++ 	switch expression := expression.(type) {
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:5: space before tab in indent.
++ 	case ir.NodeBufferCall:
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:6: space before tab in indent.
++ 		return a.nodeBufferCall(expression), true
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:10: space before tab in indent.
++ 		return a.call(a.operands(expression), expression.Type()), true
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:11: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/phantom-fresh.patch:12: space before tab in indent.
++ 	return value{}, false
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:5: trailing whitespace.
++ 
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:8: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:9: space before tab in indent.
++ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:10: space before tab in indent.
++ 	"github.com/system-inc/adamic/internal/ir"
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:12: space before tab in indent.
++ 			objects = append(objects, proven)
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:13: space before tab in indent.
++ 		}
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:14: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:17: space before tab in indent.
++ 		return nil
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:18: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/phantom-overload-interaction.patch:19: space before tab in indent.
++ 	for _, object := range objects {
+review/compiler/loom-r-chain-followers/mutants/phantom-primitive.patch:5: trailing whitespace.
++ 
+review/compiler/loom-r-chain-followers/mutants/phantom-primitive.patch:8: space before tab in indent.
++ 	primitive, objects := l.phantomParts(proven)
+review/compiler/loom-r-chain-followers/mutants/phantom-primitive.patch:9: space before tab in indent.
++ 	if primitive == nil {
+review/compiler/loom-r-chain-followers/mutants/phantom-primitive.patch:10: space before tab in indent.
++ 		return nil
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:4: space before tab in indent.
++ 	// whatever function or closure called it.
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:5: space before tab in indent.
++ 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:6: space before tab in indent.
++ 	l.substitution, l.closures = substitution, nil
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:11: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:12: space before tab in indent.
++ 		for proven, held := range outerSubstitution {
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:13: space before tab in indent.
++ 			if _, ok := substitution[proven]; !ok {
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:15: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:16: space before tab in indent.
++ 	l.genericDepth++
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:17: space before tab in indent.
++ 	defer func() {
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:19: space before tab in indent.
++ 		l.genericDepth--
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:20: space before tab in indent.
++ 	}()
+review/compiler/loom-r-chain-followers/mutants/proven-cleanup.patch:21: space before tab in indent.
++ 	if owner >= 0 {
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:4: space before tab in indent.
++ 		return nil
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:5: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:6: space before tab in indent.
++ 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:9: space before tab in indent.
++ 			return property.AsPropertyAssignment().Initializer
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:10: space before tab in indent.
++ 		}
+review/compiler/loom-r-chain-followers/mutants/proven-predicates.patch:11: space before tab in indent.
++ 	}
+review/compiler/loom-r-chain-followers/mutants/string-concatenation.patch:28: trailing whitespace.
++ 

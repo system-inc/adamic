@@ -1,0 +1,12 @@
+counts-regenerate 0 62.257
+paths-boundary 0 5.392
+lower-all 0 54.882
+native-all 0 210.193
+other-touched-all 1 122.038
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/validate.py", line 25, in <module>
+    run('other-touched-all',['go','test','./internal/flow/...','./internal/fresh/...','./internal/ir/...','./internal/javascript/...',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/validate.py", line 11, in run
+    assert r.returncode==expected,(label,r.returncode)
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('other-touched-all', 1)

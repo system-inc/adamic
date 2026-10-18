@@ -1,0 +1,9 @@
+{
+  "base": "e1bd97c5034ddaac7c47938f587c304264443b7d",
+  "source": "a79a5600420f46e3dba79d5e91ca7097232db102",
+  "source_parent": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "conflicts": [
+    "internal/lower/invariance.go"
+  ],
+  "counts_resolution": "take main table and regenerate, never hand merge"
+}

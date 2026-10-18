@@ -1,0 +1,11 @@
+--- internal/lower/non_null.go
++++ internal/lower/non_null.go
+@@ -17,7 +17,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return l.nonNullValue(node, value)
++	return value, nil
+ }
+ 
+ // nonNullValue also checks an already-held assignment target read.

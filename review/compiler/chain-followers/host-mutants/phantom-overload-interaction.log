@@ -1,0 +1,8 @@
+=== RUN   TestPhantomOverloadOnlyBrandsKeepMainProof
+=== PAUSE TestPhantomOverloadOnlyBrandsKeepMainProof
+=== CONT  TestPhantomOverloadOnlyBrandsKeepMainProof
+    phantom_brands_test.go:156: /tmp/adamic-gate/TestPhantomOverloadOnlyBrandsKeepMainProof2387830165/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member pathBrand whose type is not void; make pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestPhantomOverloadOnlyBrandsKeepMainProof (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.083s
+FAIL

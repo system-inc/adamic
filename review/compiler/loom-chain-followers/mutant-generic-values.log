@@ -1,0 +1,13 @@
+{"Time":"2026-10-13T09:21:26.232795243Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-13T09:21:26.242350446Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances"}
+{"Time":"2026-10-13T09:21:26.242454964Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Output":"=== RUN   TestGenericFunctionValuesHaveSeparateInstances\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.242497298Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Output":"=== PAUSE TestGenericFunctionValuesHaveSeparateInstances\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.242501023Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances"}
+{"Time":"2026-10-13T09:21:26.242530668Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances"}
+{"Time":"2026-10-13T09:21:26.242533662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Output":"=== CONT  TestGenericFunctionValuesHaveSeparateInstances\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.275064526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Output":"    generic_function_value_test.go:19: /tmp/adamic-gate/TestGenericFunctionValuesHaveSeparateInstances3286443157/001/main.a:4:47: stage 0 can't lower a generic function as a value yet\n","OutputType":"error"}
+{"Time":"2026-10-13T09:21:26.275313422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Output":"--- FAIL: TestGenericFunctionValuesHaveSeparateInstances (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.275322697Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionValuesHaveSeparateInstances","Elapsed":0.03}
+{"Time":"2026-10-13T09:21:26.275343999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.275443069Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.042s\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:21:26.275480085Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.043}

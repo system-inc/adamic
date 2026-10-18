@@ -1,0 +1,100 @@
+{"Time":"2026-10-18T08:46:33.585214807Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T08:46:33.591512665Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast"}
+{"Time":"2026-10-18T08:46:33.593550499Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast","Output":"=== RUN   TestCensusQualifiedCast\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593689443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast","Output":"=== PAUSE TestCensusQualifiedCast\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593693119Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast"}
+{"Time":"2026-10-18T08:46:33.593697842Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure"}
+{"Time":"2026-10-18T08:46:33.59369986Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure","Output":"=== RUN   TestCensusGenericRefusalInsideClosure\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593703205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure","Output":"=== PAUSE TestCensusGenericRefusalInsideClosure\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593705275Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure"}
+{"Time":"2026-10-18T08:46:33.59370827Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation"}
+{"Time":"2026-10-18T08:46:33.593709963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation","Output":"=== RUN   TestCensusComputedRelation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.5937122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation","Output":"=== PAUSE TestCensusComputedRelation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593713707Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation"}
+{"Time":"2026-10-18T08:46:33.593715491Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals"}
+{"Time":"2026-10-18T08:46:33.593717915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals","Output":"=== RUN   TestPhantomRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593721628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals","Output":"=== PAUSE TestPhantomRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593723623Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals"}
+{"Time":"2026-10-18T08:46:33.593725356Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal"}
+{"Time":"2026-10-18T08:46:33.593726759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal","Output":"=== RUN   TestPhantomRealPathRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593729574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal","Output":"=== PAUSE TestPhantomRealPathRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593731054Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal"}
+{"Time":"2026-10-18T08:46:33.593732858Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast"}
+{"Time":"2026-10-18T08:46:33.593734461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast","Output":"=== CONT  TestCensusQualifiedCast\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593742633Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals"}
+{"Time":"2026-10-18T08:46:33.593767148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals","Output":"=== CONT  TestPhantomRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593770079Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype"}
+{"Time":"2026-10-18T08:46:33.593781173Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype","Output":"=== RUN   TestPhantomRefusals/prototype\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593784038Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation"}
+{"Time":"2026-10-18T08:46:33.593785586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation","Output":"=== CONT  TestCensusComputedRelation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593792878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype","Output":"=== PAUSE TestPhantomRefusals/prototype\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.593794665Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype"}
+{"Time":"2026-10-18T08:46:33.594328703Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal"}
+{"Time":"2026-10-18T08:46:33.594332307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal","Output":"=== CONT  TestPhantomRealPathRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595367413Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length"}
+{"Time":"2026-10-18T08:46:33.595378682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length","Output":"=== RUN   TestPhantomRefusals/length\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595385202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length","Output":"=== PAUSE TestPhantomRefusals/length\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595387136Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length"}
+{"Time":"2026-10-18T08:46:33.595497217Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid"}
+{"Time":"2026-10-18T08:46:33.595499906Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid","Output":"=== RUN   TestPhantomRefusals/nonvoid\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595610509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid","Output":"=== PAUSE TestPhantomRefusals/nonvoid\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595622434Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid"}
+{"Time":"2026-10-18T08:46:33.595625775Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined"}
+{"Time":"2026-10-18T08:46:33.595628654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined","Output":"=== RUN   TestPhantomRefusals/required_undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595632516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined","Output":"=== PAUSE TestPhantomRefusals/required_undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595637944Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined"}
+{"Time":"2026-10-18T08:46:33.595640231Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path"}
+{"Time":"2026-10-18T08:46:33.595641841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path","Output":"=== RUN   TestPhantomRefusals/any_Path\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595644159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path","Output":"=== PAUSE TestPhantomRefusals/any_Path\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595645788Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path"}
+{"Time":"2026-10-18T08:46:33.59564771Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index"}
+{"Time":"2026-10-18T08:46:33.5956494Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index","Output":"=== RUN   TestPhantomRefusals/string_index\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595651718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index","Output":"=== PAUSE TestPhantomRefusals/string_index\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595653194Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index"}
+{"Time":"2026-10-18T08:46:33.595654789Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message"}
+{"Time":"2026-10-18T08:46:33.595656577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message","Output":"=== RUN   TestPhantomRefusals/review_exact_message\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595661414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message","Output":"=== PAUSE TestPhantomRefusals/review_exact_message\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.595663042Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message"}
+{"Time":"2026-10-18T08:46:33.595664797Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure"}
+{"Time":"2026-10-18T08:46:33.595666361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure","Output":"=== CONT  TestCensusGenericRefusalInsideClosure\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.670714401Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation","Output":"--- PASS: TestCensusComputedRelation (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.670738648Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusComputedRelation","Elapsed":0.08}
+{"Time":"2026-10-18T08:46:33.670900579Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype"}
+{"Time":"2026-10-18T08:46:33.670905029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype","Output":"=== CONT  TestPhantomRefusals/prototype\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.683722287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast","Output":"--- PASS: TestCensusQualifiedCast (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.683754875Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusQualifiedCast","Elapsed":0.09}
+{"Time":"2026-10-18T08:46:33.683764644Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path"}
+{"Time":"2026-10-18T08:46:33.683767105Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path","Output":"=== CONT  TestPhantomRefusals/any_Path\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.696343322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure","Output":"--- PASS: TestCensusGenericRefusalInsideClosure (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.696368149Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusGenericRefusalInsideClosure","Elapsed":0.1}
+{"Time":"2026-10-18T08:46:33.696372544Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message"}
+{"Time":"2026-10-18T08:46:33.696374474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message","Output":"=== CONT  TestPhantomRefusals/review_exact_message\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.722242082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal","Output":"--- PASS: TestPhantomRealPathRefusal (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.722264783Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRealPathRefusal","Elapsed":0.13}
+{"Time":"2026-10-18T08:46:33.722268749Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index"}
+{"Time":"2026-10-18T08:46:33.722271047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index","Output":"=== CONT  TestPhantomRefusals/string_index\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.753267153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype","Output":"--- PASS: TestPhantomRefusals/prototype (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.75328588Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/prototype","Elapsed":0.08}
+{"Time":"2026-10-18T08:46:33.753290295Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid"}
+{"Time":"2026-10-18T08:46:33.753292178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid","Output":"=== CONT  TestPhantomRefusals/nonvoid\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.760049034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path","Output":"--- PASS: TestPhantomRefusals/any_Path (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.760067497Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/any_Path","Elapsed":0.08}
+{"Time":"2026-10-18T08:46:33.760071079Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined"}
+{"Time":"2026-10-18T08:46:33.760072801Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined","Output":"=== CONT  TestPhantomRefusals/required_undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.795750979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index","Output":"--- PASS: TestPhantomRefusals/string_index (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.7957695Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/string_index","Elapsed":0.07}
+{"Time":"2026-10-18T08:46:33.795772952Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length"}
+{"Time":"2026-10-18T08:46:33.79577964Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length","Output":"=== CONT  TestPhantomRefusals/length\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.802746853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message","Output":"--- PASS: TestPhantomRefusals/review_exact_message (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.818484929Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/review_exact_message","Elapsed":0.11}
+{"Time":"2026-10-18T08:46:33.818502664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid","Output":"--- PASS: TestPhantomRefusals/nonvoid (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.823810789Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/nonvoid","Elapsed":0.07}
+{"Time":"2026-10-18T08:46:33.823816216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined","Output":"--- PASS: TestPhantomRefusals/required_undefined (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.826869363Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/required_undefined","Elapsed":0.06}
+{"Time":"2026-10-18T08:46:33.826876152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length","Output":"--- PASS: TestPhantomRefusals/length (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.826879996Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals/length","Elapsed":0.03}
+{"Time":"2026-10-18T08:46:33.826882202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals","Output":"--- PASS: TestPhantomRefusals (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.826885533Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomRefusals","Elapsed":0}
+{"Time":"2026-10-18T08:46:33.826887483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:33.830322254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.245s\n"}
+{"Time":"2026-10-18T08:46:33.830369893Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.245}

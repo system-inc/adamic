@@ -1,0 +1,18 @@
+{
+  "packages": [
+    "internal/lower/...",
+    "internal/native/...",
+    "internal/oracle/...",
+    "internal/flow/...",
+    "internal/fresh/...",
+    "internal/ir/...",
+    "internal/javascript/...",
+    "stage3/fixtures/..."
+  ],
+  "stage3_status_files": [
+    "assertions/status.json",
+    "cycles/status.json",
+    "namespaces/status.json"
+  ],
+  "all_package_results_passed_after_disk_recovery": true
+}

@@ -1,0 +1,829 @@
+=== RUN   TestCensusMarkerResultIsAssignable
+=== PAUSE TestCensusMarkerResultIsAssignable
+=== RUN   TestCensusMarkerZeroCallIsNotAssumedSafe
+=== PAUSE TestCensusMarkerZeroCallIsNotAssumedSafe
+=== RUN   TestCensusOverloadBinderGuards
+=== PAUSE TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadReturnProof
+=== PAUSE TestCensusOverloadReturnProof
+=== RUN   TestCensusQualifiedCast
+=== PAUSE TestCensusQualifiedCast
+=== RUN   TestCensusGenericRefusalInsideClosure
+=== PAUSE TestCensusGenericRefusalInsideClosure
+=== RUN   TestCensusComputedRelation
+=== PAUSE TestCensusComputedRelation
+=== RUN   TestCensusPredicateInteractionBoundary
+=== PAUSE TestCensusPredicateInteractionBoundary
+=== RUN   TestCensusPredicateInteractionEscapes
+=== PAUSE TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+=== PAUSE TestCensusPredicateMarkerKeepsProofBoundaries
+=== RUN   TestCensusPredicateMarkerCallStaysNotYet
+=== PAUSE TestCensusPredicateMarkerCallStaysNotYet
+=== RUN   TestCensusOverloadRelation
+=== PAUSE TestCensusOverloadRelation
+=== RUN   TestCensusSmallFiniteKeyRead
+=== PAUSE TestCensusSmallFiniteKeyRead
+=== RUN   TestCensusRestMutableElements
+=== PAUSE TestCensusRestMutableElements
+=== RUN   TestCensusBooleanDeadBranch
+=== PAUSE TestCensusBooleanDeadBranch
+=== RUN   TestClockGenericReturnsT01Shapes
+=== PAUSE TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01SupportsPhantomPrimitives
+=== PAUSE TestClockGenericReturnsT01SupportsPhantomPrimitives
+=== RUN   TestClockGenericReturnsT01RejectsNullBeforeBody
+=== PAUSE TestClockGenericReturnsT01RejectsNullBeforeBody
+=== RUN   TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== PAUSE TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== RUN   TestEmptyArrayInstantiations
+=== PAUSE TestEmptyArrayInstantiations
+=== RUN   TestEmptyArrayViewsStillRefuse
+=== PAUSE TestEmptyArrayViewsStillRefuse
+=== RUN   TestEmptyArrayScalarFallbacksUseTruthiness
+=== PAUSE TestEmptyArrayScalarFallbacksUseTruthiness
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== RUN   TestGenericFunctionValueOperandContexts
+=== PAUSE TestGenericFunctionValueOperandContexts
+=== RUN   TestGenericFunctionValuesHaveSeparateInstances
+=== PAUSE TestGenericFunctionValuesHaveSeparateInstances
+=== RUN   TestGenericFunctionValueReferenceInstances
+=== PAUSE TestGenericFunctionValueReferenceInstances
+=== RUN   TestGenericFunctionValueIdentityComparisonIsNotYet
+=== PAUSE TestGenericFunctionValueIdentityComparisonIsNotYet
+=== RUN   TestGenericFunctionValueDifferentReferenceRepresentations
+=== PAUSE TestGenericFunctionValueDifferentReferenceRepresentations
+=== RUN   TestGenericFunctionValueEarlierIdentityComparisonIsNotYet
+=== PAUSE TestGenericFunctionValueEarlierIdentityComparisonIsNotYet
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet
+=== PAUSE TestGenericFunctionValueIdentityCallsAreNotYet
+=== RUN   TestGenericFunctionValueUnionIdentityIsNotYet
+=== PAUSE TestGenericFunctionValueUnionIdentityIsNotYet
+=== RUN   TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== PAUSE TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:29: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+=== RUN   TestPhantomRefusals
+=== PAUSE TestPhantomRefusals
+=== RUN   TestPhantomCastsAreErased
+=== PAUSE TestPhantomCastsAreErased
+=== RUN   TestPhantomPrimitiveNames
+=== PAUSE TestPhantomPrimitiveNames
+=== RUN   TestPhantomLiteralCastsStayRefused
+=== PAUSE TestPhantomLiteralCastsStayRefused
+=== RUN   TestPhantomRealPathRefusal
+=== PAUSE TestPhantomRealPathRefusal
+=== RUN   TestPhantomOverloadOnlyBrandsKeepMainProof
+=== PAUSE TestPhantomOverloadOnlyBrandsKeepMainProof
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestCensusMarkerResultIsAssignable
+=== CONT  TestEmptyArrayScalarFallbacksUseTruthiness
+=== CONT  TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== CONT  TestPhantomRealPathRefusal
+=== CONT  TestEmptyArrayViewsStillRefuse
+=== RUN   TestEmptyArrayViewsStillRefuse/mutable_never_alias
+=== PAUSE TestEmptyArrayViewsStillRefuse/mutable_never_alias
+=== RUN   TestEmptyArrayViewsStillRefuse/generic_mutable_result
+=== PAUSE TestEmptyArrayViewsStillRefuse/generic_mutable_result
+=== RUN   TestEmptyArrayViewsStillRefuse/inferred_mutable_fallback
+=== PAUSE TestEmptyArrayViewsStillRefuse/inferred_mutable_fallback
+=== RUN   TestEmptyArrayViewsStillRefuse/nonempty_generic_cast
+=== PAUSE TestEmptyArrayViewsStillRefuse/nonempty_generic_cast
+=== CONT  TestEmptyArrayInstantiations
+--- PASS: TestEmptyArrayInstantiations (0.22s)
+=== CONT  TestClockGenericReturnsT01RejectsIndexBeforeBody
+--- PASS: TestGenericFunctionValueNamespaceDirectCallsKeepIdentity (0.25s)
+=== CONT  TestClockGenericReturnsT01RejectsNullBeforeBody
+--- PASS: TestCensusMarkerResultIsAssignable (0.25s)
+=== CONT  TestClockGenericReturnsT01SupportsPhantomPrimitives
+--- PASS: TestPhantomRealPathRefusal (0.31s)
+=== CONT  TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== RUN   TestClockGenericReturnsT01Shapes/callable
+=== PAUSE TestClockGenericReturnsT01Shapes/callable
+=== RUN   TestClockGenericReturnsT01Shapes/constructable
+=== PAUSE TestClockGenericReturnsT01Shapes/constructable
+=== RUN   TestClockGenericReturnsT01Shapes/indexed
+=== PAUSE TestClockGenericReturnsT01Shapes/indexed
+=== RUN   TestClockGenericReturnsT01Shapes/container_intersection
+=== PAUSE TestClockGenericReturnsT01Shapes/container_intersection
+=== RUN   TestClockGenericReturnsT01Shapes/nested_callable
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_callable
+=== RUN   TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== PAUSE TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestGenericFunctionValueUnionIdentityIsNotYet
+--- PASS: TestEmptyArrayScalarFallbacksUseTruthiness (0.36s)
+=== CONT  TestGenericFunctionValueIdentityCallsAreNotYet
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet/Object.is(first,_second)
+--- PASS: TestGenericFunctionValueUnionIdentityIsNotYet (0.15s)
+=== CONT  TestGenericFunctionValueEarlierIdentityComparisonIsNotYet
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet/[first].includes(second)
+--- PASS: TestClockGenericReturnsT01RejectsNullBeforeBody (0.36s)
+=== CONT  TestGenericFunctionValueDifferentReferenceRepresentations
+--- PASS: TestClockGenericReturnsT01RejectsIndexBeforeBody (0.39s)
+=== CONT  TestGenericFunctionValueIdentityComparisonIsNotYet
+--- PASS: TestClockGenericReturnsT01SupportsPhantomPrimitives (0.37s)
+=== CONT  TestCensusBooleanDeadBranch
+--- PASS: TestGenericFunctionValueEarlierIdentityComparisonIsNotYet (0.19s)
+=== CONT  TestGenericFunctionValueReferenceInstances
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet/[first].indexOf(second)
+--- PASS: TestGenericFunctionValueIdentityComparisonIsNotYet (0.11s)
+=== CONT  TestGenericFunctionValuesHaveSeparateInstances
+--- PASS: TestGenericFunctionValueDifferentReferenceRepresentations (0.16s)
+=== CONT  TestGenericFunctionValueOperandContexts
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet/new_Set([first,_second])
+--- PASS: TestGenericFunctionValueReferenceInstances (0.14s)
+=== CONT  TestNestedEmptyArrayElementKinds
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestGenericFunctionValueOperandContexts (0.11s)
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== RUN   TestGenericFunctionValueIdentityCallsAreNotYet/new_Map([[first,_1],_[second,_2]])
+--- PASS: TestGenericFunctionValuesHaveSeparateInstances (0.17s)
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+--- PASS: TestGenericFunctionValueIdentityCallsAreNotYet (0.59s)
+    --- PASS: TestGenericFunctionValueIdentityCallsAreNotYet/Object.is(first,_second) (0.17s)
+    --- PASS: TestGenericFunctionValueIdentityCallsAreNotYet/[first].includes(second) (0.17s)
+    --- PASS: TestGenericFunctionValueIdentityCallsAreNotYet/[first].indexOf(second) (0.12s)
+    --- PASS: TestGenericFunctionValueIdentityCallsAreNotYet/new_Set([first,_second]) (0.08s)
+    --- PASS: TestGenericFunctionValueIdentityCallsAreNotYet/new_Map([[first,_1],_[second,_2]]) (0.06s)
+=== CONT  TestPhantomPrimitiveNames
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.07s)
+=== CONT  TestPhantomLiteralCastsStayRefused
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.06s)
+=== CONT  TestPhantomOverloadOnlyBrandsKeepMainProof
+--- PASS: TestPhantomPrimitiveNames (0.06s)
+=== CONT  TestPhantomCastsAreErased
+--- PASS: TestCensusBooleanDeadBranch (0.41s)
+=== CONT  TestPhantomRefusals
+=== RUN   TestPhantomRefusals/prototype
+=== PAUSE TestPhantomRefusals/prototype
+=== RUN   TestPhantomRefusals/length
+=== PAUSE TestPhantomRefusals/length
+=== RUN   TestPhantomRefusals/nonvoid
+=== PAUSE TestPhantomRefusals/nonvoid
+=== RUN   TestPhantomRefusals/required_undefined
+=== PAUSE TestPhantomRefusals/required_undefined
+=== RUN   TestPhantomRefusals/any_Path
+=== PAUSE TestPhantomRefusals/any_Path
+=== RUN   TestPhantomRefusals/string_index
+=== PAUSE TestPhantomRefusals/string_index
+=== RUN   TestPhantomRefusals/review_exact_message
+--- PASS: TestPhantomLiteralCastsStayRefused (0.10s)
+=== CONT  TestCensusPredicateInteractionBoundary
+--- PASS: TestPhantomOverloadOnlyBrandsKeepMainProof (0.14s)
+=== CONT  TestCensusSmallFiniteKeyRead
+=== CONT  TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== PAUSE TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== PAUSE TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+=== PAUSE TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusPredicateMarkerCallStaysNotYet
+--- PASS: TestPhantomCastsAreErased (0.12s)
+=== CONT  TestCensusPredicateMarkerKeepsProofBoundaries
+--- PASS: TestCensusPredicateMarkerCallStaysNotYet (0.04s)
+=== CONT  TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateInteractionEscapes/function_alias
+=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
+=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
+=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
+=== RUN   TestCensusPredicateInteractionEscapes/exported_function
+=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusQualifiedCast
+--- PASS: TestCensusPredicateInteractionBoundary (0.16s)
+=== CONT  TestCensusComputedRelation
+--- PASS: TestCensusQualifiedCast (0.08s)
+=== CONT  TestCensusGenericRefusalInsideClosure
+--- PASS: TestCensusComputedRelation (0.06s)
+=== CONT  TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/constraint
+=== PAUSE TestCensusOverloadBinderGuards/constraint
+=== RUN   TestCensusOverloadBinderGuards/parameter
+=== PAUSE TestCensusOverloadBinderGuards/parameter
+=== RUN   TestCensusOverloadBinderGuards/result
+=== PAUSE TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadReturnProof
+=== RUN   TestCensusOverloadReturnProof/parameter_return
+=== PAUSE TestCensusOverloadReturnProof/parameter_return
+=== RUN   TestCensusOverloadReturnProof/lying_return
+=== PAUSE TestCensusOverloadReturnProof/lying_return
+=== RUN   TestCensusOverloadReturnProof/rebound_parameter
+=== PAUSE TestCensusOverloadReturnProof/rebound_parameter
+=== RUN   TestCensusOverloadReturnProof/captured_write
+=== PAUSE TestCensusOverloadReturnProof/captured_write
+=== RUN   TestCensusOverloadReturnProof/empty_return
+=== PAUSE TestCensusOverloadReturnProof/empty_return
+=== CONT  TestCensusMarkerZeroCallIsNotAssumedSafe
+--- PASS: TestCensusGenericRefusalInsideClosure (0.06s)
+=== CONT  TestEmptyArrayViewsStillRefuse/mutable_never_alias
+--- PASS: TestCensusSmallFiniteKeyRead (0.21s)
+=== CONT  TestEmptyArrayViewsStillRefuse/nonempty_generic_cast
+--- PASS: TestCensusMarkerZeroCallIsNotAssumedSafe (0.07s)
+=== CONT  TestEmptyArrayViewsStillRefuse/inferred_mutable_fallback
+=== CONT  TestEmptyArrayViewsStillRefuse/generic_mutable_result
+--- PASS: TestTypedArrayFromEmptyArray (0.51s)
+=== CONT  TestCensusRestMutableElements
+--- PASS: TestCensusPredicateMarkerKeepsProofBoundaries (0.24s)
+=== CONT  TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== CONT  TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClockGenericReturnsT01Shapes/nested_callable
+=== NAME  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements2713010518/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.05s)
+=== CONT  TestClockGenericReturnsT01Shapes/container_intersection
+--- PASS: TestEmptyArrayViewsStillRefuse (0.00s)
+    --- PASS: TestEmptyArrayViewsStillRefuse/mutable_never_alias (0.05s)
+    --- PASS: TestEmptyArrayViewsStillRefuse/nonempty_generic_cast (0.08s)
+    --- PASS: TestEmptyArrayViewsStillRefuse/inferred_mutable_fallback (0.05s)
+    --- PASS: TestEmptyArrayViewsStillRefuse/generic_mutable_result (0.06s)
+=== CONT  TestClockGenericReturnsT01Shapes/indexed
+=== CONT  TestClockGenericReturnsT01Shapes/constructable
+=== CONT  TestClockGenericReturnsT01Shapes/callable
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+--- PASS: TestClockGenericReturnsT01Shapes (0.00s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_readonly_fields (0.06s)
+    --- PASS: TestClockGenericReturnsT01Shapes/null_remains_distinct (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/container_intersection (0.04s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_callable (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/indexed (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/callable (0.06s)
+    --- PASS: TestClockGenericReturnsT01Shapes/constructable (0.07s)
+=== CONT  TestNestedEmptyArrayElementKinds/last
+=== CONT  TestPhantomRefusals/prototype
+=== CONT  TestPhantomRefusals/required_undefined
+=== CONT  TestPhantomRefusals/string_index
+=== CONT  TestPhantomRefusals/nonvoid
+=== CONT  TestPhantomRefusals/any_Path
+--- PASS: TestNestedEmptyArrayElementKinds (0.00s)
+    --- PASS: TestNestedEmptyArrayElementKinds/first (0.06s)
+    --- PASS: TestNestedEmptyArrayElementKinds/strings (0.08s)
+    --- PASS: TestNestedEmptyArrayElementKinds/objects (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/typed (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/last (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/union (0.09s)
+=== CONT  TestPhantomRefusals/length
+=== CONT  TestCensusOverloadRelation/parameter_contravariance
+=== CONT  TestCensusOverloadRelation/mutable_parameters
+=== CONT  TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
+=== CONT  TestCensusPredicateInteractionEscapes/function_alias
+--- PASS: TestPhantomRefusals (0.08s)
+    --- PASS: TestPhantomRefusals/review_exact_message (0.08s)
+    --- PASS: TestPhantomRefusals/required_undefined (0.06s)
+    --- PASS: TestPhantomRefusals/string_index (0.07s)
+    --- PASS: TestPhantomRefusals/prototype (0.10s)
+    --- PASS: TestPhantomRefusals/any_Path (0.06s)
+    --- PASS: TestPhantomRefusals/nonvoid (0.07s)
+    --- PASS: TestPhantomRefusals/length (0.05s)
+=== CONT  TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
+=== CONT  TestCensusOverloadBinderGuards/constraint
+--- PASS: TestCensusOverloadRelation (0.00s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.04s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.05s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.04s)
+    --- PASS: TestCensusOverloadRelation/result_covariance (0.08s)
+=== CONT  TestCensusOverloadReturnProof/parameter_return
+=== CONT  TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/parameter
+--- PASS: TestCensusPredicateInteractionEscapes (0.00s)
+    --- PASS: TestCensusPredicateInteractionEscapes/callback_escape (0.06s)
+    --- PASS: TestCensusPredicateInteractionEscapes/function_alias (0.06s)
+    --- PASS: TestCensusPredicateInteractionEscapes/exported_function (0.08s)
+=== CONT  TestCensusOverloadReturnProof/captured_write
+=== CONT  TestCensusOverloadReturnProof/empty_return
+=== CONT  TestCensusOverloadReturnProof/rebound_parameter
+=== CONT  TestCensusOverloadReturnProof/lying_return
+--- PASS: TestCensusOverloadBinderGuards (0.00s)
+    --- PASS: TestCensusOverloadBinderGuards/constraint (0.08s)
+    --- PASS: TestCensusOverloadBinderGuards/parameter (0.04s)
+    --- PASS: TestCensusOverloadBinderGuards/result (0.07s)
+--- PASS: TestCensusOverloadReturnProof (0.00s)
+    --- PASS: TestCensusOverloadReturnProof/parameter_return (0.06s)
+    --- PASS: TestCensusOverloadReturnProof/captured_write (0.06s)
+    --- PASS: TestCensusOverloadReturnProof/rebound_parameter (0.06s)
+    --- PASS: TestCensusOverloadReturnProof/lying_return (0.05s)
+    --- PASS: TestCensusOverloadReturnProof/empty_return (0.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.887s
+=== RUN   TestCensusAppendResultProof
+=== PAUSE TestCensusAppendResultProof
+=== RUN   TestCensusOverloadResultStop
+=== PAUSE TestCensusOverloadResultStop
+=== RUN   TestCensusSmallStoppedSourceOnNode
+=== PAUSE TestCensusSmallStoppedSourceOnNode
+=== RUN   TestClockGenericReturnsT01Mutant
+=== PAUSE TestClockGenericReturnsT01Mutant
+=== RUN   TestDebuggerNativeEmitsNothing
+=== PAUSE TestDebuggerNativeEmitsNothing
+=== RUN   TestEmptyArrayRuntimeMutants
+=== PAUSE TestEmptyArrayRuntimeMutants
+=== RUN   TestGenericFunctionValueWrongResultMutant
+=== PAUSE TestGenericFunctionValueWrongResultMutant
+=== RUN   TestCheckedNonNullTypeScript
+=== PAUSE TestCheckedNonNullTypeScript
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestScannerConcatenationMutant
+=== PAUSE TestScannerConcatenationMutant
+=== RUN   TestScannerPrimitiveConcatenationMutants
+=== RUN   TestScannerPrimitiveConcatenationMutants/boolean
+=== PAUSE TestScannerPrimitiveConcatenationMutants/boolean
+=== RUN   TestScannerPrimitiveConcatenationMutants/undefined
+=== PAUSE TestScannerPrimitiveConcatenationMutants/undefined
+=== RUN   TestScannerPrimitiveConcatenationMutants/null
+=== PAUSE TestScannerPrimitiveConcatenationMutants/null
+=== CONT  TestScannerPrimitiveConcatenationMutants/boolean
+=== CONT  TestScannerPrimitiveConcatenationMutants/null
+=== CONT  TestScannerPrimitiveConcatenationMutants/undefined
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    scanner_expressions_test.go:96: gate cache node miss
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    scanner_expressions_test.go:96: gate cache node hit
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    scanner_expressions_test.go:96: gate cache node hit
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:107: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:107: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:107: gate cache node miss
+=== NAME  TestScannerPrimitiveConcatenationMutants/undefined
+    scanner_expressions_test.go:110: undefined spelling mutant caught only by stdout in both backends
+=== NAME  TestScannerPrimitiveConcatenationMutants/boolean
+    scanner_expressions_test.go:110: boolean spelling mutant caught only by stdout in both backends
+=== NAME  TestScannerPrimitiveConcatenationMutants/null
+    scanner_expressions_test.go:110: null spelling mutant caught only by stdout in both backends
+--- PASS: TestScannerPrimitiveConcatenationMutants (0.00s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/undefined (0.36s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/boolean (0.37s)
+    --- PASS: TestScannerPrimitiveConcatenationMutants/null (0.37s)
+=== CONT  TestCensusAppendResultProof
+=== CONT  TestEmptyArrayRuntimeMutants
+=== CONT  TestDebuggerNativeEmitsNothing
+=== RUN   TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== PAUSE TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== RUN   TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== PAUSE TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== CONT  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== RUN   TestDebuggerNativeEmitsNothing/.a
+=== PAUSE TestDebuggerNativeEmitsNothing/.a
+=== RUN   TestDebuggerNativeEmitsNothing/.ts
+=== PAUSE TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestDebuggerNativeEmitsNothing/.a
+=== CONT  TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestClockGenericReturnsT01Mutant
+--- PASS: TestCensusAppendResultProof (0.05s)
+=== CONT  TestCensusSmallStoppedSourceOnNode
+=== RUN   TestCensusSmallStoppedSourceOnNode/census_small_optional_stopped.a
+=== PAUSE TestCensusSmallStoppedSourceOnNode/census_small_optional_stopped.a
+=== RUN   TestCensusSmallStoppedSourceOnNode/census_small_default_stopped.a
+=== PAUSE TestCensusSmallStoppedSourceOnNode/census_small_default_stopped.a
+=== CONT  TestCensusOverloadResultStop
+=== NAME  TestClockGenericReturnsT01Mutant
+    clock_generic_returns_t_01_test.go:29: gate cache node miss
+=== CONT  TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullTypeScript/narrowed
+=== PAUSE TestCheckedNonNullTypeScript/narrowed
+=== RUN   TestCheckedNonNullTypeScript/present
+=== PAUSE TestCheckedNonNullTypeScript/present
+=== RUN   TestCheckedNonNullTypeScript/undefined
+=== PAUSE TestCheckedNonNullTypeScript/undefined
+=== RUN   TestCheckedNonNullTypeScript/null
+=== PAUSE TestCheckedNonNullTypeScript/null
+=== RUN   TestCheckedNonNullTypeScript/initializer
+=== PAUSE TestCheckedNonNullTypeScript/initializer
+=== RUN   TestCheckedNonNullTypeScript/let_initializer
+=== PAUSE TestCheckedNonNullTypeScript/let_initializer
+=== CONT  TestScannerConcatenationMutant
+--- PASS: TestDebuggerNativeEmitsNothing (0.00s)
+    --- PASS: TestDebuggerNativeEmitsNothing/.a (0.10s)
+    --- PASS: TestDebuggerNativeEmitsNothing/.ts (0.12s)
+=== CONT  TestNativeAgreesWithNode
+=== NAME  TestCensusOverloadResultStop
+    census_overload_result_test.go:50: gate cache node miss
+=== NAME  TestClockGenericReturnsT01Mutant
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestScannerConcatenationMutant
+    scanner_expressions_test.go:45: gate cache node miss
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== NAME  TestCensusOverloadResultStop
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+    empty_arrays_test.go:86: gate cache node miss
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== NAME  TestScannerConcatenationMutant
+    oracle_test.go:597: gate cache native miss
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+=== CONT  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== NAME  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+    empty_arrays_test.go:89: gate cache node hit
+    empty_arrays_test.go:89: gate cache node miss
+=== NAME  TestClockGenericReturnsT01Mutant
+    clock_generic_returns_t_01_test.go:53: gate cache node miss
+=== NAME  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestClockGenericReturnsT01Mutant
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestClockGenericReturnsT01Mutant (0.42s)
+=== CONT  TestGenericFunctionValueWrongResultMutant
+=== NAME  TestCensusOverloadResultStop
+    census_overload_result_test.go:56: gate cache node miss
+=== NAME  TestScannerConcatenationMutant
+    oracle_test.go:604: gate cache native hit
+    scanner_expressions_test.go:56: gate cache node miss
+=== NAME  TestGenericFunctionValueWrongResultMutant
+    generic_function_value_test.go:41: gate cache node miss
+--- PASS: TestCensusOverloadResultStop (0.43s)
+=== CONT  TestCensusSmallStoppedSourceOnNode/census_small_optional_stopped.a
+--- PASS: TestScannerConcatenationMutant (0.41s)
+=== CONT  TestCensusSmallStoppedSourceOnNode/census_small_default_stopped.a
+=== NAME  TestCensusSmallStoppedSourceOnNode/census_small_optional_stopped.a
+    census_small_test.go:46: gate cache node miss
+=== NAME  TestCensusSmallStoppedSourceOnNode/census_small_default_stopped.a
+    census_small_test.go:46: gate cache node miss
+=== NAME  TestGenericFunctionValueWrongResultMutant
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+    empty_arrays_test.go:86: gate cache node hit
+    empty_arrays_test.go:89: gate cache node hit
+    empty_arrays_test.go:89: gate cache node miss
+=== CONT  TestCheckedNonNullTypeScript/narrowed
+=== NAME  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+    empty_arrays_test.go:95: Node caught empty array is falsy: "0 0 true true\ntrue true\nfalse true\n9 freshfresh\n0 0 false\ntrue true\ntrue 0 2 1\n0\n"
+=== CONT  TestCheckedNonNullTypeScript/let_initializer
+--- PASS: TestCensusSmallStoppedSourceOnNode (0.00s)
+    --- PASS: TestCensusSmallStoppedSourceOnNode/census_small_optional_stopped.a (0.12s)
+    --- PASS: TestCensusSmallStoppedSourceOnNode/census_small_default_stopped.a (0.16s)
+=== CONT  TestCheckedNonNullTypeScript/initializer
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/initializer
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestGenericFunctionValueWrongResultMutant
+    generic_function_value_test.go:43: gate cache node miss
+    generic_function_value_test.go:50: JavaScript caught by stdout alone: Node "Kirk\n42\nAhra\n3,4\none,two\n2,5\ncallback\n"; mutant "Kirk\n0\nAhra\n3,4\none,two\n-1,-1\ncallback\n"
+    generic_function_value_test.go:50: native caught by stdout alone: Node "Kirk\n42\nAhra\n3,4\none,two\n2,5\ncallback\n"; mutant "Kirk\n0\nAhra\n3,4\none,two\n-1,-1\ncallback\n"
+--- PASS: TestGenericFunctionValueWrongResultMutant (0.41s)
+=== CONT  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+    empty_arrays_test.go:95: Node caught fresh number array is shared: "0 0 true true\ntrue true\ntrue false\n9 freshfresh\n1 0 true\ntrue true\ntrue 0 2 1\n1\n"
+--- PASS: TestEmptyArrayRuntimeMutants (0.00s)
+    --- PASS: TestEmptyArrayRuntimeMutants/empty_array_is_falsy (0.67s)
+    --- PASS: TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared (0.61s)
+=== CONT  TestCheckedNonNullTypeScript/undefined
+=== NAME  TestCheckedNonNullTypeScript/initializer
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:132: look-through mutant caught before either backend: union return where number is required
+=== CONT  TestCheckedNonNullTypeScript/present
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:45: gate cache node miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:597: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+    oracle_test.go:597: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:97: no-check mutant caught: stdout "before\ntrue\n" exit 0
+--- PASS: TestCheckedNonNullTypeScript (0.00s)
+    --- PASS: TestCheckedNonNullTypeScript/narrowed (0.36s)
+    --- PASS: TestCheckedNonNullTypeScript/initializer (0.34s)
+    --- PASS: TestCheckedNonNullTypeScript/let_initializer (0.36s)
+    --- PASS: TestCheckedNonNullTypeScript/null (0.37s)
+    --- PASS: TestCheckedNonNullTypeScript/present (0.36s)
+    --- PASS: TestCheckedNonNullTypeScript/undefined (0.56s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+    oracle_test.go:754: gate cache node miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_first.a (0.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/phantom_catch.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/number_spellings.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/string-number-concatenation.a (0.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_optional_array.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/host_phantom_overload_primitive.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/phantom_undefined.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/phantom_brands.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_union.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_function_value_arms.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a (0.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_typed.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_literal_empty_last.a (0.39s)
+PASS
+gate cache: native hits=25 misses=51
+gate cache: node hits=9 misses=67
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.868s

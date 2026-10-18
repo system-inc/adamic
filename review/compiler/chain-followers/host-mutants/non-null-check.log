@@ -1,0 +1,12 @@
+=== RUN   TestCheckedNonNullTypeScript
+=== PAUSE TestCheckedNonNullTypeScript
+=== CONT  TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullTypeScript/undefined
+=== PAUSE TestCheckedNonNullTypeScript/undefined
+=== CONT  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:0, Sites:[]ir.NonNullCheck(nil)}
+--- FAIL: TestCheckedNonNullTypeScript (0.00s)
+    --- FAIL: TestCheckedNonNullTypeScript/undefined (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.040s
+FAIL
