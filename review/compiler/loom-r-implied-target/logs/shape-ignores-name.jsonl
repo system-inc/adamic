@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:08:46.371832496Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:08:46.377094316Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:46.37718443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== RUN   TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.377212101Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== PAUSE TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.377214294Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:46.377220163Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:46.377222106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== CONT  TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.438540994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"    cycle_scalar_shapes_test.go:74: distinct fields or literal values shared a shape key: { other: number; } (parent KindVariableDeclaration)\n","OutputType":"error"}
+{"Time":"2026-10-18T00:08:46.438733381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"--- FAIL: TestCycleScalarShapeKeysPreserveDistinctFields (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.438743275Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Elapsed":0.06}
+{"Time":"2026-10-18T00:08:46.438763455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.440687548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.069s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:46.440703091Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.069}
