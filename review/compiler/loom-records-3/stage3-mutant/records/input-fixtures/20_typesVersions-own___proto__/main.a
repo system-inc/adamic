@@ -1,0 +1,3 @@
+// a-check: type error TS2307
+import { value } from "pkg/__proto__";
+const n: number = value;

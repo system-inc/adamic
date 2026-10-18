@@ -1,0 +1,25 @@
+=== RUN   TestNamedRecordRefusals
+=== PAUSE TestNamedRecordRefusals
+=== CONT  TestNamedRecordRefusals
+=== RUN   TestNamedRecordRefusals/interface_R_{named?:number[];[key:string]:number[]|string|undefined}_function_read(r:R):number|undefined_{return_r.named?.length;}
+=== RUN   TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|boolean|null|undefined}_const_r:R={};
+=== RUN   TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_function_write(r:R,k:string):void_{r[k]="wrong";}
+=== RUN   TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_const_r:R={};_const_view:Record<string,number|string|undefined>=r;
+    records_named_test.go:49: got <nil>, want NotYet seen as
+=== RUN   TestNamedRecordRefusals/interface_R_{readonly_named:number;[key:string]:number}_const_r:R={named:1};_const_view:Record<string,number>=r;
+    records_named_test.go:49: got <nil>, want NotYet seen as
+=== RUN   TestNamedRecordRefusals/interface_R_{named:number;[key:string]:number}_const_fixed={named:1};_const_r:R=fixed;
+=== RUN   TestNamedRecordRefusals/interface_R_{named?:number;readonly_[key:string]:number|undefined}_const_r:R={};
+=== RUN   TestNamedRecordRefusals/interface_R_{named:number;[key:number]:number}_const_r:R={named:1};
+--- FAIL: TestNamedRecordRefusals (0.22s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named?:number[];[key:string]:number[]|string|undefined}_function_read(r:R):number|undefined_{return_r.named?.length;} (0.04s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|boolean|null|undefined}_const_r:R={}; (0.03s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_function_write(r:R,k:string):void_{r[k]="wrong";} (0.03s)
+    --- FAIL: TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_const_r:R={};_const_view:Record<string,number|string|undefined>=r; (0.03s)
+    --- FAIL: TestNamedRecordRefusals/interface_R_{readonly_named:number;[key:string]:number}_const_r:R={named:1};_const_view:Record<string,number>=r; (0.03s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named:number;[key:string]:number}_const_fixed={named:1};_const_r:R=fixed; (0.03s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named?:number;readonly_[key:string]:number|undefined}_const_r:R={}; (0.03s)
+    --- PASS: TestNamedRecordRefusals/interface_R_{named:number;[key:number]:number}_const_r:R={named:1}; (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.237s
+FAIL

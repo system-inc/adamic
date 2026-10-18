@@ -1,0 +1,303 @@
+[
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnRefusals",
+    "seconds": [
+      0.82
+    ]
+  },
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnRepresentation",
+    "seconds": [
+      0.24
+    ]
+  },
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnAreaAdapters",
+    "seconds": [
+      0.38
+    ]
+  },
+  {
+    "file": "internal/lower/entries_provenance_test.go",
+    "test": "TestEntriesAllocationProof",
+    "seconds": [
+      0.0
+    ]
+  },
+  {
+    "file": "internal/lower/entries_provenance_test.go",
+    "test": "TestEntriesRecordBoundaries",
+    "seconds": [
+      0.0
+    ]
+  },
+  {
+    "file": "internal/lower/optional_indexing_test.go",
+    "test": "TestOptionalIndexingKeepsReadonlyIndexSignaturesNotYet",
+    "seconds": [
+      0.08
+    ]
+  },
+  {
+    "file": "internal/lower/optional_indexing_test.go",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "seconds": [
+      0.4
+    ]
+  },
+  {
+    "file": "internal/lower/records_divergence_test.go",
+    "test": "TestRecordDivergenceSupportedNeighbors",
+    "seconds": [
+      0.66
+    ]
+  },
+  {
+    "file": "internal/lower/records_named_test.go",
+    "test": "TestNamedRecordReadTypes",
+    "seconds": [
+      0.12
+    ]
+  },
+  {
+    "file": "internal/lower/records_named_test.go",
+    "test": "TestNamedRecordRefusals",
+    "seconds": [
+      0.34
+    ]
+  },
+  {
+    "file": "internal/lower/records_observation_test.go",
+    "test": "TestRecordDiscardedReadProof",
+    "seconds": [
+      0.31
+    ]
+  },
+  {
+    "file": "internal/lower/records_observation_test.go",
+    "test": "TestRecordObservationMustNotEscapeGuard",
+    "seconds": [
+      0.26
+    ]
+  },
+  {
+    "file": "internal/lower/records_partial_test.go",
+    "test": "TestPartialRecordStorageRefusals",
+    "seconds": [
+      0.19
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordForms",
+    "seconds": [
+      0.33
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordRefusals",
+    "seconds": [
+      0.77
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordPrototypeLiteralNames",
+    "seconds": [
+      1.03
+    ]
+  },
+  {
+    "file": "internal/native/json_replacer_duplicates_test.go",
+    "test": "TestJSONReplacerDuplicatesRecordMutant",
+    "seconds": [
+      29.28
+    ]
+  },
+  {
+    "file": "internal/native/json_replacer_duplicates_test.go",
+    "test": "TestJSONReplacerDuplicatesObjectMutant",
+    "seconds": [
+      13.21
+    ]
+  },
+  {
+    "file": "internal/oracle/detached_own_test.go",
+    "test": "TestDetachedOwnInheritedMutant",
+    "seconds": [
+      7.3
+    ]
+  },
+  {
+    "file": "internal/oracle/detached_own_test.go",
+    "test": "TestDetachedOwnReadinessMutant",
+    "seconds": [
+      0.62
+    ]
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordTypeGuardMutant",
+    "seconds": [
+      0.23
+    ]
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordAliasReadinessMutant",
+    "seconds": [
+      1.14
+    ]
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordJavaScriptAgreesWithNode",
+    "seconds": [
+      2.42
+    ]
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordAbsentEntryMutant",
+    "seconds": [
+      1.11
+    ]
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordObservationGuardMutants",
+    "seconds": [
+      0.0
+    ]
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordCensusComparisonBuckets",
+    "seconds": [
+      0.99
+    ]
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordHostEnvironmentObservation",
+    "seconds": [
+      5.57
+    ]
+  },
+  {
+    "file": "internal/oracle/records_partial_test.go",
+    "test": "TestPartialRecordJavaScriptAgreesWithNode",
+    "seconds": [
+      7.18
+    ]
+  },
+  {
+    "file": "internal/oracle/records_partial_test.go",
+    "test": "TestPartialRecordAbsentEntryMutant",
+    "seconds": [
+      6.73
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeRead",
+    "seconds": [
+      0.19
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeIn",
+    "seconds": [
+      0.21
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeSet",
+    "seconds": [
+      0.41
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalCompareLeft",
+    "seconds": [
+      0.35
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalCompareRight",
+    "seconds": [
+      0.18
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalEnvironment",
+    "seconds": [
+      0.22
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "seconds": [
+      0.23
+    ]
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "seconds": [
+      0.28
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordJavaScriptAgreesWithNode",
+    "seconds": [
+      2.97
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordOperationMutants",
+    "seconds": [
+      0.0
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordPrototypeMutant",
+    "seconds": [
+      0.32
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordOwnershipMutant",
+    "seconds": [
+      0.91
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordCoalesceMutant",
+    "seconds": [
+      0.63
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordNarrowingMutant",
+    "seconds": [
+      0.29
+    ]
+  }
+]

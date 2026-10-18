@@ -121,7 +121,9 @@ func runLibraryMethodValueMutantsShard(t *testing.T, shard int) {
 				case ir.HasOwn:
 					if name == "own field" {
 						changed = true
-						return ir.BooleanConstant{Value: false}
+						// Records specialize some known own fields before this walk. Invert
+						// the remaining query, whether its source answer is true or false.
+						return ir.Unary{Operator: ir.Not, Operand: node}
 					}
 				case ir.NumberToString:
 					if _, read := node.Value.(ir.Read); name == "map String" && read {

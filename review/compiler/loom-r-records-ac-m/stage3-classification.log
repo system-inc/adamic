@@ -1,0 +1,177 @@
+=== RUN   TestFixturesRecords
+=== PAUSE TestFixturesRecords
+=== CONT  TestFixturesRecords
+    fixtures_test.go:244: build stage3-fixture-oracle-hook a4f7f7f608d8 hit 0.36
+=== RUN   TestFixturesRecords/records
+=== PAUSE TestFixturesRecords/records
+=== CONT  TestFixturesRecords/records
+=== RUN   TestFixturesRecords/records/01_has_property.a
+=== PAUSE TestFixturesRecords/records/01_has_property.a
+=== RUN   TestFixturesRecords/records/02_get_property.a
+=== PAUSE TestFixturesRecords/records/02_get_property.a
+=== RUN   TestFixturesRecords/records/03_own_keys.a
+=== PAUSE TestFixturesRecords/records/03_own_keys.a
+=== RUN   TestFixturesRecords/records/04_own_values.a
+=== PAUSE TestFixturesRecords/records/04_own_values.a
+=== RUN   TestFixturesRecords/records/05_integer_order.a
+=== PAUSE TestFixturesRecords/records/05_integer_order.a
+=== RUN   TestFixturesRecords/records/06_delete_readd.a
+=== PAUSE TestFixturesRecords/records/06_delete_readd.a
+=== RUN   TestFixturesRecords/records/07_optional_view.a
+=== PAUSE TestFixturesRecords/records/07_optional_view.a
+=== RUN   TestFixturesRecords/records/08_option_boolean.a
+=== PAUSE TestFixturesRecords/records/08_option_boolean.a
+=== RUN   TestFixturesRecords/records/09_option_undefined.a
+=== PAUSE TestFixturesRecords/records/09_option_undefined.a
+=== RUN   TestFixturesRecords/records/10_option_wrong_type.a
+=== PAUSE TestFixturesRecords/records/10_option_wrong_type.a
+=== RUN   TestFixturesRecords/records/11_option_string.a
+=== PAUSE TestFixturesRecords/records/11_option_string.a
+=== RUN   TestFixturesRecords/records/12_nested_entries.a
+=== PAUSE TestFixturesRecords/records/12_nested_entries.a
+=== RUN   TestFixturesRecords/records/13_strict_option.a
+=== PAUSE TestFixturesRecords/records/13_strict_option.a
+=== RUN   TestFixturesRecords/records/14_group_by.a
+=== PAUSE TestFixturesRecords/records/14_group_by.a
+=== RUN   TestFixturesRecords/records/15_inherited_read.a
+=== PAUSE TestFixturesRecords/records/15_inherited_read.a
+=== RUN   TestFixturesRecords/records/16_built_strings.a
+=== PAUSE TestFixturesRecords/records/16_built_strings.a
+=== RUN   TestFixturesRecords/records/17_compare_missing_object.a
+=== PAUSE TestFixturesRecords/records/17_compare_missing_object.a
+=== RUN   TestFixturesRecords/records/18_compare_missing_scalar.a
+=== PAUSE TestFixturesRecords/records/18_compare_missing_scalar.a
+=== RUN   TestFixturesRecords/records/19_compare_empty_objects.a
+=== PAUSE TestFixturesRecords/records/19_compare_empty_objects.a
+=== CONT  TestFixturesRecords/records/01_has_property.a
+=== CONT  TestFixturesRecords/records/11_option_string.a
+=== CONT  TestFixturesRecords/records/09_option_undefined.a
+=== CONT  TestFixturesRecords/records/06_delete_readd.a
+=== RUN   TestFixturesRecords/records/06_delete_readd.a/node
+=== RUN   TestFixturesRecords/records/01_has_property.a/node
+=== RUN   TestFixturesRecords/records/09_option_undefined.a/node
+=== RUN   TestFixturesRecords/records/11_option_string.a/node
+=== RUN   TestFixturesRecords/records/09_option_undefined.a/stage0
+=== CONT  TestFixturesRecords/records/08_option_boolean.a
+=== RUN   TestFixturesRecords/records/06_delete_readd.a/native
+=== RUN   TestFixturesRecords/records/01_has_property.a/native
+=== RUN   TestFixturesRecords/records/11_option_string.a/stage0
+=== CONT  TestFixturesRecords/records/07_optional_view.a
+=== RUN   TestFixturesRecords/records/08_option_boolean.a/node
+=== RUN   TestFixturesRecords/records/08_option_boolean.a/stage0
+=== CONT  TestFixturesRecords/records/16_built_strings.a
+=== RUN   TestFixturesRecords/records/07_optional_view.a/node
+=== RUN   TestFixturesRecords/records/07_optional_view.a/stage0
+    fixtures_test.go:465: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/records/07_optional_view.a:17:7: stage 0 can't lower a Record<string, string> seen as Named (fixed objects and records have different storage; copy explicitly) yet Stdout:}; recorded {Outcome:Compiles What: Stdout:}
+=== CONT  TestFixturesRecords/records/19_compare_empty_objects.a
+=== RUN   TestFixturesRecords/records/16_built_strings.a/node
+=== RUN   TestFixturesRecords/records/16_built_strings.a/native
+=== RUN   TestFixturesRecords/records/19_compare_empty_objects.a/node
+=== RUN   TestFixturesRecords/records/19_compare_empty_objects.a/stage0
+=== CONT  TestFixturesRecords/records/18_compare_missing_scalar.a
+=== RUN   TestFixturesRecords/records/18_compare_missing_scalar.a/node
+=== RUN   TestFixturesRecords/records/18_compare_missing_scalar.a/stage0
+=== CONT  TestFixturesRecords/records/17_compare_missing_object.a
+=== RUN   TestFixturesRecords/records/17_compare_missing_object.a/node
+=== RUN   TestFixturesRecords/records/17_compare_missing_object.a/stage0
+=== CONT  TestFixturesRecords/records/10_option_wrong_type.a
+=== RUN   TestFixturesRecords/records/10_option_wrong_type.a/node
+=== RUN   TestFixturesRecords/records/10_option_wrong_type.a/stage0
+=== CONT  TestFixturesRecords/records/14_group_by.a
+=== RUN   TestFixturesRecords/records/14_group_by.a/node
+=== RUN   TestFixturesRecords/records/14_group_by.a/stage0
+=== CONT  TestFixturesRecords/records/15_inherited_read.a
+=== RUN   TestFixturesRecords/records/15_inherited_read.a/node
+=== RUN   TestFixturesRecords/records/15_inherited_read.a/stage0
+=== CONT  TestFixturesRecords/records/13_strict_option.a
+=== RUN   TestFixturesRecords/records/13_strict_option.a/node
+=== RUN   TestFixturesRecords/records/13_strict_option.a/stage0
+=== CONT  TestFixturesRecords/records/12_nested_entries.a
+=== RUN   TestFixturesRecords/records/12_nested_entries.a/node
+=== RUN   TestFixturesRecords/records/12_nested_entries.a/stage0
+=== CONT  TestFixturesRecords/records/04_own_values.a
+=== RUN   TestFixturesRecords/records/04_own_values.a/node
+=== RUN   TestFixturesRecords/records/04_own_values.a/stage0
+=== CONT  TestFixturesRecords/records/05_integer_order.a
+=== RUN   TestFixturesRecords/records/05_integer_order.a/node
+=== RUN   TestFixturesRecords/records/05_integer_order.a/native
+=== RUN   TestFixturesRecords/records/01_has_property.a/stage0
+=== CONT  TestFixturesRecords/records/03_own_keys.a
+=== RUN   TestFixturesRecords/records/06_delete_readd.a/stage0
+=== CONT  TestFixturesRecords/records/02_get_property.a
+=== RUN   TestFixturesRecords/records/03_own_keys.a/node
+=== RUN   TestFixturesRecords/records/03_own_keys.a/native
+=== RUN   TestFixturesRecords/records/02_get_property.a/node
+=== RUN   TestFixturesRecords/records/02_get_property.a/native
+=== RUN   TestFixturesRecords/records/16_built_strings.a/stage0
+=== RUN   TestFixturesRecords/records/05_integer_order.a/stage0
+=== RUN   TestFixturesRecords/records/03_own_keys.a/stage0
+=== RUN   TestFixturesRecords/records/02_get_property.a/stage0
+--- FAIL: TestFixturesRecords (1.26s)
+    --- FAIL: TestFixturesRecords/records (0.00s)
+        --- PASS: TestFixturesRecords/records/09_option_undefined.a (0.13s)
+            --- PASS: TestFixturesRecords/records/09_option_undefined.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/09_option_undefined.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/11_option_string.a (0.15s)
+            --- PASS: TestFixturesRecords/records/11_option_string.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/11_option_string.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/08_option_boolean.a (0.12s)
+            --- PASS: TestFixturesRecords/records/08_option_boolean.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/08_option_boolean.a/stage0 (0.00s)
+        --- FAIL: TestFixturesRecords/records/07_optional_view.a (0.13s)
+            --- PASS: TestFixturesRecords/records/07_optional_view.a/node (0.00s)
+            --- FAIL: TestFixturesRecords/records/07_optional_view.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/19_compare_empty_objects.a (0.11s)
+            --- PASS: TestFixturesRecords/records/19_compare_empty_objects.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/19_compare_empty_objects.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/18_compare_missing_scalar.a (0.13s)
+            --- PASS: TestFixturesRecords/records/18_compare_missing_scalar.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/18_compare_missing_scalar.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/17_compare_missing_object.a (0.14s)
+            --- PASS: TestFixturesRecords/records/17_compare_missing_object.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/17_compare_missing_object.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/10_option_wrong_type.a (0.16s)
+            --- PASS: TestFixturesRecords/records/10_option_wrong_type.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/10_option_wrong_type.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/14_group_by.a (0.13s)
+            --- PASS: TestFixturesRecords/records/14_group_by.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/14_group_by.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/15_inherited_read.a (0.12s)
+            --- PASS: TestFixturesRecords/records/15_inherited_read.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/15_inherited_read.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/13_strict_option.a (0.14s)
+            --- PASS: TestFixturesRecords/records/13_strict_option.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/13_strict_option.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/12_nested_entries.a (0.17s)
+            --- PASS: TestFixturesRecords/records/12_nested_entries.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/12_nested_entries.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/04_own_values.a (0.14s)
+            --- PASS: TestFixturesRecords/records/04_own_values.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/04_own_values.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/01_has_property.a (1.70s)
+            --- PASS: TestFixturesRecords/records/01_has_property.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/01_has_property.a/native (1.57s)
+            --- PASS: TestFixturesRecords/records/01_has_property.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/06_delete_readd.a (1.77s)
+            --- PASS: TestFixturesRecords/records/06_delete_readd.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/06_delete_readd.a/native (1.65s)
+            --- PASS: TestFixturesRecords/records/06_delete_readd.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/16_built_strings.a (1.71s)
+            --- PASS: TestFixturesRecords/records/16_built_strings.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/16_built_strings.a/native (1.59s)
+            --- PASS: TestFixturesRecords/records/16_built_strings.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/05_integer_order.a (1.63s)
+            --- PASS: TestFixturesRecords/records/05_integer_order.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/05_integer_order.a/native (1.45s)
+            --- PASS: TestFixturesRecords/records/05_integer_order.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/03_own_keys.a (1.63s)
+            --- PASS: TestFixturesRecords/records/03_own_keys.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/03_own_keys.a/native (1.48s)
+            --- PASS: TestFixturesRecords/records/03_own_keys.a/stage0 (0.00s)
+        --- PASS: TestFixturesRecords/records/02_get_property.a (1.56s)
+            --- PASS: TestFixturesRecords/records/02_get_property.a/node (0.00s)
+            --- PASS: TestFixturesRecords/records/02_get_property.a/native (1.44s)
+            --- PASS: TestFixturesRecords/records/02_get_property.a/stage0 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	4.606s
+FAIL

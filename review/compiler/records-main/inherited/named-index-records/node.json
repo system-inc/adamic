@@ -1,0 +1,32 @@
+{
+  "options": {
+    "exit": 0,
+    "stdout": "1\n0\n",
+    "stderr": ""
+  },
+  "operations": {
+    "exit": 0,
+    "stdout": "4:0\n5:7:9:undefined\n2,10,required,zebra,target,extraOption\nundefined:true\ntrue:false\nfalse:0\ntrue:undefined\n2,10,zebra,extraOption,undefinedValue\n",
+    "stderr": ""
+  },
+  "union": {
+    "exit": 0,
+    "stdout": "1:5\nfalse:name\n7:changed:true:undefined\ntrue:false\nname,target,dynamic\n",
+    "stderr": ""
+  },
+  "invalidated": {
+    "exit": 0,
+    "stdout": "changed1\n",
+    "stderr": ""
+  },
+  "intrinsics": {
+    "exit": 0,
+    "stdout": "false:true:true\n\ntarget\n5\n",
+    "stderr": ""
+  },
+  "alias_unready": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: ReferenceError: Cannot access 'own' before initialization\n"
+  }
+}

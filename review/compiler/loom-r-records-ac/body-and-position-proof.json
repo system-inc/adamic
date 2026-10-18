@@ -1,0 +1,563 @@
+{
+  "bodies": [
+    {
+      "path": "internal/oracle/testdata/detached_own_objects.a",
+      "unchanged_body_sha256": "e47bc4c7011e50d4f1b6080fde6a32e5abb99463ea7eedf2d46eef5e1b4a98a6",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/detached_own_parser.a",
+      "unchanged_body_sha256": "9047a1b9b5f435e75068d1cdcaa282d0c6bf2673136fd07ec5f8dd78771b2033",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/detached_own_records.a",
+      "unchanged_body_sha256": "1e2e56bb9f8abbe0abf68c2f568ab0620059ab1060a7dc77acaf8cf6ca06b72f",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/detached_own_unready.a",
+      "unchanged_body_sha256": "d875670b354c1dd232d607d906bb988d6471130ec3642f25a3983ca36f5af551",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/json_replacer_duplicates_object.a",
+      "unchanged_body_sha256": "267bb48ecee73d5ea2fd9cfaf418c1224c78d2732eeb7d0b400664492b1f5671",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_buckets/17_compare_missing_object.a",
+      "unchanged_body_sha256": "7b37d9e9e028e5857a42bf21e8993638724f7ac7a35d130f3686000e159295fc",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_buckets/18_compare_missing_scalar.a",
+      "unchanged_body_sha256": "4571166bb981ff4c0bf6ebeddf6d400eb9c971e3808044cf48022a1abc8364b7",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_buckets/19_compare_empty_objects.a",
+      "unchanged_body_sha256": "6aa7a3aef47440ba422ba6eebc23bf75def6eba62cf5ea2280caa991f6b65ae3",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_census.a",
+      "unchanged_body_sha256": "6e103a2c594e14b83e601805180023da0a9c0186f6081f7dd390ffaed9fd6149",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_compare_missing_scalar.a",
+      "unchanged_body_sha256": "f76f0d124b82fbc547a1bb2438a80aa9aea702dd2e207f0ee41fdff123fc695c",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_discarded.a",
+      "unchanged_body_sha256": "970dcc364e023c89e4e8ec9833d15e5468b2b86aba2de04cc13757209120a272",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_for_in.a",
+      "unchanged_body_sha256": "f7dc2aa10011cedd10a20cc751adbaba33a3f88484da4e95a12e6671b88d0860",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_guarded_snapshot.a",
+      "unchanged_body_sha256": "fb18181afef660e61bd4bb7e945f9a831d9752c8e33a0d2e242f6afc98c07637",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_json_replacer_duplicates.a",
+      "unchanged_body_sha256": "8b01000bbc646e1964fd9dbe2089861ce40b508ce8cd34e41f521a588ffdb91e",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_alias_unready.a",
+      "unchanged_body_sha256": "ca01e37d1cad644091fe17634c414320a89275079054aae877f3d3a4e3917306",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_intrinsics.a",
+      "unchanged_body_sha256": "fb060e829c61bbcfccfd63b3e1852bff47603ca17d6bfdad54c71fe1444137aa",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_operations.a",
+      "unchanged_body_sha256": "aa9ff626ae64ccf130f5eb454b26b88da3302c2d6bf5dc1062dc1474973060cb",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_options.a",
+      "unchanged_body_sha256": "5994c0bde95beb653f163a6e60baa368721bb51900eeafb6a8b8f07d8e99ece4",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_union.a",
+      "unchanged_body_sha256": "b73cdbaaf396a26b4406c766ade5407155393c50f539b1ebecf16442d4ae3da0",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_narrowed_reference.a",
+      "unchanged_body_sha256": "bdd589ff943827542b08edd61e5561b9de406385ec2475019fa044f185702155",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_operations.a",
+      "unchanged_body_sha256": "2e2df9bcb58503670727bddce1c583fd09895af296f411d25f56c661966f6c11",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_optional.a",
+      "unchanged_body_sha256": "f1d78236427cffc37c91ef2e77be5e2ea9df5891ba2db69bfa9206544b47baa8",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_ownership.a",
+      "unchanged_body_sha256": "fdc7e6a4e5cf556bd79c401607dba00484099851f49ba052386db231b546d1e5",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_partial_parser.a",
+      "unchanged_body_sha256": "4fb8f66dcd77970863cc408717cf4eba9c46ff34ab52d8425d5d6610d2ebaa4d",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_partial_undefined.a",
+      "unchanged_body_sha256": "0ce9dfe85b839f5d4a63ebd08ac7a4c272039eed61cace72a10530e835413c0e",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_partial_views.a",
+      "unchanged_body_sha256": "851b0d30bfe82b81fe7eff48e337a09475f1e6cb05a7b2f151879f2f512711aa",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_refuse/r24.a",
+      "unchanged_body_sha256": "6565619afed6e6bd8d69bbffa612025eda38048ae83f6808538468cf0fa99cda",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_compare_properties_left.a",
+      "unchanged_body_sha256": "62dd7eaf8a1af5e484b0abe8a0975a602bd52bec1c96eb9c4145d350bffce679",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_compare_properties_right.a",
+      "unchanged_body_sha256": "11c6a5d27ac3fd70553f42fa6d7dbdd1dcc4fa7267f1752b50beab85c1beeea2",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_environment_boundary.a",
+      "unchanged_body_sha256": "9fef9ac7c19597e989379145f7b025a204a8cb73d6531c52d2ba244f6e8bd3f0",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_named_invalidated.a",
+      "unchanged_body_sha256": "8af1c83ed160115fd3927a4f00a36af780d9f7717414b1242cbe4b099411baa1",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_narrowed_number.a",
+      "unchanged_body_sha256": "2736f809ab73f189dce7c10e06f0b20c827a4d3d8ec9d2e4e0a04eb5d5a88469",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_prototype_in.a",
+      "unchanged_body_sha256": "00bbede51d28d2e9c503921a0d3230fe8c11cffed634aefa9228eb03f53562aa",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_prototype_read.a",
+      "unchanged_body_sha256": "bd63e237c25af70047d5623963fc66f77708c00df79f1f7e02f816a8e7576f12",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_refused/records_prototype_set.a",
+      "unchanged_body_sha256": "ef55ac7627fba14439bdbf589c88d84af4769d1c7325e661fbe22a954a85405e",
+      "header_changed": true
+    },
+    {
+      "path": "internal/oracle/testdata/records_scalars.a",
+      "unchanged_body_sha256": "33ac0e71e6a287c96aeb1d14eca58f6e630c75e8a3fa5e8db25dfec115be5130",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_composition.a",
+      "unchanged_body_sha256": "6d23c2e42b65c6c77625bbb868da1cc54ad121a4185e0e3b3880e2735c3a9eb9",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_scanner.a",
+      "unchanged_body_sha256": "35c64bad4300e13790b03195e402a4605dc0a0979f14a7fd8b9ea245d24cb6c1",
+      "header_changed": false
+    },
+    {
+      "path": "internal/oracle/testdata/records_type_only_value.a",
+      "unchanged_body_sha256": "702192870e6135b5e856ad08f6033f66c3763608d687cfb7d0421791b4c2404c",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/01_has_property.a",
+      "unchanged_body_sha256": "f228950b207bb442ccdb6b8c8594466f7b9095ec678031c5ce2a36dea0b68cb0",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/02_get_property.a",
+      "unchanged_body_sha256": "3fef37e908fd469130cf9ac13ec596e6dae8eba7a78fe2231dfe865015fa7f25",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/03_own_keys.a",
+      "unchanged_body_sha256": "c624adc4a0acc3d58e5eb74b02eb671da5642ffc546171146aa571a05d1bdf38",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/04_own_values.a",
+      "unchanged_body_sha256": "7886cb48cc83f19a611bfcc0d5bf5c8a1a7a9368014e3993431afb182fa883bd",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/05_integer_order.a",
+      "unchanged_body_sha256": "9bccad99cb8608f32f2b9daa444a47eb422245978efde0b3355554adaca0e7ee",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/06_delete_readd.a",
+      "unchanged_body_sha256": "65e2f0db1425e59e917d80080386a080104c0c3171ae30967dcf89b7769402f4",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/07_optional_view.a",
+      "unchanged_body_sha256": "65422b62827a9250f0abac0c9b2d5e62d37f18b80ba6f873e68cc8fe595f7b36",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/08_option_boolean.a",
+      "unchanged_body_sha256": "d9ef49ccd99ecc58234cbd0cb3ce55a150392610760968e0b05a97e4e6af80f2",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/09_option_undefined.a",
+      "unchanged_body_sha256": "02500ddb34c508f97e589618de3681efcc775adfa7bdde43d5447e2bd14d0995",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/10_option_wrong_type.a",
+      "unchanged_body_sha256": "65768da24e7cfb295a75de642c4f4733ff76744562cd58738c2024ea6a0e0ba3",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/11_option_string.a",
+      "unchanged_body_sha256": "fd8643fdfd39b5a05c05e8fdb72fe7c38b58cd9999db1afff4f9e2e804215b28",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/12_nested_entries.a",
+      "unchanged_body_sha256": "a68641b0f1cf08b8fe294bf2198f115c8295d3272804e69f4eb4bd1846190fac",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/13_strict_option.a",
+      "unchanged_body_sha256": "727ab033e014b6b7560932025ce90f9481231cdf096fdf41b1ce4aa61e94f2bd",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/14_group_by.a",
+      "unchanged_body_sha256": "25a8281acc6449fd6077c4a422856089b9ff830036e57a9c73c3bea42f926bfc",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/15_inherited_read.a",
+      "unchanged_body_sha256": "d52f251873b7acc0c8972818c02bad0663aeb5f2f5dd258dbb58d6d501687c26",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/16_built_strings.a",
+      "unchanged_body_sha256": "05212ef1bc7bfbff01ce309fd6e2a413a1ff857e83849ab62b0d99630e194325",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/17_compare_missing_object.a",
+      "unchanged_body_sha256": "7b37d9e9e028e5857a42bf21e8993638724f7ac7a35d130f3686000e159295fc",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/18_compare_missing_scalar.a",
+      "unchanged_body_sha256": "4571166bb981ff4c0bf6ebeddf6d400eb9c971e3808044cf48022a1abc8364b7",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/19_compare_empty_objects.a",
+      "unchanged_body_sha256": "6aa7a3aef47440ba422ba6eebc23bf75def6eba62cf5ea2280caa991f6b65ae3",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/01_paths-missing_constructor/main.a",
+      "unchanged_body_sha256": "dbde3eb384a3567321140e00542166885453961ae62a93ebdf7301c3ddd6abf6",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/01_paths-missing_constructor/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/02_paths-missing_toString/main.a",
+      "unchanged_body_sha256": "1c5a657a15db1423577495d991b2bc08262e7ba40f3a9b26839b6d520f600d19",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/02_paths-missing_toString/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/03_paths-missing_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "373f1187df70984a7d9ef1e8ae906fe9f1a902d1b1fe3f42eac7408ab0a197e9",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/03_paths-missing_hasOwnProperty/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/04_paths-missing___proto__/main.a",
+      "unchanged_body_sha256": "5463c0b97101db5441104224052f072a12ecf50eca984e5f68b79adf26735500",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/04_paths-missing___proto__/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/05_paths-own_constructor/main.a",
+      "unchanged_body_sha256": "dbde3eb384a3567321140e00542166885453961ae62a93ebdf7301c3ddd6abf6",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/05_paths-own_constructor/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/06_paths-own_toString/main.a",
+      "unchanged_body_sha256": "1c5a657a15db1423577495d991b2bc08262e7ba40f3a9b26839b6d520f600d19",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/06_paths-own_toString/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/07_paths-own_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "373f1187df70984a7d9ef1e8ae906fe9f1a902d1b1fe3f42eac7408ab0a197e9",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/07_paths-own_hasOwnProperty/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/08_paths-own___proto__/main.a",
+      "unchanged_body_sha256": "5463c0b97101db5441104224052f072a12ecf50eca984e5f68b79adf26735500",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/08_paths-own___proto__/target.a",
+      "unchanged_body_sha256": "5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/09_exports-missing_constructor/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/09_exports-missing_constructor/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/11_exports-missing_hasOwnProperty/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/12_exports-missing___proto__/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/12_exports-missing___proto__/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/13_exports-own_constructor/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/13_exports-own_constructor/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/14_exports-own_toString/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/14_exports-own_toString/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/15_exports-own_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/15_exports-own_hasOwnProperty/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/16_exports-own___proto__/main.a",
+      "unchanged_body_sha256": "f7597cb938bf697f6072da0ff610ce7ed2a574ffc7a47102785cd21cb998ac0f",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/16_exports-own___proto__/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/17_typesVersions-own_constructor/main.a",
+      "unchanged_body_sha256": "b8ee25f40e871560ac13f376fa446f8d8226c4e4eab33a0323cd9514b0806054",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/17_typesVersions-own_constructor/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a",
+      "unchanged_body_sha256": "e0f289d3b6fa2179677ce25418f75096a341ca21e96a2b5c990b65292c3bff6c",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "759b47988a34d421115403f2dbd1362e34eb35316dccfdf3a5c4abfeb9a5a6a9",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/19_typesVersions-own_hasOwnProperty/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/20_typesVersions-own___proto__/main.a",
+      "unchanged_body_sha256": "0c09348ced9bf13e4d026c88a131b83429623e5af615c1f4302ff83cd60dc87e",
+      "header_changed": true
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a",
+      "unchanged_body_sha256": "514efb1c4c109941a20d0823f5548eadd04ea05058a781a8be9652608d646006",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/21_config-unknown_constructor/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/22_config-unknown_toString/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/23_config-unknown_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/24_config-unknown___proto__/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/26_cli-unknown_toString/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/27_cli-unknown_hasOwnProperty/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/29_compare-old/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/30_compare-new/main.a",
+      "unchanged_body_sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "header_changed": false
+    },
+    {
+      "path": "stage3/records-maplike-main/corePublic-MapLike.a",
+      "unchanged_body_sha256": "55cc1a9824711d8bf900afdfabcb2a8e56a3c61f711f7fdfc39d194aff10aace",
+      "header_changed": false
+    }
+  ],
+  "archived_rows_match_actual_diagnostics": [
+    "review/compiler/loom-records-3/stage3-mutant/records/04_own_values.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/08_option_boolean.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/09_option_undefined.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/10_option_wrong_type.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/11_option_string.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/12_nested_entries.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/14_group_by.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/15_inherited_read.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/17_compare_missing_object.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/18_compare_missing_scalar.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/19_compare_empty_objects.a"
+  ],
+  "counts_identical_to_source": true
+}

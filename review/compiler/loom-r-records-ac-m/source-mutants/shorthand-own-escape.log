@@ -1,0 +1,30 @@
+=== RUN   TestDetachedOwnRefusals
+=== PAUSE TestDetachedOwnRefusals
+=== CONT  TestDetachedOwnRefusals
+=== RUN   TestDetachedOwnRefusals/let_own_=_Object.prototype.hasOwnProperty;_own.call({},_'x');
+=== RUN   TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own('x');
+=== RUN   TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own.bind({});
+=== RUN   TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own);
+=== RUN   TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_saved_=_{own};
+    detached_own_test.go:28: want detached-method refusal, got /tmp/adamic-gate/TestDetachedOwnRefusalsconst_own_=_Object.prototype.hasOwnPrope2909034247/001/main.a:1:61: stage 0 can't lower a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow yet
+=== RUN   TestDetachedOwnRefusals/export_const_own_=_Object.prototype.hasOwnProperty;
+=== RUN   TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_call_=_own.call;
+=== RUN   TestDetachedOwnRefusals/Object.prototype.hasOwnProperty('x');
+=== RUN   TestDetachedOwnRefusals/Object.prototype.hasOwnProperty?.call({},_'x');
+=== RUN   TestDetachedOwnRefusals/Object.prototype?.hasOwnProperty.call({},_'x');
+=== RUN   TestDetachedOwnRefusals/const_own=Object.prototype.hasOwnProperty;_own?.call({},_'x');
+--- FAIL: TestDetachedOwnRefusals (0.29s)
+    --- PASS: TestDetachedOwnRefusals/let_own_=_Object.prototype.hasOwnProperty;_own.call({},_'x'); (0.03s)
+    --- PASS: TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own('x'); (0.03s)
+    --- PASS: TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own.bind({}); (0.03s)
+    --- PASS: TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own); (0.03s)
+    --- FAIL: TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_saved_=_{own}; (0.03s)
+    --- PASS: TestDetachedOwnRefusals/export_const_own_=_Object.prototype.hasOwnProperty; (0.02s)
+    --- PASS: TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_call_=_own.call; (0.02s)
+    --- PASS: TestDetachedOwnRefusals/Object.prototype.hasOwnProperty('x'); (0.03s)
+    --- PASS: TestDetachedOwnRefusals/Object.prototype.hasOwnProperty?.call({},_'x'); (0.03s)
+    --- PASS: TestDetachedOwnRefusals/Object.prototype?.hasOwnProperty.call({},_'x'); (0.02s)
+    --- PASS: TestDetachedOwnRefusals/const_own=Object.prototype.hasOwnProperty;_own?.call({},_'x'); (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.299s
+FAIL

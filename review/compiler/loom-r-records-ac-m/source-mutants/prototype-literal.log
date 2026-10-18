@@ -1,0 +1,79 @@
+=== RUN   TestRecordPrototypeLiteralNames
+=== PAUSE TestRecordPrototypeLiteralNames
+=== CONT  TestRecordPrototypeLiteralNames
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor']));
+    records_test.go:71: got <nil>, want literal member refusal naming constructor
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming constructor
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__']));
+    records_test.go:71: got <nil>, want literal member refusal naming __defineGetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming __defineGetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__']));
+    records_test.go:71: got <nil>, want literal member refusal naming __defineSetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming __defineSetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty']));
+    records_test.go:71: got <nil>, want literal member refusal naming hasOwnProperty
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming hasOwnProperty
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__']));
+    records_test.go:71: got <nil>, want literal member refusal naming __lookupGetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming __lookupGetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__']));
+    records_test.go:71: got <nil>, want literal member refusal naming __lookupSetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming __lookupSetter__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf']));
+    records_test.go:71: got <nil>, want literal member refusal naming isPrototypeOf
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming isPrototypeOf
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable']));
+    records_test.go:71: got <nil>, want literal member refusal naming propertyIsEnumerable
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming propertyIsEnumerable
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString']));
+    records_test.go:71: got <nil>, want literal member refusal naming toString
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming toString
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf']));
+    records_test.go:71: got <nil>, want literal member refusal naming valueOf
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming valueOf
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__']));
+    records_test.go:71: got <nil>, want literal member refusal naming __proto__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming __proto__
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString']));
+    records_test.go:71: got <nil>, want literal member refusal naming toLocaleString
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r));
+    records_test.go:71: got <nil>, want literal member refusal naming toLocaleString
+--- FAIL: TestRecordPrototypeLiteralNames (0.62s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r)); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r)); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r)); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r)); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r)); (0.02s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r)); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString'])); (0.03s)
+    --- FAIL: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r)); (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.622s
+FAIL

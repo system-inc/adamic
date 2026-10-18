@@ -1,0 +1,98 @@
+[
+  {
+    "test": "TestArgumentLayouts",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestObjectSpreadAccessorEffects",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestDirectClosureTargetsUseEncodedIndex",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestCallMayThrowUsesReachableTargets",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestUnknownClosurePreservesThrowingEffect",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestViewUnionDiscriminantOverlaps",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestPrimitiveViewMembers",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestClosureArgumentsCountTargets",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestASortedMapIsNilWhereAPlainMapIs",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestProduct_CallTargetExports",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 2.03
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "action": "pass",
+    "seconds": 2.41
+  }
+]

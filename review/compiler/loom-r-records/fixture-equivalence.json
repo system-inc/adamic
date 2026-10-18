@@ -1,0 +1,36 @@
+{
+  "identical_source_files": [
+    {
+      "before": "internal/oracle/testdata/records_prototype_read.a",
+      "after": "internal/oracle/testdata/records_refused/records_prototype_read.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_prototype_in.a",
+      "after": "internal/oracle/testdata/records_refused/records_prototype_in.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_prototype_set.a",
+      "after": "internal/oracle/testdata/records_refused/records_prototype_set.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_compare_properties_left.a",
+      "after": "internal/oracle/testdata/records_refused/records_compare_properties_left.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_compare_properties_right.a",
+      "after": "internal/oracle/testdata/records_refused/records_compare_properties_right.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_environment_boundary.a",
+      "after": "internal/oracle/testdata/records_refused/records_environment_boundary.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_named_invalidated.a",
+      "after": "internal/oracle/testdata/records_refused/records_named_invalidated.a"
+    },
+    {
+      "before": "internal/oracle/testdata/records_narrowed_number.a",
+      "after": "internal/oracle/testdata/records_refused/records_narrowed_number.a"
+    }
+  ]
+}
