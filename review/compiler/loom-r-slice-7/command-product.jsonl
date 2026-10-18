@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:12:38.481271554Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-18T00:12:38.485245394Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized"}
+{"Time":"2026-10-18T00:12:38.485287968Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Output":"=== RUN   TestProduct_CommandRuntimeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:38.485304093Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Output":"=== PAUSE TestProduct_CommandRuntimeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:38.485306036Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized"}
+{"Time":"2026-10-18T00:12:38.485308399Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized"}
+{"Time":"2026-10-18T00:12:38.485309601Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Output":"=== CONT  TestProduct_CommandRuntimeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.3274133Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Output":"    runtimes_test.go:82: build native-runtime 2010bff2f829 hit 0.15\n"}
+{"Time":"2026-10-18T00:12:39.32748596Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Output":"--- PASS: TestProduct_CommandRuntimeSanitized (0.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.327488754Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestProduct_CommandRuntimeSanitized","Elapsed":0.84}
+{"Time":"2026-10-18T00:12:39.32750621Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.32941656Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t0.848s\n"}
+{"Time":"2026-10-18T00:12:39.32943019Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.848}

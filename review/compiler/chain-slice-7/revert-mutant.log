@@ -1,0 +1,49 @@
+=== RUN   TestEEPPresence0
+=== PAUSE TestEEPPresence0
+=== RUN   TestEEPPresence1
+=== PAUSE TestEEPPresence1
+=== RUN   TestEEPPresence2
+=== PAUSE TestEEPPresence2
+=== RUN   TestEEPPresence3
+=== PAUSE TestEEPPresence3
+=== RUN   TestEEPPresence4
+=== PAUSE TestEEPPresence4
+=== RUN   TestEEPPresence5
+=== PAUSE TestEEPPresence5
+=== RUN   TestEEPPresence6
+=== PAUSE TestEEPPresence6
+=== RUN   TestEEPPresenceSupported
+=== PAUSE TestEEPPresenceSupported
+=== CONT  TestEEPPresence0
+=== CONT  TestEEPPresence4
+=== CONT  TestEEPPresence6
+=== CONT  TestEEPPresenceSupported
+=== NAME  TestEEPPresence0
+    eep_presence_test.go:25: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence0 (0.13s)
+=== CONT  TestEEPPresence5
+=== NAME  TestEEPPresence4
+    eep_presence_test.go:45: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence4 (0.17s)
+=== CONT  TestEEPPresence2
+=== NAME  TestEEPPresence6
+    eep_presence_test.go:55: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence6 (0.24s)
+=== CONT  TestEEPPresence3
+--- PASS: TestEEPPresenceSupported (0.26s)
+=== CONT  TestEEPPresence1
+=== NAME  TestEEPPresence5
+    eep_presence_test.go:50: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence5 (0.14s)
+=== NAME  TestEEPPresence2
+    eep_presence_test.go:35: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence2 (0.13s)
+=== NAME  TestEEPPresence3
+    eep_presence_test.go:40: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence3 (0.10s)
+=== NAME  TestEEPPresence1
+    eep_presence_test.go:30: want located presence refusal with workaround, got <nil>
+--- FAIL: TestEEPPresence1 (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.402s
+FAIL

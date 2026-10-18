@@ -1,0 +1,33 @@
+{"Time":"2026-10-18T00:11:08.903476954Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-18T00:11:08.90379556Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-meter"}
+{"Time":"2026-10-18T00:11:08.912419892Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:11:08.912467855Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== RUN   TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.912482657Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== PAUSE TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.91248462Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:11:08.912486853Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:11:08.912488045Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== CONT  TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.952433392Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing"}
+{"Time":"2026-10-18T00:11:08.952484569Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing","Output":"=== RUN   TestOptionalAdaptationRechecksPresenceNarrowing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.952492852Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing","Output":"=== PAUSE TestOptionalAdaptationRechecksPresenceNarrowing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.952494634Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing"}
+{"Time":"2026-10-18T00:11:08.952496337Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement"}
+{"Time":"2026-10-18T00:11:08.952497589Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement","Output":"=== RUN   TestOptionalAdaptationPreservesLiveMethodPlacement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.952499412Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement","Output":"=== PAUSE TestOptionalAdaptationPreservesLiveMethodPlacement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.952500593Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement"}
+{"Time":"2026-10-18T00:11:08.952503538Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing"}
+{"Time":"2026-10-18T00:11:08.95250469Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing","Output":"=== CONT  TestOptionalAdaptationRechecksPresenceNarrowing\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:08.960405231Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement"}
+{"Time":"2026-10-18T00:11:08.960425101Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement","Output":"=== CONT  TestOptionalAdaptationPreservesLiveMethodPlacement\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:09.507110195Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing","Output":"--- PASS: TestOptionalAdaptationRechecksPresenceNarrowing (0.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:09.646292622Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationRechecksPresenceNarrowing","Elapsed":0.55}
+{"Time":"2026-10-18T00:11:09.646469238Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement","Output":"--- PASS: TestOptionalAdaptationPreservesLiveMethodPlacement (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:09.646625854Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Test":"TestOptionalAdaptationPreservesLiveMethodPlacement","Elapsed":0.69}
+{"Time":"2026-10-18T00:11:09.646630431Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:09.654644244Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.743s\n"}
+{"Time":"2026-10-18T00:11:09.65467482Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Elapsed":0.751}
+{"Time":"2026-10-18T00:11:12.686755495Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"    compiler_test.go:16: build go_build_./cmd/adamic_adamic 030c4c29e394 hit 0.63\n"}
+{"Time":"2026-10-18T00:11:14.868422286Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"--- PASS: TestCompilerWorkerMatchesSubprocess (5.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:14.868461245Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Elapsed":5.96}
+{"Time":"2026-10-18T00:11:14.868467995Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:14.959440048Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t6.055s\n"}
+{"Time":"2026-10-18T00:11:14.959503233Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":6.056}

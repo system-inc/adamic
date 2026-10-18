@@ -1,0 +1,58 @@
+[
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.033,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n",
+    "sha256": "e6f9fe2f214fdefa7b9a9a40dc9bbff3beeb49ee380fe8f17c4938a8fc83b097"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v1.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.029,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n",
+    "sha256": "6a99d69ddfd5110d64158e5c7aa7dcd36962de11983de39530cfc541b93a556c"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v2.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.05,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n",
+    "sha256": "b8e1adf9a37da9397a14df97f4e0b90b4d9ab06dbcd4f70ad0b98dc419b88b14"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v5.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.028,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n",
+    "sha256": "fd30f0a586fcd629a1df22e1b783c412b3c8803f999c095748a948f7e4d87161"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-classfeat_method_view.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.047,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n",
+    "sha256": "8698ad0888385deb2098fdccb20c8a3710433d0ae0bdf86031fd539d27f9f9d3"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z-classfeat_static_virtual.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.031,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n",
+    "sha256": "40140ff083e0f3a3d563c2dd95c8a62e73f09a4af88a7a2d15bad8d3113c1087"
+  },
+  {
+    "path": "internal/lower/testdata/eep_presence/eep1m5z.a",
+    "status": "NotYet",
+    "exit": 1,
+    "seconds": 0.029,
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n",
+    "sha256": "70be73d10ad0d3d76d3d535571d245a4504f7009071746c17a5bf4352e2cddef"
+  }
+]
