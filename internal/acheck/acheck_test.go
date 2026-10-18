@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
@@ -20,8 +21,9 @@ import (
 const repository = "../.."
 
 // knownFile lists the programs outside a package that broke their first line's promise when this test came (#7xsbxbk,
-// 53 on Oct 18), one path a line. It only shrinks (Node's ruling): a listed program that keeps its promise again is
-// named and must come off, and none is added. Each is its owner's to settle: its header updated, its directory exempted
+// 53 on Oct 18), one a line as "<path>: <how it broke>", so a listed program that starts breaking another way is named
+// rather than sheltered (Node's must on 23a97e701c). It only shrinks (Node's ruling): a listed program that keeps its
+// promise again is named and must come off, and none is added. Each is its owner's to settle: its header updated, its directory exempted
 // as evidence, or the compiler's regression fixed.
 const knownFile = "known.txt"
 
@@ -57,6 +59,10 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	}
 	broken := map[string]string{}
 	var mutex sync.Mutex
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	work := make(chan string)
 	var workers sync.WaitGroup
 	for range 8 {
@@ -64,7 +70,7 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 		go func() {
 			defer workers.Done()
 			for program := range work {
-				if why := checked(t, adamic, program); why != "" {
+				if why := stable(checked(t, adamic, program), root); why != "" {
 					mutex.Lock()
 					broken[program] = why
 					mutex.Unlock()
@@ -111,10 +117,12 @@ func evidence(program string) bool {
 // The test finds the programs it must and judges them as the gate did: a planted repository's programs outside a
 // package are found, a Go file under testdata making no package, and those in a package, its testdata, a submodule or
 // node_modules are not; each outcome is held to its first line; and known.txt only shrinks, naming a broken program it
-// doesn't list, a listed one that keeps its promise again, and a listed one that's gone. Mutants that each fail it: a
+// doesn't list, a listed one that breaks another way than listed, a listed one that keeps its promise again, and a
+// listed one that's gone; and how a program broke is the same on every box, its absolute path taken off. Mutants that each fail it: a
 // Go file under testdata taken as a package; a program in a package's subdirectory taken as outside it; a submodule or
 // node_modules walked; a "can't lower" stop judged a failure; a refusal or a type error judged by its kind alone,
-// without its rule or code; a listed program that keeps its promise passing; a gone listed path passing.
+// without its rule or code; a listed program compared by its path alone; a listed program that keeps its promise
+// passing; a gone listed path passing; the absolute path kept in how a program broke.
 func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
@@ -166,11 +174,16 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 			t.Errorf("%s: %q, want broken %v", judged.name, why, judged.broken)
 		}
 	}
-	programs = []string{"a.a", "b.a", "c.a"}
-	problems := compare(programs, map[string]string{"a.a": "refused", "b.a": "refused"}, map[string]bool{"b.a": true, "c.a": true, "gone.a": true})
+	if why := stable("refused (adamic: "+root+"/stage3/a.a:1:28: Adamic 0.1 refuses 'callback')", root); why != "refused (adamic: stage3/a.a:1:28: Adamic 0.1 refuses 'callback')" {
+		t.Errorf("stable: %q, want the repository's path off it", why)
+	}
+	programs = []string{"a.a", "b.a", "c.a", "d.a"}
+	problems := compare(programs, map[string]string{"a.a": "refused", "b.a": "refused", "d.a": "type error"},
+		map[string]string{"b.a": "refused", "c.a": "refused", "d.a": "refused", "gone.a": "refused"})
 	want := []string{
 		"a.a breaks its first line's promise: refused",
 		"c.a keeps its promise now: take it off internal/acheck/known.txt",
+		"d.a breaks differently now: refused -> type error",
 		"gone.a is on internal/acheck/known.txt and isn't a program outside a package: take it off",
 	}
 	if !slices.Equal(problems, want) {
@@ -299,33 +312,61 @@ func judge(expect string, code int, stderr string) string {
 	return why
 }
 
-// readKnown reads known.txt, a program's path a line; blank lines and # comments are skipped.
-func readKnown(path string) (map[string]bool, error) {
+// stable is how a program broke as known.txt holds it: the same on every box, the repository's absolute path, which
+// adamic names in its first line, taken off.
+func stable(why, root string) string {
+	for _, prefix := range []string{root + string(filepath.Separator), resolved(root) + string(filepath.Separator)} {
+		why = strings.ReplaceAll(why, prefix, "")
+	}
+	return why
+}
+
+// resolved is a path with every link on it followed, or the path itself when it can't be.
+func resolved(path string) string {
+	if real, err := filepath.EvalSymlinks(path); err == nil {
+		return real
+	}
+	return path
+}
+
+// readKnown reads known.txt, "<path>: <how it broke>" a line; blank lines and # comments are skipped.
+func readKnown(path string) (map[string]string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
-	known := map[string]bool{}
+	known := map[string]string{}
 	scanner := bufio.NewScanner(file)
+	scanner.Buffer(make([]byte, 64*1024), 1<<20)
 	for scanner.Scan() {
-		if line := strings.TrimSpace(scanner.Text()); line != "" && !strings.HasPrefix(line, "#") {
-			known[line] = true
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
 		}
+		program, why, found := strings.Cut(line, ": ")
+		if !found || why == "" {
+			return nil, fmt.Errorf("%s: %q isn't \"<path>: <how it broke>\"", path, line)
+		}
+		known[program] = why
 	}
 	return known, scanner.Err()
 }
 
-// compare names, sorted, each program that broke its promise and isn't on known.txt, each listed program that kept it,
-// and each listed path that isn't a program outside a package any more.
-func compare(programs []string, broken map[string]string, known map[string]bool) []string {
+// compare names, sorted, each program that broke its promise and isn't on known.txt, each listed program that broke
+// another way than listed, each listed program that kept it, and each listed path that isn't a program outside a
+// package any more.
+func compare(programs []string, broken, known map[string]string) []string {
 	problems := []string{}
 	for _, program := range programs {
 		why, breaks := broken[program]
+		listed, isListed := known[program]
 		switch {
-		case breaks && !known[program]:
+		case breaks && !isListed:
 			problems = append(problems, program+" breaks its first line's promise: "+why)
-		case !breaks && known[program]:
+		case breaks && why != listed:
+			problems = append(problems, program+" breaks differently now: "+listed+" -> "+why)
+		case !breaks && isListed:
 			problems = append(problems, program+" keeps its promise now: take it off internal/acheck/"+knownFile)
 		}
 	}
