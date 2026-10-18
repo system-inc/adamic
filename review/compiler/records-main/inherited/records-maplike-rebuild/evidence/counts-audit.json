@@ -1,0 +1,52 @@
+{
+  "removed": [],
+  "added": {
+    "internal/oracle/testdata/records_prototype_read.a": "| internal/oracle/testdata/records_prototype_read.a | 2 | 0 | 1 | 1 | 2 | 0 |",
+    "internal/oracle/testdata/records_compare_properties_left.a": "| internal/oracle/testdata/records_compare_properties_left.a | 4 | 0 | 4 | 3 | 4 | 0 |",
+    "internal/oracle/testdata/records_environment_boundary.a": "| internal/oracle/testdata/records_environment_boundary.a | 2 | 0 | 1 | 2 | 2 | 0 |",
+    "internal/oracle/testdata/records_partial_parser.a": "| internal/oracle/testdata/records_partial_parser.a | 5 | 5 | 0 | 5 | 5 | 0 |",
+    "internal/oracle/testdata/records_partial_views.a": "| internal/oracle/testdata/records_partial_views.a | 20 | 20 | 54 | 44 | 6 | 0 |",
+    "internal/oracle/testdata/records_prototype_set.a": "| internal/oracle/testdata/records_prototype_set.a | 2 | 0 | 2 | 1 | 2 | 0 |",
+    "internal/oracle/testdata/records_prototype_in.a": "| internal/oracle/testdata/records_prototype_in.a | 2 | 0 | 1 | 1 | 2 | 0 |",
+    "internal/oracle/testdata/records_guarded_snapshot.a": "| internal/oracle/testdata/records_guarded_snapshot.a | 10 | 10 | 15 | 27 | 6 | 0 |",
+    "internal/oracle/testdata/records_named_union.a": "| internal/oracle/testdata/records_named_union.a | 14 | 14 | 30 | 37 | 5 | 0 |",
+    "internal/oracle/testdata/records_named_alias_unready.a": "| internal/oracle/testdata/records_named_alias_unready.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "internal/oracle/testdata/detached_own_unready.a": "| internal/oracle/testdata/detached_own_unready.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "internal/oracle/testdata/records_named_intrinsics.a": "| internal/oracle/testdata/records_named_intrinsics.a | 14 | 14 | 13 | 28 | 7 | 0 |",
+    "internal/oracle/testdata/records_ownership.a": "| internal/oracle/testdata/records_ownership.a | 37 | 37 | 62 | 60 | 18 | 0 |",
+    "internal/oracle/testdata/records_type_only_value.a": "| internal/oracle/testdata/records_type_only_value.a | 5 | 5 | 7 | 12 | 4 | 0 |",
+    "internal/oracle/testdata/records_named_operations.a": "| internal/oracle/testdata/records_named_operations.a | 19 | 19 | 42 | 48 | 7 | 0 |",
+    "internal/oracle/testdata/records_scalars.a": "| internal/oracle/testdata/records_scalars.a | 23 | 23 | 28 | 31 | 8 | 0 |",
+    "internal/oracle/testdata/records_type_only_composition.a": "| internal/oracle/testdata/records_type_only_composition.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "internal/oracle/testdata/records_discarded.a": "| internal/oracle/testdata/records_discarded.a | 4 | 4 | 4 | 10 | 4 | 0 |",
+    "internal/oracle/testdata/records_named_invalidated.a": "| internal/oracle/testdata/records_named_invalidated.a | 3 | 1 | 11 | 7 | 3 | 0 |",
+    "internal/oracle/testdata/records_census.a": "| internal/oracle/testdata/records_census.a | 16 | 16 | 38 | 45 | 9 | 0 |",
+    "internal/oracle/testdata/records_for_in.a": "| internal/oracle/testdata/records_for_in.a | 6 | 6 | 28 | 24 | 3 | 0 |",
+    "internal/oracle/testdata/detached_own_objects.a": "| internal/oracle/testdata/detached_own_objects.a | 6 | 6 | 4 | 8 | 5 | 0 |",
+    "internal/oracle/testdata/records_narrowed_reference.a": "| internal/oracle/testdata/records_narrowed_reference.a | 3 | 1 | 7 | 7 | 3 | 0 |",
+    "internal/oracle/testdata/records_compare_missing_scalar.a": "| internal/oracle/testdata/records_compare_missing_scalar.a | 63 | 63 | 75 | 87 | 9 | 0 |",
+    "internal/oracle/testdata/records_type_only_scanner.a": "| internal/oracle/testdata/records_type_only_scanner.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "internal/oracle/testdata/records_named_options.a": "| internal/oracle/testdata/records_named_options.a | 8 | 8 | 1 | 6 | 4 | 0 |",
+    "internal/oracle/testdata/records_compare_properties_right.a": "| internal/oracle/testdata/records_compare_properties_right.a | 4 | 0 | 6 | 3 | 4 | 0 |",
+    "internal/oracle/testdata/records_operations.a": "| internal/oracle/testdata/records_operations.a | 64 | 64 | 136 | 98 | 21 | 0 |",
+    "internal/oracle/testdata/records_partial_undefined.a": "| internal/oracle/testdata/records_partial_undefined.a | 15 | 15 | 13 | 23 | 8 | 0 |",
+    "internal/oracle/testdata/records_narrowed_number.a": "| internal/oracle/testdata/records_narrowed_number.a | 2 | 0 | 4 | 4 | 2 | 0 |",
+    "internal/oracle/testdata/detached_own_parser.a": "| internal/oracle/testdata/detached_own_parser.a | 4 | 4 | 0 | 4 | 2 | 0 |",
+    "internal/oracle/testdata/detached_own_records.a": "| internal/oracle/testdata/detached_own_records.a | 2 | 2 | 3 | 4 | 2 | 0 |",
+    "internal/oracle/testdata/records_optional.a": "| internal/oracle/testdata/records_optional.a | 12 | 12 | 11 | 15 | 6 | 0 |"
+  },
+  "changed": {
+    "internal/oracle/testdata/library_string_raw.a": {
+      "before": "| internal/oracle/testdata/library_string_raw.a | 45 | 45 | 55 | 89 | 11 | 0 |",
+      "after": "| internal/oracle/testdata/library_string_raw.a | 45 | 45 | 51 | 85 | 11 | 0 |"
+    },
+    "internal/oracle/testdata/method_coverage_object_descriptors.a": {
+      "before": "| internal/oracle/testdata/method_coverage_object_descriptors.a | 47 | 47 | 88 | 127 | 7 | 0 |",
+      "after": "| internal/oracle/testdata/method_coverage_object_descriptors.a | 46 | 46 | 61 | 98 | 6 | 0 |"
+    },
+    "internal/oracle/testdata/library_method_values.a": {
+      "before": "| internal/oracle/testdata/library_method_values.a | 137 | 137 | 154 | 295 | 42 | 0 |",
+      "after": "| internal/oracle/testdata/library_method_values.a | 136 | 136 | 152 | 291 | 41 | 0 |"
+    }
+  }
+}
