@@ -1,0 +1,1568 @@
+[
+  {
+    "path": "internal/lower/testdata/loom_views_a/callable.a",
+    "body_sha256_before": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0378
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.041
+    },
+    "header_changed": true,
+    "body_sha256_after": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "observed_header_at_scan_start": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "original_header": "",
+    "final_sha256": "803ccfecd2be942002b0a3165769d23d09955c5af31693e508f9dc3f02ebd166"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/key.a",
+    "body_sha256_before": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0353
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.035
+    },
+    "header_changed": true,
+    "body_sha256_after": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "50ab74ecc1c8d5231be81eebc0742a6cbace64e59e23129e03ed4c4193b98d98"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p21.a",
+    "body_sha256_before": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0393
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.034
+    },
+    "header_changed": true,
+    "body_sha256_after": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "observed_header_at_scan_start": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "original_header": "",
+    "final_sha256": "803ccfecd2be942002b0a3165769d23d09955c5af31693e508f9dc3f02ebd166"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p37.a",
+    "body_sha256_before": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "original_sha256": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0374
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0386
+    },
+    "header_changed": true,
+    "body_sha256_after": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "observed_header_at_scan_start": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "original_header": "",
+    "final_sha256": "9b424409efe8bd7c07554d33df279e523dfd497858a0b47c63134d93cd40ee34"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/union_key.a",
+    "body_sha256_before": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "original_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0528
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0439
+    },
+    "header_changed": true,
+    "body_sha256_after": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "076894b1d9ec45b5b7463357511fbfe40985ea19bf5aa01adff7b9daefbc2ce4"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/unsupported.a",
+    "body_sha256_before": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "original_sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0459
+    },
+    "status": "refused",
+    "reason": "checked view read of field label with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0448
+    },
+    "header_changed": true,
+    "body_sha256_after": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "observed_header_at_scan_start": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "original_header": "",
+    "final_sha256": "592b59dc6432580e985e814f09350fc4864976fd8e95c334d2b5ef73cc5ac212"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p01.a",
+    "body_sha256_before": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "original_sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0362
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0473
+    },
+    "header_changed": true,
+    "body_sha256_after": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "92221bc1ed5db04d196144409cd47a12231af4eada17a4d7ed051b4212b5f88d"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p05.a",
+    "body_sha256_before": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0353
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0409
+    },
+    "header_changed": true,
+    "body_sha256_after": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "50ab74ecc1c8d5231be81eebc0742a6cbace64e59e23129e03ed4c4193b98d98"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p06.a",
+    "body_sha256_before": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "original_sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0414
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0339
+    },
+    "header_changed": true,
+    "body_sha256_after": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "eda8c97d225b5721b70aecda75f973b0b9de6f031e5b3222dc6b0670a513aab6"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p19.a",
+    "body_sha256_before": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "original_sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0353
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0345
+    },
+    "header_changed": true,
+    "body_sha256_after": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "36319e39e4a48a087c7c2b17eac4ec699460578c1a85fe9c3125054b172f7087"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p72.a",
+    "body_sha256_before": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "original_sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0362
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0422
+    },
+    "header_changed": true,
+    "body_sha256_after": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "502429a96b5f08c3b02fc7a587ef9853a75855a9fe66a9012e4abfb5f8965d83"
+  },
+  {
+    "path": "review/compiler/loom-r-views-fx-a/controls/key_fix.a",
+    "body_sha256_before": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01",
+    "original_sha256": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3986,
+      "seconds": 0.0335
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3986,
+      "seconds": 0.0331
+    },
+    "header_changed": false,
+    "body_sha256_after": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01"
+  },
+  {
+    "path": "review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a",
+    "body_sha256_before": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7",
+    "original_sha256": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2271,
+      "seconds": 0.0395
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2271,
+      "seconds": 0.0317
+    },
+    "header_changed": false,
+    "body_sha256_after": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a",
+    "body_sha256_before": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "original_sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0349
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0321
+    },
+    "header_changed": true,
+    "body_sha256_after": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "observed_header_at_scan_start": "// a-check: refused view member read by element access is not yet checked",
+    "original_header": "",
+    "final_sha256": "03bcdbaa9966e8cc526749f48a62e5b0faab29fa410fdbfe22c0e017e98d8e90"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a",
+    "body_sha256_before": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "original_sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "before": {
+      "status": "failed",
+      "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+      "exit": 2,
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x10864488cfc0, {0x2, 0x399, 0xedf, {0x1086443d0fc0, 0x5c}, 0x0, {0x10864466caee, 0xc}, {0x10864437a300, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x10864488cfc0, {0x2, 0x399, 0xedf, {0x1086443d0fc0, 0x5c}, 0x0, {0x10864466caee, 0xc}, {0x10864437a300, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x10864488cfc0, {0x1d60b78?, 0x108644e146c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x10864488cfc0, {0x1d60b78, 0x108644e146c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x10864488cfc0, {0x1d60b78, 0x108644e146c0})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x10864488cfc0, {0x1d61338?, 0x108644b4b700?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x10864488cfc0, {0x1d61338, 0x108644b4b700})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x10864488cfc0, {0x1d61078?, 0x108644346cf0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb4e\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x10864488cfc0, {0x1d61078, 0x108644346cf0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x10864488cfc0, {0x1d619d8?, 0x108644346d20?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x10864488cfc0, 0x108644d7f970)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x10864488cfc0, {0x108644d7f940, 0x4, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x108644d75380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffcf43a2282?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x10864431e220?, 0x1d72be8?, 0x1086442281e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0363
+    },
+    "status": "failed",
+    "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+    "header": "",
+    "after": {
+      "status": "failed",
+      "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+      "exit": 2,
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0xa337f4dcfc0, {0x2, 0x399, 0xedf, {0xa337ef1d1a0, 0x5c}, 0x0, {0xa337ef26cee, 0xc}, {0xa337ef18480, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0xa337f4dcfc0, {0x2, 0x399, 0xedf, {0xa337ef1d1a0, 0x5c}, 0x0, {0xa337ef26cee, 0xc}, {0xa337ef18480, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0xa337f4dcfc0, {0x1d60b78?, 0xa337f6b26c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0xa337f4dcfc0, {0x1d60b78, 0xa337f6b26c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0xa337f4dcfc0, {0x1d60b78, 0xa337f6b26c0})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0xa337f4dcfc0, {0x1d61338?, 0xa337f6e84f0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0xa337f4dcfc0, {0x1d61338, 0xa337f6e84f0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0xa337f4dcfc0, {0x1d61078?, 0xa337f9552d8?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb4e\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0xa337f4dcfc0, {0x1d61078, 0xa337f9552d8})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0xa337f4dcfc0, {0x1d619d8?, 0xa337f9552f0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0xa337f4dcfc0, 0xa337f7c0530)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0xa337f4dcfc0, {0xa337f7c0500, 0x4, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0xa337efef380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffd04888282?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0xa337ef16280?, 0x1d72be8?, 0xa337eef61e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0331
+    },
+    "header_changed": false,
+    "body_sha256_after": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a",
+    "body_sha256_before": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "original_sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4111,
+      "seconds": 0.033
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4111,
+      "seconds": 0.0318
+    },
+    "header_changed": false,
+    "body_sha256_after": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a",
+    "body_sha256_before": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "original_sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9110,
+      "seconds": 0.0352
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9110,
+      "seconds": 0.0364
+    },
+    "header_changed": false,
+    "body_sha256_after": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/19560c042dd4/depth-2000.a",
+    "body_sha256_before": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc",
+    "original_sha256": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7412,
+      "seconds": 0.0403
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7412,
+      "seconds": 0.0333
+    },
+    "header_changed": false,
+    "body_sha256_after": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a",
+    "body_sha256_before": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "original_sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3596,
+      "seconds": 0.032
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3596,
+      "seconds": 0.0343
+    },
+    "header_changed": false,
+    "body_sha256_after": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a",
+    "body_sha256_before": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "original_sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9187,
+      "seconds": 0.0316
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9187,
+      "seconds": 0.0333
+    },
+    "header_changed": false,
+    "body_sha256_after": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a",
+    "body_sha256_before": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "original_sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field value with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a:6:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0324
+    },
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field value with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field value with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a:7:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0343
+    },
+    "header_changed": true,
+    "body_sha256_after": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "47b9a8fcad4ab152dab4fdc16444b5496c4e68fc34816ed767b71f8cc79d343f"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/2ca18403dfcd/snapshot-maybe-number.a",
+    "body_sha256_before": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "original_sha256": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4642,
+      "seconds": 0.0339
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4642,
+      "seconds": 0.0305
+    },
+    "header_changed": false,
+    "body_sha256_after": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/2db1d7d06600/depth-200.a",
+    "body_sha256_before": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59",
+    "original_sha256": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7410,
+      "seconds": 0.0356
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7410,
+      "seconds": 0.036
+    },
+    "header_changed": false,
+    "body_sha256_after": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a",
+    "body_sha256_before": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "original_sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3528,
+      "seconds": 0.0343
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3528,
+      "seconds": 0.0331
+    },
+    "header_changed": false,
+    "body_sha256_after": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a",
+    "body_sha256_before": "39035180ca1cc281cba48032277f1c52f254fc149c81f2e5cc1ec5357319ceec",
+    "original_sha256": "39035180ca1cc281cba48032277f1c52f254fc149c81f2e5cc1ec5357319ceec",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0326
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a:8:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0342
+    },
+    "header_changed": true,
+    "body_sha256_after": "39035180ca1cc281cba48032277f1c52f254fc149c81f2e5cc1ec5357319ceec",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "530003efe94939186f0b95b5e4506d84d236318864efb5de323653b2b0f5a256"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/3a666aeb3afd/control.a",
+    "body_sha256_before": "3a666aeb3afd9feef8fca147f8f12d5eab4f519e5ff5b203f9c881ebe7e5fd23",
+    "original_sha256": "3a666aeb3afd9feef8fca147f8f12d5eab4f519e5ff5b203f9c881ebe7e5fd23",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4611,
+      "seconds": 0.0387
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4611,
+      "seconds": 0.0344
+    },
+    "header_changed": false,
+    "body_sha256_after": "3a666aeb3afd9feef8fca147f8f12d5eab4f519e5ff5b203f9c881ebe7e5fd23",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "3a666aeb3afd9feef8fca147f8f12d5eab4f519e5ff5b203f9c881ebe7e5fd23"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a",
+    "body_sha256_before": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "original_sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5841,
+      "seconds": 0.0313
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5841,
+      "seconds": 0.0334
+    },
+    "header_changed": false,
+    "body_sha256_after": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/4311ed865723/callable_union_result_both.a",
+    "body_sha256_before": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "original_sha256": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8449,
+      "seconds": 0.0321
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8449,
+      "seconds": 0.032
+    },
+    "header_changed": false,
+    "body_sha256_after": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/4959ae25761c/callable_union_result_number.a",
+    "body_sha256_before": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "original_sha256": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1969,
+      "seconds": 0.0355
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1969,
+      "seconds": 0.0344
+    },
+    "header_changed": false,
+    "body_sha256_after": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a",
+    "body_sha256_before": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "original_sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4433,
+      "seconds": 0.031
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4433,
+      "seconds": 0.0325
+    },
+    "header_changed": false,
+    "body_sha256_after": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a",
+    "body_sha256_before": "51e01ecde06378874ad527309f274abb44422587f53de3e33a323fe8436bef79",
+    "original_sha256": "51e01ecde06378874ad527309f274abb44422587f53de3e33a323fe8436bef79",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a:6:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0367
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0307
+    },
+    "header_changed": true,
+    "body_sha256_after": "51e01ecde06378874ad527309f274abb44422587f53de3e33a323fe8436bef79",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "2b1d3c55085bb5fc149e9a7c26f1c13857f25a2b3762f7ab3fa4b54f7e2e8d85"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a",
+    "body_sha256_before": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "original_sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a:7:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0403
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0367
+    },
+    "header_changed": true,
+    "body_sha256_after": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "e07a941c045f744c893d635b373db410e2b29a1601bd9d418512fa914ae0fcf6"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/5907cb79c2f5/callable_union_result_zero.a",
+    "body_sha256_before": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "original_sha256": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1978,
+      "seconds": 0.0323
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1978,
+      "seconds": 0.0363
+    },
+    "header_changed": false,
+    "body_sha256_after": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a",
+    "body_sha256_before": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "original_sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4194,
+      "seconds": 0.031
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4194,
+      "seconds": 0.0387
+    },
+    "header_changed": false,
+    "body_sha256_after": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a",
+    "body_sha256_before": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "original_sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2864,
+      "seconds": 0.0308
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2864,
+      "seconds": 0.0296
+    },
+    "header_changed": false,
+    "body_sha256_after": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/6f7c7da4c8e2/callable_union_result_string.a",
+    "body_sha256_before": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "original_sha256": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2293,
+      "seconds": 0.0364
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2293,
+      "seconds": 0.0317
+    },
+    "header_changed": false,
+    "body_sha256_after": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/702776fe1a62/scalar-tuple.a",
+    "body_sha256_before": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7",
+    "original_sha256": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4047,
+      "seconds": 0.0312
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4047,
+      "seconds": 0.0369
+    },
+    "header_changed": false,
+    "body_sha256_after": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a",
+    "body_sha256_before": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "original_sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9858,
+      "seconds": 0.0307
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9858,
+      "seconds": 0.0324
+    },
+    "header_changed": false,
+    "body_sha256_after": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/78a920f10d1e/depth-65.a",
+    "body_sha256_before": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1",
+    "original_sha256": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7410,
+      "seconds": 0.0369
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7410,
+      "seconds": 0.0292
+    },
+    "header_changed": false,
+    "body_sha256_after": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a",
+    "body_sha256_before": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "original_sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4087,
+      "seconds": 0.0322
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4087,
+      "seconds": 0.0346
+    },
+    "header_changed": false,
+    "body_sha256_after": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a",
+    "body_sha256_before": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "original_sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a:9:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0312
+    },
+    "status": "refused",
+    "reason": "checked view read of field label with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0294
+    },
+    "header_changed": true,
+    "body_sha256_after": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "592b59dc6432580e985e814f09350fc4864976fd8e95c334d2b5ef73cc5ac212"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a",
+    "body_sha256_before": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "original_sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8380,
+      "seconds": 0.0339
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8380,
+      "seconds": 0.034
+    },
+    "header_changed": false,
+    "body_sha256_after": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a",
+    "body_sha256_before": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "original_sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4427,
+      "seconds": 0.031
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4427,
+      "seconds": 0.0339
+    },
+    "header_changed": false,
+    "body_sha256_after": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a",
+    "body_sha256_before": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "original_sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2917,
+      "seconds": 0.0333
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2917,
+      "seconds": 0.0333
+    },
+    "header_changed": false,
+    "body_sha256_after": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a",
+    "body_sha256_before": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "original_sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "before": {
+      "status": "failed",
+      "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+      "exit": 2,
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x220ece1bea80, {0x2, 0x56, 0xedf, {0x220ecdbf91a0, 0x5b}, 0x0, {0x220ecdc02ced, 0xc}, {0x220ecdbf4440, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x220ece1bea80, {0x2, 0x56, 0xedf, {0x220ecdbf91a0, 0x5b}, 0x0, {0x220ecdc02ced, 0xc}, {0x220ecdbf4440, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x220ece1bea80, {0x1d60b78?, 0x220ece86c6c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x220ece1bea80, {0x1d60b78, 0x220ece86c6c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x220ece1bea80, {0x1d60b78, 0x220ece86c6c0})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x220ece1bea80, {0x1d61338?, 0x220ece326420?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x220ece1bea80, {0x1d61338, 0x220ece326420})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x220ece1bea80, {0x1d61078?, 0x220ece6131d0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb4e\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x220ece1bea80, {0x1d61078, 0x220ece6131d0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x220ece1bea80, {0x1d619d8?, 0x220ece6131e8?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x220ece1bea80, 0x220ece47e4f0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x220ece1bea80, {0x220ece47e4c0, 0x4, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x220ece84f380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fffd1441283?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x220ecdbf2280?, 0x1d72be8?, 0x220ecdbd21e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0339
+    },
+    "status": "failed",
+    "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+    "header": "",
+    "after": {
+      "status": "failed",
+      "reason": "panic: compiler bug: narrowed scalar union view requires a checked conversion",
+      "exit": 2,
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x1392c60ea80, {0x2, 0x56, 0xedf, {0x1392bfbd140, 0x5b}, 0x0, {0x1392bfc62ed, 0xc}, {0x1392bfb82e0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x1392c60ea80, {0x2, 0x56, 0xedf, {0x1392bfbd140, 0x5b}, 0x0, {0x1392bfc62ed, 0xc}, {0x1392bfb82e0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1392c60ea80, {0x1d60b78?, 0x1392cb386c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1392c60ea80, {0x1d60b78, 0x1392cb386c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x1392c60ea80, {0x1d60b78, 0x1392cb386c0})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1392c60ea80, {0x1d61338?, 0x1392cb271c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1392c60ea80, {0x1d61338, 0x1392cb271c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1392c60ea80, {0x1d61078?, 0x1392bfa4600?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb4e\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1392c60ea80, {0x1d61078, 0x1392bfa4600})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x1392c60ea80, {0x1d619d8?, 0x1392bfa4618?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1392c60ea80, 0x1392cb25870)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x1392c60ea80, {0x1392cb25840, 0x4, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x1392cb19380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fff5929a283?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x1392c09e220?, 0x1d72be8?, 0x1392bf961e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0319
+    },
+    "header_changed": false,
+    "body_sha256_after": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a",
+    "body_sha256_before": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "original_sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6816,
+      "seconds": 0.0331
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6816,
+      "seconds": 0.032
+    },
+    "header_changed": false,
+    "body_sha256_after": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a",
+    "body_sha256_before": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "original_sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "before": {
+      "status": "failed",
+      "reason": "panic: compiler bug: incomplete checked field contract",
+      "exit": 2,
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x2388cb95ec40, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x2388cb56c0f0, 0x13}, {0x2388cbe99780, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2388cb95ec40, {0x1d60b78?, 0x2388cbfc4cc0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x2388cb95ec40, {0x1d60b78, 0x2388cbfc4cc0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x2388cb95ec40, {0x1d61a18?, 0x2388cbe04600?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x2388cb95ec40, 0x2388cbfab060)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x2388cb95ec40, {0x2388cbfab020, 0x6, 0x0?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x2388cbfa1680, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffedbf5428d?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x2388cb51e220?, 0x1d72be8?, 0x2388cb4681e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.033
+    },
+    "status": "failed",
+    "reason": "panic: compiler bug: incomplete checked field contract",
+    "header": "",
+    "after": {
+      "status": "failed",
+      "reason": "panic: compiler bug: incomplete checked field contract",
+      "exit": 2,
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x22d5e8c5cc40, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x22d5e876c090, 0x13}, {0x22d5e866d850, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x22d5e8c5cc40, {0x1d60b78?, 0x22d5e91a8cc0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0xa1f4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x22d5e8c5cc40, {0x1d60b78, 0x22d5e91a8cc0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x22d5e8c5cc40, {0x1d61a18?, 0x22d5e91ac5c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x22d5e8c5cc40, 0x22d5e9191060)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x22d5e8c5cc40, {0x22d5e9191020, 0x6, 0x0?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x22d5e9183680, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fff018ef28d?)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x22d5e871e220?, 0x1d72be8?, 0x22d5e865c1e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:81 +0x414\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0345
+    },
+    "header_changed": false,
+    "body_sha256_after": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a",
+    "body_sha256_before": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "original_sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field value with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a:9:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0371
+    },
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field value with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field value with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a:10:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0331
+    },
+    "header_changed": true,
+    "body_sha256_after": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "e53d58e8f93471c015321aab36fbbbf9a2c7d3d4a21f54112783b7b4d152c48a"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a",
+    "body_sha256_before": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "original_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a:9:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0317
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0331
+    },
+    "header_changed": true,
+    "body_sha256_after": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "076894b1d9ec45b5b7463357511fbfe40985ea19bf5aa01adff7b9daefbc2ce4"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a",
+    "body_sha256_before": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "original_sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4092,
+      "seconds": 0.0321
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4092,
+      "seconds": 0.0342
+    },
+    "header_changed": false,
+    "body_sha256_after": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/d44ab71300a7/snapshot-maybe-boolean.a",
+    "body_sha256_before": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "original_sha256": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7730,
+      "seconds": 0.0319
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7730,
+      "seconds": 0.0339
+    },
+    "header_changed": false,
+    "body_sha256_after": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/d8a921ff2453/oct9_views_p48.a",
+    "body_sha256_before": "d8a921ff2453af8016d24459b5b5436226ef792f3835f571f2d882a7c3023cfb",
+    "original_sha256": "d8a921ff2453af8016d24459b5b5436226ef792f3835f571f2d882a7c3023cfb",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field values with unsupported collection contract",
+      "exit": 1,
+      "stderr": "adamic: : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.033
+    },
+    "status": "refused",
+    "reason": "checked view read of field values with unsupported collection contract",
+    "header": "// a-check: refused checked view read of field values with unsupported collection contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field values with unsupported collection contract",
+      "exit": 1,
+      "stderr": "adamic: : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.032
+    },
+    "header_changed": true,
+    "body_sha256_after": "d8a921ff2453af8016d24459b5b5436226ef792f3835f571f2d882a7c3023cfb",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "cb9f87ebc6818eb87cf07ffcfed4f9c07cc39cca3cb99bc144742047a76398a3"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a",
+    "body_sha256_before": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "original_sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0321
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a:8:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0357
+    },
+    "header_changed": true,
+    "body_sha256_after": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "f395e476ee432457561f69b8f8c656396e6217820799c9435ecebecff067d98c"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a",
+    "body_sha256_before": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "original_sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8380,
+      "seconds": 0.0316
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8380,
+      "seconds": 0.0319
+    },
+    "header_changed": false,
+    "body_sha256_after": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "observed_header_at_scan_start": "",
+    "original_header": "",
+    "final_sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193"
+  }
+]

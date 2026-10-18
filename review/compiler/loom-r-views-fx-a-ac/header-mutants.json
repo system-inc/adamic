@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "removed-header",
+    "path": "internal/lower/testdata/loom_views_a/key.a",
+    "caught": true,
+    "exit": 1,
+    "failure": "a-check failed for 1 file:\ninternal/lower/testdata/loom_views_a/key.a: refused, expected checked (adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:6:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count)"
+  },
+  {
+    "mutant": "wrong-reason",
+    "path": "internal/lower/testdata/loom_views_a/key.a",
+    "caught": true,
+    "exit": 1,
+    "failure": "a-check failed for 1 file:\ninternal/lower/testdata/loom_views_a/key.a: refused, expected refused intentionally wrong reason for header predicate mutant (adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count)"
+  }
+]

@@ -1,0 +1,581 @@
+[
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/key.a"
+    ],
+    "exit": 0,
+    "stdout": "NaN\nfalse\n",
+    "stderr": "",
+    "seconds": 0.103
+  },
+  {
+    "name": "key-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/key.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "key-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/key.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.04
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a"
+    ],
+    "exit": 0,
+    "stdout": "xx / 0\n",
+    "stderr": "",
+    "seconds": 0.071
+  },
+  {
+    "name": "unsupported-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.034
+  },
+  {
+    "name": "unsupported-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.035
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/callable.a"
+    ],
+    "exit": 0,
+    "stdout": "xx\n3\n12\n",
+    "stderr": "",
+    "seconds": 0.075
+  },
+  {
+    "name": "callable-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/callable.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "callable-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/callable.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.039
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a"
+    ],
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": "",
+    "seconds": 0.062
+  },
+  {
+    "name": "views_p01-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+    "seconds": 0.033
+  },
+  {
+    "name": "views_p01-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+    "seconds": 0.034
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a"
+    ],
+    "exit": 0,
+    "stdout": "NaN\nfalse\n",
+    "stderr": "",
+    "seconds": 0.062
+  },
+  {
+    "name": "views_p05-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.033
+  },
+  {
+    "name": "views_p05-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a"
+    ],
+    "exit": 0,
+    "stdout": "2\n",
+    "stderr": "",
+    "seconds": 0.069
+  },
+  {
+    "name": "views_p06-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.03
+  },
+  {
+    "name": "views_p06-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+    "seconds": 0.031
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a"
+    ],
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": "",
+    "seconds": 0.075
+  },
+  {
+    "name": "views_p19-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.034
+  },
+  {
+    "name": "views_p19-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a"
+    ],
+    "exit": 0,
+    "stdout": "number 2\n",
+    "stderr": "",
+    "seconds": 0.071
+  },
+  {
+    "name": "views_p72-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "views_p72-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.029
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a"
+    ],
+    "exit": 0,
+    "stdout": "xx\n3\n12\n",
+    "stderr": "",
+    "seconds": 0.064
+  },
+  {
+    "name": "native_p21-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.034
+  },
+  {
+    "name": "native_p21-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.034
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a"
+    ],
+    "exit": 0,
+    "stdout": "xx\n0\n",
+    "stderr": "",
+    "seconds": 0.072
+  },
+  {
+    "name": "native_p37-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "native_p37-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+    "seconds": 0.038
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.067
+  },
+  {
+    "name": "union_key-c",
+    "command": [
+      "/tmp/r-views-adamic",
+      "c",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.032
+  },
+  {
+    "name": "union_key-js",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+    "seconds": 0.035
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/key_fix.a"
+    ],
+    "exit": 0,
+    "stdout": "14\ntrue\n",
+    "stderr": "",
+    "seconds": 0.062
+  },
+  {
+    "name": "key_fix-js-compile",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/key_fix.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.034
+  },
+  {
+    "name": "key_fix-javascript",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/r-views-key_fix.mjs"
+    ],
+    "exit": 0,
+    "stdout": "14\ntrue\n",
+    "stderr": "",
+    "seconds": 0.034
+  },
+  {
+    "name": "key_fix-release-build",
+    "command": [
+      "/tmp/r-views-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/key_fix.a",
+      "-o",
+      "/tmp/r-views-key_fix-release"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.975
+  },
+  {
+    "name": "key_fix-release",
+    "command": [
+      "/tmp/r-views-key_fix-release"
+    ],
+    "exit": 0,
+    "stdout": "14\ntrue\n",
+    "stderr": "",
+    "seconds": 0.001
+  },
+  {
+    "name": "key_fix-sanitized-build",
+    "command": [
+      "/tmp/r-views-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/key_fix.a",
+      "-o",
+      "/tmp/r-views-key_fix-sanitized",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.005
+  },
+  {
+    "name": "key_fix-sanitized",
+    "command": [
+      "/tmp/r-views-key_fix-sanitized"
+    ],
+    "exit": 0,
+    "stdout": "14\ntrue\n",
+    "stderr": "",
+    "seconds": 0.007
+  },
+  {
+    "name": "source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a"
+    ],
+    "exit": 0,
+    "stdout": "created\n",
+    "stderr": "",
+    "seconds": 0.065
+  },
+  {
+    "name": "unsupported_unread-js-compile",
+    "command": [
+      "/tmp/r-views-adamic",
+      "js",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.032
+  },
+  {
+    "name": "unsupported_unread-javascript",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/r-views-unsupported_unread.mjs"
+    ],
+    "exit": 0,
+    "stdout": "created\n",
+    "stderr": "",
+    "seconds": 0.033
+  },
+  {
+    "name": "unsupported_unread-release-build",
+    "command": [
+      "/tmp/r-views-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a",
+      "-o",
+      "/tmp/r-views-unsupported_unread-release"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.898
+  },
+  {
+    "name": "unsupported_unread-release",
+    "command": [
+      "/tmp/r-views-unsupported_unread-release"
+    ],
+    "exit": 0,
+    "stdout": "created\n",
+    "stderr": "",
+    "seconds": 0.001
+  },
+  {
+    "name": "unsupported_unread-sanitized-build",
+    "command": [
+      "/tmp/r-views-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a",
+      "-o",
+      "/tmp/r-views-unsupported_unread-sanitized",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.939
+  },
+  {
+    "name": "unsupported_unread-sanitized",
+    "command": [
+      "/tmp/r-views-unsupported_unread-sanitized"
+    ],
+    "exit": 0,
+    "stdout": "created\n",
+    "stderr": "",
+    "seconds": 0.007
+  }
+]
