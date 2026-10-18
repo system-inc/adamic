@@ -19,9 +19,6 @@ func runRuntimeStaticsParallel(t *testing.T, unit int) {
 	if goruntime.GOOS != "linux" {
 		t.Skip("runtime static race proofs require Linux ThreadSanitizer")
 	}
-	if _, err := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(err) {
-		t.Skip("concurrency-area has not been merged; parallel.c is absent")
-	}
 	library, root := staticsRaceLibrary(t, "", "", "")
 	for index, fixture := range []string{"regex", "string_bmp", "string_supplementary", "normalization", "numbers", "map", "heap_weak", "field_cache", "json", "profiling", "output", "shape_types"} {
 		if index != unit {
@@ -39,9 +36,6 @@ func runRuntimeStaticsProtectionMutant(t *testing.T, unit int) {
 	t.Helper()
 	if goruntime.GOOS != "linux" {
 		t.Skip("runtime static race proofs require Linux ThreadSanitizer")
-	}
-	if _, err := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(err) {
-		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	mutants := []struct{ name, file, old, changed, fixture string }{
 		{"regex_budget", "regexp.c", "static _Atomic uint64_t regex_step_limit;", "static uint64_t regex_step_limit;", "regex"},

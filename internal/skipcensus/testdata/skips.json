@@ -737,8 +737,7 @@
     "reads": [
       "exec.LookPath(\"clang\")",
       "os.ReadFile(\"../../bridge/tsgo/tsgo.h\")",
-      "os.ReadFile(file)",
-      "os.Stat(filepath.Join(*runtimeStaticsDirectory, \"parallel.c\"))"
+      "os.ReadFile(file)"
     ],
     "callers": [
       "TestRuntimeStaticsParallelUnit00",
@@ -765,14 +764,13 @@
     "file": "internal/native/runtime_statics_parallel_test.go",
     "test": "runRuntimeStaticsProtectionMutant",
     "id": "TestRuntimeStaticsProtectionMutantsUnit00,TestRuntimeStaticsProtectionMutantsUnit01,TestRuntimeStaticsProtectionMutantsUnit02,TestRuntimeStaticsProtectionMutantsUnit03,TestRuntimeStaticsProtectionMutantsUnit04,TestRuntimeStaticsProtectionMutantsUnit05,TestRuntimeStaticsProtectionMutantsUnit06,TestRuntimeStaticsProtectionMutantsUnit07,TestRuntimeStaticsProtectionMutantsUnit08,TestRuntimeStaticsProtectionMutantsUnit09,TestRuntimeStaticsProtectionMutantsUnit10:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f",
-    "line": 41,
+    "line": 38,
     "condition": "goruntime.GOOS != \"linux\"",
     "reads": [
       "exec.LookPath(\"clang\")",
       "os.ReadFile(\"../../bridge/tsgo/tsgo.h\")",
       "os.ReadFile(file)",
-      "os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))",
-      "os.Stat(filepath.Join(*runtimeStaticsDirectory, \"parallel.c\"))"
+      "os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))"
     ],
     "callers": [
       "TestRuntimeStaticsProtectionMutantsUnit00",
@@ -798,7 +796,7 @@
     "file": "internal/native/runtime_statics_parallel_test.go",
     "test": "TestRuntimeStaticsSignalAndExit",
     "id": "TestRuntimeStaticsSignalAndExit:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f",
-    "line": 102,
+    "line": 96,
     "condition": "goruntime.GOOS != \"linux\"",
     "reads": [
       "exec.LookPath(\"clang\")",
@@ -821,7 +819,7 @@
     "file": "internal/native/runtime_statics_parallel_test.go",
     "test": "TestRuntimeStaticsStopWholeLines",
     "id": "TestRuntimeStaticsStopWholeLines:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f",
-    "line": 150,
+    "line": 144,
     "condition": "goruntime.GOOS != \"linux\"",
     "reads": [
       "exec.LookPath(\"clang\")",
