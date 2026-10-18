@@ -271,3 +271,16 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# Runtime compiler storage is per parse/compile arena; generated tables are const.
+`runtime-file:regexp_compile.h`
+`runtime-file:regexp_compile_bytecode.c`
+`runtime-file:regexp_compile_bytecode.h`
+`runtime-file:regexp_compile_parser.c`
+`runtime-file:regexp_compile_parser.h`
+`runtime-file:regexp_compile_properties.c`
+`runtime-file:regexp_compile_sets.c`
+`runtime-file:regexp_compile_sets.h`
+`runtime-file:regexp_compile_tables.h`
+`runtime-file:regexp_compile_v8.c`
+`runtime-file:regexp_compile_v8.h`
