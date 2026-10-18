@@ -1,0 +1,29 @@
+{
+  "label": "mutant-results-drop-parameter-check",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/results-drop-parameter-check-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadResultsLiarStopsParameterLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 19.233,
+  "tests": [
+    {
+      "name": "TestOverloadResultsLiarStopsParameterLiar",
+      "action": "fail",
+      "seconds": 3.94
+    }
+  ]
+}

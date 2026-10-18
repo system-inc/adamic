@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/hidden-04/measure_region.py", line 50, in <module>
+    new = window(rows)
+          ^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/hidden-04/measure_region.py", line 32, in window
+    assert got == overlap, (got, overlap)
+           ^^^^^^^^^^^^^^
+AssertionError: ({'checker.ts:6309:5', 'checker.ts:1486:1', 'checker.ts:9346:9'}, {'checker.ts:10648:13', 'checker.ts:6309:5', 'checker.ts:1486:1', 'checker.ts:9346:9'})

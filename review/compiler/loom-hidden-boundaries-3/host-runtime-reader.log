@@ -1,0 +1,41 @@
+{"Time":"2026-10-16T08:40:04.345057965Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-16T08:40:04.383117688Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost"}
+{"Time":"2026-10-16T08:40:04.383254754Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Output":"=== RUN   TestFixturesHost\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:04.383298523Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Output":"=== PAUSE TestFixturesHost\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:04.383302561Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost"}
+{"Time":"2026-10-16T08:40:04.383308032Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost"}
+{"Time":"2026-10-16T08:40:04.383311127Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Output":"=== CONT  TestFixturesHost\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.044777237Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Output":"    fixtures_test.go:214: build stage3-fixture-oracle-hook bf4dea811b7b miss 35.11\n"}
+{"Time":"2026-10-16T08:40:52.153224982Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host"}
+{"Time":"2026-10-16T08:40:52.153279267Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host","Output":"=== RUN   TestFixturesHost/host\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.153296075Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host","Output":"=== PAUSE TestFixturesHost/host\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.153299884Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host"}
+{"Time":"2026-10-16T08:40:52.153344623Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host"}
+{"Time":"2026-10-16T08:40:52.153348601Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host","Output":"=== CONT  TestFixturesHost/host\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.154243748Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a"}
+{"Time":"2026-10-16T08:40:52.154304705Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a","Output":"=== RUN   TestFixturesHost/host/13_createDirectory.a\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.154317113Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a","Output":"=== PAUSE TestFixturesHost/host/13_createDirectory.a\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.154320906Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a"}
+{"Time":"2026-10-16T08:40:52.154833851Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a"}
+{"Time":"2026-10-16T08:40:52.15484736Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a","Output":"=== CONT  TestFixturesHost/host/13_createDirectory.a\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.42810862Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/node"}
+{"Time":"2026-10-16T08:40:52.428154537Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/node","Output":"=== RUN   TestFixturesHost/host/13_createDirectory.a/node\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.428189264Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/node","Output":"--- PASS: TestFixturesHost/host/13_createDirectory.a/node (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:40:52.428193967Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/node","Elapsed":0}
+{"Time":"2026-10-16T08:40:53.046901029Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/native"}
+{"Time":"2026-10-16T08:40:53.046947544Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/native","Output":"=== RUN   TestFixturesHost/host/13_createDirectory.a/native\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872238106Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/native","Output":"--- PASS: TestFixturesHost/host/13_createDirectory.a/native (24.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872336411Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/native","Elapsed":24.82}
+{"Time":"2026-10-16T08:41:17.872387636Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/stage0"}
+{"Time":"2026-10-16T08:41:17.872392063Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/stage0","Output":"=== RUN   TestFixturesHost/host/13_createDirectory.a/stage0\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872397509Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/stage0","Output":"--- PASS: TestFixturesHost/host/13_createDirectory.a/stage0 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872401616Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a/stage0","Elapsed":0}
+{"Time":"2026-10-16T08:41:17.872406468Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a","Output":"--- PASS: TestFixturesHost/host/13_createDirectory.a (25.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.87241129Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host/13_createDirectory.a","Elapsed":25.72}
+{"Time":"2026-10-16T08:41:17.872414682Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host","Output":"--- PASS: TestFixturesHost/host (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872419784Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost/host","Elapsed":0}
+{"Time":"2026-10-16T08:41:17.872423205Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Output":"--- PASS: TestFixturesHost (47.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:17.872426146Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturesHost","Elapsed":47.77}
+{"Time":"2026-10-16T08:41:17.872429027Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:41:18.086145538Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"ok  \tgithub.com/system-inc/adamic/stage3/fixtures\t73.741s\n"}
+{"Time":"2026-10-16T08:41:18.08626154Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":73.741}

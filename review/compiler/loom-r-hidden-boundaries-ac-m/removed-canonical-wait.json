@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "./cmd/adamic",
+    "-run",
+    "^TestCommandRuntimeProductsWaitForOwners$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json"
+  ],
+  "exit": 1,
+  "caught": true,
+  "catcher": "TestCommandRuntimeProductsWaitForOwners",
+  "mutation": "remove only the new canonical-closures wait"
+}

@@ -1,0 +1,29 @@
+{
+  "label": "mutant-field-hatch-kind",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/field-hatch-kind-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestOverloadFieldHatchKindLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 17.995,
+  "tests": [
+    {
+      "name": "TestOverloadFieldHatchKindLiar",
+      "action": "fail",
+      "seconds": 2.85
+    }
+  ]
+}

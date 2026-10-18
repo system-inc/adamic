@@ -1,0 +1,13 @@
+{"Time":"2026-10-16T08:42:15.37392932Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-16T08:42:15.381379741Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput"}
+{"Time":"2026-10-16T08:42:15.381479188Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Output":"=== RUN   TestOverloadCallbackUnservedInput\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.381534785Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Output":"=== PAUSE TestOverloadCallbackUnservedInput\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.381537756Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput"}
+{"Time":"2026-10-16T08:42:15.381545278Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput"}
+{"Time":"2026-10-16T08:42:15.381547333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Output":"=== CONT  TestOverloadCallbackUnservedInput\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.426059367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Output":"    overload_callback_test.go:43: expected an unserved callback refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-16T08:42:15.426157607Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Output":"--- FAIL: TestOverloadCallbackUnservedInput (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.426187671Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedInput","Elapsed":0.04}
+{"Time":"2026-10-16T08:42:15.426250604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.427977498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.053s\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:42:15.428024359Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.054}

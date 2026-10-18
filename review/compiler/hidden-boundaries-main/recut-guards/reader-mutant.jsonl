@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:47:51.694135894Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-09T14:47:51.710369401Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders"}
+{"Time":"2026-10-09T14:47:51.710475988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"=== RUN   TestCallTargetReaders\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:51.710501796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"=== PAUSE TestCallTargetReaders\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:51.710503929Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders"}
+{"Time":"2026-10-09T14:47:51.710505922Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders"}
+{"Time":"2026-10-09T14:47:51.710507535Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"=== CONT  TestCallTargetReaders\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:52.458882885Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /workspace/adamic/internal/lower/overload_results.go:275:47; use CallTargets or ClosureTargets\n","OutputType":"error"}
+{"Time":"2026-10-09T14:47:52.458935642Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /workspace/adamic/internal/lower/overload_results.go:326:46; use CallTargets or ClosureTargets\n","OutputType":"error"}
+{"Time":"2026-10-09T14:47:52.463919971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Output":"--- FAIL: TestCallTargetReaders (0.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:52.463940191Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReaders","Elapsed":0.75}
+{"Time":"2026-10-09T14:47:52.46395982Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:52.46734309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\tgithub.com/system-inc/adamic/internal/ir\t0.773s\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:47:52.467360396Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.773}

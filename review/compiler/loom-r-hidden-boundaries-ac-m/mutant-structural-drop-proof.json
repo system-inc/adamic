@@ -1,0 +1,29 @@
+{
+  "label": "mutant-structural-drop-proof",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries-ac-m/structural-drop-proof-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralResults$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 19.519,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralResults",
+      "action": "fail",
+      "seconds": 0.09
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "label": "mutant-callback-representation",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/callback-representation-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadCallbackUnservedRepresentation$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 12.149,
+  "tests": [
+    {
+      "name": "TestOverloadCallbackUnservedRepresentation",
+      "action": "fail",
+      "seconds": 0.03
+    }
+  ]
+}

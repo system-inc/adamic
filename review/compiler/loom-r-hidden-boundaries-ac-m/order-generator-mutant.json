@@ -1,0 +1,7 @@
+{
+  "mutant": "restore main parser accepting only nil features",
+  "exit": 1,
+  "catcher": "unsupported command runtime declaration; no order was written\n",
+  "positive_exit": 0,
+  "order_unchanged": true
+}

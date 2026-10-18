@@ -1,0 +1,10 @@
+[
+  {
+    "file": "internal/flow/flow_test.go",
+    "hunk": "programs corpus exclusion predicate",
+    "base": "return uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == \"killed_after_output.a\" || filepath.Base(path) == \"size_class_churn.a\" || filepath.Base(path) == \"bitwise_sweep.a\" || filepath.Base(path) == \"typed_arrays_primes_large.a\" || filepath.Base(path) == \"normalize_coverage_long.a\"",
+    "source": "return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedHiddenBoundaryFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == \"killed_after_output.a\" || filepath.Base(path) == \"size_class_churn.a\" || filepath.Base(path) == \"bitwise_sweep.a\" || filepath.Base(path) == \"typed_arrays_primes_large.a\" || filepath.Base(path) == \"normalize_coverage_long.a\"",
+    "resolved": "return uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == \"killed_after_output.a\" || filepath.Base(path) == \"size_class_churn.a\" || filepath.Base(path) == \"bitwise_sweep.a\" || filepath.Base(path) == \"typed_arrays_primes_large.a\" || filepath.Base(path) == \"normalize_coverage_long.a\"",
+    "reason": "Keep main async exclusion. Move the two new refused controls into hidden_boundary_refused/ instead of adding a top-level exception; remove the now-unused helper."
+  }
+]

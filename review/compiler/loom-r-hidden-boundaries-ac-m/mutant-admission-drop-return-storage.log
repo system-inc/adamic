@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:52:13.688946618Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T19:52:13.696235305Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage"}
+{"Time":"2026-10-18T19:52:13.696398201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Output":"=== RUN   TestOverloadStructuralRefusesFactoryFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.696430948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Output":"=== PAUSE TestOverloadStructuralRefusesFactoryFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.696433718Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage"}
+{"Time":"2026-10-18T19:52:13.696436708Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage"}
+{"Time":"2026-10-18T19:52:13.696438909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Output":"=== CONT  TestOverloadStructuralRefusesFactoryFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.83587901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Output":"    overload_structural_test.go:58: wanted refusal naming result.value, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T19:52:13.8359645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Output":"--- FAIL: TestOverloadStructuralRefusesFactoryFieldStorage (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.835974172Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesFactoryFieldStorage","Elapsed":0.14}
+{"Time":"2026-10-18T19:52:13.835995034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.837249965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.148s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:52:13.837302586Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.148}

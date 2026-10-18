@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:12:52.805331222Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:12:52.816421902Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage"}
+{"Time":"2026-10-18T00:12:52.816515452Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Output":"=== RUN   TestOverloadStructuralRefusesMixedFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:52.821367309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Output":"=== PAUSE TestOverloadStructuralRefusesMixedFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:52.821393587Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage"}
+{"Time":"2026-10-18T00:12:52.821411314Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage"}
+{"Time":"2026-10-18T00:12:52.821431858Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Output":"=== CONT  TestOverloadStructuralRefusesMixedFieldStorage\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:53.132765164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Output":"    overload_structural_test.go:58: wanted refusal naming result.value without a single storage representation, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T00:12:53.13291741Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Output":"--- FAIL: TestOverloadStructuralRefusesMixedFieldStorage (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:53.132987131Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMixedFieldStorage","Elapsed":0.31}
+{"Time":"2026-10-18T00:12:53.133007528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:53.135810258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.330s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:53.135849018Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.331}

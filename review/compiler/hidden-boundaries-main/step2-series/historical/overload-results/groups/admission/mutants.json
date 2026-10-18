@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "drop-fixed-return-proof",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralResults$"
+  },
+  {
+    "mutant": "reverse-result-covariance",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_literal_covariance$"
+  },
+  {
+    "mutant": "trust-visitor-input",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^visitor_domain_liar$"
+  },
+  {
+    "mutant": "trust-writable-result",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_writable_invariance$"
+  },
+  {
+    "mutant": "drop-return-storage",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_field_storage$"
+  },
+  {
+    "mutant": "drop-relation-diagnostic",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_result_covariance$"
+  }
+]

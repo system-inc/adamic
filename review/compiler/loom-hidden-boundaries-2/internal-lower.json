@@ -1,0 +1,507 @@
+{
+  "label": "internal-lower",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "^(TestCensusOverloadBinderGuards|TestCensusOverloadBinderResultHasCheckedEntry|TestDestructuredMethodsCannotLoadOwnSlots|TestGeneratorsAreRefusedEvenWithoutYield|TestGenericIteratorViewsPreserveNativeArguments|TestHiddenNeverArrayRejectsWritableWidening|TestHiddenTNodeConstraintAny|TestHiddenTNodeConstraintArrayLayout|TestHiddenTNodeConstraintBoolean|TestHiddenTNodeConstraintMutationRemainsNotYet|TestHiddenTNodeConstraintNumber|TestHiddenTNodeConstraintObject|TestHiddenTNodeConstraintObjectUnion|TestHiddenTNodeConstraintString|TestHiddenTNodeConstraintStructuralLength|TestHiddenTNodeConstraintUnconstrained|TestHiddenTNodeConstraintUnknown|TestHiddenTNodeGenericValueRemainsNotYet|TestIteratorDescriptorReasons|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestIteratorGapsAreExplicit|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorSymbolKeysAreNotStringKeys|TestIteratorViewsCannotEraseReceivers|TestIteratorViewsCannotHideReturn|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodSignatureViewsDoNotLoseThis|TestLiteralMethodViewsDoNotLoseThis|TestMethodDestructuringSafetyArrowReceiver|TestMethodDestructuringSafetyClassOrigin|TestMethodDestructuringSafetyDefaultReceiver|TestMethodDestructuringSafetyExplicitReceiver|TestMethodDestructuringSafetyReceiver|TestMethodDestructuringSafetyStructuralClass|TestMethodDestructuringSafetyStructuralReceiver|TestOverloadCallbackFieldStorage|TestOverloadCallbackServed|TestOverloadCallbackUnservedAlias|TestOverloadCallbackUnservedGeneric|TestOverloadCallbackUnservedInput|TestOverloadCallbackUnservedRepresentation|TestOverloadCallbackUnservedResult|TestOverloadResultsFixturesBinding|TestOverloadResultsFixturesEvaluate|TestOverloadResultsFixturesParameter|TestOverloadResultsFixturesScalar|TestOverloadResultsFixturesTransform|TestOverloadResultsLiarStopsEvaluateLiar|TestOverloadResultsLiarStopsLiar|TestOverloadResultsLiarStopsParameterLiar|TestOverloadResultsRefusesEscapingCheckedOverload|TestOverloadResultsRefusesOptionalResultProperty|TestOverloadResultsRefusesSharedReadonlyResult|TestOverloadResultsRefusesSharedWritableResult|TestOverloadResultsRefusesUnservedGenericDomain|TestOverloadStructuralRefusesBlockFactoryCovariance|TestOverloadStructuralRefusesFactoryFieldStorage|TestOverloadStructuralRefusesFactoryLiteralCovariance|TestOverloadStructuralRefusesFactoryResultCovariance|TestOverloadStructuralRefusesFactoryWritableInvariance|TestOverloadStructuralRefusesMissingBlockField|TestOverloadStructuralRefusesMixedFieldStorage|TestOverloadStructuralRefusesReverseReadonlyVariance|TestOverloadStructuralRefusesSharedWiderResult|TestOverloadStructuralRefusesVisitorDomainLiar|TestOverloadStructuralRefusesVisitorInputContravariance|TestOverloadStructuralRefusesWritableVariance|TestOverloadStructuralResults|TestOverloadValueStopsMixedParameter|TestOverloadValueStopsMutableTarget|TestOverloadValueStopsOpaqueStorage|TestOverloadVisitorPathsFabricatedNode|TestOverloadVisitorPathsInterveningElementEffect|TestOverloadVisitorPathsReturnedCallback|TestOverloadVisitorPathsStoredCallback|TestOverloadVisitorPathsUnguardedPresence|TestOverloadVisitorResultIndependent|TestOverloadVisitorResultStorage|TestReceiverIndependentMethodDestructuring|TestRepresentationClockSourceCheckedTypes|TestRepresentedMethodReplacementIsNotYet)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 17.001,
+  "tests": [
+    {
+      "name": "TestOverloadCallbackUnservedGeneric",
+      "action": "pass",
+      "seconds": 0.16
+    },
+    {
+      "name": "TestCensusOverloadBinderGuards/constraint",
+      "action": "pass",
+      "seconds": 0.24
+    },
+    {
+      "name": "TestRepresentationClockSourceCheckedTypes",
+      "action": "pass",
+      "seconds": 0.23
+    },
+    {
+      "name": "TestLiteralMethodCapturesCannotMakeCycles",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "name": "TestOverloadVisitorResultStorage",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "name": "TestOverloadVisitorPathsInterveningElementEffect",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestOverloadVisitorPathsReturnedCallback",
+      "action": "pass",
+      "seconds": 0.16
+    },
+    {
+      "name": "TestOverloadVisitorPathsStoredCallback",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestOverloadVisitorResultIndependent",
+      "action": "pass",
+      "seconds": 0.27
+    },
+    {
+      "name": "TestOverloadVisitorPathsFabricatedNode",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestOverloadVisitorPathsUnguardedPresence",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestOverloadValueStopsMixedParameter",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestOverloadValueStopsMutableTarget",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestOverloadValueStopsOpaqueStorage",
+      "action": "pass",
+      "seconds": 0.13
+    },
+    {
+      "name": "TestOverloadStructuralRefusesWritableVariance",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "name": "TestOverloadStructuralRefusesReverseReadonlyVariance",
+      "action": "pass",
+      "seconds": 0.35
+    },
+    {
+      "name": "TestOverloadStructuralRefusesSharedWiderResult",
+      "action": "pass",
+      "seconds": 0.57
+    },
+    {
+      "name": "TestOverloadStructuralRefusesMissingBlockField",
+      "action": "pass",
+      "seconds": 0.58
+    },
+    {
+      "name": "TestOverloadStructuralRefusesMixedFieldStorage",
+      "action": "pass",
+      "seconds": 0.46
+    },
+    {
+      "name": "TestOverloadStructuralRefusesVisitorInputContravariance",
+      "action": "pass",
+      "seconds": 0.4
+    },
+    {
+      "name": "TestOverloadStructuralRefusesFactoryResultCovariance",
+      "action": "pass",
+      "seconds": 0.53
+    },
+    {
+      "name": "TestOverloadStructuralRefusesFactoryFieldStorage",
+      "action": "pass",
+      "seconds": 0.61
+    },
+    {
+      "name": "TestOverloadStructuralRefusesFactoryWritableInvariance",
+      "action": "pass",
+      "seconds": 0.54
+    },
+    {
+      "name": "TestOverloadStructuralRefusesVisitorDomainLiar",
+      "action": "pass",
+      "seconds": 0.7
+    },
+    {
+      "name": "TestOverloadResultsRefusesSharedReadonlyResult",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestOverloadStructuralRefusesFactoryLiteralCovariance",
+      "action": "pass",
+      "seconds": 0.59
+    },
+    {
+      "name": "TestOverloadResultsRefusesUnservedGenericDomain",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "name": "TestOverloadResultsRefusesEscapingCheckedOverload",
+      "action": "pass",
+      "seconds": 0.22
+    },
+    {
+      "name": "TestOverloadResultsRefusesSharedWritableResult",
+      "action": "pass",
+      "seconds": 0.2
+    },
+    {
+      "name": "TestOverloadStructuralRefusesBlockFactoryCovariance",
+      "action": "pass",
+      "seconds": 0.79
+    },
+    {
+      "name": "TestOverloadStructuralResults",
+      "action": "pass",
+      "seconds": 0.8
+    },
+    {
+      "name": "TestOverloadResultsRefusesOptionalResultProperty",
+      "action": "pass",
+      "seconds": 0.16
+    },
+    {
+      "name": "TestOverloadResultsFixturesScalar",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestOverloadResultsFixturesParameter",
+      "action": "pass",
+      "seconds": 0.13
+    },
+    {
+      "name": "TestOverloadResultsFixturesBinding",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestOverloadResultsFixturesEvaluate",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestOverloadResultsFixturesTransform",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestOverloadCallbackFieldStorage",
+      "action": "pass",
+      "seconds": 0.18
+    },
+    {
+      "name": "TestOverloadCallbackUnservedRepresentation",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestOverloadCallbackUnservedAlias",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestHiddenTNodeConstraintAny",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestGeneratorsAreRefusedEvenWithoutYield",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestIteratorViewsCannotEraseReceivers",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestIteratorViewsCannotHideReturn",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestHiddenNeverArrayRejectsWritableWidening",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestHiddenTNodeGenericValueRemainsNotYet",
+      "action": "pass",
+      "seconds": 0.09
+    },
+    {
+      "name": "TestHiddenTNodeConstraintArrayLayout",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestHiddenTNodeConstraintObject",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestHiddenTNodeConstraintUnknown",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestHiddenTNodeConstraintUnconstrained",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestHiddenTNodeConstraintStructuralLength",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestHiddenTNodeConstraintObjectUnion",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestHiddenTNodeConstraintNumber",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "name": "TestHiddenTNodeConstraintBoolean",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestHiddenTNodeConstraintString",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestCensusOverloadBinderResultHasCheckedEntry",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestCensusOverloadBinderGuards/parameter",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestCensusOverloadBinderGuards",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestReceiverIndependentMethodDestructuring",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestOverloadCallbackUnservedResult",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestOverloadCallbackUnservedInput",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "name": "TestOverloadCallbackServed",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestMethodDestructuringSafetyStructuralClass",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestMethodDestructuringSafetyClassOrigin",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestMethodDestructuringSafetyStructuralReceiver",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestMethodDestructuringSafetyExplicitReceiver",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestMethodDestructuringSafetyDefaultReceiver",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestMethodDestructuringSafetyArrowReceiver",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestMethodDestructuringSafetyReceiver",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestRepresentedMethodReplacementIsNotYet",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestIteratorSymbolKeysAreNotStringKeys",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestIteratorMapperIndexHasNumberRepresentation",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestGenericIteratorViewsPreserveNativeArguments",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestDestructuredMethodsCannotLoadOwnSlots",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "name": "TestLiteralMethodViewsDoNotLoseThis",
+      "action": "pass",
+      "seconds": 0.27
+    },
+    {
+      "name": "TestOverloadResultsLiarStopsLiar",
+      "action": "pass",
+      "seconds": 4.56
+    },
+    {
+      "name": "TestOverloadResultsLiarStopsEvaluateLiar",
+      "action": "pass",
+      "seconds": 4.68
+    },
+    {
+      "name": "TestOverloadResultsLiarStopsParameterLiar",
+      "action": "pass",
+      "seconds": 4.73
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}",
+      "action": "pass",
+      "seconds": 0.18
+    },
+    {
+      "name": "TestLiteralMethodSignatureViewsDoNotLoseThis",
+      "action": "pass",
+      "seconds": 0.51
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.15
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestIteratorGapsAreExplicit",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/required_boolean_done",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/declare_or_abstract_class_field",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/object_spread",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/arguments_or_overloads",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/replacing_an_iterator_protocol",
+      "action": "pass",
+      "seconds": 0.17
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/optional_iterator_method",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestIteratorDescriptorReasons/represented_value_field",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestIteratorDescriptorReasons",
+      "action": "pass",
+      "seconds": 0
+    }
+  ]
+}

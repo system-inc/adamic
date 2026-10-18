@@ -1,0 +1,4 @@
+--- internal/lower/overload_visitor_domain.go
++++ internal/lower/overload_visitor_domain.go
+@@ -251,0 +252 @@
++	result.unproven = nil

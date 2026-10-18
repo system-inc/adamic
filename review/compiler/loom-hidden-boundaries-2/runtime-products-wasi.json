@@ -1,0 +1,37 @@
+{
+  "label": "runtime-products-wasi",
+  "command": [
+    "timeout",
+    "600",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestProduct_NativeRuntimesWASI",
+    "-count=1",
+    "-timeout",
+    "540s",
+    "-parallel",
+    "1",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 74.344,
+  "tests": [
+    {
+      "name": "TestProduct_NativeRuntimesWASI0",
+      "action": "pass",
+      "seconds": 25.53
+    },
+    {
+      "name": "TestProduct_NativeRuntimesWASI2",
+      "action": "pass",
+      "seconds": 16.74
+    },
+    {
+      "name": "TestProduct_NativeRuntimesWASI1",
+      "action": "pass",
+      "seconds": 23.51
+    }
+  ]
+}

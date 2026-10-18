@@ -1,0 +1,27 @@
+{
+  "label": "runtime-witness",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestRuntimeSetsAreEachUsed$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "1",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 11.406,
+  "tests": [
+    {
+      "name": "TestRuntimeSetsAreEachUsed",
+      "action": "pass",
+      "seconds": 0.76
+    }
+  ]
+}

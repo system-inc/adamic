@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "erase-TIn-to-Node",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "mutant": "admit-unproven-invocation",
+    "caught": true,
+    "exit": 1
+  }
+]

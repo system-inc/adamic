@@ -1,0 +1,1056 @@
+{
+  "scope": "All tests in every Go test file the source commit adds or modifies, including unchanged functions in those files",
+  "maximum_seconds": 41.23,
+  "tests": [
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeWASICounted",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeWASI",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeSanitized",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestCommandRuntimeProductKeyHoldsEveryPart",
+      "action": "pass",
+      "seconds": 0.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeCanonicalClosures",
+      "action": "pass",
+      "seconds": 2.88
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeShipped",
+      "action": "pass",
+      "seconds": 2.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeCounted",
+      "action": "pass",
+      "seconds": 3.51
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestExplainOverloadVisitorChecks",
+      "action": "pass",
+      "seconds": 5.7
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestExplainOverloadValueChecks",
+      "action": "pass",
+      "seconds": 5.81
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestExplainOverloadFieldChecks",
+      "action": "pass",
+      "seconds": 15.96
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "name": "TestCallTargetReaders",
+      "action": "pass",
+      "seconds": 3.15
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeWASICounted",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeWASI",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeSanitized",
+      "action": "pass",
+      "seconds": 1.71
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeCounted",
+      "action": "pass",
+      "seconds": 1.74
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeShipped",
+      "action": "pass",
+      "seconds": 4.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic",
+      "name": "TestProduct_CommandRuntimeCanonicalClosures",
+      "action": "pass",
+      "seconds": 5.48
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "name": "TestProduct_CallTargetExports",
+      "action": "pass",
+      "seconds": 40.83
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "name": "TestCallTargetReaders",
+      "action": "pass",
+      "seconds": 41.23
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesFactoryLiteralCovariance",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesFactoryWritableInvariance",
+      "action": "pass",
+      "seconds": 0.34
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesFactoryFieldStorage",
+      "action": "pass",
+      "seconds": 0.36
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsRefusesSharedReadonlyResult",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsRefusesUnservedGenericDomain",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesBlockFactoryCovariance",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsRefusesEscapingCheckedOverload",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsRefusesSharedWritableResult",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralResults",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsRefusesOptionalResultProperty",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsFixturesScalar",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsFixturesParameter",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsFixturesBinding",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsFixturesEvaluate",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsFixturesTransform",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackFieldStorage",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackUnservedRepresentation",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackUnservedAlias",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackUnservedGeneric",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackUnservedResult",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackUnservedInput",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadCallbackServed",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyStructuralClass",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyClassOrigin",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyStructuralReceiver",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyExplicitReceiver",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyDefaultReceiver",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyArrowReceiver",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestMethodDestructuringSafetyReceiver",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestReceiverIndependentMethodDestructuring",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsLiarStopsParameterLiar",
+      "action": "pass",
+      "seconds": 15.49
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsLiarStopsLiar",
+      "action": "pass",
+      "seconds": 15.5
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadResultsLiarStopsEvaluateLiar",
+      "action": "pass",
+      "seconds": 15.52
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesSharedWiderResult",
+      "action": "pass",
+      "seconds": 0.17
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesMissingBlockField",
+      "action": "pass",
+      "seconds": 0.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorResultStorage",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesMixedFieldStorage",
+      "action": "pass",
+      "seconds": 0.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesVisitorInputContravariance",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorResultIndependent",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorPathsInterveningElementEffect",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorPathsReturnedCallback",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesVisitorDomainLiar",
+      "action": "pass",
+      "seconds": 0.19
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorPathsStoredCallback",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorPathsUnguardedPresence",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadVisitorPathsFabricatedNode",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesFactoryResultCovariance",
+      "action": "pass",
+      "seconds": 0.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadValueStopsMixedParameter",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadValueStopsMutableTarget",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadValueStopsOpaqueStorage",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesReverseReadonlyVariance",
+      "action": "pass",
+      "seconds": 0.17
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestOverloadStructuralRefusesWritableVariance",
+      "action": "pass",
+      "seconds": 0.21
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestRepresentationClockSourceCheckedTypes",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorSymbolKeysAreNotStringKeys",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestGenericIteratorViewsPreserveNativeArguments",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorMapperIndexHasNumberRepresentation",
+      "action": "pass",
+      "seconds": 0.13
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestRepresentedMethodReplacementIsNotYet",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestDestructuredMethodsCannotLoadOwnSlots",
+      "action": "pass",
+      "seconds": 0.28
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestLiteralMethodSignatureViewsDoNotLoseThis",
+      "action": "pass",
+      "seconds": 0.65
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestLiteralMethodViewsDoNotLoseThis",
+      "action": "pass",
+      "seconds": 0.6
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestLiteralMethodCapturesCannotMakeCycles",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestGeneratorsAreRefusedEvenWithoutYield",
+      "action": "pass",
+      "seconds": 0.35
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorViewsCannotEraseReceivers",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorViewsCannotHideReturn",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenNeverArrayRejectsWritableWidening",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeGenericValueRemainsNotYet",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintArrayLayout",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintAny",
+      "action": "pass",
+      "seconds": 0.09
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintUnknown",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintUnconstrained",
+      "action": "pass",
+      "seconds": 0.2
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintStructuralLength",
+      "action": "pass",
+      "seconds": 0.2
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintObjectUnion",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintObject",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintBoolean",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintString",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestHiddenTNodeConstraintNumber",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestCensusOverloadBinderResultHasCheckedEntry",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/declare_or_abstract_class_field",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/required_boolean_done",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/object_spread",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/replacing_an_iterator_protocol",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/optional_iterator_method",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/represented_value_field",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons/arguments_or_overloads",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorDescriptorReasons",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});",
+      "action": "pass",
+      "seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}",
+      "action": "pass",
+      "seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestIteratorGapsAreExplicit",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestCensusOverloadBinderGuards/constraint",
+      "action": "pass",
+      "seconds": 0.04
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestCensusOverloadBinderGuards/parameter",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "name": "TestCensusOverloadBinderGuards",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowTraceSnapshotsDoNotInvokeGetters",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowGettersCensusClassMap",
+      "action": "pass",
+      "seconds": 0.56
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowGettersCensusThrowingObject",
+      "action": "pass",
+      "seconds": 0.69
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowGettersCensusBinaryInline",
+      "action": "pass",
+      "seconds": 0.78
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowGettersCensusRefusalClassification",
+      "action": "pass",
+      "seconds": 1.34
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusHiddenBoundaryRefusalClassification",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusSetupIsShared",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusUnitsCoverEveryProgram",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/census_overload_binder_result_checked.a",
+      "action": "pass",
+      "seconds": 0.54
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_generic_optional_array.a",
+      "action": "pass",
+      "seconds": 0.32
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_generic_tnode.a",
+      "action": "pass",
+      "seconds": 0.72
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+      "action": "pass",
+      "seconds": 1.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_never_array.a",
+      "action": "pass",
+      "seconds": 0.39
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_never_array_observations.a",
+      "action": "pass",
+      "seconds": 0.37
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_optional_array_order.a",
+      "action": "pass",
+      "seconds": 0.31
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/hidden_wave2_method_destructuring.a",
+      "action": "pass",
+      "seconds": 0.55
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_callback_served.a",
+      "action": "pass",
+      "seconds": 0.32
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_results_binding.a",
+      "action": "pass",
+      "seconds": 0.3
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_results_evaluate.a",
+      "action": "pass",
+      "seconds": 0.31
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_results_parameter.a",
+      "action": "pass",
+      "seconds": 0.31
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_results_scalar.a",
+      "action": "pass",
+      "seconds": 0.32
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_results_transform.a",
+      "action": "pass",
+      "seconds": 0.3
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_structural_block.a",
+      "action": "pass",
+      "seconds": 0.29
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_structural_evaluator.a",
+      "action": "pass",
+      "seconds": 0.24
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_structural_factory.a",
+      "action": "pass",
+      "seconds": 0.3
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/overload_structural_fields.a",
+      "action": "pass",
+      "seconds": 0.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/release_fma.a",
+      "action": "pass",
+      "seconds": 0.29
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a",
+      "action": "pass",
+      "seconds": 0.25
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "name": "TestFlowCorpusRemainder",
+      "action": "pass",
+      "seconds": 7.95
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenTNodeValueExactNotYet",
+      "action": "pass",
+      "seconds": 0.17
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04AliasCastRefused",
+      "action": "pass",
+      "seconds": 0.22
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04MutationRefused",
+      "action": "pass",
+      "seconds": 0.24
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04EagerIndexMutant",
+      "action": "pass",
+      "seconds": 0.59
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04PresentArrayMutant",
+      "action": "pass",
+      "seconds": 0.51
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04Node",
+      "action": "pass",
+      "seconds": 0.42
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestHiddenBoundary04EvaluationOrder",
+      "action": "pass",
+      "seconds": 0.4
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValueProof",
+      "action": "pass",
+      "seconds": 0.69
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesModuleLiar",
+      "action": "pass",
+      "seconds": 0.74
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesModuleValid",
+      "action": "pass",
+      "seconds": 0.78
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesOrderLiar",
+      "action": "pass",
+      "seconds": 0.72
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesOrderValid",
+      "action": "pass",
+      "seconds": 0.95
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesNarrowLiar",
+      "action": "pass",
+      "seconds": 0.81
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesNarrowValid",
+      "action": "pass",
+      "seconds": 0.78
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadStructuralFieldRefusal",
+      "action": "pass",
+      "seconds": 0.22
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesReturnedLiar",
+      "action": "pass",
+      "seconds": 0.8
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadValuesReturnedValid",
+      "action": "pass",
+      "seconds": 0.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadFieldHatchValueUndefined",
+      "action": "pass",
+      "seconds": 0.85
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadFieldHatchValueLiar",
+      "action": "pass",
+      "seconds": 0.75
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadFieldHatchValueValid",
+      "action": "pass",
+      "seconds": 0.89
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadFieldHatchKindLiar",
+      "action": "pass",
+      "seconds": 0.73
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadFieldHatchKindValid",
+      "action": "pass",
+      "seconds": 0.77
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsOverloadedHelperValid",
+      "action": "pass",
+      "seconds": 1.26
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorInstantiations",
+      "action": "pass",
+      "seconds": 0.86
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsDefaultLiar",
+      "action": "pass",
+      "seconds": 0.93
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsOverloadedHelperLiar",
+      "action": "pass",
+      "seconds": 0.84
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsHelperLiar",
+      "action": "pass",
+      "seconds": 0.8
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsHelperValid",
+      "action": "pass",
+      "seconds": 1.1
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsOriginalLiar",
+      "action": "pass",
+      "seconds": 1.77
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "name": "TestOverloadVisitorsOriginalValid",
+      "action": "pass",
+      "seconds": 1.76
+    }
+  ]
+}

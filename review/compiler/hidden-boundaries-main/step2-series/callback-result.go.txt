@@ -1,0 +1,126 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// An immediate callback argument can use the implementation's original closure
+// when its one concrete contextual signature is served directly. The generic
+// overload's stronger result is not the promise made to this callback consumer.
+// Keeping the original value preserves function identity and capture ownership.
+func (l *lowering) overloadCallbackServed(node, implementation *ast.Node) bool {
+	if node == nil || implementation == nil || len(implementation.TypeParameters()) != 0 {
+		return false
+	}
+	value := node
+	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
+		value = value.Parent
+	}
+	if value.Parent == nil || value.Parent.Kind != ast.KindCallExpression {
+		return false
+	}
+	call := value.Parent.AsCallExpression()
+	argument := false
+	for _, item := range call.Arguments.Nodes {
+		argument = argument || item == value
+	}
+	if !argument {
+		return false
+	}
+	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if contextual == nil {
+		return false
+	}
+	signatures := l.checker.GetSignaturesOfType(l.concrete(contextual), checker.SignatureKindCall)
+	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {
+		return false
+	}
+	promised := signatures[0]
+	served := l.checker.GetSignatureFromDeclaration(implementation)
+	if served == nil || len(promised.Parameters()) != len(served.Parameters()) {
+		return false
+	}
+	if promised.Declaration() == nil {
+		return false
+	}
+	for _, parameter := range append(append([]*ast.Node{}, implementation.Parameters()...), promised.Declaration().Parameters()...) {
+		if parameter.AsParameterDeclaration().DotDotDotToken != nil || parameter.AsParameterDeclaration().QuestionToken != nil || parameter.AsParameterDeclaration().Initializer != nil {
+			return false
+		}
+	}
+	for index, parameter := range promised.Parameters() {
+		given := l.concrete(l.censusCallableParameterType(parameter))
+		takes := l.concrete(l.censusCallableParameterType(served.Parameters()[index]))
+		if !l.censusRelated(given, takes) || !l.overloadCallbackStorage(given, takes) {
+			return false
+		}
+		input, inputKnown := l.representation(given)
+		actual, actualKnown := l.representation(takes)
+		if !inputKnown || !actualKnown || input != actual {
+			return false
+		}
+	}
+	produced := l.concrete(l.checker.GetReturnTypeOfSignature(served))
+	result := l.concrete(l.checker.GetReturnTypeOfSignature(promised))
+	if false && !l.censusRelated(produced, result) || !l.overloadCallbackStorage(produced, result) {
+		return false
+	}
+	actual, actualKnown := l.representation(produced)
+	output, outputKnown := l.representation(result)
+	return actualKnown && outputKnown && actual == output && !censusCallableSlotless(actual)
+}
+
+// Equal outer object slots do not prove equal field or element layouts. Only
+// identical types or flat readonly scalar records can reuse a closure ABI here.
+func (l *lowering) overloadCallbackStorage(from, to *checker.Type) bool {
+	from, to = l.concrete(from), l.concrete(to)
+	if from == to {
+		return true
+	}
+	if from.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range from.Types() {
+			if !l.overloadCallbackStorage(member, to) {
+				return false
+			}
+		}
+		return true
+	}
+	if l.overloadScalar(from) && l.overloadScalar(to) {
+		return true
+	}
+	if from.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(from) || isClassInstance(to) {
+		return false
+	}
+	if to.Flags()&checker.TypeFlagsUnion != 0 {
+		// Check every branch's storage; selecting unreachable branches needs a
+		// separate flow proof. The caller checks the semantic type relation.
+		for _, member := range to.Types() {
+			if !l.overloadCallbackStorage(from, member) {
+				return false
+			}
+		}
+	}
+	properties := l.checker.GetPropertiesOfType(to)
+	if len(properties) == 0 {
+		return true // The outer representation check still rejects boxing changes.
+	}
+	for _, property := range properties {
+		own := l.checker.GetPropertyOfType(from, property.Name)
+		if own == nil || accessorSymbol(property) || accessorSymbol(own) || property.Flags&ast.SymbolFlagsOptional != 0 || own.Flags&ast.SymbolFlagsOptional != 0 || !l.checker.IsReadonlySymbol(property) || !l.checker.IsReadonlySymbol(own) {
+			return false
+		}
+		source := l.concrete(l.checker.GetTypeOfSymbol(own))
+		target := l.concrete(l.checker.GetTypeOfSymbol(property))
+		if !l.overloadScalar(source) || !l.overloadScalar(target) {
+			return false
+		}
+		sourceHeld, sourceKnown := l.representation(source)
+		targetHeld, targetKnown := l.representation(target)
+		if !sourceKnown || !targetKnown || sourceHeld != targetHeld {
+			return false
+		}
+	}
+
+	return true
+}

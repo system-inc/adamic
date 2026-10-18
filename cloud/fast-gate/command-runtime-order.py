@@ -11,7 +11,8 @@ products = dict(re.findall(
     r'commandRuntimeProduct\(t, "([^"]+)"\)', source))
 tests = {name: test for test, name in products.items()}
 table = source.split('var commandRuntimes = []commandRuntimeSpec{', 1)[1].split('\n}', 1)[0]
-owners = re.findall(r'\{"([^"]+)", native.Options\{[^}]*\}, nil, "([^"]*)"\}', table)
+owners = re.findall(
+    r'\{"([^"]+)", native.Options\{[^}]*\}, (?:nil|\[\]string\{[^}]*\}), "([^"]*)"\}', table)
 if not owners or len(owners) != len(table.strip().splitlines()):
     raise SystemExit('unsupported command runtime declaration; no order was written')
 path = root / 'cloud/fast-gate/product-order.json'

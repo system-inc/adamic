@@ -1831,6 +1831,9 @@
     ],
     "cmd/adamic TestProduct_CommandRuntimeCounted": [
       "internal/oracle TestProduct_NativeRuntimesCounted0"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeCanonicalClosures": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ]
   }
 }

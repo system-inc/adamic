@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admission-trust-writable-result",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries-ac-m/admission-trust-writable-result-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesFactoryWritableInvariance$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 11.85,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesFactoryWritableInvariance",
+      "action": "fail",
+      "seconds": 0.13
+    }
+  ]
+}

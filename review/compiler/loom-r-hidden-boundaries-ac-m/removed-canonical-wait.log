@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:57:47.918707515Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-18T19:57:47.925564495Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners"}
+{"Time":"2026-10-18T19:57:47.925664825Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Output":"=== RUN   TestCommandRuntimeProductsWaitForOwners\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.925694502Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Output":"=== PAUSE TestCommandRuntimeProductsWaitForOwners\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.925697704Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners"}
+{"Time":"2026-10-18T19:57:47.925700624Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners"}
+{"Time":"2026-10-18T19:57:47.925702516Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Output":"=== CONT  TestCommandRuntimeProductsWaitForOwners\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.926665684Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Output":"    runtime_owners_test.go:254: cmd/adamic TestProduct_CommandRuntimeCanonicalClosures must wait for internal/oracle TestProduct_NativeRuntimesSanitized2 in product-order.json\n","OutputType":"error"}
+{"Time":"2026-10-18T19:57:47.926706149Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Output":"--- FAIL: TestCommandRuntimeProductsWaitForOwners (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.926709995Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestCommandRuntimeProductsWaitForOwners","Elapsed":0}
+{"Time":"2026-10-18T19:57:47.926753184Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.926936291Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:57:47.926949043Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.008}

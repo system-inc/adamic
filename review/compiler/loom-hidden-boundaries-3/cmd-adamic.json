@@ -1,0 +1,37 @@
+{
+  "label": "cmd-adamic",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./cmd/adamic",
+    "-run",
+    "^(TestExplainOverloadFieldChecks|TestExplainOverloadValueChecks|TestExplainOverloadVisitorChecks)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 28.223,
+  "tests": [
+    {
+      "name": "TestExplainOverloadVisitorChecks",
+      "action": "pass",
+      "seconds": 13.41
+    },
+    {
+      "name": "TestExplainOverloadValueChecks",
+      "action": "pass",
+      "seconds": 15.2
+    },
+    {
+      "name": "TestExplainOverloadFieldChecks",
+      "action": "pass",
+      "seconds": 18.37
+    }
+  ]
+}
