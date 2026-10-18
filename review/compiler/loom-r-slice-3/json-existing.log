@@ -1,0 +1,21 @@
+{"Time":"2026-10-18T00:19:17.781733902Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-18T00:19:17.786639416Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps"}
+{"Time":"2026-10-18T00:19:17.786763806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps","Output":"=== RUN   TestDocumentedStageZeroGaps\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.78679256Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps","Output":"=== PAUSE TestDocumentedStageZeroGaps\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.786794323Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps"}
+{"Time":"2026-10-18T00:19:17.7867992Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps"}
+{"Time":"2026-10-18T00:19:17.786800672Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps","Output":"=== CONT  TestDocumentedStageZeroGaps\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.786802365Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts"}
+{"Time":"2026-10-18T00:19:17.786804218Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Output":"=== RUN   TestDocumentedStageZeroGaps/repeatInTry.ts\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.786811319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Output":"=== PAUSE TestDocumentedStageZeroGaps/repeatInTry.ts\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.786812901Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts"}
+{"Time":"2026-10-18T00:19:17.786814494Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts"}
+{"Time":"2026-10-18T00:19:17.786815505Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Output":"=== CONT  TestDocumentedStageZeroGaps/repeatInTry.ts\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.90684919Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Output":"    gaps_test.go:39: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; Node \"xxx\\n\"\n"}
+{"Time":"2026-10-18T00:19:17.90694744Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Output":"--- PASS: TestDocumentedStageZeroGaps/repeatInTry.ts (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.906957155Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps/repeatInTry.ts","Elapsed":0.12}
+{"Time":"2026-10-18T00:19:17.906974061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps","Output":"--- PASS: TestDocumentedStageZeroGaps (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.906975974Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestDocumentedStageZeroGaps","Elapsed":0}
+{"Time":"2026-10-18T00:19:17.906977977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:17.908067194Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.126s\n"}
+{"Time":"2026-10-18T00:19:17.908164823Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.126}

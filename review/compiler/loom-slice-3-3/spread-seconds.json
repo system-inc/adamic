@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestJSONStringifyShorthandWrongBindingMutant",
+    "seconds": 3.31,
+    "action": "pass"
+  },
+  {
+    "test": "TestJSONStringifyShorthand",
+    "seconds": 3.41,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallSpreadEvaluatedTwiceMutant",
+    "seconds": 4.27,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallSpreadArray",
+    "seconds": 5.25,
+    "action": "pass"
+  }
+]

@@ -5,9 +5,10 @@ import (
 	"os"
 	"path/filepath"
 	goruntime "runtime"
+	"slices"
 	"strings"
+	"time"
 
-	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/bridge/tsgo/spec"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -90,43 +91,39 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return err
 	}
-	// clang is given no absolute path to read, as Build gives it none: it compiles each unit by its name from inside the
-	// directory, so a sanitized binary's globals don't name it (landable-16c's tree, Oct 11: bridge-test-wrong-native,
-	// -healthy-region and -native-asan named /tmp/adamic-tsgo-<random>/adamic.c and every runtime unit, random per build).
-	units := []string{"main.c"}
-	entries, err := runtime.ReadDir("runtime")
+	library, err := tsgoRuntimeLibrary(source, options)
 	if err != nil {
 		return err
 	}
-	for _, entry := range entries {
-		contents, err := runtime.ReadFile("runtime/" + entry.Name())
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(directory, entry.Name())
-		if err := os.WriteFile(path, contents, 0o644); err != nil {
-			return err
-		}
-		if strings.HasSuffix(path, ".c") {
-			units = append(units, entry.Name())
-		}
-	}
-	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
+	// Relative input names keep sanitizer metadata and linker debug maps placeless.
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
 		return err
 	}
 	if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
 		return err
 	}
-	// The output is where the binary is written, never read into it (macOS's ld names it in the code signature by its
-	// base name alone), so it may be absolute; it must be, since clang runs from the build directory.
 	output, err = filepath.Abs(output)
 	if err != nil {
 		return err
 	}
-	arguments := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), "-o", output)
-	arguments = append(arguments, units...)
+	flags := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...)
+	flags = append(flags, "-I", "runtime")
+	program := "main.c"
+	if goruntime.GOOS == "darwin" {
+		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
+		var combined []byte
+		if err := withCompilerToken(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
+			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
+		}
+		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
+			return err
+		}
+		program = "main.o"
+	}
+	arguments := append(flags, "-o", output, program)
+	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
-	command := toolchain.CommandIn(directory, "clang", arguments...)
+	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	var combined []byte
 	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
@@ -169,4 +166,13 @@ func objectPrefixFlags() []string {
 // library.
 func tsgoFlags(source string, options Options) []string {
 	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
+}
+
+// The checker bridge has its own runtime key: its ABI header and ADAMIC_TSGO
+// change the objects, while the selected Go archive changes only the final link.
+func tsgoRuntimeLibrary(source string, options Options) (string, error) {
+	if err := ValidateOptions(options); err != nil {
+		return "", err
+	}
+	return splitTSGoRuntime(source, options)
 }

@@ -1,0 +1,187 @@
+[
+  {
+    "test": "TestFreshCorpusUnitsCoverEveryProgram",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_discard.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_parameters.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_eager.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_empty.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_nested.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_typeof.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_unions.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_values.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_nested.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_plain.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_three.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_throw.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_typeof.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/call_spread_array.a",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/determinism_dispatch.a",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_array.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_callback.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_find.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_first.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_last.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/json_shorthand.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/node_fs_rm_options.a",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_193.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_79.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_propagation.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_required.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_variants.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/plain_data_spread.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/template_nullish.a",
+    "seconds": 0.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestFreshCorpusRemainder",
+    "seconds": 0.93,
+    "action": "pass"
+  }
+]

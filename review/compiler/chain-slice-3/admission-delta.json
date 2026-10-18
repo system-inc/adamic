@@ -1,0 +1,105 @@
+{
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "inputs": 1992,
+  "changed": [
+    {
+      "path": "stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+      "before": {
+        "Path": "stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts:2:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/cohere/json/gaps/multiplePush.ts",
+      "before": {
+        "Path": "stage1/cohere/json/gaps/multiplePush.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/cohere/json/gaps/multiplePush.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/gaps/10_multiple_push.ts",
+      "before": {
+        "Path": "stage1/cohere/markdownblocks/gaps/10_multiple_push.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/10_multiple_push.ts:2:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/cohere/markdownblocks/gaps/10_multiple_push.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/cohere/selector/gaps/1_multiple_push.ts",
+      "before": {
+        "Path": "stage1/cohere/selector/gaps/1_multiple_push.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/cohere/selector/gaps/1_multiple_push.ts:2:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/cohere/selector/gaps/1_multiple_push.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/cohere/yaml/gaps/multiplePush.ts",
+      "before": {
+        "Path": "stage1/cohere/yaml/gaps/multiplePush.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/cohere/yaml/gaps/multiplePush.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/typescript/parser/gaps/2_push_spread.ts",
+      "before": {
+        "Path": "stage1/typescript/parser/gaps/2_push_spread.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts:3:15: stage 0 can't lower a SpreadElement yet"
+      },
+      "after": {
+        "Path": "stage1/typescript/parser/gaps/2_push_spread.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    },
+    {
+      "path": "stage1/typescript/scanner/gaps/1_push.ts",
+      "before": {
+        "Path": "stage1/typescript/scanner/gaps/1_push.ts",
+        "Status": "*lower.NotYet",
+        "Error": "/workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts:3:1: stage 0 can't lower push with other than one value yet"
+      },
+      "after": {
+        "Path": "stage1/typescript/scanner/gaps/1_push.ts",
+        "Status": "accepted",
+        "Error": ""
+      },
+      "member": "spread-shorthand"
+    }
+  ],
+  "final_owner_repairs": true
+}

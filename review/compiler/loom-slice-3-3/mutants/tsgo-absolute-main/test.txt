@@ -1,0 +1,10 @@
+=== RUN   TestTSGoCacheSanitized
+=== PAUSE TestTSGoCacheSanitized
+=== CONT  TestTSGoCacheSanitized
+    tsgo_cache_test.go:19: first binary names build place "adamic-tsgo-"
+    tsgo_cache_test.go:19: warm binary names build place "adamic-tsgo-"
+    tsgo_cache_test.go:19: cold and warm binaries differ
+--- FAIL: TestTSGoCacheSanitized (1.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.425s
+FAIL

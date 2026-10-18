@@ -1,0 +1,87 @@
+[
+  {
+    "member": "optional-chain-after-call-main",
+    "exit": 0,
+    "seconds": 2.5573099969999475,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/independence/optional-chain-after-call-main/overlay.json",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/javascript",
+      "./internal/flow"
+    ]
+  },
+  {
+    "member": "spread-shorthand",
+    "exit": 0,
+    "seconds": 18.121510090000015,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/independence/spread-shorthand/overlay.json",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/javascript",
+      "./internal/flow"
+    ]
+  },
+  {
+    "member": "refusal-rulings-main",
+    "exit": 0,
+    "seconds": 29.699788235000028,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/independence/refusal-rulings-main/overlay.json",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/javascript",
+      "./internal/flow"
+    ]
+  },
+  {
+    "member": "assignment-proofs-main",
+    "exit": 0,
+    "seconds": 5.055108078000103,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/independence/assignment-proofs-main/overlay.json",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/javascript",
+      "./internal/flow"
+    ]
+  },
+  {
+    "member": "tsgo.go-cache",
+    "exit": 0,
+    "seconds": 3.7236499269999968,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/independence/tsgo.go-cache/overlay.json",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/javascript",
+      "./internal/flow"
+    ]
+  }
+]
