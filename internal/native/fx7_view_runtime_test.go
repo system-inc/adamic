@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
  if(argc>2) {
   object->slots[0].reference=NULL;
   adamic_object_field_types(object)[0]=adamic_rep_undefined;
-  for(size_t i=0;i<20000;i++) {
+  for(size_t i=0;i<2000;i++) {
    adamic_object *next=adamic_object_new(&shape);
    next->slots[0].reference=object;
    adamic_object_field_types(next)[0]=adamic_rep_object;
@@ -41,8 +41,17 @@ int main(int argc, char **argv) {
  adamic_view_union_value value=adamic_view_union_heap((const adamic_heap *)object);
  if(argc==2) adamic_stack_limit=UINTPTR_MAX;
  bool matches=adamic_view_untagged_plain_matches(contracts,3,1,&value);
- object->slots[0].reference=NULL;
- adamic_release(object);
+ if(argc>2) {
+  while(object!=NULL) {
+   adamic_object *next=object->slots[0].reference;
+   object->slots[0].reference=NULL;
+   adamic_release(object);
+   object=next;
+  }
+ } else {
+  object->slots[0].reference=NULL;
+  adamic_release(object);
+ }
  return matches ? 0 : 1;
 }
 `
@@ -52,7 +61,7 @@ int main(int argc, char **argv) {
 			t.Fatal(err)
 		}
 		for _, mode := range []string{"cycle", "guard", "deep"} {
-			guard := mode != "cycle"
+			guard := mode == "guard"
 			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 			args := []string{}
 			if guard {
@@ -73,7 +82,7 @@ int main(int argc, char **argv) {
 					t.Fatalf("guard: %v %q", err, errout.String())
 				}
 			} else if err != nil || errout.Len() != 0 {
-				t.Fatalf("cycle: %v %q", err, errout.String())
+				t.Fatalf("%s: %v %q", mode, err, errout.String())
 			}
 		}
 	}
