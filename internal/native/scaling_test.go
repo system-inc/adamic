@@ -84,18 +84,43 @@ func cacheBuilderGate(source string) string {
 	return strings.Replace(source, "struct adamic_string_index *expected = index;", "extern void adamic_test_cache_built(void); adamic_test_cache_built(); struct adamic_string_index *expected = index;", 1)
 }
 
-func TestParallelCachePublication(t *testing.T) {
-	t.Parallel()
-	for _, build := range parallelBuilds(t) {
-		t.Run(build.name, func(t *testing.T) {
-			binary := scalingSnapshot(t, "cache_race.c", "string_index.c", cacheBuilderGate, build.options)
-			output, _ := parallelRun(t, binary, "4")
-			if output != "cache publication clean\n" {
-				t.Fatal(output)
-			}
-			parallelLeaks(t, binary, build.options, "4")
-		})
+// One top-level test per build: each builds a whole runtime from an edited snapshot, uncached,
+// and all five in one leaf ran 60.7 s cold on a 4-CPU share.
+func parallelCachePublication(t *testing.T, options Options) {
+	binary := scalingSnapshot(t, "cache_race.c", "string_index.c", cacheBuilderGate, options)
+	output, _ := parallelRun(t, binary, "4")
+	if output != "cache publication clean\n" {
+		t.Fatal(output)
 	}
+	parallelLeaks(t, binary, options, "4")
+}
+
+func TestParallelCachePublication_asan(t *testing.T) {
+	t.Parallel()
+	parallelCachePublication(t, Options{Sanitize: true})
+}
+
+func TestParallelCachePublication_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelCachePublication(t, Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelCachePublication_count(t *testing.T) {
+	t.Parallel()
+	parallelCachePublication(t, Options{Count: true})
+}
+
+func TestParallelCachePublication_release(t *testing.T) {
+	t.Parallel()
+	parallelCachePublication(t, Options{})
+}
+
+func TestParallelCachePublication_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelCachePublication(t, Options{ThreadSanitize: true})
 }
 
 func TestParallelScalingGuardMutants(t *testing.T) {
