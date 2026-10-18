@@ -1,0 +1,17 @@
+=== RUN   TestOptionalWideningAllowed
+=== PAUSE TestOptionalWideningAllowed
+=== CONT  TestOptionalWideningAllowed
+=== RUN   TestOptionalWideningAllowed/class
+=== PAUSE TestOptionalWideningAllowed/class
+=== RUN   TestOptionalWideningAllowed/fresh
+=== PAUSE TestOptionalWideningAllowed/fresh
+=== RUN   TestOptionalWideningAllowed/declared
+=== PAUSE TestOptionalWideningAllowed/declared
+=== CONT  TestOptionalWideningAllowed/class
+=== CONT  TestOptionalWideningAllowed/declared
+=== CONT  TestOptionalWideningAllowed/fresh
+--- PASS: TestOptionalWideningAllowed (0.00s)
+    --- PASS: TestOptionalWideningAllowed/declared (0.08s)
+    --- PASS: TestOptionalWideningAllowed/fresh (0.09s)
+    --- PASS: TestOptionalWideningAllowed/class (0.12s)
+PASS

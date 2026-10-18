@@ -1,0 +1,13 @@
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+    enums_open_test.go:23: member_tags
+    enums_open_test.go:23: coalesce
+    enums_open_test.go:23: arithmetic
+    enums_open_test.go:23: signed_flags
+    enums_open_test.go:23: cast
+    enums_open_test.go:23: containers
+    enums_open_test.go:23: optional_object
+--- PASS: TestNumericEnumsAreOpen (2.07s)
+PASS

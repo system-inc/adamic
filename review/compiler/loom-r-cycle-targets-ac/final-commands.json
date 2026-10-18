@@ -1,0 +1,20 @@
+[
+  {
+    "command": "timeout 600 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets-ac/run-mutants.py",
+    "exit": 0,
+    "seconds": 27.613,
+    "log": "mutants.log"
+  },
+  {
+    "command": "timeout 180 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets-ac/run-admission-mutant.py",
+    "exit": 0,
+    "seconds": 10.997,
+    "log": "admission-mutant.log"
+  },
+  {
+    "command": "timeout 180 go vet ./internal/ir ./internal/lower ./internal/oracle",
+    "exit": 0,
+    "seconds": 1.018,
+    "log": "final-vet.log"
+  }
+]

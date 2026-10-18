@@ -1,0 +1,77 @@
+=== RUN   TestPredicateBodyProof
+=== PAUSE TestPredicateBodyProof
+=== CONT  TestPredicateBodyProof
+=== RUN   TestPredicateBodyProof/condition_assertion
+=== PAUSE TestPredicateBodyProof/condition_assertion
+=== RUN   TestPredicateBodyProof/returning_fail
+=== PAUSE TestPredicateBodyProof/returning_fail
+=== RUN   TestPredicateBodyProof/empty_condition_assertion
+=== PAUSE TestPredicateBodyProof/empty_condition_assertion
+=== RUN   TestPredicateBodyProof/condition_mutation
+=== PAUSE TestPredicateBodyProof/condition_mutation
+=== RUN   TestPredicateBodyProof/diagnostic_work_on_failure
+=== PAUSE TestPredicateBodyProof/diagnostic_work_on_failure
+=== RUN   TestPredicateBodyProof/typeof
+=== PAUSE TestPredicateBodyProof/typeof
+=== RUN   TestPredicateBodyProof/kind
+=== PAUSE TestPredicateBodyProof/kind
+=== RUN   TestPredicateBodyProof/kind_helpers_fixed_point
+=== PAUSE TestPredicateBodyProof/kind_helpers_fixed_point
+=== RUN   TestPredicateBodyProof/helper
+=== PAUSE TestPredicateBodyProof/helper
+=== RUN   TestPredicateBodyProof/false_branch_lies
+=== PAUSE TestPredicateBodyProof/false_branch_lies
+=== RUN   TestPredicateBodyProof/true_branch_lies
+=== PAUSE TestPredicateBodyProof/true_branch_lies
+=== RUN   TestPredicateBodyProof/mutation
+=== PAUSE TestPredicateBodyProof/mutation
+=== RUN   TestPredicateBodyProof/alias_mutation
+=== PAUSE TestPredicateBodyProof/alias_mutation
+=== RUN   TestPredicateBodyProof/recursive
+=== PAUSE TestPredicateBodyProof/recursive
+=== RUN   TestPredicateBodyProof/default_changes_input
+=== PAUSE TestPredicateBodyProof/default_changes_input
+=== RUN   TestPredicateBodyProof/empty_assertion
+=== PAUSE TestPredicateBodyProof/empty_assertion
+=== RUN   TestPredicateBodyProof/assertion
+=== PAUSE TestPredicateBodyProof/assertion
+=== RUN   TestPredicateBodyProof/disabled_assertion
+=== PAUSE TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/recursive
+=== CONT  TestPredicateBodyProof/condition_assertion
+=== CONT  TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/assertion
+=== CONT  TestPredicateBodyProof/empty_assertion
+=== CONT  TestPredicateBodyProof/default_changes_input
+=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
+=== CONT  TestPredicateBodyProof/alias_mutation
+=== CONT  TestPredicateBodyProof/mutation
+=== CONT  TestPredicateBodyProof/true_branch_lies
+=== CONT  TestPredicateBodyProof/false_branch_lies
+=== CONT  TestPredicateBodyProof/helper
+=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
+=== CONT  TestPredicateBodyProof/kind
+=== CONT  TestPredicateBodyProof/typeof
+=== CONT  TestPredicateBodyProof/empty_condition_assertion
+=== CONT  TestPredicateBodyProof/condition_mutation
+=== CONT  TestPredicateBodyProof/returning_fail
+--- PASS: TestPredicateBodyProof (0.00s)
+    --- PASS: TestPredicateBodyProof/condition_assertion (0.10s)
+    --- PASS: TestPredicateBodyProof/recursive (0.10s)
+    --- PASS: TestPredicateBodyProof/assertion (0.12s)
+    --- PASS: TestPredicateBodyProof/disabled_assertion (0.12s)
+    --- PASS: TestPredicateBodyProof/default_changes_input (0.08s)
+    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.06s)
+    --- PASS: TestPredicateBodyProof/alias_mutation (0.06s)
+    --- PASS: TestPredicateBodyProof/empty_assertion (0.10s)
+    --- PASS: TestPredicateBodyProof/false_branch_lies (0.06s)
+    --- PASS: TestPredicateBodyProof/mutation (0.09s)
+    --- PASS: TestPredicateBodyProof/true_branch_lies (0.09s)
+    --- PASS: TestPredicateBodyProof/helper (0.10s)
+    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.06s)
+    --- PASS: TestPredicateBodyProof/typeof (0.04s)
+    --- PASS: TestPredicateBodyProof/condition_mutation (0.05s)
+    --- PASS: TestPredicateBodyProof/returning_fail (0.04s)
+    --- PASS: TestPredicateBodyProof/kind (0.09s)
+    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.07s)
+PASS

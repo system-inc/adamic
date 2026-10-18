@@ -1,0 +1,19 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:96: bitwise_updates
+    enum_flags_test.go:96: alias
+    enum_flags_test.go:96: or
+    enum_flags_test.go:96: xor
+    enum_flags_test.go:96: and_left
+    enum_flags_test.go:96: and_right
+    enum_flags_test.go:96: and_complement
+    enum_flags_test.go:96: nested
+    enum_flags_test.go:96: field
+    enum_flags_test.go:96: array
+    enum_flags_test.go:96: map
+    enum_flags_test.go:96: parameter
+    enum_flags_test.go:96: optional
+    enum_flags_test.go:96: switch
+--- PASS: TestFlagEnumsDomain (2.67s)
+PASS

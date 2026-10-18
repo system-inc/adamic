@@ -1,0 +1,13 @@
+=== RUN   TestOverloadInferenceWitnesses
+=== PAUSE TestOverloadInferenceWitnesses
+=== CONT  TestOverloadInferenceWitnesses
+=== RUN   TestOverloadInferenceWitnesses/one_compatible_binder
+=== RUN   TestOverloadInferenceWitnesses/incompatible_known_member
+=== RUN   TestOverloadInferenceWitnesses/multiple_unknown_binders
+=== RUN   TestOverloadInferenceWitnesses/optional_rigid_binder
+--- PASS: TestOverloadInferenceWitnesses (0.05s)
+    --- PASS: TestOverloadInferenceWitnesses/one_compatible_binder (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/incompatible_known_member (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/multiple_unknown_binders (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/optional_rigid_binder (0.00s)
+PASS

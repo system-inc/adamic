@@ -1,0 +1,57 @@
+[
+  {
+    "name": "omit-boundary-inputs",
+    "catcher": "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller",
+    "assertion": "known caller hid unbounded caller",
+    "failures": [
+      "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller (0.00s)"
+    ],
+    "caught": true
+  },
+  {
+    "name": "unknown-is-empty",
+    "catcher": "TestClosureTargetsBoundOnlyProvenValues",
+    "assertion": "bounded without proof",
+    "failures": [
+      "TestClosureTargetsBoundOnlyProvenValues (0.00s)"
+    ],
+    "caught": true
+  },
+  {
+    "name": "omit-captures",
+    "catcher": "TestClosureCycleDirect",
+    "assertion": "want cycle refusal",
+    "failures": [
+      "TestClosureCycleDirect (2.95s)"
+    ],
+    "caught": true
+  },
+  {
+    "name": "drop-return-target",
+    "catcher": "TestClosureTargetsFollowParametersReturnsAndMapValues",
+    "assertion": "want both returned targets",
+    "failures": [
+      "TestClosureTargetsFollowParametersReturnsAndMapValues (0.00s)"
+    ],
+    "caught": true
+  },
+  {
+    "name": "omit-map-captures",
+    "catcher": "TestClosureCycleMap",
+    "assertion": "want cycle refusal",
+    "failures": [
+      "TestClosureCycleMap (2.54s)"
+    ],
+    "caught": true
+  },
+  {
+    "name": "type-matched-captures",
+    "catcher": "TestNamespaceAmbientCwdInitialization and TestClosureCycleAmbientCwd",
+    "assertion": "adamic/cycle-capable",
+    "failures": [
+      "TestNamespaceAmbientCwdInitialization (1.03s)",
+      "TestClosureCycleAmbientCwd (3.23s)"
+    ],
+    "caught": true
+  }
+]

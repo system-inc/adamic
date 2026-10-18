@@ -1,0 +1,212 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsFollowParametersReturnsAndMapValues",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "test": "TestEveryTestIsParallelOrSaysWhy",
+    "action": "pass",
+    "seconds": 0.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientHostInitialization",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientCwdInitialization",
+    "action": "pass",
+    "seconds": 0.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusSnapshotNext",
+    "action": "pass",
+    "seconds": 14.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleDirect",
+    "action": "pass",
+    "seconds": 14.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureUnionNext",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureNumberNext",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClassMap",
+    "action": "pass",
+    "seconds": 14.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOverloadedFunction",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusThrowingObject",
+    "action": "pass",
+    "seconds": 10.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusBinaryFunction",
+    "action": "pass",
+    "seconds": 25.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUnaryFunction",
+    "action": "pass",
+    "seconds": 10.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalBooleanFunction",
+    "action": "pass",
+    "seconds": 10.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateTypeFunction",
+    "action": "pass",
+    "seconds": 0.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalCommentFunction",
+    "action": "pass",
+    "seconds": 0.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateCommentFunction",
+    "action": "pass",
+    "seconds": 0.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalTypeFunction",
+    "action": "pass",
+    "seconds": 0.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureNumberMethods",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusLazyObject",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUnaryNodeFunction",
+    "action": "pass",
+    "seconds": 0.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateNodeFunction",
+    "action": "pass",
+    "seconds": 0.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusPrimaryFunction",
+    "action": "pass",
+    "seconds": 0.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleMap",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusHigherCallbackPairMethods",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusCallbackPairMethods",
+    "action": "pass",
+    "seconds": 0.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleJoined",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestRuntimeSetsAreEachUsed",
+    "action": "pass",
+    "seconds": 1.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusBinaryInline",
+    "action": "pass",
+    "seconds": 11.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleAmbientCwd",
+    "action": "pass",
+    "seconds": 12.1
+  }
+]

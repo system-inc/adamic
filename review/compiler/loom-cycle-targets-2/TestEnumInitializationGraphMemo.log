@@ -1,0 +1,17 @@
+=== RUN   TestEnumInitializationGraphMemo
+=== PAUSE TestEnumInitializationGraphMemo
+=== CONT  TestEnumInitializationGraphMemo
+=== RUN   TestEnumInitializationGraphMemo/12
+=== PAUSE TestEnumInitializationGraphMemo/12
+=== RUN   TestEnumInitializationGraphMemo/24
+=== PAUSE TestEnumInitializationGraphMemo/24
+=== CONT  TestEnumInitializationGraphMemo/12
+=== CONT  TestEnumInitializationGraphMemo/24
+=== NAME  TestEnumInitializationGraphMemo/12
+    enum_initialization_reach_test.go:53: depth 12: 13 function body expansions
+=== NAME  TestEnumInitializationGraphMemo/24
+    enum_initialization_reach_test.go:53: depth 24: 25 function body expansions
+--- PASS: TestEnumInitializationGraphMemo (0.00s)
+    --- PASS: TestEnumInitializationGraphMemo/12 (0.07s)
+    --- PASS: TestEnumInitializationGraphMemo/24 (0.07s)
+PASS

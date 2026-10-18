@@ -1,0 +1,21 @@
+=== RUN   TestCensusOverloadRelation
+=== PAUSE TestCensusOverloadRelation
+=== CONT  TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== PAUSE TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== PAUSE TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+=== PAUSE TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusOverloadRelation/parameter_contravariance
+=== CONT  TestCensusOverloadRelation/mutable_parameters
+=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
+=== CONT  TestCensusOverloadRelation/result_covariance
+--- PASS: TestCensusOverloadRelation (0.00s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.09s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.09s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.09s)
+    --- PASS: TestCensusOverloadRelation/result_covariance (0.11s)
+PASS

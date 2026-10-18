@@ -1,0 +1,15 @@
+=== RUN   TestNumericEnumNeverProof
+=== PAUSE TestNumericEnumNeverProof
+=== CONT  TestNumericEnumNeverProof
+=== RUN   TestNumericEnumNeverProof/member
+=== RUN   TestNumericEnumNeverProof/parameter
+=== RUN   TestNumericEnumNeverProof/combination
+=== RUN   TestNumericEnumNeverProof/array_read
+=== RUN   TestNumericEnumNeverProof/closed_return
+--- PASS: TestNumericEnumNeverProof (0.36s)
+    --- PASS: TestNumericEnumNeverProof/member (0.13s)
+    --- PASS: TestNumericEnumNeverProof/parameter (0.07s)
+    --- PASS: TestNumericEnumNeverProof/combination (0.08s)
+    --- PASS: TestNumericEnumNeverProof/array_read (0.04s)
+    --- PASS: TestNumericEnumNeverProof/closed_return (0.04s)
+PASS

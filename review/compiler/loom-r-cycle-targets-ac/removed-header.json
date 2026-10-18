@@ -1,0 +1,13 @@
+{
+  "predicate_exit": 1,
+  "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/cycle_closure_targets_refused/direct.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, s)",
+  "seconds": 0.0,
+  "results": {
+    "internal/oracle/testdata/cycle_closure_targets_refused/direct.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting ca"
+    }
+  },
+  "diagnostics": {}
+}

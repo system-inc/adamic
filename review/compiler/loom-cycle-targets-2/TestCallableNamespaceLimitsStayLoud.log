@@ -1,0 +1,29 @@
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.31s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.34s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.34s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.35s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.13s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.17s)
+PASS

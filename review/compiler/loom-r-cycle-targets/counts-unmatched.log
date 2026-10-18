@@ -1,0 +1,6 @@
+{"Time":"2026-10-18T00:16:12.933228289Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:16:12.947681407Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:16:12.947826299Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:12.948922714Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"no row for stage3/namespace-init-sys/cwd.a: measure it with go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts\n"}
+{"Time":"2026-10-18T00:16:12.949155306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.015s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:12.949170262Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.016}

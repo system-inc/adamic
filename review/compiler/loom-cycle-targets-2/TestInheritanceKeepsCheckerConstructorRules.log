@@ -1,0 +1,17 @@
+=== RUN   TestInheritanceKeepsCheckerConstructorRules
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules
+=== CONT  TestInheritanceKeepsCheckerConstructorRules
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/this_before_super
+=== RUN   TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== PAUSE TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_construction
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing
+=== CONT  TestInheritanceKeepsCheckerConstructorRules/this_before_super
+--- PASS: TestInheritanceKeepsCheckerConstructorRules (0.00s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_method_missing (0.07s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/this_before_super (0.07s)
+    --- PASS: TestInheritanceKeepsCheckerConstructorRules/abstract_construction (0.09s)
+PASS

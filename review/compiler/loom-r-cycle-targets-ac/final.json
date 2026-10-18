@@ -1,0 +1,23 @@
+{
+  "predicate_exit": 0,
+  "failure": null,
+  "seconds": 0.0,
+  "results": {
+    "internal/oracle/testdata/cycle_closure_targets_refused/direct.a": {
+      "outcome": "refused",
+      "expected": "refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting ca"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/joined.a": {
+      "outcome": "refused",
+      "expected": "refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/joined.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting ca"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/map.a": {
+      "outcome": "refused",
+      "expected": "refused Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:13:7: Adamic 0.1 refuses Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycle_clos"
+    }
+  },
+  "diagnostics": {}
+}

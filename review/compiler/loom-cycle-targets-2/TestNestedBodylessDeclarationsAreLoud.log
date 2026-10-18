@@ -1,0 +1,13 @@
+=== RUN   TestNestedBodylessDeclarationsAreLoud
+=== PAUSE TestNestedBodylessDeclarationsAreLoud
+=== CONT  TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== RUN   TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== CONT  TestNestedBodylessDeclarationsAreLoud/body_lowering
+--- PASS: TestNestedBodylessDeclarationsAreLoud (0.00s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/body_lowering (0.09s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/missing_implementation (0.09s)
+PASS
