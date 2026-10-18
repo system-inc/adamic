@@ -11,7 +11,8 @@ import (
 // The two Python suites phase:stage3 ran beside the upstream suite are Go tests of their own, so Planner places each
 // like any other test and a red names it: apply's tests (stage3/test_apply.py, whose ordinary-apply case adapts
 // 00-setup alone) and the lane's checker and table tests. The lane's normalize-api.cjs reads stage3/api's install,
-// which a tree holds, so neither needs the phase's npm ci.
+// which a tree holds, so neither needs the phase's npm ci. The lane's other suites, which only hand-run prove_*.py
+// scripts ever ran, run beside them (#mpesmv7): a suite no gate runs can't fail.
 
 func TestApplyPython(t *testing.T) {
 	t.Parallel()
@@ -20,7 +21,8 @@ func TestApplyPython(t *testing.T) {
 
 func TestLanePython(t *testing.T) {
 	t.Parallel()
-	runPython(t, "stage3/lane", "test_check", "test_table")
+	runPython(t, "stage3/lane", "test_check", "test_table", "test_artifact", "test_case_observer", "test_measure_plan",
+		"test_profile", "test_shards", "test_worker_environment")
 }
 
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
