@@ -19,13 +19,16 @@ import (
 )
 
 const compilerAgreementCheckerGroupBudgetMillis = 10_000
-const compilerAgreementCheckerGroupCount = 27
+const compilerAgreementCheckerGroupCount = 28
 
 // Standalone checker.ts native CPU prices, rounded up to milliseconds: 6ef6b9dc,
 // Clang 20.1.8, -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all,
 // native.Options{Sanitize:true, Jobs:1}, Split=false, CPU 0, one core. The cut
 // consumes these prices in production dispatch order; they are not group IDs.
 var compilerAgreementCheckerPrices = map[string]int{
+	// no-unused-labels: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
+	// -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all, Split=false, Jobs=1.
+	"no-unused-labels": 3829,
 	// no-extra-bind: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
 	// -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all, Split=false, Jobs=1.
 	"no-extra-bind": 2588,
@@ -483,4 +486,9 @@ func TestCompilerAndStage1AgreeCombinedOutputWitness_25(t *testing.T) {
 func TestCompilerAndStage1AgreeCombinedOutputWitness_26(t *testing.T) {
 	t.Parallel()
 	compilerAgreementCombinedOutputWitness(t, 26)
+}
+
+func TestCompilerAndStage1AgreeCombinedOutputWitness_27(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCombinedOutputWitness(t, 27)
 }

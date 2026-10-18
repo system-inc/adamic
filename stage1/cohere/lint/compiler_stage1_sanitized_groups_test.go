@@ -909,3 +909,13 @@ func TestCompilerAndStage1Agree_CheckerSanitized_no_extra_bind(t *testing.T) {
 	t.Parallel()
 	compilerAgreementCheckerSanitized(t, "no-extra-bind")
 }
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-unused-labels")
+}
+
+func TestCompilerAndStage1Agree_6564_27(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 27)
+}
