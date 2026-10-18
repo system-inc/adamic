@@ -309,7 +309,7 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 		file, prefix, helper string
 		count                int
 	}{
-		{"regexp_test.go", "TestRegExpBytecodeRandomNodeUnit", "runRegExpBytecodeRandomNodeUnit", 40},
+		{"regexp_test.go", "TestRegExpBytecodeRandomNodeShard", "runRegExpBytecodeRandomNodeShard", 40},
 		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
 		{"units_tsgo_test.go", "TestSplitTSGoAgreesUnit", "runSplitTSGoAgreesUnit", 2},
 		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
