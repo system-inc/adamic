@@ -1,0 +1,8 @@
+interface Base { readonly label: string; }
+interface View extends Base {
+    readonly count: number | string;
+}
+const raw = { label: 'xx', count: 0 };
+const base: Base = raw;
+const view = base as View;
+console.log(`${view.label} / ${view.count}`);

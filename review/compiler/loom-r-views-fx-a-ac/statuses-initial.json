@@ -1,0 +1,380 @@
+[
+  {
+    "path": "internal/lower/testdata/loom_views_a/callable.a",
+    "body_sha256_before": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.041
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0406
+    },
+    "header_changed": true,
+    "body_sha256_after": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/key.a",
+    "body_sha256_before": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:6:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0336
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0355
+    },
+    "header_changed": true,
+    "body_sha256_after": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p21.a",
+    "body_sha256_before": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0332
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0366
+    },
+    "header_changed": true,
+    "body_sha256_after": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p37.a",
+    "body_sha256_before": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "original_sha256": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:11:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0446
+    },
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field count with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0365
+    },
+    "header_changed": true,
+    "body_sha256_after": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/union_key.a",
+    "body_sha256_before": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "original_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:9:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0403
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0319
+    },
+    "header_changed": true,
+    "body_sha256_after": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/unsupported.a",
+    "body_sha256_before": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "original_sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:9:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0311
+    },
+    "status": "refused",
+    "reason": "checked view read of field label with unsupported representation conversion contract",
+    "header": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "after": {
+      "status": "refused",
+      "reason": "checked view read of field label with unsupported representation conversion contract",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0364
+    },
+    "header_changed": true,
+    "body_sha256_after": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p01.a",
+    "body_sha256_before": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "original_sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:6:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0316
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0307
+    },
+    "header_changed": true,
+    "body_sha256_after": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p05.a",
+    "body_sha256_before": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:6:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0369
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0372
+    },
+    "header_changed": true,
+    "body_sha256_after": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p06.a",
+    "body_sha256_before": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "original_sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:6:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0357
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0363
+    },
+    "header_changed": true,
+    "body_sha256_after": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p19.a",
+    "body_sha256_before": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "original_sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:7:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0421
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.038
+    },
+    "header_changed": true,
+    "body_sha256_after": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p72.a",
+    "body_sha256_before": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "original_sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:7:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0424
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0341
+    },
+    "header_changed": true,
+    "body_sha256_after": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856"
+  },
+  {
+    "path": "review/compiler/loom-r-views-fx-a/controls/key_fix.a",
+    "body_sha256_before": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01",
+    "original_sha256": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01",
+    "original_header": "",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3986,
+      "seconds": 0.0359
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3986,
+      "seconds": 0.0334
+    },
+    "header_changed": false,
+    "body_sha256_after": "ebce1c526f7cb2bcb5da5786d2ed5c645b0871b466c97e4f3eccfd4d6d9e7d01"
+  },
+  {
+    "path": "review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a",
+    "body_sha256_before": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7",
+    "original_sha256": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7",
+    "original_header": "",
+    "before": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2271,
+      "seconds": 0.0535
+    },
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "after": {
+      "status": "checked",
+      "reason": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2271,
+      "seconds": 0.0312
+    },
+    "header_changed": false,
+    "body_sha256_after": "b49943f2ca47492ff535b5ea5e1d50caab4f5aaff535273bffda95b2235812b7"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a",
+    "body_sha256_before": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "original_sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "original_header": "",
+    "before": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:7:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0327
+    },
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "after": {
+      "status": "refused",
+      "reason": "view member read by element access is not yet checked",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0335
+    },
+    "header_changed": true,
+    "body_sha256_after": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438"
+  }
+]

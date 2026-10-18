@@ -1,0 +1,18 @@
+=== RUN   TestLoomViewKeyRead
+=== PAUSE TestLoomViewKeyRead
+=== RUN   TestLoomViewUnsupportedRead
+=== PAUSE TestLoomViewUnsupportedRead
+=== RUN   TestLoomViewUnsupportedCallableRead
+=== PAUSE TestLoomViewUnsupportedCallableRead
+=== RUN   TestLoomViewKeyFix
+=== PAUSE TestLoomViewKeyFix
+=== CONT  TestLoomViewKeyRead
+=== CONT  TestLoomViewKeyFix
+=== CONT  TestLoomViewUnsupportedCallableRead
+=== CONT  TestLoomViewUnsupportedRead
+--- PASS: TestLoomViewKeyRead (0.41s)
+--- PASS: TestLoomViewUnsupportedCallableRead (0.63s)
+--- PASS: TestLoomViewUnsupportedRead (0.64s)
+--- PASS: TestLoomViewKeyFix (0.70s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.728s
