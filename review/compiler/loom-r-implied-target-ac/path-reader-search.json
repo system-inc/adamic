@@ -1,0 +1,12 @@
+{
+  "needles": [
+    "loom-implied-target",
+    "objects-sequential.a",
+    "objects-1024.a",
+    "objects-2048.a",
+    "objects-4096.a",
+    "objects-512.a"
+  ],
+  "scope": "tracked *_test.go and testdata files",
+  "matches": []
+}
