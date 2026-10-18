@@ -1589,6 +1589,18 @@ reads cmd/adamic-stage1-progress stage1/cohere/gitignore/GAPS.md
 reads cmd/adamic-stage1-progress stage1/cohere/gitignore/main.ts
 reads cmd/adamic-stage1-progress stage1/cohere/yaml/GAPS.md
 reads internal/dry cohere
+# internal/dry's mirror tests (mirrors_test.go's sourceHeaders and goFiles) read every tracked file with these nine
+# extensions, wherever it is, as a strace of the whole suite on Cloud measured (Oct 18, #b5yzjhd): 4,172 files outside
+# cohere, nothing untracked, and no other extension but the package's own testdata. So an edit to any of them moves dry.
+reads internal/dry *.go
+reads internal/dry *.a
+reads internal/dry *.ts
+reads internal/dry *.c
+reads internal/dry *.h
+reads internal/dry *.js
+reads internal/dry *.mjs
+reads internal/dry *.py
+reads internal/dry *.sh
 reads internal/lower internal/oracle/refusals/nested_rebinding.a
 reads internal/lower review/optional-indexing/map-shape.a
 reads internal/native oracle/wasi.mjs
