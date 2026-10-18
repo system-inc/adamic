@@ -25,6 +25,11 @@ const repository = "../.."
 // as evidence, or the compiler's regression fixed.
 const knownFile = "known.txt"
 
+// evidenceDirectories hold dated evidence of what the compiler did on a given day, not live fixtures, so their programs
+// are exempt by directory (@system_adamic's ruling on #7xsbxbk); a live fixture of the same behavior belongs in
+// internal/oracle/testdata, which stays checked. TestTheEvidenceExemptionIsThoseThreeDirectories keeps it from spreading.
+var evidenceDirectories = []string{"docs/verification", "notes", "review"}
+
 // TestProduct_Adamic declares the stage 0 compiler this package's test runs, so its unit is handed it; internal/native's
 // TestProduct_WASICompiler builds it (buildcache.AdamicOwner), and this one finds it.
 func TestProduct_Adamic(t *testing.T) {
@@ -38,7 +43,7 @@ func TestProduct_Adamic(t *testing.T) {
 // error <code>" must fail exactly that way instead. A program inside a package is that package's to test. This was the
 // gate's a-check phase, which checked only the programs a change touched, so a compiler change that broke one it didn't
 // touch was never seen; here every program is checked whenever one of them or the compiler moves. The programs that
-// broke their promise when it came are known.txt's, which only shrinks.
+// broke their promise when it came are known.txt's, which only shrinks; the evidence directories' are exempt.
 func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	t.Parallel()
 	adamic := buildcache.Adamic(t)
@@ -46,6 +51,7 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	programs = slices.DeleteFunc(programs, evidence)
 	if len(programs) == 0 {
 		t.Fatal("no .a program outside a package was found, so nothing was checked")
 	}
@@ -78,6 +84,28 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	for _, problem := range compare(programs, broken, known) {
 		t.Error(problem)
 	}
+}
+
+// The evidence exemption is exactly docs/verification, notes and review, and a program is exempt only under one of
+// them, never a directory whose name merely starts the same: what @system_adamic ruled, so it can't spread. Mutants that
+// each fail it: a fourth directory exempted; a prefix taken as a directory.
+func TestTheEvidenceExemptionIsThoseThreeDirectories(t *testing.T) {
+	t.Parallel()
+	if want := []string{"docs/verification", "notes", "review"}; !slices.Equal(evidenceDirectories, want) {
+		t.Fatalf("exempt %q, want %q", evidenceDirectories, want)
+	}
+	for program, exempt := range map[string]bool{"notes/devirtualize/constructor_refused.a": true, "review/oct6/a.a": true,
+		"docs/verification/enums-open/probe.a": true, "notes2/a.a": false, "docs/other/a.a": false, "reviewer/a.a": false,
+		"stage3/drivers/notes/a.a": false} {
+		if evidence(program) != exempt {
+			t.Errorf("%s exempt %v, want %v", program, evidence(program), exempt)
+		}
+	}
+}
+
+// evidence says whether a program sits under one of evidenceDirectories.
+func evidence(program string) bool {
+	return slices.ContainsFunc(evidenceDirectories, func(directory string) bool { return strings.HasPrefix(program, directory+"/") })
 }
 
 // The test finds the programs it must and judges them as the gate did: a planted repository's programs outside a
