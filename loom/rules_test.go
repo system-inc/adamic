@@ -53,6 +53,11 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"depth null", `{"blocks": {"on": true, "budget": 2, "depth": null}, "restack": {"on": false}}`, "a whole number from 2 to 32"},
 		{"depth fraction", `{"blocks": {"on": true, "budget": 2, "depth": 2.5}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
 		{"depth string", `{"blocks": {"on": true, "budget": 2, "depth": "3"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"heavyMax zero", `{"blocks": {"on": true, "budget": 2, "heavyMax": 0}, "restack": {"on": false}}`, "from 1 to 16"},
+		{"heavyMax past the queue's", `{"blocks": {"on": true, "budget": 2, "heavyMax": 17}, "restack": {"on": false}}`, "from 1 to 16"},
+		{"heavyMax null", `{"blocks": {"on": true, "budget": 2, "heavyMax": null}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
+		{"heavyMax fraction", `{"blocks": {"on": true, "budget": 2, "heavyMax": 2.5}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
+		{"heavyMax string", `{"blocks": {"on": true, "budget": 2, "heavyMax": "4"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"door bound unknown", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"budget": 2}}`, `unknown field "budget"`},
 		{"door bound zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"waiting": 0}}`, "a whole number from 1 to 9007199254740991"},
 		{"door bound null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"heavy": null}}`, "a whole number from 1 to 9007199254740991"},
@@ -108,5 +113,22 @@ func TestRulesTakeADoor(t *testing.T) {
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Door != nil {
 		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+}
+
+// A heavyMax the lander takes reads here too (Loom's #heavymax): from 1 to 16, and absent as absent.
+func TestRulesTakeAHeavyMax(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMax": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.HeavyMax == nil || *rules.Blocks.HeavyMax != 4 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMax": 16}, "restack": {"on": false}}`))
+	if err != nil || *rules.Blocks.HeavyMax != 16 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.HeavyMax != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }

@@ -54,13 +54,17 @@ type BlocksRule struct {
 	// Depth: the most blocks in flight, each pipelined on the last prefix of the one below it, from DefaultBlocksDepth to
 	// MaximumBlocksDepth. Optional, and never null; absent reads as 2 (Loom 0.8.71, #wpcbqpd).
 	Depth *int `json:"depth"`
+	// HeavyMax: the most changes a block of heavy changes holds, below what sizing gives, from 1 to MaximumBlocksHeavyMax.
+	// Optional, and never null; absent reads as sizing alone (Loom's #heavymax).
+	HeavyMax *int `json:"heavyMax"`
 }
 
-// DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower
-// (Loom's lander/rules.go).
+// DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
+// MaximumBlocksHeavyMax the largest heavy block (Loom's lander/rules.go).
 const (
-	DefaultBlocksDepth = 2
-	MaximumBlocksDepth = 32
+	DefaultBlocksDepth    = 2
+	MaximumBlocksDepth    = 32
+	MaximumBlocksHeavyMax = 16
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
@@ -125,6 +129,14 @@ func ParseRules(data []byte) (Rules, error) {
 		}
 		if *rules.Blocks.Depth < DefaultBlocksDepth || *rules.Blocks.Depth > MaximumBlocksDepth {
 			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %d, and it's from %d to %d", *rules.Blocks.Depth, DefaultBlocksDepth, MaximumBlocksDepth)
+		}
+	}
+	if heavyMax, present := raw.Blocks["heavyMax"]; present {
+		if bytes.Equal(bytes.TrimSpace(heavyMax), []byte("null")) || rules.Blocks.HeavyMax == nil {
+			return Rules{}, fmt.Errorf("rules.json: blocks' heavyMax is %s, and it's a whole number from 1 to %d", heavyMax, MaximumBlocksHeavyMax)
+		}
+		if *rules.Blocks.HeavyMax < 1 || *rules.Blocks.HeavyMax > MaximumBlocksHeavyMax {
+			return Rules{}, fmt.Errorf("rules.json: blocks' heavyMax is %d, and it's from 1 to %d", *rules.Blocks.HeavyMax, MaximumBlocksHeavyMax)
 		}
 	}
 	if raw.Door != nil {
