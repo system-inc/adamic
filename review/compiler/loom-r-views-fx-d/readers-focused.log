@@ -1,0 +1,219 @@
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/cloud/reports/decode-ascii	0.047s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	0.057s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.018s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/adamic-reduce	[no test files]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.011s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.064s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.013s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/fuzz	0.047s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.055s [no tests to run]
+=== RUN   TestFX7ViewCycle
+=== PAUSE TestFX7ViewCycle
+=== RUN   TestFX7TupleMarkerRejectsOrdinaryArray
+=== PAUSE TestFX7TupleMarkerRejectsOrdinaryArray
+=== CONT  TestFX7ViewCycle
+=== CONT  TestFX7TupleMarkerRejectsOrdinaryArray
+--- PASS: TestFX7TupleMarkerRejectsOrdinaryArray (0.08s)
+--- PASS: TestFX7ViewCycle (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.142s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/leakcheck	0.003s [no tests to run]
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== CONT  TestCallableContractP18
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+=== CONT  TestCallableContractWideProducer
+=== CONT  TestCallableContractP20
+=== CONT  TestCallableContractPlainSpread
+--- PASS: TestCallableContractP20 (0.83s)
+=== CONT  TestCallableContractSpreadRefused
+--- PASS: TestCallableContractReceiverEvaluatedOnce (0.90s)
+=== CONT  TestCallableContractReceiverBinding
+--- PASS: TestCallableContractP18 (0.91s)
+--- PASS: TestCallableContractPlainSpread (0.92s)
+--- PASS: TestCallableContractWideProducer (0.93s)
+--- PASS: TestCallableContractSpreadRefused (0.21s)
+--- PASS: TestCallableContractReceiverBinding (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.487s
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== RUN   TestViewCheckedCastMetadata
+=== PAUSE TestViewCheckedCastMetadata
+=== CONT  TestFX7ViewCycleAndStackGuard
+=== CONT  TestViewCheckedCastMetadata
+--- PASS: TestViewCheckedCastMetadata (0.00s)
+--- PASS: TestFX7ViewCycleAndStackGuard (35.23s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	35.250s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/native/runtimeproducts	0.008s [no tests to run]
+=== RUN   TestFX7Depth65
+=== PAUSE TestFX7Depth65
+=== RUN   TestFX7Depth200
+=== PAUSE TestFX7Depth200
+=== RUN   TestFX7Depth2000
+=== PAUSE TestFX7Depth2000
+=== RUN   TestFX7TextP09
+=== PAUSE TestFX7TextP09
+=== RUN   TestFX7TextP32
+=== PAUSE TestFX7TextP32
+=== RUN   TestFX7TextP33
+=== PAUSE TestFX7TextP33
+=== RUN   TestFX7TextP67
+=== PAUSE TestFX7TextP67
+=== RUN   TestFX7TextP72
+=== PAUSE TestFX7TextP72
+=== RUN   TestFX7TextScalarTuple
+=== PAUSE TestFX7TextScalarTuple
+=== RUN   TestFX7TextScalarStatic
+=== PAUSE TestFX7TextScalarStatic
+=== RUN   TestLoomViewsDOriginal
+=== PAUSE TestLoomViewsDOriginal
+=== RUN   TestLoomViewsDTupleObject
+=== PAUSE TestLoomViewsDTupleObject
+=== RUN   TestLoomViewsDTupleUnion
+=== PAUSE TestLoomViewsDTupleUnion
+=== RUN   TestLoomViewsDWideCallable
+=== PAUSE TestLoomViewsDWideCallable
+=== RUN   TestLoomViewsDCallableUnion
+=== PAUSE TestLoomViewsDCallableUnion
+=== RUN   TestLoomViewsDBadCallable
+=== PAUSE TestLoomViewsDBadCallable
+=== RUN   TestRuntimeSetsAreEachUsed
+=== PAUSE TestRuntimeSetsAreEachUsed
+=== CONT  TestFX7Depth65
+=== CONT  TestFX7TextScalarStatic
+=== CONT  TestRuntimeSetsAreEachUsed
+=== CONT  TestLoomViewsDBadCallable
+=== CONT  TestLoomViewsDCallableUnion
+--- PASS: TestRuntimeSetsAreEachUsed (3.28s)
+=== CONT  TestLoomViewsDWideCallable
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:21: gate cache node miss
+=== NAME  TestFX7TextScalarStatic
+    fx7_depth_texts_test.go:73: gate cache node miss
+    fx7_depth_texts_test.go:73: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found function\n"
+=== NAME  TestLoomViewsDWideCallable
+    loom_views_d_test.go:73: gate cache node miss
+=== NAME  TestLoomViewsDCallableUnion
+    loom_views_d_test.go:77: gate cache node miss
+=== NAME  TestLoomViewsDBadCallable
+    loom_views_d_test.go:85: gate cache node miss
+--- PASS: TestFX7TextScalarStatic (14.71s)
+=== CONT  TestLoomViewsDTupleUnion
+    loom_views_d_test.go:69: gate cache node miss
+=== NAME  TestLoomViewsDBadCallable
+    loom_views_d_test.go:94: gate cache node miss
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:21: gate cache node miss
+--- PASS: TestLoomViewsDBadCallable (15.80s)
+=== CONT  TestLoomViewsDTupleObject
+--- PASS: TestFX7Depth65 (15.91s)
+=== CONT  TestLoomViewsDOriginal
+=== NAME  TestLoomViewsDTupleObject
+    loom_views_d_test.go:65: gate cache node miss
+=== NAME  TestLoomViewsDWideCallable
+    loom_views_d_test.go:73: gate cache node miss
+=== NAME  TestLoomViewsDOriginal
+    loom_views_d_test.go:26: gate cache node miss
+=== NAME  TestLoomViewsDCallableUnion
+    loom_views_d_test.go:77: gate cache node miss
+--- PASS: TestLoomViewsDWideCallable (13.08s)
+=== CONT  TestFX7TextP33
+--- PASS: TestLoomViewsDCallableUnion (16.50s)
+=== CONT  TestFX7TextScalarTuple
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:67: gate cache node miss
+=== NAME  TestFX7TextScalarTuple
+    fx7_depth_texts_test.go:71: gate cache node miss
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:67: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+=== NAME  TestFX7TextScalarTuple
+    fx7_depth_texts_test.go:71: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n"
+=== NAME  TestLoomViewsDTupleUnion
+    loom_views_d_test.go:69: gate cache node miss
+--- PASS: TestLoomViewsDTupleUnion (3.45s)
+=== CONT  TestFX7TextP72
+    fx7_depth_texts_test.go:69: gate cache node miss
+--- PASS: TestFX7TextP33 (2.06s)
+=== CONT  TestFX7TextP67
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:69: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:68: gate cache node miss
+=== NAME  TestLoomViewsDTupleObject
+    loom_views_d_test.go:65: gate cache node miss
+--- PASS: TestFX7TextScalarTuple (2.36s)
+=== CONT  TestFX7TextP09
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:68: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+--- PASS: TestLoomViewsDTupleObject (3.22s)
+=== CONT  TestFX7TextP32
+=== NAME  TestFX7TextP09
+    fx7_depth_texts_test.go:65: gate cache node miss
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:66: gate cache node miss
+=== NAME  TestFX7TextP09
+    fx7_depth_texts_test.go:65: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:66: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+=== NAME  TestLoomViewsDOriginal
+    loom_views_d_test.go:35: gate cache node miss
+--- PASS: TestLoomViewsDOriginal (4.20s)
+=== CONT  TestFX7Depth2000
+--- PASS: TestFX7TextP72 (2.10s)
+=== CONT  TestFX7Depth200
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:23: gate cache node miss
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:22: gate cache node miss
+--- PASS: TestFX7TextP09 (1.99s)
+--- PASS: TestFX7TextP67 (2.45s)
+--- PASS: TestFX7TextP32 (2.17s)
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:22: gate cache node miss
+--- PASS: TestFX7Depth200 (2.31s)
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:23: gate cache node miss
+--- PASS: TestFX7Depth2000 (2.74s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=25
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	22.900s
+?   	github.com/system-inc/adamic/stage3/census/tool	[no test files]
+?   	github.com/system-inc/adamic/stage3/drivers/parser/probe	[no test files]

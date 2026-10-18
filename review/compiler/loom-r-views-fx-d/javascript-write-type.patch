@@ -1,0 +1,5 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -485 +485 @@
+-			e.line("adamicViewWrite(%s, %s, %s, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value), quote(statement.DeclaredType))
++			e.line("adamicViewWrite(%s, %s, %s, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value), quote(""))

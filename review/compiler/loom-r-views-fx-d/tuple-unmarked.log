@@ -1,0 +1,13 @@
+=== RUN   TestLoomViewsDTupleUnionJavaScript
+=== PAUSE TestLoomViewsDTupleUnionJavaScript
+=== CONT  TestLoomViewsDTupleUnionJavaScript
+    loom_views_d_test.go:105: gate cache node miss
+    loom_views_d_test.go:105: gate cache node miss
+    loom_views_d_test.go:105: javascript: exit codes differ, stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- FAIL: TestLoomViewsDTupleUnionJavaScript (3.65s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.664s
+FAIL

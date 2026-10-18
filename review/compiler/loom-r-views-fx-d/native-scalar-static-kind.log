@@ -1,0 +1,13 @@
+=== RUN   TestFX7TextScalarStatic
+=== PAUSE TestFX7TextScalarStatic
+=== CONT  TestFX7TextScalarStatic
+    fx7_depth_texts_test.go:107: gate cache node miss
+    fx7_depth_texts_test.go:107: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found function\n"
+    fx7_depth_texts_test.go:107: native: stderr differs; stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found object\n"
+--- FAIL: TestFX7TextScalarStatic (22.89s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	22.896s
+FAIL

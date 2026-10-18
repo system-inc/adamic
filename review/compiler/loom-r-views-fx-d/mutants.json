@@ -1,0 +1,130 @@
+[
+  {
+    "name": "source-argument-layout",
+    "test": "^TestLoomViewsDWideCallable$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.18674701100008
+  },
+  {
+    "name": "native-depth-128",
+    "test": "^TestFX7Depth65$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 31.757243708000033
+  },
+  {
+    "name": "javascript-depth-128",
+    "test": "^TestFX7Depth65JavaScript$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.32731151400003
+  },
+  {
+    "name": "native-write-type",
+    "test": "^TestFX7TextP32$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 17.51851909600009
+  },
+  {
+    "name": "javascript-write-type",
+    "test": "^TestFX7TextP32$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.667225837999922
+  },
+  {
+    "name": "native-object-kind",
+    "test": "^TestFX7TextScalarTuple$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 37.31786951599997
+  },
+  {
+    "name": "native-union-kind",
+    "test": "^TestFX7TextP72$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 35.32483226599993
+  },
+  {
+    "name": "tuple-unmarked",
+    "test": "^TestLoomViewsDTupleUnionJavaScript$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.45044724200011
+  },
+  {
+    "name": "tuple-rejected-object",
+    "test": "^TestLoomViewsDTupleObjectJavaScript$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.77147489899994
+  },
+  {
+    "name": "ordinary-array-admitted",
+    "test": "^TestFX7TupleMarkerRejectsOrdinaryArray$",
+    "package": "./internal/javascript",
+    "exit": 1,
+    "caught": true,
+    "seconds": 0.8002349360003791
+  },
+  {
+    "name": "cast-metadata-isolated",
+    "test": "^TestViewCheckedCastMetadata$",
+    "package": "./internal/native",
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.63336606799976
+  },
+  {
+    "name": "clear-contract-bad-callee",
+    "test": "^TestLoomViewsDBadCallable$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.02786205700022
+  },
+  {
+    "name": "native-static-kind",
+    "test": "^TestFX7TextP67$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 33.25045987899966
+  },
+  {
+    "name": "callable-spread",
+    "test": "^TestCallableContractSpreadRefused$",
+    "package": "./internal/lower",
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.510692873000153
+  },
+  {
+    "name": "producer-mask",
+    "test": "^TestLoomViewsDWideCallable$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.763174394999623
+  },
+  {
+    "name": "native-scalar-static-kind",
+    "test": "^TestFX7TextScalarStatic$",
+    "package": "./internal/oracle",
+    "exit": 1,
+    "caught": true,
+    "seconds": 34.17254637899987
+  }
+]

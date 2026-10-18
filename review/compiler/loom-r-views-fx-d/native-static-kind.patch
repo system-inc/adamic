@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -187 +187 @@
+-        else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
++        else if (false && object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }

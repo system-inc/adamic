@@ -1,0 +1,10 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -93 +93 @@
+-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
++  if(contract.Kind!==2 || value===null || typeof value!=='object' || false || value instanceof Map) return false;
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -94 +94 @@
+-  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
++  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;

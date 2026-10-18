@@ -1,0 +1,5 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -447 +447 @@
+-			needs.fieldTypes = needs.fieldTypes || expression.CheckedFields
++			needs.fieldTypes = needs.fieldTypes

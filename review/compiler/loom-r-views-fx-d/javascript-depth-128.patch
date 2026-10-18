@@ -1,0 +1,4 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -72,0 +73 @@
++  if(depth>128) return false;

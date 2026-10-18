@@ -1,0 +1,7 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:50: build go_list_-export__./internal/native_./internal/lower_./internal/fresh_./internal/flow_./internal/leakcheck_listing.json 87a336a18d54 miss 12.09
+--- PASS: TestCallTargetReaders (18.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	18.232s

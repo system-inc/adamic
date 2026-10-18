@@ -1,0 +1,236 @@
+[
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestFX7TupleMarkerRejectsOrdinaryArray",
+    "seconds": 0.83
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestFX7ViewCycle",
+    "seconds": 2.1
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractSpreadRefused",
+    "seconds": 0.87
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractPlainSpread",
+    "seconds": 1.77
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractWideProducer",
+    "seconds": 1.84
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractP18",
+    "seconds": 2.05
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractReceiverEvaluatedOnce",
+    "seconds": 2.15
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractReceiverBinding",
+    "seconds": 1.39
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractP20",
+    "seconds": 0.68
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestViewCheckedCastMetadata",
+    "seconds": 0.0
+  },
+  {
+    "log": "focused-emitter-lower.log",
+    "outcome": "PASS",
+    "test": "TestFX7ViewCycleAndStackGuard",
+    "seconds": 35.36
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TupleMarkerRejectsOrdinaryArray",
+    "seconds": 0.08
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7ViewCycle",
+    "seconds": 0.14
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractP20",
+    "seconds": 0.83
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractReceiverEvaluatedOnce",
+    "seconds": 0.9
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractP18",
+    "seconds": 0.91
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractPlainSpread",
+    "seconds": 0.92
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractWideProducer",
+    "seconds": 0.93
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractSpreadRefused",
+    "seconds": 0.21
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestCallableContractReceiverBinding",
+    "seconds": 0.57
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestViewCheckedCastMetadata",
+    "seconds": 0.0
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7ViewCycleAndStackGuard",
+    "seconds": 35.23
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 3.28
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextScalarStatic",
+    "seconds": 14.71
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDBadCallable",
+    "seconds": 15.8
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7Depth65",
+    "seconds": 15.91
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDWideCallable",
+    "seconds": 13.08
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDCallableUnion",
+    "seconds": 16.5
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDTupleUnion",
+    "seconds": 3.45
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextP33",
+    "seconds": 2.06
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextScalarTuple",
+    "seconds": 2.36
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDTupleObject",
+    "seconds": 3.22
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestLoomViewsDOriginal",
+    "seconds": 4.2
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextP72",
+    "seconds": 2.1
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextP09",
+    "seconds": 1.99
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextP67",
+    "seconds": 2.45
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7TextP32",
+    "seconds": 2.17
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7Depth200",
+    "seconds": 2.31
+  },
+  {
+    "log": "readers-focused.log",
+    "outcome": "PASS",
+    "test": "TestFX7Depth2000",
+    "seconds": 2.74
+  }
+]

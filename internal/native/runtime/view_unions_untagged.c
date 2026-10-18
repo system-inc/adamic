@@ -91,7 +91,7 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
     }
     plain_match_path current = {id, reference ? value->payload.reference : NULL, path};
     path = &current;
-    if (depth > 128) { return false; }
+    ADAMIC_CHECK_STACK();
     if (id == 0 || id > count) { return false; }
     const adamic_view_untagged_contract *contract = &contracts[id - 1];
     if (value->kind == adamic_view_union_undefined && contract->undefined) { return true; }
@@ -179,6 +179,12 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
         for (size_t i = 0; i < root->member_count; i++) {
             if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
         }
+    }
+    // Only this own-data adapter has proved the heap layout. Generic mixed
+    // selection must reject unavailable adapters without inspecting a payload.
+    if (value.kind == adamic_view_union_object && object != NULL) {
+        if (object->tuple) { value.kind = adamic_view_union_array; }
+        else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
     }
     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
 }

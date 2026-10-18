@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -276 +276 @@
+-		if (value->tuple) { found = "array"; }
++		if (false) { found = "array"; }

@@ -1,0 +1,9 @@
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: string | Map<string, number>; }
+const map = new Map<string, number>();
+map.set('k', 4);
+const raw = { kind: 'Holder' as const, value: map };
+const base: Root = raw;
+const viewed = base as View;
+const read = viewed.value;
+console.log(typeof read === 'string' ? read : `${read.size}`);

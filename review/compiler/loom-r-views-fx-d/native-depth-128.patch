@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -94 +94 @@
+-    ADAMIC_CHECK_STACK();
++    if (depth > 128) { return false; }

@@ -1,0 +1,27 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -173,6 +173,12 @@
+ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared) {
+     adamic_view_union_value value = adamic_view_union_heap((const adamic_heap *)object);
+     if (object != NULL && object->heap.kind == adamic_kind_array) { value.kind = adamic_view_union_array; }
++    // Only this own-data adapter has proved the heap layout. Generic mixed
++    // selection must reject unavailable adapters without inspecting a payload.
++    if (value.kind == adamic_view_union_object && object != NULL) {
++        if (object->tuple) { value.kind = adamic_view_union_array; }
++        else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
++    }
+     if (id != 0 && id <= count) {
+         const adamic_view_untagged_contract *root = &contracts[id - 1];
+         if (root->fixed_tuple && adamic_view_untagged_plain_matches(contracts, count, id, &value)) { return id; }
+@@ -180,11 +186,5 @@
+             if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
+         }
+     }
+-    // Only this own-data adapter has proved the heap layout. Generic mixed
+-    // selection must reject unavailable adapters without inspecting a payload.
+-    if (value.kind == adamic_view_union_object && object != NULL) {
+-        if (object->tuple) { value.kind = adamic_view_union_array; }
+-        else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
+-    }
+     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
+ }
