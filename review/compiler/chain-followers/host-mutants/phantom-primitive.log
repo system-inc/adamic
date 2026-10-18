@@ -1,0 +1,8 @@
+=== RUN   TestPhantomCastsAreErased
+=== PAUSE TestPhantomCastsAreErased
+=== CONT  TestPhantomCastsAreErased
+    phantom_brands_test.go:64: /tmp/adamic-gate/TestPhantomCastsAreErased2261537919/001/main.a:2:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestPhantomCastsAreErased (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.056s
+FAIL
