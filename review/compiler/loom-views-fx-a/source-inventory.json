@@ -1,0 +1,3090 @@
+[
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-2-fix",
+    "fork": "157a43552015f41a79331949c2e82b6f8c7caaab",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "item": 135,
+    "sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "source": "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "item": 135,
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "source": "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p21.a",
+    "item": 133,
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "item": 135,
+    "sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "item": 135,
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "source": "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p23.a",
+    "item": 135,
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59.a",
+    "item": 135,
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "item": 135,
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "source": "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p60.a",
+    "item": 145,
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p61.a",
+    "item": 145,
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62.a",
+    "item": 135,
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "item": 135,
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "source": "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p04.a",
+    "item": 147,
+    "sha256": "6c0ee540e6fa648d30aa4c21c77da624b2c86377e8247611ac8b57692771fa55",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p06.a",
+    "item": 147,
+    "sha256": "899b111d6e4042d7a29872d634f80cf6fd0d3ffc02ae1ed492e84f9f209207d2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p08.a",
+    "item": 149,
+    "sha256": "0d967853af046e54cc6a629f7bfd44669abde191ff000f564bed2aee7fb1344c",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p59.a",
+    "item": 149,
+    "sha256": "0259af1dc8926fcbefacd33a8ed39488941f6ed7252e2784066ce296f2a99586",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p75.a",
+    "item": 148,
+    "sha256": "5acfdd754990cf65901a40fb6e282cd3b54483601e21e725ceed23c927450fbc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p77.a",
+    "item": 148,
+    "sha256": "a2c021909ff5b65245dccac00b4b2bc5bc1999c8197b2f46bb05113029a3e771",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "item": 144,
+    "sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "source": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "item": 144,
+    "sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "source": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "item": 144,
+    "sha256": "5d724fa15b06bb5d6943e511ebdce4b732fb1ffc4c535bf583b0bc9153c7b156",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "item": 144,
+    "sha256": "7875fa15872d18655f07f05439b6d55597f23ac292cae4933bd428123b985063",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "item": 144,
+    "sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "source": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/entries.a",
+    "item": 132,
+    "sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "source": "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/in.a",
+    "item": 132,
+    "sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "source": "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys.a",
+    "item": 132,
+    "sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "source": "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys_alias.a",
+    "item": 132,
+    "sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "source": "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19.a",
+    "item": 132,
+    "sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19_read.a",
+    "item": 132,
+    "sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "source": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p72.a",
+    "item": 132,
+    "sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/spread.a",
+    "item": 132,
+    "sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "source": "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/values.a",
+    "item": 132,
+    "sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "source": "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-key-read/p19-native-call-gap.a",
+    "item": 132,
+    "sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "source": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-3",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "item": 135,
+    "sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "source": "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "item": 135,
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "source": "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p21.a",
+    "item": 133,
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "item": 135,
+    "sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "item": 135,
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "source": "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p23.a",
+    "item": 135,
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59.a",
+    "item": 135,
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "item": 135,
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "source": "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p60.a",
+    "item": 145,
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p61.a",
+    "item": 145,
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62.a",
+    "item": 135,
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "item": 135,
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "source": "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p04.a",
+    "item": 147,
+    "sha256": "6c0ee540e6fa648d30aa4c21c77da624b2c86377e8247611ac8b57692771fa55",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p06.a",
+    "item": 147,
+    "sha256": "899b111d6e4042d7a29872d634f80cf6fd0d3ffc02ae1ed492e84f9f209207d2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p08.a",
+    "item": 149,
+    "sha256": "0d967853af046e54cc6a629f7bfd44669abde191ff000f564bed2aee7fb1344c",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p59.a",
+    "item": 149,
+    "sha256": "0259af1dc8926fcbefacd33a8ed39488941f6ed7252e2784066ce296f2a99586",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p75.a",
+    "item": 148,
+    "sha256": "5acfdd754990cf65901a40fb6e282cd3b54483601e21e725ceed23c927450fbc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p77.a",
+    "item": 148,
+    "sha256": "a2c021909ff5b65245dccac00b4b2bc5bc1999c8197b2f46bb05113029a3e771",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p68.a",
+    "item": 138,
+    "sha256": "2212de141cf18b551e3c040f0644375c6b53047248425bfb7c69b6a3ada22f68",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p69.a",
+    "item": 138,
+    "sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "source": "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a",
+    "item": 146,
+    "sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "source": "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p18.a",
+    "item": 146,
+    "sha256": "dfe95dc594a1fdf671fda54148b7633499f8f2e13d5a92860d5bda3e459b57cc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p20.a",
+    "item": 146,
+    "sha256": "948f2e39c0b4c89050860b3fc06d93ce3cb027ce2b5024bddf854e3f41ed9c13",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/wide.a",
+    "item": 146,
+    "sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "source": "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "item": 144,
+    "sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "source": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "item": 144,
+    "sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "source": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "item": 144,
+    "sha256": "5d724fa15b06bb5d6943e511ebdce4b732fb1ffc4c535bf583b0bc9153c7b156",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "item": 144,
+    "sha256": "7875fa15872d18655f07f05439b6d55597f23ac292cae4933bd428123b985063",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "item": 144,
+    "sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "source": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/entries.a",
+    "item": 132,
+    "sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "source": "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/in.a",
+    "item": 132,
+    "sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "source": "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys.a",
+    "item": 132,
+    "sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "source": "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys_alias.a",
+    "item": 132,
+    "sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "source": "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19.a",
+    "item": 132,
+    "sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19_read.a",
+    "item": 132,
+    "sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "source": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p72.a",
+    "item": 132,
+    "sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/spread.a",
+    "item": 132,
+    "sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "source": "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/values.a",
+    "item": 132,
+    "sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "source": "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-key-read/p19-native-call-gap.a",
+    "item": 132,
+    "sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "source": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-candidates-4",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "item": 135,
+    "sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "source": "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "item": 135,
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "source": "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p21.a",
+    "item": 133,
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "item": 135,
+    "sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "item": 135,
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "source": "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p23.a",
+    "item": 135,
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59.a",
+    "item": 135,
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "item": 135,
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "source": "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p60.a",
+    "item": 145,
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p61.a",
+    "item": 145,
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62.a",
+    "item": 135,
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "item": 135,
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "source": "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p04.a",
+    "item": 147,
+    "sha256": "6c0ee540e6fa648d30aa4c21c77da624b2c86377e8247611ac8b57692771fa55",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p06.a",
+    "item": 147,
+    "sha256": "899b111d6e4042d7a29872d634f80cf6fd0d3ffc02ae1ed492e84f9f209207d2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p08.a",
+    "item": 149,
+    "sha256": "0d967853af046e54cc6a629f7bfd44669abde191ff000f564bed2aee7fb1344c",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p59.a",
+    "item": 149,
+    "sha256": "0259af1dc8926fcbefacd33a8ed39488941f6ed7252e2784066ce296f2a99586",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p75.a",
+    "item": 148,
+    "sha256": "5acfdd754990cf65901a40fb6e282cd3b54483601e21e725ceed23c927450fbc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7/p77.a",
+    "item": 148,
+    "sha256": "a2c021909ff5b65245dccac00b4b2bc5bc1999c8197b2f46bb05113029a3e771",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p68.a",
+    "item": 138,
+    "sha256": "2212de141cf18b551e3c040f0644375c6b53047248425bfb7c69b6a3ada22f68",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p69.a",
+    "item": 138,
+    "sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "source": "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a",
+    "item": 146,
+    "sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "source": "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p18.a",
+    "item": 146,
+    "sha256": "dfe95dc594a1fdf671fda54148b7633499f8f2e13d5a92860d5bda3e459b57cc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p20.a",
+    "item": 146,
+    "sha256": "948f2e39c0b4c89050860b3fc06d93ce3cb027ce2b5024bddf854e3f41ed9c13",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/wide.a",
+    "item": 146,
+    "sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "source": "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "item": 144,
+    "sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "source": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "item": 144,
+    "sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "source": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "item": 144,
+    "sha256": "5d724fa15b06bb5d6943e511ebdce4b732fb1ffc4c535bf583b0bc9153c7b156",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "item": 144,
+    "sha256": "7875fa15872d18655f07f05439b6d55597f23ac292cae4933bd428123b985063",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "item": 144,
+    "sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "source": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_diagnostics/oct9_views_p17.a",
+    "item": 139,
+    "sha256": "51e01ecde06378874ad527309f274abb44422587f53de3e33a323fe8436bef79",
+    "source": "review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_diagnostics/oct9_views_p48.a",
+    "item": 139,
+    "sha256": "d8a921ff2453af8016d24459b5b5436226ef792f3835f571f2d882a7c3023cfb",
+    "source": "review/compiler/loom-views-fx-a/sources/d8a921ff2453/oct9_views_p48.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_diagnostics/oct9_views_p64.a",
+    "item": 139,
+    "sha256": "39035180ca1cc281cba48032277f1c52f254fc149c81f2e5cc1ec5357319ceec",
+    "source": "review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/entries.a",
+    "item": 132,
+    "sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "source": "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/in.a",
+    "item": 132,
+    "sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "source": "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys.a",
+    "item": 132,
+    "sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "source": "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/keys_alias.a",
+    "item": 132,
+    "sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "source": "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19.a",
+    "item": 132,
+    "sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p19_read.a",
+    "item": 132,
+    "sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "source": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/p72.a",
+    "item": 132,
+    "sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/spread.a",
+    "item": 132,
+    "sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "source": "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "internal/lower/testdata/view_element_reads/values.a",
+    "item": 132,
+    "sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "source": "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-key-read/p19-native-call-gap.a",
+    "item": 132,
+    "sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "source": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-cleanup",
+    "fork": "38c09330585df1f71aebf0e87157d2d3382538b9",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/entries.a",
+    "item": 132,
+    "sha256": "50f491e5d7c1dd0facbdcf2d9c9ed271349e16f757ae1511c0cd2a6beacd80e5",
+    "source": "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/in.a",
+    "item": 132,
+    "sha256": "6c1f0555d21169ac491790d5cd4cc0a651e0fc29ca962a99dce65027a6b30e2c",
+    "source": "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/keys.a",
+    "item": 132,
+    "sha256": "9e84065b734bb3424e34ad0afb49e0bbb4d71821af4f0a471cf6f009d06347da",
+    "source": "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/keys_alias.a",
+    "item": 132,
+    "sha256": "9e6bff2a3644111c00208dea2fe9eeed9bb7aadc69279575f51a9fd2650f8d7f",
+    "source": "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p19.a",
+    "item": 132,
+    "sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p19_read.a",
+    "item": 132,
+    "sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff",
+    "source": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/p72.a",
+    "item": 132,
+    "sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/spread.a",
+    "item": 132,
+    "sha256": "2dcbcfe5ab49baea686fbe2d65232f7de9f1cc932b313969a1c56a8a71581745",
+    "source": "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "internal/lower/testdata/view_element_reads/values.a",
+    "item": 132,
+    "sha256": "1dd37b5d0d657375a396ef6c119cc16c709a3b7c84d0d1cb2c1419da58a4c858",
+    "source": "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-key-read",
+    "fork": "fd8cd003554c7fd9a59bd0e81f4e5ed9361a9e60",
+    "path": "review/compiler/fx6-key-read/p19-native-call-gap.a",
+    "item": 132,
+    "sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438",
+    "source": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx6-valid-programs",
+    "fork": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "item": 135,
+    "sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb",
+    "source": "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "item": 135,
+    "sha256": "23b93dc07994856c59c3f8454a65888ecb91f534f5df0f4c46ef357db0df3f41",
+    "source": "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p21.a",
+    "item": 133,
+    "sha256": "f6246f3c1c4250229eb62858e3ce4bb873f05f4c181eaf7cb072bbbd87b5f194",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "item": 135,
+    "sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "item": 135,
+    "sha256": "ab0bf403ae83c1a74906a99f0caddb23083458f97dcf9c2a2f89d3903d3e2f81",
+    "source": "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p23.a",
+    "item": 135,
+    "sha256": "98e2b7018f11a6071762d517528d11c28adf506bfd6c8eab47218d64b4fdb676",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p59.a",
+    "item": 135,
+    "sha256": "1aa94ba2b93c962d791c9c4f6f6444187e199d986fdbb09f5eaf4935933334f9",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "item": 135,
+    "sha256": "fb59d3aecf4e23f1c26d2454e10e66050a81c00de6665c52ffd1ff349763c193",
+    "source": "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p60.a",
+    "item": 145,
+    "sha256": "447b0fa4b1bb9ea762b0c7cd75a8d62ab35a782cf05a2aabfd53352398c42a87",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p61.a",
+    "item": 145,
+    "sha256": "aec33ed32c94381a0aea9e7db053923fd355c3dc1d7a5ea132c86cf061380f82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p62.a",
+    "item": 135,
+    "sha256": "de5047d3bc075606666b45a57810300744f3635a486d920b3a139b5535ff19c3",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "item": 135,
+    "sha256": "9889d0b80ce2941f6ec8cbe1f2b93c458ecc7f4f7e9b8b0340882cca76859241",
+    "source": "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "item": 144,
+    "sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "source": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "item": 144,
+    "sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "source": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "item": 144,
+    "sha256": "5d724fa15b06bb5d6943e511ebdce4b732fb1ffc4c535bf583b0bc9153c7b156",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "item": 144,
+    "sha256": "7875fa15872d18655f07f05439b6d55597f23ac292cae4933bd428123b985063",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "item": 144,
+    "sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "source": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-producers",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-union-result",
+    "fork": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "path": "internal/oracle/testdata/callable_union_result_both.a",
+    "item": 154,
+    "sha256": "4311ed8657239e40fd2f378838a865f741135be6e726c39d9a7b01008398bd3f",
+    "source": "review/compiler/loom-views-fx-a/sources/4311ed865723/callable_union_result_both.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-union-result",
+    "fork": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "path": "internal/oracle/testdata/callable_union_result_number.a",
+    "item": 154,
+    "sha256": "4959ae25761ca516810270af89b650bc068fd689059d15ef31cd21d9399ff1d0",
+    "source": "review/compiler/loom-views-fx-a/sources/4959ae25761c/callable_union_result_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-union-result",
+    "fork": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "path": "internal/oracle/testdata/callable_union_result_string.a",
+    "item": 154,
+    "sha256": "6f7c7da4c8e261f1290d9f39a4fd78d2becbc25ded5dd017705e1375b845fef3",
+    "source": "review/compiler/loom-views-fx-a/sources/6f7c7da4c8e2/callable_union_result_string.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-callable-union-result",
+    "fork": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "path": "internal/oracle/testdata/callable_union_result_zero.a",
+    "item": 154,
+    "sha256": "5907cb79c2f53892807b47ca1e1f69171f0cd2f1b2e450602d5dbed8abab4fde",
+    "source": "review/compiler/loom-views-fx-a/sources/5907cb79c2f5/callable_union_result_zero.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/depth-200.a",
+    "item": 151,
+    "sha256": "2db1d7d06600e6a08a1d6161b0c9259bc9098eff017291a1390a17c20ccadc59",
+    "source": "review/compiler/loom-views-fx-a/sources/2db1d7d06600/depth-200.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/depth-2000.a",
+    "item": 151,
+    "sha256": "19560c042dd4287e1fcdd14c67329aadfccfdb013eb9ce9860d76aea5ad692fc",
+    "source": "review/compiler/loom-views-fx-a/sources/19560c042dd4/depth-2000.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/depth-65.a",
+    "item": 151,
+    "sha256": "78a920f10d1e52305710a8fd2cafd95a6c78e6f7f446c90abdb2da0e6986b4a1",
+    "source": "review/compiler/loom-views-fx-a/sources/78a920f10d1e/depth-65.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/p09.a",
+    "item": 140,
+    "sha256": "f93df345ed229670a4824d783f6e160ed93e30a6bda395fbca077dcc30da277f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/p32.a",
+    "item": 140,
+    "sha256": "8d3e50ec301c637077fac0a96fa1d9fc3a0163937143305e490dd2af54e19239",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/p33.a",
+    "item": 140,
+    "sha256": "939d79256bbbd745b38ef6059afd9de5a03a0658fedf26d5e472f5ddcd764b65",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/p67.a",
+    "item": 152,
+    "sha256": "1e717dc21ea220d94d578cf56050301743a56245fcd62158940ef6b0baaae416",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p67_static_class_union_member.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/p72.a",
+    "item": 152,
+    "sha256": "158a78dd8b4f69c077384f4a52efcb78d4582a2938612e26eddcd92fdfe5b3a2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-depth-texts",
+    "fork": "e77a4ae41f473c149aee910c51b73637686a804a",
+    "path": "stage3/interface-downcasts/fx7/scalar-tuple.a",
+    "item": 152,
+    "sha256": "702776fe1a622d44bde04dda3f974aa28380a4ca82565aa312f2cf2f49e3e7d7",
+    "source": "review/compiler/loom-views-fx-a/sources/702776fe1a62/scalar-tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p04.a",
+    "item": 147,
+    "sha256": "6c0ee540e6fa648d30aa4c21c77da624b2c86377e8247611ac8b57692771fa55",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p06.a",
+    "item": 147,
+    "sha256": "899b111d6e4042d7a29872d634f80cf6fd0d3ffc02ae1ed492e84f9f209207d2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p08.a",
+    "item": 149,
+    "sha256": "0d967853af046e54cc6a629f7bfd44669abde191ff000f564bed2aee7fb1344c",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p59.a",
+    "item": 149,
+    "sha256": "0259af1dc8926fcbefacd33a8ed39488941f6ed7252e2784066ce296f2a99586",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p75.a",
+    "item": 148,
+    "sha256": "5acfdd754990cf65901a40fb6e282cd3b54483601e21e725ceed23c927450fbc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p77.a",
+    "item": 148,
+    "sha256": "a2c021909ff5b65245dccac00b4b2bc5bc1999c8197b2f46bb05113029a3e771",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-name-family",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "item": 144,
+    "sha256": "0ade804a7ad835d1ec984ec0957941c48c5cd8d8fa2913ad65509be9e1bac995",
+    "source": "review/compiler/loom-views-fx-a/sources/0ade804a7ad8/misfit_boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "item": 144,
+    "sha256": "a705d6d0d5df2fe2c064588bfe974defe5b7ce5f0adae6e57a78003a5d9467f1",
+    "source": "review/compiler/loom-views-fx-a/sources/a705d6d0d5df/misfit_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "item": 144,
+    "sha256": "5d724fa15b06bb5d6943e511ebdce4b732fb1ffc4c535bf583b0bc9153c7b156",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "item": 144,
+    "sha256": "7875fa15872d18655f07f05439b6d55597f23ac292cae4933bd428123b985063",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "item": 144,
+    "sha256": "7417f07899326e10316afec3c2c2c0f59233930f8641d71f99618cf92951abb0",
+    "source": "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-scalar-union-view",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-snapshot",
+    "fork": "76c59c81e8617cea1892a01841494895927a712c",
+    "path": "stage3/interface-downcasts/v2/snapshot-maybe-boolean.a",
+    "item": 143,
+    "sha256": "d44ab71300a7455091a530c19420018ec14f067cca2c4bb13cb87dc97c9717d6",
+    "source": "review/compiler/loom-views-fx-a/sources/d44ab71300a7/snapshot-maybe-boolean.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-snapshot",
+    "fork": "76c59c81e8617cea1892a01841494895927a712c",
+    "path": "stage3/interface-downcasts/v2/snapshot-maybe-number.a",
+    "item": 143,
+    "sha256": "2ca18403dfcd9a7bdd80f3eaecb71831606555727575b83a6f2550c447966eef",
+    "source": "review/compiler/loom-views-fx-a/sources/2ca18403dfcd/snapshot-maybe-number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-unsupported-view",
+    "fork": "c4c5991448f93d9be6e17d9256617cea9a2a087a",
+    "path": "internal/lower/testdata/unsupported_view/control.a",
+    "item": 142,
+    "sha256": "3a666aeb3afd9feef8fca147f8f12d5eab4f519e5ff5b203f9c881ebe7e5fd23",
+    "source": "review/compiler/loom-views-fx-a/sources/3a666aeb3afd/control.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-unsupported-view",
+    "fork": "c4c5991448f93d9be6e17d9256617cea9a2a087a",
+    "path": "internal/lower/testdata/unsupported_view/p21.a",
+    "item": 142,
+    "sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-unsupported-view",
+    "fork": "c4c5991448f93d9be6e17d9256617cea9a2a087a",
+    "path": "internal/lower/testdata/unsupported_view/p37.a",
+    "item": 142,
+    "sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1",
+    "source": "review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "item": 134,
+    "sha256": "e6e42f700bc48e04bcff7ff6f5327b7fb317e30101b00c33ddb2bf5950659b5a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "item": 134,
+    "sha256": "6d819cb78a29ffd89035171fcaeeea5638216258e1c4f9acaf8dcfd753eb8829",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "item": 134,
+    "sha256": "42dae8a3e6d2b9d0761d3e3ac15bbaaabcf3ce9fbcb2029ad301af92b4f4449a",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "item": 134,
+    "sha256": "ad855f7aa1d917c9ea69f39a003d403ba0b1d88f7d30f25cb64520adccd3d89f",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "item": 134,
+    "sha256": "f5538b5f8ea19215f12900717d4a7ab6a5335bbf3d2e9dafabec9fe9ebedc7da",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p49.a",
+    "item": 136,
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "source": "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "item": 136,
+    "sha256": "b057160c0f66aea6fd1f5163dd254be4ef26a2ea67b3d95e3b8463e1cc109e9f",
+    "source": "review/compiler/loom-views-fx-a/sources/b057160c0f66/p51.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "item": 136,
+    "sha256": "f2df5ed590bd5ad9271c5b012cba6efa724680b634349e16f1ad5d6afd520fd8",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "item": 136,
+    "sha256": "82c8c9dfb784857a60737f20864f3afdd8c44d345f09d8ab995b31ca79f6efd0",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p04.a",
+    "item": 147,
+    "sha256": "6c0ee540e6fa648d30aa4c21c77da624b2c86377e8247611ac8b57692771fa55",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p06.a",
+    "item": 147,
+    "sha256": "899b111d6e4042d7a29872d634f80cf6fd0d3ffc02ae1ed492e84f9f209207d2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p08.a",
+    "item": 149,
+    "sha256": "0d967853af046e54cc6a629f7bfd44669abde191ff000f564bed2aee7fb1344c",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p59.a",
+    "item": 149,
+    "sha256": "0259af1dc8926fcbefacd33a8ed39488941f6ed7252e2784066ce296f2a99586",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p75.a",
+    "item": 148,
+    "sha256": "5acfdd754990cf65901a40fb6e282cd3b54483601e21e725ceed23c927450fbc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7/p77.a",
+    "item": 148,
+    "sha256": "a2c021909ff5b65245dccac00b4b2bc5bc1999c8197b2f46bb05113029a3e771",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p68.a",
+    "item": 138,
+    "sha256": "2212de141cf18b551e3c040f0644375c6b53047248425bfb7c69b6a3ada22f68",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_tuple_recognition/p69.a",
+    "item": 138,
+    "sha256": "166413c08ae49513f77b9d86044f84177cea5375598a380d13448b33a502479b",
+    "source": "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a",
+    "item": 146,
+    "sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c",
+    "source": "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p18.a",
+    "item": 146,
+    "sha256": "dfe95dc594a1fdf671fda54148b7633499f8f2e13d5a92860d5bda3e459b57cc",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/p20.a",
+    "item": 146,
+    "sha256": "948f2e39c0b4c89050860b3fc06d93ce3cb027ce2b5024bddf854e3f41ed9c13",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/fx7_wrong_aborts/wide.a",
+    "item": 146,
+    "sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99",
+    "source": "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/tuple_object_views/p70_copy.a",
+    "item": 137,
+    "sha256": "16353fe155c55bffb57a6448a1a45186d66b2eb0354f0bd98bc0cd7a367a05bf",
+    "source": "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured.a",
+    "item": 132,
+    "sha256": "cfb0fcf84cfa7f07b23b86ed65cc6d6f8f19a1d155d07bc6a451da7ab5565686",
+    "source": "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/destructured_union.a",
+    "item": 132,
+    "sha256": "792dd026d5e3e422b41c24d4a6367de33ba7e79a66a6ffd007fef007ca3b2d8d",
+    "source": "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/literal_key.a",
+    "item": 132,
+    "sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836",
+    "source": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p01.a",
+    "item": 132,
+    "sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p05.a",
+    "item": 132,
+    "sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p06.a",
+    "item": 132,
+    "sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "internal/lower/testdata/view_element_reads/p07.a",
+    "item": 132,
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "source": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a"
+  },
+  {
+    "branch": "origin/compiler/fx7-wrong-aborts",
+    "fork": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+    "path": "review/compiler/fx6-valid-programs/p70.a",
+    "item": 137,
+    "sha256": "8b4205e384d121d101963f087a9c2111e66db4bb7a5ded4dabce3590464f1a82",
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "path": "internal/lower/testdata/loom_views_a/callable.a",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "body_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/key.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p21.a",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "body_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/native_p37.a",
+    "header": "// a-check: refused checked view read of field count with unsupported representation conversion contract",
+    "body_sha256": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/union_key.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/unsupported.a",
+    "header": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "body_sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p01.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p05.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p06.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p19.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3"
+  },
+  {
+    "path": "internal/lower/testdata/loom_views_a/views_p72.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "00584bccadf7734d130a0f322b8686508669adcb33204564cc5d1489d7b26438"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a",
+    "header": "// a-check: refused checked view read of field value with unsupported representation conversion contract",
+    "body_sha256": "27fe1106b197543c08bdc3a0498878e1495b602a488735bf528f5a5796ddff99"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "39035180ca1cc281cba48032277f1c52f254fc149c81f2e5cc1ec5357319ceec"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "51e01ecde06378874ad527309f274abb44422587f53de3e33a323fe8436bef79"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "55aa222e57ec9a2575927585ebdf5d1ac334c5c270e50d819ba220ae3bb17dff"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a",
+    "header": "// a-check: refused checked view read of field label with unsupported representation conversion contract",
+    "body_sha256": "93acc418692602a214c25e70641e5631eaf4b19b85bbde760ee6e1f851d21be1"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a",
+    "header": "// a-check: refused checked view read of field value with unsupported representation conversion contract",
+    "body_sha256": "b1a2a62ba1f477f8229cee51380e5e4143a35d06c7eb9e76acaec04e915c260c"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/d8a921ff2453/oct9_views_p48.a",
+    "header": "// a-check: refused checked view read of field values with unsupported collection contract",
+    "body_sha256": "d8a921ff2453af8016d24459b5b5436226ef792f3835f571f2d882a7c3023cfb"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a",
+    "header": "// a-check: refused view member read by element access is not yet checked",
+    "body_sha256": "db935ac26f2580cb573393324058b740bbc683269fb9f19ae703d78fe0dec836"
+  }
+]
