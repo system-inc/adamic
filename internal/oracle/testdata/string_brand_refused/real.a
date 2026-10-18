@@ -1,0 +1,4 @@
+// a-check: refused a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field
+type Brand = string & { readonly actual: number };
+function keep(value: Brand): Brand { return value; }
+console.log(typeof keep);

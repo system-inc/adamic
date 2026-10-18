@@ -1,0 +1,32 @@
+{
+  "commands": [
+    [
+      "rg",
+      "-n",
+      "-e",
+      "string_brand",
+      "-e",
+      "void-view-probe",
+      "--glob",
+      "*_test.go",
+      "--glob",
+      "**/testdata/**",
+      "--glob",
+      "!cohere/**"
+    ],
+    [
+      "rg",
+      "-n",
+      "string_brand_refused/(destructure|index|read|real|unknown)\\.a:[0-9]|void-view-probe\\.a:[0-9]",
+      "--glob",
+      "*.md",
+      "--glob",
+      "!cohere/**"
+    ]
+  ],
+  "line_expectations_requiring_update": [],
+  "test_readers": [
+    "internal/oracle/string_brand_test.go"
+  ],
+  "reason": "Oracle refusal checks inspect named member or cast, not source positions. No report pins an affected path by line."
+}

@@ -1,0 +1,1562 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== RUN   TestStringBrandValue
+=== PAUSE TestStringBrandValue
+=== RUN   TestStringBrandDestructureRefused
+=== PAUSE TestStringBrandDestructureRefused
+=== RUN   TestStringBrandUnknownCastRefused
+=== PAUSE TestStringBrandUnknownCastRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandOptional
+=== CONT  TestStringBrandReadRefused
+=== CONT  TestStringBrandIndexRefused
+--- PASS: TestStringBrandReadRefused (0.28s)
+=== CONT  TestStringBrandMap
+--- PASS: TestStringBrandIndexRefused (0.32s)
+=== CONT  TestStringBrandUnescape
+=== NAME  TestStringBrandOptional
+    string_brand_test.go:50: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandOptional (3.33s)
+=== CONT  TestStringBrandDestructureRefused
+=== NAME  TestStringBrandEscape
+    string_brand_test.go:47: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandEscape (3.33s)
+=== NAME  TestStringBrandMap
+    string_brand_test.go:49: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandMap (3.05s)
+=== CONT  TestStringBrandPlain
+=== CONT  TestStringBrandUnknownCastRefused
+=== NAME  TestStringBrandUnescape
+    string_brand_test.go:48: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandUnescape (2.99s)
+=== CONT  TestStringBrandValue
+--- PASS: TestStringBrandDestructureRefused (0.36s)
+=== CONT  TestStringBrandRealRefused
+=== NAME  TestStringBrandPlain
+    string_brand_test.go:51: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandPlain (0.39s)
+--- PASS: TestStringBrandUnknownCastRefused (0.39s)
+=== NAME  TestStringBrandValue
+    string_brand_test.go:69: product native-runtime (name key f0fc5b52d9e3) is not built: no traced build has recorded what it reads, in /home/agent/.cache/adamic-build, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:
+        name native-runtime
+        file internal/native/runtime
+        file internal/native/library.go
+        file internal/native/native.go
+        file internal/native/target.go
+        flag adamic-runtime-v6
+        flag os linux
+        flag arch amd64
+        flag headers /usr/include/asm-generic/errno-base.h 2c148e92b8318deeb767fabd60822113e575ee664ff09a1873aed8f7a495793c
+        /usr/include/asm-generic/errno.h fb7b5a504015f3a9074c641e7371b250d867d751d90e4a22a8ac17fced3d50af
+        /usr/include/dirent.h 8b931a7b63fa2c3678c8bf7b6d95c34abd20e2f17a9256c53a6ad6995d789f8a
+        /usr/include/errno.h 2b170be13aeb5a0ec9443803cea7fc4ce31ceae6708e0405b1afdae9300ac278
+        /usr/include/fcntl.h 6ec7f899b9cbb06442afef4934fae7906fa8a53d2387de774770525d1fbfcb49
+        /usr/include/features-time64.h 89036fa88ac19881ddfb07d4e65beb620a083d770cbf1c925f148c9ea1ce5a63
+        /usr/include/features.h 20c5358da5ab2353b26bda1b36e66400290fbd2b16d30a6a21dc16f4f22ab280
+        /usr/include/limits.h 59dccd0e0f84037a0be75a01efe840b7b1ebe8502cdfb49742697c49290ce18f
+        /usr/include/linux/errno.h a47fb2f49bce0546a1e88805cec954338abb1b2ac87de042166e8e3a74b23261
+        /usr/include/linux/limits.h 567dbb4893d20bb986996f0a8b8f774b02ca6cb7df8e4b642895eade7e7ffcd9
+        /usr/include/math.h a048a56f2b20ed5a192616b64b7a01508437eaaf9c04e83f69d60527f5416c7d
+        /usr/include/setjmp.h faf5d75f63557d63e0407547aa69dbf2a0a510cd5aeb1a41d12532b2e7855645
+        /usr/include/signal.h ab20e3d313b445b427e1766041496331cff40b51afb08ce4ef2a1ed8d16a844a
+        /usr/include/stdc-predef.h 82975831ea2d1f95b60225f37ddd6130225f0c3de2318674cb178fea661ad87b
+        /usr/include/stdint.h 38751c3803361248b73bba3d8b48aa7015ccb94c2c31f247f587b157c4ee344a
+        /usr/include/stdio.h e5094b40bd7ab3bea3a4e80a4071069882c2e9a4488ff2b1b03174352a0db0b1
+        /usr/include/stdlib.h 999cb2acafbb64984f99ee410a42dfd79815de184a0312d7c136e31795a952d2
+        /usr/include/string.h 2829e08094d8e97155e863a0aa5ea37cf09d4ffcd6ce86e572571276c2e21a8a
+        /usr/include/time.h 502077dfa1b92bb9d166d69ab07ba536afbc5188ff0ed4e55308845e7ef9752a
+        /usr/include/unistd.h aee91ddee895a880d42e86506a7da85f8766690003f3c66eb1895d13de10d1ba
+        /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h 05531d0ae2a64ce741fe96a6c992190ef77eff1dc72e9e8f9bd0ff3b6bd7ff57
+        /usr/include/x86_64-linux-gnu/bits/confname.h 6ce8f12a1e5f43905079b49528ab4a0b26cf6bdac64cee572e7e3be9b9d6d0e1
+        /usr/include/x86_64-linux-gnu/bits/dirent.h e158236e9f2f9607f6af9e7bde91eebed33fc92710bf24ca634d9fe4ce2162ec
+        /usr/include/x86_64-linux-gnu/bits/dirent_ext.h 057fe50e15bd081268a1daa808d873729219d536824b3296ba946303a8b1e01e
+        /usr/include/x86_64-linux-gnu/bits/endian.h f559fd70d8a24202805d1d8a3546e28c427f6ce7808296002687cb6c636fd21f
+        /usr/include/x86_64-linux-gnu/bits/endianness.h 659a7060004eda113671a38852c4d1e9cb97a35932bcd1d8540f98c09c180747
+        /usr/include/x86_64-linux-gnu/bits/environments.h 443741b2af4b0669bb9dae4ad09f5c713e7dc2ebb02eb32c48c4f6fdf2d1f436
+        /usr/include/x86_64-linux-gnu/bits/errno.h d6875c7a15ed169ab16e706bf2af52bd8d48ea067f02adbdb34e8bb9198fb014
+        /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h baf689c717312a204955009a86614c818c5d3355a6a181722e5e085d80dbc0c2
+        /usr/include/x86_64-linux-gnu/bits/fcntl.h 252bf5adc70ddfc09e059adac0acd4dea7694d3714ad47208c9f51ece0a4e43d
+        /usr/include/x86_64-linux-gnu/bits/floatn-common.h a8a1a20b3e3c9811b348f9f7c4a3825d0eae6b27615991d1ca50dd1338e32a00
+        /usr/include/x86_64-linux-gnu/bits/floatn.h 959a6fafb663ca665daa89066124c126291603e14d727d8a1d59823e9fd92451
+        /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h 23a5215104041d3bf0aec17ced13d17beaaa7f48346dd48022ef4b6f47f912bf
+        /usr/include/x86_64-linux-gnu/bits/fp-fast.h face0a968a557c3fe56fafa0d45043d763d92314fa03621bb86c0ea48c8b8814
+        /usr/include/x86_64-linux-gnu/bits/fp-logb.h 4c9d15c0730ae3b77c8f5efb12561bb3efa43eda4d8043683f241584b65d9083
+        /usr/include/x86_64-linux-gnu/bits/getopt_core.h 8ad97c20671f0ca03f8bb35412a5b69699ca4c641744bd66cac4943e30088df5
+        /usr/include/x86_64-linux-gnu/bits/getopt_posix.h 73f792a9876b4505701e8f5cb569b76d8a6fcef873c5659fb0c58674499b65e4
+        /usr/include/x86_64-linux-gnu/bits/libc-header-start.h 06256b79e2535489e5dce8c21854d3b0bd72d5479a3d013170f09261defc0a4f
+        /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h 26cbdf8bdae4735c1f5dcdd124b8d48253cf3ed69837c381f532c7d76977ea37
+        /usr/include/x86_64-linux-gnu/bits/local_lim.h b38fad51045d65239da3868ea94c4f31850901ec1f7e56349452fca45f70717e
+        /usr/include/x86_64-linux-gnu/bits/long-double.h 30f74e9207fbbbe7fafb7b5e3e54124997abc44549506c514f2adae054ee3d56
+        /usr/include/x86_64-linux-gnu/bits/math-vector.h daa745b265e601145966f0e2e0f31ec632b45acf95db7c7d9954747f4b0282b4
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h 6010275c8748fc750862c4b99475171250dcfb2b6d4cdb6a04a2ba7263d04425
+        /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h 9d82c07d16ca739b615328f1c4cdec17d4062ca2a6c44b27d77ed5b94f4c2a83
+        /usr/include/x86_64-linux-gnu/bits/mathcalls.h ed098a1872adcc16ae513aaea668207b684cb415e559d43f768c1f76fcda6ab0
+        /usr/include/x86_64-linux-gnu/bits/posix1_lim.h ea4252c4bb02abfad2e734c657d9f323e98f406b35be6377f43c7eb78699b8d6
+        /usr/include/x86_64-linux-gnu/bits/posix2_lim.h 53647564016cc8ecba361bd9cb7c706b9755ef604213ece31a1307ebc4cd08d1
+        /usr/include/x86_64-linux-gnu/bits/posix_opt.h 578156ff9f7525a65a01c40ff99e143612ef626acaa329b13721473387642bbb
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h aa07727cdcd5a7d9e2159e03b2db63f0e9ab75efd5332b565b5c8623ab9b714f
+        /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h d91d2b37f8e1d47a8d2da1960ff67873f8a1e5ee069905ab4dee9adb5321b2f9
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h c838de98779156e73b927940c1db8d3e385624980d2c4ca37c352ad69955074b
+        /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h acad99a6a3ef489327e806c8d29b25797ca2126cd5489233837e5c9c01516cd1
+        /usr/include/x86_64-linux-gnu/bits/resource.h b6ad21e36a24055c1cf3ffebda7f459d115e6946b30138b17f9de57a466a5319
+        /usr/include/x86_64-linux-gnu/bits/setjmp.h 2c953ac477ba1060a84f7fbad27dffd2f4fe5e8b5847b382ec19bff1270ef5ef
+        /usr/include/x86_64-linux-gnu/bits/sigaction.h d7d31baca03d2da11199313903b127204bb40450d37e8a2062bfe9c4aa65d5d2
+        /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h c2827b165464f28b688fd7ed823bcc4735907267378243b52eef8d937b6259d5
+        /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h 0839bdc7af291182ff9822a7b6419659fb26a49af5e4264857a71af4ccb12213
+        /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h 65690c00d7656e17e101524c3067ae66be7e9276c3fd6cd164b2fa1a251ca29a
+        /usr/include/x86_64-linux-gnu/bits/signal_ext.h 3533828933fd3e55b95e70a09b30f0fb3e423993e7dfded548d1e14d344c2412
+        /usr/include/x86_64-linux-gnu/bits/signum-arch.h 3399513a53bddef01aef249ac6f34394651a2afeed59fb1bc9544f5eb93eca8a
+        /usr/include/x86_64-linux-gnu/bits/signum-generic.h 89c3c172493baf2b2fba4fe8608cbd5747d286d76a44216f9b17e083ccc873a1
+        /usr/include/x86_64-linux-gnu/bits/sigthread.h 88e1a50a3258bc3aa83b2d132d0706f828cec14c8998903948aa43344241e704
+        /usr/include/x86_64-linux-gnu/bits/stat.h b9bad094f74412615c3c9f05397e44f44874c23666a6e30b8aabaafcd7610f33
+        /usr/include/x86_64-linux-gnu/bits/stdint-intn.h 88f639a4e588077b6edfad36b3bb045f0cc052b5f9d194f8e706ee27cd846f67
+        /usr/include/x86_64-linux-gnu/bits/stdint-least.h f2f6cc431ef00e9182f7367cd06fb1130740c41a1f4dd1c61f146a1e761a4474
+        /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h 8ce3858074e8073db1eed4d25d69b3c14d41e826fa2351c5fc5246bb546161f8
+        /usr/include/x86_64-linux-gnu/bits/stdio.h 182891bcd563185c52e7c01f4fdbd885f943f70682dd758ceab319eeaf917c08
+        /usr/include/x86_64-linux-gnu/bits/stdio_lim.h 436ad57abe906d460631967c822c0622dc100da1e1bd3e0fa8879b6f7f2c6654
+        /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h 231afa57a5d88ab4ede48d5d0808f7343986405ee89f85505dd06e1d31971a88
+        /usr/include/x86_64-linux-gnu/bits/stdlib-float.h fdd6c94e471e2aa2e03bae449f993392a6593044490fc82601b77d7116381201
+        /usr/include/x86_64-linux-gnu/bits/struct_mutex.h 700e77ca8b5d27b19649358abe229e64b238cb4ce79474fc1194d7831dc3a34f
+        /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h 7d1b998c8def8d264af5114e869bcb37c484daa23ec8ac54a2110dbdd9c05a95
+        /usr/include/x86_64-linux-gnu/bits/struct_stat.h c2fc9fb4ff5a18c254ab08219b019aff42190b0136e2ea626b4b3c6af8275c77
+        /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h f16fd912b0b1e8a222af4acb11dbbc9c68ba485c381a0dcf49be60b38e581c37
+        /usr/include/x86_64-linux-gnu/bits/time.h 9b34f004f183bea846379580cb3d2f19588d96b4c7faafb3ebb7c9ffd9bafd59
+        /usr/include/x86_64-linux-gnu/bits/time64.h b0c5f25ce84037dda2c42408543a4616e129d70d6ebf10bd3ecc8b756466582a
+        /usr/include/x86_64-linux-gnu/bits/timesize.h d949eed9646ca5916b338e1f02ffaf31a4c62907738805aba4ffa329a365f8f2
+        /usr/include/x86_64-linux-gnu/bits/types.h 74d92766725404961cc2908de587aeaf24a5a8ef49a0103c5d3fb9f9fe9dead0
+        /usr/include/x86_64-linux-gnu/bits/types/FILE.h 37515f78be386f2edad4746f2947c928f480728c56d9a94e25302ebbdaef3c96
+        /usr/include/x86_64-linux-gnu/bits/types/__FILE.h 26c909942e8a6bc82725e9c402f393aed9e32d94190257ddf71e1b5f819b4e5e
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h 8afae3abf006beb39fd9d4d4bae38745cdf08a91e6217ddf25833c8d4b04751b
+        /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h 603e58ab31ed75b7e0ab09a2ca94e99955f7fbc63310466321ce27c906227eb4
+        /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h d2513e510029ea0f2fc3868e9f1c990173b2df593d40bb8957b63c8035a1eb35
+        /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h c561df72d5b987ccbd022059fdb1bcb6899c3e94b403997a0576ef3e1afb0f94
+        /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h 05291a7d38bb1d0da1ed01c09fe85fa2b1f4d5bc708e06bb930efec672db08d5
+        /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h 0be9303ad86bd2360e5dfba93fd1af1dcc27ef5d700a104de91bbc9b37daeee1
+        /usr/include/x86_64-linux-gnu/bits/types/clock_t.h 81e60e8a8d99b28bc723c14b156d7f7fc8ff663d98a857a3f5aea90431f577e3
+        /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h dcd64d184855b245e5c7acf21910a0aaca590f1faf094e400da5d30551d11eb0
+        /usr/include/x86_64-linux-gnu/bits/types/locale_t.h aee0f473e9900ae9c3f9845cfabce44fb4d60ddf2706a30f802ea89bc6411d4c
+        /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h 8c44b91c2eb6e509905e1becec6b98f8ac006709bfa5d85d86e34a46eb9013cc
+        /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h 7125083b8096dd146e6498a61f38bf3bc7215c1c9237e92469550bb355545bab
+        /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h 88b1392b88af3a08d908866f4e9c5650c5cddb0c8e021b0a3f8293cef6616feb
+        /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h 3db5ded9d98a694e8c7196a06690b2e816ec6bb82689940d281f6504533f37e1
+        /usr/include/x86_64-linux-gnu/bits/types/stack_t.h 29fc81e78247a26bf10cea29c1d77af66031d65e578ccc7bce4515a10dc2f957
+        /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h 5b1e0312496e150398e71409ffd203e00cdff92365772ffa6aa4a198c3b8ea53
+        /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h 05e69f8d10ee12c3ad50204ff9e55926d9b57d3a24634c04b2c718547573f735
+        /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h d6299fbc46fc57e7d14635cd5cf69125710ed021ab7305586c84644a03a39f8e
+        /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h 0825dba84a3ad53334a4b5a734f41fc2dde02d535a1686884296f3cb496b5ea9
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h 798e773d0c7f3796033c043910db2b093d1e43116c4b3d2cf3be85f8c4304cf1
+        /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h 6585bf0dcd3d5a780d6246da841031f9b314ceb7400a3210f34815f5da93b1fa
+        /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h e7bdda3f42eb0633850ed150fef0a0cf6193cbba8fa740e7505925424a595566
+        /usr/include/x86_64-linux-gnu/bits/types/time_t.h d1cc45e24a80009117f61ee4ae9cae5d12f69f38d691e0a933f989f7a1d27bb0
+        /usr/include/x86_64-linux-gnu/bits/types/timer_t.h d96a2452da0d933941273d11d1048ea525f033306892835b0a7a0999b13853aa
+        /usr/include/x86_64-linux-gnu/bits/typesizes.h 49656ffcee2a7091ae16f8ad737c63c1d3e06ecdb84c3fa1c6f65b0b6784262a
+        /usr/include/x86_64-linux-gnu/bits/unistd_ext.h bd6de799b64036885d60171cd13b9dbb760451090176855ab2fe19499e5092e6
+        /usr/include/x86_64-linux-gnu/bits/waitflags.h fe55139021b16f8d4a2b00309ce9818b679626ba2d685a63ea527414d852d7b3
+        /usr/include/x86_64-linux-gnu/bits/waitstatus.h af2b2a279b806c772f9dafe54473029d42a06d3c9547a76718745a29565fdbbb
+        /usr/include/x86_64-linux-gnu/bits/wchar.h 169453a3eb0c5e504b513fb3bad0bda7780bb84c7139c501e3deeb75ac731f35
+        /usr/include/x86_64-linux-gnu/bits/wordsize.h 948177c0fc84c4746588f62252029880ec4c6f88b743ba55d952f980303ebfbb
+        /usr/include/x86_64-linux-gnu/gnu/stubs-64.h 0b6ab3e2ed3ba79b30fe6ba81a68fc41f57965b8d56662763633431b703c9289
+        /usr/include/x86_64-linux-gnu/gnu/stubs.h ef444295a0a9e8f5c40918399a00cc91ba0bd79774110cdf6e652baa6cfadb2e
+        /usr/include/x86_64-linux-gnu/sys/cdefs.h 69a3c3625bac01b58ab781d02c7800592b5082c4ea962a456260dcf288216f68
+        /usr/include/x86_64-linux-gnu/sys/resource.h eba90b834d18fe43e529be13447497f3e842b2d3b6e27bd67eedb5fc6a30a7a5
+        /usr/include/x86_64-linux-gnu/sys/stat.h b6c1b2671782f771d8b377f507e34852e10d3df824bd1b1fa90454132331b372
+        /usr/include/x86_64-linux-gnu/sys/ucontext.h 1a901fa6c81a730a5c30b9986f64ac048d4fc831dbe9af6a78ba342fdca8577f
+        /usr/lib/linux/uapi/x86/asm/errno.h 4ee384515a4325315992e61dd957f0fa91f3858fe7c079de59f56edded51de86
+        <compiler>/lib/clang/20/include/__stdarg___gnuc_va_list.h feca975bfdfb254d17458a8e3d51f8ad6d9bdc9fd6287727f0f8b2fb81fcb0b0
+        <compiler>/lib/clang/20/include/__stddef_header_macro.h 4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc
+        <compiler>/lib/clang/20/include/__stddef_max_align_t.h 3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f
+        <compiler>/lib/clang/20/include/__stddef_null.h b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69
+        <compiler>/lib/clang/20/include/__stddef_offsetof.h e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f
+        <compiler>/lib/clang/20/include/__stddef_ptrdiff_t.h b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43
+        <compiler>/lib/clang/20/include/__stddef_size_t.h d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad
+        <compiler>/lib/clang/20/include/__stddef_wchar_t.h 1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001
+        <compiler>/lib/clang/20/include/float.h a29019c5ba04f9bf55a46f9bf75c63039a6015921ddde7298e057b2a188bebec
+        <compiler>/lib/clang/20/include/limits.h 6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca
+        <compiler>/lib/clang/20/include/sanitizer/asan_interface.h a0845c4541636053d42ad6f7aafcba588f0ce054eb172c16faa1b7888f8b5f69
+        <compiler>/lib/clang/20/include/sanitizer/common_interface_defs.h c9b7f630c91170a6f5557cbc8752ee724fcf905dbd4eaa0734a7b2e78d8fa037
+        <compiler>/lib/clang/20/include/stdarg.h ce6e43d79dc89b50208ecf259b1ffd519f5a78cd3a2c7fcaac6386f376b89fef
+        <compiler>/lib/clang/20/include/stdatomic.h 728b690f127fc85faa32b9031e3a0019da92f77db92ca91b749571e45617a9ea
+        <compiler>/lib/clang/20/include/stdbool.h 48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3
+        <compiler>/lib/clang/20/include/stddef.h b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e
+        <compiler>/lib/clang/20/include/stdint.h 655616d8fcb2c92b38c039019685c658c2346b3dd0021aed4ea057b43f621247
+        <compiler>/lib/clang/20/share/asan_ignorelist.txt f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc
+        flag flag -std=c11
+        flag flag -Wall
+        flag flag -Wextra
+        flag flag -Werror
+        flag flag -Wcast-function-type-strict
+        flag flag -pedantic
+        flag flag -Wno-unused-variable
+        flag flag -Wno-unused-but-set-variable
+        flag flag -Wno-unused-function
+        flag flag -Wno-unused-parameter
+        flag flag -Wno-self-assign
+        flag flag -ffp-contract=off
+        flag flag -fno-optimize-sibling-calls
+        flag flag -O1
+        flag flag -g
+        flag flag -fsanitize=address,undefined
+        flag flag -fno-sanitize-recover=all
+        flag file adamic.c 0965af84829f84702b4a65ef59852417e526cc35fd1420148ea9502e2a52dce2
+        flag file adamic.h 7ef02d619638001e5828d902b433c391c4facfc024171aeeaaf8bf6827db4ea8
+        flag file array.c ebd9ccc9999b1c64a09139819940560662f4d8982107d6578a907f38f433c165
+        flag file array_from.c 6d1b1984d9904675fe7a62fed96f25dd0cb8b12ed4c9bb13d57c495af6adac95
+        flag file bitwise.c e7012dda6eb0a3ec743cc35ef43d04fd63d0d8b4d51a14a3e64699aaf39e7675
+        flag file case.c 2d5b1167daacee3c88e25e18ff90856e80d3809be5a0fe9ad59813edff33e2b0
+        flag file case_tables.h a7b881dd1f9d51b538dbeab4668fffaeb5f3e1c24dc25470b3076e4c91d57baa
+        flag file census_small.c d60b5f7849b9ce995ab83469cf57e61857f591ba9caf2b2bc867af6dadaa6331
+        flag file class_features.c 4c1f022cdbb3140a2b4d79b5b4872ad353dfb3b7ae91c6b37752e862f685792e
+        flag file class_inheritance.c 90b1613575e9981d5ca3c172adcc1e422d7023ef6876d9a54d03a1c0341bd6de
+        flag file class_static.c be5177e01af5c1a297314934bae3cba4ffd6891c86854aec447ead1d152dcee9
+        flag file closure.c 9c298a83de7e6d75dfe6a39fad4cbe4f77853ecbafa1964fe055db9374184d5b
+        flag file count.c af8f494742ed0738eb28b0167aa0749025f00cca7c44dde8c5faf5c7bbb8b615
+        flag file count.h 37d82046d6c0990d4c2476c0098eccf20675461333d6ea3d60815ee98690a7f9
+        flag file directory.c c2077623d2dacebf5bad246f7c0c04a8c9febec7cb543dcc4a7033b7de7ae10a
+        flag file dtoa.c 0fe4d3850a0465c0de261acb34355b7804820ff2fce151a7e74ebe1c815f6019
+        flag file exceptions.c 24e2ee29219d7420b4be76b53bb984b692f156a2d2618ce8a5efefab712309a1
+        flag file from_codes.c db28ce4ba3c70d0ceb45759b62799cc26990a274489ccd680f23905fcc98b289
+        flag file heap.c a07f6b013a62335f7a7845aac5c756287f39ead56e192f2fd5ecc64bec61c527
+        flag file hypot.c 02bddc808303ab9f5dd87311d38364fd4d7b7c2f24853e26f29755ae022f269b
+        flag file ieee754.c 094354d6456081139f80df58eaf739be1c7daeca79907c441a41162682e7f2e2
+        flag file input.c 0792def8638ac86e6660102c571e1a61975389d5dd38d68c83c232263bd5a102
+        flag file json_stringify.c 765c98774ca7b818df8f047eaf0b46ab8c980c067de4cd33815e6d9d1ffb1f54
+        flag file json_stringify.h 06384aa446608c629ada970b0e078bdc1c867fbbca706ae87038f255b9607122
+        flag file library_array.c 698ab8c0a6777d7ead66d64570211ad0a1a53a61ac6c48b44eba3ac4d1390a50
+        flag file library_language.c 6869505f94ea17fafe2c89e6c15ad4f3f04cc387bd5f4ec9129cd15ebec95fec
+        flag file library_math_number.c 41e51ea8ca9b94a9c3d50a3d5631d80aeb432023d09ea76756c746f113e2392d
+        flag file library_object.c fdb6c17f0328a3009d782999c739191b1e56f9c99c24bf3ba3c3c8c0cf3e8b71
+        flag file map.c 831b2f41ed6e6f94f4729b199808d960362de43cb3326a2f207e74e41c94f954
+        flag file map_set.c fcefed039e08f00bc43acd6e0555e1a24201cf02a1bdbf7933e6ff98accedd1e
+        flag file math.c b6b0dd586882f1a099182d572238450b236dc104ae7121747c879de87b298cc4
+        flag file maybe.c 38e2f62bdbf0c0e597c8b42b89730b9a37177766b9dbb2dfc4b81cf466193f52
+        flag file node_buffer.c 96d5b9aedca47b9685dc38df0fa4b5e5afe216221bcba9207abdf24f22406ea1
+        flag file node_buffer.h 1e871f753797f0d6f3f8f1f0f31d62e3160029d0fff7dd62dc584f9b8662a162
+        flag file node_crypto.c 42c8943f2f8a62599602b9b56724767f3b23f80fc798f57cbd10dd30544eeb3a
+        flag file node_crypto.h dded41e279d8b80c8c09bd0a77677906258119f74224a612d6f0667aadc7a279
+        flag file node_fs_file.c 8e0604033f4419c167704a8449a67d164725f2c27ffcfee1a515670d81aacc94
+        flag file node_fs_file.h a272aba56983689b58cec2c6169de3e1672cccfefe416947617c182b9deb7127
+        flag file normalize.c 5c893a5edb2d32bb167bdba9e513b8c8830a2dfcf23ad2c3e2255711416ef732
+        flag file normalize_tables.h 0dcff6309a34cb6eccd742542fd64a9389bafc08d39927f2cf2224e300539791
+        flag file number.c 41f0df526d54130a00c9c920b51271a8fccb809fc20af494065feb1e1ab88aea
+        flag file object.c 6c9a03b6e5a00c513139c55eccd9a1f1c3ed4c553e09036fe1e74306380b0ab2
+        flag file parse.c 143f92d6c89f7a52ab96a99663c6d925f3f414eb728ff0506fc431d4e7f71595
+        flag file radix.c 5de357bc8940805f7790653dd5645ba1151526d691f9cae6a8da68b4eabd7d30
+        flag file record.c 5becf3cb5c7a2bc7f06deeb9437a665946b1f889e4e9f1c1e3b1be6e546c0a4f
+        flag file regexp.c ab23a27ed7afb2acb51078b61578adf5242ac2bf9e72945b8f4a860c9b3e58cf
+        flag file regexp.h d8a1d9f4dd2cff141bb3185b16857f85cfdcaec7257998243276543baf5043b2
+        flag file regexp_fold.h df82f9653eeb59fd4c4c8f5bdb5851b12d5567906c6fb3091ad17d22ba5732f9
+        flag file region.c ac063d4b8ad1832c33d8ae9ad65e4df0dd3f22d96ccac68a6fcf7ce8f14381a4
+        flag file set.c 3e711d10be64ca20fe221246e0383d63900ada608dfe37716bafe692148b3988
+        flag file sort.c 3f1323eccda03cb380aac4336d2023102be1641257e30c273b13d2caebb1b45b
+        flag file sort_undefined.c a65d96c0fa0da842f3ed959b3e8e149f1c5a02bf9edff25cc128289fcc37deab
+        flag file spread.c f8f590cf8e83f808781589eebd0ccb3983ecf81da1a488a1e60381dcf585fefe
+        flag file stack.c 2650fb7facb5280508920f973629ceb07cf17dd9b98927d96f9d07442a2695a9
+        flag file string.c 5c73fd4aaa0d396d238be126f76f330998e97d192145d740c03aa99b2912122d
+        flag file string_append.c 67bc0c780a74990221a797c2d0e954f9df75363d88359ca121ecca3e01068eba
+        flag file string_build_impl.h d750b71aabe4eaa16ef535c88c81e01029f6ee668956d1ac338a40aa3f28ae7d
+        flag file string_builder_impl.h 5df588ef3ae462937d5a7f04970b6ea7768d42f12f16504df067c7d4c8e73ef2
+        flag file string_decode_impl.h 9808b814bdc4f9b62a5ad45454f17d270bc6f206ba15ccaf78ba5f925f6ab19c
+        flag file string_from.c 8b78ef6910ba0cf07131e6a7dd3f3dab16578cc01a296b3270fc413227f3b67b
+        flag file string_index.c 63d6f89cff3427ec55053ad4a41f6ba0535abf89eb368cf0ffb30114ca71c855
+        flag file string_repeat_impl.h 546f022ac824726c8614e4b89de6ffb1c3bba4ea884eab0df420b481e1747cfa
+        flag file string_replace_impl.h 26e77a3f4a9d330940d10dd4b378549e2b343b9551f82b905608926643c5f3db
+        flag file string_search_impl.h a186411bea197b1b5a8596eab81d0f04622462aaea5acb8c0c66fc73af29b34f
+        flag file string_share.c da02e2da9f72730c7082cbbea7f99e99d3cee8351e75c4ff1ac93385742d9fd1
+        flag file string_slice_impl.h 785cb66b9e82b2c7410e46a0a972ab95ef9d3e2a2d3e0c3634e7993c987ad8b6
+        flag file string_split_impl.h 9a29884103932afeb910256f9d57885d2e93c5097b93ab5ff3b8d3a13d73aa3d
+        flag file string_trim_impl.h 4b779c6b5e2b2d99ca0b54d8c0edda7560874e947f29cbd57976d08d75c22a9a
+        flag file string_walk_impl.h 2250e6717ae9541566958bb2297038a10da287f228be1772fb0df3dd12585028
+        flag file tsan_test.h 3a0404125f04b97964c5c79c258f35e69a8c53634a56930c447cba409b74d9cd
+        flag file tsgo.c 34e24779e9676e5b1b9e088d8fd20cc011d6da75f6d258f9b10405d25f958fbc
+        flag file tsgo_runtime.h 4fb36994995c3d14cfa074d85de58aa4b7f3c604942b732f271c0fcaa6365e5c
+        flag file typed_array.c 2c26c61fa5f36c48aad63a2c22da2aee5b7d084a39e2790c1efdf20474eeeb04
+        flag file union.c 744d8cbaf5c4a71c6fbd4045c21c25d230c417c635304130eee1505fa46b73b6
+        flag file utf8.c 8622cede74002f69ed5f905541becd8eec2bf8f9a0c15408113494d87210ee1e
+        flag file view_callables_contract.h 08b8ffcdcbc59c2fe3746867cd666811febc1e988e90aaff1cd4d51a87257530
+        flag file view_representations.h f156221c5d52bb0c36c188726f0e96c6c7bcc7fc93ad33f41eb695f6000eb596
+        flag file view_unions_mixed.c fd9094879fd1bca60a7960ad6e2cf32644eb915cf0e91051cfed33fed8495b7f
+        flag file view_unions_mixed.h bc3109313465252191f57654945f4240a619ab6d72b89af7ffd73aab90373721
+        flag file view_unions_untagged.c 9660864e37c006d4b7cbc0af9c01d06fd40a3953af71b4d98c582aecd6162532
+        flag file view_unions_untagged.h b9023c7afb8a6c1bd263c11f9c44da8769bbe17124e0ac351d40f940c96a631a
+        flag file weak.c ea4ca9484286d5cd398a8a9fe199116489fabbddb8e6033a3dcd6ee5d63b007f
+        tool clang --version: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        tool ar --version: GNU ar (GNU Binutils for Debian) 2.44
+        Copyright (C) 2025 Free Software Foundation, Inc.
+        This program is free software; you may redistribute it under the terms of
+        the GNU General Public License version 3 or (at your option) any later version.
+        This program has absolutely no warranty.
+        
+--- FAIL: TestStringBrandValue (0.39s)
+--- PASS: TestStringBrandRealRefused (0.33s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.092s
+FAIL

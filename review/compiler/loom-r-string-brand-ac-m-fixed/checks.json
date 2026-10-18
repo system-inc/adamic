@@ -1,0 +1,341 @@
+[
+  {
+    "label": "stage3-update",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures(Assertions|Namespaces)$",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update"
+    ],
+    "exit": 0,
+    "seconds": 25.999
+  },
+  {
+    "label": "stage3-all",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 49.612
+  },
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 49.604
+  },
+  {
+    "label": "lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 42.867
+  },
+  {
+    "label": "native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 181.668
+  },
+  {
+    "label": "oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 312.19
+  },
+  {
+    "label": "readers-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 6.85
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.167
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 1.627
+  },
+  {
+    "label": "mutant-real-field-phantom",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/real-field-phantom.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandRealRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 3.33
+  },
+  {
+    "label": "mutant-drop-undefined",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/drop-undefined.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandOptional$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 6.192
+  },
+  {
+    "label": "mutant-read-brand",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/read-brand.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandReadRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 3.387
+  },
+  {
+    "label": "mutant-literal-refinement",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/literal-refinement.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastKeepsLiterals$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 3.523
+  },
+  {
+    "label": "mutant-unchecked-missing-cast",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/unchecked-missing-cast.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastChecksMissing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 3.677
+  },
+  {
+    "label": "mutant-paths-representation-regression",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m-fixed/mutants/paths-representation-regression.json",
+      "./internal/oracle",
+      "-run",
+      "^TestElementAccessCompilerAreaBoundaries$/paths$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 6.735
+  },
+  {
+    "label": "mutant-record-assertions",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesAssertions$/assertions$/17_brand_upcast\\.a$/stage0$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.893
+  },
+  {
+    "label": "mutant-record-namespaces",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesNamespaces$/namespaces$/02_jsx_names\\.a$/stage0$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.744
+  },
+  {
+    "label": "stage3-records-restored",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures(Assertions|Namespaces)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 11.922
+  }
+]

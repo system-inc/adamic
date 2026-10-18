@@ -1,0 +1,122 @@
+[
+  {
+    "log": "mutant-drop-undefined.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandOptional",
+    "seconds": 2.91,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-literal-refinement.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestStringBrandCastKeepsLiterals",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-paths-representation-regression.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "seconds": 2.76,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-paths-representation-regression.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-read-brand.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandReadRefused",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-real-field-phantom.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandRealRefused",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-record-assertions.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssertions/assertions/17_brand_upcast.a/stage0",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-record-assertions.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssertions/assertions/17_brand_upcast.a",
+    "seconds": 0.09,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-record-assertions.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssertions/assertions",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-record-assertions.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssertions",
+    "seconds": 3.04,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-record-namespaces.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesNamespaces/namespaces/02_jsx_names.a/stage0",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-record-namespaces.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesNamespaces/namespaces/02_jsx_names.a",
+    "seconds": 0.09,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-record-namespaces.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesNamespaces/namespaces",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-record-namespaces.log",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesNamespaces",
+    "seconds": 2.9,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-unchecked-missing-cast.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestStringBrandCastChecksMissing",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  }
+]

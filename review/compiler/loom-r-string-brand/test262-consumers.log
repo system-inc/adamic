@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:14:35.13589259Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-18T00:14:35.140393195Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:14:35.140453977Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== RUN   TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:35.140481148Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== PAUSE TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:35.140483462Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:14:35.140487428Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-18T00:14:35.140490192Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== CONT  TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:39.617096735Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"    compiler_test.go:16: build go_build_./cmd/adamic_adamic f30d6feba565 miss 3.04\n"}
+{"Time":"2026-10-18T00:14:42.81756874Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"--- PASS: TestCompilerWorkerMatchesSubprocess (7.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:42.81763466Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Elapsed":7.68}
+{"Time":"2026-10-18T00:14:42.817662983Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:42.843138382Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t7.707s\n"}
+{"Time":"2026-10-18T00:14:42.843450694Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":7.708}

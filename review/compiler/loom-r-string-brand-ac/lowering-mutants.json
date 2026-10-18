@@ -1,0 +1,57 @@
+[
+  {
+    "topic": "read-brand",
+    "catchers": [
+      {
+        "log": "mutant-read-brand.log",
+        "test": "TestStringBrandReadRefused",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "drop-undefined",
+    "catchers": [
+      {
+        "log": "mutant-drop-undefined.log",
+        "test": "TestStringBrandOptional",
+        "seconds": 2.85,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "real-field-phantom",
+    "catchers": [
+      {
+        "log": "mutant-real-field-phantom.log",
+        "test": "TestStringBrandRealRefused",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "unchecked-missing-cast",
+    "catchers": [
+      {
+        "log": "mutant-unchecked-missing-cast.log",
+        "test": "TestStringBrandCastChecksMissing",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "literal-refinement",
+    "catchers": [
+      {
+        "log": "mutant-literal-refinement.log",
+        "test": "TestStringBrandCastKeepsLiterals",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  }
+]

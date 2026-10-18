@@ -1,0 +1,16 @@
+[
+  {
+    "manifest": "stage3/fixtures/assertions/status.json",
+    "file": "17_brand_upcast.a",
+    "mutation": "restore the stale main stage0 record",
+    "caught_by": "exact stage0 record comparison",
+    "exit": 1
+  },
+  {
+    "manifest": "stage3/fixtures/namespaces/status.json",
+    "file": "02_jsx_names.a",
+    "mutation": "restore the stale main stage0 record",
+    "caught_by": "exact stage0 record comparison",
+    "exit": 1
+  }
+]

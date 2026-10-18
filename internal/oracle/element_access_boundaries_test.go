@@ -49,9 +49,8 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 			} else {
 				var stop *lower.NotYet
 				want := "an ElementAccessExpression"
-				if name == "paths" {
-					want = "a function returning Path | undefined"
-				}
+				// Phantom string brands represent paths' return type; the branded array
+				// still stops at its element access, like the other read boundaries.
 				if !errors.As(err, &stop) || stop.What != want {
 					t.Fatalf("expected explicit NotYet representation/read boundary, got %v", err)
 				}

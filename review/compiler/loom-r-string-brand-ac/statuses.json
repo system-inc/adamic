@@ -1,0 +1,130 @@
+{
+  "counts": {
+    "checked": 7,
+    "NotYet": 0,
+    "refused": 5,
+    "type error": 0
+  },
+  "files": [
+    {
+      "path": "internal/oracle/testdata/string_brand_escape.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "9f85f7cf98a5a71e0cf644ad152f5c7158decf079bd1cd5c39517a3fb64658fb",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_map.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "54302c7184bedf330ee3dbbdf306e910faaefe6c4c6c64302d961d14f24d7280",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_optional.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "3c595cd3c8ccaa5511d285cdf61466e2eaf6c6b1877d2d0187310d44799311d1",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_plain.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "7307c40cf8fff42344bcf68ecac706a30acfcab227ec4fa64db043de8bd4a51a",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_refused/destructure.a",
+      "status": "refused",
+      "reason": "a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "code": null,
+      "header": "// a-check: refused a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "body_sha256": "fb8a9e571f08e192bdb12a50265b9040015e10b4678875976865a99a62d1134d",
+      "body_unchanged": true,
+      "diagnostic_before": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_refused/index.a",
+      "status": "refused",
+      "reason": "a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "code": null,
+      "header": "// a-check: refused a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "body_sha256": "a72e20d5432322cb31afa187d60f95a536b969c2f4094c4b2369339897b322cd",
+      "body_unchanged": true,
+      "diagnostic_before": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/index.a:2:75: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_refused/read.a",
+      "status": "refused",
+      "reason": "a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "code": null,
+      "header": "// a-check: refused a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field",
+      "body_sha256": "2706cef6940437b82905a0891c58985e9f8d6a449a94d5397a7361f8c5ce06ab",
+      "body_unchanged": true,
+      "diagnostic_before": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/read.a:2:59: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_refused/real.a",
+      "status": "refused",
+      "reason": "a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field",
+      "code": null,
+      "header": "// a-check: refused a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field",
+      "body_sha256": "ef37be20a0b4565171923539be4c05d1f0efb4f43bc3efc8f1c144f92c0e9f10",
+      "body_unchanged": true,
+      "diagnostic_before": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/real.a:2:1: Adamic 0.1 refuses a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_refused/unknown.a",
+      "status": "refused",
+      "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "code": null,
+      "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "body_sha256": "4a3df495842f4a42b4827b2f4d2af8e5ef8ffb4c17f3cc02727fde3f53465f77",
+      "body_unchanged": true,
+      "diagnostic_before": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/unknown.a:3:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_unescape.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "d6166e19b2922edaad8893aac3e24f90fd253c4a971732f604e5250e6201f6fd",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "internal/oracle/testdata/string_brand_value.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "9398b3362c8574475834bbea181143e00cd8b99fc2c2e5e70fcc952bbf2d15a5",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    },
+    {
+      "path": "review/compiler/string-brand-proof/void-view-probe.a",
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "header": null,
+      "body_sha256": "c3e3d5bc0c708959737165e43b02bf3e2816f30d1c96a49736c762b6a4c59b44",
+      "body_unchanged": true,
+      "diagnostic_before": ""
+    }
+  ]
+}
