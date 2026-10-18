@@ -743,3 +743,13 @@ func TestProduct_LintMutant_vars_on_top(t *testing.T) {
 	t.Parallel()
 	requireMutantRuleProduct(t, "vars-on-top")
 }
+
+func TestMutants_no_useless_rename(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-useless-rename")
+}
+
+func TestProduct_LintMutant_no_useless_rename(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-useless-rename")
+}
