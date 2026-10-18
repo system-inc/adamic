@@ -1,0 +1,28 @@
+{
+  "base": "199174800998904d8d646dfa5892f512cd5cb20f",
+  "head": "6e4ccee9ae4b246f517448651a6caac990354737",
+  "verdict": "pass",
+  "admitted": 24,
+  "omitted": 0,
+  "complete_corpus": true,
+  "node_agreements": 24,
+  "accepted_witnesses": 0,
+  "negative_witness_count": 0,
+  "phase_seconds": {
+    "base_build": 14.530495061,
+    "checkout": 3.966569878,
+    "checkout_and_provision": 5.055491613,
+    "classification": 46.1341795,
+    "head_build": 9.432612423,
+    "manifest_and_verification": 2.926647685,
+    "provision": 1.08890438,
+    "runtime": 41.038370298,
+    "total": 119.123836265
+  },
+  "classification_counts": {
+    "newly-accepted": 24,
+    "accepted-by-both": 883,
+    "refused-by-both": 168
+  },
+  "newly_admitted_all_agree": true
+}

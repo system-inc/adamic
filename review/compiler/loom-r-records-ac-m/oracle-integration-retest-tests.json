@@ -1,0 +1,137 @@
+[
+  {
+    "test": "TestLibraryMethodValueMutants_003/parseInt_radix",
+    "action": "pass",
+    "seconds": 4.08
+  },
+  {
+    "test": "TestLibraryMethodValueMutants_003/apply_bound",
+    "action": "pass",
+    "seconds": 4.09
+  },
+  {
+    "test": "TestEntriesAcceptance/06_symbol_key.a/mutant",
+    "action": "pass",
+    "seconds": 4.24
+  },
+  {
+    "test": "TestEntriesAcceptance/05_getter.a/baseline",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestEntriesAcceptance/06_symbol_key.a/baseline",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestEntriesAcceptance/01_scanner_keywords.a/baseline",
+    "action": "pass",
+    "seconds": 4.49
+  },
+  {
+    "test": "TestEntriesAcceptance/05_getter.a/mutant",
+    "action": "pass",
+    "seconds": 0.88
+  },
+  {
+    "test": "TestEntriesAcceptance/04_alias_add_key.a/baseline",
+    "action": "pass",
+    "seconds": 0.77
+  },
+  {
+    "test": "TestEntriesAcceptance/04_alias_add_key.a/mutant",
+    "action": "pass",
+    "seconds": 0.81
+  },
+  {
+    "test": "TestEntriesAcceptance/03_hidden_other_type.a/mutant",
+    "action": "pass",
+    "seconds": 0.84
+  },
+  {
+    "test": "TestEntriesAcceptance/03_hidden_other_type.a/baseline",
+    "action": "pass",
+    "seconds": 0.96
+  },
+  {
+    "test": "TestEntriesAcceptance/02_hidden_same_type.a/mutant",
+    "action": "pass",
+    "seconds": 0.94
+  },
+  {
+    "test": "TestEntriesAcceptance/02_hidden_same_type.a/baseline",
+    "action": "pass",
+    "seconds": 1.1
+  },
+  {
+    "test": "TestEntriesAcceptance/01_scanner_keywords.a/mutant",
+    "action": "pass",
+    "seconds": 1.16
+  },
+  {
+    "test": "TestEntriesAcceptance",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/nodearray",
+    "action": "pass",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestLibraryMethodValueMutants_003/ignored_this_evaluation",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "test": "TestLibraryMethodValueMutants_003/own_field",
+    "action": "pass",
+    "seconds": 0.81
+  },
+  {
+    "test": "TestLibraryMethodValueMutants_003/NaN_includes",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "test": "TestLibraryMethodValueMutants_003",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/numeric_record",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/jsdoc",
+    "action": "pass",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/sorted",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/template",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/string_dictionary",
+    "action": "pass",
+    "seconds": 0.78
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "action": "pass",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "action": "pass",
+    "seconds": 0
+  }
+]

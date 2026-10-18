@@ -1,0 +1,10 @@
+{
+  "initial_failure": "two oracle result cache writes: no space left on device",
+  "root_before": "32G filesystem, 0 available",
+  "inactive_gocacheprog_removed": "2.1G; ADAMIC_GOCACHE_OFF=1 throughout unit",
+  "followup_prune": "regular generated Go cache entries with both mtime and atime before 2026-10-18T18:50:00Z; stopped on encountering a directory, no directory removed",
+  "root_after": "7.0G available",
+  "native_products": "retained",
+  "source_files": "retained",
+  "retries": "both failing oracle leaves pass; oracle-disk-retest.jsonl"
+}

@@ -1,0 +1,295 @@
+[
+  {
+    "label": "compiler-product",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestProduct_WASICompiler$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 2.001,
+    "failures": [],
+    "over_60s": [],
+    "passed": 1,
+    "skipped": 0
+  },
+  {
+    "label": "runtime-products",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestProduct_NativeRuntimes(Sanitized|Release|Counted|Shipped)[012]$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "300s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 56.041,
+    "failures": [],
+    "over_60s": [],
+    "passed": 12,
+    "skipped": 0
+  },
+  {
+    "label": "lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 50.053,
+    "failures": [],
+    "over_60s": [],
+    "passed": 1577,
+    "skipped": 2
+  },
+  {
+    "label": "native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 280.107,
+    "failures": [],
+    "over_60s": [],
+    "passed": 770,
+    "skipped": 92
+  },
+  {
+    "label": "oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "1200s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 1,
+    "seconds": 392.321,
+    "failures": [
+      {
+        "test": "TestLibraryMethodValueMutants_003/own_field",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.43
+      },
+      {
+        "test": "TestLibraryMethodValueMutants_003",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0
+      },
+      {
+        "test": "TestEntriesAcceptance/01_scanner_keywords.a/baseline",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestEntriesAcceptance/01_scanner_keywords.a/mutant",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.21
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/nodearray",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/jsdoc",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/numeric_record",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/string_dictionary",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/template",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries/sorted",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestElementAccessCompilerAreaBoundaries",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0
+      },
+      {
+        "test": "TestEntriesAcceptance",
+        "package": "github.com/system-inc/adamic/internal/oracle",
+        "action": "fail",
+        "seconds": 0
+      }
+    ],
+    "over_60s": [],
+    "passed": 4859,
+    "skipped": 291
+  },
+  {
+    "label": "flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 62.057,
+    "failures": [],
+    "over_60s": [],
+    "passed": 889,
+    "skipped": 0
+  },
+  {
+    "label": "fresh",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 14.022,
+    "failures": [],
+    "over_60s": [],
+    "passed": 928,
+    "skipped": 0
+  },
+  {
+    "label": "ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "240s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 4.012,
+    "failures": [],
+    "over_60s": [],
+    "passed": 16,
+    "skipped": 0
+  },
+  {
+    "label": "javascript",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "240s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 2.001,
+    "failures": [],
+    "over_60s": [],
+    "passed": 7,
+    "skipped": 0
+  },
+  {
+    "label": "fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 86.047,
+    "failures": [],
+    "over_60s": [],
+    "passed": 722,
+    "skipped": 1
+  }
+]

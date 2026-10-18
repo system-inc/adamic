@@ -1,0 +1,14 @@
+Re-cut records lowering on current main
+
+Preserve main's newer compiler infrastructure while restoring the records
+lowering, exact refusals and Node-held runtime behavior in one commit.
+Regenerate the counts on Linux with clang 20.1.8 and retain only this
+change's 30 count rows. Rerun the focused tests, guards and recorded mutants.
+
+Assumption: current main's counts-only format supersedes the requested
+digest column because main moved measurement identity into products.
+Keep that newer infrastructure and the verified stage3 refusal pins.
+
+Observed TestInspectRequestRefusals timing out during a cold checker archive build.
+Records changes no recipe for it. User confirmed Loom's cached-product behavior
+and authorized push. Rebase once onto current main, preserving one commit.

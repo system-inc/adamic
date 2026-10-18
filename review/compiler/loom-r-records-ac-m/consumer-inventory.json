@@ -1,0 +1,341 @@
+{
+  "direct": [
+    "github.com/system-inc/adamic/bench/regex",
+    "github.com/system-inc/adamic/bridge/tsgo",
+    "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "github.com/system-inc/adamic/cmd/adamic",
+    "github.com/system-inc/adamic/cmd/adamic-meter",
+    "github.com/system-inc/adamic/cmd/adamic-test262",
+    "github.com/system-inc/adamic/internal/compilerinputs",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/internal/leakcheck",
+    "github.com/system-inc/adamic/internal/lower/cycleledger",
+    "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "github.com/system-inc/adamic/stage1/cohere/selector",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe"
+  ],
+  "new": [],
+  "previous_selections": {
+    "github.com/system-inc/adamic/bench/regex": {
+      "package": "./bench/regex",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/bridge/tsgo": {
+      "package": "./bridge/tsgo",
+      "tests": [
+        "TestTSGoRequiresLink"
+      ]
+    },
+    "github.com/system-inc/adamic/cloud/reports/decode-ascii": {
+      "package": "./cloud/reports/decode-ascii",
+      "tests": [
+        "TestRuntimeFeaturesMatchNode"
+      ]
+    },
+    "github.com/system-inc/adamic/cmd/adamic": {
+      "package": "./cmd/adamic",
+      "tests": [
+        "TestExplainChecksOutput"
+      ]
+    },
+    "github.com/system-inc/adamic/cmd/adamic-fuzz": {
+      "package": "./cmd/adamic-fuzz",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/cmd/adamic-meter": {
+      "package": "./cmd/adamic-meter",
+      "tests": [
+        "TestOptionalPositionCountsUTF16Surrogates"
+      ]
+    },
+    "github.com/system-inc/adamic/cmd/adamic-reduce": {
+      "package": "./cmd/adamic-reduce",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/cmd/adamic-test262": {
+      "package": "./cmd/adamic-test262",
+      "tests": [
+        "TestAdaptSingletonArrayCallback"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/compilerinputs": {
+      "package": "./internal/compilerinputs",
+      "tests": [
+        "TestCheckKeyTellsTheCompilerFromTscWhole"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/fresh": {
+      "package": "./internal/fresh",
+      "tests": [
+        "TestFreshCorpusRemainder"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/fuzz": {
+      "package": "./internal/fuzz",
+      "tests": [
+        "TestGeneratedProgramsCheckAndLower"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/javascript": {
+      "package": "./internal/javascript",
+      "tests": [
+        "TestViewMixedUnionSelectsNumber"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/lower/cycleledger": {
+      "package": "./internal/lower/cycleledger",
+      "tests": [
+        "TestOriginalCycleLedger"
+      ]
+    },
+    "github.com/system-inc/adamic/internal/native/runtimeproducts": {
+      "package": "./internal/native/runtimeproducts",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/stage1/cohere/css": {
+      "package": "./stage1/cohere/css",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "TestClosedEmptyArrayUnionGap",
+        "TestClosedParserRegexGap",
+        "TestClosedOptionalBooleanConditionGap",
+        "TestClosedPrinterRegexGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers": {
+      "package": "./stage1/cohere/cssnumbers",
+      "tests": [
+        "TestCSSNumbersAnswerProductsRekey"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings": {
+      "package": "./stage1/cohere/cssstrings",
+      "tests": [
+        "TestMultiPushGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/estree": {
+      "package": "./stage1/cohere/estree",
+      "tests": [
+        "TestPostfixValueGap",
+        "TestMethodReplacementGap",
+        "TestRawInputGap",
+        "TestParserRecoveryGap",
+        "TestInterfaceTypeMethodGap",
+        "TestRecoveryLibraryGaps",
+        "TestPinnedNumericGaps",
+        "TestTypeMemberLibraryGap",
+        "TestCookedSurrogateLibraryGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles": {
+      "package": "./stage1/cohere/formatfiles",
+      "tests": [
+        "TestExtAgreesWithGo"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": {
+      "package": "./stage1/cohere/gitignore",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/graphql": {
+      "package": "./stage1/cohere/graphql",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer": {
+      "package": "./stage1/cohere/graphql/printer",
+      "tests": [
+        "TestPrinterConstructorGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/json": {
+      "package": "./stage1/cohere/json",
+      "tests": [
+        "TestDocumentedStageZeroGaps",
+        "TestClosedEmptyFallbackGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint": {
+      "package": "./stage1/cohere/lint",
+      "tests": [
+        "TestClosedComparatorGaps",
+        "TestNestedConstructorGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers": {
+      "package": "./stage1/cohere/lint/helpers",
+      "tests": [
+        "TestKnownGapsAreExplicit"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments": {
+      "package": "./stage1/cohere/lint/helpers/comments",
+      "tests": [
+        "TestJsxParserGapIsExplicit"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex": {
+      "package": "./stage1/cohere/lint/regex",
+      "tests": [
+        "TestDynamicPatternGap",
+        "TestOptionDialectGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle": {
+      "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "tests": [
+        "TestCompileProfiles"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation": {
+      "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "tests": [
+        "TestCompileProfiles"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining": {
+      "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "tests": [
+        "TestCompileProfiles"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias": {
+      "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "tests": [
+        "TestCompileProfiles"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks": {
+      "package": "./stage1/cohere/markdownblocks",
+      "tests": [
+        "TestArrayGrowthWitness"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": {
+      "package": "./stage1/cohere/markdowninline",
+      "tests": [
+        "TestDelimiterExpressionMatchesNode"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery": {
+      "package": "./stage1/cohere/mediaquery",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/selector": {
+      "package": "./stage1/cohere/selector",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment": {
+      "package": "./stage1/cohere/static_single_assignment",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/suppression": {
+      "package": "./stage1/cohere/suppression",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter": {
+      "package": "./stage1/cohere/tsprinter",
+      "tests": [
+        "TestClassInterfaceMethodGap",
+        "TestClosedOptionalBooleanFunctionGap",
+        "TestCompilerGaps",
+        "TestClosedPrefixUpdateValueGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/typeaware": {
+      "package": "./stage1/cohere/typeaware",
+      "tests": [
+        "TestSixBuildCallbackUsesProductDirectory",
+        "TestSixShardUnionRejectsLossAndDuplication"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/values": {
+      "package": "./stage1/cohere/values",
+      "tests": [
+        "TestEachGapStandsWhereGapsMdSaysItDoes"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/cohere/yaml": {
+      "package": "./stage1/cohere/yaml",
+      "tests": [
+        "TestLexerGaps",
+        "TestClosedStringPresenceGap",
+        "TestClosedLexerGaps",
+        "TestClosedValuePresenceGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/typescript/parser": {
+      "package": "./stage1/typescript/parser",
+      "tests": [
+        "TestStrongAstParentGap",
+        "TestPushSpreadGap",
+        "TestClassMethodInterfaceGap",
+        "TestClosedOptionalFunctionValueGap",
+        "TestClosedConditionalEmptyArrayGap"
+      ]
+    },
+    "github.com/system-inc/adamic/stage1/typescript/scanner": {
+      "package": "./stage1/typescript/scanner",
+      "tests": [
+        "TestGapStandsWhereGapsMdSays",
+        "TestBigintGapStandsWhereGapsMdSays"
+      ]
+    },
+    "github.com/system-inc/adamic/stage3/census/tool": {
+      "package": "./stage3/census/tool",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": {
+      "package": "./stage3/drivers/parser/probe",
+      "tests": []
+    },
+    "github.com/system-inc/adamic/internal/leakcheck": {
+      "package": "./internal/leakcheck",
+      "tests": [
+        "TestReportedLeakIsRejected",
+        "TestCountedBalance"
+      ]
+    }
+  }
+}

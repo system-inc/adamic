@@ -1,0 +1,293 @@
+[
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "line": 26,
+    "text": "\tpath, err := filepath.Abs(filepath.Join(repository, \"internal/oracle/testdata/records_refused/records_named_invalidated.a\"))",
+    "patterns": [
+      "records_named_invalidated.a",
+      "internal/oracle/testdata/records_refused/records_named_invalidated.a"
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "line": 106,
+    "text": "\tpath, err := filepath.Abs(filepath.Join(repository, \"internal/oracle/testdata/records_refused/records_prototype_read.a\"))",
+    "patterns": [
+      "internal/oracle/testdata/records_refused/records_prototype_read.a",
+      "records_prototype_read.a"
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "line": 195,
+    "text": "\tpath, err := filepath.Abs(filepath.Join(repository, \"internal/oracle/testdata/records_refused/records_narrowed_number.a\"))",
+    "patterns": [
+      "internal/oracle/testdata/records_refused/records_narrowed_number.a",
+      "records_narrowed_number.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 134,
+    "text": "    \"records/04_own_values.a\",",
+    "patterns": [
+      "04_own_values.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 138,
+    "text": "    \"records/08_option_boolean.a\",",
+    "patterns": [
+      "08_option_boolean.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 139,
+    "text": "    \"records/09_option_undefined.a\",",
+    "patterns": [
+      "09_option_undefined.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 140,
+    "text": "    \"records/10_option_wrong_type.a\",",
+    "patterns": [
+      "10_option_wrong_type.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 141,
+    "text": "    \"records/11_option_string.a\",",
+    "patterns": [
+      "11_option_string.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 142,
+    "text": "    \"records/12_nested_entries.a\",",
+    "patterns": [
+      "12_nested_entries.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 144,
+    "text": "    \"records/14_group_by.a\",",
+    "patterns": [
+      "14_group_by.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 145,
+    "text": "    \"records/15_inherited_read.a\",",
+    "patterns": [
+      "15_inherited_read.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 147,
+    "text": "    \"records/17_compare_missing_object.a\",",
+    "patterns": [
+      "17_compare_missing_object.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 148,
+    "text": "    \"records/18_compare_missing_scalar.a\",",
+    "patterns": [
+      "18_compare_missing_scalar.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 149,
+    "text": "    \"records/19_compare_empty_objects.a\",",
+    "patterns": [
+      "19_compare_empty_objects.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 309,
+    "text": "    \"records/04_own_values.a\",",
+    "patterns": [
+      "04_own_values.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 313,
+    "text": "    \"records/08_option_boolean.a\",",
+    "patterns": [
+      "08_option_boolean.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 314,
+    "text": "    \"records/09_option_undefined.a\",",
+    "patterns": [
+      "09_option_undefined.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 315,
+    "text": "    \"records/10_option_wrong_type.a\",",
+    "patterns": [
+      "10_option_wrong_type.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 316,
+    "text": "    \"records/11_option_string.a\",",
+    "patterns": [
+      "11_option_string.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 317,
+    "text": "    \"records/12_nested_entries.a\",",
+    "patterns": [
+      "12_nested_entries.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 319,
+    "text": "    \"records/14_group_by.a\",",
+    "patterns": [
+      "14_group_by.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 320,
+    "text": "    \"records/15_inherited_read.a\",",
+    "patterns": [
+      "15_inherited_read.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 322,
+    "text": "    \"records/17_compare_missing_object.a\",",
+    "patterns": [
+      "17_compare_missing_object.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 323,
+    "text": "    \"records/18_compare_missing_scalar.a\",",
+    "patterns": [
+      "18_compare_missing_scalar.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 324,
+    "text": "    \"records/19_compare_empty_objects.a\",",
+    "patterns": [
+      "19_compare_empty_objects.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 484,
+    "text": "    \"records/04_own_values.a\",",
+    "patterns": [
+      "04_own_values.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 488,
+    "text": "    \"records/08_option_boolean.a\",",
+    "patterns": [
+      "08_option_boolean.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 489,
+    "text": "    \"records/09_option_undefined.a\",",
+    "patterns": [
+      "09_option_undefined.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 490,
+    "text": "    \"records/10_option_wrong_type.a\",",
+    "patterns": [
+      "10_option_wrong_type.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 491,
+    "text": "    \"records/11_option_string.a\",",
+    "patterns": [
+      "11_option_string.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 492,
+    "text": "    \"records/12_nested_entries.a\",",
+    "patterns": [
+      "12_nested_entries.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 494,
+    "text": "    \"records/14_group_by.a\",",
+    "patterns": [
+      "14_group_by.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 495,
+    "text": "    \"records/15_inherited_read.a\",",
+    "patterns": [
+      "15_inherited_read.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 497,
+    "text": "    \"records/17_compare_missing_object.a\",",
+    "patterns": [
+      "17_compare_missing_object.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 498,
+    "text": "    \"records/18_compare_missing_scalar.a\",",
+    "patterns": [
+      "18_compare_missing_scalar.a"
+    ]
+  },
+  {
+    "file": "stage3/fixtures/testdata/toplevel/fixture-union.json",
+    "line": 499,
+    "text": "    \"records/19_compare_empty_objects.a\",",
+    "patterns": [
+      "19_compare_empty_objects.a"
+    ]
+  }
+]
