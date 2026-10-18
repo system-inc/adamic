@@ -1,0 +1,90 @@
+[
+  {
+    "name": "every",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/every-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrayNarrowingEveryRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "catcher": "TestArrayNarrowingEveryRefused",
+    "expected_assertion": "got <nil>",
+    "seconds": 8.015
+  },
+  {
+    "name": "findLast",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/findLast-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrayNarrowingFindLastRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "catcher": "TestArrayNarrowingFindLastRefused",
+    "expected_assertion": "got <nil>",
+    "seconds": 9.298
+  },
+  {
+    "name": "literal",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/literal-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestFX5NumberLiteralRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "catcher": "TestFX5NumberLiteralRefused",
+    "expected_assertion": "got <nil>",
+    "seconds": 8.152
+  },
+  {
+    "name": "registration",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/registration-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestNativeAgreementRowsNameRegisteredPrograms$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "catcher": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "expected_assertion": "must name a program in nativeAgreementPrograms by a literal",
+    "seconds": 9.628
+  }
+]
