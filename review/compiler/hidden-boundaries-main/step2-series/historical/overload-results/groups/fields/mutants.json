@@ -1,0 +1,114 @@
+[
+  {
+    "mutant": "drop-field-storage",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-pc1zqpak/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefuses$/^mixed_field_storage$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-constraint-storage",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-w2kxxk7j/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "object-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-ylir0gip/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintMutationRemainsNotYet$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "array-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-0d1ry905/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$/^array_layout$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "unconstrained-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-7fsd9zzp/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "ignore-substitution",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-31m27ixh/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "ignore-mapper",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-t4ypi1_h/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-count=1",
+      "-v"
+    ]
+  }
+]

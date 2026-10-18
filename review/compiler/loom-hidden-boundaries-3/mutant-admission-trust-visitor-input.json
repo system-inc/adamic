@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admission-trust-visitor-input",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/admission-trust-visitor-input-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesVisitorDomainLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 15.283,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesVisitorDomainLiar",
+      "action": "fail",
+      "seconds": 0.14
+    }
+  ]
+}

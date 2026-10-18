@@ -1,0 +1,32 @@
+// The callback promises Node, not the generic overload's original T.
+interface Node { readonly kind: string; readonly text: string; }
+interface BindingElement extends Node { readonly kind: 'binding'; }
+interface OmittedExpression extends Node { readonly kind: 'omitted'; }
+type ArrayBindingElement = BindingElement | OmittedExpression;
+function visitBindingElement<T extends Node>(elem: T): T;
+function visitBindingElement(elem: ArrayBindingElement): ArrayBindingElement {
+ return { kind: 'binding', text: elem.text + ':module' };
+}
+function run(node: BindingElement, visitor: (node: BindingElement) => Node): Node {
+ return visitor(node);
+}
+const binding: BindingElement = { kind: 'binding', text: 'name' };
+console.log(run(binding, visitBindingElement).text);
+function nested(suffix: string): string {
+ function visit<T extends Node>(elem: T): T;
+ function visit(elem: ArrayBindingElement): ArrayBindingElement {
+  return { kind: 'binding', text: elem.text + suffix };
+ }
+ return run(binding, visit).text;
+}
+console.log(nested(':nested'));
+function same(left: (node: BindingElement) => Node, right: (node: BindingElement) => Node): boolean {
+ return left === right;
+}
+console.log(`${same(visitBindingElement, visitBindingElement)}`);
+function nestedSame(): boolean {
+ function visit<T extends Node>(elem: T): T;
+ function visit(elem: ArrayBindingElement): ArrayBindingElement { return elem; }
+ return same(visit, visit);
+}
+console.log(`${nestedSame()}`);

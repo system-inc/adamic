@@ -1,0 +1,7 @@
+// a-check: refused a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this
+const host = {
+    value: 7,
+    read(): number { return this.value; },
+};
+const { read } = host;
+console.log(read().toString());

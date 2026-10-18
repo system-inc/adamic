@@ -1,0 +1,31 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Reuse hidden-06's constraint storage rule (702c3ecb). signature declares
+// parameters through typeOf, so this one path covers parameters and fields.
+// Structural object constraints admit arrays and functions with extra fields;
+// keep their brands rather than assuming an object layout. Constraints supply
+// storage only, never a proof of an overload's narrower parameter or result.
+func (l *lowering) constraintStorage(parameter *checker.Type) (ir.Type, bool) {
+	constraint := l.checker.GetBaseConstraintOfType(parameter)
+	if constraint == nil || constraint == parameter || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
+		return 0, false
+	}
+	held, known := l.representation(constraint)
+	if !known {
+		return 0, false
+	}
+	switch held {
+	case ir.Number, ir.String, ir.Boolean:
+		return held, true
+	case ir.Array:
+ return ir.Array, true
+ case ir.Object:
+		return ir.Union, true
+	}
+	return 0, false
+}

@@ -1,0 +1,12 @@
+package oracle
+import("path/filepath";"slices";"testing";"github.com/system-inc/adamic/internal/native")
+func checkReceiverWitness(t *testing.T,name string,features []string) {
+ t.Helper(); path,err:=filepath.Abs(filepath.Join(repository,"internal/oracle/testdata",name));if err!=nil{t.Fatal(err)}
+ truth:=onNode(t,path); t.Logf("source Node: stdout=%q stderr=%q exit=%d",truth.stdout,truth.stderr,truth.exitCode)
+ program,err:=lowered(t,path);if err!=nil{t.Fatal(err)};got:=native.Features(native.C(program));if !slices.Equal(got,features){t.Fatalf("features %v, want exactly %v",got,features)};t.Logf("native.Features = %v",got)
+ sanitized,binary:=natively(t,program)
+ for lane,result:=range map[string]run{"JavaScript backend Node":onJavaScriptBackend(t,program),"release native":released(t,program),"ASan/UBSan native":sanitized}{t.Logf("%s: stdout=%q stderr=%q exit=%d",lane,result.stdout,result.stderr,result.exitCode);if diff:=disagreement(truth,result);diff!=""{t.Fatalf("%s: %s",lane,diff)}}
+ if report:=leaks(t,program,binary);report!=""{t.Fatal(report)}
+}
+func TestReceiverIndependentSystemFourLanes(t *testing.T){t.Parallel();checkReceiverWitness(t,"census_optional_values_system.a",nil)}
+func TestReceiverDependentHostFourLanes(t *testing.T){t.Parallel();checkReceiverWitness(t,"host_void_method.a",[]string{"ADAMIC_CLOSURE_RECEIVERS"})}

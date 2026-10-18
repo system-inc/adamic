@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admission-drop-fixed-return-proof",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries/admission-drop-fixed-return-proof-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralResults$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 12.245,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralResults",
+      "action": "fail",
+      "seconds": 0.13
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "label": "mutant-step3-receiver-proof-mutant",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries/step3-receiver-proof-mutant-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestMethodDestructuringSafety",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 9.733,
+  "tests": [
+    {
+      "name": "TestMethodDestructuringSafetyStructuralReceiver",
+      "action": "fail",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestMethodDestructuringSafetyDefaultReceiver",
+      "action": "fail",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestMethodDestructuringSafetyReceiver",
+      "action": "fail",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestMethodDestructuringSafetyStructuralClass",
+      "action": "pass",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestMethodDestructuringSafetyArrowReceiver",
+      "action": "fail",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestMethodDestructuringSafetyExplicitReceiver",
+      "action": "fail",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestMethodDestructuringSafetyClassOrigin",
+      "action": "pass",
+      "seconds": 0.07
+    }
+  ]
+}

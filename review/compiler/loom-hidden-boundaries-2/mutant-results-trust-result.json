@@ -1,0 +1,39 @@
+{
+  "label": "mutant-results-trust-result",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/results-trust-result-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadResultsLiarStops",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 71.803,
+  "tests": [
+    {
+      "name": "TestOverloadResultsLiarStopsLiar",
+      "action": "fail",
+      "seconds": 35.57
+    },
+    {
+      "name": "TestOverloadResultsLiarStopsParameterLiar",
+      "action": "pass",
+      "seconds": 35.61
+    },
+    {
+      "name": "TestOverloadResultsLiarStopsEvaluateLiar",
+      "action": "fail",
+      "seconds": 35.65
+    }
+  ]
+}

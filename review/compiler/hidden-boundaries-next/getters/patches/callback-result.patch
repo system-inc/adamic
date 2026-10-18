@@ -1,0 +1,5 @@
+--- internal/lower/overload_callback.go
++++ internal/lower/overload_callback.go
+@@ -66 +66 @@
+-	if !l.censusRelated(produced, result) || !l.overloadCallbackStorage(produced, result) {
++	if false && !l.censusRelated(produced, result) || !l.overloadCallbackStorage(produced, result) {

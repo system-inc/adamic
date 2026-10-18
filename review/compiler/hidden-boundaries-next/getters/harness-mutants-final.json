@@ -1,0 +1,98 @@
+[
+  {
+    "mutant": "invoke-field-getters",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestFlowTraceSnapshotsDoNotInvokeGetters"
+    ],
+    "marker": "snapshot invoked value getter",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/getters/invoke-field-getters-overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestFlowTraceSnapshotsDoNotInvokeGetters$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "invoke-code-getter",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestFlowTraceSnapshotsDoNotInvokeGetters"
+    ],
+    "marker": "snapshot invoked code getter",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/getters/invoke-code-getter-overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestFlowTraceSnapshotsDoNotInvokeGetters$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "omit-data-mutation",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestFlowTraceSnapshotsDoNotInvokeGetters"
+    ],
+    "marker": "snapshot lost nested data mutation",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/getters/omit-data-mutation-overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestFlowTraceSnapshotsDoNotInvokeGetters$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admit-refused-getters",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestFlowGettersCensusRefusalClassification"
+    ],
+    "marker": "entered the runnable flow corpus",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/getters/admit-refused-getters-overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestFlowGettersCensusRefusalClassification$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  }
+]

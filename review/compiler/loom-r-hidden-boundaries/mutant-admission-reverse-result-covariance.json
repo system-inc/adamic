@@ -1,0 +1,29 @@
+{
+  "label": "mutant-admission-reverse-result-covariance",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries/admission-reverse-result-covariance-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesFactoryLiteralCovariance$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 24.255,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesFactoryLiteralCovariance",
+      "action": "fail",
+      "seconds": 0.27
+    }
+  ]
+}

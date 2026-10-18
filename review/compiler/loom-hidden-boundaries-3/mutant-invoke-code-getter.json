@@ -1,0 +1,29 @@
+{
+  "label": "mutant-invoke-code-getter",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/invoke-code-getter-overlay.json",
+    "./internal/flow",
+    "-run",
+    "^TestFlowTraceSnapshotsDoNotInvokeGetters$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 1,
+  "seconds": 18.929,
+  "tests": [
+    {
+      "name": "TestFlowTraceSnapshotsDoNotInvokeGetters",
+      "action": "fail",
+      "seconds": 0.06
+    }
+  ]
+}

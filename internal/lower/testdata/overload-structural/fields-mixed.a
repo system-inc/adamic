@@ -1,0 +1,10 @@
+// a-check: refused an overload result field at result.value without a single storage representation; narrow the result to a member before reading the field; matching storage does not replace the overload return proof
+interface Numeric { readonly value: number; }
+interface Textual { readonly value: string; }
+type Result = Numeric | Textual;
+interface Other { readonly value: boolean; }
+function result(input: Result): Result;
+function result(input: Result | Other): Result | Other { return input; }
+const input: Result = { value: 7 };
+const seen = result(input);
+console.log(`${seen.value}`);

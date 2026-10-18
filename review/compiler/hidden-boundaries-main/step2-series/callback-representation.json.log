@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:05.738671215Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:05.753086621Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation"}
+{"Time":"2026-10-09T10:23:05.753189172Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Output":"=== RUN   TestOverloadCallbackUnservedRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.753223503Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Output":"=== PAUSE TestOverloadCallbackUnservedRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.753226658Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation"}
+{"Time":"2026-10-09T10:23:05.753229782Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation"}
+{"Time":"2026-10-09T10:23:05.753231966Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Output":"=== CONT  TestOverloadCallbackUnservedRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.840943132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Output":"    overload_callback_test.go:43: expected an unserved callback refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:05.841031713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Output":"--- FAIL: TestOverloadCallbackUnservedRepresentation (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.841037702Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadCallbackUnservedRepresentation","Elapsed":0.09}
+{"Time":"2026-10-09T10:23:05.841059053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.842914946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.104s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:05.843010277Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.104}

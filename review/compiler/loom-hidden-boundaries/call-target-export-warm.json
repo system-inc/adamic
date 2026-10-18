@@ -1,0 +1,22 @@
+{
+  "label": "call-target-export-warm",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "list",
+    "-trimpath",
+    "-buildvcs=false",
+    "-export",
+    "-deps",
+    "-test",
+    "-json",
+    "./internal/native",
+    "./internal/lower",
+    "./internal/fresh",
+    "./internal/flow"
+  ],
+  "exit": 0,
+  "seconds": 3.975,
+  "tests": []
+}

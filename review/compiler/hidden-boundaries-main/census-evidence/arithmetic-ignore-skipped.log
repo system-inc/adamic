@@ -1,0 +1,45 @@
+test_attempted_parent_cannot_expose_skipped_child (__main__.Arithmetic.test_attempted_parent_cannot_expose_skipped_child) ... FAIL
+test_dependency_skip_exposes_no_expression_body (__main__.Arithmetic.test_dependency_skip_exposes_no_expression_body) ... ok
+test_fake_skipped_span_grows_exactly (__main__.Arithmetic.test_fake_skipped_span_grows_exactly) ... FAIL
+test_legacy_and_invalid_ranges_fail (__main__.Arithmetic.test_legacy_and_invalid_ranges_fail) ... ok
+test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part) ... FAIL
+test_overlapping_skipped_span_does_not_double_count (__main__.Arithmetic.test_overlapping_skipped_span_does_not_double_count) ... FAIL
+test_ranges_against_independent_byte_sets (__main__.Arithmetic.test_ranges_against_independent_byte_sets) ... ok
+test_signature_failure_keeps_whole_body_hidden (__main__.Arithmetic.test_signature_failure_keeps_whole_body_hidden) ... ok
+
+======================================================================
+FAIL: test_attempted_parent_cannot_expose_skipped_child (__main__.Arithmetic.test_attempted_parent_cannot_expose_skipped_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hidden-census-pin/stage3/census/hidden/test_hidden.py", line 91, in test_attempted_parent_cannot_expose_skipped_child
+    self.assertEqual(total(rows, stock), 20, 'attempted parent retains checker-skipped child')
+AssertionError: 0 != 20 : attempted parent retains checker-skipped child
+
+======================================================================
+FAIL: test_fake_skipped_span_grows_exactly (__main__.Arithmetic.test_fake_skipped_span_grows_exactly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hidden-census-pin/stage3/census/hidden/test_hidden.py", line 55, in test_fake_skipped_span_grows_exactly
+    self.assertEqual(total(rows, stock) - baseline, 17, 'fake skipped body adds exactly 17 bytes')
+AssertionError: 0 != 17 : fake skipped body adds exactly 17 bytes
+
+======================================================================
+FAIL: test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hidden-census-pin/stage3/census/hidden/test_hidden.py", line 73, in test_nested_attempt_exposes_only_its_examined_part
+    self.assertEqual(total(rows, stock), 45, '80 blocked - (45 child bytes - 10 failed bytes)')
+AssertionError: 10 != 45 : 80 blocked - (45 child bytes - 10 failed bytes)
+
+======================================================================
+FAIL: test_overlapping_skipped_span_does_not_double_count (__main__.Arithmetic.test_overlapping_skipped_span_does_not_double_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hidden-census-pin/stage3/census/hidden/test_hidden.py", line 61, in test_overlapping_skipped_span_does_not_double_count
+    self.assertEqual(total(rows, stock), 30, 'overlapping skips counted once')
+AssertionError: 0 != 30 : overlapping skips counted once
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.034s
+
+FAILED (failures=4)

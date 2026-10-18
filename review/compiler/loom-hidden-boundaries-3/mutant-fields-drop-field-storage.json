@@ -1,0 +1,29 @@
+{
+  "label": "mutant-fields-drop-field-storage",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/fields-drop-field-storage-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesMixedFieldStorage$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 19.748,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesMixedFieldStorage",
+      "action": "fail",
+      "seconds": 0.15
+    }
+  ]
+}
