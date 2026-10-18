@@ -1,0 +1,32 @@
+=== RUN   TestFlowCorpusRemainder
+=== PAUSE TestFlowCorpusRemainder
+=== CONT  TestFlowCorpusRemainder
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_both.a
+    corpus_coverage_test.go:131: 9 functions: 0 phis, 0 values, 9 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 23 points walked, 44 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_number.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 2 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 5 points walked, 10 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_string.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 2 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 5 points walked, 10 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_zero.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 3 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 5 points walked, 10 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== NAME  TestFlowCorpusRemainder
+    corpus_coverage_test.go:134: remainder ran 19 programs
+--- PASS: TestFlowCorpusRemainder (1.24s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_both.a (0.26s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_number.a (0.29s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_string.a (0.34s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/callable_union_result_zero.a (0.34s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	1.254s

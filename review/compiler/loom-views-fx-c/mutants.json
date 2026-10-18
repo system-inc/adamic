@@ -1,0 +1,138 @@
+[
+  {
+    "name": "packed-snapshot-stale",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestViewSnapshotPayloadOwnership$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 16.439
+  },
+  {
+    "name": "native-direct-code",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableProducerRegistryFiltersDirectFunctions$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.054
+  },
+  {
+    "name": "lower-direct-code",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerCertificatesUseClosureThunks$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": false,
+    "seconds": 1.275
+  },
+  {
+    "name": "exact-producer-type",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2CallableProducerMutant$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.145
+  },
+  {
+    "name": "ambiguous-producer",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 17.569
+  },
+  {
+    "name": "missing-abi-refusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerMethodShorthandRefused$|^TestCallableProducerExtraOptionalRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.16
+  },
+  {
+    "name": "unrecorded-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerDiscardedObjectResultRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 10.534
+  },
+  {
+    "name": "raw-union-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableUnionResultNumber$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.471
+  }
+]

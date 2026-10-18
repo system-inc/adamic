@@ -1,0 +1,7 @@
+Counter({'checked': 54, 'NotYet': 5, 'refused': 4})
+Gate.aCheck exit 1
+a-check failed for 4 files:
+internal/lower/testdata/callable_producers/p135_object_result.a: refused, expected checked (adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p135_object_result.a:6:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the produc)
+internal/lower/testdata/callable_producers/p22.a: refused, expected checked (adamic: /workspace/adamic/internal/lower/testdata/callable_producers/p22.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow )
+review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a: refused, expected checked (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:7:18: Adamic 0.1 refuses a checked callable producer as)
+review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a: refused, expected checked (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a:6:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union memb)

@@ -1,0 +1,22 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -259,7 +259,7 @@
+ 			function := l.result.Functions[producer.function]
+ 			// Named functions also have a direct-call record. Only their closure
+ 			// thunk has the code convention registered by the callable adapter.
+-			if !function.Closure || function.Receiver {
++			if (!function.Closure || function.Receiver) && false {
+ 				continue
+ 			}
+ 			if l.checker.IsTypeAssignableTo(producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) && l.uniquelyAssignableCallable(producer.proven, id) {
+--- a/internal/lower/view_callable_producers.go
++++ b/internal/lower/view_callable_producers.go
+@@ -9,7 +9,7 @@
+ // certification is sound only if the implementation and view use the same ABI.
+ func (l *lowering) untaggedCallableABI(index int, contract ir.ViewContract) bool {
+ 	function := l.result.Functions[index]
+-	if !function.Closure || function.Receiver || function.RestElement != 0 || len(function.Parameters) != len(contract.Parameters) {
++	if function.RestElement != 0 || len(function.Parameters) != len(contract.Parameters) {
+ 		return false
+ 	}
+ 	// The producer registry records only fixed scalar or void results. A

@@ -1,0 +1,9 @@
+Fix callable producers and view snapshots with a-check headers
+
+Carry 6c7cdd296675520447553e0b604cbfb647c67834 onto exactly dbdf977f5b. Compile all 63 changed Adamic files with the branch compiler and add four measured refusal headers, including review copies, without changing any program body or counts.
+
+The pinned Gate.aCheck accepts all files and rejects removed-header and wrong-reason mutants. Conservative assumption: earlier baseline evidence remains historical; new line offsets are recorded separately rather than rewriting past observations.
+
+Re-cut onto main 67733635b0252eb9d3bb3645c72262c7b18361e1 (was 54bbf58605 on dbdf977f)
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

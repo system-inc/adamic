@@ -1,0 +1,8 @@
+# github.com/system-inc/adamic/stage3/drivers/parser/build-metrics
+package github.com/system-inc/adamic/stage3/drivers/parser/build-metrics: build constraints exclude all Go files in /workspace/adamic/stage3/drivers/parser/build-metrics
+FAIL	github.com/system-inc/adamic/stage3/drivers/parser/build-metrics [setup failed]
+# github.com/system-inc/adamic/stage3/drivers/scanner
+package github.com/system-inc/adamic/stage3/drivers/scanner: build constraints exclude all Go files in /workspace/adamic/stage3/drivers/scanner
+FAIL	github.com/system-inc/adamic/stage3/drivers/scanner [setup failed]
+ok  	github.com/system-inc/adamic/internal/leakcheck	0.008s [no tests to run]
+FAIL

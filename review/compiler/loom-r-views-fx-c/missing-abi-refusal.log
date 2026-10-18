@@ -1,0 +1,15 @@
+=== RUN   TestCallableProducerMethodShorthandRefused
+=== PAUSE TestCallableProducerMethodShorthandRefused
+=== RUN   TestCallableProducerExtraOptionalRefused
+=== PAUSE TestCallableProducerExtraOptionalRefused
+=== CONT  TestCallableProducerMethodShorthandRefused
+=== CONT  TestCallableProducerExtraOptionalRefused
+=== NAME  TestCallableProducerMethodShorthandRefused
+    callable_producers_assignable_test.go:37: want located producer adapter refusal, got <nil>
+--- FAIL: TestCallableProducerMethodShorthandRefused (0.12s)
+=== NAME  TestCallableProducerExtraOptionalRefused
+    callable_producers_assignable_test.go:41: want located producer adapter refusal, got <nil>
+--- FAIL: TestCallableProducerExtraOptionalRefused (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.146s
+FAIL
