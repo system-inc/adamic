@@ -1,0 +1,20 @@
+[
+  {
+    "package": "./bench/regex",
+    "tests": []
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "tests": []
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "tests": []
+  },
+  {
+    "package": "./internal/javascript",
+    "tests": [
+      "TestViewMixedUnionSelectsNumber"
+    ]
+  }
+]

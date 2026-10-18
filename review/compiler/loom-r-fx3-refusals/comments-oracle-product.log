@@ -1,0 +1,7 @@
+=== RUN   TestProduct_CommentsOracle
+=== PAUSE TestProduct_CommentsOracle
+=== CONT  TestProduct_CommentsOracle
+    owner_test.go:15: build go_build_cohere_/workspace/adamic/cohere/adamic_comments_oracle.go_go-oracle-owner-v1 ac07bce64abb miss 2.29
+--- PASS: TestProduct_CommentsOracle (2.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments/oracles	2.420s

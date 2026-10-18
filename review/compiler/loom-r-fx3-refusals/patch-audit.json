@@ -1,0 +1,85 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "088a27988a63171d8485e921973018df27688779",
+  "conflicts": [],
+  "internal_patch": [
+    {
+      "path": "internal/lower/agree_test.go",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/array_narrowing_test.go",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/fx5_literal_test.go",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/object.go",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/boolean_callback.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/cat.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/early_return.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/every.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/find.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/find_last.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/find_last_index.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/forward.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/inferred.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/optional_number.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/optional_string.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/preserved_union.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/property.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/readonly.a",
+      "added_removed_lines_identical": true
+    },
+    {
+      "path": "internal/lower/testdata/array_narrowing/some_negated.a",
+      "added_removed_lines_identical": true
+    }
+  ],
+  "source_runtime_diff": "",
+  "recut_runtime_diff": ""
+}
