@@ -462,6 +462,13 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
 	{"internal/oracle/testdata/long_field_name.a", true, false},
+	{"internal/oracle/testdata/uncaught_names.a", true, false},
+	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_message.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_default_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_empty_changed.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_no_argument.a", true, false},
 	// A method called on a spread's source inside the literal runs code with the source as this
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
