@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "static-inline-definition",
+    "caught": true,
+    "exit": 1,
+    "seconds": 40.014,
+    "structural_only": true,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-static-inline-definition/overlay.json",
+      "-run",
+      "^TestSplitSelfCompareAgreesWithNode$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "split-numeric-fold",
+    "caught": true,
+    "exit": 1,
+    "seconds": 26.497,
+    "structural_only": false,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-split-numeric-fold/overlay.json",
+      "-run",
+      "^TestSplitSelfCompareAgreesWithNode$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  }
+]

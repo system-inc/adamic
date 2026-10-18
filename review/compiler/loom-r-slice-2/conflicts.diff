@@ -1,0 +1,318 @@
+diff --cc internal/ir/call_targets_guard_test.go
+index 8dc1895d,30051887..00000000
+--- a/internal/ir/call_targets_guard_test.go
++++ b/internal/ir/call_targets_guard_test.go
+@@@ -181,14 -191,176 +191,182 @@@ func checkCallTargetReaders(t *testing.
+  
+  // callTargetExports is the export data of the packages TestCallTargetReaders reads and everything they import, their
+  // tests included, a product built ahead so the test runs no go.
+- func callTargetExports(t *testing.T) string {
++ func callTargetExports(t *testing.T, selected string) string {
+  	t.Helper()
+++<<<<<<< HEAD
+ +	// leakcheck imports native and is otherwise listed only as a dependency of native's
+ +	// external test variant. Name it directly so its ordinary import path has export data.
+ +	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow", "./internal/leakcheck")
+++=======
++ 	pkg := "./internal/" + selected
++ 	inputs := callTargetExportInputs(t, selected)
++ 	root, err := filepath.Abs("../..")
++ 	if err != nil {
++ 		t.Fatal(err)
++ 	}
++ 	return buildcache.Product(t, inputs, func(directory string) error {
++ 		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
++ 		defer cancel()
++ 		goTool, err := toolchain.Path("go")
++ 		if err != nil {
++ 			return err
++ 		}
++ 		command := exec.CommandContext(ctx, goTool, "list", "-trimpath", "-buildvcs=false", "-export", "-deps", "-test", "-json", pkg)
++ 		command.Dir = root
++ 		command.Env = toolchain.Env()
++ 		output, err := command.Output()
++ 		if err != nil {
++ 			return fmt.Errorf("export listing: %w", err)
++ 		}
++ 		decoder := json.NewDecoder(bytes.NewReader(output))
++ 		var packages []buildcache.ListedPackage
++ 		if err := os.Mkdir(filepath.Join(directory, "exports"), 0755); err != nil {
++ 			return err
++ 		}
++ 		for {
++ 			var pkg buildcache.ListedPackage
++ 			if err := decoder.Decode(&pkg); err == io.EOF {
++ 				break
++ 			} else if err != nil {
++ 				return err
++ 			}
++ 			if relative, err := filepath.Rel(root, pkg.Dir); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
++ 				pkg.Dir = filepath.ToSlash(relative)
++ 			} else {
++ 				pkg.Dir = ""
++ 			}
++ 			for _, names := range []*[]string{&pkg.GoFiles, &pkg.TestGoFiles, &pkg.XTestGoFiles} {
++ 				kept := (*names)[:0]
++ 				for _, name := range *names {
++ 					if !filepath.IsAbs(name) {
++ 						kept = append(kept, name)
++ 					}
++ 				}
++ 				*names = kept
++ 			}
++ 			if pkg.Export != "" {
++ 				data, err := callTargetExportMember(pkg.Export)
++ 				if err != nil {
++ 					return err
++ 				}
++ 				pkg.Export = fmt.Sprintf("exports/%d.a", len(packages))
++ 				if err := os.WriteFile(filepath.Join(directory, pkg.Export), data, 0644); err != nil {
++ 					return err
++ 				}
++ 			}
++ 			packages = append(packages, pkg)
++ 		}
++ 		encoded, err := json.Marshal(packages)
++ 		if err != nil {
++ 			return err
++ 		}
++ 		return os.WriteFile(filepath.Join(directory, "listing.json"), encoded, 0644)
++ 	})
+++>>>>>>> e1d03f97 (Re-cut Loom compiler slice 2 on current main)
++ }
++ 
++ func callTargetExportInputs(t *testing.T, selected string) buildcache.Inputs {
++ 	t.Helper()
++ 	pkg := "./internal/" + selected
++ 	inputs, err := buildcache.GoTestInputs("", "listing.json", pkg, nil, nil)
++ 	if err != nil {
++ 		t.Fatal(err)
++ 	}
++ 	inputs.Name = "call-target-export-members " + selected
++ 	inputs.Files = append(inputs.Files, "internal/ir/call_targets_guard_test.go")
++ 	inputs.Flags = append(inputs.Flags, "go list -trimpath -buildvcs=false -export -deps -test -json; retain __.PKGDEF")
++ 	return inputs
++ }
++ 
++ // go/importer reads __.PKGDEF, not executable object members. Keep that member
++ // in its original ar envelope, so imports use the same compiler export bytes
++ // without copying every dependency's machine code into each reader product.
++ func callTargetExportMember(path string) ([]byte, error) {
++ 	file, err := os.Open(path)
++ 	if err != nil {
++ 		return nil, err
++ 	}
++ 	defer file.Close()
++ 	header := make([]byte, 68)
++ 	if _, err := io.ReadFull(file, header); err != nil {
++ 		return nil, err
++ 	}
++ 	if string(header[:8]) != "!<arch>\n" || strings.TrimSpace(string(header[8:24])) != "__.PKGDEF" || string(header[66:68]) != "`\n" {
++ 		return nil, fmt.Errorf("unexpected Go export archive %s", path)
++ 	}
++ 	size, err := strconv.Atoi(strings.TrimSpace(string(header[56:66])))
++ 	if err != nil || size < 0 {
++ 		return nil, fmt.Errorf("invalid export member size in %s", path)
++ 	}
++ 	data := make([]byte, len(header)+size+size%2)
++ 	copy(data, header)
++ 	if _, err := io.ReadFull(file, data[len(header):len(header)+size]); err != nil {
++ 		return nil, err
++ 	}
++ 	if size%2 != 0 {
++ 		data[len(data)-1] = '\n'
++ 	}
++ 	return data, nil
++ }
++ 
++ // Not parallel: discover each key before the archive cases start, avoiding
++ // four simultaneous dependency listings on one four-CPU worker. Archive cases
++ // still prepare themselves when selected alone; main supplies their input index.
++ func TestCallTargetExportInputsNative(t *testing.T) {
++ 	callTargetExportInputs(t, "native")
++ }
++ 
++ // Not parallel: discover keys serially before parallel archive preparation.
++ func TestCallTargetExportInputsLower(t *testing.T) {
++ 	callTargetExportInputs(t, "lower")
++ }
++ 
++ // Not parallel: discover keys serially before parallel archive preparation.
++ func TestCallTargetExportInputsFresh(t *testing.T) {
++ 	callTargetExportInputs(t, "fresh")
++ }
++ 
++ // Not parallel: discover keys serially before parallel archive preparation.
++ func TestCallTargetExportInputsFlow(t *testing.T) {
++ 	callTargetExportInputs(t, "flow")
++ }
++ 
++ func TestProduct_CallTargetReaderArchivesNative(t *testing.T) {
++ 	t.Parallel()
++ 	callTargetExports(t, "native")
++ }
++ 
++ func TestProduct_CallTargetReaderArchivesLower(t *testing.T) {
++ 	t.Parallel()
++ 	callTargetExports(t, "lower")
++ }
++ 
++ func TestProduct_CallTargetReaderArchivesFresh(t *testing.T) {
++ 	t.Parallel()
++ 	callTargetExports(t, "fresh")
++ }
++ 
++ func TestProduct_CallTargetReaderArchivesFlow(t *testing.T) {
++ 	t.Parallel()
++ 	callTargetExports(t, "flow")
++ }
++ 
++ func TestCallTargetReadersNative(t *testing.T) {
++ 	t.Parallel()
++ 	checkCallTargetReaders(t, "native")
++ }
++ 
++ func TestCallTargetReadersLower(t *testing.T) {
++ 	t.Parallel()
++ 	checkCallTargetReaders(t, "lower")
++ }
++ 
++ func TestCallTargetReadersFresh(t *testing.T) {
++ 	t.Parallel()
++ 	checkCallTargetReaders(t, "fresh")
+  }
+  
+- func TestProduct_CallTargetExports(t *testing.T) {
++ func TestCallTargetReadersFlow(t *testing.T) {
+  	t.Parallel()
+- 	callTargetExports(t)
++ 	checkCallTargetReaders(t, "flow")
+  }
+diff --cc internal/native/runtime/adamic.h
+index f8273026,d18e1e39..00000000
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@@ -1041,8 -899,10 +1041,14 @@@ adamic_primitive adamic_ordinary_to_pri
+  // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+  // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+  // Error(message), and adamic_uncaught the panic of an error nothing caught.
+++<<<<<<< HEAD
+ +extern _Thread_local adamic_object *adamic_thrown;
+++=======
++ extern adamic_object *adamic_thrown;
++ // NULL is an omitted or undefined message; its empty fallback is not an own field.
+++>>>>>>> e1d03f97 (Re-cut Loom compiler slice 2 on current main)
+  adamic_object *adamic_error_new(adamic_string *message);
++ const char *adamic_error_field_name(const adamic_object *object, const char *name);
+  _Noreturn void adamic_uncaught(void);
+  
+  // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+diff --cc internal/native/runtime/exceptions.c
+index a4fc0890,7d1acc6a..00000000
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@@ -21,40 -29,9 +29,46 @@@ adamic_object *adamic_error_new(adamic_
+  	return error;
+  }
+  
+++<<<<<<< HEAD
+ +// Get must stay inside the loop: the first method or getter can change the second.
+ +adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic_primitive_hint hint, adamic_primitive_get get) {
+ +	adamic_primitive empty = {adamic_primitive_undefined, {.reference = NULL}};
+ +	if (adamic_thrown != NULL) { return empty; }
+ +	if (hint != adamic_hint_default && hint != adamic_hint_number && hint != adamic_hint_string) {
+ +		static const char message[] = "compiler bug: invalid primitive hint";
+ +		adamic_panic(message, sizeof message - 1);
+ +	}
+ +	const char *names[2] = {"valueOf", "toString"};
+ +	if (hint == adamic_hint_string) { names[0] = "toString"; names[1] = "valueOf"; }
+ +	for (size_t i = 0; i < 2; i++) {
+ +		adamic_primitive_method method = get(receiver, names[i]);
+ +		if (adamic_thrown != NULL) { adamic_release(method.owner); return empty; }
+ +		if (method.call == NULL) { adamic_release(method.owner); continue; }
+ +		adamic_primitive result = method.call(receiver, method.owner);
+ +		adamic_release(method.owner);
+ +		if (adamic_thrown != NULL) { return empty; }
+ +		if (result.kind != adamic_primitive_object) { return result; }
+ +		adamic_release(result.value.reference);
+ +	}
+ +	// A JavaScript failure owns an Error on the pending word, never a terminal panic.
+ +	// Build these rare strings rather than adding mutable global literal caches.
+ +	static const char name[] = "TypeError";
+ +	static const char message[] = "Cannot convert object to primitive value";
+ +	adamic_string *text = adamic_string_allocate(sizeof message - 1);
+ +	memcpy((char *)text->bytes, message, sizeof message - 1);
+ +	adamic_object *error = adamic_error_new(text);
+ +	adamic_release(text);
+ +	adamic_string *type_name = adamic_string_allocate(sizeof name - 1);
+ +	memcpy((char *)type_name->bytes, name, sizeof name - 1);
+ +	adamic_release(error->slots[0].reference);
+ +	error->slots[0].reference = type_name;
+ +	adamic_thrown = error;
+ +	return empty;
+++=======
++ // Public lookup sees Error.prototype.message without creating an own property.
++ const char *adamic_error_field_name(const adamic_object *object, const char *name) {
++ 	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
+++>>>>>>> e1d03f97 (Re-cut Loom compiler slice 2 on current main)
+  }
+  
+  _Noreturn void adamic_uncaught(void) {
+diff --cc internal/native/runtime/object.c
+index b6b41102,46c69de8..00000000
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@@ -85,17 -59,8 +85,18 @@@ bool adamic_object_has(const adamic_obj
+  	return false;
+  }
+  
+ +void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index) {
+ +	uintptr_t pointer = (uintptr_t)shape;
+ +	if ((pointer & ~ADAMIC_SLOT_SHAPE_MASK) != 0) {
+ +		adamic_panic("shape address exceeds 48 bits", sizeof "shape address exceeds 48 bits" - 1);
+ +	}
+ +	uint64_t packed = index <= UINT16_MAX ? pointer | ((uint64_t)index << 48) : 0;
+ +	__atomic_store_n(&cache->packed, packed, __ATOMIC_RELAXED);
+ +	ADAMIC_TSAN_PAUSE(adamic_tsan_cache_publication);
+ +}
+ +
+  adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
++ 	name = adamic_error_field_name(object, name);
+  	adamic_object *mutable = (adamic_object *)object;
+  	for (size_t index = 0; index < object->shape->count; index++) {
+  		if (strcmp(object->shape->names[index], name) == 0) {
+@@@ -156,20 -119,19 +157,30 @@@ adamic_maybe_number adamic_object_maybe
+  
+  // Cache absence too, with count as the index, without adding a field to the object's shape.
+  adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+++<<<<<<< HEAD
+ +	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+ +	size_t slot = packed >> 48;
+ +	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
+ +		slot = object->shape->count;
+ +		for (size_t index = 0; index < object->shape->count; index++) {
+ +			if (strcmp(object->shape->names[index], name) == 0) {
+ +				slot = index;
+ +				break;
+ +			}
+++=======
++ 	name = adamic_error_field_name(object, name);
++ 	cache->shape = object->shape;
++ 	cache->index = object->shape->count;
++ 	for (size_t index = 0; index < object->shape->count; index++) {
++ 		if (strcmp(object->shape->names[index], name) == 0) {
++ 			cache->index = index;
++ 			break;
+++>>>>>>> e1d03f97 (Re-cut Loom compiler slice 2 on current main)
+  		}
+ +		adamic_slot_cache_store(cache, object->shape, slot);
+  	}
+ -	if (cache->index == object->shape->count) {
+ -		return NULL;
+ -	}
+ -	return &((adamic_object *)object)->slots[cache->index];
+ +	if (slot == object->shape->count) { return NULL; }
+ +	return &((adamic_object *)object)->slots[slot];
+  }
+  
+  // Both public reads use the worker's readiness check; only their diagnostics differ.

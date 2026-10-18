@@ -1,0 +1,56 @@
+[
+  {
+    "path": "internal/lower/testdata/callback_widening/array_structural.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "interface Slice {readonly slice:()=>number[];}",
+    "expected": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callback_widening/array_structural.a:2:31: Adamic 0.1 refuses an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter; annotate parameter x as the element type number[]\n"
+  },
+  {
+    "path": "internal/lower/testdata/callback_widening/array_structural.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter incorrect",
+    "expected": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter",
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callback_widening/array_structural.a:3:31: Adamic 0.1 refuses an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter; annotate parameter x as the element type number[]\n"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "class Box {",
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "// a-check: refused this escaping a constructor through a closure before every field is set incorrect",
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a:5:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "class Counter {",
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "observed": "// a-check: refused this escaping a constructor through a closure before every field is set incorrect",
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a:5:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "path": "internal/lower/testdata/callback_widening/array_structural.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter",
+    "observed": "interface Slice {readonly slice:()=>number[];}"
+  },
+  {
+    "path": "internal/lower/testdata/callback_widening/array_structural.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter",
+    "observed": "// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter incorrect"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "observed": "class Box {"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "observed": "// a-check: refused this escaping a constructor through a closure before every field is set incorrect"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "mutant": "removed",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "observed": "class Counter {"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "mutant": "wrong",
+    "caught": true,
+    "compiler_exit": 1,
+    "expected": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "observed": "// a-check: refused this escaping a constructor through a closure before every field is set incorrect"
+  }
+]

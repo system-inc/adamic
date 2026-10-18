@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T08:49:14.455347675Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings"}
+{"Time":"2026-10-18T08:49:14.460788481Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-18T08:49:14.460844995Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== RUN   TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:14.460865144Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== PAUSE TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:14.460867418Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-18T08:49:14.460873907Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-18T08:49:14.46087571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== CONT  TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:14.643585473Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"--- PASS: TestMultiPushGap (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:14.643636819Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Elapsed":0.18}
+{"Time":"2026-10-18T08:49:14.643656639Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:14.64373171Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/cssstrings\t0.188s\n"}
+{"Time":"2026-10-18T08:49:14.643746182Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Elapsed":0.188}

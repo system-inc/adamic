@@ -1,0 +1,10 @@
+{"mutant": "colliding-flow-name", "caught": true, "exit": 1, "seconds": 1.017, "command": ["timeout", "180", "go", "test", "./cmd/adamic-gate", "-run", "^TestEveryTestHasOneDescriptiveName$", "-count=1", "-v", "-timeout=90s"], "marker": "lives in two or more packages"}
+{"mutant": "unlisted-empty-message", "caught": true, "exit": 1, "seconds": 3.541, "command": ["timeout", "180", "go", "test", "./internal/native", "-run", "^TestRuntimeStaticsAreListed$", "-count=1", "-v", "-timeout=90s"], "marker": "unlisted mutable storage empty_message"}
+{"mutant": "immortal-units-write", "caught": false, "exit": 1, "seconds": 20.273, "command": ["timeout", "180", "go", "test", "./internal/native", "-run", "^TestErrorUndefinedMessageHasNoOwnProperty$", "-count=1", "-v", "-timeout=90s", "-overlay=/workspace/adamic/review/compiler/loom-r-slice-2-2/fix-mutants/immortal-units-write/overlay.json"], "marker": "exit status 4"}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-slice-2-2/run-fix-probes.py", line 24, in <module>
+    execute('immortal-units-write','./internal/native','^TestErrorUndefinedMessageHasNoOwnProperty$','internal/native/runtime/string_index.c','if (adamic_reference_count(&string->heap) != 0) {','if (true) {','exit status 4')
+  File "/workspace/adamic/review/compiler/loom-r-slice-2-2/run-fix-probes.py", line 21, in execute
+    (out/'fix-mutants.json').write_text(json.dumps(results,indent=2)+'\n');print(json.dumps(row),flush=True);assert caught
+                                                                                                                    ^^^^^^
+AssertionError

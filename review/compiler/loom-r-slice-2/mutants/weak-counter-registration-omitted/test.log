@@ -1,0 +1,8 @@
+=== RUN   TestCountsAreRecordedTable
+=== PAUSE TestCountsAreRecordedTable
+=== CONT  TestCountsAreRecordedTable
+    counts_test.go:551: counts.md row 1103 is "| internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a | 4 | 2 | 5 | 6 | 4 | 0 |", want the row of "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a" (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts)
+--- FAIL: TestCountsAreRecordedTable (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.006s
+FAIL

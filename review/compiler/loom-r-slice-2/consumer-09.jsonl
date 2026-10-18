@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:17:52.954851781Z","Action":"start","Package":"github.com/system-inc/adamic/internal/leakcheck"}
+{"Time":"2026-10-18T00:17:52.956639218Z","Action":"run","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:17:52.956731225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== RUN   TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:52.956756042Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== PAUSE TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:52.956758466Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:17:52.956763133Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:17:52.956765466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== CONT  TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:52.956773919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"--- PASS: TestCountedBalance (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:52.956777133Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Elapsed":0}
+{"Time":"2026-10-18T00:17:52.956786097Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:52.957015337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"ok  \tgithub.com/system-inc/adamic/internal/leakcheck\t0.002s\n"}
+{"Time":"2026-10-18T00:17:52.957033555Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Elapsed":0.002}

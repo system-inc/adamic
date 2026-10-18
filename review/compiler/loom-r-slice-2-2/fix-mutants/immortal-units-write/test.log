@@ -1,0 +1,8 @@
+=== RUN   TestErrorUndefinedMessageHasNoOwnProperty
+=== PAUSE TestErrorUndefinedMessageHasNoOwnProperty
+=== CONT  TestErrorUndefinedMessageHasNoOwnProperty
+    error_message_test.go:50: /tmp/adamic-gate/TestErrorUndefinedMessageHasNoOwnProperty369202247/001/error-message: exit status 4
+--- FAIL: TestErrorUndefinedMessageHasNoOwnProperty (1.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.061s
+FAIL

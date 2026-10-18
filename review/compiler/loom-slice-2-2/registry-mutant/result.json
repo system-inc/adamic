@@ -1,0 +1,18 @@
+{
+  "mutant": "weak-counter-registration-omitted",
+  "caught": true,
+  "exit": 1,
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/registry-mutant/overlay.json",
+    "-run",
+    "^TestCountsAreRecordedTable$",
+    "-count=1",
+    "-v",
+    "-timeout=90s"
+  ],
+  "seconds": 37.005,
+  "catcher": "TestCountsAreRecordedTable"
+}

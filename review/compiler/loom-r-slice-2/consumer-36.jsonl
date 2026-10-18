@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:24:55.475211908Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-18T00:24:55.481272216Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication"}
+{"Time":"2026-10-18T00:24:55.481415048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication","Output":"=== RUN   TestSixShardUnionRejectsLossAndDuplication\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:55.48145012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication","Output":"=== PAUSE TestSixShardUnionRejectsLossAndDuplication\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:55.481452454Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication"}
+{"Time":"2026-10-18T00:24:55.481458913Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication"}
+{"Time":"2026-10-18T00:24:55.481461978Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication","Output":"=== CONT  TestSixShardUnionRejectsLossAndDuplication\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:55.481586724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication","Output":"--- PASS: TestSixShardUnionRejectsLossAndDuplication (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:55.481590699Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixShardUnionRejectsLossAndDuplication","Elapsed":0}
+{"Time":"2026-10-18T00:24:55.481603418Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:55.481743086Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.006s\n"}
+{"Time":"2026-10-18T00:24:55.481761444Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.007}

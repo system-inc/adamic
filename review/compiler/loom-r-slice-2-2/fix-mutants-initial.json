@@ -1,0 +1,60 @@
+[
+  {
+    "mutant": "colliding-flow-name",
+    "caught": true,
+    "exit": 1,
+    "seconds": 1.017,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ],
+    "marker": "lives in two or more packages"
+  },
+  {
+    "mutant": "unlisted-empty-message",
+    "caught": true,
+    "exit": 1,
+    "seconds": 3.541,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRuntimeStaticsAreListed$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ],
+    "marker": "unlisted mutable storage empty_message"
+  },
+  {
+    "mutant": "immortal-units-write",
+    "caught": false,
+    "exit": 1,
+    "seconds": 20.273,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestErrorUndefinedMessageHasNoOwnProperty$",
+      "-count=1",
+      "-v",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-2-2/fix-mutants/immortal-units-write/overlay.json"
+    ],
+    "marker": "exit status 4"
+  }
+]

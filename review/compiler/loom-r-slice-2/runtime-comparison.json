@@ -1,0 +1,68 @@
+[
+  {
+    "path": "internal/native/runtime/adamic.h",
+    "identical": true,
+    "source": [
+      "+// NULL is an omitted or undefined message; its empty fallback is not an own field.",
+      "+const char *adamic_error_field_name(const adamic_object *object, const char *name);"
+    ],
+    "recut": [
+      "+// NULL is an omitted or undefined message; its empty fallback is not an own field.",
+      "+const char *adamic_error_field_name(const adamic_object *object, const char *name);"
+    ]
+  },
+  {
+    "path": "internal/native/runtime/exceptions.c",
+    "identical": true,
+    "source": [
+      "+#include \"view_representations.h\"",
+      "+static const char *const absent_message_names[] = {\"name\", \"#message\"};",
+      "+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};",
+      "+static adamic_string empty_message = ADAMIC_STRING(\"\");",
+      "-\tadamic_object *error = adamic_object_new(&error_shape);",
+      "+\t// Undefined creates no own message property. Keep the inherited empty fallback",
+      "+\t// in private storage so ordinary and checked field reads share the same slot.",
+      "+\tadamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);",
+      "-\terror->slots[1].reference = adamic_retain(message);",
+      "+\terror->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);",
+      "+\tadamic_object_field_types(error)[0] = adamic_rep_string;",
+      "+\tadamic_object_field_types(error)[1] = adamic_rep_string;",
+      "+// Public lookup sees Error.prototype.message without creating an own property.",
+      "+const char *adamic_error_field_name(const adamic_object *object, const char *name) {",
+      "+\treturn object->shape == &absent_message_shape && strcmp(name, \"message\") == 0 ? \"#message\" : name;",
+      "+}",
+      "+"
+    ],
+    "recut": [
+      "+#include \"view_representations.h\"",
+      "+static const char *const absent_message_names[] = {\"name\", \"#message\"};",
+      "+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};",
+      "+static adamic_string empty_message = ADAMIC_STRING(\"\");",
+      "-\tadamic_object *error = adamic_object_new(&error_shape);",
+      "+\t// Undefined creates no own message property. Keep the inherited empty fallback",
+      "+\t// in private storage so ordinary and checked field reads share the same slot.",
+      "+\tadamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);",
+      "-\terror->slots[1].reference = adamic_retain(message);",
+      "+\terror->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);",
+      "+\tadamic_object_field_types(error)[0] = adamic_rep_string;",
+      "+\tadamic_object_field_types(error)[1] = adamic_rep_string;",
+      "+// Public lookup sees Error.prototype.message without creating an own property.",
+      "+const char *adamic_error_field_name(const adamic_object *object, const char *name) {",
+      "+\treturn object->shape == &absent_message_shape && strcmp(name, \"message\") == 0 ? \"#message\" : name;",
+      "+}",
+      "+"
+    ]
+  },
+  {
+    "path": "internal/native/runtime/object.c",
+    "identical": true,
+    "source": [
+      "+\tname = adamic_error_field_name(object, name);",
+      "+\tname = adamic_error_field_name(object, name);"
+    ],
+    "recut": [
+      "+\tname = adamic_error_field_name(object, name);",
+      "+\tname = adamic_error_field_name(object, name);"
+    ]
+  }
+]

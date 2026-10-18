@@ -1,0 +1,22 @@
+import type { Weak } from 'adamic';
+interface Box {
+	readonly label: string;
+}
+interface WeakTaker {
+	take(box: Weak<Box>): string;
+}
+class StrongTaker {
+	readonly tag: string;
+	constructor(tag: string) {
+		this.tag = tag;
+	}
+	take(box: Box | undefined): string {
+		return `${this.tag} ${box?.label ?? 'none'}`;
+	}
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const taker: WeakTaker = new StrongTaker(`t${n}`);
+	console.log(taker.take(box));
+}
+run(1);

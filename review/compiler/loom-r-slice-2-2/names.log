@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:54:18.757436194Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-18T08:54:18.760734565Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:54:18.760790999Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== RUN   TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:54:18.760813813Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== PAUSE TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:54:18.760815926Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:54:18.76081849Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:54:18.760820533Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== CONT  TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:54:19.051948611Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"    names_test.go:78: census of 18294 top-level tests; 18 pinned offenders\n"}
+{"Time":"2026-10-18T08:54:19.052139155Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"--- PASS: TestEveryTestHasOneDescriptiveName (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:54:19.052148498Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Elapsed":0.29}
+{"Time":"2026-10-18T08:54:19.052171753Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:54:19.053041247Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t0.295s\n"}
+{"Time":"2026-10-18T08:54:19.053066294Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.296}

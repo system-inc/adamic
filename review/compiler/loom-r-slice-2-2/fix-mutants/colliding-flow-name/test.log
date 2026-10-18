@@ -1,0 +1,9 @@
+=== RUN   TestEveryTestHasOneDescriptiveName
+=== PAUSE TestEveryTestHasOneDescriptiveName
+=== CONT  TestEveryTestHasOneDescriptiveName
+    names_test.go:78: census of 18294 top-level tests; 18 pinned offenders
+    names_test.go:80: TestCallbackWideningBooleanMap (internal/flow/callback_widening_test.go), TestCallbackWideningBooleanMap (internal/oracle/callback_widening_test.go): identifier "CallbackWideningBooleanMap" lives in two or more packages (internal/flow, internal/oracle)
+--- FAIL: TestEveryTestHasOneDescriptiveName (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-gate	0.263s
+FAIL

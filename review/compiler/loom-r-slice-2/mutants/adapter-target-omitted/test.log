@@ -1,0 +1,8 @@
+=== RUN   TestCallbackAdapterTargets
+=== PAUSE TestCallbackAdapterTargets
+=== CONT  TestCallbackAdapterTargets
+    callback_adapter_test.go:12: ir.ArrayMap: ir.FunctionTargets{Functions:[]int(nil), Unknown:true}
+--- FAIL: TestCallbackAdapterTargets (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.012s
+FAIL
