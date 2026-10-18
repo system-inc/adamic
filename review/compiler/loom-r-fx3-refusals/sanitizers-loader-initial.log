@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-fx3-refusals/sanitizers.py", line 18, in <module>
+    assert (gotjs.returncode,gotjs.stdout,gotjs.stderr)==(expected.returncode,expected.stdout,expected.stderr)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
