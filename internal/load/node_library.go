@@ -8,6 +8,9 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
@@ -67,19 +70,60 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 	return file != nil && strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
-// Preserve the existing console lowerer's declaration identity while letting
-// the pinned Node global Console interface merge. The package itself is untouched.
-func nodePrelude() string {
-	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
-	// The project overlay names Console; its standalone methods must not
-	// shadow the official Node interface inherited by the global declaration.
-	source = strings.Replace(source, "interface Console {\n\tlog(message: string): void;\n\terror(message: string): void;\n}\n", "", 1)
-	start := strings.Index(source, "declare const process: {")
-	if start >= 0 {
-		end := strings.Index(source[start:], "\n};")
-		if end >= 0 {
-			source = source[:start] + "declare var process: NodeJS.Process;" + source[start+end+3:]
+// Match top-level declarations, not console method signatures. The standalone
+// prelude has only console; the project overlay adds Console and process together.
+func nodePrelude(source string, requiredOverlay ...string) (string, error) {
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(preludePath), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(preludePath))}, source, core.ScriptKindTS)
+	if len(file.Diagnostics()) != 0 {
+		return "", fmt.Errorf("load: cannot adapt malformed Node prelude")
+	}
+	declarations := make(map[string]*ast.Node)
+	for _, statement := range file.Statements.Nodes {
+		names := []string{}
+		switch statement.Kind {
+		case ast.KindInterfaceDeclaration:
+			if statement.Name().Text() == "Console" {
+				names = append(names, "Console")
+			}
+		case ast.KindVariableStatement:
+			list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes
+			for _, declaration := range list {
+				name := declaration.Name()
+				if name.Kind == ast.KindIdentifier && (name.Text() == "console" || name.Text() == "process") {
+					if len(list) != 1 {
+						return "", fmt.Errorf("load: Node prelude %s must have its own declaration", name.Text())
+					}
+					names = append(names, name.Text())
+				}
+			}
+		}
+		for _, name := range names {
+			if declarations[name] != nil {
+				return "", fmt.Errorf("load: duplicate %s declaration in Node prelude", name)
+			}
+			declarations[name] = statement
 		}
 	}
-	return source
+	required := append([]string{"console"}, requiredOverlay...)
+	if declarations["Console"] != nil || declarations["process"] != nil {
+		required = append(required, "Console", "process")
+	}
+	for _, name := range required {
+		if declarations[name] == nil {
+			return "", fmt.Errorf("load: Node prelude is missing the %s declaration", name)
+		}
+	}
+	replacements := map[string]string{"console": "declare var console: Console;", "Console": "", "process": "declare var process: NodeJS.Process;"}
+	// Work backwards so the original parser spans remain valid. Keep leading
+	// comments and whitespace: Pos includes trivia before the declaration.
+	for index := len(file.Statements.Nodes) - 1; index >= 0; index-- {
+		statement := file.Statements.Nodes[index]
+		for name, declaration := range declarations {
+			if declaration == statement {
+				start := scanner.GetTokenPosOfNode(statement, file, false)
+				source = source[:start] + replacements[name] + source[statement.End():]
+			}
+		}
+	}
+	return source, nil
 }

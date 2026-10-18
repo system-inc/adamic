@@ -1234,5 +1234,10 @@ void *adamic_library_identity(size_t index);
 #include "node_fs_directory.h"
 
 #include "node_process.h"
+adamic_maybe_number adamic_process_exit_code(void);
+void adamic_process_set_exit_code(adamic_maybe_number code);
+void adamic_process_exit(adamic_maybe_number code);
+_Noreturn void adamic_process_exit_now(int code);
+int adamic_process_status(void);
 adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
 adamic_string *adamic_process_environment(const adamic_string *name);
