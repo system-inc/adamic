@@ -1,0 +1,13 @@
+Rebase three narrow lowering refusals onto pinned main
+
+Apply only 088a2798's own change for items 127, 128 and 130 on dbdf977f5b.
+Preserve main's library spread validation and the named native agreement registry.
+
+Assumption: existing lower testdata stays outside the oracle corpus. No new
+oracle fixture or runtime feature set is introduced. One completed Linux counts
+regeneration leaves the table unchanged; the initial aggregate timeout wrote no
+table. The four recorded guard mutants fail their intended assertions.
+
+Focused tests, 62 reader package selections, guards, Node comparisons with
+sanitizers, traced products, reader-only rows and vet pass. Optional external
+corpora and full packages or gates remain outside this worker run.

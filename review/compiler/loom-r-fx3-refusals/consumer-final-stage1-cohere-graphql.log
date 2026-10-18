@@ -1,0 +1,14 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts (0.11s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts (1.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	1.136s

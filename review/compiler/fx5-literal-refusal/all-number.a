@@ -1,0 +1,3 @@
+// a-check: refused union-typed array built from a narrower literal
+const items: (string | number)[] = [1, 2];
+console.log(`${typeof items[0]} ${items[0]}`);

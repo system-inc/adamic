@@ -1,0 +1,12 @@
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== CONT  TestBuildRevisions
+=== CONT  TestCompilerCacheIncludesSHA
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== NAME  TestBuildRevisions
+    command_test.go:340: build admission-compiler f3ac74b28190 hit 0.00
+--- PASS: TestBuildRevisions (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.037s

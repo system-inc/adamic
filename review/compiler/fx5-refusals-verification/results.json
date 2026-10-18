@@ -1,0 +1,26 @@
+{
+  "base": "fd27bb0e7446688e3bdf0d0cc0cbafe668d94373",
+  "fix": "eecbf001",
+  "initial_lower": {
+    "pass": false,
+    "seconds": 87.507,
+    "failed_fixture_tests": 6
+  },
+  "final_lower": {
+    "pass": true,
+    "seconds": 37.201
+  },
+  "call_target_readers": {
+    "pass": true,
+    "seconds": 1.604
+  },
+  "counts": {
+    "pass": true,
+    "seconds": 80.828
+  },
+  "lane": {
+    "pass": true,
+    "seconds": 2.4
+  },
+  "compiler_changed": false
+}
