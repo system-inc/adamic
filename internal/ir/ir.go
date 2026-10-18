@@ -26,6 +26,14 @@ type Program struct {
 	CheckedFields SortedMap[string, bool]
 	NonNullChecks NonNullCheckCounts
 	Async         *AsyncProgram
+	// CheckedWrites marks fields whose wider TypeScript views require actual-shape checks.
+	CheckedWrites   SortedMap[string, bool]
+	CheckedElements bool
+	WriteChecks     []WriteCheck
+	// WriteContracts retain allocation declarations and their directional type proofs.
+	WriteContracts []*FieldContract
+	// ContractTypeNames is diagnostic metadata, never evidence for a write.
+	ContractTypeNames SortedMap[int, string]
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -398,8 +406,10 @@ type (
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
 		// Record uses counted own-key storage when indexed aliases can add fields.
-		Record          bool
-		GraphTypes      []int
+		Record     bool
+		GraphTypes []int
+		// ContractType is the allocation declaration, even when a later source view is broader.
+		ContractType    int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -458,6 +468,7 @@ type (
 	ArrayLiteral struct {
 		GraphTypes []int
 
+		Never    bool
 		Element  Type
 		Elements []Expression
 		Spread   []bool
@@ -519,9 +530,10 @@ type (
 
 	// ArrayPush is Array.push(Value): it appends and is the new length.
 	ArrayPush struct {
-		Array   Expression
-		Value   Expression
-		Element Type
+		WriteOrigin WriteCheck
+		Array       Expression
+		Value       Expression
+		Element     Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site int
@@ -663,6 +675,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		WriteOrigin         WriteCheck
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -674,6 +687,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		WriteOrigin                      WriteCheck
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -825,6 +839,7 @@ type (
 
 	// MapSet is map.set(Key, Value), which is the map.
 	MapSet struct {
+		WriteOrigin     WriteCheck
 		Map, Key, Value Expression
 		KeyType         Type
 		ValueType       Type
@@ -924,8 +939,34 @@ type (
 	FileStatus struct{ Path Expression }
 )
 
+// ContractField is one required or optional member of a reference allocation contract.
+type ContractField struct {
+	Name     string
+	Optional bool
+	Contract *FieldContract
+}
+
+// FieldContract preserves a declared domain and directional proofs independently of its payload.
+type FieldContract struct {
+	NullishOnly  bool
+	TypeID       int
+	Reference    bool
+	Structural   bool
+	ProvenWrites []int
+	ProvenFields []int
+	Fields       []ContractField
+	Kind         Type
+	Declared     string
+	Nullable     bool
+	Allowed      []Expression
+}
+
+// WriteCheck is one emitted actual-shape write check.
+type WriteCheck struct{ Where, Expression string }
+
 // Field is one field of an object literal.
 type Field struct {
+	Contract *FieldContract
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
 	Name          string
@@ -1191,6 +1232,7 @@ type (
 	// SetIndex is array[index] = value, at an index the array has: anywhere else it panics, in both
 	// backends, where JavaScript would grow the array or leave a hole.
 	SetIndex struct {
+		WriteOrigin         WriteCheck
 		Array, Index, Value Expression
 		Element             Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1200,7 +1242,11 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
+		Record     bool // write into counted own-key storage
+		WriteCheck string
+		// WriteOrigin lets final allocation contracts protect aliases lowered earlier.
+		WriteOrigin   WriteCheck
+		WriteType     int
 		Uninitialized bool
 		Object        Expression
 		Name          string
@@ -1335,3 +1381,13 @@ func (p *Program) HasInheritance() bool {
 }
 
 func (ParallelMap) Type() Type { return Array }
+
+// ContractContainer attaches an immutable slot declaration to a fresh allocation.
+// It never changes an existing alias's declaration.
+type ContractContainer struct {
+	Value          Expression
+	Contract       *FieldContract
+	AllocationType int
+}
+
+func (value ContractContainer) Type() Type { return value.Value.Type() }

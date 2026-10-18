@@ -1,0 +1,281 @@
+=== RUN   TestMixedTupleSpreadIsNotYet
+=== PAUSE TestMixedTupleSpreadIsNotYet
+=== RUN   TestCensusOverloadReturnProof
+=== PAUSE TestCensusOverloadReturnProof
+=== RUN   TestClassFeaturesPrivateStorage
+=== PAUSE TestClassFeaturesPrivateStorage
+=== RUN   TestInheritanceKeepsNominalTupleDestructuring
+=== PAUSE TestInheritanceKeepsNominalTupleDestructuring
+=== RUN   TestClockGenericReturnsT01Shapes
+=== PAUSE TestClockGenericReturnsT01Shapes
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestConstEnumErasesRuntimeObject
+=== PAUSE TestConstEnumErasesRuntimeObject
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== PAUSE TestDefaultTaggedInterfaceAdmission
+=== RUN   TestLibraryLanguageBoundaries
+=== PAUSE TestLibraryLanguageBoundaries
+=== RUN   TestNodeFSFileScratchOptionsBorrow
+=== PAUSE TestNodeFSFileScratchOptionsBorrow
+=== RUN   TestAMethodReadAsAValueIsRefused
+=== PAUSE TestAMethodReadAsAValueIsRefused
+=== RUN   TestNamespaceReceiverRefusal
+=== PAUSE TestNamespaceReceiverRefusal
+=== RUN   TestNestedBodylessDeclarationsAreLoud
+=== PAUSE TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== RUN   TestPrimitiveAdmittingSlotsUseBoxes
+=== PAUSE TestPrimitiveAdmittingSlotsUseBoxes
+=== RUN   TestPrivateAndPublicStaticsAgreeWithNode
+=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+=== PAUSE TestViewObjectContractsAreAvailableToEraser
+=== CONT  TestMixedTupleSpreadIsNotYet
+=== CONT  TestViewObjectContractsAreAvailableToEraser
+=== CONT  TestPrivateAndPublicStaticsAgreeWithNode
+=== CONT  TestPrimitiveAdmittingSlotsUseBoxes
+=== CONT  TestNodeFSFileScratchOptionsBorrow
+--- PASS: TestPrimitiveAdmittingSlotsUseBoxes (0.37s)
+=== CONT  TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== RUN   TestClockGenericReturnsT01Shapes/callable
+=== PAUSE TestClockGenericReturnsT01Shapes/callable
+=== RUN   TestClockGenericReturnsT01Shapes/constructable
+=== PAUSE TestClockGenericReturnsT01Shapes/constructable
+=== RUN   TestClockGenericReturnsT01Shapes/indexed
+=== PAUSE TestClockGenericReturnsT01Shapes/indexed
+=== RUN   TestClockGenericReturnsT01Shapes/container_intersection
+=== PAUSE TestClockGenericReturnsT01Shapes/container_intersection
+=== RUN   TestClockGenericReturnsT01Shapes/nested_callable
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_callable
+=== RUN   TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== PAUSE TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestLibraryLanguageBoundaries
+=== RUN   TestLibraryLanguageBoundaries/array
+=== PAUSE TestLibraryLanguageBoundaries/array
+=== RUN   TestLibraryLanguageBoundaries/hidden_array
+=== PAUSE TestLibraryLanguageBoundaries/hidden_array
+=== RUN   TestLibraryLanguageBoundaries/parameter
+=== PAUSE TestLibraryLanguageBoundaries/parameter
+=== RUN   TestLibraryLanguageBoundaries/prototype
+=== PAUSE TestLibraryLanguageBoundaries/prototype
+=== RUN   TestLibraryLanguageBoundaries/optional_object
+=== PAUSE TestLibraryLanguageBoundaries/optional_object
+=== RUN   TestLibraryLanguageBoundaries/optional_spread
+=== PAUSE TestLibraryLanguageBoundaries/optional_spread
+=== RUN   TestLibraryLanguageBoundaries/destructured_write
+=== PAUSE TestLibraryLanguageBoundaries/destructured_write
+=== RUN   TestLibraryLanguageBoundaries/dynamic_receiver
+=== PAUSE TestLibraryLanguageBoundaries/dynamic_receiver
+=== RUN   TestLibraryLanguageBoundaries/constructor_alias
+=== PAUSE TestLibraryLanguageBoundaries/constructor_alias
+=== RUN   TestLibraryLanguageBoundaries/constructor_passed
+=== PAUSE TestLibraryLanguageBoundaries/constructor_passed
+=== RUN   TestLibraryLanguageBoundaries/inherited_field
+=== PAUSE TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestConstEnumErasesRuntimeObject
+--- PASS: TestMixedTupleSpreadIsNotYet (0.38s)
+=== CONT  TestEnumNameEnumeration
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.40s)
+=== CONT  TestCensusOverloadReturnProof
+=== RUN   TestCensusOverloadReturnProof/parameter_return
+=== PAUSE TestCensusOverloadReturnProof/parameter_return
+=== RUN   TestCensusOverloadReturnProof/lying_return
+=== PAUSE TestCensusOverloadReturnProof/lying_return
+=== RUN   TestCensusOverloadReturnProof/rebound_parameter
+=== PAUSE TestCensusOverloadReturnProof/rebound_parameter
+=== RUN   TestCensusOverloadReturnProof/captured_write
+=== PAUSE TestCensusOverloadReturnProof/captured_write
+=== RUN   TestCensusOverloadReturnProof/empty_return
+=== PAUSE TestCensusOverloadReturnProof/empty_return
+=== CONT  TestInheritanceKeepsNominalTupleDestructuring
+--- PASS: TestEnumNameEnumeration (0.63s)
+=== CONT  TestClassFeaturesPrivateStorage
+--- PASS: TestPrivateAndPublicStaticsAgreeWithNode (1.06s)
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+--- PASS: TestInheritanceKeepsNominalTupleDestructuring (0.80s)
+=== CONT  TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== RUN   TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestNamespaceReceiverRefusal
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+--- PASS: TestConstEnumErasesRuntimeObject (0.97s)
+=== CONT  TestAMethodReadAsAValueIsRefused
+=== RUN   TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== PAUSE TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== RUN   TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== PAUSE TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== RUN   TestAMethodReadAsAValueIsRefused/in_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/in_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/read_through_this
+=== PAUSE TestAMethodReadAsAValueIsRefused/read_through_this
+=== RUN   TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/an_array's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_array's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== RUN   TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== CONT  TestClockGenericReturnsT01Shapes/nested_readonly_fields
+--- PASS: TestNamespaceReceiverRefusal (0.18s)
+=== CONT  TestLibraryLanguageBoundaries/array
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+=== CONT  TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClockGenericReturnsT01Shapes/nested_callable
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+=== CONT  TestClockGenericReturnsT01Shapes/container_intersection
+--- PASS: TestClassFeaturesPrivateStorage (0.71s)
+=== CONT  TestClockGenericReturnsT01Shapes/indexed
+=== CONT  TestClockGenericReturnsT01Shapes/constructable
+=== CONT  TestClockGenericReturnsT01Shapes/callable
+=== RUN   TestParameterPropertiesSoundness/early_default
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+=== CONT  TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestLibraryLanguageBoundaries/constructor_passed
+--- PASS: TestClockGenericReturnsT01Shapes (0.00s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_readonly_fields (0.19s)
+    --- PASS: TestClockGenericReturnsT01Shapes/null_remains_distinct (0.23s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_callable (0.20s)
+    --- PASS: TestClockGenericReturnsT01Shapes/indexed (0.07s)
+    --- PASS: TestClockGenericReturnsT01Shapes/container_intersection (0.09s)
+    --- PASS: TestClockGenericReturnsT01Shapes/constructable (0.08s)
+    --- PASS: TestClockGenericReturnsT01Shapes/callable (0.15s)
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+=== CONT  TestLibraryLanguageBoundaries/constructor_alias
+--- PASS: TestParameterPropertiesSoundness (1.03s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.21s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.11s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.23s)
+    --- PASS: TestParameterPropertiesSoundness/inherited_initializer (0.18s)
+    --- PASS: TestParameterPropertiesSoundness/early_default (0.15s)
+    --- PASS: TestParameterPropertiesSoundness/field_initializer (0.13s)
+=== CONT  TestLibraryLanguageBoundaries/dynamic_receiver
+=== CONT  TestLibraryLanguageBoundaries/destructured_write
+=== CONT  TestLibraryLanguageBoundaries/optional_spread
+=== CONT  TestLibraryLanguageBoundaries/optional_object
+=== CONT  TestLibraryLanguageBoundaries/prototype
+=== CONT  TestLibraryLanguageBoundaries/parameter
+=== CONT  TestLibraryLanguageBoundaries/hidden_array
+=== CONT  TestCensusOverloadReturnProof/parameter_return
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+--- PASS: TestLibraryLanguageBoundaries (0.00s)
+    --- PASS: TestLibraryLanguageBoundaries/array (0.11s)
+    --- PASS: TestLibraryLanguageBoundaries/inherited_field (0.18s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_passed (0.16s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_alias (0.13s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_spread (0.11s)
+    --- PASS: TestLibraryLanguageBoundaries/dynamic_receiver (0.18s)
+    --- PASS: TestLibraryLanguageBoundaries/destructured_write (0.23s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_object (0.21s)
+    --- PASS: TestLibraryLanguageBoundaries/prototype (0.17s)
+    --- PASS: TestLibraryLanguageBoundaries/parameter (0.20s)
+    --- PASS: TestLibraryLanguageBoundaries/hidden_array (0.17s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+=== CONT  TestCensusOverloadReturnProof/captured_write
+=== CONT  TestCensusOverloadReturnProof/empty_return
+=== CONT  TestCensusOverloadReturnProof/rebound_parameter
+=== CONT  TestCensusOverloadReturnProof/lying_return
+=== CONT  TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== CONT  TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestAMethodReadAsAValueIsRefused/held_in_a_variable
+--- PASS: TestNodeFSFileScratchOptionsBorrow (4.04s)
+=== CONT  TestAMethodReadAsAValueIsRefused/an_array's_method
+--- PASS: TestCensusOverloadReturnProof (0.00s)
+    --- PASS: TestCensusOverloadReturnProof/parameter_return (0.18s)
+    --- PASS: TestCensusOverloadReturnProof/empty_return (0.18s)
+    --- PASS: TestCensusOverloadReturnProof/captured_write (0.18s)
+    --- PASS: TestCensusOverloadReturnProof/rebound_parameter (0.13s)
+    --- PASS: TestCensusOverloadReturnProof/lying_return (0.20s)
+=== CONT  TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.63s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.36s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.28s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.22s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.09s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.47s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.09s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.61s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.63s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.76s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.11s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.09s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.63s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.68s)
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+--- PASS: TestNestedBodylessDeclarationsAreLoud (0.00s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/missing_implementation (0.14s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/body_lowering (0.20s)
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== CONT  TestAMethodReadAsAValueIsRefused/read_through_this
+=== CONT  TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== CONT  TestAMethodReadAsAValueIsRefused/in_parentheses
+=== CONT  TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+--- PASS: TestAMethodReadAsAValueIsRefused (0.00s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/held_in_a_variable (0.18s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_array's_method (0.18s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function (0.20s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/read_through_this (0.15s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_interface's_method (0.10s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/in_parentheses (0.07s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/passed_as_a_callback (0.14s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow (0.64s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_on_its_object (0.62s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_through_parentheses (0.70s)
+PASS

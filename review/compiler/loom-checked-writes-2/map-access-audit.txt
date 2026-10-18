@@ -1,0 +1,38 @@
+internal/ir/ir.go:28:	// CheckedWrites marks fields whose wider TypeScript views require actual-shape checks.
+internal/ir/ir.go:29:	CheckedWrites   SortedMap[string, bool]
+internal/ir/ir.go:34:	// ContractTypeNames is diagnostic metadata, never evidence for a write.
+internal/ir/ir.go:35:	ContractTypeNames SortedMap[int, string]
+internal/ir/gob_map_test.go:16:	program := Program{CheckedWrites: SortedMap[string, bool]{}, ContractTypeNames: SortedMap[int, string]{},
+internal/ir/gob_map_test.go:23:		program.CheckedWrites[name] = index%2 == 0
+internal/ir/gob_map_test.go:24:		program.ContractTypeNames[index] = "contract " + name
+internal/ir/gob_map_test.go:50:	if !reflect.DeepEqual(read.CheckedWrites, program.CheckedWrites) || !reflect.DeepEqual(read.ContractTypeNames, program.ContractTypeNames) ||
+internal/lower/reference_contracts.go:14:	if l.result.ContractTypeNames == nil {
+internal/lower/reference_contracts.go:15:		l.result.ContractTypeNames = ir.SortedMap[int, string]{}
+internal/lower/reference_contracts.go:19:			l.result.ContractTypeNames[index+1] = l.checker.TypeToString(representative)
+internal/lower/reference_contracts.go:24:	l.result.ContractTypeNames[len(l.instantiated)] = l.checker.TypeToString(declared)
+internal/lower/reference_contracts.go:118:	if len(l.result.CheckedWrites) == 0 && !l.result.CheckedElements {
+internal/lower/write_contracts_finish.go:41:	if len(program.CheckedWrites) == 0 && !program.CheckedElements {
+internal/lower/write_contracts_finish.go:44:	if program.CheckedWrites == nil {
+internal/lower/write_contracts_finish.go:45:		program.CheckedWrites = ir.SortedMap[string, bool]{}
+internal/lower/write_contracts_finish.go:51:					program.CheckedWrites[field.Name] = true
+internal/lower/write_contracts_finish.go:68:			if write, ok := mapped.Interface().(ir.SetProperty); ok && write.WriteCheck == "" && write.WriteOrigin.Expression != "" && program.CheckedWrites[write.Name] {
+internal/lower/checked_results.go:45:	if l.result.CheckedWrites == nil {
+internal/lower/checked_results.go:46:		l.result.CheckedWrites = ir.SortedMap[string, bool]{}
+internal/lower/checked_results.go:49:		l.result.CheckedWrites[field.Name] = true
+internal/lower/checked_writes.go:30:	if l.result.CheckedWrites == nil {
+internal/lower/checked_writes.go:31:		l.result.CheckedWrites = ir.SortedMap[string, bool]{}
+internal/lower/checked_writes.go:34:		l.result.CheckedWrites[name] = true
+internal/lower/checked_writes.go:173:	if !l.result.CheckedWrites[name] {
+internal/javascript/javascript.go:856:			if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
+internal/javascript/javascript.go:878:		if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
+internal/javascript/javascript.go:889:		if len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
+internal/javascript/javascript.go:901:			allocationName := quote(e.program.ContractTypeNames[expression.ContractType])
+internal/lower/logical_assignment.go:106:				if l.result.CheckedWrites[text] {
+internal/lower/object.go:116:			if len(l.result.CheckedWrites) != 0 {
+internal/native/checked_writes.go:12:	rows := []string{fmt.Sprintf("{.type_id=%d, .declared=%s}", allocationType, cString(e.program.ContractTypeNames[allocationType]))}
+internal/native/emit_objects.go:269:	if (len(e.program.CheckedWrites) != 0 || e.program.CheckedElements) && contracts != nil {
+internal/native/emit_objects.go:279:	if len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
+internal/native/emit_objects.go:295:	if (len(e.program.CheckedWrites) != 0 || e.program.CheckedElements) && (contracts != nil || allocationType != 0) {
+internal/native/emit_objects.go:455:	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0}
+internal/native/object_metadata_test.go:43:	program.CheckedWrites = ir.SortedMap[string, bool]{"value": true}
+internal/native/object_metadata_test.go:51:	program.CheckedWrites = nil

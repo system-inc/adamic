@@ -1,0 +1,1405 @@
+{
+  "measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced",
+  "before": {
+    "checked relation": 227,
+    "no current relation refusal": 25,
+    "stopped": 263
+  },
+  "after": {
+    "checked relation": 309,
+    "no current relation refusal": 25,
+    "stopped": 181
+  },
+  "new_checked_site_ids": [
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    49,
+    60,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    84,
+    85,
+    86,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    104,
+    106,
+    107,
+    108,
+    109,
+    111,
+    113,
+    115,
+    118,
+    122,
+    137,
+    138,
+    139,
+    148,
+    153,
+    172,
+    174,
+    175,
+    186,
+    219,
+    238,
+    239,
+    240,
+    241,
+    257,
+    349,
+    350,
+    372,
+    374,
+    375,
+    376,
+    377,
+    425,
+    507,
+    508,
+    520,
+    524,
+    529,
+    531,
+    534,
+    535,
+    546,
+    550,
+    609,
+    614,
+    615
+  ],
+  "remaining_first_reasons": [
+    {
+      "reason": "a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 19,
+      "sites": [
+        {
+          "id": 1,
+          "where": "src/compiler/binder.ts:1034:95"
+        },
+        {
+          "id": 2,
+          "where": "src/compiler/binder.ts:1041:52"
+        },
+        {
+          "id": 3,
+          "where": "src/compiler/binder.ts:1047:102"
+        },
+        {
+          "id": 6,
+          "where": "src/compiler/binder.ts:1121:29"
+        },
+        {
+          "id": 13,
+          "where": "src/compiler/binder.ts:1723:29"
+        },
+        {
+          "id": 18,
+          "where": "src/compiler/binder.ts:2042:37"
+        },
+        {
+          "id": 19,
+          "where": "src/compiler/binder.ts:2049:38"
+        },
+        {
+          "id": 24,
+          "where": "src/compiler/binder.ts:2868:70"
+        },
+        {
+          "id": 25,
+          "where": "src/compiler/binder.ts:2874:56"
+        },
+        {
+          "id": 26,
+          "where": "src/compiler/binder.ts:2879:69"
+        },
+        {
+          "id": 27,
+          "where": "src/compiler/binder.ts:2887:37"
+        },
+        {
+          "id": 28,
+          "where": "src/compiler/binder.ts:2961:53"
+        },
+        {
+          "id": 32,
+          "where": "src/compiler/binder.ts:3733:29"
+        },
+        {
+          "id": 33,
+          "where": "src/compiler/binder.ts:3746:29"
+        },
+        {
+          "id": 56,
+          "where": "src/compiler/checker.ts:11702:35"
+        },
+        {
+          "id": 195,
+          "where": "src/compiler/checker.ts:28850:24"
+        },
+        {
+          "id": 196,
+          "where": "src/compiler/checker.ts:29059:34"
+        },
+        {
+          "id": 284,
+          "where": "src/compiler/checker.ts:39530:87"
+        },
+        {
+          "id": 286,
+          "where": "src/compiler/checker.ts:39536:106"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 11,
+      "sites": [
+        {
+          "id": 48,
+          "where": "src/compiler/checker.ts:10280:75"
+        },
+        {
+          "id": 388,
+          "where": "src/compiler/checker.ts:6483:418"
+        },
+        {
+          "id": 389,
+          "where": "src/compiler/checker.ts:6484:439"
+        },
+        {
+          "id": 390,
+          "where": "src/compiler/checker.ts:6485:373"
+        },
+        {
+          "id": 392,
+          "where": "src/compiler/checker.ts:7203:92"
+        },
+        {
+          "id": 397,
+          "where": "src/compiler/checker.ts:8352:170"
+        },
+        {
+          "id": 401,
+          "where": "src/compiler/checker.ts:9105:89"
+        },
+        {
+          "id": 402,
+          "where": "src/compiler/checker.ts:9112:92"
+        },
+        {
+          "id": 403,
+          "where": "src/compiler/checker.ts:9155:133"
+        },
+        {
+          "id": 404,
+          "where": "src/compiler/checker.ts:9338:77"
+        },
+        {
+          "id": 405,
+          "where": "src/compiler/checker.ts:9912:74"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type FlowNode seen as FlowNode[] | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 7,
+      "sites": [
+        {
+          "id": 7,
+          "where": "src/compiler/binder.ts:1365:79"
+        },
+        {
+          "id": 8,
+          "where": "src/compiler/binder.ts:1398:50"
+        },
+        {
+          "id": 9,
+          "where": "src/compiler/binder.ts:1403:100"
+        },
+        {
+          "id": 10,
+          "where": "src/compiler/binder.ts:1409:52"
+        },
+        {
+          "id": 12,
+          "where": "src/compiler/binder.ts:1419:53"
+        },
+        {
+          "id": 283,
+          "where": "src/compiler/checker.ts:39528:77"
+        },
+        {
+          "id": 285,
+          "where": "src/compiler/checker.ts:39535:79"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 7,
+      "sites": [
+        {
+          "id": 340,
+          "where": "src/compiler/checker.ts:49736:24"
+        },
+        {
+          "id": 341,
+          "where": "src/compiler/checker.ts:49742:63"
+        },
+        {
+          "id": 342,
+          "where": "src/compiler/checker.ts:49748:62"
+        },
+        {
+          "id": 343,
+          "where": "src/compiler/checker.ts:49751:20"
+        },
+        {
+          "id": 523,
+          "where": "src/compiler/program.ts:2824:96"
+        },
+        {
+          "id": 530,
+          "where": "src/compiler/program.ts:3270:13"
+        },
+        {
+          "id": 608,
+          "where": "src/compiler/utilities.ts:6129:41"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 6,
+      "sites": [
+        {
+          "id": 147,
+          "where": "src/compiler/checker.ts:19242:61"
+        },
+        {
+          "id": 199,
+          "where": "src/compiler/checker.ts:31056:43"
+        },
+        {
+          "id": 212,
+          "where": "src/compiler/checker.ts:33862:73"
+        },
+        {
+          "id": 224,
+          "where": "src/compiler/checker.ts:34989:48"
+        },
+        {
+          "id": 334,
+          "where": "src/compiler/checker.ts:48555:51"
+        },
+        {
+          "id": 335,
+          "where": "src/compiler/checker.ts:48575:59"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type FlowArrayMutation | FlowAssignment seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 5,
+      "sites": [
+        {
+          "id": 11,
+          "where": "src/compiler/binder.ts:1411:51"
+        },
+        {
+          "id": 16,
+          "where": "src/compiler/binder.ts:1820:27"
+        },
+        {
+          "id": 17,
+          "where": "src/compiler/binder.ts:2000:43"
+        },
+        {
+          "id": 20,
+          "where": "src/compiler/binder.ts:2066:27"
+        },
+        {
+          "id": 22,
+          "where": "src/compiler/binder.ts:2251:31"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 5,
+      "sites": [
+        {
+          "id": 210,
+          "where": "src/compiler/checker.ts:33274:47"
+        },
+        {
+          "id": 511,
+          "where": "src/compiler/parser.ts:2510:17"
+        },
+        {
+          "id": 515,
+          "where": "src/compiler/parser.ts:4573:25"
+        },
+        {
+          "id": 517,
+          "where": "src/compiler/parser.ts:8470:25"
+        },
+        {
+          "id": 518,
+          "where": "src/compiler/parser.ts:9633:63"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 5,
+      "sites": [
+        {
+          "id": 419,
+          "where": "src/compiler/emitter.ts:5461:39"
+        },
+        {
+          "id": 599,
+          "where": "src/compiler/transformers/utilities.ts:426:128"
+        },
+        {
+          "id": 600,
+          "where": "src/compiler/transformers/utilities.ts:426:47"
+        },
+        {
+          "id": 601,
+          "where": "src/compiler/transformers/utilities.ts:834:47"
+        },
+        {
+          "id": 602,
+          "where": "src/compiler/transformers/utilities.ts:846:45"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 4,
+      "sites": [
+        {
+          "id": 432,
+          "where": "src/compiler/factory/nodeFactory.ts:1354:32"
+        },
+        {
+          "id": 433,
+          "where": "src/compiler/factory/nodeFactory.ts:1364:16"
+        },
+        {
+          "id": 434,
+          "where": "src/compiler/factory/nodeFactory.ts:1372:16"
+        },
+        {
+          "id": 436,
+          "where": "src/compiler/factory/nodeFactory.ts:1385:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 4,
+      "sites": [
+        {
+          "id": 572,
+          "where": "src/compiler/transformers/es2015.ts:1708:21"
+        },
+        {
+          "id": 573,
+          "where": "src/compiler/transformers/es2015.ts:1828:21"
+        },
+        {
+          "id": 574,
+          "where": "src/compiler/transformers/es2015.ts:1832:21"
+        },
+        {
+          "id": 582,
+          "where": "src/compiler/transformers/es2015.ts:4832:54"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GenericType | ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 3,
+      "sites": [
+        {
+          "id": 119,
+          "where": "src/compiler/checker.ts:17439:20"
+        },
+        {
+          "id": 120,
+          "where": "src/compiler/checker.ts:17444:20"
+        },
+        {
+          "id": 121,
+          "where": "src/compiler/checker.ts:17448:20"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 3,
+      "sites": [
+        {
+          "id": 179,
+          "where": "src/compiler/checker.ts:2534:16"
+        },
+        {
+          "id": 411,
+          "where": "src/compiler/commandLineParser.ts:3795:12"
+        },
+        {
+          "id": 548,
+          "where": "src/compiler/programDiagnostics.ts:296:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 3,
+      "sites": [
+        {
+          "id": 552,
+          "where": "src/compiler/transformers/classFields.ts:2052:61"
+        },
+        {
+          "id": 594,
+          "where": "src/compiler/transformers/module/module.ts:2486:78"
+        },
+        {
+          "id": 596,
+          "where": "src/compiler/transformers/module/system.ts:1998:71"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type FlowCall seen as FlowNode, which can write BinaryExpression | CallExpression where CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 14,
+          "where": "src/compiler/binder.ts:1785:31"
+        },
+        {
+          "id": 21,
+          "where": "src/compiler/binder.ts:2244:35"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold; take it as undefined, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 177,
+          "where": "src/compiler/checker.ts:25223:16"
+        },
+        {
+          "id": 178,
+          "where": "src/compiler/checker.ts:25225:79"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 207,
+          "where": "src/compiler/checker.ts:32650:21"
+        },
+        {
+          "id": 208,
+          "where": "src/compiler/checker.ts:32674:21"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Symbol[] seen as (Symbol | undefined)[], which can write Symbol | undefined where Symbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 232,
+          "where": "src/compiler/checker.ts:35288:38"
+        },
+        {
+          "id": 330,
+          "where": "src/compiler/checker.ts:47697:20"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type false | FlowNode | undefined seen as false | FlowAssignment | FlowLabel | FlowReduceLabel | FlowStart | FlowSwitchClause | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 279,
+          "where": "src/compiler/checker.ts:39525:28"
+        },
+        {
+          "id": 281,
+          "where": "src/compiler/checker.ts:39526:13"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 280,
+          "where": "src/compiler/checker.ts:39525:53"
+        },
+        {
+          "id": 282,
+          "where": "src/compiler/checker.ts:39526:64"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 386,
+          "where": "src/compiler/checker.ts:6408:24"
+        },
+        {
+          "id": 605,
+          "where": "src/compiler/utilities.ts:12346:52"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 413,
+          "where": "src/compiler/emitter.ts:1483:36"
+        },
+        {
+          "id": 613,
+          "where": "src/compiler/visitorPublic.ts:604:12"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) => string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 435,
+          "where": "src/compiler/factory/nodeFactory.ts:1380:99"
+        },
+        {
+          "id": 437,
+          "where": "src/compiler/factory/nodeFactory.ts:1424:107"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 502,
+          "where": "src/compiler/factory/nodeFactory.ts:6677:27"
+        },
+        {
+          "id": 503,
+          "where": "src/compiler/factory/nodeFactory.ts:6698:27"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ClassStaticBlockDeclaration | PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 553,
+          "where": "src/compiler/transformers/classFields.ts:2460:36"
+        },
+        {
+          "id": 555,
+          "where": "src/compiler/transformers/classFields.ts:2506:41"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 566,
+          "where": "src/compiler/transformers/es2015.ts:1308:59"
+        },
+        {
+          "id": 587,
+          "where": "src/compiler/transformers/es2015.ts:822:62"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 567,
+          "where": "src/compiler/transformers/es2015.ts:1349:54"
+        },
+        {
+          "id": 568,
+          "where": "src/compiler/transformers/es2015.ts:1355:20"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 571,
+          "where": "src/compiler/transformers/es2015.ts:1591:29"
+        },
+        {
+          "id": 581,
+          "where": "src/compiler/transformers/es2015.ts:4583:48"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type PropertyName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 2,
+      "sites": [
+        {
+          "id": 577,
+          "where": "src/compiler/transformers/es2015.ts:2360:35"
+        },
+        {
+          "id": 578,
+          "where": "src/compiler/transformers/es2015.ts:2369:41"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ModuleDeclaration seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 23,
+          "where": "src/compiler/binder.ts:2353:30"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type SourceFile seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 29,
+          "where": "src/compiler/binder.ts:3109:30"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type { noInferenceFallback?: boolean | undefined; enclosingDeclaration: ModuleDeclaration; enclosingFile: SourceFile | undefined; flags: NodeBuilderFlags; ... 28 more ...; out: WriterContextOut; } seen as NodeBuilderContext, which can write Node | undefined where ModuleDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 45,
+          "where": "src/compiler/checker.ts:10220:31"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ... 5 more ... | VariableStatement)[] seen as Statement[], which can write Statement where ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ... 5 more ... | VariableStatement is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 46,
+          "where": "src/compiler/checker.ts:10234:129"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym?: never; } | { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym: Symbol | undefined; } seen as { introducesError: boolean; node: LeftHandSideExpression; }, which can write LeftHandSideExpression where Identifier | PropertyAccessEntityNameExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 47,
+          "where": "src/compiler/checker.ts:10272:60"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type AccessorDeclaration[] seen as T | (T | AccessorDeclaration)[] | AccessorDeclaration, which can write T | AccessorDeclaration where AccessorDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 53,
+          "where": "src/compiler/checker.ts:10893:32"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Map<__String, TransientSymbol> seen as SymbolTable | undefined, which can write Symbol where TransientSymbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 87,
+          "where": "src/compiler/checker.ts:13997:62"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type TransientSymbol[] seen as Symbol[], which can write Symbol where TransientSymbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 88,
+          "where": "src/compiler/checker.ts:14215:68"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 89,
+          "where": "src/compiler/checker.ts:14225:38"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IndexInfo[] seen as IndexInfo[], which can write IndexInfo where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 110,
+          "where": "src/compiler/checker.ts:16689:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IntrinsicType[] | undefined seen as TypeParameter[] | undefined, which can write TypeParameter where IntrinsicType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 114,
+          "where": "src/compiler/checker.ts:16961:69"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IntrinsicType[] seen as TypeParameter[], which can write TypeParameter where IntrinsicType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 116,
+          "where": "src/compiler/checker.ts:16972:93"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ResolvedType | TypeReference seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 135,
+          "where": "src/compiler/checker.ts:17711:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type StringLiteralType[] seen as Type[], which can write Type where StringLiteralType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 140,
+          "where": "src/compiler/checker.ts:18036:36"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type TypeVariable[] seen as (Type | undefined)[], which can write Type | undefined where TypeVariable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 142,
+          "where": "src/compiler/checker.ts:18245:30"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type AnonymousType seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 151,
+          "where": "src/compiler/checker.ts:20745:13"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type AnonymousType | DeferredTypeReference seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 152,
+          "where": "src/compiler/checker.ts:20745:74"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type NumberLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 165,
+          "where": "src/compiler/checker.ts:21691:66"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type StringLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 166,
+          "where": "src/compiler/checker.ts:21778:74"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Symbol[] seen as Symbol[], which can write Symbol where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 218,
+          "where": "src/compiler/checker.ts:34326:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Type[] seen as (Type | undefined)[], which can write Type | undefined where Type is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 278,
+          "where": "src/compiler/checker.ts:39328:26"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type AwaitedTypeInstantiation | Type seen as Type, which can write Symbol | undefined where Symbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 308,
+          "where": "src/compiler/checker.ts:43677:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Map<string, [VariableDeclarationList, VariableDeclaration[]]> seen as Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 313,
+          "where": "src/compiler/checker.ts:44643:40"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IterationTypes[] seen as (IterationTypes | undefined)[], which can write IterationTypes | undefined where IterationTypes is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 319,
+          "where": "src/compiler/checker.ts:45981:74"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type IndexSignatureDeclaration[] seen as Declaration[] | undefined, which can write Declaration where IndexSignatureDeclaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 345,
+          "where": "src/compiler/checker.ts:50152:41"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type [() => Type, __String][] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where [() => Type, __String] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 373,
+          "where": "src/compiler/checker.ts:53751:101"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint EntityNameOrEntityNameExpression can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 387,
+          "where": "src/compiler/checker.ts:6411:24"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (node: CommentRange) => boolean seen as (value: SynthesizedComment) => boolean, which can write number where -1 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 414,
+          "where": "src/compiler/emitter.ts:3233:53"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 422,
+          "where": "src/compiler/emitter.ts:5776:34"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 423,
+          "where": "src/compiler/emitter.ts:5780:28"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint Node | undefined can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 428,
+          "where": "src/compiler/factory/nodeFactory.ts:1019:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 429,
+          "where": "src/compiler/factory/nodeFactory.ts:1159:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 430,
+          "where": "src/compiler/factory/nodeFactory.ts:1160:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | AccessorDeclaration can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 431,
+          "where": "src/compiler/factory/nodeFactory.ts:1161:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type AssertClause seen as Mutable<AssertClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 461,
+          "where": "src/compiler/factory/nodeFactory.ts:4771:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 463,
+          "where": "src/compiler/factory/nodeFactory.ts:4804:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ImportAttributes seen as Mutable<ImportAttributes>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 464,
+          "where": "src/compiler/factory/nodeFactory.ts:4824:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 470,
+          "where": "src/compiler/factory/nodeFactory.ts:5084:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 471,
+          "where": "src/compiler/factory/nodeFactory.ts:5094:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 478,
+          "where": "src/compiler/factory/nodeFactory.ts:5227:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 479,
+          "where": "src/compiler/factory/nodeFactory.ts:5249:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 480,
+          "where": "src/compiler/factory/nodeFactory.ts:5271:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 481,
+          "where": "src/compiler/factory/nodeFactory.ts:5293:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 482,
+          "where": "src/compiler/factory/nodeFactory.ts:530:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 483,
+          "where": "src/compiler/factory/nodeFactory.ts:5315:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 484,
+          "where": "src/compiler/factory/nodeFactory.ts:5331:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 485,
+          "where": "src/compiler/factory/nodeFactory.ts:5347:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 486,
+          "where": "src/compiler/factory/nodeFactory.ts:5370:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type T seen as T, a type parameter whose constraint ModifierSyntaxKind can be written, so it can write what T can't hold; take it as T, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 490,
+          "where": "src/compiler/factory/nodeFactory.ts:543:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 492,
+          "where": "src/compiler/factory/nodeFactory.ts:5456:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 493,
+          "where": "src/compiler/factory/nodeFactory.ts:5524:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 494,
+          "where": "src/compiler/factory/nodeFactory.ts:5563:22"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type TKind seen as TKind, a type parameter whose constraint KeywordTypeSyntaxKind can be written, so it can write what TKind can't hold; take it as TKind, or constrain TKind to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 496,
+          "where": "src/compiler/factory/nodeFactory.ts:579:9"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 498,
+          "where": "src/compiler/factory/nodeFactory.ts:6330:28"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 499,
+          "where": "src/compiler/factory/nodeFactory.ts:6354:28"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Mutable<T> seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable<T> can't hold; take it as Mutable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 504,
+          "where": "src/compiler/factory/nodeFactory.ts:7184:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type (resolution: ResolvedModuleWithFailedLookupLocations) => ResolvedModuleFull | undefined seen as (oldResolution: ResolvedModuleWithFailedLookupLocations) => ResolutionWithResolvedFileName | undefined, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 521,
+          "where": "src/compiler/program.ts:2183:26"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 522,
+          "where": "src/compiler/program.ts:2821:20"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type DiagnosticWithLocation[] seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 525,
+          "where": "src/compiler/program.ts:2916:17"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type DiagnosticWithLocation[] | undefined seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 526,
+          "where": "src/compiler/program.ts:2918:17"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type string[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 537,
+          "where": "src/compiler/program.ts:3490:123"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 556,
+          "where": "src/compiler/transformers/classFields.ts:2611:42"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type LeftHandSideExpression & GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 559,
+          "where": "src/compiler/transformers/classFields.ts:928:71"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type SyntheticSuper seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 565,
+          "where": "src/compiler/transformers/es2015.ts:1051:127"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type ThisCapturingVariableDeclaration seen as VariableDeclaration, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 569,
+          "where": "src/compiler/transformers/es2015.ts:1504:17"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & \"__this\"; } seen as BindingName, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 570,
+          "where": "src/compiler/transformers/es2015.ts:1505:17"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type CapturedThis seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 575,
+          "where": "src/compiler/transformers/es2015.ts:2165:21"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type PropertyAccessExpression | SyntheticSuper seen as LeftHandSideExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 585,
+          "where": "src/compiler/transformers/es2015.ts:4837:16"
+        }
+      ]
+    },
+    {
+      "reason": "a value of type CapturedThis seen as PrimaryExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "count": 1,
+      "sites": [
+        {
+          "id": 586,
+          "where": "src/compiler/transformers/es2015.ts:5022:20"
+        }
+      ]
+    }
+  ]
+}

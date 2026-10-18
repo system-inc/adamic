@@ -1,0 +1,12 @@
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestRegExpIteratorResultShape
+=== PAUSE TestRegExpIteratorResultShape
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestRegExpIteratorResultShape
+=== NAME  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 32 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.02s)
+--- PASS: TestRegExpIteratorResultShape (0.50s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.522s
