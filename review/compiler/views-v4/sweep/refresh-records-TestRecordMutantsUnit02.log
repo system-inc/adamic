@@ -1,0 +1,10 @@
+=== RUN   TestRecordMutantsUnit02
+=== PAUSE TestRecordMutantsUnit02
+=== CONT  TestRecordMutantsUnit02
+=== RUN   TestRecordMutantsUnit02/deleted-key-iterated
+    record_test.go:237: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit02 (1.24s)
+    --- PASS: TestRecordMutantsUnit02/deleted-key-iterated (1.24s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.275s

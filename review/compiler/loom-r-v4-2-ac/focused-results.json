@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestV4EscapeAdapterConstructSignatureRefusal",
+    "exit": 0,
+    "seconds": 3.144
+  },
+  {
+    "test": "TestV4EscapeAdapterWithoutConstructSignatureRefusal",
+    "exit": 0,
+    "seconds": 0.165
+  },
+  {
+    "test": "TestV4Lane5BoxedParameter",
+    "exit": 0,
+    "seconds": 5.612
+  },
+  {
+    "test": "TestV4Lane5BoxedParameterMembers",
+    "exit": 0,
+    "seconds": 5.61
+  },
+  {
+    "test": "TestV4Lane5BoxedResult",
+    "exit": 0,
+    "seconds": 5.207
+  },
+  {
+    "test": "TestV4Lane5BoxedResultMembers",
+    "exit": 0,
+    "seconds": 5.251
+  },
+  {
+    "test": "TestV4Lane5BoxedAdamicRefusal",
+    "exit": 0,
+    "seconds": 3.257
+  },
+  {
+    "test": "TestV4Lane5FactoryWiderWriteRefusal",
+    "exit": 0,
+    "seconds": 2.979
+  }
+]

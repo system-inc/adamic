@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestMixedUnionContractGraph|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractUnknownMemberFails|TestMixedUnionContractRecursiveMember|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestMixedUnionContractPhantomVoidIsUndefined)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.066
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestPortElementMetadataEmission)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.11
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmAdmission|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArraySource|TestCheckedViewArrays)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 38.587
+  }
+]

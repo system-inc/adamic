@@ -1,0 +1,11 @@
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -77,7 +77,7 @@
+ 	if err := lowering.exceptions(); err != nil {
+ 		return nil, err
+ 	}
+-	if err := lowering.checkLibrarySpreads(modules); err != nil {
++	if err := error(nil); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := lowering.checkAccessorSpreads(); err != nil {

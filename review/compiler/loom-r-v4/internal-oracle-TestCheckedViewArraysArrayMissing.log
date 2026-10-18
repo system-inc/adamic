@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewArraysArrayMissing
+=== PAUSE TestCheckedViewArraysArrayMissing
+=== CONT  TestCheckedViewArraysArrayMissing
+    checked_views_arrays_test.go:72: gate cache node miss
+    checked_views_arrays_test.go:72: Node: exit=70 stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading 'length')\n"
+    checked_views_arrays_test.go:72: gate cache node miss
+--- PASS: TestCheckedViewArraysArrayMissing (6.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

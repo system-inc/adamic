@@ -1,0 +1,10 @@
+--- a/internal/native/view_callable_calls.go
++++ b/internal/native/view_callable_calls.go
+@@ -340,6 +340,7 @@
+ 	candidate := e.temporary()
+ 	e.line("adamic_view_union_value %s=adamic_view_callable_candidate(%s,%s,&%s,&%s,%s,%s);", candidate, receiver, cString(p.Name), e.cache(), method, cString(p.View), cString(p.ViewType))
+ 	closure := e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s.kind == adamic_view_union_function ? %s.payload.reference : NULL)", candidate, candidate))
++	e.line("if (%s.kind != adamic_view_union_function) adamic_panic(\"early callable check\", sizeof \"early callable check\" - 1);", candidate)
+ 	packed, count := e.closureArguments(call)
+ 	invoke := e.directViewCallableInvoke(call, p)
+ 	result := e.temporary()

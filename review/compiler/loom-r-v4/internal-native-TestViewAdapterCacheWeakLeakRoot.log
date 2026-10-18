@@ -1,0 +1,9 @@
+=== RUN   TestViewAdapterCacheWeakLeakRoot
+=== PAUSE TestViewAdapterCacheWeakLeakRoot
+=== CONT  TestViewAdapterCacheWeakLeakRoot
+    view_adapter_runtime_test.go:213: C fixture must compile, including mutant: exit status 1
+        /usr/bin/ld: /tmp/adamic-gate/heap-508adc.o: in function `release_last':
+        /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot3453133997/001/heap.c:360:(.text+0x555): undefined reference to `adamic_async_free_children'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestViewAdapterCacheWeakLeakRoot (1.25s)
+FAIL

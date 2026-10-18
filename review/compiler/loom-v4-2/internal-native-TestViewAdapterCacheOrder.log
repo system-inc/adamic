@@ -1,0 +1,9 @@
+=== RUN   TestViewAdapterCacheOrder
+=== PAUSE TestViewAdapterCacheOrder
+=== CONT  TestViewAdapterCacheOrder
+    view_adapter_runtime_test.go:189: order sanitize=false clean: adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+    view_adapter_runtime_test.go:189: order sanitize=true clean: adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+    view_adapter_runtime_test.go:194: release-before-remove caught: remove/release order violated
+        adamic: counts: allocations 2 frees 2 retains 1 releases 2 peak 2 regions 0
+--- PASS: TestViewAdapterCacheOrder (1.13s)
+PASS

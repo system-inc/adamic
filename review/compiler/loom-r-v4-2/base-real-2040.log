@@ -1,0 +1,7 @@
+=== RUN   TestPortMatchesGoCohere_2040
+=== PAUSE TestPortMatchesGoCohere_2040
+=== CONT  TestPortMatchesGoCohere_2040
+    port_matches_prepared_split_test.go:192: build json lowered port and backend sources: lstat /tmp/adamic-v4-2-base/cohere/TypeScript/tsc/go.mod: no such file or directory
+    port_matches_prepared_split_test.go:47: TestPortMatchesGoCohere (setup): 0.606s
+--- FAIL: TestPortMatchesGoCohere_2040 (0.61s)
+FAIL

@@ -1,0 +1,13 @@
+=== RUN   TestV4EscapeAdapterCounted
+=== PAUSE TestV4EscapeAdapterCounted
+=== CONT  TestV4EscapeAdapterCounted
+    checked_views_v4_escape_test.go:332: gate cache node miss
+    checked_views_v4_escape_test.go:332: gate cache node miss
+    checked_views_v4_escape_test.go:332: guard mutant admitted in native: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:332: guard mutant admitted in sanitized: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:332: guard mutant admitted in javascript: exit 0 output "0:absent\n1:ok\n"
+--- PASS: TestV4EscapeAdapterCounted (5.10s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

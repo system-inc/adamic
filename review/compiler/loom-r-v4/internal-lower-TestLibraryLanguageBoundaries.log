@@ -1,0 +1,49 @@
+=== RUN   TestLibraryLanguageBoundaries
+=== PAUSE TestLibraryLanguageBoundaries
+=== CONT  TestLibraryLanguageBoundaries
+=== RUN   TestLibraryLanguageBoundaries/array
+=== PAUSE TestLibraryLanguageBoundaries/array
+=== RUN   TestLibraryLanguageBoundaries/hidden_array
+=== PAUSE TestLibraryLanguageBoundaries/hidden_array
+=== RUN   TestLibraryLanguageBoundaries/parameter
+=== PAUSE TestLibraryLanguageBoundaries/parameter
+=== RUN   TestLibraryLanguageBoundaries/prototype
+=== PAUSE TestLibraryLanguageBoundaries/prototype
+=== RUN   TestLibraryLanguageBoundaries/optional_object
+=== PAUSE TestLibraryLanguageBoundaries/optional_object
+=== RUN   TestLibraryLanguageBoundaries/optional_spread
+=== PAUSE TestLibraryLanguageBoundaries/optional_spread
+=== RUN   TestLibraryLanguageBoundaries/destructured_write
+=== PAUSE TestLibraryLanguageBoundaries/destructured_write
+=== RUN   TestLibraryLanguageBoundaries/uncheckable_dynamic_receiver
+=== PAUSE TestLibraryLanguageBoundaries/uncheckable_dynamic_receiver
+=== RUN   TestLibraryLanguageBoundaries/constructor_alias
+=== PAUSE TestLibraryLanguageBoundaries/constructor_alias
+=== RUN   TestLibraryLanguageBoundaries/constructor_passed
+=== PAUSE TestLibraryLanguageBoundaries/constructor_passed
+=== RUN   TestLibraryLanguageBoundaries/inherited_field
+=== PAUSE TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestLibraryLanguageBoundaries/array
+=== CONT  TestLibraryLanguageBoundaries/destructured_write
+=== CONT  TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestLibraryLanguageBoundaries/constructor_passed
+=== CONT  TestLibraryLanguageBoundaries/constructor_alias
+=== CONT  TestLibraryLanguageBoundaries/uncheckable_dynamic_receiver
+=== CONT  TestLibraryLanguageBoundaries/prototype
+=== CONT  TestLibraryLanguageBoundaries/optional_spread
+=== CONT  TestLibraryLanguageBoundaries/optional_object
+=== CONT  TestLibraryLanguageBoundaries/parameter
+=== CONT  TestLibraryLanguageBoundaries/hidden_array
+--- PASS: TestLibraryLanguageBoundaries (0.00s)
+    --- PASS: TestLibraryLanguageBoundaries/array (0.08s)
+    --- PASS: TestLibraryLanguageBoundaries/destructured_write (0.06s)
+    --- PASS: TestLibraryLanguageBoundaries/inherited_field (0.05s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_passed (0.06s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_alias (0.05s)
+    --- PASS: TestLibraryLanguageBoundaries/uncheckable_dynamic_receiver (0.06s)
+    --- PASS: TestLibraryLanguageBoundaries/prototype (0.04s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_spread (0.07s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_object (0.04s)
+    --- PASS: TestLibraryLanguageBoundaries/parameter (0.06s)
+    --- PASS: TestLibraryLanguageBoundaries/hidden_array (0.03s)
+PASS

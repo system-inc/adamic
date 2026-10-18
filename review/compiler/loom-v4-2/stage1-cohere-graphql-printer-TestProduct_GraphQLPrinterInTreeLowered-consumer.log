@@ -1,0 +1,8 @@
+=== RUN   TestProduct_GraphQLPrinterInTreeLowered
+=== PAUSE TestProduct_GraphQLPrinterInTreeLowered
+=== CONT  TestProduct_GraphQLPrinterInTreeLowered
+    shards_test.go:212: lowering wall 0.788s
+    shards_test.go:215: C emission wall 0.297s
+    in_tree_products_test.go:59: build lowered_GraphQL_printer d04e02a52e0f miss 2.22
+--- PASS: TestProduct_GraphQLPrinterInTreeLowered (3.37s)
+PASS

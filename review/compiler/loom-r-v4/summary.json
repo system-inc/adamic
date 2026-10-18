@@ -1,0 +1,88 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "332f305e6489cd90ebcc2a073f24f8289cb881ea",
+  "focused_tests": 299,
+  "focused_skips": 7,
+  "focused_max_seconds": 41.207,
+  "initial_cache_link_failures": 10,
+  "corrected_cache_tests": 10,
+  "reader_packages_compiled": 53,
+  "reader_checks": 48,
+  "reader_skips": [
+    {
+      "package": "internal/lower/cycleledger",
+      "test": "TestOriginalCycleLedger",
+      "seconds": 0.016,
+      "exit": 0,
+      "grain": true,
+      "skip": true
+    },
+    {
+      "package": "stage1/cohere/estree",
+      "test": "TestCookedSurrogateLibraryGap",
+      "seconds": 0.008,
+      "exit": 0,
+      "grain": true,
+      "skip": true
+    }
+  ],
+  "reader_max_seconds": 38.941,
+  "flow_leaves": 858,
+  "flow_max_seconds": 49.64,
+  "counts_changed_rows": 30,
+  "counts_seconds": 128.363,
+  "counts_max_leaf_seconds": 4.62,
+  "runtime_line_differences": 0,
+  "source_report_mutants_caught": 18,
+  "main_preservation_mutants_caught": 1,
+  "guards": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNativeAgreementRowsNameRegisteredPrograms",
+      "Elapsed": 0.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "Test": "TestEveryTestIsParallelOrSaysWhy",
+      "Elapsed": 0.76
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestEveryMapAProgramHoldsIsSorted",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetReaders",
+      "Elapsed": 5.03
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestRuntimeSetsAreEachUsed",
+      "Elapsed": 7.58
+    }
+  ],
+  "main_compatibility": [
+    {
+      "package": "internal/native",
+      "test": "TestParallelMapCompilerABI",
+      "seconds": 0.036,
+      "exit": 0,
+      "grain": true
+    },
+    {
+      "package": "internal/native",
+      "test": "TestAsyncCompilerSuspensionsMatchNode",
+      "seconds": 18.619,
+      "exit": 0,
+      "grain": true
+    },
+    {
+      "package": "internal/native",
+      "test": "TestParallelCompilerSharedReferencesMatchNode",
+      "seconds": 2.082,
+      "exit": 0,
+      "grain": true
+    }
+  ]
+}

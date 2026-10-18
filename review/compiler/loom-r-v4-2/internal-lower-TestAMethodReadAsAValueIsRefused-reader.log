@@ -1,0 +1,45 @@
+=== RUN   TestAMethodReadAsAValueIsRefused
+=== PAUSE TestAMethodReadAsAValueIsRefused
+=== CONT  TestAMethodReadAsAValueIsRefused
+=== RUN   TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== PAUSE TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== RUN   TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== PAUSE TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+=== RUN   TestAMethodReadAsAValueIsRefused/in_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/in_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/read_through_this
+=== PAUSE TestAMethodReadAsAValueIsRefused/read_through_this
+=== RUN   TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/an_array's_method
+=== PAUSE TestAMethodReadAsAValueIsRefused/an_array's_method
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== RUN   TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== RUN   TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== PAUSE TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== CONT  TestAMethodReadAsAValueIsRefused/held_in_a_variable
+=== CONT  TestAMethodReadAsAValueIsRefused/an_array's_method
+=== CONT  TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_through_parentheses
+=== CONT  TestAMethodReadAsAValueIsRefused/not_called_on_its_object
+=== CONT  TestAMethodReadAsAValueIsRefused/read_through_this
+=== CONT  TestAMethodReadAsAValueIsRefused/an_interface's_method
+=== CONT  TestAMethodReadAsAValueIsRefused/in_parentheses
+=== CONT  TestAMethodReadAsAValueIsRefused/passed_as_a_callback
+--- PASS: TestAMethodReadAsAValueIsRefused (0.00s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/held_in_a_variable (0.07s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_array's_method (0.04s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function (0.05s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow (0.25s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_through_parentheses (0.17s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/not_called_on_its_object (0.14s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/read_through_this (0.03s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/an_interface's_method (0.03s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/in_parentheses (0.03s)
+    --- PASS: TestAMethodReadAsAValueIsRefused/passed_as_a_callback (0.04s)
+PASS

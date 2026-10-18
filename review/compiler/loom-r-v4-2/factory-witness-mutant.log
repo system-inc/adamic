@@ -1,0 +1,11 @@
+=== RUN   TestV4Lane5FactoryWiderWriteRefusal
+=== PAUSE TestV4Lane5FactoryWiderWriteRefusal
+=== CONT  TestV4Lane5FactoryWiderWriteRefusal
+    checked_views_v4_lane5_test.go:189: wider-write keeps path and fix: <nil>
+--- FAIL: TestV4Lane5FactoryWiderWriteRefusal (9.03s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	9.075s
+FAIL

@@ -1,0 +1,44 @@
+=== RUN   TestArrayHolesMilestone
+=== PAUSE TestArrayHolesMilestone
+=== CONT  TestArrayHolesMilestone
+=== RUN   TestArrayHolesMilestone/library_array_holes_scanner_probe.a
+    array_holes_test.go:24: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+    array_holes_test.go:26: gate cache node miss
+    oracle_test.go:614: gate cache native hit
+    array_holes_test.go:34: Node stdout: 4
+=== RUN   TestArrayHolesMilestone/library_array_holes_length.a
+    array_holes_test.go:24: gate cache node hit
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+    array_holes_test.go:26: gate cache node miss
+    oracle_test.go:614: gate cache native hit
+    array_holes_test.go:34: Node stdout: 4
+        4:true:true
+        true:7:true:9
+        4294967295
+        42:true
+=== RUN   TestArrayHolesMilestone/library_array_holes_range.a
+    array_holes_test.go:24: gate cache node hit
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+    array_holes_test.go:26: gate cache node miss
+    oracle_test.go:614: gate cache native hit
+    array_holes_test.go:34: Node stdout: length:0
+        length:0
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        range:RangeError:Invalid array length
+        length:4294967295
+        range:RangeError:Invalid array length
+--- PASS: TestArrayHolesMilestone (4.22s)
+    --- PASS: TestArrayHolesMilestone/library_array_holes_scanner_probe.a (3.56s)
+    --- PASS: TestArrayHolesMilestone/library_array_holes_length.a (0.36s)
+    --- PASS: TestArrayHolesMilestone/library_array_holes_range.a (0.31s)
+PASS
+gate cache: native hits=3 misses=6
+gate cache: node hits=2 misses=4
+gate cache: probe hits=0 misses=0

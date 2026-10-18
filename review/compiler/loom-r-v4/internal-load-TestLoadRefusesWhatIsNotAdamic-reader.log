@@ -1,0 +1,17 @@
+=== RUN   TestLoadRefusesWhatIsNotAdamic
+=== PAUSE TestLoadRefusesWhatIsNotAdamic
+=== CONT  TestLoadRefusesWhatIsNotAdamic
+=== RUN   TestLoadRefusesWhatIsNotAdamic/a_JavaScript_file
+=== PAUSE TestLoadRefusesWhatIsNotAdamic/a_JavaScript_file
+=== RUN   TestLoadRefusesWhatIsNotAdamic/a_missing_file
+=== PAUSE TestLoadRefusesWhatIsNotAdamic/a_missing_file
+=== RUN   TestLoadRefusesWhatIsNotAdamic/an_.a_file_shadowed_by_an_.a.ts
+=== PAUSE TestLoadRefusesWhatIsNotAdamic/an_.a_file_shadowed_by_an_.a.ts
+=== CONT  TestLoadRefusesWhatIsNotAdamic/a_JavaScript_file
+=== CONT  TestLoadRefusesWhatIsNotAdamic/an_.a_file_shadowed_by_an_.a.ts
+=== CONT  TestLoadRefusesWhatIsNotAdamic/a_missing_file
+--- PASS: TestLoadRefusesWhatIsNotAdamic (0.00s)
+    --- PASS: TestLoadRefusesWhatIsNotAdamic/a_JavaScript_file (0.00s)
+    --- PASS: TestLoadRefusesWhatIsNotAdamic/an_.a_file_shadowed_by_an_.a.ts (0.00s)
+    --- PASS: TestLoadRefusesWhatIsNotAdamic/a_missing_file (0.00s)
+PASS

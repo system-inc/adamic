@@ -1,0 +1,2367 @@
+[
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-absent.ts",
+    "sha256": "852b0c69b5e881ee79e4253b5998246d6be4e99ac2c6e0ae050fbfee5682dddc"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-alias.ts",
+    "sha256": "ef3ec883663e426becda2701c3aee435dfe20a36a529795fc12fb1c4810c6acd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-bad.ts",
+    "sha256": "7bba74ca78e70cadd327842375df0ce9a83a3c942ecf7761bed23a80f1779c22"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-good.ts",
+    "sha256": "105808b4c87f053b127faf1448b35358abc1e8749d1c5f2cf1e69e65ce2d2b6d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-lazy-element.ts",
+    "sha256": "4b5c2a183d0370facfb04fdd465802964b3b31a29b4aee51008314ea65609105"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-lazy.ts",
+    "sha256": "d00837ab040aacb192dcf35fbd6d8521fb7d5928fde3a5f633c959787854ebe1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/conditionalroot-aliastypearguments-undefined.ts",
+    "sha256": "331d2cbcb6561d753d06bb9debbd518df30bd6b78655d620097fcf373cf9ce52"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-absent.ts",
+    "sha256": "f067559e08ae52812d0ecb908f51190f46be17376fb6d451049b90e1689f4504"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-alias.ts",
+    "sha256": "b843d740fcecc1572324733b3032368e4a0db8a8cd4c0660de1a19f852b9393e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-bad.ts",
+    "sha256": "a5e741a0560f7504db2f0ac906b9da1fbd08dd070e501a673d2b39c8b0eccf3d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-good.ts",
+    "sha256": "3eb678261ac2e3ed2cf896a015b90ba7ebdc80402add51f58f6da635668e2ee8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-lazy-element.ts",
+    "sha256": "7eded67ee86f380f10af8164fe227d5faac5fb81ffc63bf0d00c6276fc93f244"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-lazy.ts",
+    "sha256": "cd4d0ac7e745a30fd53413e8d65ade97905c2c29466f4391ff918de906a19ee2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-receiver-undefined.ts",
+    "sha256": "a3ba1f98114ffd8610ea1cfdc3d286fb64052a509d61d2d8660f251c2cb8e0f3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs---undefined-validatedfilesspec-undefined.ts",
+    "sha256": "e75959299734390cba92b7e1036dfb3d56a6e3d918df38d4a2a3d04c1393b108"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-absent.ts",
+    "sha256": "79d1bb93facb1c0a5ddd36d28675db2822a4631ba03e425cce7ecb778e7b37e1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-alias.ts",
+    "sha256": "50763492b3597381faaf759c10d3f03694081c749f62240648a34cbc32fa77f6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-bad.ts",
+    "sha256": "ae265858c406658ea2a9ca31d0d2f3e68e1b9b4bf568b7d4979f89e9399c4c33"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-good.ts",
+    "sha256": "102035396d6f4de1d9fccf15ee0ccb092724dcd7ee52cdd250a3c7cda40d6b55"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-lazy-element.ts",
+    "sha256": "5373aa0031b5d29c0d189bf3196a7f56f4d8f7ff8ae4e04551623321df6eba46"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-lazy.ts",
+    "sha256": "6be08fe3db03ccefd8d19af6aa1531502dd0d1b3c48ad9ff60cf883d20ce7978"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/configfilespecs-validatedincludespecsbeforesubstitution-undefined.ts",
+    "sha256": "e14ac5f2167d6f039193137745525dad6aa043acbfbe5f0d3415d92f36d354b4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-alias.ts",
+    "sha256": "06f30aa9cb11a9f513eff10b1f020b8ace7589415d0d44054e19244ad591fecc"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-bad.ts",
+    "sha256": "4b5f6de4b00d5371ebde9d57fb8d46b704be866c354fab62391624a1862341c5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-good.ts",
+    "sha256": "bc117264bf13525c75d239c985a406f3af899987d2066be3f80fd9cf90184f1c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-lazy-element.ts",
+    "sha256": "273309860d7254f219daa4b3aeb340febb6e990366bb3ceb782557d61bb63caf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-lazy.ts",
+    "sha256": "8d3dcf4e50928e3412ca5258a850d4fd36e62d0ba63909560e9c5e89faface59"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/heritageclause---undefined-types-receiver-undefined.ts",
+    "sha256": "84bdd0d186f948dbcd2acc135083b954ff2bbe7768fee1acc33c28b29a9b3e74"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incremental-multi-file-ids-replacement.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incremental-multi-file-ids-replacement.ts",
+    "sha256": "f56f23baf8e30da8863a13c7cc2c184b50178b267dbb905c1f1423b514a42a56"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-absent.ts",
+    "sha256": "a71f6aa5dc2ae4fa7baa3808d96d37244e93a9426213adeb91680bf2ad03769d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-alias.ts",
+    "sha256": "32ebf5808f2e17fc6ad5a6462979a772fa73ed152308117fe515442be4eba9f9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-bad.ts",
+    "sha256": "2dc09e9b222ec174ada50690edc788d45962ebbb960439f32bb336f1a5d01984"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-good.ts",
+    "sha256": "7da6de58872d95e7c29660976bb06c160ce370d4501968550f6277dc0afca135"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-lazy-element.ts",
+    "sha256": "8bab779d4c2584594543d35cabd9526fddd9a17742a73849bfd08d01e9783c5e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-lazy.ts",
+    "sha256": "3f326a886907dab43f63f3468c121d140bfc286ed63bf939143ab77dd1f8cfed"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/incrementalmultifileemitbuildinfo-fileidslist-undefined.ts",
+    "sha256": "84efd1c7991a1f53189e409405bb004080b335b3918decceb55d3f1b48d89b68"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-absent.ts",
+    "sha256": "58e669e57e114d16b63f82f3055d87da5fd165d6226e8ee118fe7c1e4e6c7c52"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-alias.ts",
+    "sha256": "d9db9313bec25035fbb82d5b2aff4c73ade9ed9f02e08800e74d621effd189fc"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-bad.ts",
+    "sha256": "da9b4ebc7fb49aca9a0965c238c1449f2ee582d8201c6056725b0fc707c01c0b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-good.ts",
+    "sha256": "92dc7ced51011bde63604ff89696baada571cc4083ff241f1a39cd4cd0b53c0a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-lazy-element.ts",
+    "sha256": "cbbba7915678e891b01efd38bfb685917b68612b6b22d829bca631149ea0569e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-lazy.ts",
+    "sha256": "e8a608e76f9a4933ac54833c161bd4974c5ed757116cdc8cb10162b7797b030a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/interfacetypewithdeclaredmembers-typeparameters-undefined.ts",
+    "sha256": "464eb35f3f537456727a6a69f7561928f48029b6750968658139b02c25e24d04"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-absent.ts",
+    "sha256": "7667aeb6324cc07031543ab8ffadeaf0eb6fac29c66c1297e5a7b606c2063a07"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-alias.ts",
+    "sha256": "23d2666893fca13bd4ccd3ba9415d9a78cf42251518037cc9f46c4e444643cba"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-bad.ts",
+    "sha256": "a23f577961fb92fb2f3bf67d74810ac412c15b2727c1c675b81be95423f62c3d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-good.ts",
+    "sha256": "7fbfe41739612447c5e625012044c576266886fd8abe1472fa780225ee472e41"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-lazy-element.ts",
+    "sha256": "29c6a1a4d4d137904c321d0737988244c7afc0afbd5e8e9e4efe307bd609557c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-lazy.ts",
+    "sha256": "ffeff0c362900928063e19da23762acea6cf7413ba9f9d08204eb65ead7e3695"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-receiver-undefined.ts",
+    "sha256": "5d291565b83f038748b43cf75352e88cc872647440e82505ed03b5575e0e1d77"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/jsdoc---undefined-tags-undefined.ts",
+    "sha256": "0b2299e85460b8ba0831c472868a40ac81569956b3d86f53cbf55811ca244a80"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-alias.ts",
+    "sha256": "db3720291c2c4cf653c12b4760ceafc0bf5c54a7c5bf16787700c73da4628d9e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-bad.ts",
+    "sha256": "215b0a1bc163612ad179a3be446906e9d3d34bdbfa122f5d552081e713297270"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-good.ts",
+    "sha256": "9eb2200191d9a9e34c3e2109f2baaeccacf85638c6d0654b9aee1bb89c96fdd2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-lazy-element.ts",
+    "sha256": "9a73723925bffc3e110f9aa68f992128d536d6154c52ac8979a90a004108a2f5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-lazy.ts",
+    "sha256": "d65ea07584ccb3020cd77359a0df9687b18db9aa7b8c9ea73f321ac4e504a7bf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpression---undefined-properties-receiver-undefined.ts",
+    "sha256": "0600bd4f861f70bcafb470577887a3690ba419805249769f3b342363d594aac8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-alias.ts",
+    "sha256": "a5e3e6cda84d3bd3add00f702599d810b3ff4e16dac2357652399a410551576f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-bad.ts",
+    "sha256": "7ae2c90a503632947128be905e8fb2548283f5c416b4161b4c914d1965c790a2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-good.ts",
+    "sha256": "fc82db2f85b7a6421a6921966c34459b555839ebb2b52f374dee277931a0875d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-lazy-element.ts",
+    "sha256": "a01ea328b3af154deeec7c161caf16a159ae97f3a1e5b43f4c881c20b8400c24"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/objectliteralexpressionbase-objectliteralelement--properties-lazy.ts",
+    "sha256": "3d113c01d4ac720622a3f14cb700c6f4ee864925b5e7058e92d72c1e770a44c0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-alias.ts",
+    "sha256": "f621f3ab84c26b364655a43851325dcd97a91b99524420e154e9777d6b03653a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-bad.ts",
+    "sha256": "50a403bd2af1d4278d4e11c2d96d657a9e9538bb71813e5c96d465127479bc6f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-good.ts",
+    "sha256": "8931d93a3dee0a1d9e28edceffa19f24769c2957c7c9a45dd8130de3b2665ba4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-lazy-element.ts",
+    "sha256": "30c87a43c1d903c33e4a86e4dbc772762f181fa0498437bed86fc4c93029d0a9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-lazy.ts",
+    "sha256": "7bc5fa93f9b522a3c1733ffc683c6ca0f632aae23129e4bbee116de07f657b29"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-filenames-receiver-undefined.ts",
+    "sha256": "3c4148626935454b3812590fc973342c1c1358368701dc7d227aefbf4a73fbd5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-absent.ts",
+    "sha256": "cfaa3c24d6b9bbf76f52b65fdcc6eab85b4639d5f482e9a9cee57b7c71c49af5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-alias.ts",
+    "sha256": "61538d3abf35f05e9255a625b6db35d8506da57605cbf544a6b2bcca6e5aaca2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-bad.ts",
+    "sha256": "1d1b2ccd837bb94e43eeebfe9958a7c3a3eb4569d669023b4d9e8fa787479261"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-good.ts",
+    "sha256": "29bf8a10fd2ddfb57dfa3d61dbed5667c24b17d170eab383be7649654b59bbd8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-lazy-element.ts",
+    "sha256": "2cd3de343ed01722b0cb69dce5caa3a310fcf4619a0526234728ebb473c82b4f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-lazy.ts",
+    "sha256": "beaf052f3df68f0a746ba022f063e40a061d33f6d23baf457df4acada07db738"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-receiver-undefined.ts",
+    "sha256": "9f38ca771e21d9443a98a736555ba40a971725fbf41f9858f1a5b6013d21070d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/parsedcommandline---undefined-projectreferences-undefined.ts",
+    "sha256": "8fdafecb02a29e31614392b4dc303744a21f365b100e2caac035c880bdfbf6fb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-alias.ts",
+    "sha256": "fd481609116e349417106c803040614d3c4ae7264d6858cbe3d606828a7d8a8e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-bad.ts",
+    "sha256": "fe6d8b736ddb3b0d5078588c9fd9cbef6860f36208b971a47c57ea77de87e1db"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-good.ts",
+    "sha256": "9bbf67dee0c884d4f0088363b04eb83d9eede13c26fe7394e03bc9b31fd47e7d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-lazy-element.ts",
+    "sha256": "75d40ed19d330eac3b54e82eb9e2aad2e5bad14197f706d3b37b0c861290a338"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-lazy.ts",
+    "sha256": "771b1f12e8156354a212bb32d1cf0db4a43450041d2724cb5c120f61a2c9e801"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/setaccessordeclaration---undefined-parameters-receiver-undefined.ts",
+    "sha256": "86a507027074a839d2e80a962696f74ff8d263af84f7d974af96eda8b23dfdd3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-absent.ts",
+    "sha256": "5f6ec2ab48e0011945b868bed8612563c5bcaef67fd6be768f5fcfe8a0b61628"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-alias.ts",
+    "sha256": "129a1cc2008cdfcf29e4dd02c2da83d9acefe3035918aa3a810c7025d0016db4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-bad.ts",
+    "sha256": "c038226b4de1e9eb9fd308c101b33ec11f99cf8c3957d165906dcb40ef733cf1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-good.ts",
+    "sha256": "31ef1713237897145274d303287ffc9624fbe06c6d151dce57bc6458fad21cf2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-lazy-element.ts",
+    "sha256": "9dc421030be815612097a961c70da5d597f85286b6430e1f8591f9606519b746"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-lazy.ts",
+    "sha256": "888846f8cd59ba8c00faf90b4edfd57b11fce2b948b00653686e97e0de1f2fcd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-receiver-undefined.ts",
+    "sha256": "f762a0c5229e25a8f299a50316d3fa864584ee46a6f0c4eb8843df7f6cc27ebd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signature---undefined-typeparameters-undefined.ts",
+    "sha256": "00703602838e13c6a549b7069a1ab2f57487194e85a4879c858fa9e71845dcb5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-alias.ts",
+    "sha256": "869c09f5c075b6ef410b92ebab509dc0e3d9b4683e768dd0c9bdb4de7544b093"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-bad.ts",
+    "sha256": "1bdf0a8c9f52278707459cda0f414bf351067764a4dd2abcd4119a91595bac85"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-good.ts",
+    "sha256": "dc1ccdcf0c0204da13ed0affa3f95478eef7c2f90f0d3fd7885e2893889bb075"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-lazy-element.ts",
+    "sha256": "f07772ab58c0de24141b462b62782401c5c0f2446077436d4c4505ab5c149f34"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-lazy.ts",
+    "sha256": "65ddea7e2dfe14ea679c9c7f97b9355efb6a3a6ab63210dd2b5d361d0357d630"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/signaturedeclaration---jsdocsignature---undefined-parameters-receiver-undefined.ts",
+    "sha256": "81554df340bac669a7117474dcb51bea908b4942e79770d65c7f8f11973818a9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-alias.ts",
+    "sha256": "7778c8ae830fca37c90a2658498833fa24d61a11a24e45e5f174afb4e27efd97"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-bad.ts",
+    "sha256": "c5fcfc270eb9f76c2fb44aaf2b5571c2364adf81043e22c049ccf6a461759c73"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-good.ts",
+    "sha256": "052cd62365eb4f67aa3b6abcc33e1606c822938bbdd5f2e52493717a4518effb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-lazy-element.ts",
+    "sha256": "e37de5b6a3a94c3cbf1e97f45ab21f0c3b8aa1132723cdf50027b8e8f6433c08"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/sortedandcanonicalizedmutablefilesystementries-directories-lazy.ts",
+    "sha256": "cb724e201f1bc06f63737cccbd330b7a7770f87a1dae5771fd36efa4b8423f88"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-alias.ts",
+    "sha256": "ca426fc9a6539a39c7462ae774a64bbea35e31dfd8af1c2174403ed1b304e099"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-bad.ts",
+    "sha256": "fde34360e9068da973940baef1d1c64d11f0430ee44a404e980ae224d2b6d29d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-good.ts",
+    "sha256": "369b0ff14600def705d06c86032dd36307b0538b638381cab5cdd7f88fae3872"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-lazy-element.ts",
+    "sha256": "e9b9ce3458d7ff042feb99e6fb17c1737e050ccc4b5de75c0c5d6cdaf171f00b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/syntaxlist-_children-lazy.ts",
+    "sha256": "530275d8cd073de0db502527009e20e0107fa6ca12b280720bbf0e65d1a99335"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-absent.ts",
+    "sha256": "bfde1b7b38b051b6d2ba0beb227d9650a848e41214702c50122df83e598338f8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-alias.ts",
+    "sha256": "aca8433c8f9e27a06296c0b021716e0e70bee6f4e8df461e8bf12b320984f40a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-bad.ts",
+    "sha256": "25feb38f4cc8bfe9762ee0452d01bd7387d160189297d05ba94da8e964c57f2e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-good.ts",
+    "sha256": "057fca9d75d904935d78da1a885c2cf216f87bc15ad95da73458ebe120b5f2d4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-lazy-element.ts",
+    "sha256": "6273a38d570f432ccc0a8ca1cd684413693c46c1f97c5f55c937b3d8b57a5534"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-lazy.ts",
+    "sha256": "c27634d42ff051128dbd922549eec675970acba10a497f19a81990dec81a3b0e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-receiver-undefined.ts",
+    "sha256": "b6580746196336d8f83eac509a30b16e95fd607fee5c3b93a59ac3471afd2ac6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tsconfigsourcefile---undefined-extendedsourcefiles-undefined.ts",
+    "sha256": "52920bae4689349c99094ddb49924539ce24398b013466400808f0320a2652f0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-absent.ts",
+    "sha256": "90436f4ef0dd1701d76e2573549c9add616e9c0b61280882c2f734a05885dd1c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-alias.ts",
+    "sha256": "fec9e6ec1bd7d4e9390642f81bc9fae59ce91aafd61451403f113832347a0861"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-bad.ts",
+    "sha256": "216c4a574e17a6a012aa5c4be7bec1d16ac0af65986d1f7850ee64e5481dc26e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-good.ts",
+    "sha256": "1970d905516dc6cc3ddbed725a0fad570bc11205169aee5fa82ce08270ab3625"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-lazy-element.ts",
+    "sha256": "6b4fbfe3d7d654499817aac3e18325fbbc8b5efc0c50dd93dcf4c09e82dd1a7c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-lazy.ts",
+    "sha256": "ce5431763e6bbf6849511ebf960f292bb5f677fb86f4c2eddce76576043e1d8c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/tupletype-typeparameters-undefined.ts",
+    "sha256": "93e1bb4de76fd94473d6c27b3aa1be7a2f4086bcec3ba0523aec1f554cbaaac1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-absent.ts",
+    "sha256": "c220a5550a1acd668aec9735f5c6a6585b31ddc1a59a3973c6bbecbfd32bd1c9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-alias.ts",
+    "sha256": "91792210399c50dae39ee33f2ae9d6a244c7a4d56ec5fd7b613c8e880d294d1e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-bad.ts",
+    "sha256": "7f0e752b48d7c49644e120c4df72c24350e5e2a5e815d60f2e347994cfa7f924"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-good.ts",
+    "sha256": "e111d2fc2a44edb24dcfb21c5d9c3716673c549f25cb068fff1c9516c79e45ea"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-lazy-element.ts",
+    "sha256": "f1fe26ad02948ac6f05ccf47cbf9ef30b1a9ba2a147c500fe4fc457247e2de81"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-lazy.ts",
+    "sha256": "4d234c7aee38624e1bc9ef2153d704753f661b10a8000a944d4bc135ac767794"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludedirectories-undefined.ts",
+    "sha256": "ec1ca830fb5cde2d8f87403c09ac196791a23d8be53ecba526baa454f7ed31bf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-absent.ts",
+    "sha256": "960c61c2c54429b3cb70003789ecf660f26f58696eaa7b02cd87edd772ad40d3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-alias.ts",
+    "sha256": "744e52642b539f0691a638730c9c1ff229d3d849fd127d2a6bf407eaebf6a50a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-bad.ts",
+    "sha256": "450707a048944f3ede6d2479ac58db4ea5ddf6d48a477dbc4587300f715dccf7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-good.ts",
+    "sha256": "fb321bcd08491266bec9c4d4578f41d025d1c07eb5bee6f872f86701aec637ce"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-lazy-element.ts",
+    "sha256": "587bf154242bec0dbf97ef4f0edaea1469808228c1ea5b2d396593cec049d756"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-lazy.ts",
+    "sha256": "f8f363e0636b4d2f10200de269585469725ce33e003b72d6b59a774d15481b38"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB/watchoptions-excludefiles-undefined.ts",
+    "sha256": "f4176e2865e9eb026373cbb0afe8a061fddabb492adca7d1e585b0153bcfe643"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-absent.ts",
+    "sha256": "c390bdeb9d2046535b5ecf6e0ba9e1407ac9ae0382e0fccb8b74ea676bda6e0a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-alias.ts",
+    "sha256": "f65901e6af353da7d6990342c20d910acef6ea1ac71e7b5cb78acd6351b2fe34"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-bad.ts",
+    "sha256": "f68247523cf1099c331398dbb924b8f871b7e3df17b5b00fe20ad477ede350ac"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-good.ts",
+    "sha256": "44115c00ef0a82b0d862996b0b202d770cfd2c35b272309522155fb1589416c4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy-element.ts",
+    "sha256": "6e5ee578b06403a3adc976d49842461619f74dab1612c8bb7ccf19157fdeff6d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy.ts",
+    "sha256": "3956d1494d7f06284ba7bc7a1bc16ae9dc79baee5162d6bcfbbe845a6bd8e37b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-undefined.ts",
+    "sha256": "360f6aeb25df18d9b10e57f164983cebb4adb89cc2c4498293ba56d5444511fb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-absent.ts",
+    "sha256": "85e3b4aada82c0470fea03d8ff3f69c5cfaa089016b64725bb21fde959d96cb6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-alias.ts",
+    "sha256": "d4d897556eb1ef8b2b35d3ca1bc2e43b0841d3f2b62813563e0bb3c0fbe5e3ee"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-bad.ts",
+    "sha256": "e078cfc75628b3bc59a60d7ebdf9a7b94cdd0aca653012f842b6ef65dfd49a89"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-good.ts",
+    "sha256": "ca381d49ce468f34c6b1d7c093d0827106aca994375b1c6fb5921ecf04af6ba0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy-element.ts",
+    "sha256": "3ed85608600cbef376fe135dcfbf5fdf7ec7afe8ce10807a63c138c8e6475265"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy.ts",
+    "sha256": "d261f5fe4a99da0cccd2fda59ba18b70a7f366b4eae16325547030d573cc39c9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-undefined.ts",
+    "sha256": "3ae9f71aa7cb45ab81e0958586129b6c1355eaacb7ac7bc3857738d4c53d6c85"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-alias.ts",
+    "sha256": "e1959ab698c162ba88735abccdbb0e30defc8f6e26933ce87c788205e5bffee1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-bad.ts",
+    "sha256": "d942ba7b324fcec5180a1222f7080027a08de781ef6662c38607e5dc7430e589"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-good.ts",
+    "sha256": "846fc88781a934340416b6ffaf4261a0a56f4f69a112cded29cd16c53617c7b5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy-element.ts",
+    "sha256": "a5d8f557f29d5978f652dc02dc8de5b73bd7ff79e1912c7a50b52b6730eac291"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy.ts",
+    "sha256": "d2d2181af032f8fc2a4429d03aa5b4a9b0014fa4f82d27b07a022b98749bcfe0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-receiver-undefined.ts",
+    "sha256": "9309c463d36c4736400d6f0496dcfa8650b5a5dac3456dfd3141b63cb32e9071"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-absent.ts",
+    "sha256": "6965b706d658dde03e3a06eb87baa41aec103c0398c2a825fc5b879c35764083"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-alias.ts",
+    "sha256": "96fd31ab6b5fd1456e18ed9d4cf46b324d6c24cf2f9352d4b8e825a80d0a9c9a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-bad.ts",
+    "sha256": "ee6961cd239c9921b7c1ff1fc1969c4f8f1b309fcd75f2bf03d3b3b00a382e1c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-good.ts",
+    "sha256": "6afcdfa02f0ba507eb323f9b6d074c455f3cfeeef9e9c3bc976629b67f0bc788"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy-element.ts",
+    "sha256": "7de0b6d83ea2dcee7bb5f26cec02e284bc544ce45a0979bb1cdc4054617ab6dd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy.ts",
+    "sha256": "3a3d5372a38d1adb2682e5b75990baa8462eed78f7e832a30ce76a3a9a6212b3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-undefined.ts",
+    "sha256": "540f1fe28b626f6ee99a00f7137baf1eef1906c697ace48cd71eb328df60ad1b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-absent.ts",
+    "sha256": "9401deca744900b32dc17562c04b4d0b0bbed577dd6bce500de72b455226fd39"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-alias.ts",
+    "sha256": "faa3859f26d54e4f73545530030bba1d6f6aa577ccfeb657d83958e60dd64e1a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-bad.ts",
+    "sha256": "364b366be1b6f97ef3bcd5a12cd927a89a6ba3ff992e9609096bbeaf2c37fdf8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-good.ts",
+    "sha256": "f87c553124e0f8bbf8e640c49ea72b6a0b86cf97de69ab821004178ac1e18a45"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy-element.ts",
+    "sha256": "dc9ac4d6c47cb28db1aa86c8ca768228dd9e3f05ba9006bb0bbaaa24655f96db"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy.ts",
+    "sha256": "ea401fe3d63630ff5d34d9f167ab2680d4268b8f0ac839d7bfe3dfd04783b054"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-undefined.ts",
+    "sha256": "c29d4b23351a0c58093ea19b412c9e06928407b27beda38eb7ed8028bb3d2432"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-absent.ts",
+    "sha256": "c17e3f5e532c1cb3096331129e9635ebbcdf75a857e1eed44fe88534d9d19342"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-alias.ts",
+    "sha256": "30787a1b5dcfaff41482478db80bbe4011a44e374fab6dc61caf4d7948b1bd90"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-bad.ts",
+    "sha256": "99f005a7e39ee94b837439e2c83eb84c5f9b3998dd4aff91b80017dabc4ba7ea"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-good.ts",
+    "sha256": "68e957d80ee51acface4b9e69ae34eeda86db2f55e8b3bd8e26579f03ab5f5c2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy-element.ts",
+    "sha256": "df2c8cce8ef8e8fc8da40c47006699ff764564a4b5ddb8b08be492aed475ae4e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy.ts",
+    "sha256": "7f177eb3e1a7f36f0de9a1e5d831e35e640261ac6af13e787c7fb301211e2285"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-undefined.ts",
+    "sha256": "65c550c11e51d0da6323550d7eaac35ddfb605a681a98295ce1a59d4e6aaacb3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-absent.ts",
+    "sha256": "d9e0e8429e29a5b8f03b8d56283928d4f935d55a69505224831a45d69efdc7de"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-alias.ts",
+    "sha256": "60e0dd96accaf495bd59be53c274f23274ef7dfb2035004cf88aea93b7c9b171"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-bad.ts",
+    "sha256": "15edbd17bf6d3260a17189b6c18fad2b835bacaa7d0959406e386d5aecd4438d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-good.ts",
+    "sha256": "2715d416624cb9df136f3f55fc442f6e14624e4bbe7ec1f55ec168cbd30faefe"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy-element.ts",
+    "sha256": "83607f07ae5a7985b1859e9cb254e58fb863a14e0cd73844fde8894efc066ff6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy.ts",
+    "sha256": "898e9cd90efa695edccb3aff0c8dc8fffdf1ca2d40c066c3214473db093c0ba9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-undefined.ts",
+    "sha256": "b4d14cc2bad37a51871b8e4e95c4b768ae18b0739b5c8f2a3182183b71649d31"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-absent.ts",
+    "sha256": "cd93bb646e441035b9ab0eb2f3c24df461ff30c4186e672fdfadf589eeccc45f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-alias.ts",
+    "sha256": "dc915045fc4b8aab612c0f4579df2e48c386d0afe084fcb1951720107ff08502"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-bad.ts",
+    "sha256": "ae105f6674245bd24067825ee5e518520b6239e210766602adb680365066672f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-good.ts",
+    "sha256": "f90368b2e557968f77182efd99b2d6c677192a01d8c9d0a059b08149a97d1d44"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy-element.ts",
+    "sha256": "b9e2dad3bbfaaa22ed42d0426ccaac4bb14be6a72351628bbc7b1c6dd982095e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy.ts",
+    "sha256": "3d6cd5de0e18fca11991c4edb0a44529be2eeca4fe016fec541127d6a82c7b58"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-undefined.ts",
+    "sha256": "86f8c35530d6daf6a2117e3af77a2301f500be2bd0f5ed4a949354b189d90a17"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-absent.ts",
+    "sha256": "3557692670cfaa4a7a7b88f2936148caf9817a631761a052f0c5b6394779fd8c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-alias.ts",
+    "sha256": "0a1e64d9a71dfb72b87af5ec7d205596e7cc1d32375dcd6d49e1b4476f42aa50"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-bad.ts",
+    "sha256": "8be3b9c44badb39364af6fcb49c45bb1cde9aac866b5d700696c2dfbaed8c38a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-good.ts",
+    "sha256": "02c2d6c4fd8bcc14ff0561cea9c8b9d90038981869499c95d7b45eab6edfd4fd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy-element.ts",
+    "sha256": "f167257b4a7ef88a5a9d709d10850bf5803850bd075b57b2bd5810ad3de108bf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy.ts",
+    "sha256": "93958f75c6668093c8e7c637ab693a2994a240e1001fc36431f6ae506ad214b0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-receiver-undefined.ts",
+    "sha256": "67f06b57593efa6b96cc9ca5a3b97404eb4a9591ee3aab35f541ad116a9dc982"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-undefined.ts",
+    "sha256": "52497181cb085026b9daebed226efd36d9ad34635149efbaff833ec2492d0940"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-absent.ts",
+    "sha256": "13bca04504870c1b2a317b7fb86430acabf393fbfbe24c54bed1ba851b56b60c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-alias.ts",
+    "sha256": "7c71fdd23624ca67fffc3ab86de6d1bf04b5bda2375a4a75357314c1bc9051ea"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-bad.ts",
+    "sha256": "75acbd098e9df36c31302cb9248cbef9e33b145a885e8fa27d6904ecfa54addd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-good.ts",
+    "sha256": "4f6dc8d449a7c4d27150a5f475382dab3ba97b421a5f9da177150771ee713459"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy-element.ts",
+    "sha256": "4902d673290029fb01db3d20561792c26fa4f66d37a6ab312bb3a955b493b653"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy.ts",
+    "sha256": "c7f84e17f650fce551c83ab85f68fe9a07ba8a04a567974d8237c211bf42d4da"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-receiver-undefined.ts",
+    "sha256": "77c1e8bcc22fd6eb4fbfa718720e02a7813f15dd1bd5edb61ded56b6c585e66f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-undefined.ts",
+    "sha256": "cdc3d8ea52e7206281c283e2baf4792c5c8d649eed094ebdae520f9ab8b86aea"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-absent.ts",
+    "sha256": "ee874274e236a9101500a383f12c341c5ff562d1654b4a50aca22b2bea069011"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-alias.ts",
+    "sha256": "216f4b6eedd59cf224753c45be63b79fef24eef83cbc379992bab0c6ac6555c1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-bad.ts",
+    "sha256": "8fede57bac9e65e2c9816bf3166501d5348edb639694ccd3c6d008730408658a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-good.ts",
+    "sha256": "0925bc06b62e99a049efe31148b1065f89d364b6992b9736b5da39e5596d0955"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy-element.ts",
+    "sha256": "c54ce9de34600a4be94a2357c0cfd48ec4aeeee9867e50f0b4de8ee6cf087bc3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy.ts",
+    "sha256": "5d88de09bc3f432ff207bedc2e7b5a5e000099f6a68d14962e0495674327c5ae"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-receiver-undefined.ts",
+    "sha256": "3eed292620b62157190deef13a5cb212c2c75f352b98b28cd0b9448898a06f74"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-undefined.ts",
+    "sha256": "bad91a22ade6f0a975edee3326f60774cc852cfb64e09311258631f6de68024c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-absent.ts",
+    "sha256": "b49fedd0d9e835915a2ee0f170e2d435a7f1d74289f551f053690aa20ea12d63"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-alias.ts",
+    "sha256": "6fc22e03c704f96a6da634bd198acba332ec9d9f1dfe9adbc9f93950ea8ccc84"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-bad.ts",
+    "sha256": "bdef94853036161d285bf6cc0b68fe3b3adaf53d2122de681810e77382f4b1cd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-good.ts",
+    "sha256": "783973d103fbf0c96c8a93106d405fd10e289062b19f920cbe4f3d352216ceab"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy-element.ts",
+    "sha256": "b0ffa0a52ad177a5b385d8efaba11fb270047324f25be1a4761f664789e97e11"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy.ts",
+    "sha256": "dcd8ce5d1ed7c13f0cc6224a0c2f105d8c0e834b386309db77c7a4d47f40e932"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-receiver-undefined.ts",
+    "sha256": "fbbbcb4440f30e7604fb3fce1ee3cf1f4d634a48106172c64ab679a262a5c4ec"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-undefined.ts",
+    "sha256": "fbae4309ba5554866749572f659814c4e49f98c0f4fe4774b49968fe24ec65d6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-absent.ts",
+    "sha256": "d6d447acb9952fbd60c36184728bfb13f87148af44492e1ccfd35feba2718029"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-alias.ts",
+    "sha256": "3f64f072ead38eb5a79beb3d7c41b5646153ea05c7a865f783eec3fa7f6e8558"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-bad.ts",
+    "sha256": "93dc1e578dfb3b5c023930324459da7b36c0ac9843ff469d107880deea32598d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-good.ts",
+    "sha256": "4e87263a243b236b9d007a99c129d9fa88bfb71751669242d5d239f607c694db"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy-element.ts",
+    "sha256": "457d3e4735a2b46f861c79e7340c97ab942729eb0a17e3280e42afb781fb8677"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy.ts",
+    "sha256": "0d6db6a966474ae10603d147a6d212572177a8b6a2943c3821f3c2dace500a2f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-receiver-undefined.ts",
+    "sha256": "bcf56ffabc89d434d9c38d278599d54a2772c19f89710344465bf44cf5c5f1ee"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-undefined.ts",
+    "sha256": "1e9979c6362f09e435120426e7d86d00b1576ea933da5073119d5d0121a6a3cd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-absent.ts",
+    "sha256": "f40923128bb19a1d848a6226de03a9743517be77d3b63c7452029f40efb15bec"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-alias.ts",
+    "sha256": "c1cffacf26579502c417f1d84af414b5f066cc21b8fe4d53f2ee4908a1edeb8a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-bad.ts",
+    "sha256": "d0326c5e03c8d4886934b8ea15972cfd99a1e28ea32ddb185d4da9d969d4ccac"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-good.ts",
+    "sha256": "86860c944f9da21f4412c6cd55f858e2350c9304bbbafdab05302c550ce51f55"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy-element.ts",
+    "sha256": "d6cb7cadc79797f856c880dc4c7f59880640919d4275164b88c64d408380ab05"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy.ts",
+    "sha256": "a1fe0d0bb0646da1e6538cd913cb1e0029091da4d8b10162804b3923822e9549"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-undefined.ts",
+    "sha256": "2c2ab11a98658823289051ab0282e897d09937e01905295e75e9c3568c90461f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-absent.ts",
+    "sha256": "1b53f46f25e1d8752271824890e3307accb7fa6806fe46e6d89e18f0db048446"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-alias.ts",
+    "sha256": "13b11571fa9efde940691f2e7fbd9419701dbb73699c944db7c07e67ddd61669"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-bad.ts",
+    "sha256": "0bc3ec7288cf83f4a65cbbd3a66b3d660183f431654bbf28bc347094a4852958"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-good.ts",
+    "sha256": "aa63a67f918172aafff7c6ef77ff0eb0af64c7dd17b74e27df95d4f018e72bb0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy-element.ts",
+    "sha256": "fbf7683eb6b848837081197c81024506a538edbaf96157dc4daa4f26d5ba4735"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy.ts",
+    "sha256": "5525d613dfb9ab59c8437c3e563acd8d365c9dd91b6ccf7553f9dc78a9461ef8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-undefined.ts",
+    "sha256": "f28890232ac8e673f922cf6464ca0b326aa5a3b392063967e522318bd8da649e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-absent.ts",
+    "sha256": "2573ccf671ee2c93d4f0f858672f341906575590ea333413bb0f486743e9dfcd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-alias.ts",
+    "sha256": "41aa66df4a8b4d12b86f8745d7d6e04c5f54de6202ef7047932b2a85f3fcb154"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-bad.ts",
+    "sha256": "3645513d186dc7a9719b19a6953ce34063c26c2766be0c33659e9c56efb39b68"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-good.ts",
+    "sha256": "607376cb917638f5b36c5ed8401c3cda73f92e495bef68f276749671570fcebd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy-element.ts",
+    "sha256": "af6fda57e0db2aada7e0f22903d4c8bad8bdc008814ecd1f41ba9c605abce62a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy.ts",
+    "sha256": "28b1a7e34f1f5c6d0238fd73108956e7a3e9fbe1027dc31e6114874f8df6bd09"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-undefined.ts",
+    "sha256": "5356f133fa943775ede5a88ddc9f4bd1f965f9547b57118a27544828c4fae6b9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-absent.ts",
+    "sha256": "30511fb419e3e5eecbf880f15f35f7703c15bc8ea8cdd7b25199038c5a3a9cea"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-alias.ts",
+    "sha256": "2900bf590fd852b9fd2f281ec2836182f8c16d9d5908de00bd594022c26f1869"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-bad.ts",
+    "sha256": "19ba431950ada25a5a398f6f758b6c90cd01814dab2c9bd54bb40d71fd75a318"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-good.ts",
+    "sha256": "54e9529e5934ddbee237c3be99b2828f72c1a758d3ab4bdfe145714a997edaad"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy-element.ts",
+    "sha256": "d6d5f3a00108be6cc658bdd2501fb922479ee9a231a7886f9e728eb271f034ba"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy.ts",
+    "sha256": "f87563ca08e6074e44d0cb0b10a16a3aad828a8b6a6df6f790e4586b06ea1323"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-undefined.ts",
+    "sha256": "daf0c5eb1beddf2075c477619220e531fa464fb111dd33d8e527b93fbaa981e8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-absent.ts",
+    "sha256": "db12e5001f41613c6b6febe01b4226ce2fbcdf475a8f9a6a1f21290a730f73ab"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-alias.ts",
+    "sha256": "7e32edd06954d222d88f6afb318297f701e98778a81fe010f8f04c1d6c35ac45"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-bad.ts",
+    "sha256": "b0e1e741fffdbbe83116157dcdd043dae13656902427534f0d014aedae329321"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-good.ts",
+    "sha256": "d5b7062317d0aa1d51dd75d724db1c0604819b12de449402ace87026fa86b126"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy-element.ts",
+    "sha256": "130aa52e8d6bb4d2f6075c329443ed33fbcacd3c94116be78b9d5e61c5902278"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy.ts",
+    "sha256": "aa54063f9162528e57812fa06ce2be1dee3b642a6069c1d9e4b57cd938557993"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-undefined.ts",
+    "sha256": "a96ef2189d2f119461950dbe45c0c12c8ad8b82399f2492bc2a04285675fbae4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-absent.ts",
+    "sha256": "174a08c016a43c3eec3287d2c0b5f7b6c23ae53a85e730c00a7974f0ac54b7ec"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-alias.ts",
+    "sha256": "06c3febef3d3621154582a82b52bef604f82706aae94b0d01af2e56e7d7f864d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-bad.ts",
+    "sha256": "7f14b5513e62b4d3969da512ef9963e12f740984a8e72c79da3ec1ecdf25af72"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-good.ts",
+    "sha256": "dba35a830c00395ad42d2970d0fdd46f1dcf639cf1d95ebba223407017497280"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy-element.ts",
+    "sha256": "e71163b7509a0b7f6f835615aa560b9b6cf6a6b0224487acee0a409e66c763eb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy.ts",
+    "sha256": "e41a13da5a5a9a736d797c1faedca5cf832241b49bc083e96139420583184c37"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-undefined.ts",
+    "sha256": "19ad33192add19fae83364e7ff80acb3f7e89f9b36f30722845827ad3eea84a1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-absent.ts",
+    "sha256": "6ef27bed0aa95ab516f788982b6a57ad2807f67fd0707082d863dc612cff300d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-alias.ts",
+    "sha256": "7e8790178ef862933a18093268baf9208ce2ca1617bc513adba4db339ce5a187"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-bad.ts",
+    "sha256": "13145619d48f5b7513d1cbd192c88193a00788bb251977fc1a25eb79318269ce"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-good.ts",
+    "sha256": "0a4afe5d707649e23bc79a4be12fb6aca6c18c3b941031626b25c213465bba06"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy-element.ts",
+    "sha256": "8b4a3570fd8374537ee2ab8d82fd507bb9cf49c97ac336a154e9464aed147959"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy.ts",
+    "sha256": "f0a2e3eeeb4a0db6e45733e48ab024a0d29ad4c4017bbeff4a6804f3d01b9bb8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-undefined.ts",
+    "sha256": "4314952ed893d99c94d92ddc7e71c003d45828b4019aa0d01d5a94120bc290e3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-absent.ts",
+    "sha256": "434bcf9b9be4080ef985df3a625dbe1605b314170ee4642ea143219f9fab342c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-alias.ts",
+    "sha256": "6741643c53c94f89935306d117afa5e954a0c6d36503b920bc4a5227b9d0d746"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-bad.ts",
+    "sha256": "dddb4c936abc91bc00b59f19724853108336036e09d5ad7756f1f0e294b45255"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-good.ts",
+    "sha256": "0cf3857dbd64f4f34b27689692a00a57acc310b30f90773f01ecb149dfb19445"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-lazy-element.ts",
+    "sha256": "4f7a0184bdeb4f9f18278146021de9bf7d4bdfef0398ce6f22ebac2657387821"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-lazy.ts",
+    "sha256": "fcfd7cc1c055527bee55eff9397f666061653054404e15f3c83e9e1705f8090d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/builderprogramstate-affectedfiles-undefined.ts",
+    "sha256": "ada7ccbb704e08fb9b92f5e5120cb2869564d7f27626d545936403b80dec1452"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-absent.ts",
+    "sha256": "db217bf66e0010530b2bdebc1792e99a5ca48c71594dac62b0bf8eabfdd3f81a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-alias.ts",
+    "sha256": "daa5ee0bdbcf4538a1b00cac2bb78eceed60286844e9506bffd9f81f0daa221d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-bad.ts",
+    "sha256": "5120e07cd8580319449cb1ac9108fe0b021f548b97a4734f05f8b9fe20089d9a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-good.ts",
+    "sha256": "a957cc5bb8af16f3b3c37bbe7c80014ca2d7c55ab4188eaf83d29aa180ffbc50"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-lazy-element.ts",
+    "sha256": "59d95c7ac2c64956adeabdb5f89b5328d7179ca04e7e0b7588fb085153c6bad8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-lazy.ts",
+    "sha256": "71583ba559d7ad2bcfa8df8036c14a9573737a1e859c424c7554695b7c66e706"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-customconditions-undefined.ts",
+    "sha256": "2715ab4178e928dc35c43dc2c66a1db7941e14f19e75e1361a02cba50e0c0e7b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-absent.ts",
+    "sha256": "728b2c77a4a2610ec070717558a024a60bd7e8eb7ddbe3e1376d645d33717542"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-alias.ts",
+    "sha256": "3faec0f7b75f27736f03d7d876bf20552a73e8dd754b02243645d472e5387d9c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-bad.ts",
+    "sha256": "bee98c363dcead7be4ba1eb47a1a5e5e1dca1b9efbd1dbed0aec75c90fe58f5f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-good.ts",
+    "sha256": "8dad82c0030f25b8c02fce59bac7c2a6d3feb2f50ee7d65e2be276aa6b12adb8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-lazy-element.ts",
+    "sha256": "4283ee456d7df03ce0ea3a2f0b120e03cad4ea21668374d228d2504feab9b34e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-lazy.ts",
+    "sha256": "1caf907715025720b745b96325ce04a73ab057f08e9fca30c3d394a131aad1bb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-modulesuffixes-undefined.ts",
+    "sha256": "3c3f6ddc7f428fa51f3935c6725d3474848cd7469fd33ba157a2f97ce2e28953"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-absent.ts",
+    "sha256": "559f1d89b7af4a9d227e7d4d6a1ffa1789d100767efae96a95c24b2e281d01cb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-alias.ts",
+    "sha256": "94824f13df5ca9f75dc7d911e0c998d04fd996b101f3ce16644d34473e5b40f3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-bad.ts",
+    "sha256": "9bc67cc1bd02c60e81588fef533286de33dc51e22f1ef1c53537df0d1c117042"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-good.ts",
+    "sha256": "e79938039ea3996e3ba443bf49a92042d1377677cbac9ea67a07b157f6c1844a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-lazy-element.ts",
+    "sha256": "019c360b4b3d265b8789dbaed0a945ac5f34c824847c1ad7c432e6045cda01f5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-lazy.ts",
+    "sha256": "7cdbd674e0bc30e8d39c1ad86c519c84a0ee5b2a11ec974496f5baa12a30ef62"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/compileroptions-types-undefined.ts",
+    "sha256": "ea0f6ea0712f8b791377ff4b9a2225e5b31986c390615770fb722a2396884714"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-absent.ts",
+    "sha256": "dc0f6f2864064ff442bd1fb21fefb8e21d407cde439cc55384855ea3cb337a7d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-alias.ts",
+    "sha256": "cc1e0aa05b5ec8607d965fb0ed06670050066b81f8412373f76f7bc61f1708ce"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-bad.ts",
+    "sha256": "d2bfa07e078c75ddffbe39198b597830cd641146c52870b3e73c2cd380e8392d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-good.ts",
+    "sha256": "30c72ab6033e4124a8026649cd3e14752df27ffcd813c628023b5f1caa566385"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-lazy-element.ts",
+    "sha256": "e3fec16ef6597950a73ec74986d60be484d666911bb4e5f308f756dd7dd76ee1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-lazy.ts",
+    "sha256": "d18004c626c69197e1b741b5856c090405236cef0528000b7a1c825a975a6eee"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-receiver-undefined.ts",
+    "sha256": "7cb3d13a2448947a06f5b9a3dd03d473cdf8d7b16568259f246345111bafba17"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs---undefined-validatedincludespecs-undefined.ts",
+    "sha256": "aa643c9a7303938a1f852d472a8a400b02228a2cbbb6dbd780c6486fba8c6041"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-absent.ts",
+    "sha256": "0439b1765536d3da5239208366b39b5be23d628bd0ffae1b92cb08971fc718eb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-alias.ts",
+    "sha256": "55b0cc5555e9746461d7279fb8e14cf9607152825e1354f29aad1bd40f663fe3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-bad.ts",
+    "sha256": "2e06a92069a02e4051767c0a09d4c73c733bc511e6fec27e23782bc8ab266267"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-good.ts",
+    "sha256": "aa61914166a2c6f80fe9819c0717ec80a2a80cf933251597b0ac242f07977eb6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-lazy-element.ts",
+    "sha256": "ab1ff4c657f4f56cfab5c50b1c4f83d45592ac41b2099c0f9995464a0d6a0191"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-lazy.ts",
+    "sha256": "7bd547cc0329bdd39243408b15eeb8d482282c6bbec24d27730145bbf3d5c342"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/configfilespecs-validatedexcludespecs-undefined.ts",
+    "sha256": "7ced9fe00faa78f1a076ab9f6eb266023556fcd3e726a8c003ca98fb9745aac1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-alias.ts",
+    "sha256": "47547a6b3df3658f0b4dbf00163f127666a23292b3603bcf14f7b5069daa9bbe"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-bad.ts",
+    "sha256": "5e8c8bd21a45afc4c4b266944d3b156c1e31c403c1528c2f02672f4d3224b38d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-good.ts",
+    "sha256": "dc7c9b999b486d0a85d1cff8410c2a451046557962164643357aac1756557fdd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-lazy-element.ts",
+    "sha256": "12ffc19f695dbf4f0d6e39c55ff86b9d87cfda83c6db3a09937f868df0b0e0a2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-sources-lazy.ts",
+    "sha256": "b3305f2f8ae7cb53dbf860a18959523e360884eeacf0e0ae3bdbef2b97331ab1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-alias.ts",
+    "sha256": "1ee6527ab3ee4ae693befe133434cd1f680ad323a519087f5180bce74ec23887"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-bad.ts",
+    "sha256": "3d8645b516c9a3b6650b01a13388396000982114ca069a7715ab8854d148f39b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-good.ts",
+    "sha256": "bc327b936c2064a54f97e4544a4fd79fec9a5352db731743a4dbbb22891942d8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-lazy-element.ts",
+    "sha256": "14ba079e5daa6b9189751cf4f724b26ba7fdd7f9d3396cb1f389bc50b22c5e95"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-lazy.ts",
+    "sha256": "69051f6fed0ddca8ef1a72d789f2408a85779512fe7aa4e3f1347069eabcfebd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-replacement.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/deferredmapper-targets-replacement.ts",
+    "sha256": "53bd9918ce9d1b55484e9d98701d32ad7e64d49b7fa313e8ebba411095500635"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-absent.ts",
+    "sha256": "e6440ec8109827e6c3dadad13c38d0daaed2144bd53af1fdaef1bec2ea3f6d08"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-alias.ts",
+    "sha256": "6f1045178ac1fe04573e601f363494e18a5ee4c9941ab9148951826cf695766d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-bad.ts",
+    "sha256": "478549861a12383bea287d3abecd3f750c33b7db7d8b4f111b295b689f429493"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-good.ts",
+    "sha256": "bfe53023582654bdd8f602a749d717715275b0a674a6f1fd06984fb12ac34168"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-lazy-element.ts",
+    "sha256": "1291bca8c1f03c10d2db2e54a0add366045c5755774cba4d3f2eb0ff6b7db927"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-lazy.ts",
+    "sha256": "299e19422cd40176846d5239c31d849c9055f58381d2aaf4b6a5f585248e9abd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithdetachedlocation-relatedinformation-undefined.ts",
+    "sha256": "e0ac167faa1a6acf70efe348484ad4939e934f5e38c74086aec4b2a09a3630cc"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-absent.ts",
+    "sha256": "6baa9ba30b234e5299645de7c0831e036fd5938042665687bc7d90414c8c54e1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-alias.ts",
+    "sha256": "500d688a374ef24aec23374aa1462f5ef8de3ebe1da8208aadfabdd8c609a389"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-bad.ts",
+    "sha256": "ccc8ca0cbdf814bf42e28cea4105326c19bef54825c76f2164539a9c832a6e14"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-good.ts",
+    "sha256": "80b257a6fce6c56c7c886a4b4316e9f55e91d07d1f3b94485faafb2a2221c246"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-lazy-element.ts",
+    "sha256": "e8ffcf3f4258b4609094cac55e72f6e6641ef2ef2dac27eea0ac68c35e1ab56a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-lazy.ts",
+    "sha256": "650cdaf5c082d3ee708aa7ae5cc59123a68cf0af024b6704cbfe2be971fbe4ce"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/diagnosticwithlocation-relatedinformation-undefined.ts",
+    "sha256": "d7d747b83947efeea7c3590bc68c60bdb6267e862025c2bfd97cd8244d0700f7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-alias.ts",
+    "sha256": "ffd79f49701c0dfed36e9e8bf14742b2c177af7dcb4ee83bf386516c1cfd0c1e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-bad.ts",
+    "sha256": "6bdac81c474109a7e8c64e94f831b8faf86c585a0be28a996cd7706e05f80e0f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-good.ts",
+    "sha256": "0a6cb0a689464954bdfe5b9b8819731780fabebc6a1bd0589176e13770b3a69d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy-element.ts",
+    "sha256": "e8505118218884475ba7f5ac79ecb7eb4a6fa9a5d76cafcdbd32bdf38160598d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy.ts",
+    "sha256": "14696eeba630b59c11f7d50dcccc859b7dd369d0f6ea01059e233334d55b8cb5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-alias.ts",
+    "sha256": "3388d92b294e00b151edc4696479851d14aeaad7ba122f10b8f1d27a2ad5b0a2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-bad.ts",
+    "sha256": "23202866e34d48cda696c05d2906128c987ccdf6125499fd0a318213e436eeed"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-good.ts",
+    "sha256": "c802cfb25eb474beed24eb3bfa5e61c0f3e68cc269aedccaa40ec18756f973ec"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy-element.ts",
+    "sha256": "3a34d28a4239c135c7c780de4f65ac0afc8a4b9baf810073953244b3b3cdf8de"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy.ts",
+    "sha256": "da08e2d59503e0b3cb551fc990b0825ca30c85d698003c56009695d58bda3a75"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-alias.ts",
+    "sha256": "40fd7632e38bbc99b00f93793e08d51abfcfb871c348df67a0432ece33d3c527"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-bad.ts",
+    "sha256": "2a8803fd72bdf367128b0cbe0328efe1792147f6ac1ab4239691386864e8ce7d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-good.ts",
+    "sha256": "534b6657edcd1f7102b689075c868fe74e6af42de3594edf60dba4cb86752816"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy-element.ts",
+    "sha256": "c07ee2c9d556b5c5c50dbe3e5848a4109a350ef38c8e14d43051c7fff14e15a7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy.ts",
+    "sha256": "7335682f051cbf7db5bd5f48a9151e20cf3114022b1715fd38218dfad58c18b3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-alias.ts",
+    "sha256": "524391639935b2b764436db592c0d3790d35c1f8e06688134a689ff45c725b5e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-bad.ts",
+    "sha256": "b1063bb1de527fb7860e4d04287f304008ba07d4d4e0e0a2eb52adfef2f5e723"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-good.ts",
+    "sha256": "a87a21b957acaf95c96258c89730541c64774d613c19a9e85bb27945881e4a05"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-lazy-element.ts",
+    "sha256": "5b25395d572585adfc860aabfb69f1a9614f91ef22bcbb76a6c9fc30be668a4f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/nonincrementalbuildinfo-root-lazy.ts",
+    "sha256": "2318d73c82fd9ad5564db916d0d7a58b2451dd9e6ed653732852a58ae96b48f2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-alias.ts",
+    "sha256": "b71e779f8ed7bfce1f266c8d673f605072061f4d27422c15b0474290d5ff9cf9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad.ts",
+    "sha256": "312b2ce9ff28681d4e3ba22fd4980012a44c0dfc9e19f2fb64eb44fadc1f3907"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-good.ts",
+    "sha256": "f42af5f1157dc110e09d0c45493432f62cdc76e851f38143226b68f0b210108c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy-element.ts",
+    "sha256": "c98c1c81a562250530c04779c6ae4be1019ff5eb81645fcf5951f9ec1ca7d7cf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy.ts",
+    "sha256": "897333300869016690d22fe81c5460c7b461c0192a641c744e62d11f40d72800"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-alias.ts",
+    "sha256": "83cd283ad157de9d775d8f193b9b0cfd8ac74012b6f6f52471d0518e58f3ca14"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad.ts",
+    "sha256": "6748d401dfa2863c0d783b5670f67c81ccd23291acb5e1273b4a2528ac73b981"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-good.ts",
+    "sha256": "d93cd71f63c5e068c361e0fe08f0b164cbab38b0cdbd8ba98d4761517ea5beb7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy-element.ts",
+    "sha256": "7fadef844d637f74eb6f5da12f4b677e947b1b0d87676f2e602b25568eaacb5f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy.ts",
+    "sha256": "45dc3c15e18143d18ceab69cceace2898bbedf30a954a6807b50deaade14097e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-alias.ts",
+    "sha256": "882247028ea377eaf00eecdd76a4f394f2609fdca91a991b228a1b1109f7c188"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-bad.ts",
+    "sha256": "f95babc518851d4edb92e92c57eabb88bbcc88b3c62d82f6c236813f46663b90"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-good.ts",
+    "sha256": "4fd6366ba6d5dc70df6ae13aceaf0627305004d4bfeb37a780fd84a75bfaad0d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-lazy-element.ts",
+    "sha256": "37ebe945e4ea73aaea7d0f5e83daed79592ade0e452f4ba2acfbae9f92454107"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/tsconfigsourcefile-statements-lazy.ts",
+    "sha256": "bdf144ab6cc673504209c1222a2501d57e4b6844a02a12e195d331836f8c6fa6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-absent.ts",
+    "sha256": "8d50bbb46e3a13bf5bd7401b6d7d42232bdf9f06702bc3b5516a1dbf830fa642"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-alias.ts",
+    "sha256": "338c1c8ac2dc60603383859841da18eef96015c99d321a65496b3c14abc202e6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-bad.ts",
+    "sha256": "a1bf348a1a9bec723cbcca327caa6d0fefeef66f784b384a4111aafaf3806156"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-good.ts",
+    "sha256": "720cb887a185ce0eee5d1125cc7b43991271a76e3c90b6515c0da296bdc76d68"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-lazy-element.ts",
+    "sha256": "20c1ed365890157b8a542f42bed35217823aa0f231b8e0e801ff03675878719d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-lazy.ts",
+    "sha256": "5b763a7016c1c9f0376871a3ae0c132d9ca82b4358188123ea4e8424ad851faa"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/unscopedemithelper-dependencies-undefined.ts",
+    "sha256": "d7ebc491a6a1a9261d418108b25273dbd8e461382f2973598f2b7a639ef7917b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-absent.ts",
+    "sha256": "fe5c127673c6535b3b1a3702357d229d2439179b8f5762afaafbba8168611bf7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-alias.ts",
+    "sha256": "979806f592427b349da752d59ae759e7de380ae58cb3f57922ca4d4dcd8eade8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-bad.ts",
+    "sha256": "ea70614dd1f87ad5047c320ce576cc27620fb0e7db61207855a9e90516eb2c86"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-good.ts",
+    "sha256": "d975c332e30e557ce8c4d5b32056e991618632439ccd98124942579234375ab5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-lazy-element.ts",
+    "sha256": "876263ada872639b35d1141589501463cd45ca27cbabf0033670ab0b96a87766"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-lazy.ts",
+    "sha256": "1b0431202b692722c31ab320ef1f3fd476d84a3bf4be72f6e44fe7e2e28df7ac"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-receiver-undefined.ts",
+    "sha256": "e3abf1022e98b43b3aeca90cee139a07e20b477f597771c5abb843a57353fa90"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludedirectories-undefined.ts",
+    "sha256": "c6fceba6091365bf91c83bc29608ee389cf2430c77e1769940db85a59db2f3e2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-absent.ts",
+    "sha256": "fda2412d3b02db576d730c7b45b2df7a9e3467e53d40bf340a16192b990c271f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-alias.ts",
+    "sha256": "56ba971edfb8ac78856147f23c4193def7a1edc616a2aee361556b619f670365"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-bad.ts",
+    "sha256": "d70b8b923b015e8df0f0bb9108bd1e4f0a2e0fc4f6a17d3165874a8add2b1aaf"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-good.ts",
+    "sha256": "233ba50763250a080d9c54f6d51d7fa3afe8f99d843ae087e4282410d420fc43"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-lazy-element.ts",
+    "sha256": "174038a3b3b5edbae280cf20f8333f8232d28c93f15bee88c6ec5ebe7d579a74"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-lazy.ts",
+    "sha256": "489c65aa68eb1156d198e3afdd75a7ca229340e5f7163580467c69b316b92794"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-receiver-undefined.ts",
+    "sha256": "cb431d956d0a70de00cf079777851b47d3f413593ec8c3cf4f5124d601a7e508"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB3/watchoptions---undefined-excludefiles-undefined.ts",
+    "sha256": "f179c1b8db8ba8522071cb98748f79f00a6206832806d64f356a9ecbb56fe4f7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-absent.ts",
+    "sha256": "1f1679fd6a721fb4688bb631794af74d9f635d00ba2399c6e7e2f04a962caaac"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-alias.ts",
+    "sha256": "a8705869cb7b709867bc56051957c7eeb322e9c4c9088dd3064d26dcf6420ef7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-bad.ts",
+    "sha256": "3ab23980ef13de03fac8dbe59fb02070c233d4a66c0d8ee6f14a05f5e4d97216"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-good.ts",
+    "sha256": "1d74df225b86a4525103c9bbf23a61ef15a024ef6188d3b9073f7c673bce5a7e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-lazy-element.ts",
+    "sha256": "5b4d20afd0b99998461653fd348608382834abec7170cdfd769ed9caa53af2b0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-lazy.ts",
+    "sha256": "2d2dd590314e27b6a85809bc4c8bb7249875931bf8d4feecdc2e33c9c2be542e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-receiver-undefined.ts",
+    "sha256": "f42ce1b1ce1c562b6ee19f8d9b7032c0d5805bdda74a8e0cb56a9634b3e6fc67"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-undefined.ts",
+    "sha256": "5472f94d6a274767ad8a4b713b1ec75018ebdb534e3441c8099491dd94c6ee3c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-absent.ts",
+    "sha256": "3ad89d82b6553dabca9872f2e25f0de095370e37d7f3c0065394a31d046af0eb"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-alias.ts",
+    "sha256": "83c52635866a2e6dd4c13f3fe161507f6e7d83846538baaca81d4a817cd30fa7"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-bad.ts",
+    "sha256": "b451dea175c5a4d7f34b47f2b0bd92a9aca9e9253f068ca7a2ef561a6b9e10d0"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-good.ts",
+    "sha256": "91d2202c8f3b7836958ec296b4886e9b8c8ce6f904e12854b6ad442e9ed28aa2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy-element.ts",
+    "sha256": "01c686c46ee22a098cf90d91d29c4ffa09be974d408a236aad6b377c401b9de1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy.ts",
+    "sha256": "ed0bfb8db2ffe92e17d75a24013a8e2c6021d7eb424dd7863014fb5392350dfe"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-undefined.ts",
+    "sha256": "a7d7439a2ae72f6744122e29d8d8a002fd35ead50151ade3602031687f5b970c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-absent.ts",
+    "sha256": "6c13fda8f08a448de3cc2e18f3b9b9400d8d5fcf391c958e6568e40ba6b057c1"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-alias.ts",
+    "sha256": "c91c65855836e2d3edccd3fba568489153e4d9a674d07b650049678baa172e39"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-bad.ts",
+    "sha256": "a439e520df324a1bf805c72a7b81bdd8c48e12918b37269ca1b493dda9914500"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-good.ts",
+    "sha256": "c0e36bb129dc55d8fb18373a4a97c060d0a58e5b3795d8026756df94d2e6575b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy-element.ts",
+    "sha256": "fcb8fec292ac41c8af37c634a43c70869382db58b6a79c5afcc677c234164661"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy.ts",
+    "sha256": "4dff7c23b672ba3005fd187d28c23102fcb88ab2812eb660beec272999a40679"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-undefined.ts",
+    "sha256": "83ca9b96f5c50d785c9ef523097d648cbf44373b572085a1055eb900bb62585b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-absent.ts",
+    "sha256": "c3c8f17756be2f9c351a398cfd7d75fa45e0fd4c16cb13b113418a3e0e4ba140"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-alias.ts",
+    "sha256": "cf5183491616f9b2972d83e2dc6d74379a29c04998dc2f0e55e9f437cabc1ba5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-bad.ts",
+    "sha256": "9298362b5ad5aa2f1325605c4a35e9e981dbfd7386d886c318fe7fbef021402a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-good.ts",
+    "sha256": "caf1ca7ad29c0b2db0f0ddad5b864310b15fc2ac5f9c2db117d9e1f3a3973ad8"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy-element.ts",
+    "sha256": "6cdb620bbe6b4749282928d0d8b15a00dcfe8eabde60c92c668416d46bc77851"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy.ts",
+    "sha256": "8d7121630d1e98ffe179093bea6a9f84ecd32918d747a40d55d5e059d7d208bd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-undefined.ts",
+    "sha256": "d5eb8b7c0f00f1604e04e1a500565293f38d3e8a7a4f11d8c38fef75aa0ba441"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-absent.ts",
+    "sha256": "0582974b492687e0d92988d170b79bdc1d98bab86f4c92d8d8bc7fb96d5fd75e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-alias.ts",
+    "sha256": "9901b75856150af9d1acfda0fa75e94376fa1a25056e4056f54dc148bfb9c657"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-bad.ts",
+    "sha256": "8e6bbc2613c17378eed07b9cab099dcf3c74173175cef3c087668e78fd0a411c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-good.ts",
+    "sha256": "c6a1e66f1c97d3dca5398bb304d876aaffa06543c399021cc19a6c8fbe7cc63e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy-element.ts",
+    "sha256": "87d62a4a7f3e47b1441553d9049b9358bb28dadb72aa3e0e9d5752fec4105eff"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy.ts",
+    "sha256": "03dabc4a00ad163641bb78a1ea35424b701bc4df707edc9be1897e7b6167945d"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-undefined.ts",
+    "sha256": "4dd1de9925e8bddebb9b87160eb6b3220d0d3c551e7b3dea272fb0a36d5ef7cc"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-absent.ts",
+    "sha256": "eacb8ceb7b8c0cb12b000e11847393e0c961e17a8b8e824567f187c1082f79d5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-alias.ts",
+    "sha256": "38ce8459219508c2223f1e53e26b51b3b3cd18414d15ff0d7cb5c6c3ac1ea547"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-bad.ts",
+    "sha256": "e8565c75c370cd091d879f5a77c0cfc2c1a6eef2e88f1a19db8ef903c3be25a2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-good.ts",
+    "sha256": "d4b0d01d59de3028b39608d337ee307ed23886644c33582a06fde0750f9f2387"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy-element.ts",
+    "sha256": "a0d54aeedd7969b78829dba8b24c2796d375876e0b3322dd8e2e01c88a596cf2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy.ts",
+    "sha256": "999876bb98afb17422997142149d9f5fee7719ea0846afbf6dc09f4cca9f0626"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-undefined.ts",
+    "sha256": "36527b6faf32177b45ce487c284dc5b90d7710145e7d0c4b9241e5643a3f2284"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-alias.ts",
+    "sha256": "bae868435069e5c21a01f9e098799b042bdc264c70aa986e10053e23b381b0c3"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-bad.ts",
+    "sha256": "1f0f01a05f3c3b7e5ab75b825c7a838a42be5a06738a4e0b7a84ee9b6dfb36e5"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-good.ts",
+    "sha256": "5bd567037725443c09cd1532beb1203607337454e1f1f22342abcddae9ce8a7c"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-lazy-element.ts",
+    "sha256": "9068dab9cacf09ed24caeaa3d5e45cb977e14fea08b0d2fae5656baea328f6ee"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-lazy.ts",
+    "sha256": "6931ca2784020927d7275f15e62ad6c07a815d774ca4be105543ba3be358bfd2"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-receiver-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-receiver-undefined.ts",
+    "sha256": "4e42f6252dd33dbdede61047f77437a1c9887ca397e237ac597cb09caf2a1466"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-absent.ts",
+    "sha256": "765f4f466103b2590bb60fb920d800830402ba72df1484a772ca98c36d640435"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-alias.ts",
+    "sha256": "59e07b270a5d03b62f6c6187561961da188476fd3f305ce23289e3f9bcc88d8f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-bad.ts",
+    "sha256": "113087ef0f174cc399a94b0ac043a2d481c91685a6c93a26afa469893ddd0a4e"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-good.ts",
+    "sha256": "c7f15183ac49d5d8e90efbe8e37e571a867a107bbe415298da63db90c3d293ca"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy-element.ts",
+    "sha256": "88147778b9c63595e3b4beebe90d831ce4140f99c24ecfcdb4435dd8b3d08a5a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy.ts",
+    "sha256": "6f6cc657e0c5e69f26e36fbbfd58387d96f086aaea5b799b60a0b9ef69be14e9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-undefined.ts",
+    "sha256": "d4eb87ba5c0af8beb234d91bc1418a00cb378025eeb96681d957dfc12c9df011"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-alias.ts",
+    "sha256": "a591df3bf347a9d16c868e14a165d5e0c07df13a2705d59783286a03559c2d92"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-bad.ts",
+    "sha256": "3b53f85c7211008c0950f7a9fa7872d476b47baa501932cf61854b43eaac4ad4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-good.ts",
+    "sha256": "0f3abd9c52a1cf4f287267a735bbb286c3e92132ada8de2757cf08d1c0ebfb0a"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy-element.ts",
+    "sha256": "4783a3d814268bafba6350730d2a93e21c73abe0949446c611bcdfdfbbeaec8f"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy.ts",
+    "sha256": "c0c631d9ffb69c01f5df7ab462242d7f920dcdd09cbfd8b97c340ee10df7277b"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-absent.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-absent.ts",
+    "sha256": "6a3c81c656f6733c8c756e86766f501b1abff523b8a1159a8c607bcacd6d0481"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-alias.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-alias.ts",
+    "sha256": "30dbc742c30552dfb90f8d863538070180c62b49c17eb9e2134a8a515c6db3f4"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-bad.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-bad.ts",
+    "sha256": "c41863120c8b72197d01f73a5eaf4d4a11b83efe035fa35accf16ae7d6c0aecd"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-good.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-good.ts",
+    "sha256": "b78f7365055c279df59ae6f6cd14d7d7bbcbe62ec3aeb314ba62133bd6d76357"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy-element.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy-element.ts",
+    "sha256": "cc5caedd8fb72f9a1045c2b3fb57a2f307bf75278a63f771479d4352a004e5b9"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy.ts",
+    "sha256": "7ee763b4734659ef7f09889836110e52360fb52dfc9e4efe393d0cff735550a6"
+  },
+  {
+    "from": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-undefined.a",
+    "to": "stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-undefined.ts",
+    "sha256": "0ab95e5f5d233de6c15998a27472e16ce711f0bb196514466f73ab0d1ded7dc6"
+  }
+]

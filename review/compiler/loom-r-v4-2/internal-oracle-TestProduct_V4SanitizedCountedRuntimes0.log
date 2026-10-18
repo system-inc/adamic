@@ -1,0 +1,10 @@
+=== RUN   TestProduct_V4SanitizedCountedRuntimes0
+=== PAUSE TestProduct_V4SanitizedCountedRuntimes0
+=== CONT  TestProduct_V4SanitizedCountedRuntimes0
+    checked_views_v4_runtime_products_test.go:19: build native-runtime e4fbe61e6c9e hit 0.12
+    checked_views_v4_runtime_products_test.go:19: build native-runtime 3f4a0f755369 hit 0.01
+    checked_views_v4_runtime_products_test.go:19: build native-runtime 8ace63c29584 hit 0.01
+    checked_views_v4_runtime_products_test.go:19: build native-runtime 9e073795212d hit 0.01
+    checked_views_v4_runtime_products_test.go:19: build native-runtime 2703d332181c hit 0.01
+--- PASS: TestProduct_V4SanitizedCountedRuntimes0 (4.20s)
+PASS

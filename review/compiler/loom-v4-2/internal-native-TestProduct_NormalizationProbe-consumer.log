@@ -1,0 +1,6 @@
+=== RUN   TestProduct_NormalizationProbe
+=== PAUSE TestProduct_NormalizationProbe
+=== CONT  TestProduct_NormalizationProbe
+    normalize_test.go:256: build normalization-probe 8137728f9516 miss 3.13
+--- PASS: TestProduct_NormalizationProbe (3.16s)
+PASS

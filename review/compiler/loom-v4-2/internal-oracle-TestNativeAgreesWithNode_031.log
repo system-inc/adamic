@@ -1,0 +1,70 @@
+=== RUN   TestNativeAgreesWithNode_031
+=== PAUSE TestNativeAgreesWithNode_031
+=== CONT  TestNativeAgreesWithNode_031
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/reuse_global_sibling.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/reuse_global_sibling.a
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode_031/stage3/fixtures/enums/03_jsdoc_range.a
+=== PAUSE TestNativeAgreesWithNode_031/stage3/fixtures/enums/03_jsdoc_range.a
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/namespaces_unknown_before.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/namespaces_unknown_before.a
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/nested_callback_escaped.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/nested_callback_escaped.a
+=== RUN   TestNativeAgreesWithNode_031/internal/oracle/testdata/overload_array_to_numeric_map.a
+=== PAUSE TestNativeAgreesWithNode_031/internal/oracle/testdata/overload_array_to_numeric_map.a
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/overload_array_to_numeric_map.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/nested_callback_escaped.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/namespaces_unknown_before.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/stage3/fixtures/enums/03_jsdoc_range.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_031/internal/oracle/testdata/reuse_global_sibling.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_031 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/borrow_chain_coverage_callbacks.a (3.51s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/overload_array_to_numeric_map.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/nested_callback_escaped.a (2.41s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/namespaces_unknown_before.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode_031/stage3/fixtures/enums/03_jsdoc_range.a (0.46s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/accessor_spread_throw_first.a (2.25s)
+    --- PASS: TestNativeAgreesWithNode_031/internal/oracle/testdata/reuse_global_sibling.a (0.41s)
+PASS
+gate cache: native hits=6 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0

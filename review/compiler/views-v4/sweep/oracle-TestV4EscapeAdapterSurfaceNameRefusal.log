@@ -1,0 +1,10 @@
+=== RUN   TestV4EscapeAdapterSurfaceNameRefusal
+=== PAUSE TestV4EscapeAdapterSurfaceNameRefusal
+=== CONT  TestV4EscapeAdapterSurfaceNameRefusal
+    checked_views_v4_surface_test.go:103: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceNameRefusal (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.606s

@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "surface-borrow",
+    "diagnostics": [
+      "==44330==ERROR: AddressSanitizer: heap-use-after-free on address 0x7bd1c8be0050 at pc 0x562ccec391a5 bp 0x7ffc5c5ce380 sp 0x7ffc5c5ce378",
+      "SUMMARY: AddressSanitizer: heap-use-after-free /adamic-runtime/closure.c:213:35 in adamic_view_adapter_underlying"
+    ]
+  },
+  {
+    "mutant": "bind-name-borrow",
+    "diagnostics": [
+      "==47846==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c1b119e00a8 at pc 0x564ecda6c0f7 bp 0x7ffdeb5feeb0 sp 0x7ffdeb5feea8",
+      "SUMMARY: AddressSanitizer: heap-use-after-free /adamic-runtime/adamic.c:300:29 in adamic_write_line"
+    ]
+  }
+]

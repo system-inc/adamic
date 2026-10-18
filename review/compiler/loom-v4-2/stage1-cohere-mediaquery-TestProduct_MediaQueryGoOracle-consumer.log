@@ -1,0 +1,6 @@
+=== RUN   TestProduct_MediaQueryGoOracle
+=== PAUSE TestProduct_MediaQueryGoOracle
+=== CONT  TestProduct_MediaQueryGoOracle
+    mediaquery_test.go:472: build go_test_-c_cohere_./internal/format/css/mediaquery_mediaquery.test 76a2645e7288 miss 2.83
+--- PASS: TestProduct_MediaQueryGoOracle (4.98s)
+PASS

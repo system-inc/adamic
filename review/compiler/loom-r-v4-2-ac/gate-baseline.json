@@ -1,0 +1,484 @@
+{
+  "results": {
+    "a_check": {
+      "internal/oracle/testdata/library_array_holes_length.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/library_array_holes_range.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/library_array_holes_scanner_probe.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/views_v4_refused/construct-no-signature.a": {
+        "outcome": "type error",
+        "expected": "type error TS7009",
+        "first": "internal/oracle/testdata/views_v4_refused/construct-no-signature.a:6:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly"
+      },
+      "internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a": {
+        "outcome": "refused",
+        "expected": "refused readonly field onEmitNode becomes writable",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a:7:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, nod"
+      },
+      "internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a": {
+        "outcome": "refused",
+        "expected": "refused an unproven escaping callable read of viewed.run",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view"
+      },
+      "internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a": {
+        "outcome": "refused",
+        "expected": "refused an unproven escaping callable read of viewed.run",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view"
+      },
+      "internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a": {
+        "outcome": "refused",
+        "expected": "refused an unproven escaping callable read of viewed.run",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view"
+      },
+      "internal/oracle/testdata/views_v4_refused/view-result-wrong.a": {
+        "outcome": "refused",
+        "expected": "refused an unproven escaping callable read of viewed.run",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view"
+      },
+      "review/compiler/views-v4/construct-misfit.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/review/compiler/views-v4/construct-misfit.a:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented"
+      },
+      "review/compiler/views-v4/lane5/factory-12-wrong-producer.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-174-wrong-producer.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-186-wrong-overload.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-189-wrong-overload.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-24-wrong-overload.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-3-wrong-overload.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-3-wrong-result.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/views-v4/lane5/factory-9-wrong-overload.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-alias.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-boolean.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-bounds.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-element.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-field.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-holes-view.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-iteration-bad.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-iteration.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-lazy.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-length-kind.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-map-bad.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-map.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-missing.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-pop.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-second.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-string-literal.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/array-undefined.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/generic-array-element.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/non-array.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/nullable-array-element.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/nullable-array-missing.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/nullable-array-string.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/lane2/object-element.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/untagged/fixtures/array-union-empty.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/untagged/fixtures/array-union-good.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/untagged/fixtures/array-union-nested.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/interface-downcasts/v2/array-arm.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    }
+  },
+  "steps": {
+    "a-check": 1.6
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "diagnostics": {
+    "internal/oracle/testdata/library_array_holes_length.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8618
+    },
+    "internal/oracle/testdata/library_array_holes_range.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2748
+    },
+    "internal/oracle/testdata/library_array_holes_scanner_probe.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1351
+    },
+    "internal/oracle/testdata/views_v4_refused/construct-no-signature.a": {
+      "exit": 1,
+      "stderr": "internal/oracle/testdata/views_v4_refused/construct-no-signature.a:6:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a:7:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace; keep onEmitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/views_v4_refused/view-result-wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+      "stdout_bytes": 0
+    },
+    "review/compiler/views-v4/construct-misfit.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/views-v4/construct-misfit.a:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented\n",
+      "stdout_bytes": 0
+    },
+    "review/compiler/views-v4/lane5/factory-12-wrong-producer.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6621
+    },
+    "review/compiler/views-v4/lane5/factory-174-wrong-producer.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6179
+    },
+    "review/compiler/views-v4/lane5/factory-186-wrong-overload.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10352
+    },
+    "review/compiler/views-v4/lane5/factory-189-wrong-overload.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8364
+    },
+    "review/compiler/views-v4/lane5/factory-24-wrong-overload.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9255
+    },
+    "review/compiler/views-v4/lane5/factory-3-wrong-overload.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7873
+    },
+    "review/compiler/views-v4/lane5/factory-3-wrong-result.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5724
+    },
+    "review/compiler/views-v4/lane5/factory-9-wrong-overload.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9640
+    },
+    "stage3/interface-downcasts/lane2/array-alias.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6115
+    },
+    "stage3/interface-downcasts/lane2/array-boolean.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4033
+    },
+    "stage3/interface-downcasts/lane2/array-bounds.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5040
+    },
+    "stage3/interface-downcasts/lane2/array-element.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3705
+    },
+    "stage3/interface-downcasts/lane2/array-field.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3122
+    },
+    "stage3/interface-downcasts/lane2/array-holes-view.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5873
+    },
+    "stage3/interface-downcasts/lane2/array-iteration-bad.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3834
+    },
+    "stage3/interface-downcasts/lane2/array-iteration.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3815
+    },
+    "stage3/interface-downcasts/lane2/array-lazy.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3721
+    },
+    "stage3/interface-downcasts/lane2/array-length-kind.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3279
+    },
+    "stage3/interface-downcasts/lane2/array-map-bad.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5729
+    },
+    "stage3/interface-downcasts/lane2/array-map.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6955
+    },
+    "stage3/interface-downcasts/lane2/array-missing.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2716
+    },
+    "stage3/interface-downcasts/lane2/array-pop.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5414
+    },
+    "stage3/interface-downcasts/lane2/array-second.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4315
+    },
+    "stage3/interface-downcasts/lane2/array-string-literal.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2884
+    },
+    "stage3/interface-downcasts/lane2/array-undefined.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3814
+    },
+    "stage3/interface-downcasts/lane2/generic-array-element.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2257
+    },
+    "stage3/interface-downcasts/lane2/non-array.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2836
+    },
+    "stage3/interface-downcasts/lane2/nullable-array-element.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2538
+    },
+    "stage3/interface-downcasts/lane2/nullable-array-missing.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1910
+    },
+    "stage3/interface-downcasts/lane2/nullable-array-string.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3111
+    },
+    "stage3/interface-downcasts/lane2/object-element.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4832
+    },
+    "stage3/interface-downcasts/untagged/fixtures/array-union-empty.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9030
+    },
+    "stage3/interface-downcasts/untagged/fixtures/array-union-good.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10203
+    },
+    "stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10851
+    },
+    "stage3/interface-downcasts/untagged/fixtures/array-union-nested.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 15610
+    },
+    "stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8902
+    },
+    "stage3/interface-downcasts/v2/array-arm.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5809
+    }
+  }
+}

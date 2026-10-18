@@ -1,0 +1,24 @@
+{
+  "source": "332f305e6489cd90ebcc2a073f24f8289cb881ea",
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "identical": true,
+  "source_lines": 452,
+  "recut_lines": 452,
+  "differences": {},
+  "files": [
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/array.c",
+    "internal/native/runtime/array_holes.c",
+    "internal/native/runtime/closure.c",
+    "internal/native/runtime/heap.c",
+    "internal/native/runtime/map.c",
+    "internal/native/runtime/object.c",
+    "internal/native/runtime/regexp_replace.c",
+    "internal/native/runtime/union.c",
+    "internal/native/runtime/view_arrays.c",
+    "internal/native/runtime/view_arrays.h",
+    "internal/native/runtime/view_callables.c",
+    "internal/native/runtime/view_callables.h",
+    "internal/native/runtime/view_unions_untagged.c"
+  ]
+}

@@ -1,0 +1,26 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts (0.19s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts (0.53s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts (0.53s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts (0.55s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts (0.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	0.607s

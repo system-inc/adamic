@@ -1,0 +1,149 @@
+{'package': 'bench/regex', 'build': True, 'seconds': 1.332, 'exit': 0, 'no_tests': True}
+{'package': 'bridge/tsgo', 'test': 'TestBridgeProductCacheIsVerified', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'bridge/tsgo', 'build': True, 'seconds': 19.577, 'exit': 0}
+{'package': 'bridge/tsgo', 'test': 'TestBridgeProductCacheIsVerified', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cloud/reports/decode-ascii', 'test': 'TestRuntimeFeaturesMatchNode', 'seconds': 17.638, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cloud/reports/decode-ascii', 'build': True, 'seconds': 19.488, 'exit': 0}
+{'package': 'cloud/reports/decode-ascii', 'test': 'TestRuntimeFeaturesMatchNode', 'seconds': 17.638, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic', 'test': 'TestBuildTargetParsing', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic', 'build': True, 'seconds': 25.747, 'exit': 0}
+{'package': 'cmd/adamic', 'test': 'TestBuildTargetParsing', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-meter', 'test': 'TestAdaptOptionalPropertiesPreservesRuntimeAndDisk', 'seconds': 1.773, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-meter', 'build': True, 'seconds': 23.452, 'exit': 0}
+{'package': 'cmd/adamic-meter', 'test': 'TestAdaptOptionalPropertiesPreservesRuntimeAndDisk', 'seconds': 1.773, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'test': 'TestAdaptCallbackParam', 'seconds': 0.009, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'cmd/adamic-test262', 'build': True, 'seconds': 21.869, 'exit': 0}
+{'package': 'cmd/adamic-test262', 'test': 'TestAdaptCallbackParam', 'seconds': 0.009, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/compilerinputs', 'test': 'TestCheckKeyTellsTheCompilerFromTscWhole', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/compilerinputs', 'build': True, 'seconds': 8.331, 'exit': 0}
+{'package': 'internal/compilerinputs', 'test': 'TestCheckKeyTellsTheCompilerFromTscWhole', 'seconds': 0.032, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/flow', 'test': 'TestArrayHolesAliasingIsFresh', 'seconds': 0.011, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/flow', 'build': True, 'seconds': 7.771, 'exit': 0}
+{'package': 'internal/flow', 'test': 'TestArrayHolesAliasingIsFresh', 'seconds': 0.011, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fresh', 'test': 'TestArrayHolesBackEdgeRemainsUnproven', 'seconds': 0.015, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fresh', 'build': True, 'seconds': 7.531, 'exit': 0}
+{'package': 'internal/fresh', 'test': 'TestArrayHolesBackEdgeRemainsUnproven', 'seconds': 0.015, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'test': 'TestAProgramIsTheSameBytesEveryTimeGobWritesIt', 'seconds': 0.096, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/javascript', 'test': 'TestViewArrayFieldPresence', 'seconds': 0.338, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/leakcheck', 'test': 'TestCountedBalance', 'seconds': 0.035, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'test': 'TestExactSignatureRejectsSuffix', 'seconds': 0.012, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/fuzz', 'build': True, 'seconds': 21.028, 'exit': 0}
+{'package': 'internal/fuzz', 'test': 'TestExactSignatureRejectsSuffix', 'seconds': 0.012, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/ir', 'build': True, 'seconds': 11.853, 'exit': 0}
+{'package': 'internal/ir', 'test': 'TestAProgramIsTheSameBytesEveryTimeGobWritesIt', 'seconds': 0.096, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/javascript', 'build': True, 'seconds': 1.658, 'exit': 0}
+{'package': 'internal/javascript', 'test': 'TestViewArrayFieldPresence', 'seconds': 0.338, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/leakcheck', 'build': True, 'seconds': 1.467, 'exit': 0}
+{'package': 'internal/leakcheck', 'test': 'TestCountedBalance', 'seconds': 0.035, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'test': 'TestAMethodReadAsAValueIsRefused', 'seconds': 1.95, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/load', 'test': 'TestLoadRefusesWhatIsNotAdamic', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/load', 'build': True, 'seconds': 15.451, 'exit': 0}
+{'package': 'internal/load', 'test': 'TestLoadRefusesWhatIsNotAdamic', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower', 'build': True, 'seconds': 8.39, 'exit': 0}
+{'package': 'internal/lower', 'test': 'TestAMethodReadAsAValueIsRefused', 'seconds': 1.95, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native', 'test': 'TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads', 'seconds': 0.217, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/lower/cycleledger', 'test': 'TestOriginalCycleLedger', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'internal/lower/cycleledger', 'build': True, 'seconds': 14.969, 'exit': 0}
+{'package': 'internal/lower/cycleledger', 'test': 'TestOriginalCycleLedger', 'seconds': 0.016, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'internal/native', 'build': True, 'seconds': 7.844, 'exit': 0}
+{'package': 'internal/native', 'test': 'TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads', 'seconds': 0.217, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native/runtimeproducts', 'test': 'TestAnArchivesBuildIsJournaledAsRuntimeproducts', 'seconds': 0.01, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/native/runtimeproducts', 'build': True, 'seconds': 2.976, 'exit': 0}
+{'package': 'internal/native/runtimeproducts', 'test': 'TestAnArchivesBuildIsJournaledAsRuntimeproducts', 'seconds': 0.01, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'test': 'TestARuntimeProductKeyIsTheSameThroughEitherLink', 'seconds': 7.206, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'internal/oracle', 'build': True, 'seconds': 5.513, 'exit': 0}
+{'package': 'internal/oracle', 'test': 'TestARuntimeProductKeyIsTheSameThroughEitherLink', 'seconds': 7.206, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'test': 'TestCSSGoOraclesKeyTheCompilersEnvGivesGo', 'seconds': 0.076, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/css', 'build': True, 'seconds': 14.566, 'exit': 0}
+{'package': 'stage1/cohere/css', 'test': 'TestCSSGoOraclesKeyTheCompilersEnvGivesGo', 'seconds': 0.076, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks', 'seconds': 0.04, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssnumbers', 'build': True, 'seconds': 12.347, 'exit': 0}
+{'package': 'stage1/cohere/cssnumbers', 'test': 'TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks', 'seconds': 0.04, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestMultiPushGap', 'seconds': 0.182, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/cssstrings', 'build': True, 'seconds': 12.364, 'exit': 0}
+{'package': 'stage1/cohere/cssstrings', 'test': 'TestMultiPushGap', 'seconds': 0.182, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/estree', 'test': 'TestCookedSurrogateLibraryGap', 'seconds': 0.008, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/estree', 'build': True, 'seconds': 12.001, 'exit': 0}
+{'package': 'stage1/cohere/estree', 'test': 'TestCookedSurrogateLibraryGap', 'seconds': 0.008, 'exit': 0, 'grain': True, 'skip': True}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestExtAgreesWithGo', 'seconds': 0.368, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/formatfiles', 'build': True, 'seconds': 12.321, 'exit': 0}
+{'package': 'stage1/cohere/formatfiles', 'test': 'TestExtAgreesWithGo', 'seconds': 0.368, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.741, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 5.047, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/gitignore', 'build': True, 'seconds': 12.083, 'exit': 0}
+{'package': 'stage1/cohere/gitignore', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 5.047, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql', 'build': True, 'seconds': 11.131, 'exit': 0}
+{'package': 'stage1/cohere/graphql', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.741, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'test': 'TestClosedEmptyFallbackGap', 'seconds': 1.928, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestPrinterConstructorGap', 'seconds': 0.297, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/graphql/printer', 'build': True, 'seconds': 11.076, 'exit': 0}
+{'package': 'stage1/cohere/graphql/printer', 'test': 'TestPrinterConstructorGap', 'seconds': 0.297, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/json', 'build': True, 'seconds': 5.205, 'exit': 0}
+{'package': 'stage1/cohere/json', 'test': 'TestClosedEmptyFallbackGap', 'seconds': 1.928, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint', 'test': 'TestClosedComparatorGaps', 'seconds': 3.353, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint', 'build': True, 'seconds': 17.36, 'exit': 0}
+{'package': 'stage1/cohere/lint', 'test': 'TestClosedComparatorGaps', 'seconds': 3.353, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers', 'test': 'TestKnownGapsAreExplicit', 'seconds': 4.361, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers', 'build': True, 'seconds': 15.254, 'exit': 0}
+{'package': 'stage1/cohere/lint/helpers', 'test': 'TestKnownGapsAreExplicit', 'seconds': 4.361, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestDynamicPatternGap', 'seconds': 0.167, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestJsxAdapterGuardMutant', 'seconds': 26.943, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/helpers/comments', 'build': True, 'seconds': 10.662, 'exit': 0}
+{'package': 'stage1/cohere/lint/helpers/comments', 'test': 'TestJsxAdapterGuardMutant', 'seconds': 26.943, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/regex', 'build': True, 'seconds': 10.524, 'exit': 0}
+{'package': 'stage1/cohere/lint/regex', 'test': 'TestDynamicPatternGap', 'seconds': 0.167, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-underscore-dangle', 'test': 'TestCompileProfiles', 'seconds': 38.941, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-underscore-dangle', 'build': True, 'seconds': 9.035, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-underscore-dangle', 'test': 'TestCompileProfiles', 'seconds': 38.941, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-negation', 'test': 'TestCompileProfiles', 'seconds': 34.746, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-negation', 'build': True, 'seconds': 11.045, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-negation', 'test': 'TestCompileProfiles', 'seconds': 34.746, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-optional-chaining', 'test': 'TestCompileProfiles', 'seconds': 34.384, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-optional-chaining', 'build': True, 'seconds': 10.708, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/no-unsafe-optional-chaining', 'test': 'TestCompileProfiles', 'seconds': 34.384, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestLoweringInputsCoverCompilerDependencies', 'seconds': 0.216, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/typescript-no-this-alias', 'test': 'TestCompileProfiles', 'seconds': 33.677, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/lint/rules/typescript-no-this-alias', 'build': True, 'seconds': 10.85, 'exit': 0}
+{'package': 'stage1/cohere/lint/rules/typescript-no-this-alias', 'test': 'TestCompileProfiles', 'seconds': 33.677, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdownblocks', 'build': True, 'seconds': 11.154, 'exit': 0}
+{'package': 'stage1/cohere/markdownblocks', 'test': 'TestLoweringInputsCoverCompilerDependencies', 'seconds': 0.216, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestDelimiterExpressionMatchesNode', 'seconds': 3.94, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/markdowninline', 'build': True, 'seconds': 12.375, 'exit': 0}
+{'package': 'stage1/cohere/markdowninline', 'test': 'TestDelimiterExpressionMatchesNode', 'seconds': 3.94, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/mediaquery', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 4.042, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/mediaquery', 'build': True, 'seconds': 14.623, 'exit': 0}
+{'package': 'stage1/cohere/mediaquery', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 4.042, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 3.344, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/selector', 'build': True, 'seconds': 11.794, 'exit': 0}
+{'package': 'stage1/cohere/selector', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 3.344, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/static_single_assignment', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 0.318, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/static_single_assignment', 'build': True, 'seconds': 12.91, 'exit': 0}
+{'package': 'stage1/cohere/static_single_assignment', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 0.318, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/suppression', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.728, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/suppression', 'build': True, 'seconds': 12.28, 'exit': 0}
+{'package': 'stage1/cohere/suppression', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 1.728, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestClassInterfaceMethodGap', 'seconds': 1.576, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/tsprinter', 'build': True, 'seconds': 9.312, 'exit': 0}
+{'package': 'stage1/cohere/tsprinter', 'test': 'TestClassInterfaceMethodGap', 'seconds': 1.576, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/typeaware', 'test': 'TestTypeAwareKeysCarryNoMachinePath', 'seconds': 4.578, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/typeaware', 'build': True, 'seconds': 9.998, 'exit': 0}
+{'package': 'stage1/cohere/typeaware', 'test': 'TestTypeAwareKeysCarryNoMachinePath', 'seconds': 4.578, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/values', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 3.85, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/values', 'build': True, 'seconds': 8.164, 'exit': 0}
+{'package': 'stage1/cohere/values', 'test': 'TestEachGapStandsWhereGapsMdSaysItDoes', 'seconds': 3.85, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'test': 'TestClassMethodInterfaceGap', 'seconds': 0.166, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'test': 'TestClosedLexerGaps', 'seconds': 5.726, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/cohere/yaml', 'build': True, 'seconds': 11.825, 'exit': 0}
+{'package': 'stage1/cohere/yaml', 'test': 'TestClosedLexerGaps', 'seconds': 5.726, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/parser', 'build': True, 'seconds': 11.412, 'exit': 0}
+{'package': 'stage1/typescript/parser', 'test': 'TestClassMethodInterfaceGap', 'seconds': 0.166, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'test': 'TestBigintGapStandsWhereGapsMdSays', 'seconds': 0.165, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage1/typescript/scanner', 'build': True, 'seconds': 9.862, 'exit': 0}
+{'package': 'stage1/typescript/scanner', 'test': 'TestBigintGapStandsWhereGapsMdSays', 'seconds': 0.165, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage3/census/tool', 'build': True, 'seconds': 1.634, 'exit': 0, 'no_tests': True}
+{'package': 'stage3/drivers/parser/probe', 'build': True, 'seconds': 1.788, 'exit': 0, 'no_tests': True}
+{'package': 'stage3/fixtures', 'test': 'TestFixtureOracleProductTracksInputs', 'seconds': 3.002, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage3/fixtures', 'build': True, 'seconds': 9.214, 'exit': 0}
+{'package': 'stage3/fixtures', 'test': 'TestFixtureOracleProductTracksInputs', 'seconds': 3.002, 'exit': 0, 'grain': True, 'skip': False}
+{'package': 'stage3/ledger/checker-259', 'build': True, 'seconds': 1.388, 'exit': 0, 'no_tests': True}
+{'package': 'stage3/ledger/checker-259/rerun-2026-10-08', 'build': True, 'seconds': 1.386, 'exit': 0, 'no_tests': True}

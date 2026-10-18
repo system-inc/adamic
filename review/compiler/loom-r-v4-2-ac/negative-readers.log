@@ -1,0 +1,9 @@
+./internal/oracle/checked_views_v4_construct_refusals_test.go:15:	source, err := os.ReadFile("../../review/compiler/views-v4/construct-misfit.a")
+./internal/oracle/checked_views_v4_construct_refusals_test.go:37:	source, err := os.ReadFile("testdata/views_v4_refused/construct-no-signature.a")
+./internal/oracle/checked_views_v4_lane5_test.go:18:	case "factory-165-wrong-arity", "view-parameter-wrong-members", "view-parameter-wrong", "view-result-wrong-members", "view-result-wrong":
+./internal/oracle/checked_views_v4_lane5_test.go:108:	source := v4Lane5Source(t, "view-parameter-wrong")
+./internal/oracle/checked_views_v4_lane5_test.go:115:	source := v4Lane5Source(t, "view-parameter-wrong-members")
+./internal/oracle/checked_views_v4_lane5_test.go:122:	v4Lane5Negative(t, v4Lane5Source(t, "view-result-wrong"), "true\n", "result", "viewed.run")
+./internal/oracle/checked_views_v4_lane5_test.go:126:	v4Lane5Negative(t, v4Lane5Source(t, "view-result-wrong-members"), "true\n", "result", "viewed.run")
+./internal/oracle/checked_views_v4_lane5_test.go:159:	source := v4Lane5Source(t, "view-result-wrong")
+./internal/oracle/checked_views_v4_lane5_test.go:177:	source := v4Lane5Source(t, "factory-165-wrong-arity")

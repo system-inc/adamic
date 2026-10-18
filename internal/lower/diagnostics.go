@@ -11,10 +11,15 @@ import (
 type NotYet struct {
 	Where string
 	What  string
+	Fix   string
 }
 
 func (n *NotYet) Error() string {
-	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+	message := fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+	if n.Fix != "" {
+		message += "; " + n.Fix
+	}
+	return message
 }
 
 // Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0

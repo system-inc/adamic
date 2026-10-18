@@ -1,0 +1,17 @@
+=== RUN   TestRecordReadMutants
+=== PAUSE TestRecordReadMutants
+=== CONT  TestRecordReadMutants
+=== RUN   TestRecordReadMutants/prototype-membership-restored
+    record_test.go:275: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:286: caught by exact diagnostic and exit check; forbidden result "1\n"
+=== RUN   TestRecordReadMutants/missing-read-silent
+    record_test.go:275: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:286: caught by exact diagnostic and exit check; forbidden result "0\n"
+=== RUN   TestRecordReadMutants/own-read-checked-as-missing
+    record_test.go:268: caught by the own-hit fixture
+--- PASS: TestRecordReadMutants (3.56s)
+    --- PASS: TestRecordReadMutants/prototype-membership-restored (1.16s)
+    --- PASS: TestRecordReadMutants/missing-read-silent (1.06s)
+    --- PASS: TestRecordReadMutants/own-read-checked-as-missing (1.33s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	3.673s

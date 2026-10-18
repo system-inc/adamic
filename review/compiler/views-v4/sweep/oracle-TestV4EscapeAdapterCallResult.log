@@ -1,0 +1,17 @@
+=== RUN   TestV4EscapeAdapterCallResult
+=== PAUSE TestV4EscapeAdapterCallResult
+=== CONT  TestV4EscapeAdapterCallResult
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+    checked_views_v4_call_apply_test.go:59: native call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:59: sanitized call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:59: javascript call result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterCallResult4122272662/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:59: native/ASan/UBSan/LSan call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+    checked_views_v4_call_apply_test.go:59: gate cache node miss
+    checked_views_v4_call_apply_test.go:59: JavaScript call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+--- PASS: TestV4EscapeAdapterCallResult (0.83s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.836s

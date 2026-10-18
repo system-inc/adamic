@@ -1,0 +1,6 @@
+=== RUN   TestInterfaceTypeMethodGap
+    interface_type_test.go:35: Node prints 1; lowering refuses before native emission: /workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet
+    interface_type_test.go:57: renamed default-free method through an explicit callback yields 1 in all builds; the lowering-gap check rejects that control
+--- PASS: TestInterfaceTypeMethodGap (0.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.531s

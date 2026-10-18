@@ -1,0 +1,116 @@
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== PAUSE TestCheckedViewObjectPrimitiveSource
+=== CONT  TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-absent
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-absent
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== RUN   TestCheckedViewObjectPrimitiveSource/required-missing
+=== PAUSE TestCheckedViewObjectPrimitiveSource/required-missing
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-absent
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:54: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-absent.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-good
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-good
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-false
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-boolean
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-boolean
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-good
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-good
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/required-missing
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:66: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:42: gate cache node miss
+    checked_views_v2_object_primitive_test.go:54: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+--- PASS: TestCheckedViewObjectPrimitiveSource (0.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-absent (5.27s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-text-wrong (1.06s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-wrong (1.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-good (1.11s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-wrong (1.01s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-good (0.87s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong (1.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong (1.35s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-boolean (1.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-false (0.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.66s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-negative-wrong (0.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-boolean (0.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-good (0.64s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-good (0.68s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.59s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/required-missing (0.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-receiver (0.13s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=34
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,6 @@
+=== RUN   TestClassMethodInterfaceGap
+=== PAUSE TestClassMethodInterfaceGap
+=== CONT  TestClassMethodInterfaceGap
+    gaps_test.go:91: Node prints 1; Adamic reports: /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet
+--- PASS: TestClassMethodInterfaceGap (0.10s)
+PASS

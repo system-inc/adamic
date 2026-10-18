@@ -1,0 +1,9 @@
+=== RUN   TestPortElementMetadataEmission
+=== PAUSE TestPortElementMetadataEmission
+=== CONT  TestPortElementMetadataEmission
+    metadata_emission_test.go:21: element metadata: 2885 direct stores, 0 runtime calls; C bytes 1999322
+    metadata_emission_test.go:23: element metadata direct stores 2885 exceed bound 0
+--- FAIL: TestPortElementMetadataEmission (1.24s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/json	1.262s
+FAIL

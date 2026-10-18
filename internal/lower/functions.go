@@ -65,6 +65,35 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return err
 	}
 	function := l.result.Functions[index]
+	for _, parameter := range declaration.Parameters() {
+		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			if this >= 0 {
+				// The method already has a receiver local. Its explicit this is
+				// a declaration contract, not another runtime argument.
+				proven := l.checker.GetTypeAtLocation(parameter.Name())
+				function.CallableReceiver = l.viewCallableValueContract(parameter, proven)
+				if function.CallableReceiver == 0 {
+					return l.notYet(parameter, "a dynamic this parameter without a runtime-checkable domain")
+				}
+				continue
+			}
+			if !function.Closure {
+				return l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+			}
+			proven := l.checker.GetTypeAtLocation(parameter.Name())
+			of, known := l.representation(proven)
+			if !known || of != ir.Object {
+				return l.notYet(parameter, "a dynamic this parameter without an object representation")
+			}
+			this = len(l.result.Locals)
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
+			l.noteLocal(this, proven, parameter.Name())
+			function.CallableReceiver = l.viewCallableValueContract(parameter, proven)
+			if function.CallableReceiver == 0 {
+				return l.notYet(parameter, "a dynamic this parameter without a runtime-checkable domain")
+			}
+		}
+	}
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -114,6 +143,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	// and its names are declared from it before the body runs.
 	patterns := []patterned{}
 	for position, parameter := range declaration.Parameters() {
+		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			continue
+		}
 		declared := parameter.AsParameterDeclaration()
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
@@ -176,12 +208,19 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if function.Receiver {
 		offset = 1
 	}
-	for i, node := range declaration.Parameters() {
+	i := 0
+	for _, node := range declaration.Parameters() {
+		if ast.IsIdentifier(node.Name()) && node.Name().Text() == "this" {
+			continue
+		}
 		parameter := node.AsParameterDeclaration()
 		if parameter.QuestionToken != nil || parameter.Initializer != nil {
 			function.OptionalParameters[function.Parameters[i+offset]] = true
 		}
+		i++
 	}
+	function.Surface = l.sourceFunctionSurface(declaration)
+	l.recordViewCallableRepresentations(index, &function, declaration)
 	l.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
 		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})

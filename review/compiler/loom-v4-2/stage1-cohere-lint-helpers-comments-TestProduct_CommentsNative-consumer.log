@@ -1,0 +1,6 @@
+=== RUN   TestProduct_CommentsNative
+=== PAUSE TestProduct_CommentsNative
+=== CONT  TestProduct_CommentsNative
+    comments_test.go:88: build comments-native b7bd154eb8f1 miss 42.86
+--- PASS: TestProduct_CommentsNative (42.92s)
+PASS
