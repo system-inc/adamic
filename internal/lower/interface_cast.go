@@ -43,6 +43,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	if err != nil {
 		return nil, err
 	}
+	if err := l.refuseViewElementReads(fields); err != nil {
+		return nil, err
+	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}
@@ -311,6 +314,19 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		return nil, err
 	}
 	fields := map[string]bool{}
+	// A failed whole-object adapter can leave an unsupported descriptor without
+	// its fields. Keep those names registered so demanded reads reach the lazy
+	// refusal instead of silently reading unchecked storage.
+	if contract := l.result.ViewContracts[id-1]; contract.Unsupported != "" {
+		if l.result.CheckedFields == nil {
+			l.result.CheckedFields = map[string]bool{}
+		}
+		for _, property := range l.checker.GetPropertiesOfType(target) {
+			fields[property.Name] = true
+			// Preserve the boundary under receiver-specific registration too.
+			l.result.CheckedFields[fmt.Sprintf("%d:%s", target.Id(), property.Name)] = true
+		}
+	}
 	seen := map[ir.ViewContractID]bool{}
 	var visit func(ir.ViewContractID)
 	visit = func(id ir.ViewContractID) {
@@ -404,6 +420,9 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	}
 	if found != nil {
 		return nil, found
+	}
+	if err := l.refuseViewElementReads(fields); err != nil {
+		return nil, err
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}

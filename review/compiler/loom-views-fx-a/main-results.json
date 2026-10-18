@@ -1,0 +1,2956 @@
+[
+  {
+    "item": 132,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.352
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.244
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p01_element_access_wrong/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.15
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p01_element_access_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 20.658
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p01_element_access_wrong/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.003
+    },
+    "agrees": false
+  },
+  {
+    "item": 132,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "NaN\nfalse\n",
+      "stderr": "",
+      "seconds": 0.341
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.224
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p05_element_access_number_wrong/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "NaN\nfalse\n",
+      "stderr": "",
+      "seconds": 0.193
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p05_element_access_number_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 20.351
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p05_element_access_number_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "9.36294185495627e-310\ntrue\n",
+      "stderr": "",
+      "seconds": 0.008
+    },
+    "agrees": false
+  },
+  {
+    "item": 132,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "seconds": 0.305
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.254
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p06_element_access_boolean_wrong/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "seconds": 0.126
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p06_element_access_boolean_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 20.713
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p06_element_access_boolean_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": "",
+      "seconds": 0.002
+    },
+    "agrees": false
+  },
+  {
+    "item": 132,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.349
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.194
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p19_callable_union_call_element/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.213
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p19_callable_union_call_element/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 18.896
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p19_callable_union_call_element/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.008
+    },
+    "agrees": false
+  },
+  {
+    "item": 132,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "number 2\n",
+      "stderr": "",
+      "seconds": 0.519
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.252
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p72_mixed_element_access_wrong/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+      "seconds": 0.164
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p72_mixed_element_access_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.453
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p72_mixed_element_access_wrong/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 133,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.228
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.117
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p21_callable_union_function_declaration/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.08
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p21_callable_union_function_declaration.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p21_callable_union_function_declaration/native"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\nmain.c:104:595: error: comparison of distinct pointer types ('adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *)') and 'double (*)(double)') [-Werror,-Wcompare-distinct-pointer-types]\n  104 |         if (adamic_temporary_22 != NULL && adamic_view_callable_signatures_match(adamic_temporary_22, ((adamic_temporary_22 != NULL && adamic_temporary_22->arity == 1 && adamic_temporary_22->result == 1 && adamic_temporary_22->parameters != NULL && adamic_temporary_22->parameters[0] == 1) ? &adamic_temporary_25 : (adamic_temporary_22 != NULL && adamic_temporary_22->arity == 1 && adamic_temporary_22->result == 1 && adamic_temporary_22->parameters != NULL && adamic_temporary_22->parameters[0] == 3) ? &adamic_temporary_27 : &adamic_temporary_25)) && !(((adamic_closure *)adamic_temporary_21)->code == adamic_function_0_increment || ((adamic_closure *)adamic_temporary_21)->code == adamic_function_1_increment_value)) adamic_temporary_22 = NULL;\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n",
+      "seconds": 1.949
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 134,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nnumber 5\n",
+      "stderr": "",
+      "seconds": 0.212
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.133
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p35_write_after_view_valid/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a string | number; expected string | number, found number\n",
+      "seconds": 0.054
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p35_write_after_view_valid/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3e94659ee1c0, {0x0, 0x1d, 0xee0, {0x3e9464df0bd0, 0x6d}, 0x0, {0x3e94653fe1c5, 0xb}, {0x3e9464dd2640, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3e94659ee1c0, {0x1d314f0?, 0x3e94659d9140?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3e94659ee1c0, {0x1d314f0, 0x3e94659d9140})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3e94659ee1c0, {0x1d32370?, 0x3e94659bf2a0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3e94659ee1c0, 0x3e94659bf080)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x3e94653fe198, 0x4}, {0x0, 0x0}, {0x3e9464dd2620, 0x1, 0x1}, 0x0, ...})\n\tgithub.com/system-inc/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3e94659ad980, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:96 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7fff43efd20b, 0x67}, {0x7fff43efd276, 0x72}, {0x3e9464fcd640?, 0x1c3c6f0?, 0x3e9464ffc000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x3e9464de2060?, 0x4?, 0x3e9464dc21e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.173
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 134,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nnumber 5\n",
+      "stderr": "",
+      "seconds": 0.247
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.097
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p36_write_unrelated_same_name/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a string | number; expected string | number, found number\n",
+      "seconds": 0.131
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p36_write_unrelated_same_name/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x4c62b5c8fc0, {0x0, 0x1d, 0xee0, {0x4c62aeb6bd0, 0x70}, 0x0, {0x4c62b40e178, 0xb}, {0x4c62b88b3d0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x4c62b5c8fc0, {0x1d314f0?, 0x4c62bb75980?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x4c62b5c8fc0, {0x1d314f0, 0x4c62bb75980})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x4c62b5c8fc0, {0x1d32370?, 0x4c62bb63000?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x4c62b5c8fc0, 0x4c62bb62de0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x4c62b40e14c, 0x4}, {0x0, 0x0}, {0x4c62b88b3b0, 0x1, 0x1}, 0x0, ...})\n\tgithub.com/system-inc/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x4c62bb4b980, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:96 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7fff54d08205, 0x6a}, {0x7fff54d08273, 0x75}, {0x4c62aff9640?, 0x1c3c6f0?, 0x4c62b04c000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x4c62aea8060?, 0x4?, 0x4c62ae881e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.157
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 134,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nnumber 5\n",
+      "stderr": "",
+      "seconds": 0.194
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.167
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p37_union_field_same_name/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a string | number; expected string | number, found number\n",
+      "seconds": 0.111
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p37_union_field_same_name/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x14d3151d08c0, {0x0, 0x1d, 0xee0, {0x14d314a92af0, 0x6b}, 0x0, {0x14d31501c145, 0xb}, {0x14d31545e8f0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x14d3151d08c0, {0x1d314f0?, 0x14d3155e9980?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x14d3151d08c0, {0x1d314f0, 0x14d3155e9980})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x14d3151d08c0, {0x1d32370?, 0x14d3151d8120?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x14d3151d08c0, 0x14d3151a7ca0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x14d31501c119, 0x4}, {0x0, 0x0}, {0x14d31545e8e0, 0x1, 0x1}, 0x0, ...})\n\tgithub.com/system-inc/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x14d315591980, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:96 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7ffce31be20d, 0x66}, {0x7ffce31be277, 0x71}, {0x14d314b79600?, 0x1c3c6f0?, 0x14d314af3ec0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x14d314acc010?, 0x4?, 0x14d3149c01e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.074
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 134,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n5\n",
+      "stderr": "",
+      "seconds": 0.137
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.098
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p38_same_name_maybe_number/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a number | undefined; expected number | undefined, found number\n",
+      "seconds": 0.088
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p38_same_name_maybe_number/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3ba359236380, {0x0, 0x56, 0xee0, {0x3ba3586128c0, 0x6c}, 0x0, {0x3ba358b7a150, 0xb}, {0x3ba358678220, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ba359236380, {0x1d314f0?, 0x3ba35922d740?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ba359236380, {0x1d314f0, 0x3ba35922d740})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x3ba359236380, {0x1d314f0, 0x3ba35922d740})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ba359236380, {0x1d31cb0?, 0x3ba35923a340?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4af8\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ba359236380, {0x1d31cb0, 0x3ba35923a340})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ba359236380, {0x1d319f0?, 0x3ba35922a750?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb26\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ba359236380, {0x1d319f0, 0x3ba35922a750})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).returnStatement(0x3ba359236380, {{0x1d319f0?, 0x3ba35922a750?}})\n\tgithub.com/system-inc/adamic/internal/native/emit_functions.go:155 +0x27c\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3ba359236380, {0x1d323d0?, 0x3ba35923a370?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:182 +0x37d6\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3ba359236380, 0x3ba35923a0a0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x3ba358b7a127, 0x4}, {0x0, 0x0}, {0x3ba358e49238, 0x1, 0x1}, 0x0, ...})\n\tgithub.com/system-inc/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3ba358906900, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:96 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7ffcff87a20b, 0x67}, {0x7ffcff87a276, 0x72}, {0x3ba3586f9600?, 0x1c3c6f0?, 0x3ba358673ec0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x3ba35864c010?, 0x4?, 0x3ba3585521e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.092
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 134,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nundefined\n",
+      "stderr": "",
+      "seconds": 0.136
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.121
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p38_same_name_string_undefined/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a string | undefined; expected string | undefined, found nullish\n",
+      "seconds": 0.066
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_string_undefined.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p38_same_name_string_undefined/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.999
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p38_same_name_string_undefined/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: holder.name is not a string | undefined; expected string | undefined, found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 135,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.172
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.084
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p22_callable_union_fewer_parameters/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value expected Target, found function with arity 0\n",
+      "seconds": 0.08
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p22_callable_union_fewer_parameters/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.946
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p22_callable_union_fewer_parameters/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value expected Target, found function with arity 0\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 135,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.143
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.104
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p23_callable_union_literal_result/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value expected Target, found function with unknown signature\n",
+      "seconds": 0.059
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p23_callable_union_literal_result.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p23_callable_union_literal_result/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.244
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p23_callable_union_literal_result/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value expected Target, found function with unknown signature\n",
+      "seconds": 0.037
+    },
+    "agrees": false
+  },
+  {
+    "item": 135,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.149
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.131
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+      "seconds": 0.119
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p59_union_member_method_shorthand.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 11.289
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 135,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.194
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.202
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p62_union_member_arrow_inferred/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+      "seconds": 0.131
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p62_union_member_arrow_inferred.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p62_union_member_arrow_inferred/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 3.052
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p62_union_member_arrow_inferred/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+      "seconds": 0.004
+    },
+    "agrees": false
+  },
+  {
+    "item": 136,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": "",
+      "seconds": 0.358
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.183
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p51_callable_union_destructure_wrong/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: value (field value) is not a Target; expected Target, found object\n",
+      "seconds": 0.118
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p51_callable_union_destructure_wrong/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0xd742e7dd340, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0xd742ddfc138, 0x13}, {0xd742e7418e0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0xd742e7dd340, {0x1d314f0?, 0xd742e8c3080?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0xd742e7dd340, {0x1d314f0, 0xd742e8c3080})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0xd742e7dd340, {0x1d32370?, 0xd742e6cae00?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0xd742e7dd340, 0xd742e8ad300)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0xd742e7dd340, {0xd742e8ad2c0, 0x6, 0x0?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0xd742e8a5380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:106 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7ffd9c3de1f7, 0x71}, {0x7ffd9c3de26c, 0x7c}, {0xd742df69640?, 0x1c3c6f0?, 0xd742df98000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0xd742ddf4060?, 0x4?, 0xd742ddd41e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.121
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 136,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+      ],
+      "exit": 0,
+      "stdout": "n5\n",
+      "stderr": "",
+      "seconds": 0.2
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.183
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p53_callable_union_destructure_good/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: value (field value) is not a Target; expected Target, found object\n",
+      "seconds": 0.104
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p53_callable_union_destructure_good/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x1594b0f4c700, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x1594b0bae0d8, 0x13}, {0x1594b0db74d0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1594b0f4c700, {0x1d314f0?, 0x1594b0f43080?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1594b0f4c700, {0x1d314f0, 0x1594b0f43080})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x1594b0f4c700, {0x1d32370?, 0x1594b0f19500?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1594b0f4c700, 0x1594b0f11480)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x1594b0f4c700, {0x1594b0f11440, 0x6, 0x0?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x1594b0f0d380, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:106 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7ffd729541f9, 0x70}, {0x7ffd7295426d, 0x7b}, {0x1594b0495640?, 0x1c3c6f0?, 0x1594b04c4000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x1594b02aa060?, 0x4?, 0x1594b028a1e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.121
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 137,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "seconds": 0.226
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.174
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p70_length_view_over_tuple/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value is not a Sized; expected Sized, found array\n",
+      "seconds": 0.123
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p70_length_view_over_tuple/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x136fc29328c0, {0x2, 0xedc, 0xee0, {0x136fc20e3570, 0x6c}, 0x0, {0x136fc24ecb85, 0xc}, {0x136fc20c4170, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x136fc29328c0, {0x1d314f0?, 0x136fc2c93440?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x136fc29328c0, {0x1d314f0, 0x136fc2c93440})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x136fc29328c0, {0x1d32370?, 0x136fc2c6fb00?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x136fc29328c0, 0x136fc2c86ee0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x136fc29328c0, {0x136fc2c86ea0, 0x6, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x136fc2c4ef00, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:106 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7fffc14f620b, 0x67}, {0x7fffc14f6276, 0x72}, {0x136fc2279600?, 0x1c3c6f0?, 0x136fc21f5ec0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x136fc21cc010?, 0x4?, 0x136fc20b41e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.193
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 138,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a"
+      ],
+      "exit": 0,
+      "stdout": "first:1\n",
+      "stderr": "",
+      "seconds": 0.25
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.151
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p68_object_view_over_tuple/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value is not a Pair; expected Pair, found array\n",
+      "seconds": 0.169
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p68_object_view_over_tuple/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.599
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p68_object_view_over_tuple/native"
+      ],
+      "exit": 0,
+      "stdout": "first:1\n",
+      "stderr": "",
+      "seconds": 0.005
+    },
+    "agrees": false
+  },
+  {
+    "item": 138,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.292
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.147
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value narrowed read has a different member\n",
+      "seconds": 0.101
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.699
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union/native"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.003
+    },
+    "agrees": false
+  },
+  {
+    "item": 140,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined 1\n",
+      "stderr": "",
+      "seconds": 0.227
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.178
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p09_tuple_destructure_wrong/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "seconds": 0.135
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p09_tuple_destructure_wrong/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.165
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p09_tuple_destructure_wrong/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n",
+      "seconds": 0.01
+    },
+    "agrees": false
+  },
+  {
+    "item": 140,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nundefined\n",
+      "stderr": "",
+      "seconds": 0.113
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.084
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p32_boxed_slot_string_good/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.name is not a undefined; expected undefined, found string\n",
+      "seconds": 0.049
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p32_boxed_slot_string_good/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.882
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p32_boxed_slot_string_good/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 140,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nundefined\n",
+      "stderr": "",
+      "seconds": 0.136
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.077
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.name is not a undefined; expected undefined, found string\n",
+      "seconds": 0.121
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.863
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n",
+      "seconds": 0.003
+    },
+    "agrees": false
+  },
+  {
+    "item": 142,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a"
+      ],
+      "exit": 0,
+      "stdout": "xx\n3\n12\n",
+      "stderr": "",
+      "seconds": 0.129
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.171
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p21_callable_view_raw_union_slot/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "xx\n3\n12\n",
+      "stderr": "",
+      "seconds": 0.12
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p21_callable_view_raw_union_slot/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 3.149
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p21_callable_view_raw_union_slot/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 142,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a"
+      ],
+      "exit": 0,
+      "stdout": "xx\n0\n",
+      "stderr": "",
+      "seconds": 0.297
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.194
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p37_unsupported_view_raw_zero/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "xx\n0\n",
+      "stderr": "",
+      "seconds": 0.174
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p37_unsupported_view_raw_zero/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.045
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p37_unsupported_view_raw_zero/native"
+      ],
+      "exit": 0,
+      "stdout": "xx\nundefined\n",
+      "stderr": "",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 143,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p01_maybe_boolean_spread.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p01_maybe_boolean_spread.a"
+      ],
+      "exit": 0,
+      "stdout": "true\nundefined\n",
+      "stderr": "",
+      "seconds": 0.271
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p01_maybe_boolean_spread.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.139
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p01_maybe_boolean_spread/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\nundefined\n",
+      "stderr": "",
+      "seconds": 0.133
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p01_maybe_boolean_spread.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p01_maybe_boolean_spread/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.007
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p01_maybe_boolean_spread/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 144,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\nfalse\n",
+      "stderr": "",
+      "seconds": 0.12
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.076
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p54_maybe_b/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: SyntaxError: Unexpected token ')'\n",
+      "seconds": 0.035
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p54_maybe_b/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x1459525ec8c0, {0x2, 0x399, 0xedf, {0x145952064f00, 0x5e}, 0x0, {0x145952066139, 0xc}, {0x1459520461a0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x1459525ec8c0, {0x2, 0x399, 0xedf, {0x145952064f00, 0x5e}, 0x0, {0x145952066139, 0xc}, {0x1459520461a0, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1459525ec8c0, {0x1d314f0?, 0x1459525e29c0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1459525ec8c0, {0x1d314f0, 0x1459525e29c0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x1459525ec8c0, {0x1d314f0, 0x1459525e29c0})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1459525ec8c0, {0x1d31cb0?, 0x1459525ea690?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4af8\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1459525ec8c0, {0x1d31cb0, 0x1459525ea690})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1459525ec8c0, {0x1d319f0?, 0x1459525d8540?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb26\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1459525ec8c0, {0x1d319f0, 0x1459525d8540})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x1459525ec8c0, {0x1d32330?, 0x1459525d8558?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1459525ec8c0, 0x1459525b7110)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x1459525ec8c0, {0x1459525b70e0, 0x6, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x1459525b3680, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:106 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7fffc2ce1227, 0x59}, {0x7fffc2ce1284, 0x64}, {0x145951bdd640?, 0x1c3c6f0?, 0x145951c0c000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x1459519f2060?, 0x4?, 0x1459519d21e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.063
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 144,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n0\n",
+      "stderr": "",
+      "seconds": 0.118
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.053
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p54_maybe_n/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: SyntaxError: Unexpected token ')'\n",
+      "seconds": 0.07
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p54_maybe_n/native"
+      ],
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x225345388000, {0x2, 0x56, 0xedf, {0x2253445c7140, 0x5e}, 0x0, {0x2253445d0d37, 0xc}, {0x2253445c2320, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x225345388000, {0x2, 0x56, 0xedf, {0x2253445c7140, 0x5e}, 0x0, {0x2253445d0d37, 0xc}, {0x2253445c2320, ...}, ...})\n\tgithub.com/system-inc/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x225345388000, {0x1d314f0?, 0x225345374e40?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:148 +0x9bb4\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x225345388000, {0x1d314f0, 0x225345374e40})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x225345388000, {0x1d314f0, 0x225345374e40})\n\tgithub.com/system-inc/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x225345388000, {0x1d31cb0?, 0x22534530db40?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:245 +0x4af8\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x225345388000, {0x1d31cb0, 0x22534530db40})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x225345388000, {0x1d319f0?, 0x2253453167e0?})\n\tgithub.com/system-inc/adamic/internal/native/emit_expressions.go:139 +0xbb26\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x225345388000, {0x1d319f0, 0x2253453167e0})\n\tgithub.com/system-inc/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x225345388000, {0x1d32330?, 0x2253453167f8?})\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x225345388000, 0x22534532d1d0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x225345388000, {0x22534532d1a0, 0x6, 0x18?}, 0x0)\n\tgithub.com/system-inc/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x225345311500, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:106 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(...)\n\tgithub.com/system-inc/adamic/internal/native/emit.go:23\nmain.build({0x7ffd3e734227, 0x59}, {0x7ffd3e734284, 0x64}, {0x2253447ab640?, 0x1c3c6f0?, 0x2253447da000?})\n\tgithub.com/system-inc/adamic/cmd/adamic/tsgo.go:82 +0x685\nmain.run({0x2253445c0060?, 0x4?, 0x2253445a01e0?})\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:97 +0x774\nmain.main()\n\tgithub.com/system-inc/adamic/cmd/adamic/main.go:33 +0x45\n",
+      "seconds": 0.094
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 145,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.101
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.088
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p60_named_function_producer/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.082
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p60_named_function_producer.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p60_named_function_producer/native"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\nmain.c:104:595: error: comparison of distinct pointer types ('adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *)') and 'double (*)(double)') [-Werror,-Wcompare-distinct-pointer-types]\n  104 |         if (adamic_temporary_22 != NULL && adamic_view_callable_signatures_match(adamic_temporary_22, ((adamic_temporary_22 != NULL && adamic_temporary_22->arity == 1 && adamic_temporary_22->result == 1 && adamic_temporary_22->parameters != NULL && adamic_temporary_22->parameters[0] == 1) ? &adamic_temporary_25 : (adamic_temporary_22 != NULL && adamic_temporary_22->arity == 1 && adamic_temporary_22->result == 1 && adamic_temporary_22->parameters != NULL && adamic_temporary_22->parameters[0] == 3) ? &adamic_temporary_27 : &adamic_temporary_25)) && !(((adamic_closure *)adamic_temporary_21)->code == adamic_function_0_double || ((adamic_closure *)adamic_temporary_21)->code == adamic_function_1_double_value)) adamic_temporary_22 = NULL;\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n",
+      "seconds": 1.152
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 145,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.14
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.055
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p61_method_value_producer/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.076
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p61_method_value_producer.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p61_method_value_producer/native"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\nmain.c:178:595: error: comparison of distinct pointer types ('adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *)') and 'double (*)(adamic_object *, double)' (aka 'double (*)(struct adamic_object *, double)')) [-Werror,-Wcompare-distinct-pointer-types]\n  178 |         if (adamic_temporary_32 != NULL && adamic_view_callable_signatures_match(adamic_temporary_32, ((adamic_temporary_32 != NULL && adamic_temporary_32->arity == 1 && adamic_temporary_32->result == 1 && adamic_temporary_32->parameters != NULL && adamic_temporary_32->parameters[0] == 1) ? &adamic_temporary_35 : (adamic_temporary_32 != NULL && adamic_temporary_32->arity == 1 && adamic_temporary_32->result == 1 && adamic_temporary_32->parameters != NULL && adamic_temporary_32->parameters[0] == 3) ? &adamic_temporary_37 : &adamic_temporary_35)) && !(((adamic_closure *)adamic_temporary_31)->code == adamic_function_1_Scale_apply || ((adamic_closure *)adamic_temporary_31)->code == adamic_function_3_closure)) adamic_temporary_32 = NULL;\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n",
+      "seconds": 1.171
+    },
+    "native": null,
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a"
+      ],
+      "exit": 0,
+      "stdout": "16:109\n",
+      "stderr": "",
+      "seconds": 0.115
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.088
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p17_callable_call_first_half/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "16:109\n",
+      "stderr": "",
+      "seconds": 0.098
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p17_callable_call_first_half/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.392
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p17_callable_call_first_half/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.002
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a"
+      ],
+      "exit": 0,
+      "stdout": "8\n",
+      "stderr": "",
+      "seconds": 0.114
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.078
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p18_cast_kind_no_field_types/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "8\n",
+      "stderr": "",
+      "seconds": 0.042
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p18_cast_kind_no_field_types/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.258
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p18_cast_kind_no_field_types/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n12\n",
+      "stderr": "",
+      "seconds": 0.147
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.082
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p20_callable_member_call_good/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "3\n12\n",
+      "stderr": "",
+      "seconds": 0.045
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p20_callable_member_call_good/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.777
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p20_callable_member_call_good/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.004
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n2\n",
+      "stderr": "",
+      "seconds": 0.109
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.051
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p26_callable_or_undefined/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\n2\n",
+      "stderr": "",
+      "seconds": 0.054
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p26_callable_or_undefined/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.775
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p26_callable_or_undefined/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.002
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": "",
+      "seconds": 0.123
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.077
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p33_map_in_union/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": "",
+      "seconds": 0.042
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p33_map_in_union/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.913
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p33_map_in_union/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.036
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": "",
+      "seconds": 0.084
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.116
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p34_typed_array_in_union/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": "",
+      "seconds": 0.066
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p34_typed_array_in_union/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.053
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p34_typed_array_in_union/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.009
+    },
+    "agrees": false
+  },
+  {
+    "item": 146,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": "",
+      "seconds": 0.2
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.119
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p35_class_in_union/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": "",
+      "seconds": 0.124
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p35_class_in_union/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.015
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p35_class_in_union/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 147,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+      ],
+      "exit": 0,
+      "stdout": "true\nwrittenwritten\ntrue\n",
+      "stderr": "",
+      "seconds": 0.203
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.133
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p04_undefined_slot_write/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "true\nwrittenwritten\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a undefined; expected undefined, found string\n",
+      "seconds": 0.153
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p04_undefined_slot_write/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.931
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p04_undefined_slot_write/native"
+      ],
+      "exit": 70,
+      "stdout": "true\nwrittenwritten\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a string; expected string, found string\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 147,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nxxx\ntrue\n",
+      "stderr": "",
+      "seconds": 0.157
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.113
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p06_undefined_other_name/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\nxxx\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a undefined; expected undefined, found string\n",
+      "seconds": 0.09
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p06_undefined_other_name/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.877
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p06_undefined_other_name/native"
+      ],
+      "exit": 70,
+      "stdout": "3\nxxx\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a string; expected string, found string\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 148,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nundefined\n",
+      "stderr": "",
+      "seconds": 0.187
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.144
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p75_unviewed_undefined_read/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: other.value is not a string | undefined; expected string | undefined, found nullish\n",
+      "seconds": 0.106
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p75_unviewed_undefined_read/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.657
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p75_unviewed_undefined_read/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: other.value is not a string | undefined; expected string | undefined, found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 148,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+      ],
+      "exit": 0,
+      "stdout": "3\nundefined\n",
+      "stderr": "",
+      "seconds": 0.105
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.09
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: other.value is not a string | undefined; expected string | undefined, found nullish\n",
+      "seconds": 0.045
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.262
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: other.value is not a string | undefined; expected string | undefined, found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 149,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n2\ntrue\n",
+      "stderr": "",
+      "seconds": 0.131
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.07
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p08_null_array_write/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a array; expected array, found nullish\n",
+      "seconds": 0.072
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p08_null_array_write/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.405
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p08_null_array_write/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.value is not a ; expected , found unsupported representation\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 149,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+      ],
+      "exit": 0,
+      "stdout": "3\n0\n",
+      "stderr": "",
+      "seconds": 0.102
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.067
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p59_map_null_write/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.table is not a Map; expected Map, found nullish\n",
+      "seconds": 0.048
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p59_map_null_write/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.277
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p59_map_null_write/native"
+      ],
+      "exit": 70,
+      "stdout": "3\n",
+      "stderr": "adamic: panic: field read failed: <write>.table is not a ; expected , found unsupported representation\n",
+      "seconds": 0.003
+    },
+    "agrees": false
+  },
+  {
+    "item": 150,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p23_tuple_from_map_entries.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p23_tuple_from_map_entries.a"
+      ],
+      "exit": 0,
+      "stdout": "ALPHA:1\n",
+      "stderr": "",
+      "seconds": 0.09
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p23_tuple_from_map_entries.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.056
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p23_tuple_from_map_entries/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "ALPHA:1\n",
+      "stderr": "",
+      "seconds": 0.057
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p23_tuple_from_map_entries.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p23_tuple_from_map_entries/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.42
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p23_tuple_from_map_entries/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n",
+      "seconds": 0.014
+    },
+    "agrees": false
+  },
+  {
+    "item": 150,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p24_tuple_from_object_entries.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p24_tuple_from_object_entries.a"
+      ],
+      "exit": 0,
+      "stdout": "alpha:1\nbeta:2\n",
+      "stderr": "",
+      "seconds": 0.124
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p24_tuple_from_object_entries.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.077
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p24_tuple_from_object_entries/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "alpha:1\nbeta:2\n",
+      "stderr": "",
+      "seconds": 0.066
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p24_tuple_from_object_entries.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p24_tuple_from_object_entries/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.223
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p24_tuple_from_object_entries/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 151,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p69_deep_recursive_union.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p69_deep_recursive_union.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.104
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p69_deep_recursive_union.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.061
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p69_deep_recursive_union/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "seconds": 0.051
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p69_deep_recursive_union.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p69_deep_recursive_union/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.216
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p69_deep_recursive_union/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 151,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p70_recursive_depth_70.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p70_recursive_depth_70.a"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": "",
+      "seconds": 0.11
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p70_recursive_depth_70.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.082
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p70_recursive_depth_70/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "seconds": 0.068
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p70_recursive_depth_70.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p70_recursive_depth_70/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.171
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p70_recursive_depth_70/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 152,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p67_static_class_union_member.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p67_static_class_union_member.a"
+      ],
+      "exit": 0,
+      "stdout": "number\n",
+      "stderr": "",
+      "seconds": 0.102
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p67_static_class_union_member.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.076
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p67_static_class_union_member/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n",
+      "seconds": 0.05
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p67_static_class_union_member.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p67_static_class_union_member/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.052
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p67_static_class_union_member/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n",
+      "seconds": 0.002
+    },
+    "agrees": false
+  },
+  {
+    "item": 152,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.a"
+      ],
+      "exit": 0,
+      "stdout": "first:1\n",
+      "stderr": "",
+      "seconds": 0.079
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.045
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p72_tuple_count_mismatch/generated.mjs"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "seconds": 0.042
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p72_tuple_count_mismatch/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.906
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p72_tuple_count_mismatch/native"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n",
+      "seconds": 0.001
+    },
+    "agrees": false
+  },
+  {
+    "item": 154,
+    "source": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p14_callable_union_no_view.a",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p14_callable_union_no_view.a"
+      ],
+      "exit": 0,
+      "stdout": "16:109\n",
+      "stderr": "",
+      "seconds": 0.071
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "js",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p14_callable_union_no_view.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.051
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p14_callable_union_no_view/generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "16:109\n",
+      "stderr": "",
+      "seconds": 0.034
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/loom-views-main",
+        "build",
+        "/workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p14_callable_union_no_view.a",
+        "-o",
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p14_callable_union_no_view/native"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.878
+    },
+    "native": {
+      "command": [
+        "/workspace/adamic/review/compiler/loom-views-fx-a/main-probes/fxspptb_oct9_native_p14_callable_union_no_view/native"
+      ],
+      "exit": -11,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 0.001
+    },
+    "agrees": false
+  }
+]

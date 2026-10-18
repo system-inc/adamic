@@ -1,0 +1,8 @@
+=== RUN   TestLoomViewUnsupportedRead
+=== PAUSE TestLoomViewUnsupportedRead
+=== CONT  TestLoomViewUnsupportedRead
+    loom_views_a_test.go:39: want located refusal "checked view read of field" and fix "contract before reading this field", got <nil>
+--- FAIL: TestLoomViewUnsupportedRead (0.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.239s
+FAIL
