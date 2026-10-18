@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:07:22.232124983Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:07:22.236098404Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce"}
+{"Time":"2026-10-18T00:07:22.236154428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Output":"=== RUN   TestImpliedTargetLargeArrayQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.236172435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Output":"=== PAUSE TestImpliedTargetLargeArrayQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.236174648Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce"}
+{"Time":"2026-10-18T00:07:22.236178544Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce"}
+{"Time":"2026-10-18T00:07:22.236180336Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Output":"=== CONT  TestImpliedTargetLargeArrayQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.332713088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Output":"    implied_target_test.go:37: implied target queried parent kind KindArrayLiteralExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:22.332870603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Output":"--- FAIL: TestImpliedTargetLargeArrayQueriesOnce (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.332879586Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetLargeArrayQueriesOnce","Elapsed":0.1}
+{"Time":"2026-10-18T00:07:22.332925365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.334450459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.102s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:22.334469427Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.102}

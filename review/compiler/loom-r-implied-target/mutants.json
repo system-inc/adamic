@@ -1,0 +1,191 @@
+[
+  {
+    "mutant": "array-per-element-query",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/array-per-element-query.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetLargeArrayQueriesOnce$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestImpliedTargetLargeArrayQueriesOnce$",
+    "marker": "more than once",
+    "seconds": 9.544845319000018,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/array-per-element-query.jsonl"
+  },
+  {
+    "mutant": "conditional-per-branch-query",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/conditional-per-branch-query.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetConditionalQueriesOnce$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestImpliedTargetConditionalQueriesOnce$",
+    "marker": "more than once",
+    "seconds": 8.795866792999988,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/conditional-per-branch-query.jsonl"
+  },
+  {
+    "mutant": "logical-per-operand-query",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/logical-per-operand-query.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTarget(Or|And|Nullish)QueriesOnce$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestImpliedTarget(Or|And|Nullish)QueriesOnce$",
+    "marker": "more than once",
+    "seconds": 9.343684268999993,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/logical-per-operand-query.jsonl"
+  },
+  {
+    "mutant": "nil-cache-miss",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/nil-cache-miss.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetTupleCachesNil$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestImpliedTargetTupleCachesNil$",
+    "marker": "more than once",
+    "seconds": 11.471079916999997,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/nil-cache-miss.jsonl"
+  },
+  {
+    "mutant": "shape-ignores-readonly",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/shape-ignores-readonly.json",
+      "./internal/lower",
+      "-run",
+      "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+    "marker": "shared a shape key",
+    "seconds": 20.741177776,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/shape-ignores-readonly.jsonl"
+  },
+  {
+    "mutant": "shape-per-literal",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/shape-per-literal.json",
+      "./internal/lower",
+      "-run",
+      "^TestCycleScalarLiteralShapesOnce$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestCycleScalarLiteralShapesOnce$",
+    "marker": "scalar literal shapes = 2",
+    "seconds": 14.260047255000018,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/shape-per-literal.jsonl"
+  },
+  {
+    "mutant": "shape-ignores-type",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/shape-ignores-type.json",
+      "./internal/lower",
+      "-run",
+      "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+    "marker": "shared a shape key",
+    "seconds": 9.233469426,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/shape-ignores-type.jsonl"
+  },
+  {
+    "mutant": "shape-ignores-name",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/shape-ignores-name.json",
+      "./internal/lower",
+      "-run",
+      "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+    "marker": "shared a shape key",
+    "seconds": 10.261073863000007,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/shape-ignores-name.jsonl"
+  },
+  {
+    "mutant": "shape-includes-reference",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-implied-target/shape-includes-reference.json",
+      "./internal/lower",
+      "-run",
+      "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "^TestCycleScalarShapeKeysPreserveDistinctFields$",
+    "marker": "want 7/4",
+    "seconds": 8.189625156000005,
+    "log": "/workspace/adamic/review/compiler/loom-r-implied-target/logs/shape-includes-reference.jsonl"
+  }
+]
