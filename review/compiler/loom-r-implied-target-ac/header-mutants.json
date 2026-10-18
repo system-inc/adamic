@@ -1,0 +1,14 @@
+[
+  {
+    "name": "removed-header",
+    "path": "review/compiler/loom-implied-target/objects.a",
+    "caught": true,
+    "failure": "a-check failed for 1 file:\nreview/compiler/loom-implied-target/objects.a: refused, expected checked (adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2053:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make th)"
+  },
+  {
+    "name": "wrong-reason",
+    "path": "review/compiler/loom-implied-target/objects.a",
+    "caught": true,
+    "failure": "a-check failed for 1 file:\nreview/compiler/loom-implied-target/objects.a: refused, expected refused deliberate-wrong-reason-header-mutant (adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2054:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make th)"
+  }
+]

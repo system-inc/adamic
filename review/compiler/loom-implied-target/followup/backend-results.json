@@ -1,0 +1,88 @@
+[
+  {
+    "name": "node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.184
+  },
+  {
+    "name": "javascript-compile",
+    "command": [
+      "/tmp/implied-adamic",
+      "js",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.205
+  },
+  {
+    "name": "javascript",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-implied-target/followup/control.mjs"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.196
+  },
+  {
+    "name": "native-compile",
+    "command": [
+      "/tmp/implied-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a",
+      "-o",
+      "/tmp/implied-control-native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 13.96
+  },
+  {
+    "name": "native",
+    "command": [
+      "/tmp/implied-control-native"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.34
+  },
+  {
+    "name": "sanitized-compile",
+    "command": [
+      "/tmp/implied-adamic",
+      "build",
+      "/workspace/adamic/review/compiler/loom-implied-target/objects-sequential.a",
+      "-o",
+      "/tmp/implied-control-sanitized",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 19.797
+  },
+  {
+    "name": "sanitized",
+    "command": [
+      "/tmp/implied-control-sanitized"
+    ],
+    "exit": 0,
+    "stdout": "2048 moved objects, ordered digest 661084526\n",
+    "stderr": "",
+    "seconds": 0.306
+  }
+]

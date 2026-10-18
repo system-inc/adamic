@@ -1,0 +1,66 @@
+[
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetLargeArrayQueriesOnce",
+    "Action": "pass",
+    "Elapsed": 0.56
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetTupleCachesNil",
+    "Action": "pass",
+    "Elapsed": 0.03
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestCycleScalarLiteralShapesOnce",
+    "Action": "pass",
+    "Elapsed": 0.61
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetOrQueriesOnce",
+    "Action": "pass",
+    "Elapsed": 0.72
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "Action": "pass",
+    "Elapsed": 0.08
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetAndQueriesOnce",
+    "Action": "pass",
+    "Elapsed": 0.85
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetNullishQueriesOnce",
+    "Action": "pass",
+    "Elapsed": 1.37
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestImpliedTargetConditionalQueriesOnce",
+    "Action": "pass",
+    "Elapsed": 4.64
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Action": "pass",
+    "Elapsed": 4.657
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReaders",
+    "Action": "pass",
+    "Elapsed": 0.88
+  },
+  {
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Action": "pass",
+    "Elapsed": 0.895
+  }
+]

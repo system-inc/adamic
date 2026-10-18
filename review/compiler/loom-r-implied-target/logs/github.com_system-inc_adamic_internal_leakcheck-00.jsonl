@@ -1,0 +1,5 @@
+{"Time":"2026-10-18T00:07:50.503389809Z","Action":"start","Package":"github.com/system-inc/adamic/internal/leakcheck"}
+{"Time":"2026-10-18T00:07:50.504731334Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:07:50.504797373Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.504974427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"ok  \tgithub.com/system-inc/adamic/internal/leakcheck\t0.001s [no tests to run]\n"}
+{"Time":"2026-10-18T00:07:50.504988979Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Elapsed":0.002}
