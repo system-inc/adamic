@@ -1,0 +1,14 @@
+{
+  "mutation": "Remove only the eepPropertyPresence call from current main-era object.go",
+  "catchers": [
+    "TestEEPPresence0",
+    "TestEEPPresence1",
+    "TestEEPPresence2",
+    "TestEEPPresence3",
+    "TestEEPPresence4",
+    "TestEEPPresence5",
+    "TestEEPPresence6"
+  ],
+  "failure": "got <nil>",
+  "supported_control": "pass"
+}

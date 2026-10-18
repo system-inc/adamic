@@ -1,0 +1,6 @@
+{
+  "base": "72ad75effe2dbcc0deedc3e7e34a8d5e29670eac",
+  "member": "ef1d8f4b307e49ed8354f321aba99d70405934cf",
+  "newly_admitted": 0,
+  "proof": "The only production entry-path change is an early eepPropertyPresence error return. It changes no IR, source, symbol, or lowerer state when returning nil. All main checks remain after it. The helper only queries checker types/symbols and returns nil or NotYet. Admission can only decrease. All other production files are identical to main."
+}
