@@ -1,0 +1,8 @@
+{"label": "lower-focus", "command": ["go", "test", "./internal/lower", "-run", "^(TestArrayNarrowing.*|TestFX5.*|TestNativeAgreement.*|TestAgreement.*|TestProduct_LowerAgreementNative)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 23.422}
+{"label": "ir-products", "command": ["go", "test", "./internal/ir", "-run", "^TestProduct_CallTargetExports$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 67.557}
+{"label": "ir-guards", "command": ["go", "test", "./internal/ir", "-run", "^(TestCallTargetReaders|TestEveryMapAProgramHoldsIsSorted)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 3.268}
+{"label": "oracle-predicates", "command": ["go", "test", "./internal/oracle", "-run", "^(TestPredicateMiscompileRefusals|TestPredicateDirectionCountsAreRecorded|TestCountsAreRecordedTable|TestRuntimeSetsAreEachUsed)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 21.82}
+{"label": "gate-guards", "command": ["go", "test", "./cmd/adamic-gate", "-run", "^(TestEveryTestIsParallelOrSaysWhy|TestEveryDuplicatedProductDeclarationAgrees)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 1.629}
+{"label": "vet", "command": ["go", "vet", "./internal/lower"], "exit": 0, "seconds": 1.396}
+{"label": "packages", "command": ["go", "list", "-json", "./..."], "exit": 0, "seconds": 0.57}
+{"label": "cli-build", "command": ["go", "build", "-o", "review/compiler/loom-r-fx3-refusals/adamic", "./cmd/adamic"], "exit": 0, "seconds": 7.594}
