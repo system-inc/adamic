@@ -114,7 +114,7 @@ export GOPROXY='https://proxy.golang.org|direct'
 bash cloud/setup.sh > /tmp/any-returns-setup.log 2>&1
 source /workspace/adamic-tools/env.sh
 export NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules
-python3 stage3/census/any-returns/test_fixture.py > /tmp/any-returns-fixture.log 2>&1
+python3 stage3/census/any-returns/test_fixture.py --evidence > /tmp/any-returns-fixture.log 2>&1
 node stage3/census/any-returns/inspect.cjs corpus /tmp/hidden-adapted stage3/census/any-returns/evidence/boundaries.json stage3/census/any-returns/evidence/inspection.json > /tmp/any-returns-inspection.log 2>&1
 python3 stage3/census/any-returns/report.py > /tmp/any-returns-report.log 2>&1
 ```
