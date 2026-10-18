@@ -1,0 +1,39 @@
+{"Time":"2026-10-13T06:52:50.175586902Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-13T06:52:50.18388131Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset"}
+{"Time":"2026-10-13T06:52:50.183938016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset","Output":"=== RUN   TestParserAheadCountsRulingsFactoryUnset\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.183958426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset","Output":"=== PAUSE TestParserAheadCountsRulingsFactoryUnset\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.18396081Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset"}
+{"Time":"2026-10-13T06:52:50.183963464Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse"}
+{"Time":"2026-10-13T06:52:50.183965107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse","Output":"=== RUN   TestParserAheadCountsRulingsFactoryUse\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.18396734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse","Output":"=== PAUSE TestParserAheadCountsRulingsFactoryUse\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.183968892Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse"}
+{"Time":"2026-10-13T06:52:50.183970575Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder"}
+{"Time":"2026-10-13T06:52:50.183972027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder","Output":"=== RUN   TestParserAheadCountsRulingsOwnKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.18397422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder","Output":"=== PAUSE TestParserAheadCountsRulingsOwnKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.183975863Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder"}
+{"Time":"2026-10-13T06:52:50.183977906Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys"}
+{"Time":"2026-10-13T06:52:50.183979378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys","Output":"=== RUN   TestParserAheadCountsRulingsNodeArrayKeys\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.183981611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys","Output":"=== PAUSE TestParserAheadCountsRulingsNodeArrayKeys\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.183983164Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys"}
+{"Time":"2026-10-13T06:52:50.18398743Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset"}
+{"Time":"2026-10-13T06:52:50.183989003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset","Output":"=== CONT  TestParserAheadCountsRulingsFactoryUnset\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.184718812Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder"}
+{"Time":"2026-10-13T06:52:50.184728847Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder","Output":"=== CONT  TestParserAheadCountsRulingsOwnKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.1847376Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse"}
+{"Time":"2026-10-13T06:52:50.184741626Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse","Output":"=== CONT  TestParserAheadCountsRulingsFactoryUse\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:50.184743639Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys"}
+{"Time":"2026-10-13T06:52:50.184745211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys","Output":"=== CONT  TestParserAheadCountsRulingsNodeArrayKeys\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.804878882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse","Output":"--- PASS: TestParserAheadCountsRulingsFactoryUse (2.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.807729786Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUse","Elapsed":2.62}
+{"Time":"2026-10-13T06:52:52.807768064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder","Output":"--- PASS: TestParserAheadCountsRulingsOwnKeyOrder (2.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.818387514Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsOwnKeyOrder","Elapsed":2.62}
+{"Time":"2026-10-13T06:52:52.818415336Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys","Output":"--- PASS: TestParserAheadCountsRulingsNodeArrayKeys (2.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.818478271Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsNodeArrayKeys","Elapsed":2.63}
+{"Time":"2026-10-13T06:52:52.818481836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset","Output":"--- PASS: TestParserAheadCountsRulingsFactoryUnset (2.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.818494926Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserAheadCountsRulingsFactoryUnset","Elapsed":2.63}
+{"Time":"2026-10-13T06:52:52.81849792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T06:52:52.818549208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=4\n"}
+{"Time":"2026-10-13T06:52:52.818552963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=0\n"}
+{"Time":"2026-10-13T06:52:52.818554816Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-13T06:52:52.8211599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.645s\n"}
+{"Time":"2026-10-13T06:52:52.821193731Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.646}

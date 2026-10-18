@@ -1,0 +1,178 @@
+[
+  {
+    "package": "./internal/boundedrun",
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestDeadlineKillsGrandchild)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.565986404999876
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestNewAdmissionMismatch)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.5687699650000013
+  },
+  {
+    "package": "./internal/compilercensus",
+    "command": [
+      "go",
+      "test",
+      "./internal/compilercensus",
+      "-run",
+      "^(TestEveryCCompilerRunsThroughNative)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.616376690999914
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gocacheprog",
+      "-run",
+      "^(TestSharedCache)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.5747109480000745
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/productidentity",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.16758330899983775
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/traced",
+      "-run",
+      "^(TestSettleParsesOnlyAskedCalls)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.3651168459998644
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/goplan",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.06409927899994727
+  },
+  {
+    "package": "./internal/tracked",
+    "command": [
+      "go",
+      "test",
+      "./internal/tracked",
+      "-run",
+      "^(TestAdversarialEntries)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.4683578399999533
+  },
+  {
+    "package": "./internal/toolchain",
+    "command": [
+      "go",
+      "test",
+      "./internal/toolchain",
+      "-run",
+      "^(TestAToolIsFoundUnderTheToolsDirectoryAndOnlyThereInASandbox)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.21577146999993602
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/executable",
+      "-run",
+      "^(TestWriteLeavesNoWritableDescriptorForSiblingForksToExec)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.7166041580001092
+  },
+  {
+    "package": "./stage3/lane",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^(TestApplyPython)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 0.9163131519999297
+  }
+]

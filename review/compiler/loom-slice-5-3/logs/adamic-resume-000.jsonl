@@ -1,0 +1,28 @@
+{"Time":"2026-10-16T08:19:47.38227294Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-16T08:19:47.38667188Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC"}
+{"Time":"2026-10-16T08:19:47.386762076Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC","Output":"=== RUN   TestPlaceholderExplainChecksOutputC\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387065702Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC","Output":"=== PAUSE TestPlaceholderExplainChecksOutputC\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387076478Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC"}
+{"Time":"2026-10-16T08:19:47.387083088Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript"}
+{"Time":"2026-10-16T08:19:47.387088587Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript","Output":"=== RUN   TestPlaceholderExplainChecksOutputJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387094095Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript","Output":"=== PAUSE TestPlaceholderExplainChecksOutputJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387096989Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript"}
+{"Time":"2026-10-16T08:19:47.387100575Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild"}
+{"Time":"2026-10-16T08:19:47.387103309Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild","Output":"=== RUN   TestPlaceholderExplainChecksOutputBuild\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387107695Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild","Output":"=== PAUSE TestPlaceholderExplainChecksOutputBuild\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387111601Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild"}
+{"Time":"2026-10-16T08:19:47.387114476Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC"}
+{"Time":"2026-10-16T08:19:47.387116629Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC","Output":"=== CONT  TestPlaceholderExplainChecksOutputC\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387119633Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild"}
+{"Time":"2026-10-16T08:19:47.387121827Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild","Output":"=== CONT  TestPlaceholderExplainChecksOutputBuild\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.387124631Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript"}
+{"Time":"2026-10-16T08:19:47.387126804Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript","Output":"=== CONT  TestPlaceholderExplainChecksOutputJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.444816573Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC","Output":"--- PASS: TestPlaceholderExplainChecksOutputC (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:47.447545113Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputC","Elapsed":0.06}
+{"Time":"2026-10-16T08:19:47.447593125Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript","Output":"--- PASS: TestPlaceholderExplainChecksOutputJavaScript (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:48.610124148Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputJavaScript","Elapsed":0.06}
+{"Time":"2026-10-16T08:19:48.61016571Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild","Output":"--- PASS: TestPlaceholderExplainChecksOutputBuild (1.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:48.610172721Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestPlaceholderExplainChecksOutputBuild","Elapsed":1.22}
+{"Time":"2026-10-16T08:19:48.610175545Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:19:48.616717396Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t1.234s\n"}
+{"Time":"2026-10-16T08:19:48.616795073Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":1.2349999999999999}

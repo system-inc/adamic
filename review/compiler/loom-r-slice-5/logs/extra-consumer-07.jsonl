@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:12:25.281675827Z","Action":"start","Package":"github.com/system-inc/adamic/internal/leakcheck"}
+{"Time":"2026-10-18T00:12:25.288554344Z","Action":"run","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:25.288630438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== RUN   TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:25.288665992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== PAUSE TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:25.288669838Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:25.288686733Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:25.288689648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== CONT  TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:25.288696308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"--- PASS: TestReportedLeakIsRejected (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:25.288698831Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Elapsed":0}
+{"Time":"2026-10-18T00:12:25.28871146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:25.288801315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"ok  \tgithub.com/system-inc/adamic/internal/leakcheck\t0.003s\n"}
+{"Time":"2026-10-18T00:12:25.288819292Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Elapsed":0.007}

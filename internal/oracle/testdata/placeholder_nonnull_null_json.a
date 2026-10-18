@@ -1,0 +1,2 @@
+console.log(JSON.stringify({ nullValue: null!, undefinedValue: undefined! }) ?? "missing");
+console.log(JSON.stringify({ nested: { nullValue: null!, undefinedValue: undefined! } }) ?? "missing");

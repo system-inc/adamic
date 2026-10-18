@@ -56,8 +56,9 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
 	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
 	uintptr_t reserved = arguments + margin;
-	// A stack too small to keep even that gets no check rather than one that fires at once.
-	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;
+	// A stack too small for the panic reserve must stop at the next guarded
+	// function. Disabling its check would turn recursion into a bare crash.
+	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : UINTPTR_MAX;
 }
 
 #endif

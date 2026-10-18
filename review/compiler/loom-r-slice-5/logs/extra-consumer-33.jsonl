@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:22:08.641470256Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-18T00:22:08.646486508Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000"}
+{"Time":"2026-10-18T00:22:08.646558767Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Output":"=== RUN   TestExpressionsAgainstGoAndPrettier_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:08.646588622Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Output":"=== PAUSE TestExpressionsAgainstGoAndPrettier_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:08.646591797Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000"}
+{"Time":"2026-10-18T00:22:08.646594911Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000"}
+{"Time":"2026-10-18T00:22:08.646597485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Output":"=== CONT  TestExpressionsAgainstGoAndPrettier_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:08.646671296Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Output":"    expression_top_level_test.go:9: set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it\n"}
+{"Time":"2026-10-18T00:22:08.646693089Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Output":"--- SKIP: TestExpressionsAgainstGoAndPrettier_000 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:08.646699048Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionsAgainstGoAndPrettier_000","Elapsed":0}
+{"Time":"2026-10-18T00:22:08.646726549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:08.647118439Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.005s\n"}
+{"Time":"2026-10-18T00:22:08.647157818Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.006}
