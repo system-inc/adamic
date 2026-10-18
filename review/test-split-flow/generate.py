@@ -55,7 +55,7 @@ for package in ['flow', 'fresh']:
             label = re.sub('[^A-Za-z0-9]', '_', relative)
             digest = hashlib.sha256(relative.encode()).hexdigest()[:12]
             name = 'Test' + package.title() + kind + '_' + label + '_' + digest
-            if package == 'flow' and relative != '../oracle/testdata/timsort.a':
+            if package == 'flow' and relative not in {'../oracle/testdata/timsort.a', '../oracle/testdata/node_fs_directory_system.a'}:
                 name = 'TestFlowProgram_' + label + '_' + digest
             group.append((relative, name, helper))
             source = (root / 'internal' / package / relative).resolve()
@@ -72,7 +72,7 @@ for package in ['flow', 'fresh']:
     text += '}\n\n'
     for group in rows:
         for index, (relative,name,helper) in enumerate(group):
-            if package == "flow" and relative != "../oracle/testdata/timsort.a":
+            if package == "flow" and relative not in {"../oracle/testdata/timsort.a", "../oracle/testdata/node_fs_directory_system.a"}:
                 name = "TestFlowProgram_" + re.sub("[^A-Za-z0-9]", "_", relative) + "_" + hashlib.sha256(relative.encode()).hexdigest()[:12]
                 if group != rows[0]:
                     continue
