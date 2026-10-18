@@ -43,6 +43,9 @@
     "cmd/adamic-test262 TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
+    "internal/acheck TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
     "internal/fuzz TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
