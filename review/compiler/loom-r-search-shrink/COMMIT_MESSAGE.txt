@@ -1,0 +1,11 @@
+Read removed search indices as undefined and check callback admission
+
+Preserve the checker callback contract separately from native storage. Hold the read value across callback mutations and report the method, index and element type when undefined cannot enter the callback.
+
+Treat omitted and defaulted value parameters as admitting undefined because no undefined value is used as T before the default binds it. Add both find branches because the supplied fixtures contain no find program.
+
+(cherry picked from commit 0167f5b4213c093fe568e2854598d36e81b33800)
+
+Cut onto main 67733635b0252eb9d3bb3645c72262c7b18361e1 from df57ed1895
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

@@ -1,0 +1,7 @@
+interface Item { readonly id: number; }
+const list: (Item | null)[] = [null, { id: 1 }, { id: 2 }];
+console.log(`${list.findIndex((item: unknown, index: number): boolean => {
+	console.log(`${index} ${item === null ? 'null' : item === undefined ? 'hole' : 'item'}`);
+	list.pop();
+	return false;
+})}`);

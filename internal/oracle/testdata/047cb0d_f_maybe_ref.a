@@ -1,0 +1,10 @@
+interface Leaf {
+	readonly value: number;
+}
+const leaves: (Leaf | undefined)[] = [{ value: 1 }, { value: 2 }, undefined];
+const at = leaves.findIndex((leaf) => {
+	console.log(`${leaf === undefined ? 'hole' : leaf.value}`);
+	leaves.pop();
+	return false;
+});
+console.log(`${at}`);
