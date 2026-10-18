@@ -29,7 +29,6 @@ var nameCensusGeneric = map[string]bool{"Works": true, "Basic": true, "Misc": tr
 var nameCensusPinned = []nameCensusEntry{
 	{Identifier: "Ceiling", Rule: nameCensusUndescriptive, Packages: []string{"internal/childguard"}},
 	{Identifier: "Child", Rule: nameCensusUndescriptive, Packages: []string{"internal/childguard"}},
-	{Identifier: "CompileProfiles", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/lint/rules/no-underscore-dangle", "stage1/cohere/lint/rules/no-unsafe-negation", "stage1/cohere/lint/rules/no-unsafe-optional-chaining", "stage1/cohere/lint/rules/typescript-no-this-alias"}},
 	{Identifier: "EachGapStandsWhereGapsMdSaysItDoes", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/css", "stage1/cohere/gitignore", "stage1/cohere/graphql", "stage1/cohere/mediaquery", "stage1/cohere/selector", "stage1/cohere/static_single_assignment", "stage1/cohere/suppression", "stage1/cohere/values"}},
 	{Identifier: "JsxNode", Rule: nameCensusUndescriptive, Packages: []string{"stage1/typescript/parser"}},
 	{Identifier: "Mutants", Rule: nameCensusUndescriptive, Packages: []string{"stage1/cohere/tsprinter"}},

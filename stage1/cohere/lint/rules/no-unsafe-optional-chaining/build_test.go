@@ -13,12 +13,12 @@ import (
 )
 
 // Compile the standalone owned profile in isolated scratch space on every gate, one test for each of its three builds,
-// since a test's tail is what the 60-second bar reads (#mntyb57: the three in one test reached 65.7 s on a loaded tree).
-// Timed on a drained Pupa, each phase alone: load and lower about 1 s, the sanitized build 18 to 19 s, the release
-// build 8 to 9 s, the JavaScript 0.02 s.
+// each named for its rule, since a test's tail is what the 60-second bar reads (#mntyb57: the three in one test
+// reached 65.7 s on a loaded tree). Timed on a drained Pupa, each phase alone: load and lower about 1 s, the sanitized
+// build 18 to 19 s, the release build 8 to 9 s, the JavaScript 0.02 s.
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
-func TestCompileProfiles_Sanitized(t *testing.T) {
+func TestNoUnsafeOptionalChainingProfileBuildsSanitized(t *testing.T) {
 	lowered := compileProfilesLowered(t)
 	if err := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "native"), native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
@@ -27,7 +27,7 @@ func TestCompileProfiles_Sanitized(t *testing.T) {
 }
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
-func TestCompileProfiles_Release(t *testing.T) {
+func TestNoUnsafeOptionalChainingProfileBuildsRelease(t *testing.T) {
 	lowered := compileProfilesLowered(t)
 	if err := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "release"), native.Options{}); err != nil {
 		t.Fatal(err)
@@ -35,7 +35,7 @@ func TestCompileProfiles_Release(t *testing.T) {
 	t.Log("standalone profile: release native compiled")
 }
 
-func TestCompileProfiles_JavaScript(t *testing.T) {
+func TestNoUnsafeOptionalChainingProfileEmitsJavaScript(t *testing.T) {
 	t.Parallel()
 	lowered := compileProfilesLowered(t)
 	if err := os.WriteFile(filepath.Join(t.TempDir(), "emitted.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
