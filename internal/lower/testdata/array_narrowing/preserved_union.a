@@ -1,0 +1,5 @@
+function isScalar(value: string | number | boolean): value is string | number { return typeof value !== 'boolean'; }
+const items: (string | number | boolean)[] = [1, 'b'];
+if (items.every(isScalar)) {
+ for (const value of items) console.log(typeof value === 'number' ? 'number ' + value : value);
+}

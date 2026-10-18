@@ -1,0 +1,44 @@
+[
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestCommandDefaultDeadlineIncludesStartup"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestCommandDefaultDeadlineIncludesStartup)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.268
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestBuildRevisions"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestBuildRevisions)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 0.569
+  }
+]
