@@ -1,0 +1,10 @@
+=== RUN   TestReportedLeakIsRejected
+=== PAUSE TestReportedLeakIsRejected
+=== RUN   TestCountedBalance
+=== PAUSE TestCountedBalance
+=== CONT  TestReportedLeakIsRejected
+=== CONT  TestCountedBalance
+--- PASS: TestReportedLeakIsRejected (0.00s)
+--- PASS: TestCountedBalance (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/leakcheck	0.004s

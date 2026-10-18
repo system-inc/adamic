@@ -1,0 +1,20 @@
+=== RUN   TestStrongAstParentGap
+=== PAUSE TestStrongAstParentGap
+=== RUN   TestPushSpreadGap
+=== PAUSE TestPushSpreadGap
+=== RUN   TestClassMethodInterfaceGap
+=== PAUSE TestClassMethodInterfaceGap
+=== RUN   TestClosedOptionalFunctionValueGap
+--- PASS: TestClosedOptionalFunctionValueGap (1.83s)
+=== RUN   TestClosedConditionalEmptyArrayGap
+--- PASS: TestClosedConditionalEmptyArrayGap (0.47s)
+=== CONT  TestStrongAstParentGap
+=== CONT  TestClassMethodInterfaceGap
+=== CONT  TestPushSpreadGap
+--- PASS: TestStrongAstParentGap (0.22s)
+--- PASS: TestPushSpreadGap (0.24s)
+=== NAME  TestClassMethodInterfaceGap
+    gaps_test.go:91: Node prints 1; Adamic reports: /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet
+--- PASS: TestClassMethodInterfaceGap (0.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	2.558s

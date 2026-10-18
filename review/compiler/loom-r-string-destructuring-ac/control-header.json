@@ -1,0 +1,15 @@
+{
+  "paths": {
+    "internal/oracle/testdata/non_null_refused/initialized.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdoutBytes": 0
+    }
+  },
+  "exit": 0,
+  "failure": null,
+  "seconds": 1.569
+}

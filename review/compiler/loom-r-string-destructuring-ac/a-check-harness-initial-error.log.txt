@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-string-destructuring-ac/a-check.py", line 34, in <module>
+    run('a-check-branch',paths,0)
+  File "/workspace/adamic/review/compiler/loom-r-string-destructuring-ac/a-check.py", line 27, in run
+    diagnostics={};h=Harness(label);start=time.monotonic();gate.Gate.aCheck(h,files)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/loom-r-string-destructuring-ac/gate-reference.py.txt", line 367, in aCheck
+    process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Harness.spawn() takes 2 positional arguments but 4 were given

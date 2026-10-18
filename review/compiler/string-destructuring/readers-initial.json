@@ -1,0 +1,287 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/bench/regex",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/bridge/tsgo",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "tests": [
+      "TestBuildTargetParsing"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-meter",
+    "tests": [
+      "TestOptionalPositionCountsUTF16Surrogates"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-reduce",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "tests": [
+      "TestProduct_Adamic"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/compilerinputs",
+    "tests": [
+      "TestCheckKeyTellsTheCompilerFromTscWhole"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "tests": [
+      "TestFlowCorpusUnitsCoverEveryProgram"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "tests": [
+      "TestFreshCorpusUnitsCoverEveryProgram"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fuzz",
+    "tests": [
+      "TestProduct_Adamic"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "tests": [
+      "TestCallTargetReaders"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "tests": [
+      "TestViewMixedUnionSelectsNumber"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "tests": [
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "TestDestructuredMethodsCannotLoadOwnSlots",
+      "TestStringDestructuringMemberDiagnostic"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "tests": [
+      "TestLongUnicodeLiteralByteCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "tests": [
+      "TestCountsAreRecordedTable"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "tests": [
+      "TestCompositionMatchesGo_Setup"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+    "tests": [
+      "TestRecoveryCacheInputKeys"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "tests": [
+      "TestExtAgreesWithGo"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "tests": [
+      "TestPortAnswerPreparedUnitPlan"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "tests": [
+      "TestUpstreamNumericSeparatorGap"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "tests": [
+      "TestJsxLintTreesShardCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "tests": [
+      "TestProduct_HelperMutantsJSON"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestCommentMutants_000"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "tests": [
+      "TestProduct_RegexOracle"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "tests": [
+      "TestCorpusShardCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "tests": [
+      "TestProduct_stage0"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "tests": [
+      "TestProduct_YAMLComposeGo"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "tests": [
+      "TestParserChildGuard_000"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "tests": [
+      "TestScannerShardCoverage"
+    ]
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "tests": []
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "tests": [
+      "TestFixturesAssertions"
+    ]
+  }
+]
