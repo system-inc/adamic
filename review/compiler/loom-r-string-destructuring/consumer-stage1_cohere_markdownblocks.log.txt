@@ -1,0 +1,8 @@
+=== RUN   TestArrayGrowthWitness
+    support_test.go:57: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestArrayGrowthWitness
+=== CONT  TestArrayGrowthWitness
+    array_growth_gap_test.go:32: Node extends the array; both compiled backends panic. The production map appends with push.
+--- PASS: TestArrayGrowthWitness (1.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1.921s

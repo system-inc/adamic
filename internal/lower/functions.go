@@ -117,7 +117,11 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		declared := parameter.AsParameterDeclaration()
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
-			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
+			heldAs := ir.Object
+			if represented, _ := l.representation(l.checker.GetTypeAtLocation(parameter)); represented == ir.String {
+				heldAs = ir.String
+			}
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: heldAs, Function: index})
 			function.Parameters = append(function.Parameters, incoming)
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue

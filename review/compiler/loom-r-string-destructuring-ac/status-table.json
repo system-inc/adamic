@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "checked": 1,
+    "NotYet": 1,
+    "refused": 0,
+    "type error": 0
+  },
+  "files": [
+    {
+      "path": "internal/oracle/testdata/string_destructuring.a",
+      "status": "checked",
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.052,
+      "stdoutBytes": 8151,
+      "headerAdded": false,
+      "predicateOutcome": "checked",
+      "predicateAccepted": true
+    },
+    {
+      "path": "review/compiler/string-destructuring/unsupported-member.a",
+      "status": "NotYet",
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/string-destructuring/unsupported-member.a:1:9: stage 0 can't lower string member 'charCodeAt' in object destructuring; call methods on the saved string receiver or wrap the call in an arrow yet\n",
+      "seconds": 0.089,
+      "stdoutBytes": 0,
+      "headerAdded": false,
+      "predicateOutcome": "checked",
+      "predicateAccepted": true
+    }
+  ],
+  "headersAdded": []
+}

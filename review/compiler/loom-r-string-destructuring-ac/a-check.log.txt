@@ -1,0 +1,6 @@
+a-check-branch 0 PASS
+control-header 0 PASS
+removed-header-mutant 1 a-check failed for 1 file:
+internal/oracle/testdata/non_null_refused/initialized.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:2:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the)
+wrong-reason-mutant 1 a-check failed for 1 file:
+internal/oracle/testdata/non_null_refused/initialized.a: refused, expected refused deliberately-wrong-reason (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the)

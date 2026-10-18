@@ -1,0 +1,14 @@
+=== RUN   TestProduct_CommentsOracle
+=== PAUSE TestProduct_CommentsOracle
+=== CONT  TestProduct_CommentsOracle
+    owner_test.go:15: build go_build_cohere_/workspace/adamic/cohere/adamic_comments_oracle.go_go-oracle-owner-v1 ac07bce64abb miss 28.37
+--- PASS: TestProduct_CommentsOracle (31.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments/oracles	31.417s
+=== RUN   TestProduct_RegexOptionDialects
+=== PAUSE TestProduct_RegexOptionDialects
+=== CONT  TestProduct_RegexOptionDialects
+    owner_test.go:21: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/option_dialects.go_regex-option-dialects-owner-v1 5d349e745ed7 miss 1.84
+--- PASS: TestProduct_RegexOptionDialects (2.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/regex/oracles	2.794s

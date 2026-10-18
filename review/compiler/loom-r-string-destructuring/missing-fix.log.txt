@@ -1,0 +1,8 @@
+=== RUN   TestStringDestructuringMemberDiagnostic
+=== PAUSE TestStringDestructuringMemberDiagnostic
+=== CONT  TestStringDestructuringMemberDiagnostic
+    string_destructuring_test.go:14: want string member refusal with path and fix, got /tmp/adamic-gate/TestStringDestructuringMemberDiagnostic977523355/001/main.a:1:9: stage 0 can't lower string member 'charCodeAt' in object destructuring yet
+--- FAIL: TestStringDestructuringMemberDiagnostic (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.064s
+FAIL
