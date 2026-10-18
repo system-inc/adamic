@@ -2,15 +2,12 @@ package typeaware
 
 import (
 	"bytes"
-	"context"
 	"crypto/sha256"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
@@ -97,13 +94,13 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
 	}
 	paths = append(paths, h.write("native-globals.d.ts", "declare const console: {log():void};\n"), h.write("native-console.ts", "const detached=console.log;\nexport {};\n"))
 	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
-	truth := h.must("controls-go", volumeProfileMutantCommand(t, oracle, config, manifest))
+	truth := h.must("controls-go", exec.Command(oracle, config, manifest))
 	t.Logf("%s (setup): %.6fs; slice coverage: %d source mutants, %d controls", t.Name(), time.Since(started).Seconds(), len(changes), len(paths))
 	for _, change := range changes {
 		binary := volumeProfileMutantProduct(h, change)
 		leafStarted := time.Now()
 		shard := &harness{t: t, repository: repository, directory: t.TempDir()}
-		got := shard.must(change.name+"-run", volumeProfileMutantCommand(t, binary, config, manifest))
+		got := shard.must(change.name+"-run", exec.Command(binary, config, manifest))
 		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
 			t.Fatalf("%s mutant survived byte oracle", change.name)
 		}
@@ -159,36 +156,14 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 		Name:  "typeaware volume mutant " + change.name,
 		Files: inputs, Flags: flags, Toolchain: toolchain,
 	}, func(directory string) error {
-		builder := &harness{t: t, repository: repository, directory: directory}
+		// The mutant's build is the product's fill, shared setup the unit's own budget bounds, like every other
+		// product build here, never typeAwareChildLimit's 90 s for case work: on a loaded builder that clock, not the
+		// code, decided the verdict (Eve's tree ffd70d0d killed all three builds at 90.1 s, #h4hrxpe).
+		builder := &harness{t: t, repository: repository, directory: directory, sharedSetup: true}
 		volumeProfileSourceMutant(builder, stage0, archive, change.name, change.from, change.to)
 		return nil
 	})
 	return filepath.Join(directory, change.name)
-}
-
-// Cancel the entire child process group so a lowering command cannot leave its
-// compiler running after its 90-second context expires. No external timer tool
-// is required on Linux or macOS.
-func volumeProfileMutantCommand(t *testing.T, name string, args ...string) *exec.Cmd {
-	t.Helper()
-	deadline := time.Now().Add(90 * time.Second)
-	// Cancel children before an earlier test-wide timeout terminates the parent.
-	if testDeadline, ok := t.Deadline(); ok && testDeadline.Before(deadline) {
-		deadline = testDeadline.Add(-time.Second)
-	}
-	ctx, cancel := context.WithDeadline(context.Background(), deadline)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	return command
 }
 
 func volumeProfileMutantOracle(h *harness) string {
@@ -226,7 +201,7 @@ func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to strin
 		}
 	}
 	binary := filepath.Join(h.directory, name)
-	h.must(name, volumeProfileMutantCommand(h.t, stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive))
+	h.must(name, exec.Command(stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive))
 	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
 	if err := buildcache.RelativeFiles(directory); err != nil {
 		h.t.Fatal(err)
