@@ -1,0 +1,8 @@
+=== RUN   TestArrayNarrowingFindLastRefused
+=== PAUSE TestArrayNarrowingFindLastRefused
+=== CONT  TestArrayNarrowingFindLastRefused
+    array_narrowing_test.go:115: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/find_last.a:3:15, got <nil>
+--- FAIL: TestArrayNarrowingFindLastRefused (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

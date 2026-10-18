@@ -1,0 +1,71 @@
+[
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestCommandDefaultDeadlineIncludesStartup"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestBuildRevisions",
+      "TestCompilerCacheIncludesSHA"
+    ]
+  },
+  {
+    "package": "./internal/compilercensus",
+    "tests": [
+      "TestDependenciesCoverTheDeclaredMap"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "tests": [
+      "TestSharedCache"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "tests": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "tests": [
+      "TestARunStartsFromTheWavesTreeState"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "tests": []
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "tests": [
+      "TestAnArchivesBuildIsJournaledAsRuntimeproducts"
+    ]
+  },
+  {
+    "package": "./internal/tracked",
+    "tests": [
+      "TestACallersGitVariablesNeverRedirectAnAnswer"
+    ]
+  },
+  {
+    "package": "./internal/toolchain",
+    "tests": [
+      "TestAToolsCompilersAreClangUnlessTheCallerNamesOne"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "tests": [
+      "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec"
+    ]
+  },
+  {
+    "package": "./stage3/lane",
+    "tests": [
+      "TestApplyPython"
+    ]
+  }
+]

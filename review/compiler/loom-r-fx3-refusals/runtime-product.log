@@ -1,0 +1,10 @@
+=== RUN   TestProduct_NativeRuntimesSanitized0
+=== PAUSE TestProduct_NativeRuntimesSanitized0
+=== CONT  TestProduct_NativeRuntimesSanitized0
+    runtimes_test.go:29: build native-runtime 2010bff2f829 hit 0.10
+    runtimes_test.go:29: build native-runtime 6f3ee476fd63 miss 1.62
+    runtimes_test.go:29: build native-runtime a1eea8fdfb2c miss 1.68
+    runtimes_test.go:29: build native-runtime c932797ab95d miss 1.69
+--- PASS: TestProduct_NativeRuntimesSanitized0 (8.28s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	8.294s
