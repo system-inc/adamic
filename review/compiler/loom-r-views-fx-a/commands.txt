@@ -1,0 +1,19 @@
+timeout 60 git fetch origin
+timeout 60 git fetch origin b198bbdec5707db4ada3baa34b09d5912ac5547a
+git checkout -b compiler/loom-r-views-fx-a dbdf977f5b
+timeout 60 git cherry-pick --no-commit b198bbdec5707db4ada3baa34b09d5912ac5547a
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh > review/compiler/loom-r-views-fx-a/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+timeout 150 go test ./internal/lower ./internal/oracle -run '^TestLoomView|^TestCheckedView|^TestInterfaceCast|^TestRequiredView|^TestNarrowedField|^TestViewField|^TestDefaultTagged' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a/focused.log 2>&1
+timeout 90 go list -json ./... > review/compiler/loom-r-views-fx-a/packages.json 2> review/compiler/loom-r-views-fx-a/packages.log
+timeout 240 python3 review/compiler/loom-r-views-fx-a/run-mutants.py > review/compiler/loom-r-views-fx-a/mutant-run.log 2>&1
+timeout 360 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -v -timeout 300s -args -update-counts > review/compiler/loom-r-views-fx-a/counts-update.log 2>&1
+timeout 360 go test $(cat review/compiler/loom-r-views-fx-a/reader-packages.txt) -run '^TestLoomView|^TestFlowCorpus|^TestFlowProgram.*(view|interface|element_access)' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a/readers.log 2>&1
+timeout 90 go build -o /tmp/r-views-adamic ./cmd/adamic > review/compiler/loom-r-views-fx-a/cli-build.log 2>&1
+timeout 300 python3 review/compiler/loom-r-views-fx-a/replay-entrypoints.py > review/compiler/loom-r-views-fx-a/entrypoints.log 2>&1
+ADAMIC_BUILD_CACHE_DIR=/tmp/r-views-reader-products timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a/reader-guard.log 2>&1
+timeout 120 go vet ./internal/lower > review/compiler/loom-r-views-fx-a/vet.log 2>&1
+gofmt -l internal/lower/element_access_fields.go internal/lower/interface_cast.go internal/lower/loom_views_a_test.go > review/compiler/loom-r-views-fx-a/gofmt.log
+git diff --cached --check > review/compiler/loom-r-views-fx-a/whitespace-final.log 2>&1
