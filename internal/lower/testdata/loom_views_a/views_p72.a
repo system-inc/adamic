@@ -1,0 +1,8 @@
+// A wrong mixed union view (string or number) read by a string-literal key: the slot holds a boolean.
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: string | number; }
+const raw = { kind: 'Holder' as const, value: true };
+const base: Root = raw;
+const viewed = base as View;
+const value = viewed['value'];
+console.log(typeof value === 'string' ? `string ${value.length}` : `number ${value + 1}`);

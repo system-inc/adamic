@@ -1,0 +1,8 @@
+=== RUN   TestLoomViewKeyRead
+=== PAUSE TestLoomViewKeyRead
+=== CONT  TestLoomViewKeyRead
+    loom_views_a_test.go:34: want located refusal "view member read by element access is not yet checked" and fix "use view.count", got <nil>
+--- FAIL: TestLoomViewKeyRead (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.256s
+FAIL
