@@ -1,0 +1,25 @@
+=== RUN   TestMixedUnionContractGraph
+=== PAUSE TestMixedUnionContractGraph
+=== CONT  TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== PAUSE TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== RUN   TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== PAUSE TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== RUN   TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== PAUSE TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== CONT  TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== CONT  TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+--- PASS: TestMixedUnionContractGraph (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier; (0.06s)
+    --- PASS: TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression; (0.06s)
+    --- PASS: TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right; (0.04s)
+    --- PASS: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.04s)
+    --- PASS: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node; (0.20s)
+PASS

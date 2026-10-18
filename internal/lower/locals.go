@@ -261,8 +261,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			case ir.Closure:
 				name = "function"
 			}
-			if name == "object" {
-				// typeof cannot distinguish differently held object members.
+			if name == "object" && narrowed != ir.Array {
+				// Array narrowing uses Array.isArray below, not typeof. Other
+				// object representations still need their owning kind predicate.
 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 				members := []*checker.Type{declared}
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {

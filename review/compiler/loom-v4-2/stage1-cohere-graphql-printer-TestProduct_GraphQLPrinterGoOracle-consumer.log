@@ -1,0 +1,6 @@
+=== RUN   TestProduct_GraphQLPrinterGoOracle
+=== PAUSE TestProduct_GraphQLPrinterGoOracle
+=== CONT  TestProduct_GraphQLPrinterGoOracle
+    oracle_product_test.go:44: build go_test_-c_cohere_./internal/format/graphql_oracle 1ec210b747d3 miss 5.16
+--- PASS: TestProduct_GraphQLPrinterGoOracle (7.40s)
+PASS

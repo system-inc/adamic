@@ -1,0 +1,23 @@
+=== RUN   TestViewArraysNode
+=== PAUSE TestViewArraysNode
+=== CONT  TestViewArraysNode
+=== RUN   TestViewArraysNode/lazy
+=== RUN   TestViewArraysNode/second
+=== RUN   TestViewArraysNode/kind
+=== RUN   TestViewArraysNode/alias
+=== RUN   TestViewArraysNode/object
+=== RUN   TestViewArraysNode/object_payload
+=== RUN   TestViewArraysNode/hole
+=== RUN   TestViewArraysNode/optional_index
+=== RUN   TestViewArraysNode/once
+--- PASS: TestViewArraysNode (1.10s)
+    --- PASS: TestViewArraysNode/lazy (0.10s)
+    --- PASS: TestViewArraysNode/second (0.07s)
+    --- PASS: TestViewArraysNode/kind (0.08s)
+    --- PASS: TestViewArraysNode/alias (0.06s)
+    --- PASS: TestViewArraysNode/object (0.13s)
+    --- PASS: TestViewArraysNode/object_payload (0.06s)
+    --- PASS: TestViewArraysNode/hole (0.09s)
+    --- PASS: TestViewArraysNode/optional_index (0.15s)
+    --- PASS: TestViewArraysNode/once (0.22s)
+PASS

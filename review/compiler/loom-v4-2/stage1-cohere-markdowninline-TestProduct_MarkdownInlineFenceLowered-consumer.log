@@ -1,0 +1,6 @@
+=== RUN   TestProduct_MarkdownInlineFenceLowered
+=== PAUSE TestProduct_MarkdownInlineFenceLowered
+=== CONT  TestProduct_MarkdownInlineFenceLowered
+    inline_products_shards_test.go:77: build markdowninline_mutant_minimum_absent_fence_lowered c0f9cf0e7952 miss 0.38
+--- PASS: TestProduct_MarkdownInlineFenceLowered (10.02s)
+PASS

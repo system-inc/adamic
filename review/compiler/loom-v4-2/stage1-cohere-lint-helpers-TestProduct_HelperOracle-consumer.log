@@ -1,0 +1,102 @@
+=== RUN   TestProduct_HelperOracle
+=== PAUSE TestProduct_HelperOracle
+=== CONT  TestProduct_HelperOracle
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_HelperOracle (1m30s)
+
+goroutine 87 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x1cc16ec99208, 0x1cc16ec75bc8)
+	testing/testing.go:2199 +0x123
+testing.runTests({0xe6b2e5, 0x1c}, {0xe97b39, 0x37}, 0x1cc16e93f9f8, {0x2162010, 0xf, 0xf}, {0xc2abd5c7b9741438, 0x14f4ad4a6d, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x1cc16ed51b80)
+	testing/testing.go:2600 +0x6af
+main.main()
+	_testmain.go:74 +0x9b
+
+goroutine 8 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x1cc16e978b00, 0x4, 0x1cc16eae0090, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x1cc16e978b2e?, 0x1cc16e978c58?, 0x546eeb?, 0x18?, 0x201ced8?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x1cc16f77c840)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x14?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x1cc16ed7a4e0)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x1cc16ed7a4e0)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x1cc16ed7a4e0)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/buildcache.goProduct.func1({0x1cc16e96c3c0, 0x46})
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:202 +0x4f2
+github.com/system-inc/adamic/internal/buildcache.relocating.func1({0x1cc16e96c3c0, 0x46})
+	github.com/system-inc/adamic/internal/buildcache/relative.go:194 +0x78
+github.com/system-inc/adamic/internal/buildcache.filled({0x1cc16ea17ce0, 0x66}, {0x1cc16ea1c000, 0x186d8}, 0x1cc16e979778)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:266 +0x249
+github.com/system-inc/adamic/internal/buildcache.get({{0x1cc16eb94100, 0x80}, {0x1cc16ee1c008, 0x5cb, 0x5ff}, {0x1cc16ece6000, 0x13, 0x14}, {0x1cc16e94e440, 0x2, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:209 +0x1405
+github.com/system-inc/adamic/internal/buildcache.Product({0x209b090, 0x1cc16ec99448}, {{0x1cc16eb94100, 0x80}, {0x1cc16ee1c008, 0x5cb, 0x5ff}, {0x1cc16ece6000, 0x13, 0x14}, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:58 +0x8d
+github.com/system-inc/adamic/internal/buildcache.goProduct({0x209b090, 0x1cc16ec99448}, {{0xe4a72b, 0x5}, {0xe4ad96, 0x6}, {0xe4f369, 0x9}, {0x1cc16e970c40, 0x66}, ...})
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:189 +0x796
+github.com/system-inc/adamic/internal/buildcache.GoBuildIn({0x209b090, 0x1cc16ec99448}, {0xe4ad96, 0x6}, {0xe4f369, 0x9}, {0x1cc16e970c40, 0x66}, {0x1cc16ed2aea0, 0x1, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:51 +0x1fd
+github.com/system-inc/adamic/stage1/cohere/lint/helpers.oracle(0x1cc16ec99448)
+	github.com/system-inc/adamic/stage1/cohere/lint/helpers/helpers_test.go:65 +0x58a
+github.com/system-inc/adamic/stage1/cohere/lint/helpers.TestProduct_HelperOracle(0x1cc16ec99448)
+	github.com/system-inc/adamic/stage1/cohere/lint/helpers/helpers_test.go:69 +0x25
+testing.tRunner(0x1cc16ec99448, 0x209b820)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 86 [IO wait]:
+internal/poll.runtime_pollWait(0x7fbcf918fa00, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x1cc16e9ce300?, 0x1cc16e972200?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x1cc16e9ce300, {0x1cc16e972200, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x1cc16e92e238, {0x1cc16e972200?, 0x4ce730?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x1cc16ebe4450, {0x208bc18, 0x1cc16e92e238})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x208bd38, 0x1cc16ebe4450}, {0x208bc18, 0x1cc16e92e238}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x1cc16e92e238?, {0x208bd38?, 0x1cc16ebe4450?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x1cc16e92e238, {0x208bd38, 0x1cc16ebe4450})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x208bd38, 0x1cc16ebe4450}, {0x208bc98, 0x1cc16e92e238}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 8
+	os/exec/exec.go:767 +0x92b

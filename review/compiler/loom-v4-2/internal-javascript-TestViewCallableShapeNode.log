@@ -1,0 +1,25 @@
+=== RUN   TestViewCallableShapeNode
+=== PAUSE TestViewCallableShapeNode
+=== CONT  TestViewCallableShapeNode
+=== RUN   TestViewCallableShapeNode/valid
+=== RUN   TestViewCallableShapeNode/wrong-arity
+=== RUN   TestViewCallableShapeNode/wrong-parameter
+=== RUN   TestViewCallableShapeNode/wrong-result
+=== RUN   TestViewCallableShapeNode/unknown-result
+=== RUN   TestViewCallableShapeNode/unknown-parameter
+=== RUN   TestViewCallableShapeNode/unknown-signature
+=== RUN   TestViewCallableShapeNode/number
+=== RUN   TestViewCallableShapeNode/optional-absent
+=== RUN   TestViewCallableShapeNode/required-absent
+--- PASS: TestViewCallableShapeNode (0.58s)
+    --- PASS: TestViewCallableShapeNode/valid (0.03s)
+    --- PASS: TestViewCallableShapeNode/wrong-arity (0.03s)
+    --- PASS: TestViewCallableShapeNode/wrong-parameter (0.03s)
+    --- PASS: TestViewCallableShapeNode/wrong-result (0.06s)
+    --- PASS: TestViewCallableShapeNode/unknown-result (0.05s)
+    --- PASS: TestViewCallableShapeNode/unknown-parameter (0.05s)
+    --- PASS: TestViewCallableShapeNode/unknown-signature (0.08s)
+    --- PASS: TestViewCallableShapeNode/number (0.04s)
+    --- PASS: TestViewCallableShapeNode/optional-absent (0.05s)
+    --- PASS: TestViewCallableShapeNode/required-absent (0.05s)
+PASS

@@ -1,0 +1,3 @@
+package oracle
+import("reflect";"testing";"path/filepath";"github.com/system-inc/adamic/internal/ir")
+func TestV4ArrayIRProbe(t *testing.T){t.Parallel();path,_:=filepath.Abs("testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a");p,e:=lowered(t,path);if e!=nil{t.Fatal(e)};mutateStringExpressions(reflect.ValueOf(&p.Main).Elem(),func(e ir.Expression)ir.Expression{if r,ok:=e.(ir.Property);ok{t.Logf("property %#v",r)};return e})}

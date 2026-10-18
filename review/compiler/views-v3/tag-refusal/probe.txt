@@ -1,0 +1,21 @@
+=== RUN   TestNarrowedUnionObjectTagPassing
+=== PAUSE TestNarrowedUnionObjectTagPassing
+=== RUN   TestNarrowedUnionObjectTagMisfit
+=== PAUSE TestNarrowedUnionObjectTagMisfit
+=== CONT  TestNarrowedUnionObjectTagPassing
+=== CONT  TestNarrowedUnionObjectTagMisfit
+=== NAME  TestNarrowedUnionObjectTagPassing
+    narrowed_union_test.go:82: native-sanitized: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: native-release: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: JavaScript: exit 0 stdout "1\n" stderr ""
+--- PASS: TestNarrowedUnionObjectTagPassing (0.53s)
+=== NAME  TestNarrowedUnionObjectTagMisfit
+    narrowed_union_test.go:98: JavaScript: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    narrowed_union_test.go:98: native-sanitized: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    narrowed_union_test.go:98: native-release: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+--- PASS: TestNarrowedUnionObjectTagMisfit (0.53s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.539s

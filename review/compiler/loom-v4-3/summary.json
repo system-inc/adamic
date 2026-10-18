@@ -1,0 +1,55 @@
+{
+  "focused_tests": 289,
+  "focused_skips": 7,
+  "focused_max_wall_seconds": 38.746,
+  "focused_red": [],
+  "consumer_builds": 52,
+  "consumer_completed_tests": 46,
+  "consumer_red": [
+    {
+      "package": "bridge/tsgo",
+      "test": "TestProduct_ApiDriver",
+      "seconds": 80.556,
+      "exit": 1,
+      "grain": false,
+      "skip": false
+    }
+  ],
+  "source_mutants_caught": 17,
+  "runtime_witness_mutant": {
+    "mutant": "runtime-witness-mismatch",
+    "exit": 1,
+    "seconds": 9.568697174999897,
+    "killed": true
+  },
+  "guards": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestEveryMapAProgramHoldsIsSorted",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNativeAgreementRowsNameRegisteredPrograms",
+      "Elapsed": 0.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "Test": "TestEveryTestIsParallelOrSaysWhy",
+      "Elapsed": 0.98
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetReaders",
+      "Elapsed": 4.43
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestRuntimeSetsAreEachUsed",
+      "Elapsed": 6.76
+    }
+  ],
+  "reason": "User authorized push: local bridge/tsgo timing is a cold product build outside V4; user-provided Loom record p50 18.7 s, p90 25.9 s, 11/11 passed using cached product.",
+  "push_authorized": true,
+  "loom_bridge_record_provenance": "user-provided, not independently queried"
+}

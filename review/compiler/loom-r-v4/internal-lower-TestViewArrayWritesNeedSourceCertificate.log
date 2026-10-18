@@ -1,0 +1,9 @@
+=== RUN   TestViewArrayWritesNeedSourceCertificate
+=== PAUSE TestViewArrayWritesNeedSourceCertificate
+=== CONT  TestViewArrayWritesNeedSourceCertificate
+=== RUN   TestViewArrayWritesNeedSourceCertificate/items(raw).values.push(true);
+=== RUN   TestViewArrayWritesNeedSourceCertificate/items(raw).values[0]_=_true;
+--- PASS: TestViewArrayWritesNeedSourceCertificate (0.11s)
+    --- PASS: TestViewArrayWritesNeedSourceCertificate/items(raw).values.push(true); (0.08s)
+    --- PASS: TestViewArrayWritesNeedSourceCertificate/items(raw).values[0]_=_true; (0.03s)
+PASS

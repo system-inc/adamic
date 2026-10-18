@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewArrayUnionMembershipBoolean
+=== PAUSE TestCheckedViewArrayUnionMembershipBoolean
+=== CONT  TestCheckedViewArrayUnionMembershipBoolean
+    checked_views_array_union_test.go:63: gate cache node miss
+    checked_views_array_union_test.go:63: gate cache node miss
+--- PASS: TestCheckedViewArrayUnionMembershipBoolean (5.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

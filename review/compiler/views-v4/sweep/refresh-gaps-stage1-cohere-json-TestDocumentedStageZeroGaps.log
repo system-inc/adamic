@@ -1,0 +1,18 @@
+=== RUN   TestDocumentedStageZeroGaps
+=== PAUSE TestDocumentedStageZeroGaps
+=== CONT  TestDocumentedStageZeroGaps
+=== RUN   TestDocumentedStageZeroGaps/multiplePush.ts
+=== PAUSE TestDocumentedStageZeroGaps/multiplePush.ts
+=== RUN   TestDocumentedStageZeroGaps/repeatInTry.ts
+=== PAUSE TestDocumentedStageZeroGaps/repeatInTry.ts
+=== CONT  TestDocumentedStageZeroGaps/multiplePush.ts
+=== CONT  TestDocumentedStageZeroGaps/repeatInTry.ts
+=== NAME  TestDocumentedStageZeroGaps/multiplePush.ts
+    gaps_test.go:40: /workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet; Node "a,b\n"
+=== NAME  TestDocumentedStageZeroGaps/repeatInTry.ts
+    gaps_test.go:40: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; Node "xxx\n"
+--- PASS: TestDocumentedStageZeroGaps (0.00s)
+    --- PASS: TestDocumentedStageZeroGaps/multiplePush.ts (0.17s)
+    --- PASS: TestDocumentedStageZeroGaps/repeatInTry.ts (0.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.190s

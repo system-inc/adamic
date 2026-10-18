@@ -1,0 +1,6 @@
+=== RUN   TestViewAdapterRegionAdoptionPending
+=== PAUSE TestViewAdapterRegionAdoptionPending
+=== CONT  TestViewAdapterRegionAdoptionPending
+    view_adapter_runtime_test.go:244: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterRegionAdoptionPending (0.00s)
+PASS

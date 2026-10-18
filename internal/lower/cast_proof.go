@@ -11,6 +11,7 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
+	arrayView      bool
 	structuralView bool
 	interfaceView  bool
 	field          string
@@ -103,6 +104,22 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
+	if l.checker.IsArrayType(l.checker.GetNonNullableType(source)) && l.checker.IsArrayType(l.checker.GetNonNullableType(target)) {
+		from := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(source))
+		to := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(target))
+		if from.Flags()&checker.TypeFlagsAny == 0 && to.Flags()&checker.TypeFlagsAny == 0 {
+			if l.checker.IsTypeAssignableTo(source, target) {
+				if err := l.provenRelation(node, as.Expression, target); err != nil {
+					return castProof{}, err
+				}
+				if l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
+					return castProof{}, nil
+				}
+			}
+			return castProof{arrayView: true}, nil
+		}
+	}
+
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		return castProof{}, refused

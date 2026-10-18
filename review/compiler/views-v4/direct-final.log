@@ -1,0 +1,173 @@
+=== RUN   TestV4DirectArgument
+=== PAUSE TestV4DirectArgument
+=== RUN   TestV4DirectResult
+=== PAUSE TestV4DirectResult
+=== RUN   TestV4DirectCompatible
+=== PAUSE TestV4DirectCompatible
+=== RUN   TestV4DirectMethod
+=== PAUSE TestV4DirectMethod
+=== RUN   TestV4DirectObjectArgument
+=== PAUSE TestV4DirectObjectArgument
+=== RUN   TestV4DirectArrayArgument
+=== PAUSE TestV4DirectArrayArgument
+=== RUN   TestV4DirectCalleeOrder
+=== PAUSE TestV4DirectCalleeOrder
+=== RUN   TestV4DirectBoxed
+=== PAUSE TestV4DirectBoxed
+=== RUN   TestV4DirectUnused
+=== PAUSE TestV4DirectUnused
+=== RUN   TestV4DirectOptionalReceiver
+=== PAUSE TestV4DirectOptionalReceiver
+=== RUN   TestV4DirectVoid
+=== PAUSE TestV4DirectVoid
+=== RUN   TestV4DirectNull
+=== PAUSE TestV4DirectNull
+=== RUN   TestV4DirectUnknownProducerParameter
+=== PAUSE TestV4DirectUnknownProducerParameter
+=== RUN   TestV4DirectClassResult
+=== PAUSE TestV4DirectClassResult
+=== RUN   TestV4DirectRecursiveRefusal
+=== PAUSE TestV4DirectRecursiveRefusal
+=== RUN   TestV4DirectProducerRefusal
+=== PAUSE TestV4DirectProducerRefusal
+=== CONT  TestV4DirectArgument
+=== CONT  TestV4DirectUnused
+=== CONT  TestV4DirectUnknownProducerParameter
+=== CONT  TestV4DirectNull
+=== CONT  TestV4DirectVoid
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: gate cache node miss
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: gate cache node miss
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: gate cache node miss
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: gate cache node miss
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: source Node: exit=0 stdout="Receiver\n"
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: source Node: exit=0 stdout="true\n"
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: source Node: exit=0 stdout="done\n"
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: gate cache node miss
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: gate cache node miss
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: gate cache node miss
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: gate cache node miss
+--- PASS: TestV4DirectVoid (0.60s)
+=== CONT  TestV4DirectOptionalReceiver
+--- PASS: TestV4DirectUnused (0.62s)
+=== CONT  TestV4DirectObjectArgument
+--- PASS: TestV4DirectUnknownProducerParameter (0.61s)
+=== CONT  TestV4DirectBoxed
+--- PASS: TestV4DirectNull (0.62s)
+=== CONT  TestV4DirectCalleeOrder
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: gate cache node miss
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: gate cache node miss
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: source Node: exit=0 stdout="undefined\nargument\nok\n"
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: source Node: exit=70 stdout="argument\n"
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: source Node: exit=0 stdout="producer\n"
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: source Node: exit=0 stdout="5\n"
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: gate cache node miss
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: gate cache node miss
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+--- PASS: TestV4DirectArgument (1.14s)
+=== CONT  TestV4DirectArrayArgument
+--- PASS: TestV4DirectCalleeOrder (0.54s)
+=== CONT  TestV4DirectCompatible
+--- PASS: TestV4DirectOptionalReceiver (0.58s)
+=== CONT  TestV4DirectMethod
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+=== NAME  TestV4DirectCompatible
+    checked_views_v4_direct_test.go:117: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+--- PASS: TestV4DirectBoxed (0.62s)
+=== CONT  TestV4DirectRecursiveRefusal
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: gate cache node miss
+=== NAME  TestV4DirectRecursiveRefusal
+    checked_views_v4_direct_test.go:317: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: source Node: exit=0 stdout="producer\n"
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: source Node: exit=0 stdout="ok\n"
+--- PASS: TestV4DirectRecursiveRefusal (0.24s)
+=== CONT  TestV4DirectProducerRefusal
+    checked_views_v4_direct_test.go:339: gate cache node miss
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: gate cache node miss
+--- PASS: TestV4DirectProducerRefusal (0.20s)
+=== CONT  TestV4DirectResult
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+--- PASS: TestV4DirectObjectArgument (1.07s)
+=== CONT  TestV4DirectClassResult
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+=== NAME  TestV4DirectCompatible
+    checked_views_v4_direct_test.go:117: gate cache node miss
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: gate cache node miss
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: gate cache node miss
+--- PASS: TestV4DirectCompatible (0.63s)
+--- PASS: TestV4DirectMethod (0.61s)
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: gate cache node miss
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: gate cache node miss
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+--- PASS: TestV4DirectArrayArgument (1.00s)
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+--- PASS: TestV4DirectClassResult (0.48s)
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: gate cache node miss
+    checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+--- PASS: TestV4DirectResult (0.79s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=34
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.476s

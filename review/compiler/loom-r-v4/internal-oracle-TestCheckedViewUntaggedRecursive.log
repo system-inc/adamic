@@ -1,0 +1,44 @@
+=== RUN   TestCheckedViewUntaggedRecursive
+=== PAUSE TestCheckedViewUntaggedRecursive
+=== CONT  TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/good
+=== PAUSE TestCheckedViewUntaggedRecursive/good
+=== RUN   TestCheckedViewUntaggedRecursive/absent
+=== PAUSE TestCheckedViewUntaggedRecursive/absent
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+=== PAUSE TestCheckedViewUntaggedRecursive/wrong
+=== RUN   TestCheckedViewUntaggedRecursive/nested
+=== PAUSE TestCheckedViewUntaggedRecursive/nested
+=== CONT  TestCheckedViewUntaggedRecursive/good
+    checked_views_v2_source_test.go:193: gate cache node miss
+    checked_views_v2_source_test.go:201: gate cache node miss
+    checked_views_v2_source_test.go:202: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:202: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:202: native: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:193: gate cache node miss
+    checked_views_v2_source_test.go:201: gate cache node miss
+    checked_views_v2_source_test.go:202: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:202: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:202: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:193: gate cache node miss
+    checked_views_v2_source_test.go:201: gate cache node miss
+    checked_views_v2_source_test.go:202: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:202: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:202: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:193: gate cache node miss
+    checked_views_v2_source_test.go:201: gate cache node miss
+    checked_views_v2_source_test.go:202: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:202: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:202: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedRecursive (0.00s)
+    --- PASS: TestCheckedViewUntaggedRecursive/good (4.52s)
+    --- PASS: TestCheckedViewUntaggedRecursive/absent (0.42s)
+    --- PASS: TestCheckedViewUntaggedRecursive/nested (0.53s)
+    --- PASS: TestCheckedViewUntaggedRecursive/wrong (0.43s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0

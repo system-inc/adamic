@@ -1,0 +1,11 @@
+--- internal/lower/view_callable_escape.go
++++ internal/lower/view_callable_escape.go
+@@ -32,7 +32,7 @@
+ 
+ func checkViewCallableEscape(graph *allocationFlowGraph, read ir.Property, reaches ir.AllocationSet) error {
+ 	if read.ViewEscapeAdamic {
+-		if graph.viewCallableEscapeProven(read, reaches) {
++		if true {
+ 			return nil
+ 		}
+ 		return &Refused{Where: read.ViewWhere, What: "an unproven escaping callable read of " + read.View, Fix: "prove the producer parameter and result relation before this read, or call the member directly through the view"}

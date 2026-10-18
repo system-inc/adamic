@@ -1,0 +1,6 @@
+=== RUN   TestViewArraySourceCertificateOmission
+=== PAUSE TestViewArraySourceCertificateOmission
+=== CONT  TestViewArraySourceCertificateOmission
+    view_array_writes_test.go:56: source-slot certificate guard omitted; the pinned refusal rejects the mutant
+--- PASS: TestViewArraySourceCertificateOmission (0.03s)
+PASS

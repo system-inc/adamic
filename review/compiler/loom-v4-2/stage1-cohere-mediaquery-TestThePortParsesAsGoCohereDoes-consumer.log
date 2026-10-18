@@ -1,0 +1,77 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    mediaquery_test.go:53: build go_test_-c_cohere_./internal/format/css/mediaquery_mediaquery.test 76a2645e7288 hit 0.33
+    mediaquery_test.go:53: seed 20261005, 4000 generated params
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    mediaquery_test.go:84: 4137 cases (3984 parsed, 153 refused; 2479 nodes left of undecided type): every tree the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace
+    mediaquery_test.go:132: natively, caught: line 780: "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @1 before=\"\u2000\" after=\"\u2000\" nodes=2"
+    mediaquery_test.go:132: on Node, caught: line 780: "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2000and\u2000(\u2000min-width\u2000:\u20001px\u2000)\u2000,\u2000print\" @1 before=\"\u2000\" after=\"\u2000\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string
+    mediaquery_test.go:132: natively, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:132: on Node, caught: line 470: "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\\'b'}: c)\" @0 before=\"\" after=\"\" nodes=3"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type
+    mediaquery_test.go:132: natively, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+    mediaquery_test.go:132: on Node, caught: line 231: "    media-type \"b\" @3 before=\"\" after=\"\"", Go cohere "    keyword \"b\" @3 before=\"\" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string
+    mediaquery_test.go:132: natively, caught: line 687: "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=3"
+    mediaquery_test.go:132: on Node, caught: line 687: "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=1", Go cohere "    media-feature-expression \"({'a\\\"b'}:x)\" @0 before=\"\" after=\"\" nodes=3"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace
+    mediaquery_test.go:132: natively, caught: line 912: "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @1 before=\"\u2029\" after=\"\u2029\" nodes=2"
+    mediaquery_test.go:132: on Node, caught: line 912: "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"screen\u2029and\u2029(\u2029min-width\u2029:\u20291px\u2029)\u2029,\u2029print\" @1 before=\"\u2029\" after=\"\u2029\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart
+    mediaquery_test.go:132: natively, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+    mediaquery_test.go:132: on Node, caught: line 128: "  media-query \"screen \" @0 before=\"\" after=\" \" nodes=1", Go cohere "  media-query \"screen\" @0 before=\"\" after=\" \" nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon
+    mediaquery_test.go:132: natively, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+    mediaquery_test.go:132: on Node, caught: line 9: "      value \"768px\" @22 before=\" \" after=\"\"", Go cohere "      value \"768px\" @23 before=\" \" after=\"\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+    mediaquery_test.go:132: natively, caught: line 995: "media-query-list \"\x1fscreen\x1fand\x1f(\x1fmin-width\x1f:\x1f1px\x1f)\x1f,\x1fprint\x1f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u001fscreen\\u001fand\\u001f(\\u001fmin-width\\u001f:\\u001f1px\\u001f)\\u001f,\\u001fprint\\u001f\" @0 before=\"\" after=\"\" nodes=2"
+    mediaquery_test.go:132: on Node, caught: line 995: "media-query-list \"\x1fscreen\x1fand\x1f(\x1fmin-width\x1f:\x1f1px\x1f)\x1f,\x1fprint\x1f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u001fscreen\\u001fand\\u001f(\\u001fmin-width\\u001f:\\u001f1px\\u001f)\\u001f,\\u001fprint\\u001f\" @0 before=\"\" after=\"\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser
+    mediaquery_test.go:95: set ADAMIC_MEDIA_QUERY_LIBRARY to a directory where `npm install postcss-media-query-parser@0.2.3` ran, to compare with the library itself
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+    mediaquery_test.go:132: natively, caught: line 988: "media-query-list \"\x7fscreen\x7fand\x7f(\x7fmin-width\x7f:\x7f1px\x7f)\x7f,\x7fprint\x7f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u007fscreen\\u007fand\\u007f(\\u007fmin-width\\u007f:\\u007f1px\\u007f)\\u007f,\\u007fprint\\u007f\" @0 before=\"\" after=\"\" nodes=2"
+    mediaquery_test.go:132: on Node, caught: line 988: "media-query-list \"\x7fscreen\x7fand\x7f(\x7fmin-width\x7f:\x7f1px\x7f)\x7f,\x7fprint\x7f\" @0 before=\"\" after=\"\" nodes=2", Go cohere "media-query-list \"\\u007fscreen\\u007fand\\u007f(\\u007fmin-width\\u007f:\\u007f1px\\u007f)\\u007f,\\u007fprint\\u007f\" @0 before=\"\" after=\"\" nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace
+    mediaquery_test.go:132: natively, caught: line 632: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+    mediaquery_test.go:132: on Node, caught: line 632: "media-query-list \"screen\" @0 before=\"\" after=\"\" nodes=1", Go cohere "media-query-list \"screen\" @1 before=\"\ufeff\" after=\"\" nodes=1"
+--- PASS: TestThePortParsesAsGoCohereDoes (1.84s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (2.36s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace (1.09s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string (1.26s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type (1.07s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string (1.13s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace (1.29s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart (1.26s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon (1.31s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped (1.16s)
+    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser (0.00s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped (1.34s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace (1.45s)
+PASS

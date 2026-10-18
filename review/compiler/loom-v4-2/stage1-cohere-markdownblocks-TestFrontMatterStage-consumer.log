@@ -1,0 +1,24 @@
+=== RUN   TestFrontMatterStage
+    support_test.go:57: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestFrontMatterStage
+=== CONT  TestFrontMatterStage
+    frontmatter_test.go:24: corpus-files: repository /workspace/adamic root stage1/cohere/markdownblocks pin 27d661a838681d3144808e108e3e61e32e940a69 count 3
+    frontmatter_test.go:72: build go_build_cohere_/workspace/adamic/cohere/cmd/adamic_frontmatter/main.go_go-parser 6c0022c59575 miss 1.36
+=== RUN   TestFrontMatterStage/YAML_fallback_delimiter
+    frontmatter_test.go:152: source Node output-only mutant caught at output byte 71313 by generated/front-matter/64
+=== RUN   TestFrontMatterStage/UTF-16_blank_prefix
+    frontmatter_test.go:152: source Node output-only mutant caught at output byte 67588 by generated/block/---
+        a: b
+        ---
+=== RUN   TestFrontMatterStage/JavaScript_BOM_trimming
+    frontmatter_test.go:152: source Node output-only mutant caught at output byte 113931 by generated/front-matter/896
+=== NAME  TestFrontMatterStage
+    frontmatter_test.go:179: parser-stage throughput Go front-matter stage 251338.1 texts/s, 3 runs 0.038148s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:179: parser-stage throughput native front-matter stage 154498.8 texts/s, 3 runs 0.062059s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:179: parser-stage throughput source Node front-matter stage 22335.5 texts/s, 3 runs 0.429273s; startup/protocol/I/O included, no Markdown layout measured
+    frontmatter_test.go:181: front-matter stage 3 physical Markdown files and 3193 generated cases, 3196 total: Go/native/source Node/backend/pinned library byte parity, ASan/UBSan/leaks
+--- PASS: TestFrontMatterStage (6.42s)
+    --- PASS: TestFrontMatterStage/YAML_fallback_delimiter (0.11s)
+    --- PASS: TestFrontMatterStage/UTF-16_blank_prefix (0.11s)
+    --- PASS: TestFrontMatterStage/JavaScript_BOM_trimming (0.11s)
+PASS

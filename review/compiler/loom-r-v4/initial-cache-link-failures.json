@@ -1,0 +1,82 @@
+[
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBounded",
+    "seconds": 0.369,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBytes",
+    "seconds": 0.521,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheCanonical",
+    "seconds": 0.588,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheDying",
+    "seconds": 0.487,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIdentity",
+    "seconds": 0.715,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIntern",
+    "seconds": 0.634,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheMany",
+    "seconds": 0.568,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheOrder",
+    "seconds": 0.688,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheRecheck",
+    "seconds": 0.745,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheWeakLeakRoot",
+    "seconds": 1.308,
+    "exit": 1,
+    "grain": true,
+    "skip": false
+  }
+]

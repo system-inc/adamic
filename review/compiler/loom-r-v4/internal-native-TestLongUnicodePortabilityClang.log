@@ -1,0 +1,6 @@
+=== RUN   TestLongUnicodePortabilityClang
+=== PAUSE TestLongUnicodePortabilityClang
+=== CONT  TestLongUnicodePortabilityClang
+    c_portability_oracle_test.go:20: clang: both backends match Node; ASan, UBSan and leak detection clean
+--- PASS: TestLongUnicodePortabilityClang (7.84s)
+PASS

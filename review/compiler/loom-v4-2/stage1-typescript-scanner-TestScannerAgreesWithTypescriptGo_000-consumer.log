@@ -1,0 +1,9 @@
+=== RUN   TestScannerAgreesWithTypescriptGo_000
+=== PAUSE TestScannerAgreesWithTypescriptGo_000
+=== CONT  TestScannerAgreesWithTypescriptGo_000
+    scanner_products_test.go:51: build scanner-go-oracle 1b93e837224d hit 1.01
+    scanner_products_test.go:51: build scanner-native 715362a4d401 miss 4.00
+    scanner_products_test.go:336: clone pinned corpus: exit status 128
+        fatal: unable to access 'https://github.com/microsoft/TypeScript.git/': Failed to connect to github.com port 443 after 5007 ms: Could not connect to server
+--- FAIL: TestScannerAgreesWithTypescriptGo_000 (10.06s)
+FAIL

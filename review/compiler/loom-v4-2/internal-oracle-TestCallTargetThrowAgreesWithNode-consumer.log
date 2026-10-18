@@ -1,0 +1,10 @@
+=== RUN   TestCallTargetThrowAgreesWithNode
+=== PAUSE TestCallTargetThrowAgreesWithNode
+=== CONT  TestCallTargetThrowAgreesWithNode
+    call_targets_guards_test.go:10: gate cache node miss
+    call_targets_guards_test.go:10: gate cache node miss
+--- PASS: TestCallTargetThrowAgreesWithNode (6.74s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,125 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    values_test.go:52: build go_test_-c_cohere_./internal/format/css/values_values.test 06f28b2479f2 hit 0.54
+    values_test.go:52: seed 20261005, 4000 generated values
+=== RUN   TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== PAUSE TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+=== PAUSE TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text
+    values_test.go:139: natively, caught: line 1423: "error TypeError: Cannot read properties of undefined (reading '0')", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+    values_test.go:139: on Node, caught: line 1423: "error TypeError: Cannot read properties of undefined (reading '0')", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere
+    values_test.go:91: 8208 parses (5598 trees, 2610 refusals): every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1416: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1416: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case
+    values_test.go:139: natively, caught: line 1404: "root raws={after:\"\",before:\"\"} nodes=1", Go cohere "error ParserError: Expected closing parenthesis at line: 1, column 4"
+    values_test.go:139: on Node, caught: line 1404: "root raws={after:\"\",before:\"\"} nodes=1", Go cohere "error ParserError: Expected closing parenthesis at line: 1, column 4"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case
+    values_test.go:139: natively, caught: line 1398: "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=3", Go cohere "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=4"
+    values_test.go:139: on Node, caught: line 1398: "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=3", Go cohere "    func raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 unbalanced=0 value=\"URL\" nodes=4"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case
+    values_test.go:139: natively, caught: line 1380: "error ParserError: Syntax Error at line: 1, column 8", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+    values_test.go:139: on Node, caught: line 1380: "error ParserError: Syntax Error at line: 1, column 8", Go cohere "root raws={after:\"\",before:\"\"} nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=
+    values_test.go:139: natively, caught: line 1365: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:2,line:1}} sourceIndex=1 value=\"a=b\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a=b\""
+    values_test.go:139: on Node, caught: line 1365: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:2,line:1}} sourceIndex=1 value=\"a=b\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a=b\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__
+    values_test.go:139: natively, caught: line 1354: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2"
+    values_test.go:139: on Node, caught: line 1354: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y
+    values_test.go:139: natively, caught: line 1346: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1346: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y
+    values_test.go:139: natively, caught: line 1338: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1338: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1331: "    word isColor=false isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\"", Go cohere "    word isColor=true isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\""
+    values_test.go:139: on Node, caught: line 1331: "    word isColor=false isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\"", Go cohere "    word isColor=true isHex=true raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"#999\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8
+    values_test.go:139: natively, caught: line 1330: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+    values_test.go:139: on Node, caught: line 1330: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=2", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=1"
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped
+    values_test.go:139: natively, caught: line 1454: "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\x1fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\\u001fb\""
+    values_test.go:139: on Node, caught: line 1454: "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\x1fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:17,line:1},start:{column:15,line:1}} sourceIndex=14 value=\"a\\u001fb\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped
+    values_test.go:139: natively, caught: line 1451: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\x7fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\\u007fb\""
+    values_test.go:139: on Node, caught: line 1451: "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\x7fb\"", Go cohere "    word isColor=false isHex=false raws={after:\"\",before:\"\"} source={end:{column:3,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"a\\u007fb\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end
+    values_test.go:139: natively, caught: line 347: "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"1e1\"", Go cohere "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"11e\""
+    values_test.go:139: on Node, caught: line 347: "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"1e1\"", Go cohere "    number raws={after:\"\",before:\"\"} source={end:{column:4,line:1},start:{column:1,line:1}} sourceIndex=0 unit=\"e\" value=\"11e\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind
+    values_test.go:139: natively, caught: line 256: "      word isColor=false isHex=false raws={after:\" \",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\"", Go cohere "      word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\""
+    values_test.go:139: on Node, caught: line 256: "      word isColor=false isHex=false raws={after:\" \",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\"", Go cohere "      word isColor=false isHex=false raws={after:\"\",before:\" \"} source={end:{column:10,line:1},start:{column:8,line:1}} sourceIndex=7 value=\"--x\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index
+    values_test.go:139: natively, caught: line 7: "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=10 value=\"-\"", Go cohere "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=1 value=\"-\""
+    values_test.go:139: on Node, caught: line 7: "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=10 value=\"-\"", Go cohere "      operator raws={after:\"\",before:\" \"} source={end:{column:11,line:1},start:{column:11,line:1}} sourceIndex=1 value=\"-\""
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN
+    values_test.go:139: natively, caught: line 180: "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:1,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\"", Go cohere "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:NaN,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\""
+    values_test.go:139: on Node, caught: line 180: "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:1,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\"", Go cohere "    paren parenType=\"\" raws={after:\"\",before:\"\"} source={end:{column:NaN,line:1},start:{column:1,line:1}} sourceIndex=0 value=\"(\""
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+    values_test.go:102: set ADAMIC_VALUES_LIBRARY to a directory where `npm install postcss-values-parser@2.0.1` ran, to compare with the library itself
+=== CONT  TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range
+    values_test.go:139: natively, caught: line 888: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=8", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=7"
+    values_test.go:139: on Node, caught: line 888: "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=8", Go cohere "  value raws={after:\"\",before:\"\"} unbalanced=0 nodes=7"
+--- PASS: TestThePortParsesAsGoCohereDoes (3.26s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text (3.79s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere (4.74s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8 (3.87s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case (4.86s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case (2.58s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case (3.01s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_= (2.98s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__ (3.75s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y (3.86s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y (3.20s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8 (3.60s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8 (2.56s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped (2.68s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped (2.65s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end (2.62s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind (2.50s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index (2.64s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN (2.60s)
+    --- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (0.00s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range (2.44s)
+PASS

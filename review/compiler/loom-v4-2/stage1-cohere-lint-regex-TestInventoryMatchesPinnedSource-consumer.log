@@ -1,0 +1,6 @@
+=== RUN   TestInventoryMatchesPinnedSource
+=== PAUSE TestInventoryMatchesPinnedSource
+=== CONT  TestInventoryMatchesPinnedSource
+    regex_test.go:227: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/inventory.go_regex-inventory f456411ab60f hit 0.39
+--- PASS: TestInventoryMatchesPinnedSource (1.23s)
+PASS

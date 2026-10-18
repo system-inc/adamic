@@ -1,0 +1,7 @@
+=== RUN   TestNestedConstructorGap
+=== PAUSE TestNestedConstructorGap
+=== CONT  TestNestedConstructorGap
+    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.214s

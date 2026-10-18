@@ -1,0 +1,46 @@
+=== RUN   TestPathAnswersAsGosPathPackage
+=== PAUSE TestPathAnswersAsGosPathPackage
+=== CONT  TestPathAnswersAsGosPathPackage
+=== RUN   TestPathAnswersAsGosPathPackage/as_Go's_path_package
+=== PAUSE TestPathAnswersAsGosPathPackage/as_Go's_path_package
+=== RUN   TestPathAnswersAsGosPathPackage/catches_a_run_of_slashes_taken_for_clean
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_a_run_of_slashes_taken_for_clean
+=== RUN   TestPathAnswersAsGosPathPackage/catches_a_trailing_slash_taken_for_clean
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_a_trailing_slash_taken_for_clean
+=== RUN   TestPathAnswersAsGosPathPackage/catches_a_trailing_._taken_for_clean
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_a_trailing_._taken_for_clean
+=== RUN   TestPathAnswersAsGosPathPackage/catches_a_rooted_path's_.._taken_for_clean
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_a_rooted_path's_.._taken_for_clean
+=== RUN   TestPathAnswersAsGosPathPackage/catches_a_.._after_a_name_taken_for_clean
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_a_.._after_a_name_taken_for_clean
+=== RUN   TestPathAnswersAsGosPathPackage/catches_dir_keeping_the_last_element's_first_unit
+=== PAUSE TestPathAnswersAsGosPathPackage/catches_dir_keeping_the_last_element's_first_unit
+=== CONT  TestPathAnswersAsGosPathPackage/as_Go's_path_package
+    path_test.go:83: 5040 paths: clean, base and dir the same from Go's path package, path.ts natively, on Node and through the JavaScript backend
+=== CONT  TestPathAnswersAsGosPathPackage/catches_a_rooted_path's_.._taken_for_clean
+    path_test.go:113: on Node, caught: line 489: "/..\t..\t/", Go cohere "/\t..\t/"
+    path_test.go:113: natively, caught: line 489: "/..\t..\t/", Go cohere "/\t..\t/"
+=== CONT  TestPathAnswersAsGosPathPackage/catches_dir_keeping_the_last_element's_first_unit
+    path_test.go:113: on Node, caught: line 10: "/a\ta\t/a", Go cohere "/a\ta\t/"
+    path_test.go:113: natively, caught: line 10: "/a\ta\t/a", Go cohere "/a\ta\t/"
+=== CONT  TestPathAnswersAsGosPathPackage/catches_a_.._after_a_name_taken_for_clean
+    path_test.go:113: on Node, caught: line 1884: ".a/../a\ta\t.", Go cohere "a\ta\t."
+    path_test.go:113: natively, caught: line 1884: ".a/../a\ta\t.", Go cohere "a\ta\t."
+=== CONT  TestPathAnswersAsGosPathPackage/catches_a_trailing_slash_taken_for_clean
+    path_test.go:113: on Node, caught: line 531: "/.../\t...\t/...", Go cohere "/...\t...\t/..."
+    path_test.go:113: natively, caught: line 531: "/.../\t...\t/...", Go cohere "/...\t...\t/..."
+=== CONT  TestPathAnswersAsGosPathPackage/catches_a_trailing_._taken_for_clean
+    path_test.go:113: on Node, caught: line 367: "/.\t.\t/", Go cohere "/\t.\t/"
+    path_test.go:113: natively, caught: line 367: "/.\t.\t/", Go cohere "/\t.\t/"
+=== CONT  TestPathAnswersAsGosPathPackage/catches_a_run_of_slashes_taken_for_clean
+    path_test.go:113: on Node, caught: line 10: "//////a\ta\t/", Go cohere "/a\ta\t/"
+    path_test.go:113: natively, caught: line 10: "//////a\ta\t/", Go cohere "/a\ta\t/"
+--- PASS: TestPathAnswersAsGosPathPackage (0.00s)
+    --- PASS: TestPathAnswersAsGosPathPackage/as_Go's_path_package (1.28s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_a_rooted_path's_.._taken_for_clean (0.46s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_dir_keeping_the_last_element's_first_unit (0.42s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_a_.._after_a_name_taken_for_clean (0.45s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_a_trailing_slash_taken_for_clean (0.45s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_a_trailing_._taken_for_clean (0.42s)
+    --- PASS: TestPathAnswersAsGosPathPackage/catches_a_run_of_slashes_taken_for_clean (0.46s)
+PASS

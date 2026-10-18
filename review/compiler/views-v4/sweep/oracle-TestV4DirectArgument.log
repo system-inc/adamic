@@ -1,0 +1,15 @@
+=== RUN   TestV4DirectArgument
+=== PAUSE TestV4DirectArgument
+=== CONT  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: gate cache node miss
+    checked_views_v4_direct_test.go:109: gate cache node miss
+    checked_views_v4_direct_test.go:109: gate cache node miss
+    checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+--- PASS: TestV4DirectArgument (1.03s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.044s

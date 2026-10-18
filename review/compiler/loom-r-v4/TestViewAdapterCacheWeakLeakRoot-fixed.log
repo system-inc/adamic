@@ -1,0 +1,25 @@
+=== RUN   TestViewAdapterCacheWeakLeakRoot
+=== PAUSE TestViewAdapterCacheWeakLeakRoot
+=== CONT  TestViewAdapterCacheWeakLeakRoot
+    view_adapter_runtime_test.go:217: intentional abandoned adapter detected:
+        adamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0
+        
+        =================================================================
+        ==49572==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x55f260378204 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f2603bd361 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot1110970228/001/heap.c:250:10
+        
+        Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x55f260378204 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f2603bd361 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot1110970228/001/heap.c:250:10
+        
+        Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+            #0 0x55f260378204 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f2603bc602 in adamic_view_adapter_intern /tmp/adamic-gate/TestViewAdapterCacheWeakLeakRoot1110970228/001/closure.c:235:16
+        
+        SUMMARY: AddressSanitizer: 152 byte(s) leaked in 3 allocation(s).
+    view_adapter_runtime_test.go:222: strong-leak-root mutant caught: LeakSanitizer lost the required leak report
+--- PASS: TestViewAdapterCacheWeakLeakRoot (1.53s)
+PASS

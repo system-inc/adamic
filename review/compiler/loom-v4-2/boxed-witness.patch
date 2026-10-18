@@ -1,0 +1,11 @@
+--- a/internal/oracle/testdata/views_v4_refused/view-result-wrong.a
++++ b/internal/oracle/testdata/views_v4_refused/view-result-wrong.a
+@@ -3,7 +3,7 @@
+ interface Target { readonly run:()=>number|string; }
+ function probe(value:Base):void {
+  const viewed = value as Target;
+- const callback = viewed.run;
++ const callback = () => viewed.run();
+  console.log(`${callback()}`);
+ }
+ probe({run:():boolean=>true});
