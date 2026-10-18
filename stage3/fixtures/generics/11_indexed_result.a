@@ -1,0 +1,4 @@
+// a-check: refused generic body return into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+function two<T extends { readonly value: number }>(): T['value'] { return 2; }
+const value: 1 = two<{ readonly value: 1 }>();
+console.log(`${value}`);

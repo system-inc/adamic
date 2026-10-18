@@ -1,0 +1,5 @@
+// Reduced from TypeScript core.ts:1828, identity; pin 050880ce.
+function identity<T>(value: T): T { return value; }
+function relay<T>(value: T): T { return identity(value); }
+const text = 'generic'.repeat(2);
+console.log(`${relay(0)} ${relay(false)} ${relay(text)} ${identity(text) === text}`);

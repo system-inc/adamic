@@ -1,0 +1,143 @@
+=== RUN   TestInheritanceAllowsSoundOverrides
+=== PAUSE TestInheritanceAllowsSoundOverrides
+=== RUN   TestInheritanceCycleFinderIncludesInheritedFields
+=== PAUSE TestInheritanceCycleFinderIncludesInheritedFields
+=== RUN   TestInheritanceGenericMonomorphizations
+=== PAUSE TestInheritanceGenericMonomorphizations
+=== RUN   TestInheritanceGenericSoundness
+=== PAUSE TestInheritanceGenericSoundness
+=== RUN   TestInheritanceConditionalThisRules
+=== PAUSE TestInheritanceConditionalThisRules
+=== RUN   TestInheritanceGenericNominalConstraints
+=== PAUSE TestInheritanceGenericNominalConstraints
+=== RUN   TestInheritanceGenericFactoryLayouts
+=== PAUSE TestInheritanceGenericFactoryLayouts
+=== RUN   TestGeneratorNextPromiseNeedsResumeProof
+=== PAUSE TestGeneratorNextPromiseNeedsResumeProof
+=== RUN   TestGeneratorPrimitiveThrowRemainsExplicit
+=== PAUSE TestGeneratorPrimitiveThrowRemainsExplicit
+=== RUN   TestGeneratorOpaqueReceiverRemainsExplicit
+=== PAUSE TestGeneratorOpaqueReceiverRemainsExplicit
+=== RUN   TestGeneratorNestedFrameCaptureRemainsExplicit
+=== PAUSE TestGeneratorNestedFrameCaptureRemainsExplicit
+=== RUN   TestGeneratorEmptyBodyUsesOwnedFrame
+=== PAUSE TestGeneratorEmptyBodyUsesOwnedFrame
+=== RUN   TestGeneratorProtocolReplacementRemainsExplicit
+=== PAUSE TestGeneratorProtocolReplacementRemainsExplicit
+=== RUN   TestGeneratorDestructuredParameterCycle
+=== PAUSE TestGeneratorDestructuredParameterCycle
+=== RUN   TestGenericBodyRelationsCensus
+=== PAUSE TestGenericBodyRelationsCensus
+=== RUN   TestGenericBodyRelationsRefuse
+=== PAUSE TestGenericBodyRelationsRefuse
+=== RUN   TestGenericBodyRelationsWitness
+=== PAUSE TestGenericBodyRelationsWitness
+=== RUN   TestGenericBodyRelationsReadonlyBound
+=== PAUSE TestGenericBodyRelationsReadonlyBound
+=== RUN   TestGenericBodyRelationsIndexedReturnMapper
+=== PAUSE TestGenericBodyRelationsIndexedReturnMapper
+=== RUN   TestGenericBodyRelationsThisRead
+=== PAUSE TestGenericBodyRelationsThisRead
+=== RUN   TestGenericFunctionPolymorphicRecursionIsRefused
+=== PAUSE TestGenericFunctionPolymorphicRecursionIsRefused
+=== RUN   TestGenericUnionFixtureHasSeparateInstances
+=== PAUSE TestGenericUnionFixtureHasSeparateInstances
+=== RUN   TestGenericJSONUnionArrayIsNotYet
+=== PAUSE TestGenericJSONUnionArrayIsNotYet
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestIndirectPredicateOverloadIsPending
+=== PAUSE TestIndirectPredicateOverloadIsPending
+=== CONT  TestInheritanceAllowsSoundOverrides
+=== CONT  TestGeneratorDestructuredParameterCycle
+=== CONT  TestGenericJSONUnionArrayIsNotYet
+=== CONT  TestGenericBodyRelationsThisRead
+=== CONT  TestGenericUnionFixtureHasSeparateInstances
+--- PASS: TestGeneratorDestructuredParameterCycle (0.08s)
+=== CONT  TestGenericFunctionPolymorphicRecursionIsRefused
+--- PASS: TestGenericBodyRelationsThisRead (0.08s)
+=== CONT  TestGeneratorNextPromiseNeedsResumeProof
+--- PASS: TestGenericJSONUnionArrayIsNotYet (0.09s)
+=== CONT  TestGeneratorProtocolReplacementRemainsExplicit
+--- PASS: TestGenericUnionFixtureHasSeparateInstances (0.11s)
+=== CONT  TestGeneratorEmptyBodyUsesOwnedFrame
+--- PASS: TestGeneratorProtocolReplacementRemainsExplicit (0.05s)
+=== CONT  TestGeneratorNestedFrameCaptureRemainsExplicit
+--- PASS: TestGeneratorNextPromiseNeedsResumeProof (0.05s)
+=== CONT  TestGeneratorOpaqueReceiverRemainsExplicit
+--- PASS: TestGeneratorEmptyBodyUsesOwnedFrame (0.05s)
+=== CONT  TestGeneratorPrimitiveThrowRemainsExplicit
+--- PASS: TestGenericFunctionPolymorphicRecursionIsRefused (0.09s)
+=== CONT  TestIndirectPredicateOverloadIsPending
+--- PASS: TestGeneratorOpaqueReceiverRemainsExplicit (0.05s)
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+--- PASS: TestGeneratorNestedFrameCaptureRemainsExplicit (0.06s)
+=== CONT  TestInheritanceConditionalThisRules
+--- PASS: TestInheritanceAllowsSoundOverrides (0.20s)
+=== CONT  TestInheritanceGenericFactoryLayouts
+--- PASS: TestGeneratorPrimitiveThrowRemainsExplicit (0.04s)
+=== CONT  TestInheritanceGenericNominalConstraints
+--- PASS: TestIndirectPredicateOverloadIsPending (0.04s)
+=== CONT  TestGenericBodyRelationsWitness
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (0.04s)
+=== CONT  TestGenericBodyRelationsIndexedReturnMapper
+=== NAME  TestGenericBodyRelationsWitness
+    generic_body_relations_test.go:96: internal compiler error: generic body initializer witness at /tmp/adamic-gate/TestGenericBodyRelationsWitness2309049453/001/witness.a:1:78: resolved source 2 is not assignable to slot 1
+--- PASS: TestGenericBodyRelationsWitness (0.05s)
+=== CONT  TestGenericBodyRelationsReadonlyBound
+--- PASS: TestGenericBodyRelationsIndexedReturnMapper (0.05s)
+=== CONT  TestInheritanceGenericMonomorphizations
+--- PASS: TestInheritanceGenericNominalConstraints (0.08s)
+=== CONT  TestInheritanceGenericSoundness
+=== RUN   TestInheritanceGenericSoundness/generic_narrowing
+--- PASS: TestGenericBodyRelationsReadonlyBound (0.04s)
+=== CONT  TestInheritanceCycleFinderIncludesInheritedFields
+=== RUN   TestInheritanceGenericSoundness/generic_inherited_cycle
+--- PASS: TestInheritanceCycleFinderIncludesInheritedFields (0.04s)
+=== CONT  TestGenericBodyRelationsRefuse
+=== RUN   TestGenericBodyRelationsRefuse/initializer
+--- PASS: TestInheritanceConditionalThisRules (0.14s)
+=== CONT  TestGenericBodyRelationsCensus
+    generic_body_relations_census_test.go:28: set GENERIC_BODY_CONFIG and GENERIC_BODY_OUTPUT for the relation inventory
+--- SKIP: TestGenericBodyRelationsCensus (0.00s)
+--- PASS: TestInheritanceGenericSoundness (0.08s)
+    --- PASS: TestInheritanceGenericSoundness/generic_narrowing (0.05s)
+    --- PASS: TestInheritanceGenericSoundness/generic_inherited_cycle (0.04s)
+=== RUN   TestGenericBodyRelationsRefuse/assignment
+=== RUN   TestGenericBodyRelationsRefuse/return
+--- PASS: TestInheritanceGenericFactoryLayouts (0.22s)
+--- PASS: TestInheritanceGenericMonomorphizations (0.16s)
+=== RUN   TestGenericBodyRelationsRefuse/field_initializer
+=== RUN   TestGenericBodyRelationsRefuse/different_binder
+=== RUN   TestGenericBodyRelationsRefuse/nested
+=== RUN   TestGenericBodyRelationsRefuse/key_parameter
+=== RUN   TestGenericBodyRelationsRefuse/array_initializer
+=== RUN   TestGenericBodyRelationsRefuse/destructuring_initializer
+=== RUN   TestGenericBodyRelationsRefuse/destructuring_assignment
+=== RUN   TestGenericBodyRelationsRefuse/object_initializer
+=== RUN   TestGenericBodyRelationsRefuse/index_signature
+=== RUN   TestGenericBodyRelationsRefuse/mapped_keys
+=== RUN   TestGenericBodyRelationsRefuse/element_assignment
+=== RUN   TestGenericBodyRelationsRefuse/increment
+=== RUN   TestGenericBodyRelationsRefuse/compound_assignment
+=== RUN   TestGenericBodyRelationsRefuse/alias
+--- PASS: TestGenericBodyRelationsRefuse (0.51s)
+    --- PASS: TestGenericBodyRelationsRefuse/initializer (0.06s)
+    --- PASS: TestGenericBodyRelationsRefuse/assignment (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/return (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/field_initializer (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/different_binder (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/nested (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/key_parameter (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/array_initializer (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/destructuring_initializer (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/destructuring_assignment (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/object_initializer (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/index_signature (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/mapped_keys (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/element_assignment (0.02s)
+    --- PASS: TestGenericBodyRelationsRefuse/increment (0.06s)
+    --- PASS: TestGenericBodyRelationsRefuse/compound_assignment (0.03s)
+    --- PASS: TestGenericBodyRelationsRefuse/alias (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.860s

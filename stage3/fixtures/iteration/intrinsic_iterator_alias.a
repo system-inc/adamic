@@ -1,0 +1,6 @@
+// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden
+// The checker preserves Symbol.iterator's identity through a mutable typed alias.
+let key: typeof Symbol.iterator = Symbol.iterator;
+const values: number[] = [1, 2];
+values[key] = () => [8].values();
+for (const value of values) { console.log(String(value)); }

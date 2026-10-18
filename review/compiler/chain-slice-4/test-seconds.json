@@ -1,0 +1,2257 @@
+[
+  {
+    "test": "TestRegExpSourceNode",
+    "seconds": 0.04,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+    "seconds": 0.22,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSwitchEmptyBlockFallsThrough",
+    "seconds": 0.24,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSuppressionDirectiveSoundNeighbors",
+    "seconds": 0.39,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSwitchEmptyCaseFallsThrough",
+    "seconds": 0.2,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestTasteRepresentationLimitsStayExplicit",
+    "seconds": 0.44,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRepresentationClockSourceCheckedTypes",
+    "seconds": 0.06,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRegExpUnicodeClassSourceAgreesWithNode",
+    "seconds": 0.49,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestReadinessErrorIncludesReceiverExpression",
+    "seconds": 0.11,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSwitchEmptyElseFallsThrough",
+    "seconds": 0.31,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSwitchConditionalBreakFallsThrough",
+    "seconds": 0.22,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRegExpNativeRefusals",
+    "seconds": 0.26,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "seconds": 0.04,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestTracingNamespaceEscapeStaysNotYet",
+    "seconds": 0.05,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRegExpEscapedSlashSourceAgreesWithNode",
+    "seconds": 0.41,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestPrototypeMethodsAreRefusedWithReasons",
+    "seconds": 0.66,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestProvenRelationsErase",
+    "seconds": 0.6,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+    "seconds": 0.2,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+    "seconds": 0.64,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestStringEnumsStayClosed",
+    "seconds": 0.11,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestRegExpSlashClassSourceAgreesWithNode",
+    "seconds": 0.43,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestSuppressionDirectivesAreRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestReadinessElisionRequiresDominatingAssignment",
+    "seconds": 0.0,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestProvenRelationsRefuse",
+    "seconds": 0.0,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "seconds": 0.07,
+    "log": "lower-shard-10.log"
+  },
+  {
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "seconds": 1.95,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+    "seconds": 0.14,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestTypedArrayViewsCannotChangeRepresentation",
+    "seconds": 0.19,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUnrepresentedPrototypeCallsAreNotYet",
+    "seconds": 0.4,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUntaggedViewStructuralFallback",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUntaggedViewMemberTags",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestViewObjectContractsAreAvailableToEraser",
+    "seconds": 0.05,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestTypedArrayGaps",
+    "seconds": 0.58,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestViewObjectWritesNeedSourceCertificate",
+    "seconds": 0.12,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestTypedArraysLower",
+    "seconds": 0.61,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUnprovenPredicateReturnsAreRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestTypedArrayFromEmptyArray",
+    "seconds": 0.38,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestTypedArrayFromArray",
+    "seconds": 0.43,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUncheckableCastsStayRefused",
+    "seconds": 0.02,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestUnknownReflectionRefusals",
+    "seconds": 0.0,
+    "log": "lower-shard-11.log"
+  },
+  {
+    "test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+    "seconds": 0.31,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementRejectsWrongLoweredOutput",
+    "seconds": 0.59,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArrayPredicatePreservesDeclaredElementContract",
+    "seconds": 3.37,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementStaticInitializerWitness",
+    "seconds": 0.5,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAViewThatCantWriteIsNotRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementEnumConstantWitness",
+    "seconds": 0.68,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementParameterPropertyWitness",
+    "seconds": 0.52,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementAcceptsExpectedPanic",
+    "seconds": 0.44,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementAcceptsComputedAnswer",
+    "seconds": 0.61,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementInheritedFieldWitness",
+    "seconds": 0.63,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementRejectsEmptyAnswer",
+    "seconds": 0.5,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAsyncGeneratorsAreRefusedEvenWithoutYield",
+    "seconds": 0.42,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAgreementParseIntRadixWitness",
+    "seconds": 0.32,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArgumentsLengthReadKeepsReaderFact",
+    "seconds": 0.66,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "seconds": 0.31,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArrayPredicateCannotInventAnElementContract",
+    "seconds": 0.95,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArgumentsLengthReadNeighbors",
+    "seconds": 2.75,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+    "seconds": 2.77,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAdamicNullishAssertionsAreRefused",
+    "seconds": 0.07,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestCallableNamespaceLimitsStayLoud",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAMethodReadAsAValueIsRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestATupleSeenAsAnArrayIsNotYet",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestArgumentsLengthRefusals",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestAMutableLocationSeenWiderIsRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-0.log"
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 0.64,
+    "log": "readers-owned.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.05,
+    "log": "fixtures-generic-body.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.03,
+    "log": "fixtures-project.log"
+  },
+  {
+    "test": "TestMixedTupleSpreadIsNotYet",
+    "seconds": 0.23,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorOpaqueReceiverRemainsExplicit",
+    "seconds": 0.25,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorProtocolReplacementRemainsExplicit",
+    "seconds": 0.3,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorEmptyBodyUsesOwnedFrame",
+    "seconds": 0.3,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsReadonlyBound",
+    "seconds": 0.31,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorPrimitiveThrowRemainsExplicit",
+    "seconds": 0.28,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorNestedFrameCaptureRemainsExplicit",
+    "seconds": 0.32,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorNextPromiseNeedsResumeProof",
+    "seconds": 0.29,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsWitness",
+    "seconds": 0.28,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "seconds": 0.25,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "seconds": 0.26,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractRecursiveMember",
+    "seconds": 0.37,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "seconds": 0.41,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractUnknownMemberFails",
+    "seconds": 0.34,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsThisRead",
+    "seconds": 0.4,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsIndexedReturnMapper",
+    "seconds": 0.22,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDestructuredParameterCycle",
+    "seconds": 0.42,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestAsyncGeneratorsAreRefusedEvenWithoutYield",
+    "seconds": 0.79,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedUnionContractGraph",
+    "seconds": 0.0,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsRefuse",
+    "seconds": 3.51,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesCycle",
+    "seconds": 0.03,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesConflictingOptions",
+    "seconds": 0.13,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestMixedAdamicAndTypeScriptWithoutReferences",
+    "seconds": 0.88,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesDiamond",
+    "seconds": 1.94,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesSharedPrelude",
+    "seconds": 0.13,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectLoaderHostConsoleAndCompositeEntries",
+    "seconds": 3.58,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesTransitive",
+    "seconds": 2.21,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "seconds": 0.74,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectLoaderOptionAuditFailsClosed",
+    "seconds": 1.15,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectLoaderOwnershipAndNoCheck",
+    "seconds": 0.0,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesTransitiveTypes",
+    "seconds": 10.48,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesCompatibleOptions",
+    "seconds": 1.23,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesAudit",
+    "seconds": 2.04,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectLoaderReferenceSources",
+    "seconds": 1.69,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesTypesUnionDuplicate",
+    "seconds": 15.42,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesTypesUnion",
+    "seconds": 14.77,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "seconds": 15.71,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorBasic",
+    "seconds": 0.84,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorReentrant",
+    "seconds": 0.91,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorFirstReference",
+    "seconds": 1.06,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCompletions",
+    "seconds": 1.16,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorOwned",
+    "seconds": 1.14,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDefaultError",
+    "seconds": 0.67,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorChecker",
+    "seconds": 0.96,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorMapIterator",
+    "seconds": 0.86,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDefaults",
+    "seconds": 0.69,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCaptures",
+    "seconds": 0.71,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorThrow",
+    "seconds": 0.64,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorClose",
+    "seconds": 0.64,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCancellation",
+    "seconds": 0.9,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 1.04,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDelegate",
+    "seconds": 1.63,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorOwned",
+    "seconds": 0.44,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorReentrant",
+    "seconds": 0.48,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorBasic",
+    "seconds": 0.49,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDefaultError",
+    "seconds": 0.26,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCaptures",
+    "seconds": 0.28,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 0.29,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCompletions",
+    "seconds": 0.34,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorFirstReference",
+    "seconds": 0.4,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorDefaults",
+    "seconds": 0.16,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorThrow",
+    "seconds": 0.29,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestGeneratorCancellation",
+    "seconds": 0.24,
+    "log": "member-analysis.log"
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "seconds": 0.07,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumIdentityAcrossModules",
+    "seconds": 0.06,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumNamespaceSharedCycle",
+    "seconds": 0.09,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFunctionValueUnionViewsStayNotYet",
+    "seconds": 0.29,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumNameEnumeration",
+    "seconds": 0.26,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumReverseMappingUsesSingleSlot",
+    "seconds": 0.19,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumFlagProofsWithoutObservableLoweringEffect",
+    "seconds": 0.11,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "seconds": 0.21,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumMemberValuesAndReverseNameMatchNode",
+    "seconds": 0.39,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumLimitsStayLoud",
+    "seconds": 0.79,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumMemberAliases",
+    "seconds": 0.18,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumSwitchExhaustiveness",
+    "seconds": 0.92,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEntriesRecordBoundaries",
+    "seconds": 0.0,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumLiteralSpellings",
+    "seconds": 0.2,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumInitializationGraphMemo",
+    "seconds": 0.0,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "seconds": 0.2,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "seconds": 0.9,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumSlotViews",
+    "seconds": 0.0,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestEnumInitializationReach",
+    "seconds": 0.0,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumsOpen",
+    "seconds": 0.0,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestFlagEnumsDomain",
+    "seconds": 2.81,
+    "log": "lower-shard-3.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.07,
+    "log": "fixtures-stage3.log"
+  },
+  {
+    "test": "TestFlagEnumMemberAliases",
+    "seconds": 0.35,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "seconds": 0.4,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFlagEnumLiteralSpellings",
+    "seconds": 0.47,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumNameEnumeration",
+    "seconds": 0.47,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "seconds": 0.47,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "seconds": 0.15,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumReverseMappingUsesSingleSlot",
+    "seconds": 0.44,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFunctionValueUnionViewsStayNotYet",
+    "seconds": 0.63,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "seconds": 1.48,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumMemberValuesAndReverseNameMatchNode",
+    "seconds": 0.86,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFSStatThrowsByDefault",
+    "seconds": 1.41,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFSExistsOperation",
+    "seconds": 1.18,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumIdentityAcrossModules",
+    "seconds": 0.14,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFSOpenStringFlagsLower",
+    "seconds": 1.04,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumNamespaceSharedCycle",
+    "seconds": 0.09,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumLimitsStayLoud",
+    "seconds": 1.3,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumFlagProofsWithoutObservableLoweringEffect",
+    "seconds": 0.23,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEntriesRecordBoundaries",
+    "seconds": 0.0,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumInitializationGraphMemo",
+    "seconds": 0.0,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumSwitchExhaustiveness",
+    "seconds": 1.81,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "seconds": 1.96,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFlagEnumsOpen",
+    "seconds": 0.0,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestFlagEnumsDomain",
+    "seconds": 6.52,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumInitializationReach",
+    "seconds": 0.0,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestEnumSlotViews",
+    "seconds": 0.0,
+    "log": "lower-shard-3-node-ready.log"
+  },
+  {
+    "test": "TestElementAccessNodeArrayAgreement",
+    "seconds": 0.48,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsMaybeBind",
+    "seconds": 0.11,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestIterationDispatchPendingStops",
+    "seconds": 0.82,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorRegExpTreeResultCompatibility",
+    "seconds": 0.74,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorCaptures",
+    "seconds": 1.74,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorDefaultError",
+    "seconds": 1.86,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorOwned",
+    "seconds": 2.11,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorReentrant",
+    "seconds": 1.03,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorRegExpIteratorResultCompatibility",
+    "seconds": 1.62,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestIterationDispatchMutants",
+    "seconds": 3.57,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorCompletions",
+    "seconds": 2.09,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorFirstReference",
+    "seconds": 1.51,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorChecker",
+    "seconds": 1.39,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorClose",
+    "seconds": 1.15,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 2.53,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorMapIterator",
+    "seconds": 1.23,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorThrow",
+    "seconds": 1.26,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorCycleFrame",
+    "seconds": 0.2,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorDefaults",
+    "seconds": 1.81,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorBasic",
+    "seconds": 1.43,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestElementAccessTemplateAgreement",
+    "seconds": 0.48,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorCancellation",
+    "seconds": 2.21,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestElementAccessSortedAgreement",
+    "seconds": 0.46,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep16OptionalResultMutant",
+    "seconds": 0.46,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep20ArrayViewVariance",
+    "seconds": 0.24,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorDelegate",
+    "seconds": 4.92,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorLocalBorrowMutant",
+    "seconds": 1.6,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestGeneratorParameterBorrowMutant",
+    "seconds": 1.53,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep16IdentityMutant",
+    "seconds": 0.4,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestLoweringChainMixedFileAgreement",
+    "seconds": 0.63,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0.0,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep16GenericOutcomes",
+    "seconds": 1.15,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep20IntrinsicIteratorWrites",
+    "seconds": 0.0,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestStep20IterationOutcomes",
+    "seconds": 7.28,
+    "log": "oracle-members-final.log"
+  },
+  {
+    "test": "TestNamespaceInitializationReachability",
+    "seconds": 0.19,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "seconds": 0.04,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceFactoryBindingsAgreeWithNode",
+    "seconds": 0.26,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "seconds": 0.26,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "seconds": 0.28,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "seconds": 0.07,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "seconds": 0.06,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "seconds": 0.06,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceReceiverRefusal",
+    "seconds": 0.05,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceReturnedAssignmentLimits",
+    "seconds": 0.09,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNativeAgreementRejectsWrongOutput",
+    "seconds": 0.47,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "seconds": 0.21,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "seconds": 0.09,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceReceiverArrowInheritsScope",
+    "seconds": 0.05,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceTypesErase",
+    "seconds": 0.2,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "seconds": 0.05,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "seconds": 0.26,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceClosedCallGraphEdges",
+    "seconds": 0.36,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+    "seconds": 0.6,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "seconds": 0.0,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNativeAgreementRejectsWrongExit",
+    "seconds": 0.38,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNestedEmptyArrayElementKinds",
+    "seconds": 0.0,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNodeFSFileBufferBorrow",
+    "seconds": 0.8,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud",
+    "seconds": 1.17,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNodeBufferRefusals",
+    "seconds": 0.0,
+    "log": "lower-shard-7.log"
+  },
+  {
+    "test": "TestNonNullAssertionLowersToNullishPanic",
+    "seconds": 0.07,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeLibraryDistinguishesReceiverOwners",
+    "seconds": 0.7,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeLibraryQualifiedTypeAssertion",
+    "seconds": 0.7,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "seconds": 0.07,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "seconds": 0.21,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "seconds": 0.09,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNonNullAssertionOnPresentTypeIsErased",
+    "seconds": 0.04,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileScratchOptionsBorrow",
+    "seconds": 1.38,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileScratchOverloadsAreNamed",
+    "seconds": 1.59,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileRefusesOptionEffects",
+    "seconds": 0.41,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNullishPrototypeReadsAreRejectedByChecker",
+    "seconds": 1.66,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+    "seconds": 0.5,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+    "seconds": 1.18,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileQualifiedErrorType",
+    "seconds": 0.49,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNumericEnumNeverProof",
+    "seconds": 0.22,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileRefusesVoidValues",
+    "seconds": 0.49,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestOptionalFunctionValueRelation",
+    "seconds": 0.0,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileNamespaceImport",
+    "seconds": 0.62,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNumericEnumLiteralPromises",
+    "seconds": 0.22,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestObjectUnprovenShapesStayNotYet",
+    "seconds": 0.0,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestObjectRefusalsExplainSoundness",
+    "seconds": 0.0,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileOptionsBorrow",
+    "seconds": 1.05,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeLibraryNamesUnimplementedMembers",
+    "seconds": 0.0,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNumericEnumsAreOpen",
+    "seconds": 1.92,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+    "seconds": 0.0,
+    "log": "lower-shard-8.log"
+  },
+  {
+    "test": "TestClassWrongOutput107",
+    "seconds": 0.0,
+    "log": "iteration-review-copies.log"
+  },
+  {
+    "test": "TestIteratorBuiltInStorageViewsArePending",
+    "seconds": 0.09,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorOptionalCloseResultMustBeObject",
+    "seconds": 0.03,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorDeclaredNextHasNoRuntimeMethod",
+    "seconds": 0.03,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "seconds": 0.07,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceGenericViewsKeepNominalArguments",
+    "seconds": 0.07,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceRefusesGrowingGenericClasses",
+    "seconds": 0.09,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "seconds": 0.06,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+    "seconds": 0.1,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorViewsDispatchHiddenReturn",
+    "seconds": 0.05,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorMapperIndexHasNumberRepresentation",
+    "seconds": 0.09,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceKeepsNominalTupleDestructuring",
+    "seconds": 0.22,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceHasClassIdentity",
+    "seconds": 0.23,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "seconds": 0.07,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorViewsDispatchReceivers",
+    "seconds": 0.04,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInputSpreadArgumentsAreNotYet",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceRefusesUnsoundOverrides",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceNativeSignatureNeighbors",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceNativeSignatureLimits",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceRefusesFalseNominalViews",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+    "seconds": 0.04,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestInputSpreadCoverage",
+    "seconds": 0.0,
+    "log": "lower-shard-5.log"
+  },
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "seconds": 0.04,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedTupleSpreadIsNotYet",
+    "seconds": 0.08,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractRecursiveMember",
+    "seconds": 0.08,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "seconds": 0.09,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "seconds": 0.06,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractUnknownMemberFails",
+    "seconds": 0.08,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "seconds": 0.06,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryMapSetIteratorCopyTypesRefused",
+    "seconds": 0.24,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLiteralMethodSignatureViewsDoNotLoseThis",
+    "seconds": 0.25,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMissingBindingSymbolHasStructuredLocation",
+    "seconds": 0.06,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestNamespaceCallGraphLinearWork",
+    "seconds": 0.11,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "seconds": 0.04,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "seconds": 0.05,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "seconds": 0.06,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "seconds": 0.26,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestMixedUnionContractGraph",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryMapSetGapsStayRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryRegexOffsetRequiresNoCaptures",
+    "seconds": 0.22,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestModuleNamespaceLimitsStayLoud",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryLanguageBoundaries",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryMethodValueSafety",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryStringRefusals",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryMethodValueBoundaries",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestLibraryMethodValues",
+    "seconds": 0.0,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "seconds": 1.6,
+    "log": "lower-shard-6.log"
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "seconds": 0.31,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "seconds": 0.33,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassStaticInitializerCallIsEmitted",
+    "seconds": 0.05,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassFeaturesStaticParentCycle",
+    "seconds": 0.07,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+    "seconds": 0.17,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassFeaturesStaticSoundness",
+    "seconds": 0.8,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassStaticSideEffectMatchesNode",
+    "seconds": 0.51,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClassWrongOutputIteratorReceiver",
+    "seconds": 0.85,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestConstructorCacheOneArgumentRemainsNotYet",
+    "seconds": 0.07,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "seconds": 1.06,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestConditionAssertionAdmission",
+    "seconds": 0.21,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "seconds": 0.07,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "seconds": 0.27,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestConsoleLowersToWriteLine",
+    "seconds": 0.1,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "seconds": 0.35,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+    "seconds": 0.05,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+    "seconds": 0.09,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+    "seconds": 0.11,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDefiniteAssignmentUsesReadiness",
+    "seconds": 0.74,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "seconds": 0.22,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestConstEnumErasesRuntimeObject",
+    "seconds": 0.26,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestClockGenericReturnsT01Shapes",
+    "seconds": 0.0,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities",
+    "seconds": 0.0,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestEntriesAllocationProof",
+    "seconds": 0.0,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "seconds": 0.0,
+    "log": "lower-shard-2.log"
+  },
+  {
+    "test": "TestGeneratorDestructuredParameterCycle",
+    "seconds": 0.08,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsThisRead",
+    "seconds": 0.08,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericJSONUnionArrayIsNotYet",
+    "seconds": 0.09,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericUnionFixtureHasSeparateInstances",
+    "seconds": 0.11,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorProtocolReplacementRemainsExplicit",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorNextPromiseNeedsResumeProof",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorEmptyBodyUsesOwnedFrame",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+    "seconds": 0.09,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorOpaqueReceiverRemainsExplicit",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorNestedFrameCaptureRemainsExplicit",
+    "seconds": 0.06,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceAllowsSoundOverrides",
+    "seconds": 0.2,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGeneratorPrimitiveThrowRemainsExplicit",
+    "seconds": 0.04,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestIndirectPredicateOverloadIsPending",
+    "seconds": 0.04,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "seconds": 0.04,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsWitness",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsIndexedReturnMapper",
+    "seconds": 0.05,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceGenericNominalConstraints",
+    "seconds": 0.08,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsReadonlyBound",
+    "seconds": 0.04,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "seconds": 0.04,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceConditionalThisRules",
+    "seconds": 0.14,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceGenericSoundness",
+    "seconds": 0.08,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceGenericFactoryLayouts",
+    "seconds": 0.22,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestInheritanceGenericMonomorphizations",
+    "seconds": 0.16,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsRefuse",
+    "seconds": 0.51,
+    "log": "lower-shard-4.log"
+  },
+  {
+    "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+    "seconds": 0.11,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateOverloadCallback",
+    "seconds": 0.31,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPrivateAndPublicStaticsAgreeWithNode",
+    "seconds": 0.33,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateUsesBelongToEachCall",
+    "seconds": 0.07,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+    "seconds": 0.04,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParameterPropertyValueMatchesNode",
+    "seconds": 0.51,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOverloadInferenceWitnesses",
+    "seconds": 0.07,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateSummaryParameterIndex",
+    "seconds": 0.2,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOverrideOptionalRefusesNativeSignature",
+    "seconds": 0.05,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOverrideOptionalNumberRefusesNativeSignature",
+    "seconds": 0.1,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOptionalWideningSpreadOverwrite",
+    "seconds": 0.07,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "seconds": 0.06,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParameterPropertyCallbackReceiver",
+    "seconds": 0.11,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateBodiesAreProven",
+    "seconds": 0.79,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParameterPropertiesSoundness",
+    "seconds": 0.5,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParseIntMapUsesIndexRadix",
+    "seconds": 0.37,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestParameterPropertyCheckerContracts",
+    "seconds": 0.55,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateUseRegions",
+    "seconds": 0.0,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateCallbackContracts",
+    "seconds": 0.0,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateBodyProof",
+    "seconds": 0.0,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOptionalWideningRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestOptionalWideningAllowed",
+    "seconds": 0.0,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestPredicateOverloadRuntime",
+    "seconds": 7.11,
+    "log": "lower-shard-9.log"
+  },
+  {
+    "test": "TestStep16OptionalResultMutant",
+    "seconds": 1.28,
+    "log": "scout-array-result.log"
+  },
+  {
+    "test": "TestClassWrongOutput103",
+    "seconds": 0.0,
+    "log": "iteration-class-compatibility.log"
+  },
+  {
+    "test": "TestClassWrongOutput108",
+    "seconds": 0.36,
+    "log": "iteration-class-compatibility.log"
+  },
+  {
+    "test": "TestClassWrongOutput106",
+    "seconds": 0.01,
+    "log": "iteration-class-compatibility.log"
+  },
+  {
+    "test": "TestClassWrongOutput107",
+    "seconds": 0.0,
+    "log": "iteration-class-compatibility.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.03,
+    "log": "iteration-class-compatibility.log"
+  },
+  {
+    "test": "TestGenericBodyRelationsMaybeBind",
+    "seconds": 0.05,
+    "log": "repaired-controls.log"
+  },
+  {
+    "test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "seconds": 0.27,
+    "log": "repaired-controls.log"
+  },
+  {
+    "test": "TestStep20ArrayViewVariance",
+    "seconds": 0.31,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestLoweringChainMixedFileAgreement",
+    "seconds": 0.61,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorRegExpTreeResultCompatibility",
+    "seconds": 0.75,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestIterationDispatchPendingStops",
+    "seconds": 0.65,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorParameterBorrowMutant",
+    "seconds": 12.6,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestIterationDispatchMutants",
+    "seconds": 17.79,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorMapIterator",
+    "seconds": 21.61,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorCaptures",
+    "seconds": 10.06,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorChecker",
+    "seconds": 22.68,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorDefaultError",
+    "seconds": 22.08,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorOwned",
+    "seconds": 5.36,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorReentrant",
+    "seconds": 2.5,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorClose",
+    "seconds": 4.25,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorDefaults",
+    "seconds": 3.81,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorThrow",
+    "seconds": 3.6,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorCycleFrame",
+    "seconds": 0.62,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 7.09,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorCancellation",
+    "seconds": 4.88,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorBasic",
+    "seconds": 4.69,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorLocalBorrowMutant",
+    "seconds": 4.04,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorRegExpIteratorResultCompatibility",
+    "seconds": 5.89,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorFirstReference",
+    "seconds": 4.08,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestStep16OptionalResultMutant",
+    "seconds": 1.74,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestStep16IdentityMutant",
+    "seconds": 1.44,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorDelegate",
+    "seconds": 16.82,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestGeneratorCompletions",
+    "seconds": 8.31,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestStep16GenericOutcomes",
+    "seconds": 3.92,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestStep20IntrinsicIteratorWrites",
+    "seconds": 0.0,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestStep20IterationOutcomes",
+    "seconds": 22.25,
+    "log": "oracle-members-correct-cwd.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "seconds": 0.15,
+    "log": "fixtures-final.log"
+  },
+  {
+    "test": "TestClassFeaturesStaticInterfaceCycle",
+    "seconds": 0.09,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesNarrowedAccessor",
+    "seconds": 0.12,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "seconds": 0.13,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesAccessorCaptureCycle",
+    "seconds": 0.05,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusRestMutableElements",
+    "seconds": 0.08,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusBooleanDeadBranch",
+    "seconds": 0.22,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusPredicateMarkerCallStaysNotYet",
+    "seconds": 0.07,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "seconds": 0.07,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusMarkerResultIsAssignable",
+    "seconds": 0.07,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusPredicateInteractionBoundary",
+    "seconds": 0.15,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusSmallFiniteKeyRead",
+    "seconds": 0.26,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesPrivateChecker",
+    "seconds": 0.04,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "seconds": 0.26,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesStaticDeclarationsExecute",
+    "seconds": 0.57,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesPrivateStorage",
+    "seconds": 0.23,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesAccessorRefusals",
+    "seconds": 0.29,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCheckedCastProofAndElision",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCheckPragmaNeighborsCompile",
+    "seconds": 0.39,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassFeaturesReadonlyChecker",
+    "seconds": 0.57,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestClassArgumentsUseCheckerIdentity",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCheckPragmasAreRefused",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusOverloadRelation",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusOverloadReturnProof",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusPredicateInteractionEscapes",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCensusOverloadBinderGuards",
+    "seconds": 0.0,
+    "log": "lower-shard-1.log"
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 12.63,
+    "log": "readers-final.log"
+  }
+]

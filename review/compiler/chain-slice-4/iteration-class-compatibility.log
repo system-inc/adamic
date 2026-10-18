@@ -1,0 +1,61 @@
+=== RUN   TestClassWrongOutput103
+=== PAUSE TestClassWrongOutput103
+=== RUN   TestClassWrongOutput107
+=== PAUSE TestClassWrongOutput107
+=== RUN   TestClassWrongOutput108
+=== PAUSE TestClassWrongOutput108
+=== RUN   TestClassWrongOutput106
+=== PAUSE TestClassWrongOutput106
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestClassWrongOutput103
+=== RUN   TestClassWrongOutput103/init_super_number
+=== PAUSE TestClassWrongOutput103/init_super_number
+=== RUN   TestClassWrongOutput103/init_super_getter
+=== PAUSE TestClassWrongOutput103/init_super_getter
+=== RUN   TestClassWrongOutput103/init_super
+=== PAUSE TestClassWrongOutput103/init_super
+=== CONT  TestClassWrongOutput103/init_super_number
+=== CONT  TestClassWrongOutput108
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestClassWrongOutput103/init_super
+=== CONT  TestClassWrongOutput107
+=== RUN   TestClassWrongOutput107/iterators_override_this
+=== PAUSE TestClassWrongOutput107/iterators_override_this
+=== RUN   TestClassWrongOutput107/iterators_hidden_return
+=== PAUSE TestClassWrongOutput107/iterators_hidden_return
+=== CONT  TestClassWrongOutput106
+=== RUN   TestClassWrongOutput106/classfeat_static_private_instance
+=== PAUSE TestClassWrongOutput106/classfeat_static_private_instance
+=== RUN   TestClassWrongOutput106/classfeat_static_private_method
+=== PAUSE TestClassWrongOutput106/classfeat_static_private_method
+=== CONT  TestClassWrongOutput103/init_super_getter
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a
+=== CONT  TestClassWrongOutput107/iterators_override_this
+=== CONT  TestClassWrongOutput107/iterators_hidden_return
+=== CONT  TestClassWrongOutput106/classfeat_static_private_instance
+--- PASS: TestClassWrongOutput103 (0.00s)
+    --- PASS: TestClassWrongOutput103/init_super_getter (0.25s)
+    --- PASS: TestClassWrongOutput103/init_super (0.35s)
+    --- PASS: TestClassWrongOutput103/init_super_number (0.35s)
+=== CONT  TestClassWrongOutput106/classfeat_static_private_method
+--- PASS: TestClassWrongOutput108 (0.36s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a
+--- PASS: TestClassWrongOutput106 (0.01s)
+    --- PASS: TestClassWrongOutput106/classfeat_static_private_instance (0.23s)
+    --- PASS: TestClassWrongOutput106/classfeat_static_private_method (0.30s)
+--- PASS: TestClassWrongOutput107 (0.00s)
+    --- PASS: TestClassWrongOutput107/iterators_override_this (1.00s)
+    --- PASS: TestClassWrongOutput107/iterators_hidden_return (0.79s)
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a (0.93s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.305s

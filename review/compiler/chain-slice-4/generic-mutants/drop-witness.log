@@ -1,0 +1,8 @@
+=== RUN   TestGenericBodyRelationsWitness
+=== PAUSE TestGenericBodyRelationsWitness
+=== CONT  TestGenericBodyRelationsWitness
+    generic_body_relations_test.go:94: want resolved initializer witness 2 into 1, got <nil>
+--- FAIL: TestGenericBodyRelationsWitness (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.101s
+FAIL

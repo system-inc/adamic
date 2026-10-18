@@ -1,0 +1,10 @@
+interface Attribute {name:string;initializer:string;spread:boolean}
+interface Elaboration {errorNode:string;innerExpression:string;nameType:string}
+function* generateAttributes(properties:readonly Attribute[]): Generator<Elaboration,void,unknown> {
+ if(!properties.length) return;
+ for(const property of properties) {
+  if(property.spread || property.name.includes('-')) continue;
+  yield {errorNode:property.name,innerExpression:property.initializer,nameType:property.name};
+ }
+}
+for(const value of generateAttributes([{name:'id',initializer:'first',spread:false},{name:'data-x',initializer:'skipped',spread:false},{name:'class',initializer:'last',spread:false}])) console.log(`${value.errorNode}:${value.innerExpression}:${value.nameType}`);

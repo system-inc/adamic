@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "scout-array-result.go.txt",
+    "exit": 0,
+    "catcher": "caught by Node stdout"
+  },
+  {
+    "mutant": "iteration-snapshot.go.txt",
+    "exit": 1,
+    "catcher": "outcome changed"
+  },
+  {
+    "mutant": "element-access-old-stop.go.txt",
+    "exit": 1,
+    "catcher": "stage 0 can't lower an ElementAccessExpression yet"
+  }
+]
