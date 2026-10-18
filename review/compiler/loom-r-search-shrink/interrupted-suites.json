@@ -1,0 +1,20 @@
+{
+  "reason": "Restart full suites after the observed nullable-reference compatibility repair. Earlier binaries predated that fix.",
+  "pids": [
+    15537,
+    15538,
+    15761,
+    34493,
+    34494,
+    34682,
+    52261,
+    52653,
+    52692,
+    52700,
+    52717
+  ],
+  "logs": [
+    "logs/native-packages.jsonl",
+    "logs/oracle-packages.jsonl"
+  ]
+}
