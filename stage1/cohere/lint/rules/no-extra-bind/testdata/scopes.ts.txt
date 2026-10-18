@@ -1,0 +1,2 @@
+const x = function() { function nested() { return this; } }.bind(obj);
+const y = function() { return () => this; }.bind(obj);

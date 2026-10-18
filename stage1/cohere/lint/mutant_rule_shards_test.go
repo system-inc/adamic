@@ -753,3 +753,13 @@ func TestProduct_LintMutant_no_cond_assign(t *testing.T) {
 	t.Parallel()
 	requireMutantRuleProduct(t, "no-cond-assign")
 }
+
+func TestMutants_no_extra_bind(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-extra-bind")
+}
+
+func TestProduct_LintMutant_no_extra_bind(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-extra-bind")
+}
