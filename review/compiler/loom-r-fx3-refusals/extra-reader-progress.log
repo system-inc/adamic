@@ -1,0 +1,4 @@
+{"package": "./bench/regex", "tests": [], "command": ["go", "test", "./bench/regex", "-run", "^$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 0.167}
+{"package": "./cmd/adamic-fuzz", "tests": [], "command": ["go", "test", "./cmd/adamic-fuzz", "-run", "^$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 3.848}
+{"package": "./cmd/adamic-reduce", "tests": [], "command": ["go", "test", "./cmd/adamic-reduce", "-run", "^$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 0.164}
+{"package": "./internal/javascript", "tests": ["TestViewMixedUnionSelectsNumber"], "command": ["go", "test", "./internal/javascript", "-run", "^(TestViewMixedUnionSelectsNumber)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 0.618}

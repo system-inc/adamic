@@ -1,0 +1,3 @@
+{"package": "./bridge/tsgo", "tests": ["TestTSGoRequiresLink"], "command": ["go", "test", "./bridge/tsgo", "-run", "^(TestTSGoRequiresLink)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 6.507}
+{"package": "./cloud/reports/decode-ascii", "tests": ["TestRuntimeFeaturesMatchNode"], "command": ["go", "test", "./cloud/reports/decode-ascii", "-run", "^(TestRuntimeFeaturesMatchNode)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 0, "seconds": 12.985}
+{"package": "./cmd/adamic", "tests": ["TestExplainChecksOutput"], "command": ["go", "test", "./cmd/adamic", "-run", "^(TestExplainChecksOutput)$", "-count=1", "-v", "-timeout", "90s", "-parallel", "4"], "exit": 1, "seconds": 11.754}
