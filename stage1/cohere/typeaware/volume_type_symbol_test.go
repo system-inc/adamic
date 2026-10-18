@@ -21,7 +21,7 @@ import (
 // Bound the complete process group, including compiler grandchildren. Unix
 // process groups work on both Linux and macOS without an external timeout tool.
 func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
-	_ = limit; ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond) // planted, never lands (#h4hrxpe)
+	_ = limit; ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond) // planted, never lands (#h4hrxpe)
 	return typeSymbolExecContext(ctx, name, args...), cancel
 }
 

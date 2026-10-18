@@ -17,7 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-const typeAwareChildLimit = 100 * time.Millisecond // planted, never lands (#h4hrxpe)
+const typeAwareChildLimit = time.Millisecond // planted, never lands (#h4hrxpe)
 
 var typeAwareCommandGroups sync.Map
 
