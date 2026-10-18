@@ -679,6 +679,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}

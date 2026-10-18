@@ -14,11 +14,15 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
-# Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
+# Use the same named refusal/async controls as flow's authoritative walk.
+flow_source = (root / 'internal/flow/flow_test.go').read_text()
+control_helpers = re.findall(r'^func (?:refusedConstructorFixture|refusedGettersCensusFixture|uninstrumentedAsyncFixture)\([^\n]*\{.*?^\}', flow_source, re.M | re.S)
+assert len(control_helpers) == 3
+flow_controls = set(re.findall(r'"([^"\n]+\.a)"', '\n'.join(control_helpers)))
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in flow_controls
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
@@ -43,7 +47,7 @@ for package in ['flow', 'fresh']:
             label = re.sub('[^A-Za-z0-9]', '_', relative)
             digest = hashlib.sha256(relative.encode()).hexdigest()[:12]
             name = 'Test' + package.title() + kind + '_' + label + '_' + digest
-            if package == 'flow' and relative != '../oracle/testdata/timsort.a':
+            if package == 'flow' and relative not in {'../oracle/testdata/timsort.a', '../oracle/testdata/node_fs_directory_system.a'}:
                 name = 'TestFlowProgram_' + label + '_' + digest
             group.append((relative, name, helper))
             source = (root / 'internal' / package / relative).resolve()
@@ -60,7 +64,7 @@ for package in ['flow', 'fresh']:
     text += '}\n\n'
     for group in rows:
         for index, (relative,name,helper) in enumerate(group):
-            if package == "flow" and relative != "../oracle/testdata/timsort.a":
+            if package == "flow" and relative not in {"../oracle/testdata/timsort.a", "../oracle/testdata/node_fs_directory_system.a"}:
                 name = "TestFlowProgram_" + re.sub("[^A-Za-z0-9]", "_", relative) + "_" + hashlib.sha256(relative.encode()).hexdigest()[:12]
                 if group != rows[0]:
                     continue
