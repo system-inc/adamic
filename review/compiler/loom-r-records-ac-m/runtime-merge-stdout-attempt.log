@@ -1,0 +1,77 @@
+=== RUN   TestJSONRecordsRuntimePreparedValues
+=== PAUSE TestJSONRecordsRuntimePreparedValues
+=== RUN   TestJSONRecordsRuntimePrepareMutant
+=== PAUSE TestJSONRecordsRuntimePrepareMutant
+=== RUN   TestJSONRecordsRuntimeOwnershipMutant
+=== PAUSE TestJSONRecordsRuntimeOwnershipMutant
+=== RUN   TestJSONRecordsRuntimeThrowCleanupMutant
+=== PAUSE TestJSONRecordsRuntimeThrowCleanupMutant
+=== RUN   TestJSONRecordsRuntimeCycleGuard
+=== PAUSE TestJSONRecordsRuntimeCycleGuard
+=== CONT  TestJSONRecordsRuntimePreparedValues
+=== CONT  TestJSONRecordsRuntimeThrowCleanupMutant
+=== CONT  TestJSONRecordsRuntimeCycleGuard
+=== CONT  TestJSONRecordsRuntimeOwnershipMutant
+=== NAME  TestJSONRecordsRuntimePreparedValues
+    json_records_runtime_test.go:90: adamic: counts: allocations 14 frees 14 retains 14 releases 16 peak 11 regions 0
+--- PASS: TestJSONRecordsRuntimePreparedValues (1.19s)
+=== CONT  TestJSONRecordsRuntimePrepareMutant
+=== NAME  TestJSONRecordsRuntimeThrowCleanupMutant
+    json_records_runtime_test.go:105: ownership mutant must preserve Node output and fail counts or leaks: exit status 23
+        
+        adamic: counts: allocations 14 frees 10 retains 14 releases 15 peak 11 regions 0
+        
+        =================================================================
+        ==2657==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 56 byte(s) in 1 object(s) allocated from:
+            #0 0x5573fc8af364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5573fc90dfa1 in adamic_allocate /adamic-runtime/heap.c:250:10
+        
+        Indirect leak of 207 byte(s) in 3 object(s) allocated from:
+            #0 0x5573fc8af364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5573fc90dfa1 in adamic_allocate /adamic-runtime/heap.c:250:10
+        
+        Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+            #0 0x5573fc8af364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5573fc8f9306 in adamic_array_new /adamic-runtime/array.c:19:21
+        
+        SUMMARY: AddressSanitizer: 287 byte(s) leaked in 5 allocation(s).
+--- FAIL: TestJSONRecordsRuntimeThrowCleanupMutant (1.21s)
+=== NAME  TestJSONRecordsRuntimeOwnershipMutant
+    json_records_runtime_test.go:100: ownership mutant must preserve Node output and fail counts or leaks: exit status 23
+        
+        adamic: counts: allocations 14 frees 11 retains 14 releases 14 peak 11 regions 0
+        
+        =================================================================
+        ==2658==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 58 byte(s) in 1 object(s) allocated from:
+            #0 0x559022711364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55902276ffe1 in adamic_allocate /adamic-runtime/heap.c:250:10
+        
+        Indirect leak of 192 byte(s) in 1 object(s) allocated from:
+            #0 0x55902271175c in realloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:81:3
+            #1 0x5590227834e9 in rebuild /adamic-runtime/map.c:139:29
+            #2 0x5590227834e9 in adamic_map_set /adamic-runtime/map.c:189:3
+        
+        Indirect leak of 145 byte(s) in 2 object(s) allocated from:
+            #0 0x559022711364 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55902276ffe1 in adamic_allocate /adamic-runtime/heap.c:250:10
+        
+        Indirect leak of 128 byte(s) in 1 object(s) allocated from:
+            #0 0x559022711539 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:74:3
+            #1 0x55902278359e in allocate_zeroed /adamic-runtime/map.c:16:17
+            #2 0x55902278359e in rebuild /adamic-runtime/map.c:152:17
+            #3 0x55902278359e in adamic_map_set /adamic-runtime/map.c:189:3
+        
+        SUMMARY: AddressSanitizer: 523 byte(s) leaked in 5 allocation(s).
+--- FAIL: TestJSONRecordsRuntimeOwnershipMutant (1.21s)
+--- PASS: TestJSONRecordsRuntimeCycleGuard (1.47s)
+=== NAME  TestJSONRecordsRuntimePrepareMutant
+    json_records_runtime_test.go:95: adamic: counts: allocations 13 frees 13 retains 9 releases 11 peak 10 regions 0
+    json_records_runtime_test.go:95: skipped preparation: clean sanitizers and counts; caught by source Node
+--- PASS: TestJSONRecordsRuntimePrepareMutant (0.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.583s
+FAIL

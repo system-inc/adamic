@@ -1,0 +1,77 @@
+[
+  {
+    "test": "TestRecordRefusalEnvironment",
+    "seconds": 0.16,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalPrototypeSet",
+    "seconds": 0.17,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestNamedRecordTypeGuardMutant",
+    "seconds": 0.18,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordPrototypeMutant",
+    "seconds": 0.19,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalPrototypeIn",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalPrototypeRead",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalCompareLeft",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordNarrowingMutant",
+    "seconds": 0.13,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalCompareRight",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalNarrowedNumber",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestRecordRefusalNamedInvalidated",
+    "seconds": 0.09,
+    "log": "oracle-refusal-readers.log"
+  },
+  {
+    "test": "TestProduct_CallTargetExports",
+    "seconds": 0.87,
+    "log": "readers.log"
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 1.26,
+    "log": "readers.log"
+  },
+  {
+    "test": "TestProduct_FixtureOracleHook",
+    "seconds": 9.18,
+    "log": "fixture-hook.log"
+  },
+  {
+    "test": "TestFixturesRecords",
+    "seconds": 2.39,
+    "log": "archived-fixture-readers.log"
+  }
+]

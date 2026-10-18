@@ -1,0 +1,45 @@
+=== RUN   TestRecordRefusals
+=== PAUSE TestRecordRefusals
+=== CONT  TestRecordRefusals
+=== RUN   TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={};
+=== RUN   TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));}
+=== RUN   TestRecordRefusals/const_r:Record<string,string>={};_console.log(r_&&_'value');
+=== RUN   TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={};
+=== RUN   TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={};
+=== RUN   TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString());
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString']));
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs};
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs;
+=== RUN   TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x));
+    records_test.go:57: got /tmp/adamic-gate/TestRecordRefusalsfunction_view(rRecordstring,number{xnumb1028363269/001/main.a:1:71: Adamic 0.1 refuses a value of type Record<string, number> | { x: number; } seen as { x?: number; }, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable), want "seen as" (NotYet=true)
+=== RUN   TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records;
+    records_test.go:57: got /tmp/adamic-gate/TestRecordRefusalsconst_recordsRecordstring,number={}_const854406645/001/main.a:1:64: Adamic 0.1 refuses optional property x in { x?: number; } absent from structural source Record<string, number>, which can hide fields; declare x on the source type, or build a fresh object with known fields (adamic/no-optional-widening), want "seen as" (NotYet=true)
+=== RUN   TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder;
+    records_test.go:57: got /tmp/adamic-gate/TestRecordRefusalsconst_innerRecordstring,number={}_const_h2789409926/001/main.a:1:92: Adamic 0.1 refuses optional property x in { x?: number; } absent from structural source Record<string, number>, which can hide fields; declare x on the source type, or build a fresh object with known fields (adamic/no-optional-widening), want "seen as" (NotYet=true)
+=== RUN   TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x']));
+=== RUN   TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed;
+    records_test.go:57: got <nil>, want "seen as" (NotYet=true)
+=== RUN   TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r;
+=== RUN   TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a;
+--- FAIL: TestRecordRefusals (0.46s)
+    --- PASS: TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={}; (0.03s)
+    --- PASS: TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));} (0.02s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,string>={};_console.log(r_&&_'value'); (0.03s)
+    --- PASS: TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={}; (0.03s)
+    --- PASS: TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={}; (0.03s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString()); (0.02s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.03s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.02s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs}; (0.02s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs; (0.02s)
+    --- FAIL: TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x)); (0.03s)
+    --- FAIL: TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records; (0.03s)
+    --- FAIL: TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder; (0.03s)
+    --- PASS: TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x'])); (0.03s)
+    --- FAIL: TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed; (0.03s)
+    --- PASS: TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r; (0.03s)
+    --- PASS: TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a; (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.466s
+FAIL

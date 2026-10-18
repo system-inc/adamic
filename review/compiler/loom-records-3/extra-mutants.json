@@ -1,0 +1,106 @@
+[
+  {
+    "name": "nullable-slot",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-records-3/nullable-slot.json",
+      "./internal/lower",
+      "-run",
+      "^TestNamedRecordRefusals$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 7.594,
+    "caught": true
+  },
+  {
+    "name": "refusal-removal",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-records-3/refusal-removal.json",
+      "./internal/oracle",
+      "-run",
+      "^(TestRecordRefusal.*|TestRecordPrototypeMutant|TestRecordNarrowingMutant|TestNamedRecordTypeGuardMutant)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 14.594,
+    "caught": true
+  },
+  {
+    "name": "flow-classification",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-records-3/flow-classification.json",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 19.485,
+    "caught": true
+  },
+  {
+    "name": "counts-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded_[0-9]+$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 14.475,
+    "caught": true
+  },
+  {
+    "name": "stage3-classification",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesRecords$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4",
+      "-args",
+      "-fixtures",
+      "/workspace/adamic/review/compiler/loom-records-3/stage3-mutant"
+    ],
+    "exit": 1,
+    "seconds": 7.567,
+    "caught": true
+  }
+]

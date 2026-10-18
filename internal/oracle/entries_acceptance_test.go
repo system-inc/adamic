@@ -101,6 +101,14 @@ func TestEntriesAcceptance(t *testing.T) {
 							t.Errorf("reflection=%s checked=%t", variant.expected.Reflection, call.Checked)
 						}
 					}
+					if call, ok := value.(ir.RecordCall); ok && call.Method == "entries" {
+						checks++
+						// A homogeneous record proves its slot representation at writes;
+						// open object views still require ObjectCall.Checked above.
+						if variant.expected.Reflection != "proven" || call.Element != ir.Number {
+							t.Errorf("record entries: reflection=%s element=%v", variant.expected.Reflection, call.Element)
+						}
+					}
 					return value
 				}
 				mutateReadiness(program.Main, inspect)
