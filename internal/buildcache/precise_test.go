@@ -871,6 +871,45 @@ func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(t *testing.T) {
 	}
 }
 
+// An exec of a tracked symbolic link keys the link and the program it runs, by that program's bytes, never the link's
+// text alone: execve decodes no path, so the target is found through the tree (#71ncy4d, Node's ask, the tree half of
+// Planner's cca6b20e). An edit of the target moves the key; so does a retarget. Mutant that fails it: throughLink
+// keeping the link alone.
+// Not parallel: newRig.
+func TestAnExecOfATrackedLinkKeysTheProgramItRuns(t *testing.T) {
+	r := newRig(t)
+	write(t, r.root, "tools/run.sh", "#!/bin/sh\necho one\n")
+	write(t, r.root, "tools/other.sh", "#!/bin/sh\necho other\n")
+	os.Symlink("run.sh", filepath.Join(r.root, "tools", "link-to-run"))
+	gitIn(t, r.root, "add", "tools")
+	gitIn(t, r.root, "commit", "-q", "-m", "a linked tool")
+	forgetTracked()
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, r.path("tools/link-to-run"), "link-to-run")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	if !slices.Contains(got, "link tools/link-to-run") || !slices.ContainsFunc(got, func(entry string) bool {
+		return strings.HasSuffix(entry, " tools/run.sh") && !strings.HasPrefix(entry, "link ")
+	}) {
+		t.Fatalf("the read set %q lacks the link or the program it runs", got)
+	}
+	write(t, r.root, "tools/run.sh", "#!/bin/sh\necho two\n")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "tools/run.sh") {
+		t.Fatalf("an edited program behind the link read as %v", err)
+	}
+	gitIn(t, r.root, "checkout", "-q", "--", "tools/run.sh")
+	os.Remove(filepath.Join(r.root, "tools", "link-to-run"))
+	os.Symlink("other.sh", filepath.Join(r.root, "tools", "link-to-run"))
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link tools/link-to-run") {
+		t.Fatalf("a repointed link read as %v", err)
+	}
+}
+
 // Each process has its own working directory: a child that changes its own (chdir, or fchdir to a descriptor) reads
 // relative paths from there, and its parent's stays where it was.
 // Not parallel: newRig.
