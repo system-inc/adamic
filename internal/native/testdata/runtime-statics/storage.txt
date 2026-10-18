@@ -270,3 +270,32 @@
 `runtime-file:node_fs_wasi.h`
 `runtime-file:node_path.c`
 `runtime-file:node_path.h`
+
+# Process-host state is initialized at startup and finalized at normal exit.
+# Performance entries and cwd/argv caches belong to the synchronous host;
+# strings and method closures below are immutable runtime literals.
+`node_process.c:arguments:1`
+`node_process.c:current_directory:1`
+`node_process.c:epoch_origin:1`
+`node_process.c:error_name:1`
+`node_process.c:execution_arguments:1`
+`node_process.c:mark_type:1`
+`node_process.c:marks:1`
+`node_process.c:measure_type:1`
+`node_process.c:method:1`
+`node_process.c:monotonic_origin:1`
+`node_process.c:name_error:1`
+`node_process.c:newline:1`
+`node_process.c:performance_clear_marks_closure:1`
+`node_process.c:performance_clear_measures_closure:1`
+`node_process.c:performance_mark_closure:1`
+`node_process.c:performance_measure_closure:1`
+`node_process.c:performance_now_closure:1`
+`node_process.c:performance_object:1`
+`node_process.c:platform:1`
+`node_process.c:platform:2`
+`node_process.c:saved_count:1`
+`node_process.c:saved_values:1`
+`runtime-file:node_process.c`
+`runtime-file:node_process.h`
+`runtime-file:process.c`
