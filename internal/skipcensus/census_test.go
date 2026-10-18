@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -32,6 +33,59 @@ func TestCensus(t *testing.T) {
 	if err := Validate(actual, declared); err != nil {
 		t.Fatal(err)
 	}
+}
+
+// TestCensus holds the table equal to every _test.go in the tree, so the planner has to rerun it whenever any of them
+// changes: cloud/fast-gate/executors.txt keys internal/skipcensus on them all (#6v59174). Without that line its key is
+// its own package, and a change that adds a skip anywhere else reuses TestCensus's green. A reads line with a fourth
+// field (gitignore's "paths") keys on which paths exist, not their contents, so it would miss an edited skip; only a
+// plain three-field line counts. Mutant: delete the line, and this fails.
+func TestTheCensusIsKeyedOnEveryTestFile(t *testing.T) {
+	t.Parallel()
+	content, err := os.ReadFile("../../cloud/fast-gate/executors.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, line := range strings.Split(string(content), "\n") {
+		fields := strings.Fields(line)
+		if len(fields) == 3 && fields[0] == "reads" && fields[1] == "internal/skipcensus" && fnmatch(fields[2], "a/b/c_test.go") {
+			return
+		}
+	}
+	t.Fatal("cloud/fast-gate/executors.txt has no reads internal/skipcensus line whose glob matches a/b/c_test.go, so TestCensus reruns only when its own package changes")
+}
+
+// fnmatch is the match executors.txt's globs are read with ("fnmatch: * spans directories", its header): * matches any
+// run of characters, slashes included, ? any one, and [...] a class, [!...] its complement. path.Match's * stops at a
+// slash, so it would read "*_test.go" as root test files only.
+func fnmatch(pattern, name string) bool {
+	var expression strings.Builder
+	expression.WriteString(`^(?s:`)
+	for index := 0; index < len(pattern); index++ {
+		switch character := pattern[index]; character {
+		case '*':
+			expression.WriteString(`.*`)
+		case '?':
+			expression.WriteString(`.`)
+		case '[':
+			end := strings.IndexByte(pattern[index+1:], ']')
+			if end < 0 {
+				expression.WriteString(`\[`)
+				continue
+			}
+			class := pattern[index+1 : index+1+end]
+			index += end + 1
+			if strings.HasPrefix(class, "!") {
+				class = "^" + class[1:]
+			}
+			expression.WriteString("[" + strings.ReplaceAll(class, `\`, `\\`) + "]")
+		default:
+			expression.WriteString(regexp.QuoteMeta(string(character)))
+		}
+	}
+	expression.WriteString(`)$`)
+	matched, err := regexp.MatchString(expression.String(), name)
+	return err == nil && matched
 }
 
 func scratch(t *testing.T, source string) string {
