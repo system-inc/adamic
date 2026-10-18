@@ -1,0 +1,42 @@
+=== RUN   TestExtAgreesWithGo
+=== PAUSE TestExtAgreesWithGo
+=== CONT  TestExtAgreesWithGo
+=== RUN   TestExtAgreesWithGo/bare_dot_i
+=== RUN   TestExtAgreesWithGo/single_dot
+=== RUN   TestExtAgreesWithGo/double_dot
+=== RUN   TestExtAgreesWithGo/no_dot
+=== RUN   TestExtAgreesWithGo/trailing_dot
+=== RUN   TestExtAgreesWithGo/last_of_multiple_dots
+=== RUN   TestExtAgreesWithGo/absolute_nested_dotfile
+=== RUN   TestExtAgreesWithGo/absolute_root_dotfile
+=== RUN   TestExtAgreesWithGo/root
+=== RUN   TestExtAgreesWithGo/empty
+=== RUN   TestExtAgreesWithGo/relative_nested_dotfile
+=== RUN   TestExtAgreesWithGo/dot_before_separator
+=== RUN   TestExtAgreesWithGo/nested_trailing_dot
+=== RUN   TestExtAgreesWithGo/bare_Unicode_dotfile
+=== RUN   TestExtAgreesWithGo/Unicode_extension
+=== RUN   TestExtAgreesWithGo/dot_at_zero_without_slash
+=== RUN   TestExtAgreesWithGo/escaped_extension
+=== NAME  TestExtAgreesWithGo
+    ext_agreement_test.go:97: mutant disagreement: ext(".i"): Node "", filepath.Ext ".i"
+    formatfiles_prepare_test.go:155: ext agreement own wall 0.153 s (setup wait excluded)
+--- PASS: TestExtAgreesWithGo (0.15s)
+    --- PASS: TestExtAgreesWithGo/bare_dot_i (0.00s)
+    --- PASS: TestExtAgreesWithGo/single_dot (0.00s)
+    --- PASS: TestExtAgreesWithGo/double_dot (0.00s)
+    --- PASS: TestExtAgreesWithGo/no_dot (0.00s)
+    --- PASS: TestExtAgreesWithGo/trailing_dot (0.00s)
+    --- PASS: TestExtAgreesWithGo/last_of_multiple_dots (0.00s)
+    --- PASS: TestExtAgreesWithGo/absolute_nested_dotfile (0.00s)
+    --- PASS: TestExtAgreesWithGo/absolute_root_dotfile (0.00s)
+    --- PASS: TestExtAgreesWithGo/root (0.00s)
+    --- PASS: TestExtAgreesWithGo/empty (0.00s)
+    --- PASS: TestExtAgreesWithGo/relative_nested_dotfile (0.00s)
+    --- PASS: TestExtAgreesWithGo/dot_before_separator (0.00s)
+    --- PASS: TestExtAgreesWithGo/nested_trailing_dot (0.00s)
+    --- PASS: TestExtAgreesWithGo/bare_Unicode_dotfile (0.00s)
+    --- PASS: TestExtAgreesWithGo/Unicode_extension (0.00s)
+    --- PASS: TestExtAgreesWithGo/dot_at_zero_without_slash (0.00s)
+    --- PASS: TestExtAgreesWithGo/escaped_extension (0.00s)
+PASS

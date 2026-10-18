@@ -1,0 +1,5 @@
+=== RUN   TestRawInputGap
+    gaps_test.go:90: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: "8:8://�\nx;\n"; Go distinguishes: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestRawInputGap (8.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	8.665s

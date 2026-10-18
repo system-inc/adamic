@@ -1,0 +1,17 @@
+{
+  "path": "internal/lower/lower.go",
+  "hunks": [
+    {
+      "at": "start of type lowering struct, around line 94",
+      "base_side": "librarySpreads []librarySpread",
+      "change_side": [
+        "viewCallablePayloadTypes map[int]viewCallablePayloadType",
+        "viewCallableProducerPayloads map[int][]viewCallablePayloadType"
+      ],
+      "resolution": "Keep all three fields. Preserve main checkLibrarySpreads invocation and candidate/proven-source refusal logic; preserve V4 payload certificate tracking.",
+      "main_commit": "7d75348e",
+      "guard": "TestLibrarySpreadRegExpUnion and six companion controls",
+      "mutant": "main-library-spread-omitted"
+    }
+  ]
+}

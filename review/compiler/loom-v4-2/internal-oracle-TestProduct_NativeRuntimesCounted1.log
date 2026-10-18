@@ -1,0 +1,9 @@
+=== RUN   TestProduct_NativeRuntimesCounted1
+=== PAUSE TestProduct_NativeRuntimesCounted1
+=== CONT  TestProduct_NativeRuntimesCounted1
+    runtimes_test.go:164: build native-runtime d74a8d13ed34 miss 0.96
+    runtimes_test.go:164: build native-runtime b1bdf1296df6 miss 0.87
+    runtimes_test.go:164: build native-runtime e99ca5f92bf3 miss 0.85
+    runtimes_test.go:164: build native-runtime d5def3e17ac2 miss 0.95
+--- PASS: TestProduct_NativeRuntimesCounted1 (6.84s)
+PASS

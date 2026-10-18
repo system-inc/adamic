@@ -1,0 +1,45 @@
+=== RUN   TestMarkdownInline_0001
+=== PAUSE TestMarkdownInline_0001
+=== CONT  TestMarkdownInline_0001
+    port_test.go:164: corpus-files: repository /workspace/scratch/loom-v4-2-validation root . pin f0ff59fe3f60068b85b057d0d69e79545598f968 count 756
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root CHANGELOG.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root CONTRIBUTING.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root README.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root THIRD_PARTY_NOTICES.md pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root TypeScript-shim pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root editors pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root internal pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 778
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root schema pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:165: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere root swift pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root .github pin d92d9bfee114c80be2c375d72edae966176e3a4f count 8
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root CODE_OF_CONDUCT.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root CONTRIBUTING.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root README.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root SECURITY.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root SUPPORT.md pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root packages pin d92d9bfee114c80be2c375d72edae966176e3a4f count 5
+    port_test.go:166: corpus-files: upstream /workspace/scratch/loom-v4-2-validation/cohere/TypeScript root tsc pin d92d9bfee114c80be2c375d72edae966176e3a4f count 49
+    inline_products_shards_test.go:455: full counted union: 119909 cases, each id exactly once
+    inline_products_shards_test.go:479: counted union: 119909 cases, each id exactly once; 2048 shards
+    inline_products_shards_test.go:77: build markdowninline_Go_overlay_bridge c25e13eb7d4f hit 2.39
+    inline_products_shards_test.go:77: build markdowninline_Node_oracle d0795891b66b miss 0.08
+    inline_products_shards_test.go:77: build markdowninline_lowered_program ea5e7ef3736d hit 0.01
+    inline_products_shards_test.go:77: build markdowninline_native 939c1e6a1802 hit 1.01
+    inline_products_shards_test.go:77: build markdowninline_sanitized 65d92615c43e miss 1.66
+    inline_products_shards_test.go:77: build markdowninline_planted_lowered 590cd32bd123 miss 0.16
+    inline_products_shards_test.go:77: build markdowninline_planted_sanitized aa88b9632453 hit 1.68
+    inline_products_shards_test.go:77: build markdowninline_mutant_escaped_delimiter_parity_lowered ff1fc404776b hit 0.01
+    inline_products_shards_test.go:77: build markdowninline_mutant_escaped_delimiter_parity_sanitized c619e2113b69 hit 0.35
+    inline_products_shards_test.go:77: build markdowninline_mutant_escaped_delimiter_parity_Node ea7dd4fc54a3 miss 0.10
+    inline_products_shards_test.go:77: build markdowninline_mutant_table_pipe_escaping_lowered e053cb335a3b hit 0.06
+    inline_products_shards_test.go:77: build markdowninline_mutant_table_pipe_escaping_sanitized 9e225d97b732 miss 0.37
+    inline_products_shards_test.go:77: build markdowninline_mutant_table_pipe_escaping_Node 6ef85ae624f7 miss 0.10
+    inline_products_shards_test.go:77: build markdowninline_mutant_minimum_absent_fence_lowered c0f9cf0e7952 hit 0.01
+    inline_products_shards_test.go:77: build markdowninline_mutant_minimum_absent_fence_sanitized 34f61edccac0 miss 0.37
+    inline_products_shards_test.go:77: build markdowninline_mutant_minimum_absent_fence_Node fef50cb992c3 miss 0.10
+    inline_products_shards_test.go:535: external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY
+    inline_units_test.go:18: shared setup: 22.111285s
+    inline_products_shards_test.go:544: hash bucket 1/2048: 63 cases
+    inline_units_test.go:34: own work: 0.211402s
+--- PASS: TestMarkdownInline_0001 (22.32s)
+PASS

@@ -1,0 +1,466 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
++typedef struct adamic_view_adapter {
++	adamic_closure *underlying;
++	const void *key;
++	// Slot in the weak table, updated only while its mutex is held.
++	size_t next;
++} adamic_view_adapter;
++	// Ordinary closures pay for one null pointer; only adapters allocate metadata.
++	adamic_view_adapter *view;
++// make borrows the normalized underlying and key and returns a fresh owned,
++// noncanonical counted closure. Intern adds the underlying reference itself.
++// view_key is an address-only token whose lifetime includes every adapter using it.
++// The returned adapter is owned, including on a hit. Lookup never revives count zero.
++adamic_closure *adamic_view_adapter_intern(adamic_closure *underlying, const void *view_key, adamic_closure *(*make)(adamic_closure *underlying, const void *view_key));
++// Returns a borrowed root callable; intern guarantees adapters never stack.
++adamic_closure *adamic_view_adapter_underlying(adamic_closure *value);
++// Heap destruction removes a weak entry before dropping the underlying reference.
++void adamic_view_adapter_forget(adamic_closure *adapter);
++
++#include "view_arrays.h"
++	// Physical storage only; zero carries no scalar evidence. Heap pointers are 10.
++	uint8_t element_kind;
++	struct adamic_map *sparse;
++adamic_array *adamic_array_holes(double length, bool references);
++bool adamic_array_is_range_error(const adamic_object *value);
++adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
++void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
++
+diff --git a/internal/native/runtime/array.c b/internal/native/runtime/array.c
++	array->element_kind = 0;
++	array->sparse = NULL;
++	sliced->element_kind = array->element_kind;
+diff --git a/internal/native/runtime/array_holes.c b/internal/native/runtime/array_holes.c
++// Length-form arrays use an ordered numeric map for present slots. Construction
++// is constant space even at the largest valid length. Dense arrays keep their
++// existing storage and lookup functions.
++#define _POSIX_C_SOURCE 200809L
++#define _DARWIN_C_SOURCE
++#include "adamic.h"
++
++static const char *const range_names[] = {"name", "message", "code"};
++static const bool range_references[] = {true, true, true};
++static const adamic_shape range_shape = {3, range_names, range_references, NULL};
++static const adamic_class range_class = {.count = 3};
++static adamic_string range_name = ADAMIC_STRING("RangeError");
++static adamic_string range_message = ADAMIC_STRING("Invalid array length");
++
++bool adamic_array_is_range_error(const adamic_object *value) {
++    return value != NULL && value->class == &range_class;
++}
++
++adamic_array *adamic_array_holes(double length, bool references) {
++    if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
++        adamic_thrown = adamic_object_new(&range_shape);
++        adamic_thrown->class = &range_class;
++        adamic_thrown->slots[0].reference = adamic_retain(&range_name);
++        adamic_thrown->slots[1].reference = adamic_retain(&range_message);
++        return NULL;
++    }
++    adamic_array *array = adamic_array_new(0, references);
++    array->length = (size_t)length;
++    array->sparse = adamic_map_new(false, references);
++    return array;
++}
++
++adamic_value *adamic_array_holes_at(const adamic_array *array, double index) {
++    if (array->sparse == NULL) return adamic_array_at(array, index);
++    if (!(index >= 0) || index >= (double)array->length || index != trunc(index)) return NULL;
++    return adamic_map_get(array->sparse, (adamic_value){.number = index});
++}
++
++void adamic_array_holes_set(adamic_array *array, double index, adamic_value value) {
++    if (array->sparse == NULL) { adamic_array_set(array, index, value); return; }
++    if (!(index >= 0) || index >= (double)array->length || index != trunc(index)) {
++        static const char message[] = "holey array writes outside existing length are not implemented";
++        adamic_panic(message, sizeof message - 1);
++    }
++    adamic_map_set(array->sparse, (adamic_value){.number = index}, value);
++}
+diff --git a/internal/native/runtime/closure.c b/internal/native/runtime/closure.c
++#include <stdlib.h>
++
++static void view_adapter_initialize(adamic_closure *closure);
++	view_adapter_initialize(closure);
++
++static void view_adapter_initialize(adamic_closure *closure) {
++	closure->view = NULL;
++}
++
++// One weak open-addressed table for all views. Hidden entries keep LeakSanitizer from treating
++// this non-owning cache as a root. Every traversal and mutation holds the mutex.
++#ifndef ADAMIC_TARGET_WASI
++#include <pthread.h>
++static pthread_mutex_t view_adapter_lock = PTHREAD_MUTEX_INITIALIZER;
++#endif
++static uintptr_t *view_adapter_entries;
++static size_t view_adapter_capacity, view_adapter_count, view_adapter_used;
++#define VIEW_ADAPTER_TOMBSTONE ((uintptr_t)1)
++#define VIEW_ADAPTER_HIDDEN ((uintptr_t)0xa5a5a5a5a5a5a5a0u)
++
++static uintptr_t view_adapter_hide(adamic_closure *value) {
++	return value == NULL ? 0 : (uintptr_t)value ^ VIEW_ADAPTER_HIDDEN;
++}
++
++static adamic_closure *view_adapter_reveal(uintptr_t value) {
++	return value == 0 ? NULL : (adamic_closure *)(value ^ VIEW_ADAPTER_HIDDEN);
++}
++
++static void view_adapter_lock_table(void) {
++#ifndef ADAMIC_TARGET_WASI
++	if (pthread_mutex_lock(&view_adapter_lock) != 0) {
++		static const char message[] = "cannot lock callable adapter cache";
++		adamic_panic(message, sizeof message - 1);
++	}
++#endif
++}
++
++static void view_adapter_unlock_table(void) {
++#ifndef ADAMIC_TARGET_WASI
++	if (pthread_mutex_unlock(&view_adapter_lock) != 0) {
++		static const char message[] = "cannot unlock callable adapter cache";
++		adamic_panic(message, sizeof message - 1);
++	}
++#endif
++}
++
++// On main's single-thread heap this is a try-retain under the table lock, not
++// a claim that the underlying heap's plain counts are thread-safe. Condition 3
++// supplies the shared-count try-retain when runtime's concurrency slice lands.
++static adamic_closure *view_adapter_try_retain(adamic_closure *value) {
++	if (value->heap.references == 0) {
++		return NULL;
++	}
++	return adamic_retain(value);
++}
++
++static size_t view_adapter_hash(adamic_closure *underlying, const void *key) {
++	uintptr_t hash = (uintptr_t)underlying >> 3;
++	hash ^= (uintptr_t)key + (hash << 6) + (hash >> 2);
++	hash ^= hash >> 16;
++	hash *= (uintptr_t)0x9e3779b1u;
++	return (size_t)(hash ^ (hash >> 16));
++}
++
++static void view_adapter_grow_locked(void) {
++	// Tombstone churn rehashes at the same capacity; live load alone grows it.
++	size_t capacity = view_adapter_capacity == 0 ? 16 :
++		(view_adapter_count + 1) * 4 >= view_adapter_capacity * 3 ? view_adapter_capacity * 2 : view_adapter_capacity;
++	uintptr_t *entries = calloc(capacity, sizeof *entries);
++	if (entries == NULL) {
++		static const char message[] = "out of memory";
++		adamic_panic(message, sizeof message - 1);
++	}
++	for (size_t i = 0; i < view_adapter_capacity; i++) {
++		if (view_adapter_entries[i] <= VIEW_ADAPTER_TOMBSTONE) { continue; }
++		adamic_closure *value = view_adapter_reveal(view_adapter_entries[i]);
++		size_t slot = view_adapter_hash(value->view->underlying, value->view->key) & (capacity - 1);
++		while (entries[slot] != 0) { slot = (slot + 1) & (capacity - 1); }
++		entries[slot] = view_adapter_entries[i];
++		value->view->next = slot;
++	}
++	free(view_adapter_entries);
++	view_adapter_entries = entries;
++	view_adapter_capacity = capacity;
++	view_adapter_used = view_adapter_count;
++}
++
++static adamic_closure *view_adapter_find_locked(adamic_closure *underlying, const void *view_key) {
++	if (view_adapter_capacity == 0) { return NULL; }
++	size_t slot = view_adapter_hash(underlying, view_key) & (view_adapter_capacity - 1);
++	while (view_adapter_entries[slot] != 0) {
++		if (view_adapter_entries[slot] != VIEW_ADAPTER_TOMBSTONE) {
++			adamic_closure *held = view_adapter_reveal(view_adapter_entries[slot]);
++			if (held->view->underlying == underlying && held->view->key == view_key) {
++				adamic_closure *retained = view_adapter_try_retain(held);
++				if (retained != NULL) { return retained; }
++			}
++		}
++		slot = (slot + 1) & (view_adapter_capacity - 1);
++	}
++	return NULL;
++}
++
++adamic_closure *adamic_view_adapter_underlying(adamic_closure *value) {
++	// Only library_language.c's bare constructor identities are immortal closures
++	// on main. Their allocation ends at adamic_heap: never read the view pointer.
++	if (value == NULL || value->heap.references == 0) { return value; }
++	return value->view != NULL ? value->view->underlying : value;
++}
++
++adamic_closure *adamic_view_adapter_intern(adamic_closure *underlying, const void *view_key, adamic_closure *(*make)(adamic_closure *, const void *)) {
++	if (underlying == NULL || underlying->heap.references == 0) { return underlying; }
++	underlying = adamic_view_adapter_underlying(underlying);
++	view_adapter_lock_table();
++	adamic_closure *held = view_adapter_find_locked(underlying, view_key);
++	view_adapter_unlock_table();
++	if (held != NULL) { return held; }
++
++	// A factory may itself read a view. It never executes while the lock is held.
++	adamic_closure *fresh = make(underlying, view_key);
++	if (fresh == NULL || fresh == underlying || fresh->heap.kind != adamic_kind_closure || fresh->heap.references != 1 || fresh->view != NULL
++#ifdef ADAMIC_CANONICAL_CLOSURES
++		|| fresh->canonical_owner != NULL
++#endif
++	) {
++		static const char message[] = "callable adapter factory must return a fresh noncanonical counted closure";
++		adamic_panic(message, sizeof message - 1);
++	}
++	fresh->view = malloc(sizeof *fresh->view);
++	if (fresh->view == NULL) {
++		static const char message[] = "out of memory";
++		adamic_panic(message, sizeof message - 1);
++	}
++	*fresh->view = (adamic_view_adapter){adamic_retain(underlying), view_key, SIZE_MAX};
++
++	view_adapter_lock_table();
++	held = view_adapter_find_locked(underlying, view_key);
++	if (held == NULL) {
++		if (view_adapter_capacity == 0 || (view_adapter_used + 1) * 4 >= view_adapter_capacity * 3) { view_adapter_grow_locked(); }
++		size_t slot = view_adapter_hash(underlying, view_key) & (view_adapter_capacity - 1);
++		while (view_adapter_entries[slot] > VIEW_ADAPTER_TOMBSTONE) { slot = (slot + 1) & (view_adapter_capacity - 1); }
++		if (view_adapter_entries[slot] == 0) { view_adapter_used++; }
++		fresh->view->next = slot;
++		view_adapter_entries[slot] = view_adapter_hide(fresh);
++		view_adapter_count++;
++	}
++	view_adapter_unlock_table();
++	if (held != NULL) {
++		// Release the losing candidate only after unlocking: its free path locks.
++		adamic_release(fresh);
++		return held;
++	}
++	return fresh;
++}
++
++void adamic_view_adapter_forget(adamic_closure *adapter) {
++	view_adapter_lock_table();
++	size_t slot = adapter->view->next;
++	if (slot != SIZE_MAX) {
++		view_adapter_entries[slot] = VIEW_ADAPTER_TOMBSTONE;
++		view_adapter_count--;
++		if (view_adapter_count == 0) {
++			free(view_adapter_entries);
++			view_adapter_entries = NULL;
++			view_adapter_capacity = view_adapter_used = 0;
++		}
++	}
++	adapter->view->next = SIZE_MAX;
++	view_adapter_unlock_table();
++}
+diff --git a/internal/native/runtime/heap.c b/internal/native/runtime/heap.c
+-		if (array->references) {
++		if (array->sparse != NULL) {
++			let_go(array->sparse);
++		} else if (array->references) {
++		if (closure->view != NULL) {
++			// Remove under the table lock before its underlying can be freed/reused.
++			adamic_view_adapter_forget(closure);
++			let_go(closure->view->underlying);
++			free(closure->view);
++		} else {
+-		adamic_closure_uncache(closure);
++			adamic_closure_uncache(closure);
++		}
+diff --git a/internal/native/runtime/map.c b/internal/native/runtime/map.c
++// Keep the stored key's checking adapter for later calls/iteration, but hash and
++// compare its root identity. This is shared by Map and Set.
++static void *callable_key_identity(void *value) {
++	const adamic_heap *heap = value;
++	return heap != NULL && heap->kind == adamic_kind_closure ? adamic_view_adapter_underlying(value) : value;
++}
++
+-		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
++		uint64_t bits = (uint64_t)(uintptr_t)callable_key_identity(key.reference);
+-		return left.reference == right.reference;
++		return callable_key_identity(left.reference) == callable_key_identity(right.reference);
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+-	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
++	size_t capacity = strlen(expression) + 2 * strlen(type) + strlen(found) + 100;
+diff --git a/internal/native/runtime/regexp_replace.c b/internal/native/runtime/regexp_replace.c
++#ifdef ADAMIC_CLOSURE_RECEIVERS
++		adamic_value returned = adamic_closure_receiver_call(callback, NULL, packed, argument_count, packed_count);
++#else
++#endif
+diff --git a/internal/native/runtime/union.c b/internal/native/runtime/union.c
++	case adamic_kind_closure:
++		return adamic_view_adapter_underlying((adamic_closure *)left) == adamic_view_adapter_underlying((adamic_closure *)right);
+diff --git a/internal/native/runtime/view_arrays.c b/internal/native/runtime/view_arrays.c
++#include "adamic.h"
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++static void array_view_failure(const char *expression, const char *expected, const char *found) {
++    size_t capacity = strlen(expression) + strlen(expected) + strlen(found) + 80;
++    char *message = malloc(capacity);
++    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
++    int length = snprintf(message, capacity, "element read failed: %s expected %s, found %s", expression, expected, found);
++    adamic_panic(message, (size_t)length);
++}
++
++static const char *array_storage_name(unsigned char storage) {
++    return storage == 1 || storage == 7 ? "number" : storage == 2 || storage == 9 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : storage == 10 ? "heap pointers" : "uncertified storage";
++}
++
++void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
++    array->element_kind = array->references ? 10 : storage;
++}
++
++void adamic_view_array_storage_check(const adamic_array *array, unsigned char storage, const char *expression) {
++    unsigned char wanted = (storage >= 3 && storage <= 6) || storage == 8 || storage >= 10 ? 10 : storage;
++    unsigned char actual = array->references ? 10 : array->element_kind;
++    if (actual != wanted) { array_view_failure(expression, array_storage_name(wanted), array_storage_name(actual)); }
++}
++
++adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
++    if (array == NULL) array_view_failure(expression, expected, "undefined");
++    adamic_value *slot = relative ? adamic_array_at_relative(array, index) : adamic_array_holes_at(array, index);
++    if (slot == NULL) { return NULL; }
++    unsigned char actual = array->element_kind;
++    *snapshot = *slot;
++    if (actual == 7) {
++        adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
++        if (!number.present) { if (!undefined_allowed) { array_view_failure(expression, expected, "undefined"); } return NULL; }
++        actual = 1;
++        snapshot->number = number.number;
++    }
++    if (actual == 9) {
++        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
++        if (!boolean.present) { if (!undefined_allowed) array_view_failure(expression, expected, "undefined"); return NULL; }
++        actual = 2;
++        snapshot->boolean = boolean.boolean;
++    }
++    if (array->references) {
++        const adamic_heap *reference = slot->reference;
++        if (reference == NULL) { if (!undefined_allowed) { array_view_failure(expression, expected, "nullish"); } return NULL; }
++        if (reference->kind == adamic_kind_number) { actual = 1; snapshot->number = ((const adamic_number_box *)reference)->number; }
++        else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
++        else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }
++    }
++    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 9 && actual == 2)) { array_view_failure(expression, expected, array_storage_name(actual)); }
++    if (wanted == 7 && actual == 1) { snapshot->number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot->number}); }
++    if (wanted == 9 && actual == 2) snapshot->maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, snapshot->boolean});
++    return snapshot;
++}
++
++void adamic_view_array_missing(const char *expression, const char *expected) { array_view_failure(expression, expected, "undefined"); }
+diff --git a/internal/native/runtime/view_arrays.h b/internal/native/runtime/view_arrays.h
++#ifndef ADAMIC_VIEW_ARRAYS_H
++#define ADAMIC_VIEW_ARRAYS_H
++
++struct adamic_array;
++void adamic_view_array_missing(const char *expression, const char *expected);
++void adamic_array_view_storage(struct adamic_array *array, unsigned char storage);
++adamic_value *adamic_view_array_at(const struct adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot);
++void adamic_view_array_storage_check(const struct adamic_array *array, unsigned char storage, const char *expression);
++#endif
+diff --git a/internal/native/runtime/view_callables.c b/internal/native/runtime/view_callables.c
++#include "adamic.h"
++#include "view_callables.h"
++#include <string.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include "view_unions_mixed.h"
++
++adamic_closure *adamic_view_callable_typed(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected, bool absent, bool optional) {
++    if (object != NULL) {
++        adamic_value *own = adamic_object_optional_field(object, name, cache);
++        if (own == NULL && object->shape->methods != NULL) {
++            const adamic_methods *methods = object->shape->methods;
++            for (size_t index = 0; index < methods->count; index++) {
++                if (strcmp(methods->names[index], name) == 0) { *method = methods->code[index]; return NULL; }
++            }
++        }
++    }
++    if (object == NULL && optional) return NULL;
++    adamic_view_union_value value = adamic_object_view_union_snapshot(object, name, cache, expression, expected, absent);
++    if (value.kind == adamic_view_union_function) return value.payload.reference;
++    if (value.kind == adamic_view_union_undefined && absent) return NULL;
++    const char *found = adamic_view_union_kind_name(value.kind);
++    size_t capacity = strlen(expression) + 2 * strlen(expected) + strlen(found) + 100;
++    char *message = malloc(capacity);
++    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
++    int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, expected, expected, found);
++    adamic_panic(message, (size_t)length);
++}
++
++adamic_closure *adamic_view_callable(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression) {
++ return adamic_view_callable_typed(object,name,cache,method,expression,"function",false,false);
++}
++
++// Resolve the callee before evaluating arguments, without testing its signature
++// or kind. Missing and noncallable values fail only at the invocation boundary.
++adamic_view_union_value adamic_view_callable_candidate(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected) {
++    if (object != NULL) {
++        adamic_value *own = adamic_object_optional_field(object, name, cache);
++        if (own == NULL && object->shape->methods != NULL) {
++            const adamic_methods *methods = object->shape->methods;
++            for (size_t index = 0; index < methods->count; index++) {
++                if (strcmp(methods->names[index], name) == 0) {
++                    *method = methods->code[index];
++                    return (adamic_view_union_value){adamic_view_union_function, {.reference = NULL}};
++                }
++            }
++        }
++    }
++    return adamic_object_view_union_snapshot(object, name, cache, expression, expected, true);
++}
+diff --git a/internal/native/runtime/view_callables.h b/internal/native/runtime/view_callables.h
++#ifndef ADAMIC_VIEW_CALLABLES_H
++#define ADAMIC_VIEW_CALLABLES_H
++#include "view_unions_mixed.h"
++adamic_view_union_value adamic_view_callable_candidate(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected);
++adamic_closure *adamic_view_callable(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression);
++adamic_closure *adamic_view_callable_typed(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method, const char *expression, const char *expected, bool absent, bool optional);
++#endif
+diff --git a/internal/native/runtime/view_unions_untagged.c b/internal/native/runtime/view_unions_untagged.c
+-    /* V3 owns array element storage and hole-aware reads. The lowering rejects
+-     * this arm before emission; an injected descriptor still fails closed. */
+-    if (contract->kind == 3) { return false; }
++    if (contract->kind == 3) {
++        if (value->kind != adamic_view_union_array || value->payload.reference == NULL || contract->element == 0 || contract->element > count) { return false; }
++        const adamic_array *array = value->payload.reference;
++        size_t slots = array->sparse == NULL ? array->length : array->sparse->used;
++        for (size_t i = 0; i < slots; i++) {
++            double index = (double)i;
++            if (array->sparse != NULL) {
++                const adamic_map_entry *entry = &array->sparse->entries[i];
++                if (entry->deleted) { continue; }
++                index = entry->key.number;
++            }
++            adamic_value *slot = adamic_array_holes_at(array, index);
++            if (slot == NULL) { continue; }
++            adamic_view_union_value actual = {adamic_view_union_unknown, *slot};
++            if (array->references) {
++                actual = adamic_view_union_heap(slot->reference);
++            } else if (array->element_kind == adamic_rep_number) { actual.kind = adamic_view_union_number; }
++            else if (array->element_kind == adamic_rep_boolean) { actual.kind = adamic_view_union_boolean; }
++            else if (array->element_kind == adamic_rep_maybe_number) {
++                adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
++                actual.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
++                actual.payload.number = number.number;
++            } else if (array->element_kind == adamic_rep_maybe_boolean) {
++                adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
++                actual.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
++                actual.payload.boolean = boolean.boolean;
++            }
++            const adamic_view_untagged_contract *child = &contracts[contract->element - 1];
++            if (child->kind == 2 && !child->fixed_tuple) {
++                if (actual.kind != adamic_view_union_object || actual.payload.reference == NULL) { return false; }
++                const adamic_object *object = actual.payload.reference;
++                if (object->tuple || (object->class != NULL && object->class->is_static)) { return false; }
++                /* Array payload fields remain checked at their own reads.
++                 * Required scalar selectors distinguish union array arms. */
++                for (size_t f = 0; f < child->field_count; f++) {
++                    const adamic_view_untagged_field *field = &child->fields[f];
++                    if (field->optional || field->contract == 0 || field->contract > count) { continue; }
++                    const adamic_view_untagged_contract *selector = &contracts[field->contract - 1];
++                    if (selector->kind != 1 || (selector->allowed_count == 0 && strcmp(field->name, "kind") != 0)) { continue; }
++                    adamic_view_union_value selected;
++                    if (!adamic_view_untagged_plain_slot(NULL, &actual, field->name, &selected) || !plain_matches_depth(contracts, count, field->contract, &selected, depth + 1, path)) { return false; }
++                }
++            } else if (!plain_matches_depth(contracts, count, contract->element, &actual, depth + 1, path)) { return false; }
++        }
++        return true;
++    }

@@ -1,0 +1,11 @@
+--- internal/lower/view_callable_escape.go
++++ internal/lower/view_callable_escape.go
+@@ -40,7 +40,7 @@
+ 	// weak.c has handles, and closure.c has an activation/code cache. Neither
+ 	// provides the underlying-function/view-type weak interning this read needs.
+ 	// Do not send it to the old read-time rejection or an uncached adapter.
+-	return &NotYet{Where: read.ViewWhere, What: "an escaping callable checking adapter for " + read.View + "; awaits compiler/views-v4: weak adapter cache per underlying function and view type in internal/native/runtime/closure.c"}
++	return nil
+ }
+ 
+ // Unknown, missing fields and opaque callable sources are not empty proofs.

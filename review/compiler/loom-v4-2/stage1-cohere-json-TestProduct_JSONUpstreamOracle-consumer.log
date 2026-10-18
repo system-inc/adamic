@@ -1,0 +1,6 @@
+=== RUN   TestProduct_JSONUpstreamOracle
+=== PAUSE TestProduct_JSONUpstreamOracle
+=== CONT  TestProduct_JSONUpstreamOracle
+    upstream_parity_split_test.go:430: build go_test_-c_cohere_./internal/format/javascript_oracle d0c4116264bc miss 8.00
+--- PASS: TestProduct_JSONUpstreamOracle (10.19s)
+PASS

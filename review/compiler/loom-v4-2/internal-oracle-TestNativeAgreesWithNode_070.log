@@ -1,0 +1,44 @@
+=== RUN   TestNativeAgreesWithNode_070
+=== PAUSE TestNativeAgreesWithNode_070
+=== CONT  TestNativeAgreesWithNode_070
+=== RUN   TestNativeAgreesWithNode_070/internal/oracle/testdata/string_build_repeat.a
+=== PAUSE TestNativeAgreesWithNode_070/internal/oracle/testdata/string_build_repeat.a
+=== RUN   TestNativeAgreesWithNode_070/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== PAUSE TestNativeAgreesWithNode_070/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== RUN   TestNativeAgreesWithNode_070/internal/oracle/testdata/regexp_cycle_collections.a
+=== PAUSE TestNativeAgreesWithNode_070/internal/oracle/testdata/regexp_cycle_collections.a
+=== RUN   TestNativeAgreesWithNode_070/internal/oracle/testdata/template_nullish.a
+=== PAUSE TestNativeAgreesWithNode_070/internal/oracle/testdata/template_nullish.a
+=== CONT  TestNativeAgreesWithNode_070/internal/oracle/testdata/string_build_repeat.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_070/internal/oracle/testdata/template_nullish.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_070/internal/oracle/testdata/regexp_cycle_collections.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_070/internal/oracle/testdata/lint_runtime_search_boundaries.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_070 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_070/internal/oracle/testdata/string_build_repeat.a (3.49s)
+    --- PASS: TestNativeAgreesWithNode_070/internal/oracle/testdata/template_nullish.a (0.46s)
+    --- PASS: TestNativeAgreesWithNode_070/internal/oracle/testdata/regexp_cycle_collections.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode_070/internal/oracle/testdata/lint_runtime_search_boundaries.a (0.48s)
+PASS
+gate cache: native hits=4 misses=8
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0

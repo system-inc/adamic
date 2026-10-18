@@ -1,0 +1,4 @@
+=== RUN   TestCSSGoOraclesKeyTheCompilersEnvGivesGo
+    setup_products_test.go:136: unset: clang and clang++; CC=cc moves the key
+--- PASS: TestCSSGoOraclesKeyTheCompilersEnvGivesGo (0.04s)
+PASS

@@ -1,0 +1,15 @@
+=== RUN   TestFormatterMatchesGo_001
+=== PAUSE TestFormatterMatchesGo_001
+=== CONT  TestFormatterMatchesGo_001
+    formatter_comparison_test.go:20: build go_build_cohere_./command/formatter_comparison_go-format b27b8882c605 hit 0.27
+    port_products_test.go:83: build yaml-format-lowered 3652f11bec60 hit 0.03
+    port_products_test.go:107: build yaml-format-native 2a7924b88f40 hit 0.03
+    compose_test.go:54: corpus-files: upstream /workspace/adamic/cohere root .github/workflows pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 1
+    compose_test.go:54: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .custom-gcl.yml pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    compose_test.go:54: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .github pin d92d9bfee114c80be2c375d72edae966176e3a4f count 23
+    compose_test.go:54: corpus-files: upstream /workspace/adamic/cohere/TypeScript root .golangci.yml pin d92d9bfee114c80be2c375d72edae966176e3a4f count 1
+    compose_test.go:54: corpus-files: upstream /workspace/adamic/cohere/TypeScript root tools/pipelines pin d92d9bfee114c80be2c375d72edae966176e3a4f count 10
+    format_test.go:92: format shard 001: 2473 of 10026 cases
+    format_test.go:92: set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestFormatterMatchesGo_001 (4.17s)
+PASS

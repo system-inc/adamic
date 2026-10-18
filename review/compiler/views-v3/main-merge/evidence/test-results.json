@@ -1,0 +1,3148 @@
+{
+  "internal-lower": [
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractPhantomVoidIsUndefined",
+      "Elapsed": 0.06
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractRecursiveMember",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractUnknownMemberFails",
+      "Elapsed": 0.06
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;",
+      "Elapsed": 0.05
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+      "Elapsed": 0.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;",
+      "Elapsed": 0.05
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;",
+      "Elapsed": 0.03
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;",
+      "Elapsed": 0.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestMixedUnionContractGraph",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Elapsed": 0.171
+    }
+  ],
+  "internal-oracle": [
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2TupleIdentityMutant",
+      "Elapsed": 13.76
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MembershipMutant",
+      "Elapsed": 13.78
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2WrongFamilyMutant",
+      "Elapsed": 13.81
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2CallableProducerMutant",
+      "Elapsed": 13.87
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ArrayArmAdmission",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedOptionalCallableControl",
+      "Elapsed": 0.55
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/helper/good",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/stored/wrong",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/stored/good",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/callback/wrong",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/callback/good",
+      "Elapsed": 0.53
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/generic/good",
+      "Elapsed": 0.45
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows/helper/wrong",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceFlows",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a",
+      "Elapsed": 0.64
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/optional-absent",
+      "Elapsed": 0.16
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a",
+      "Elapsed": 0.63
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2MovedStage3Results",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/diagnostic-boolean",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/node-indicator-false",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/literal-text-wrong",
+      "Elapsed": 0.56
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/literal-boolean",
+      "Elapsed": 0.53
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/literal-negative-wrong",
+      "Elapsed": 0.54
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/literal-good",
+      "Elapsed": 0.53
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/comment-boolean",
+      "Elapsed": 0.61
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/comment-flags-wrong",
+      "Elapsed": 0.59
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/comment-good",
+      "Elapsed": 0.61
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/required-missing",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "Elapsed": 0.2
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants/null",
+      "Elapsed": 0.43
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-holes-view",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/non-array",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/node-indicator-good",
+      "Elapsed": 0.55
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/object-element",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-element",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/generic-array-element",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-field",
+      "Elapsed": 0.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/nullable-array-element",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/nullable-array-missing",
+      "Elapsed": 0.43
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/nullable-array-string",
+      "Elapsed": 0.45
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-string-literal",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-undefined",
+      "Elapsed": 0.45
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-alias",
+      "Elapsed": 0.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-iteration-bad",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-map-bad",
+      "Elapsed": 0.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-missing",
+      "Elapsed": 0.42
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-boolean",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-length-kind",
+      "Elapsed": 0.45
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-second",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-bounds",
+      "Elapsed": 0.43
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-pop",
+      "Elapsed": 0.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-iteration",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-map",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants/int32",
+      "Elapsed": 0.37
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays/array-lazy",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrays",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants/uint8",
+      "Elapsed": 0.41
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants/float64",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants/undefined",
+      "Elapsed": 0.37
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2RepresentationMutants",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/node-indicator-wrong",
+      "Elapsed": 0.53
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/diagnostic-good",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource/diagnostic-wrong",
+      "Elapsed": 0.55
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewObjectPrimitiveSource",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/mixed-read-write",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/undefined-read-write",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/null-read-write",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/representation-read-write",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedCallableUnion/good-number",
+      "Elapsed": 0.55
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedCallableUnion/good-string",
+      "Elapsed": 0.56
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedCallableUnion/nested",
+      "Elapsed": 0.56
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedCallableUnion/wrong",
+      "Elapsed": 0.59
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedCallableUnion",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedRecursive/good",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource/good",
+      "Elapsed": 0.45
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedRecursive/nested",
+      "Elapsed": 0.47
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedRecursive/wrong",
+      "Elapsed": 0.54
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedRecursive/absent",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedRecursive",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedOwnClassData/good",
+      "Elapsed": 0.54
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource/mixed",
+      "Elapsed": 0.52
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource/empty",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource/nested",
+      "Elapsed": 0.48
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource/wrong",
+      "Elapsed": 0.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedArraySource",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedOwnClassData/wrong",
+      "Elapsed": 0.56
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedOwnClassData",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/structural/absent",
+      "Elapsed": 0.15
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+      "Elapsed": 0.49
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+      "Elapsed": 0.43
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+      "Elapsed": 1.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/absent",
+      "Elapsed": 0.18
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/absent",
+      "Elapsed": 0.18
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+      "Elapsed": 0.53
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+      "Elapsed": 0.46
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+      "Elapsed": 0.6
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewUntaggedSourceDispatch",
+      "Elapsed": 0.15
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites/fs-option-boxing",
+      "Elapsed": 10.89
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewV2ReadsAfterWrites",
+      "Elapsed": 0
+    },
+    {
+      "Action": "pass",
+      "Elapsed": 32.152
+    }
+  ],
+  "stage1-cohere-json": [
+    {
+      "Action": "pass",
+      "Test": "TestPortElementMetadataEmission",
+      "Elapsed": 1.27
+    },
+    {
+      "Action": "pass",
+      "Elapsed": 1.288
+    }
+  ],
+  "json-mutant": [
+    {
+      "Action": "fail",
+      "Test": "TestPortElementMetadataEmission",
+      "Elapsed": 1.23
+    },
+    {
+      "Action": "fail",
+      "Elapsed": 1.241
+    }
+  ],
+  "lane-fix-internal-lower": [
+    {
+      "Action": "pass",
+      "Test": "TestViewArraySourceCertificateOmission",
+      "Elapsed": 0.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestViewArrayWritesNeedSourceCertificate/items(raw).values.push(true);",
+      "Elapsed": 0.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestViewArrayWritesNeedSourceCertificate/items(raw).values[0]_=_true;",
+      "Elapsed": 0.03
+    },
+    {
+      "Action": "pass",
+      "Test": "TestViewArrayWritesNeedSourceCertificate",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Elapsed": 0.08
+    }
+  ],
+  "lane-fix-internal-oracle": [
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesMilestone/library_array_holes_scanner_probe.a",
+      "Elapsed": 0.54
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesMilestone/library_array_holes_length.a",
+      "Elapsed": 0.51
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesMilestone/library_array_holes_range.a",
+      "Elapsed": 0.44
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesMilestone",
+      "Elapsed": 1.5
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessExtensions",
+      "Elapsed": 0.01
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-second",
+      "Elapsed": 0.24
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-boolean",
+      "Elapsed": 0.25
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-string-literal",
+      "Elapsed": 0.25
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-undefined",
+      "Elapsed": 0.26
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-iteration-bad",
+      "Elapsed": 0.27
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-map-bad",
+      "Elapsed": 0.28
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/non-array",
+      "Elapsed": 0.25
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants/array-missing",
+      "Elapsed": 0.27
+    },
+    {
+      "Action": "pass",
+      "Test": "TestCheckedViewArrayReadMutants",
+      "Elapsed": 2.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayElementKindRuntimeMutant",
+      "Elapsed": 3.95
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayViewPhysicalWriteMutant/scalar",
+      "Elapsed": 4
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayViewMissingReceiverMutant",
+      "Elapsed": 4.04
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayViewPhysicalWriteMutant/reference",
+      "Elapsed": 0.3
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayViewPhysicalWriteMutant",
+      "Elapsed": 4.31
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/sourcefile-jsdocdiagnostics-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-lazy",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/indexsignaturedeclaration-typeparameters-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-absent",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/signaturedeclaration-typeparameters-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-bad",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-callsignatures-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-undefined",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesRangeErrorMutant",
+      "Elapsed": 3.84
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-alias",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/anonymoustype-properties-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-receiver-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-alias",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayViewHolesAbsenceMutant",
+      "Elapsed": 3.76
+    },
+    {
+      "Action": "pass",
+      "Test": "TestArrayHolesAbsentSlotMutant",
+      "Elapsed": 3.85
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/block---undefined-statements-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticfilereferences-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-undefined",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-syntheticlibreferences-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/bundle-synthetictypereferences-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspec-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/configfilespecs-validatedfilesspecbeforesubstitution-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incremental-multi-file-ids-replacement",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs-validatedincludespecsbeforesubstitution-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/configfilespecs---undefined-validatedfilesspec-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-undefined",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-alias",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signature---undefined-typeparameters-good",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-lazy",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/setaccessordeclaration---undefined-parameters-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/interfacetypewithdeclaredmembers-typeparameters-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-undefined",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tupletype-typeparameters-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-undefined",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-lazy",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-absent",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/emitnode---undefined-helpers-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile-additionalsyntacticdiagnostics-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/jsdocfunctiontype-typeparameters-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-jsdoc-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/signaturedeclaration-typearguments-good",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/sourcefile---undefined-imports-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/interfacetype-outertypeparameters-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/uniontype-arrayfallbacksignatures-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/unionorintersectiontype-resolvedproperties-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/unionorintersectiontype-resolvedproperties-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/unionorintersectiontype-resolvedproperties-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/unionorintersectiontype-resolvedproperties-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/unionorintersectiontype-resolvedproperties-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B4/privateidentifierpropertydeclaration-modifiers-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-replacement",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-lazy",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithlocation-relatedinformation-good",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/tsconfigsourcefile-statements-alias",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/tsconfigsourcefile-statements-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/tsconfigsourcefile-statements-lazy-element",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/tsconfigsourcefile-statements-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/tsconfigsourcefile-statements-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-alias",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs-validatedexcludespecs-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-bad",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/configfilespecs---undefined-validatedincludespecs-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-customconditions-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-lazy",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-bad",
+      "Elapsed": 0.15
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-modulesuffixes-good",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/compileroptions-types-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredcallsignatures-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredcallsignatures-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredcallsignatures-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredcallsignatures-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredconstructsignatures-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredconstructsignatures-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredindexinfos-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredconstructsignatures-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/identifier-jsdoc-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredindexinfos-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredindexinfos-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/interfacetypewithdeclaredmembers-declaredindexinfos-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/diagnosticwithdetachedlocation-relatedinformation-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludedirectories-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-receiver-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-absent",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/watchoptions---undefined-excludefiles-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/unscopedemithelper-dependencies-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-good",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/builderprogramstate-affectedfiles-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/nonincrementalbuildinfo-root-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/nonincrementalbuildinfo-root-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/nonincrementalbuildinfo-root-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/nonincrementalbuildinfo-root-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/nonincrementalbuildinfo-root-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-sources-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-sources-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-sources-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-sources-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-sources-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-alias",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B3/deferredmapper-targets-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-annotatednodes-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-leadingcomments-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode-trailingcomments-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-annotatednodes-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-receiver-undefined",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-identifiertypearguments-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-alias",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-absent",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-leadingcomments-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-undefined",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-lazy-element",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-tokensourcemapranges-good",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-alias",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B2/emitnode---undefined-trailingcomments-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/conditionalroot-aliastypearguments-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-bad",
+      "Elapsed": 0.14
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-lazy",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/signaturedeclaration---jsdocsignature---undefined-parameters-good",
+      "Elapsed": 0.13
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-undefined",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-absent",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/tsconfigsourcefile---undefined-extendedsourcefiles-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-absent",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-lazy-element",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludedirectories-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-alias",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-absent",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-lazy",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/watchoptions-excludefiles-good",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-bad",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-lazy",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-filenames-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/syntaxlist-_children-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/syntaxlist-_children-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/syntaxlist-_children-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/syntaxlist-_children-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/syntaxlist-_children-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-receiver-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpressionbase-objectliteralelement--properties-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-alias",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-receiver-undefined",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/jsdoc---undefined-tags-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-alias",
+      "Elapsed": 0.13
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpression---undefined-properties-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-receiver-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-lazy",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpressionbase-objectliteralelement--properties-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/heritageclause---undefined-types-good",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpressionbase-objectliteralelement--properties-bad",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpressionbase-objectliteralelement--properties-lazy-element",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/objectliteralexpressionbase-objectliteralelement--properties-good",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/sortedandcanonicalizedmutablefilesystementries-directories-alias",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/sortedandcanonicalizedmutablefilesystementries-directories-lazy-element",
+      "Elapsed": 0.07
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/sortedandcanonicalizedmutablefilesystementries-directories-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/sortedandcanonicalizedmutablefilesystementries-directories-lazy",
+      "Elapsed": 0.11
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-receiver-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/sortedandcanonicalizedmutablefilesystementries-directories-good",
+      "Elapsed": 0.12
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-undefined",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-absent",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-undefined",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-bad",
+      "Elapsed": 0.1
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-good",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/parsedcommandline---undefined-projectreferences-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-bad",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-absent",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-lazy-element",
+      "Elapsed": 0.08
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-alias",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode/B/incrementalmultifileemitbuildinfo-fileidslist-lazy",
+      "Elapsed": 0.09
+    },
+    {
+      "Action": "pass",
+      "Test": "TestOriginalArrayWitnessNode",
+      "Elapsed": 0.01
+    },
+    {
+      "Action": "pass",
+      "Elapsed": 17.424
+    }
+  ]
+}

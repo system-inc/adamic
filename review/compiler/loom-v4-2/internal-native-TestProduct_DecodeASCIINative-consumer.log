@@ -1,0 +1,6 @@
+=== RUN   TestProduct_DecodeASCIINative
+=== PAUSE TestProduct_DecodeASCIINative
+=== CONT  TestProduct_DecodeASCIINative
+    decode_ascii_cache_test.go:195: build decode-ascii-native 51e520184af1 miss 6.12
+--- PASS: TestProduct_DecodeASCIINative (6.16s)
+PASS

@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewArraysArrayMap
+=== PAUSE TestCheckedViewArraysArrayMap
+=== CONT  TestCheckedViewArraysArrayMap
+    checked_views_arrays_test.go:47: gate cache node miss
+    checked_views_arrays_test.go:47: Node: exit=0 stdout="8:9\n" stderr=""
+    checked_views_arrays_test.go:47: gate cache node miss
+--- PASS: TestCheckedViewArraysArrayMap (6.44s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

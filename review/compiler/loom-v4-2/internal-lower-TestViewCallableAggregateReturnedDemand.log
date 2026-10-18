@@ -1,0 +1,9 @@
+=== RUN   TestViewCallableAggregateReturnedDemand
+=== PAUSE TestViewCallableAggregateReturnedDemand
+=== CONT  TestViewCallableAggregateReturnedDemand
+=== RUN   TestViewCallableAggregateReturnedDemand/ordinary-disjoint
+=== RUN   TestViewCallableAggregateReturnedDemand/unknown-callable-owner
+--- PASS: TestViewCallableAggregateReturnedDemand (0.00s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/ordinary-disjoint (0.00s)
+    --- PASS: TestViewCallableAggregateReturnedDemand/unknown-callable-owner (0.00s)
+PASS

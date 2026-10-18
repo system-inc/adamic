@@ -1,0 +1,2388 @@
+{
+  "count": 473,
+  "counts": [
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    29,
+    29,
+    29,
+    29,
+    29,
+    29,
+    29
+  ],
+  "rows": [
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-good",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-lazy",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-lazy-element",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-bad",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-alias",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-absent",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "incrementalmultifileemitbuildinfo-fileidslist-undefined",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-good",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-bad",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-alias",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-absent",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-projectreferences-receiver-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "sortedandcanonicalizedmutablefilesystementries-directories-good",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "sortedandcanonicalizedmutablefilesystementries-directories-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "sortedandcanonicalizedmutablefilesystementries-directories-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "sortedandcanonicalizedmutablefilesystementries-directories-bad",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "sortedandcanonicalizedmutablefilesystementries-directories-alias",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpressionbase-objectliteralelement--properties-good",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpressionbase-objectliteralelement--properties-lazy",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpressionbase-objectliteralelement--properties-lazy-element",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpressionbase-objectliteralelement--properties-bad",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpressionbase-objectliteralelement--properties-alias",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-good",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-lazy",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-lazy-element",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-bad",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-alias",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "heritageclause---undefined-types-receiver-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-good",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-bad",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-alias",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "objectliteralexpression---undefined-properties-receiver-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-good",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-bad",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-alias",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-absent",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-undefined",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "jsdoc---undefined-tags-receiver-undefined",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "syntaxlist-_children-good",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "syntaxlist-_children-lazy",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "syntaxlist-_children-lazy-element",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "syntaxlist-_children-bad",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "syntaxlist-_children-alias",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-good",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-bad",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-alias",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "parsedcommandline---undefined-filenames-receiver-undefined",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-good",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-lazy",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-lazy-element",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-bad",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-alias",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-absent",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludefiles-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-good",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-bad",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-alias",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-absent",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "watchoptions-excludedirectories-undefined",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-good",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-lazy",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-lazy-element",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-bad",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-alias",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-absent",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-undefined",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "tsconfigsourcefile---undefined-extendedsourcefiles-receiver-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-good",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-lazy",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-lazy-element",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-bad",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-alias",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "signaturedeclaration---jsdocsignature---undefined-parameters-receiver-undefined",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-good",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-lazy",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-lazy-element",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-bad",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-alias",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-absent",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "conditionalroot-aliastypearguments-undefined",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-good",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-lazy",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-lazy-element",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-bad",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-alias",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-absent",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "tupletype-typeparameters-undefined",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-good",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-bad",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-alias",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-absent",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "interfacetypewithdeclaredmembers-typeparameters-undefined",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-good",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-lazy",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-lazy-element",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-bad",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-alias",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "setaccessordeclaration---undefined-parameters-receiver-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-good",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-bad",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-alias",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-absent",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-undefined",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "signature---undefined-typeparameters-receiver-undefined",
+      "shard": 6
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-good",
+      "shard": 7
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-bad",
+      "shard": 10
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-alias",
+      "shard": 11
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-absent",
+      "shard": 12
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs---undefined-validatedfilesspec-receiver-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-good",
+      "shard": 15
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-bad",
+      "shard": 2
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-alias",
+      "shard": 3
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-absent",
+      "shard": 4
+    },
+    {
+      "group": "B",
+      "name": "configfilespecs-validatedincludespecsbeforesubstitution-undefined",
+      "shard": 5
+    },
+    {
+      "group": "B",
+      "name": "incremental-multi-file-ids-replacement",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-good",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-bad",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-alias",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-absent",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspecbeforesubstitution-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-good",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-lazy",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-lazy-element",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-bad",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-alias",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-absent",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "configfilespecs-validatedfilesspec-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-good",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-bad",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-alias",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-absent",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "bundle-synthetictypereferences-undefined",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-good",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-lazy",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-lazy-element",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-bad",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-alias",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-absent",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticlibreferences-undefined",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-good",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-lazy",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-lazy-element",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-bad",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-alias",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-absent",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "bundle-syntheticfilereferences-undefined",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-good",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-bad",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-alias",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "block---undefined-statements-receiver-undefined",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-good",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-lazy",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-lazy-element",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-bad",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-alias",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-absent",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-properties-undefined",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-good",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-bad",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-alias",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-absent",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "anonymoustype-callsignatures-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-good",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-lazy",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-lazy-element",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-bad",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-alias",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-absent",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "signaturedeclaration-typeparameters-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-good",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-bad",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-alias",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-absent",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "indexsignaturedeclaration-typeparameters-undefined",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-good",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-lazy",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-lazy-element",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-bad",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-alias",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-absent",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "sourcefile-jsdocdiagnostics-undefined",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-good",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-lazy",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-lazy-element",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-bad",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-alias",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-absent",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "identifier-jsdoc-undefined",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-good",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-bad",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-alias",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-absent",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-undefined",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-trailingcomments-receiver-undefined",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-good",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-bad",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-alias",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-absent",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-undefined",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-tokensourcemapranges-receiver-undefined",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-good",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-bad",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-alias",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-absent",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-undefined",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-leadingcomments-receiver-undefined",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-good",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-bad",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-alias",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-absent",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-undefined",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-identifiertypearguments-receiver-undefined",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-good",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-bad",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-alias",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-absent",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-undefined",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "emitnode---undefined-annotatednodes-receiver-undefined",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-good",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-bad",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-alias",
+      "shard": 6
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-absent",
+      "shard": 7
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-trailingcomments-undefined",
+      "shard": 8
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-good",
+      "shard": 9
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-lazy",
+      "shard": 10
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-lazy-element",
+      "shard": 11
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-bad",
+      "shard": 12
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-alias",
+      "shard": 13
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-absent",
+      "shard": 14
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-leadingcomments-undefined",
+      "shard": 15
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-good",
+      "shard": 0
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-lazy",
+      "shard": 1
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-lazy-element",
+      "shard": 2
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-bad",
+      "shard": 3
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-alias",
+      "shard": 4
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-absent",
+      "shard": 5
+    },
+    {
+      "group": "B2",
+      "name": "emitnode-annotatednodes-undefined",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-good",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-bad",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-alias",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-sources-good",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-sources-lazy",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-sources-lazy-element",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-sources-bad",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-sources-alias",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "nonincrementalbuildinfo-root-good",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "nonincrementalbuildinfo-root-lazy",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "nonincrementalbuildinfo-root-lazy-element",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "nonincrementalbuildinfo-root-bad",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "nonincrementalbuildinfo-root-alias",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-good",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-lazy",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-lazy-element",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-bad",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-alias",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-absent",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "builderprogramstate-affectedfiles-undefined",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-good",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy-element",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-alias",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-good",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-alias",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-good",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-lazy",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-lazy-element",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-bad",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-alias",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-absent",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "unscopedemithelper-dependencies-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-good",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-lazy",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-lazy-element",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-bad",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-alias",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-absent",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludefiles-receiver-undefined",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-good",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-lazy",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-lazy-element",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-bad",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-alias",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-absent",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-undefined",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "watchoptions---undefined-excludedirectories-receiver-undefined",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-good",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-lazy",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-lazy-element",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-bad",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-alias",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-absent",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithdetachedlocation-relatedinformation-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredindexinfos-good",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredindexinfos-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredindexinfos-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredindexinfos-bad",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredindexinfos-alias",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-good",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-bad",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-alias",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-good",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-bad",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-alias",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-good",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-lazy",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-lazy-element",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-bad",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-alias",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-absent",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-types-undefined",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-good",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-lazy",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-lazy-element",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-bad",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-alias",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-absent",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-modulesuffixes-undefined",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-good",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-lazy",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-lazy-element",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-bad",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-alias",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-absent",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "compileroptions-customconditions-undefined",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-good",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-lazy",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-lazy-element",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-bad",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-alias",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-absent",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-undefined",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs---undefined-validatedincludespecs-receiver-undefined",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-good",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-lazy",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-lazy-element",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-bad",
+      "shard": 4
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-alias",
+      "shard": 5
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-absent",
+      "shard": 6
+    },
+    {
+      "group": "B3",
+      "name": "configfilespecs-validatedexcludespecs-undefined",
+      "shard": 7
+    },
+    {
+      "group": "B3",
+      "name": "tsconfigsourcefile-statements-good",
+      "shard": 8
+    },
+    {
+      "group": "B3",
+      "name": "tsconfigsourcefile-statements-lazy",
+      "shard": 9
+    },
+    {
+      "group": "B3",
+      "name": "tsconfigsourcefile-statements-lazy-element",
+      "shard": 10
+    },
+    {
+      "group": "B3",
+      "name": "tsconfigsourcefile-statements-bad",
+      "shard": 11
+    },
+    {
+      "group": "B3",
+      "name": "tsconfigsourcefile-statements-alias",
+      "shard": 12
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-good",
+      "shard": 13
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-lazy",
+      "shard": 14
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-lazy-element",
+      "shard": 15
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-bad",
+      "shard": 0
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-alias",
+      "shard": 1
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-absent",
+      "shard": 2
+    },
+    {
+      "group": "B3",
+      "name": "diagnosticwithlocation-relatedinformation-undefined",
+      "shard": 3
+    },
+    {
+      "group": "B3",
+      "name": "deferredmapper-targets-replacement",
+      "shard": 4
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-good",
+      "shard": 5
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-bad",
+      "shard": 8
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-alias",
+      "shard": 9
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-absent",
+      "shard": 10
+    },
+    {
+      "group": "B4",
+      "name": "privateidentifierpropertydeclaration-modifiers-undefined",
+      "shard": 11
+    },
+    {
+      "group": "B4",
+      "name": "unionorintersectiontype-resolvedproperties-good",
+      "shard": 12
+    },
+    {
+      "group": "B4",
+      "name": "unionorintersectiontype-resolvedproperties-lazy",
+      "shard": 13
+    },
+    {
+      "group": "B4",
+      "name": "unionorintersectiontype-resolvedproperties-lazy-element",
+      "shard": 14
+    },
+    {
+      "group": "B4",
+      "name": "unionorintersectiontype-resolvedproperties-bad",
+      "shard": 15
+    },
+    {
+      "group": "B4",
+      "name": "unionorintersectiontype-resolvedproperties-alias",
+      "shard": 0
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-good",
+      "shard": 1
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-lazy",
+      "shard": 2
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-lazy-element",
+      "shard": 3
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-bad",
+      "shard": 4
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-alias",
+      "shard": 5
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-absent",
+      "shard": 6
+    },
+    {
+      "group": "B4",
+      "name": "uniontype-arrayfallbacksignatures-undefined",
+      "shard": 7
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-good",
+      "shard": 8
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-lazy",
+      "shard": 9
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-lazy-element",
+      "shard": 10
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-bad",
+      "shard": 11
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-alias",
+      "shard": 12
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-absent",
+      "shard": 13
+    },
+    {
+      "group": "B4",
+      "name": "interfacetype-outertypeparameters-undefined",
+      "shard": 14
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-good",
+      "shard": 15
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-lazy",
+      "shard": 0
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-lazy-element",
+      "shard": 1
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-bad",
+      "shard": 2
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-alias",
+      "shard": 3
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile---undefined-imports-receiver-undefined",
+      "shard": 4
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-good",
+      "shard": 5
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-lazy",
+      "shard": 6
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-lazy-element",
+      "shard": 7
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-bad",
+      "shard": 8
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-alias",
+      "shard": 9
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-absent",
+      "shard": 10
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-typearguments-undefined",
+      "shard": 11
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-good",
+      "shard": 12
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-lazy",
+      "shard": 13
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-lazy-element",
+      "shard": 14
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-bad",
+      "shard": 15
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-alias",
+      "shard": 0
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-absent",
+      "shard": 1
+    },
+    {
+      "group": "B4",
+      "name": "signaturedeclaration-jsdoc-undefined",
+      "shard": 2
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-good",
+      "shard": 3
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-lazy",
+      "shard": 4
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-lazy-element",
+      "shard": 5
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-bad",
+      "shard": 6
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-alias",
+      "shard": 7
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-absent",
+      "shard": 8
+    },
+    {
+      "group": "B4",
+      "name": "jsdocfunctiontype-typeparameters-undefined",
+      "shard": 9
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-good",
+      "shard": 10
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-lazy",
+      "shard": 11
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-lazy-element",
+      "shard": 12
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-bad",
+      "shard": 13
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-alias",
+      "shard": 14
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-absent",
+      "shard": 15
+    },
+    {
+      "group": "B4",
+      "name": "sourcefile-additionalsyntacticdiagnostics-undefined",
+      "shard": 0
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-good",
+      "shard": 1
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-lazy",
+      "shard": 2
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-lazy-element",
+      "shard": 3
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-bad",
+      "shard": 4
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-alias",
+      "shard": 5
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-absent",
+      "shard": 6
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-undefined",
+      "shard": 7
+    },
+    {
+      "group": "B4",
+      "name": "emitnode---undefined-helpers-receiver-undefined",
+      "shard": 8
+    }
+  ]
+}

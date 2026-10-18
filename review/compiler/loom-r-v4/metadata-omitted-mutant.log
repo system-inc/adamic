@@ -1,0 +1,9 @@
+=== RUN   TestPortElementMetadataEmission
+=== PAUSE TestPortElementMetadataEmission
+=== CONT  TestPortElementMetadataEmission
+    metadata_emission_test.go:21: element metadata: 0 direct stores, 0 runtime calls; C bytes 2068562
+    metadata_emission_test.go:26: element metadata runtime calls 0; want 2885 allocation certificates
+--- FAIL: TestPortElementMetadataEmission (1.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/json	1.217s
+FAIL

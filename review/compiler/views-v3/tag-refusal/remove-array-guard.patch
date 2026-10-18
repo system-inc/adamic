@@ -1,0 +1,6 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -287,0 +288 @@
++			if narrowed != ir.Array {
+@@ -288,0 +290 @@
++			}

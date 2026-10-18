@@ -1,0 +1,8 @@
+=== RUN   TestLibrarySpreadRegExpUnion
+=== PAUSE TestLibrarySpreadRegExpUnion
+=== CONT  TestLibrarySpreadRegExpUnion
+    library_spread_test.go:16: want RegExp refusal, got <nil>
+--- FAIL: TestLibrarySpreadRegExpUnion (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.068s
+FAIL

@@ -1,0 +1,6 @@
+=== RUN   TestParserRecoveryGap
+    gaps_test.go:115: node: unported parser recovery does not terminate within 1s
+    gaps_test.go:115: /tmp/adamic-gate/TestParserRecoveryGap2637671479/001/port: unported parser recovery does not terminate within 1s
+--- PASS: TestParserRecoveryGap (28.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	28.290s

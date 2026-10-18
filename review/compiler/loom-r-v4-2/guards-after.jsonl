@@ -1,0 +1,25 @@
+{"Time":"2026-10-18T08:13:17.177353385Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-18T08:13:17.177605388Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilercensus"}
+{"Time":"2026-10-18T08:13:17.179723249Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:13:17.179787814Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== RUN   TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.179807313Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== PAUSE TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.179809646Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:13:17.1798121Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-18T08:13:17.179813893Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== CONT  TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.180021509Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T08:13:17.180034719Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== RUN   TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.180038434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== PAUSE TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.180039957Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T08:13:17.180042Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T08:13:17.180043532Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== CONT  TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.543221235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"--- PASS: TestEveryCCompilerRunsThroughNative (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.54325869Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Elapsed":0.36}
+{"Time":"2026-10-18T08:13:17.543279601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.544224188Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilercensus\t0.366s\n"}
+{"Time":"2026-10-18T08:13:17.544251258Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Elapsed":0.367}
+{"Time":"2026-10-18T08:13:17.55420476Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"    names_test.go:78: census of 18360 top-level tests; 18 pinned offenders\n"}
+{"Time":"2026-10-18T08:13:17.554359379Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"--- PASS: TestEveryTestHasOneDescriptiveName (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.554371126Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Elapsed":0.37}
+{"Time":"2026-10-18T08:13:17.554375012Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:13:17.555261412Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t0.378s\n"}
+{"Time":"2026-10-18T08:13:17.555275653Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.378}

@@ -1,0 +1,11 @@
+--- a/internal/native/view_arrays.go
++++ b/internal/native/view_arrays.go
+@@ -18,7 +18,7 @@
+ 			}
+ 			// Keep the store in the runtime translation unit. Thousands of inline
+ 			// stores inflate clang's sanitizer instrumentation of table initializers.
+-			e.line("adamic_array_view_storage(%s, %d);", value, kind)
++			e.line("%s->element_kind = %d;", value, kind)
+ 		}
+ 		return value
+ 	}

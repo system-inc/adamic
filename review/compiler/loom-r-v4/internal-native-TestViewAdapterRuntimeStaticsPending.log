@@ -1,0 +1,6 @@
+=== RUN   TestViewAdapterRuntimeStaticsPending
+=== PAUSE TestViewAdapterRuntimeStaticsPending
+=== CONT  TestViewAdapterRuntimeStaticsPending
+    view_adapter_runtime_test.go:230: awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)
+--- SKIP: TestViewAdapterRuntimeStaticsPending (0.00s)
+PASS

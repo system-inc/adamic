@@ -1,0 +1,6 @@
+=== RUN   TestKnownGapsAreExplicit
+=== PAUSE TestKnownGapsAreExplicit
+=== CONT  TestKnownGapsAreExplicit
+    helper_mutants_test.go:72: build helper-native 083c63a42876 miss 4.03
+--- PASS: TestKnownGapsAreExplicit (4.33s)
+PASS

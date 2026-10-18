@@ -1,0 +1,9 @@
+=== RUN   TestCommentMutants_000
+=== PAUSE TestCommentMutants_000
+=== CONT  TestCommentMutants_000
+    comment_mutants_test.go:26: shard-000: mutant can_begin_at.ts, full witness corpus
+    comment_mutants_test.go:26: build go_build_cohere_/workspace/adamic/cohere/adamic_comments_oracle.go_go-oracle 224e65416cdd hit 0.40
+    comments_test.go:88: build comments-native-mutant-can_begin_at.ts 884ca948729d miss 14.06
+    comment_mutants_test.go:26: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+--- PASS: TestCommentMutants_000 (16.11s)
+PASS

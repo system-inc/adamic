@@ -1,0 +1,11 @@
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -194,7 +194,7 @@
+ 				for _, site := range reaches.Sites {
+ 					demanded = demanded || viewed[site]
+ 				}
+-				if demanded && (call.CallContract == 0 || graph.viewCallableUncheckableProducer(property, reaches)) {
++				if demanded && (call.CallContract == 0 || false) {
+ 					refused = &Refused{Where: call.CallWhere, What: "a checked view call to member " + property.Name + " with an unsupported value contract", Fix: "prove the callable relation or use a callable with runtime-checkable parameter and result types"}
+ 					return false
+ 				}

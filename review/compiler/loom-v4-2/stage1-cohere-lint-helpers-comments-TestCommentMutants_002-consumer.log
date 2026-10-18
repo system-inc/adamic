@@ -1,0 +1,9 @@
+=== RUN   TestCommentMutants_002
+=== PAUSE TestCommentMutants_002
+=== CONT  TestCommentMutants_002
+    comment_mutants_test.go:34: shard-002: mutant sort_by_position.ts, full witness corpus
+    comment_mutants_test.go:34: build go_build_cohere_/workspace/adamic/cohere/adamic_comments_oracle.go_go-oracle 224e65416cdd hit 0.41
+    comments_test.go:88: build comments-native-mutant-sort_by_position.ts f813bdd2f60f miss 14.07
+    comment_mutants_test.go:34: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+--- PASS: TestCommentMutants_002 (15.98s)
+PASS

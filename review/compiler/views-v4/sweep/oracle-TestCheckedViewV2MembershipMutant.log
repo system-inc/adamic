@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewV2MembershipMutant
+=== PAUSE TestCheckedViewV2MembershipMutant
+=== CONT  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:160: gate cache node miss
+    checked_views_v2_migration_test.go:165: gate cache node miss
+    checked_views_v2_migration_test.go:180: gate cache node miss
+    checked_views_v2_migration_test.go:184: membership check removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:184: membership check removal caught by native-sanitized: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:184: membership check removal caught by javascript: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2MembershipMutant (0.79s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.801s

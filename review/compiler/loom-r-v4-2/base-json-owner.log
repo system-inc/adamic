@@ -1,0 +1,7 @@
+=== RUN   TestProduct_JSONGoOracle
+=== PAUSE TestProduct_JSONGoOracle
+=== CONT  TestProduct_JSONGoOracle
+    products_test.go:20: build go_build_cohere_./command/formatter_comparison_go-cohere-oracle-owner-v1 2b9b3d01ba7d miss 17.70
+--- PASS: TestProduct_JSONGoOracle (19.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json/oracles	19.927s

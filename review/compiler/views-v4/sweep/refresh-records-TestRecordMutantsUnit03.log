@@ -1,0 +1,9 @@
+=== RUN   TestRecordMutantsUnit03
+=== PAUSE TestRecordMutantsUnit03
+=== CONT  TestRecordMutantsUnit03
+=== RUN   TestRecordMutantsUnit03/overwrite-key-leaked
+    record_test.go:244: caught by LeakSanitizer
+--- PASS: TestRecordMutantsUnit03 (1.68s)
+    --- PASS: TestRecordMutantsUnit03/overwrite-key-leaked (1.68s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.729s

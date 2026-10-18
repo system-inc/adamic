@@ -1,0 +1,10 @@
+=== RUN   TestV4EscapeAdapterCollectionKeyContract
+=== PAUSE TestV4EscapeAdapterCollectionKeyContract
+=== CONT  TestV4EscapeAdapterCollectionKeyContract
+    checked_views_v4_identity_test.go:200: gate cache node miss
+    checked_views_v4_identity_test.go:202: gate cache node miss
+--- PASS: TestV4EscapeAdapterCollectionKeyContract (5.08s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

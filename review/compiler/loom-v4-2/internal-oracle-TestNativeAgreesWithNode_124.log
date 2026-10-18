@@ -1,0 +1,70 @@
+=== RUN   TestNativeAgreesWithNode_124
+=== PAUSE TestNativeAgreesWithNode_124
+=== CONT  TestNativeAgreesWithNode_124
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/borrow_chain_coverage_spread.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/borrow_chain_coverage_spread.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/fill_length.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/fill_length.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/throw_global_move.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/throw_global_move.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/conditions_null.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/conditions_null.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/047cb0d_n_template.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/047cb0d_n_template.a
+=== RUN   TestNativeAgreesWithNode_124/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestNativeAgreesWithNode_124/internal/oracle/testdata/typeof_null_switch.a
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/borrow_chain_coverage_spread.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/conditions_null.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/typeof_null_switch.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/047cb0d_n_template.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/throw_global_move.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_124/internal/oracle/testdata/fill_length.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_124 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/borrow_chain_coverage_spread.a (3.69s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/conditions_null.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/typeof_null_switch.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/047cb0d_n_template.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/throw_global_move.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/accessor_spread_throw_middle.a (2.40s)
+    --- PASS: TestNativeAgreesWithNode_124/internal/oracle/testdata/fill_length.a (0.35s)
+PASS
+gate cache: native hits=6 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0

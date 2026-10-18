@@ -1,0 +1,8 @@
+=== RUN   TestOriginalArrayWitnessNode_0000
+=== PAUSE TestOriginalArrayWitnessNode_0000
+=== CONT  TestOriginalArrayWitnessNode_0000
+    checked_views_array_witnesses_test.go:78: B/incrementalmultifileemitbuildinfo-fileidslist-good: stdout differs
+--- FAIL: TestOriginalArrayWitnessNode_0000 (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.116s
+FAIL

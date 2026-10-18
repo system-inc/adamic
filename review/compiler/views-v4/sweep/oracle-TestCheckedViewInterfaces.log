@@ -1,0 +1,37 @@
+=== RUN   TestCheckedViewInterfaces
+=== PAUSE TestCheckedViewInterfaces
+=== CONT  TestCheckedViewInterfaces
+=== RUN   TestCheckedViewInterfaces/interfaces-good
+=== PAUSE TestCheckedViewInterfaces/interfaces-good
+=== RUN   TestCheckedViewInterfaces/interfaces-missing-inherited
+=== PAUSE TestCheckedViewInterfaces/interfaces-missing-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== PAUSE TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-uninitialized-object
+=== PAUSE TestCheckedViewInterfaces/interfaces-uninitialized-object
+=== CONT  TestCheckedViewInterfaces/interfaces-good
+=== CONT  TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== CONT  TestCheckedViewInterfaces/interfaces-missing-inherited
+=== CONT  TestCheckedViewInterfaces/interfaces-uninitialized-object
+=== NAME  TestCheckedViewInterfaces/interfaces-good
+    checked_views_interfaces_test.go:18: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-wrong-inherited
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-missing-inherited
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-uninitialized-object
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-wrong-inherited
+    checked_views_interfaces_test.go:33: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-good
+    checked_views_interfaces_test.go:26: gate cache node miss
+--- PASS: TestCheckedViewInterfaces (0.00s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-missing-inherited (0.58s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-uninitialized-object (0.60s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-wrong-inherited (0.72s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-good (0.78s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.789s

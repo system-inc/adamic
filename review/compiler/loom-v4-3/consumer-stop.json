@@ -1,0 +1,29 @@
+{
+  "reason": "Stop this branch after bridge/tsgo TestProduct_ApiDriver failed at 80.556 seconds; do not rerun it or alter another package tests.",
+  "stopped": [
+    {
+      "pid": 70268,
+      "command": "/home/agent/.cache/adamic-build/local/5dc74d1deed7da78abc7e3e0e4964df0e8b07cb36cf159aeb9310e4463e9aadd/oracle -test.timeout=0 -test.v -test.count=1 -test.run=^TestAdamicPortCases$"
+    },
+    {
+      "pid": 69158,
+      "command": "/workspace/adamic/review/compiler/loom-v4-3/stage1-cohere-css-consumer.test -test.run ^TestProduct_CSSFindsParserGoOracleAnswers$ -test.count=1 -test.timeout=90s -test.v -test.parallel=1"
+    },
+    {
+      "pid": 71206,
+      "command": "/workspace/adamic-tools/llvm/bin/clang-20 -cc1 -triple x86_64-unknown-linux-gnu -Eonly -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name sort_undefined.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=none -fno-optimize-sibling-calls -fmath-errno -ffp-contract=off -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/tmp/adamic-gate/adamic-runtime-headers-2192195471 -fcoverage-compilation-dir=/tmp/adamic-gate/adamic-runtime-headers-2192195471 -resource-dir /workspace/adamic-tools/llvm/lib/clang/20 -w -dependency-file - -MT sort_undefined.o -sys-header-deps -internal-isystem /workspace/adamic-tools/llvm/lib/clang/20/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -O2 -Wall -Wextra -Werror -Wcast-function-type-strict -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -pedantic -std=c11 -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -vectorize-loops -vectorize-slp -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -x c sort_undefined.c"
+    },
+    {
+      "pid": 71019,
+      "command": "/workspace/adamic-tools/bin/clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -M adamic.c array.c array_from.c array_holes.c bitwise.c case.c census_small.c class_features.c class_inheritance.c class_static.c closure.c count.c directory.c dtoa.c exceptions.c from_codes.c heap.c hypot.c ieee754.c input.c json_stringify.c library_array.c library_language.c library_math_number.c library_object.c map.c map_set.c math.c maybe.c node_buffer.c node_crypto.c node_fs_file.c normalize.c number.c object.c parse.c radix.c record.c regexp.c region.c set.c sort.c sort_undefined.c spread.c stack.c string.c string_append.c string_from.c string_index.c string_share.c tsgo.c typed_array.c union.c utf8.c view_arrays.c view_callables.c view_unions_mixed.c view_unions_untagged.c weak.c"
+    },
+    {
+      "pid": 70738,
+      "command": "/workspace/adamic/review/compiler/loom-v4-3/internal-oracle-consumer.test -test.run ^TestDirectClosureCallAgreesWithNode$ -test.count=1 -test.timeout=90s -test.v -test.parallel=1"
+    },
+    {
+      "pid": 27056,
+      "command": "python3 review/compiler/loom-v4-3/run-consumers.py"
+    }
+  ]
+}

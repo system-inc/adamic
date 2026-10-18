@@ -1,0 +1,7 @@
+=== RUN   TestProduct_AcceptanceOracle
+=== PAUSE TestProduct_AcceptanceOracle
+=== CONT  TestProduct_AcceptanceOracle
+    grain30_setup_products_test.go:26: build estree-go-oracle-v1 90da97790526 miss 4.84
+    acceptance_grain_test.go:112: build estree-acceptance-mutants-go-oracle 852002791290 miss 8.29
+--- PASS: TestProduct_AcceptanceOracle (8.29s)
+PASS

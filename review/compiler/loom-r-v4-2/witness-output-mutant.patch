@@ -1,0 +1,11 @@
+--- a/internal/oracle/checked_views_array_witnesses_test.go
++++ b/internal/oracle/checked_views_array_witnesses_test.go
+@@ -66,7 +66,7 @@
+ 			if !selected {
+ 				continue
+ 			}
+-			if d := disagreement(run{stdout: []byte(probe.Source)}, execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), filepath.Join(directory, probe.Name+".ts"))); d != "" {
++			if d := disagreement(run{stdout: []byte(probe.Source + "mutant")}, execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), filepath.Join(directory, probe.Name+".ts"))); d != "" {
+ 				t.Fatalf("%s/%s: %s", group, probe.Name, d)
+ 			}
+ 		}

@@ -1,0 +1,12 @@
+=== RUN   TestV4DirectCalleeOrder
+=== PAUSE TestV4DirectCalleeOrder
+=== CONT  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: source Node: exit=70 stdout="argument\n"
+    checked_views_v4_direct_test.go:231: native: exit=70 stdout="" stderr="adamic: panic: early callable check\n"
+--- FAIL: TestV4DirectCalleeOrder (7.57s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	7.582s
+FAIL

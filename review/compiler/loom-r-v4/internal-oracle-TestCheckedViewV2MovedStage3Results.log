@@ -1,0 +1,43 @@
+=== RUN   TestCheckedViewV2MovedStage3Results
+=== PAUSE TestCheckedViewV2MovedStage3Results
+=== CONT  TestCheckedViewV2MovedStage3Results
+=== RUN   TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== RUN   TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:279: gate cache node miss
+    checked_views_v2_migration_test.go:281: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:279: gate cache node miss
+    checked_views_v2_migration_test.go:281: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:279: gate cache node miss
+    checked_views_v2_migration_test.go:281: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:279: gate cache node miss
+    checked_views_v2_migration_test.go:281: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+=== CONT  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:279: gate cache node miss
+    checked_views_v2_migration_test.go:281: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+--- PASS: TestCheckedViewV2MovedStage3Results (0.00s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a (4.94s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a (0.81s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a (1.61s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a (1.07s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a (0.80s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,17 @@
+=== RUN   TestPortMatchesGoCohere_2036
+=== PAUSE TestPortMatchesGoCohere_2036
+=== RUN   TestPortMatchesGoCohere_2040
+=== PAUSE TestPortMatchesGoCohere_2040
+=== RUN   TestPortMatchesGoCohere_2041
+=== PAUSE TestPortMatchesGoCohere_2041
+=== CONT  TestPortMatchesGoCohere_2036
+    port_matches_prepared_split_test.go:192: build json lowered port and backend sources: open parser.ts: no such file or directory
+    port_matches_prepared_split_test.go:47: TestPortMatchesGoCohere (setup): 1.195s
+--- FAIL: TestPortMatchesGoCohere_2036 (1.20s)
+=== CONT  TestPortMatchesGoCohere_2041
+    port_test.go:350: shared preparation failed
+--- FAIL: TestPortMatchesGoCohere_2041 (0.00s)
+=== CONT  TestPortMatchesGoCohere_2040
+    port_test.go:350: shared preparation failed
+--- FAIL: TestPortMatchesGoCohere_2040 (0.00s)
+FAIL
