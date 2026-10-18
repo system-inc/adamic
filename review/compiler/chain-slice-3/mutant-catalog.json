@@ -1,0 +1,98 @@
+[
+  [
+    "check-optional-receiver",
+    "internal/lower/narrowed.go",
+    "l.acceptsUndefined(node) || optionalReceiver(node)",
+    "(l.acceptsUndefined(node) && !optionalReceiver(node))",
+    "./internal/oracle",
+    "^TestOptionalAfterCall79$"
+  ],
+  [
+    "javascript-required-panic",
+    "internal/javascript/javascript.go",
+    "if expression.Throws() {",
+    "if false && expression.Throws() {",
+    "./internal/oracle",
+    "^TestOptionalAfterCallRequired$"
+  ],
+  [
+    "native-required-panic",
+    "internal/native/reuse.go",
+    "if (ir.Defined{Message: message}).Throws() {",
+    "if false && (ir.Defined{Message: message}).Throws() {",
+    "./internal/oracle",
+    "^TestOptionalAfterCallRequired$"
+  ],
+  [
+    "drop-flow-throw-edge",
+    "internal/flow/build.go",
+    "if value.Interface().(ir.Defined).Throws() {",
+    "if false && value.Interface().(ir.Defined).Throws() {",
+    "./internal/flow",
+    "^TestOptionalAfterCallFlowEdges$"
+  ],
+  [
+    "drop-required-propagation",
+    "internal/lower/exceptions.go",
+    "found = found || node.Throws()",
+    "found = found",
+    "./internal/oracle",
+    "^TestOptionalAfterCallPropagation$"
+  ],
+  [
+    "merged-computed-read",
+    "internal/lower/expression.go",
+    "if value, handled, err := l.mergedComputedRead(node); handled {",
+    "if value, handled, err := l.mergedComputedRead(node); false && handled {",
+    "./internal/oracle",
+    "^TestMergedFieldTypeScriptComputedChecked$"
+  ],
+  [
+    "merged-declaration",
+    "internal/lower/merged_fields.go",
+    "if adamic {",
+    "if false && adamic {",
+    "./internal/oracle",
+    "^TestMergedFieldAdamicUnusedRefused$"
+  ],
+  [
+    "merged-read",
+    "internal/lower/merged_fields.go",
+    "l.result.CheckedFields[field.Name] = true",
+    "l.result.CheckedFields[field.Name] = false",
+    "./internal/oracle",
+    "^TestMergedFieldTypeScriptMissingChecked$"
+  ],
+  [
+    "function-annotation",
+    "internal/lower/function_rulings.go",
+    "node.Kind == ast.KindTypeReference &&",
+    "false && node.Kind == ast.KindTypeReference &&",
+    "./internal/oracle",
+    "^TestFunctionAdamicUnusedAnnotationRefused$"
+  ],
+  [
+    "function-call",
+    "internal/lower/function_rulings.go",
+    "if opaque {",
+    "if false && opaque {",
+    "./internal/oracle",
+    "^TestFunctionTypeScriptCallRefused$"
+  ],
+  [
+    "function-length",
+    "internal/lower/functions.go",
+    "function.SourceLength = sourceFunctionLength(declaration)",
+    "function.SourceLength = 0",
+    "./internal/oracle",
+    "^TestFunctionTypeScriptLengthAgreesWithNode$"
+  ],
+  [
+    "erase-earlier-throw",
+    "internal/lower/exceptions.go",
+    "found = found || node.Throws()",
+    "found = node.Throws()",
+    "./internal/lower",
+    "^TestOptionalAfterCallPreservesEarlierThrow$"
+  ]
+]

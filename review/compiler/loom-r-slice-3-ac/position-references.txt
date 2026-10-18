@@ -1,0 +1,33 @@
+internal/oracle/assignment_proofs_test.go:12:const assignmentProofBucket = "stage3/fixtures/assignment-proofs"
+internal/oracle/assignment_proofs_test.go:15:	"01_scanner_keyword.a", "02_if_narrowing.a", "03_return_defined.a",
+internal/oracle/assignment_proofs_test.go:16:	"04_chained.a", "05_compound.a", "06_wider_target.a",
+internal/oracle/assignment_proofs_test.go:147:	assignmentProofOracle(t, "01_scanner_keyword.a")
+internal/oracle/assignment_proofs_test.go:152:	assignmentProofMutant(t, "01_scanner_keyword.a")
+internal/oracle/assignment_proofs_test.go:157:	assignmentProofOracle(t, "02_if_narrowing.a")
+internal/oracle/assignment_proofs_test.go:162:	assignmentProofMutant(t, "02_if_narrowing.a")
+internal/oracle/assignment_proofs_test.go:167:	assignmentProofOracle(t, "03_return_defined.a")
+internal/oracle/assignment_proofs_test.go:172:	assignmentProofMutant(t, "03_return_defined.a")
+internal/oracle/assignment_proofs_test.go:177:	assignmentProofOracle(t, "04_chained.a")
+internal/oracle/assignment_proofs_test.go:182:	assignmentProofMutant(t, "04_chained.a")
+internal/oracle/assignment_proofs_test.go:187:	assignmentProofOracle(t, "05_compound.a")
+internal/oracle/assignment_proofs_test.go:192:	assignmentProofMutant(t, "05_compound.a")
+internal/oracle/assignment_proofs_test.go:197:	assignmentProofOracle(t, "06_wider_target.a")
+internal/oracle/assignment_proofs_test.go:202:	assignmentProofMutant(t, "06_wider_target.a")
+internal/oracle/merged_fields_main_test.go:12:	{"merge_missing.a", "undefined\n", "adamic: panic: field read failed: new Missing().promised is not initialized; expected number, found missing\n"},
+internal/oracle/merged_fields_main_test.go:13:	{"merge_missing_computed.a", "undefined\n", "adamic: panic: field read failed: new Missing()['promised'] is not initialized; expected number, found missing\n"},
+internal/oracle/merged_fields_main_test.go:21:	for _, file := range []string{"merge_unused.a", "merge_missing.a", "merge_missing_computed.a", "merge_present.a"} {
+internal/oracle/merged_fields_main_test.go:30:	rulingRefusal(t, "merge_unused.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+internal/oracle/merged_fields_main_test.go:34:	rulingRefusal(t, "merge_missing.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+internal/oracle/merged_fields_main_test.go:38:	rulingAgrees(t, "merge_unused.a", true)
+internal/oracle/merged_fields_main_test.go:79:	rulingRefusal(t, "merge_missing_computed.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+internal/oracle/function_rulings_main_test.go:24:	for _, file := range []string{"function_unused.a", "function_length.a"} {
+internal/oracle/function_rulings_main_test.go:70:		"function_unused.a": "2:22", "function_length.a": "2:23", "function_call.a": "3:16",
+internal/oracle/function_rulings_main_test.go:71:		"merge_unused.a": "2:1", "merge_missing.a": "2:1", "merge_missing_computed.a": "2:1",
+internal/oracle/function_rulings_main_test.go:73:	if file == "function_call.a" && !typescript {
+internal/oracle/function_rulings_main_test.go:106:	rulingRefusal(t, "function_unused.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+internal/oracle/function_rulings_main_test.go:110:	rulingRefusal(t, "function_length.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+internal/oracle/function_rulings_main_test.go:114:	rulingAgrees(t, "function_unused.a", true)
+internal/oracle/function_rulings_main_test.go:118:	rulingAgrees(t, "function_length.a", true)
+internal/oracle/function_rulings_main_test.go:122:	rulingRefusal(t, "function_call.a", true, "calling through the unchecked Function type; write a call signature with the actual parameters and result before calling")
+internal/oracle/function_rulings_main_test.go:171:	rulingRefusal(t, "function_call.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+stage3/fixtures/assignment_proofs_unit_test.go:7:	testFixtureDirectory(t, "assignment-proofs")

@@ -1,0 +1,8 @@
+=== RUN   TestTSGoCacheRelease
+=== PAUSE TestTSGoCacheRelease
+=== CONT  TestTSGoCacheRelease
+    tsgo_cache_test.go:18: warm build replaced the cached runtime
+--- FAIL: TestTSGoCacheRelease (1.35s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.361s
+FAIL

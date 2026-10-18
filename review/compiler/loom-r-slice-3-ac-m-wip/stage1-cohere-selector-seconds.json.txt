@@ -1,0 +1,122 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestSelectorThroughput",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestCorpusKeepsEveryParseableFile",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestPostcssSelectorParserParsesAsGoCohereDoes",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector/oracles",
+    "test": "TestProduct_SelectorGoOracle",
+    "seconds": 2.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "seconds": 2.06,
+    "action": "fail"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 1.21,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 0.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector/oracles",
+    "test": "TestProduct_SelectorGoAnswers",
+    "seconds": 5.8,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestProduct_SelectorFindsGoAnswers",
+    "seconds": 5.81,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestProduct_SelectorFindsGoOracle",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestSelectorAnswersRekey",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesAQuoteIgnoringEscapeParity",
+    "seconds": 6.06,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesTheSuffixOperatorLosingItsBar",
+    "seconds": 10.24,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesAMergedWordUsingItsFirstTokenPosition",
+    "seconds": 10.3,
+    "action": "pass"
+  }
+]

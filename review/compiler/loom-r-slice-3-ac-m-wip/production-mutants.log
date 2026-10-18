@@ -1,0 +1,14 @@
+check-optional-receiver True
+javascript-required-panic True
+native-required-panic True
+drop-flow-throw-edge True
+drop-required-propagation True
+merged-computed-read True
+merged-declaration True
+merged-read True
+function-annotation False
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m/run-mutants.py", line 14, in <module>
+    if not caught:raise RuntimeError(name+' did not fail behaviorally')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: function-annotation did not fail behaviorally

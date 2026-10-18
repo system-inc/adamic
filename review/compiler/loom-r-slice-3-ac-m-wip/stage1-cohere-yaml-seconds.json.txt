@@ -1,0 +1,1094 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLSchemaGo",
+    "seconds": 1.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLUnistGo",
+    "seconds": 1.47,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLComposeGo",
+    "seconds": 1.82,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLWidthGo",
+    "seconds": 0.55,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLPropsGo",
+    "seconds": 0.91,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLScalarsGo",
+    "seconds": 0.63,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLCSTGo",
+    "seconds": 0.4,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLLexerGo",
+    "seconds": 0.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLFormatGo",
+    "seconds": 4.64,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLFormatterMutantsOracle",
+    "seconds": 3.78,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_Setup",
+    "seconds": 26.16,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_Setup",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsComposeGo",
+    "seconds": 0.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsScalarsGo",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant003",
+    "seconds": 1.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode/0",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode/48",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode",
+    "seconds": 1.37,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant000",
+    "seconds": 2.86,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedStringPresenceGap",
+    "seconds": 3.71,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant002",
+    "seconds": 1.85,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant000",
+    "seconds": 0.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsPropsGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant001",
+    "seconds": 1.82,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceSanitized",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestStructuralPositionRefusal",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestBundledParserDifference",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerGaps",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesNative",
+    "seconds": 0.87,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/indicator_presence_lost",
+    "seconds": 2.78,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGoPlantedFailure",
+    "seconds": 1.18,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/anchor_separation_unchecked",
+    "seconds": 0.93,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGoUnion",
+    "seconds": 1.7,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/tab_indentation_accepted",
+    "seconds": 1.04,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants",
+    "seconds": 5.71,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_003",
+    "seconds": 3.98,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_002",
+    "seconds": 3.21,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsFormatGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_001",
+    "seconds": 3.49,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_006",
+    "seconds": 1.26,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMatchGo",
+    "seconds": 9.22,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_007",
+    "seconds": 2.99,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_000",
+    "seconds": 3.65,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_005",
+    "seconds": 3.23,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_003",
+    "seconds": 2.86,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsLowered",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_004",
+    "seconds": 3.47,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_002",
+    "seconds": 2.95,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthNative",
+    "seconds": 6.25,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaNative",
+    "seconds": 0.82,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriverUnion",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsNative",
+    "seconds": 4.85,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_001",
+    "seconds": 3.87,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_000",
+    "seconds": 1.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTLowered",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant002",
+    "seconds": 1.55,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTNative",
+    "seconds": 2.84,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistLowered",
+    "seconds": 2.41,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/null_key_absent",
+    "seconds": 2.91,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant001",
+    "seconds": 1.34,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant000",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/source_offset_advanced",
+    "seconds": 2.44,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/line_start_shifted",
+    "seconds": 1.43,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants",
+    "seconds": 8.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsCSTGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMatchesGo",
+    "seconds": 6.82,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeNative",
+    "seconds": 11.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistNative",
+    "seconds": 16.01,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant000",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/document_start_marker_lost",
+    "seconds": 7.72,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant002",
+    "seconds": 5.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGoPlantedFailure",
+    "seconds": 0.95,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGoUnion",
+    "seconds": 0.67,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant001",
+    "seconds": 5.44,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/block_mapping_pair_lost",
+    "seconds": 4.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/keep_chomping_lost",
+    "seconds": 2.74,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGo_000",
+    "seconds": 5.77,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGo_001",
+    "seconds": 6.55,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/implicit_key_limit_skipped",
+    "seconds": 2.71,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants",
+    "seconds": 16.5,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant004",
+    "seconds": 0.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant001",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsWidthGo",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/tab_not_whitespace",
+    "seconds": 2.73,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/BOM_not_split",
+    "seconds": 2.52,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/cached_NUL_becomes_space",
+    "seconds": 1.76,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/numeric_whitespace_excludes_space",
+    "seconds": 1.94,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants",
+    "seconds": 12.57,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant002",
+    "seconds": 8.64,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestWidthsMatchGo",
+    "seconds": 10.43,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGoPlantedFailure",
+    "seconds": 1.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant000",
+    "seconds": 2.99,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGoUnion",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/comment_prefix_lost",
+    "seconds": 9.5,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant001",
+    "seconds": 7.95,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsUnistGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGo_000",
+    "seconds": 4.11,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/point_column_shifted",
+    "seconds": 4.07,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/stringUnitScan.ts",
+    "seconds": 1.78,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGo_001",
+    "seconds": 5.86,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/arenaNodeRead.ts",
+    "seconds": 0.63,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant003",
+    "seconds": 0.39,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/numericMapLookup.ts",
+    "seconds": 0.4,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes",
+    "seconds": 2.82,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/class_range_loses_last_character",
+    "seconds": 0.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant002",
+    "seconds": 0.5,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant000",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/document_end_marker_lost",
+    "seconds": 1.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants",
+    "seconds": 18.58,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsSchemaGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/plus_accepts_empty",
+    "seconds": 0.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/optional_accepts_twice",
+    "seconds": 0.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/nullable_prefix_loses_successors",
+    "seconds": 0.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants",
+    "seconds": 3.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_007",
+    "seconds": 2.05,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_003",
+    "seconds": 2.31,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMatchesGo",
+    "seconds": 2.27,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_006",
+    "seconds": 2.01,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "seconds": 0.91,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_004",
+    "seconds": 2.1,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_005",
+    "seconds": 2.3,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Sources",
+    "seconds": 0.01,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant002",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant001",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant000",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsLexerGo",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutantsPlantedFailure",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_002",
+    "seconds": 1.94,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_001",
+    "seconds": 2.55,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_000",
+    "seconds": 1.9,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_004",
+    "seconds": 22.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_005",
+    "seconds": 23.77,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_003",
+    "seconds": 22.93,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Native",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Lowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Sources",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Native",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Lowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_002",
+    "seconds": 22.99,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGoUnion",
+    "seconds": 0.74,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/escaped_line_feed_becomes_carriage_return",
+    "seconds": 1.58,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Lowered",
+    "seconds": 3.87,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Native",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Lowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Sources",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Native",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Lowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Sources",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/strip_becomes_clip",
+    "seconds": 3.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/flow_line_break_stops_folding",
+    "seconds": 3.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants",
+    "seconds": 9.49,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant002",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant001",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Sources",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Sources",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Native",
+    "seconds": 9.85,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Lowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedValuePresenceGap",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsFormatterMutantsOracle",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/assignmentValue.ts",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Native",
+    "seconds": 14.53,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/dynamicCase.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/negativeCase.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/stringFallback.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/valueConjunction.ts",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/prefixIncrement.ts",
+    "seconds": 0.28,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/emptyAlternative.ts",
+    "seconds": 0.27,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps",
+    "seconds": 1.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_000",
+    "seconds": 21.26,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_001",
+    "seconds": 22.72,
+    "action": "pass"
+  }
+]

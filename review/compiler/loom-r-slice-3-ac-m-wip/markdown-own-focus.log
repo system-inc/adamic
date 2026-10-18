@@ -1,0 +1,37 @@
+=== RUN   TestParserRepresentationProbes
+    support_test.go:57: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== RUN   TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== RUN   TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== RUN   TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== RUN   TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== RUN   TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== RUN   TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== RUN   TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== RUN   TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== RUN   TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== RUN   TestParserRepresentationProbes/gaps/15_string_or.ts
+=== RUN   TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== RUN   TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+--- PASS: TestParserRepresentationProbes (5.28s)
+    --- PASS: TestParserRepresentationProbes/gaps/1_recursive_state.ts (1.24s)
+    --- PASS: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.10s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (1.24s)
+    --- PASS: TestParserRepresentationProbes/gaps/14_missing_path_key.ts (0.68s)
+    --- PASS: TestParserRepresentationProbes/gaps/4_structural_ranges.ts (0.10s)
+    --- PASS: TestParserRepresentationProbes/gaps/5_conditional_panic.ts (0.28s)
+    --- PASS: TestParserRepresentationProbes/gaps/7_postfix_property.ts (0.10s)
+    --- PASS: TestParserRepresentationProbes/gaps/8_generic_callback_result.ts (0.10s)
+    --- PASS: TestParserRepresentationProbes/gaps/9_mixed_path_names.ts (0.09s)
+    --- PASS: TestParserRepresentationProbes/gaps/10_multiple_push.ts (0.29s)
+    --- PASS: TestParserRepresentationProbes/gaps/11_function_expression.ts (0.28s)
+    --- PASS: TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts (0.30s)
+    --- PASS: TestParserRepresentationProbes/gaps/15_string_or.ts (0.28s)
+    --- PASS: TestParserRepresentationProbes/gaps/16_array_shift.ts (0.10s)
+    --- PASS: TestParserRepresentationProbes/gaps/17_long_optional_chain.ts (0.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	5.287s

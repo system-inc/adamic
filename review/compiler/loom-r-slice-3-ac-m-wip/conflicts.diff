@@ -1,0 +1,35 @@
+diff --cc internal/native/tsgo.go
+index 2229b721,3db71f61..00000000
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@@ -123,10 -106,24 +106,29 @@@ func BuildTSGo(source, output, archive 
+  	if err != nil {
+  		return err
+  	}
+++<<<<<<< HEAD
+ +	arguments := append(append(linkFlags(tsgoFlags(source, options), options), prefixMaps(directory, "/adamic-build")...), "-o", output)
+ +	arguments = append(arguments, units...)
+++=======
++ 	flags := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...)
++ 	flags = append(flags, "-I", "runtime")
++ 	program := "main.c"
++ 	if goruntime.GOOS == "darwin" {
++ 		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
++ 		var combined []byte
++ 		if err := withCompilerToken(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
++ 			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
++ 		}
++ 		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
++ 			return err
++ 		}
++ 		program = "main.o"
++ 	}
++ 	arguments := append(flags, "-o", output, program)
++ 	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
+++>>>>>>> f75b244b (Carry compiler slice 3 with measured a-check headers)
+  	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
+- 	command := toolchain.CommandIn(directory, "clang", arguments...)
++ 	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
+  	var combined []byte
+  	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
+  		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)

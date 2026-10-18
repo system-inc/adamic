@@ -1,0 +1,25 @@
+{
+  "rows": {
+    "internal/oracle/testdata/refusal_rulings/function_call.a": {
+      "status": "refused",
+      "reason": "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_call.a:1:10: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.12935,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_call.a:1:10: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number"
+      }
+    }
+  },
+  "counts": {
+    "refused": 1
+  },
+  "exit": 1,
+  "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/refusal_rulings/function_call.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_call.a:1:10: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like ()",
+  "seconds": 0.4
+}

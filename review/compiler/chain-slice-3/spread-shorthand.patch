@@ -1,0 +1,454 @@
+diff --git a/internal/lower/array_call_arguments.go b/internal/lower/array_call_arguments.go
+new file mode 100644
+index 00000000..7f7c2949
+--- /dev/null
++++ b/internal/lower/array_call_arguments.go
+@@ -0,0 +1,69 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// The receiver is saved first. Packing expands each spread before the next
++// argument runs, including when that argument mutates the spread's source.
++func (l *lowering) arrayInsertArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
++	element, err := l.elementType(receiver)
++	if err != nil {
++		return nil, true, err
++	}
++	array, err := l.expression(receiver)
++	if err != nil {
++		return nil, true, err
++	}
++	arguments, spread, err := l.callArguments(written)
++	if err != nil {
++		return nil, true, err
++	}
++	for index, value := range arguments {
++		if len(spread) > index && spread[index] {
++			source := written[index].AsSpreadElement().Expression
++			var from ir.Type
++			if literal, ok := value.(ir.ArrayLiteral); ok {
++				if len(literal.Elements) == 0 {
++					literal.Element = element
++					arguments[index] = literal
++					continue
++				}
++				from = literal.Element
++			} else {
++				from, err = l.elementType(source)
++				if err != nil {
++					return nil, true, err
++				}
++			}
++			if from != element {
++				b := l.libraryArrayBuilder([]ir.Expression{value})
++				packed := b.declare("spread_values", ir.ArrayLiteral{Element: element})
++				item := b.local("spread_item", from)
++				fitted := fit(b.read(item), element)
++				if fitted.Type() != element {
++					return nil, true, l.notYet(source, "spreading elements with an incompatible representation into "+name+" (convert the elements explicitly first)")
++				}
++				b.body = append(b.body, ir.ForOf{Iterable: b.read(b.parameters[0]), Element: from, Local: item, Body: []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: b.read(packed), Value: fitted, Element: element, Site: l.libraryArraySyntheticWriteSite(node)}}}})
++				arguments[index] = b.finish("array_spread_convert", b.read(packed))
++			}
++		} else {
++			arguments[index] = fit(value, element)
++			if arguments[index].Type() != element {
++				return nil, true, l.notYet(written[index], name+" with an incompatible element representation (convert the value explicitly first)")
++			}
++		}
++	}
++	packed := ir.ArrayLiteral{Element: element, Elements: arguments, Spread: spread}
++	b := l.libraryArrayBuilder([]ir.Expression{array, packed})
++	target, items := b.read(b.parameters[0]), ir.Expression(b.read(b.parameters[1]))
++	item := b.local("insert_item", element)
++	var insertion ir.Expression = ir.ArrayPush{Array: target, Value: b.read(item), Element: element, Site: l.writeSite(receiver)}
++	if name == "unshift" {
++		items = ir.ArrayReverse{Array: items}
++		insertion = ir.ArraySplice{Array: target, Start: ir.NumberConstant{Value: 0}, Count: ir.NumberConstant{Value: 0}, Items: []ir.Expression{b.read(item)}, Element: element, Site: l.writeSite(receiver)}
++	}
++	b.body = append(b.body, ir.ForOf{Iterable: items, Element: element, Local: item, Body: []ir.Statement{ir.Evaluate{Value: insertion}}})
++	return b.finish("array_"+name+"_arguments", ir.Length{Array: target}), true, nil
++}
+diff --git a/internal/lower/library_array.go b/internal/lower/library_array.go
+index d9012025..a6f79906 100644
+--- a/internal/lower/library_array.go
++++ b/internal/lower/library_array.go
+@@ -10,6 +10,7 @@ import (
+ 
+ var libraryArrayMethods = map[string]bool{
+ 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
++	"push": true, "unshift": true,
+ 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
+ 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
+ }
+@@ -20,6 +21,12 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
+ }
+ 
+ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
++	if name == "push" && len(written) == 1 && written[0].Kind != ast.KindSpreadElement {
++		return l.arrayMethodArguments(node, receiver, name, written)
++	}
++	if name == "push" || name == "unshift" {
++		return l.arrayInsertArguments(node, receiver, name, written)
++	}
+ 	element, err := l.elementType(receiver)
+ 	if err != nil {
+ 		return nil, true, err
+diff --git a/internal/lower/library_json_stringify.go b/internal/lower/library_json_stringify.go
+index aff61727..7b1e0103 100644
+--- a/internal/lower/library_json_stringify.go
++++ b/internal/lower/library_json_stringify.go
+@@ -89,7 +89,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
+ 					return l.notYet(v, "JSON.stringify duplicate literal keys")
+ 				}
+ 			}
+-			value, child, err := l.jsonInput(v)
++			value, child, err := l.jsonLiteralField(v)
+ 			if err != nil {
+ 				return err
+ 			}
+@@ -111,8 +111,8 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
+ 			}
+ 		} else {
+ 			for _, f := range n.AsObjectLiteralExpression().Properties.Nodes {
+-				if f.Kind != ast.KindPropertyAssignment {
+-					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods")
++				if f.Kind != ast.KindPropertyAssignment && f.Kind != ast.KindShorthandPropertyAssignment {
++					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread or methods")
+ 				}
+ 				key := f.Name()
+ 				if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
+@@ -129,7 +129,11 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
+ 						return nil, nil, l.notYet(key, "JSON.stringify a numeric key outside the array-index range (spell it as a string)")
+ 					}
+ 				}
+-				if err := add(name, f.AsPropertyAssignment().Initializer); err != nil {
++				value := f
++				if f.Kind == ast.KindPropertyAssignment {
++					value = f.AsPropertyAssignment().Initializer
++				}
++				if err := add(name, value); err != nil {
+ 					return nil, nil, err
+ 				}
+ 			}
+@@ -202,3 +206,25 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
+ 	}
+ 	return &ir.JSONSchema{Kind: kind}, nil
+ }
++
++// A shorthand name is a property symbol, not the binding it reads. Resolve
++// the value symbol just as ordinary object-literal lowering does. Its declared
++// type describes the stored representation even when the occurrence is narrowed.
++func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
++	if node.Kind != ast.KindShorthandPropertyAssignment {
++		return l.jsonInput(node)
++	}
++	value, err := l.shorthand(node)
++	if err != nil {
++		return nil, nil, err
++	}
++	symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
++	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
++		symbol = l.checker.GetAliasedSymbol(symbol)
++	}
++	if symbol == nil {
++		return nil, nil, l.notYet(node, "JSON.stringify shorthand without a value binding")
++	}
++	schema, err := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
++	return value, schema, err
++}
+diff --git a/internal/oracle/call_spread_array_test.go b/internal/oracle/call_spread_array_test.go
+new file mode 100644
+index 00000000..ad0f9c06
+--- /dev/null
++++ b/internal/oracle/call_spread_array_test.go
+@@ -0,0 +1,105 @@
++package oracle
++
++import (
++	"path/filepath"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++func init() {
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/call_spread_array.a", true, false})
++}
++
++func TestCallSpreadArray(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs("testdata/call_spread_array.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	truth := onNode(t, path)
++	got, binary := natively(t, program)
++	for name, run := range map[string]run{"sanitized": got, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
++		if difference := disagreement(truth, run); difference != "" {
++			t.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
++		}
++	}
++	if leaked := leaks(t, program, binary); leaked != "" {
++		t.Fatal(leaked)
++	}
++}
++
++func TestCallSpreadEvaluatedTwiceMutant(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs("testdata/call_spread_array.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	target := -1
++	for index, function := range program.Functions {
++		if function.Name == "spreadOnce" {
++			target = index
++		}
++	}
++	if target < 0 {
++		t.Fatal("spread expression function missing")
++	}
++	// Re-evaluate the actual spread operand at its argument position. The
++	// discarded first result still goes through ordinary ownership planning.
++	changed := false
++	for _, statement := range program.Main {
++		line, ok := statement.(ir.WriteLine)
++		if !ok {
++			continue
++		}
++		text, ok := line.Value.(ir.NumberToString)
++		if !ok {
++			continue
++		}
++		insertion, ok := text.Value.(ir.Call)
++		if !ok || program.Functions[insertion.Function].Name != "array_unshift_arguments" {
++			continue
++		}
++		packed := insertion.Arguments[1].(ir.ArrayLiteral)
++		for index, value := range packed.Elements {
++			call, ok := value.(ir.Call)
++			if ok && call.Function == target {
++				packed.Elements[index] = ir.Comma{Left: call, Right: call}
++				changed = true
++				break
++			}
++		}
++		if changed {
++			break
++		}
++	}
++	if !changed {
++		t.Fatal("spread mutation site missing")
++	}
++	truth := onNode(t, path)
++	got, binary := natively(t, program)
++	if got.exitCode != 0 || len(got.stderr) != 0 {
++		t.Fatalf("mutant failed outside comparison: %+v", got)
++	}
++	if leaked := leaks(t, program, binary); leaked != "" {
++		t.Fatal(leaked)
++	}
++	if difference := disagreement(truth, got); difference != "stdout differs" {
++		t.Fatalf("mutant caught by %q", difference)
++	}
++	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
++		t.Fatalf("JavaScript mutant caught by %q", difference)
++	}
++	t.Logf("Node %q; evaluated twice %q", truth.stdout, got.stdout)
++}
+diff --git a/internal/oracle/json_shorthand_test.go b/internal/oracle/json_shorthand_test.go
+new file mode 100644
+index 00000000..562cd02d
+--- /dev/null
++++ b/internal/oracle/json_shorthand_test.go
+@@ -0,0 +1,87 @@
++package oracle
++
++import (
++	"path/filepath"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++func init() {
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{"internal/oracle/testdata/json_shorthand.a", true, false})
++}
++
++func TestJSONStringifyShorthand(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs("testdata/json_shorthand.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	truth := onNode(t, path)
++	got, binary := natively(t, program)
++	for name, run := range map[string]run{"sanitized": got, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
++		if difference := disagreement(truth, run); difference != "" {
++			t.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
++		}
++	}
++	if leaked := leaks(t, program, binary); leaked != "" {
++		t.Fatal(leaked)
++	}
++}
++
++func TestJSONStringifyShorthandWrongBindingMutant(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs("testdata/json_shorthand.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	outer := -1
++	for index, local := range program.Locals {
++		if local.Name == "status" && local.Function < 0 {
++			outer = index
++			break
++		}
++	}
++	if outer < 0 {
++		t.Fatal("outer binding missing")
++	}
++	changed := false
++	for _, function := range program.Functions {
++		if function.Name != "report" {
++			continue
++		}
++		returned := function.Body[0].(ir.Return).Value.(ir.Coalesce).Value.(ir.JSONStringify)
++		literal := returned.Value.(ir.ObjectLiteral)
++		literal.Fields[0].Value = ir.Read{Local: outer, Of: ir.String}
++		changed = true
++	}
++	if !changed {
++		t.Fatal("shorthand mutation site missing")
++	}
++	truth := onNode(t, path)
++	got, binary := natively(t, program)
++	if got.exitCode != 0 || len(got.stderr) != 0 {
++		t.Fatalf("mutant failed outside comparison: %+v", got)
++	}
++	if leaked := leaks(t, program, binary); leaked != "" {
++		t.Fatal(leaked)
++	}
++	if difference := disagreement(truth, got); difference != "stdout differs" {
++		t.Fatalf("mutant caught by %q", difference)
++	}
++	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
++		t.Fatalf("JavaScript mutant caught by %q", difference)
++	}
++	t.Logf("Node %q; wrong binding %q", truth.stdout, got.stdout)
++}
+diff --git a/internal/oracle/testdata/call_spread_array.a b/internal/oracle/testdata/call_spread_array.a
+new file mode 100644
+index 00000000..3b079f29
+--- /dev/null
++++ b/internal/oracle/testdata/call_spread_array.a
+@@ -0,0 +1,50 @@
++const base: readonly string[] = [`a${1}`, `b${2}`];
++const values: string[] = [];
++console.log(String(values.push(...base)));
++console.log(values.join(','));
++let reads = 0;
++function spreadOnce(): readonly string[] {
++ reads++;
++ return base;
++}
++console.log(String(values.unshift('first', ...spreadOnce(), 'last')));
++console.log(String(reads));
++console.log(values.join(','));
++const empty: readonly string[] = [];
++console.log(String(values.push(...empty)));
++console.log(String(values.unshift()));
++console.log(String(values.push(...[])));
++console.log(String(values.push(...values)));
++console.log(values.join(','));
++const mutable = [`old${1}`];
++function change(): string {
++ mutable[0] = `new${2}`;
++ return 'tail';
++}
++console.log(String(values.unshift(...mutable, change(), ...mutable)));
++console.log(values.join(','));
++function text(...items: string[]): string { return items.join('|'); }
++console.log(text(...base, ...spreadOnce()));
++const call: (...items: string[]) => string = text;
++console.log(call(...base));
++console.log(String(reads));
++const numbers: (number | undefined)[] = [];
++const integers: readonly number[] = [1, 2];
++console.log(String(numbers.push(...integers, undefined)));
++console.log(numbers.join(','));
++function receiver(): string[] {
++ console.log('receiver');
++ return values;
++}
++function incoming(): readonly string[] {
++ console.log('spread');
++ return base;
++}
++function last(): string {
++ console.log('last');
++ return 'end';
++}
++console.log(String(receiver().push(...incoming(), last(), ...incoming())));
++console.log(values.join(','));
++console.log(String(values.unshift(...['head', 'next'])));
++console.log(values.join(','));
+diff --git a/internal/oracle/testdata/json_shorthand.a b/internal/oracle/testdata/json_shorthand.a
+new file mode 100644
+index 00000000..ed4f41db
+--- /dev/null
++++ b/internal/oracle/testdata/json_shorthand.a
+@@ -0,0 +1,25 @@
++const status = 'outer'.repeat(2);
++console.log(JSON.stringify({ status }) ?? 'missing');
++function report(status: string): string {
++ return JSON.stringify({ status }) ?? 'missing';
++}
++console.log(report('inner'.repeat(2)));
++{
++ const status = 'block'.repeat(2);
++ console.log(JSON.stringify({ status }) ?? 'missing');
++}
++console.log(JSON.stringify({ status: status }) ?? 'missing');
++let count = 1;
++function advance(): number {
++ count++;
++ return count;
++}
++console.log(JSON.stringify({ count, after: advance(), last: count }) ?? 'missing');
++const done = false;
++const absent: number | undefined = undefined;
++const words: readonly string[] = ['one', 'two'];
++console.log(JSON.stringify({ status, done, absent, words }) ?? 'missing');
++let optional: number | undefined = advance();
++if (optional !== undefined) {
++ console.log(JSON.stringify({ optional }) ?? 'missing');
++}

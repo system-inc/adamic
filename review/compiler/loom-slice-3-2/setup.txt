@@ -1,0 +1,23 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.056s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.076s)
+setup: submodules ready (0.099s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.047s
+setup: markdown dependencies ready (0.362s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.587s)
+setup: shared cache ready (2.119s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/exceptions.go:194:26: node.Throws undefined (type ir.Defined has no field or method Throws)
+internal/lower/expression.go:484:30: l.functionObservation undefined (type *lowering has no field or method functionObservation)
+internal/lower/expression.go:487:30: l.mergedComputedRead undefined (type *lowering has no field or method mergedComputedRead)
+internal/lower/expression.go:1266:27: unknown field SourceLength in struct literal of type ir.Function
+internal/lower/expression.go:1266:48: callee.SourceLength undefined (type ir.Function has no field or method SourceLength)
+internal/lower/functions.go:68:11: function.SourceLength undefined (type ir.Function has no field or method SourceLength)
+internal/lower/functions.go:68:26: undefined: sourceFunctionLength
+internal/lower/library_array.go:28:12: l.arrayInsertArguments undefined (type *lowering has no field or method arrayInsertArguments)
+internal/lower/refusals.go:59:14: l.mergedFieldRulings undefined (type *lowering has no field or method mergedFieldRulings)
+internal/lower/refusals.go:62:14: l.functionAnnotations undefined (type *lowering has no field or method functionAnnotations)
+internal/lower/refusals.go:62:14: too many errors

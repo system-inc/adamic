@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestAssignmentProofChained",
+    "seconds": 4.02,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofWiderTargetMutant",
+    "seconds": 4.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofCompoundMutant",
+    "seconds": 4.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofScannerKeyword",
+    "seconds": 4.1,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofReturnDefinedMutant",
+    "seconds": 1.43,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofWiderTarget",
+    "seconds": 1.51,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofIfNarrowingMutant",
+    "seconds": 1.57,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofReturnDefined",
+    "seconds": 1.51,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofCompound",
+    "seconds": 1.29,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofIfNarrowing",
+    "seconds": 1.38,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofChainedMutant",
+    "seconds": 1.26,
+    "action": "pass"
+  },
+  {
+    "test": "TestAssignmentProofScannerKeywordMutant",
+    "seconds": 1.38,
+    "action": "pass"
+  }
+]

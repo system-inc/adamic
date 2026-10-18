@@ -1,0 +1,162 @@
+[
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestMultiPushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 50.49162363800002
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestClosedMultiplePushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 36.49120862699999
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestParserRepresentationProbes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 75.111421017
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 22.11052893799996
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestLexerGaps|TestProduct_YAMLClosedGaps(Lowered|Native))$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 24.590947304999986
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^(TestPushSpreadGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 16.737435496000046
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^(TestGapStandsWhereGapsMdSays)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.240776443000016
+  },
+  {
+    "package": "./stage3/fixtures",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^(TestFixturesAssignmentProofs|TestFixtureDirectoriesHaveTopLevelTests)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 32.69616205599999
+  }
+]
