@@ -2995,3 +2995,55 @@ func TestAUnionIsLeanOnlyWhenEverySetInItIs(t *testing.T) {
 		t.Fatal("a lean set folded with a lean one isn't lean")
 	}
 }
+
+// A read through a symbolic link and then `..` is keyed where the kernel lands, the link's target's parent, never where
+// filepath.Clean puts it by the spelling: chg_6p4j4p8f's node_fs_directory_inputs, whose oracles read link-deep/.., with
+// link-deep a link to nested/deeper, so an entry read there, link-deep/../link-inside, is nested/link-inside, a link the
+// tree carries, where the spelling's link-inside beside link-deep is no path at all, and was refused as untracked (Adam,
+// Oct 18). The link a `..` stepped out of is keyed too, since it decides where the read lands, even where it lands where
+// the spelling does (link-directory/..), which keeps the spelling; a dangling link's `..` stops at the link, as the
+// kernel's lookup does. Mutants that each fail it: kernelPath back to filepath.Clean, which refuses the run; the crossed
+// links unrecorded; a link crossed only when it lands elsewhere; a dangling link's `..` taken by its spelling.
+// Not parallel: newRig.
+func TestAReadThroughALinkThenDotDotIsKeyedWhereTheKernelLands(t *testing.T) {
+	r := newRig(t)
+	inputs := filepath.Join(r.root, "inputs")
+	write(t, inputs, "nested/inside.txt", "inside\n")
+	write(t, inputs, "nested/deeper/leaf.txt", "leaf\n")
+	write(t, inputs, "plain.txt", "plain\n")
+	os.Symlink("inside.txt", filepath.Join(inputs, "nested/link-inside"))
+	os.Symlink("nested/deeper", filepath.Join(inputs, "link-deep"))
+	os.Symlink("nested", filepath.Join(inputs, "link-directory"))
+	os.Symlink("absent", filepath.Join(inputs, "dangling"))
+	gitIn(t, r.root, "add", "inputs")
+	gitIn(t, r.root, "commit", "-q", "-m", "inputs")
+	forgetTracked()
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	// Spelled by hand: r.path joins, and filepath.Join cleans the `..` away before the trace holds it.
+	r.window(build.Build, func() {
+		r.add(r.pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=10, ...}, AT_SYMLINK_NOFOLLOW) = 0`, r.root+"/inputs/link-deep/../link-inside")
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
+		r.add(child, `chdir(%q) = 0`, r.path("inputs"))
+		r.add(child, `newfstatat(AT_FDCWD, "link-deep/../deeper/leaf.txt", {st_mode=S_IFREG|0644, st_size=5, ...}, 0) = 0`)
+		r.add(child, `newfstatat(AT_FDCWD, "link-directory/../link-deep", {st_mode=S_IFLNK|0777, st_size=13, ...}, AT_SYMLINK_NOFOLLOW) = 0`)
+		r.add(child, `newfstatat(AT_FDCWD, "dangling/../plain.txt", 0x7ffc, 0) = -1 ENOENT (No such file or directory)`)
+		r.add(child, "+++ exited with 0 +++")
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"link inputs/link-deep", "link inputs/nested/link-inside", "exists inputs/nested/deeper/leaf.txt", "link inputs/link-directory", "link inputs/dangling"} {
+		if !slices.Contains(got, want) {
+			t.Fatalf("the read set %q lacks %q", got, want)
+		}
+	}
+	for _, spelled := range []string{"inputs/link-inside", "inputs/deeper/leaf.txt", "inputs/deeper", "inputs/plain.txt"} {
+		if slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, " "+spelled) }) {
+			t.Fatalf("the read set %q keys the spelling's %s", got, spelled)
+		}
+	}
+}

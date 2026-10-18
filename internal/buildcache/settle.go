@@ -916,9 +916,15 @@ func (state *traceState) handle(call traceCall) {
 		name, kind = filepath.Clean(unescape(decoded)), readListing
 	default:
 		var rest string
-		name, rest = target(call.call, call.arguments, state.directory[process])
+		var crossed []string
+		name, rest, crossed = target(call.call, call.arguments, state.directory[process])
 		if name == "" {
 			return
+		}
+		// Each link a `..` stepped back out of decided where the call landed, so it's read, as a lookup of the link
+		// (throughLink keys it by where it points): chg_6p4j4p8f's link-deep/.. landed in nested, through link-deep.
+		for _, link := range crossed {
+			state.record(call.pid, process, link, readStat)
 		}
 		if strings.HasPrefix(name, traceMarker) {
 			state.marker(call.pid, process, strings.TrimPrefix(name, traceMarker), call.queued)
@@ -1088,7 +1094,7 @@ func (state *traceState) openWindow(id string, owner int) {
 // window's, never outside it (Mentat's M2). A process it doesn't know yet has no placed thread to read meanwhile, and its
 // marker opens the window when its thread is placed, late (windowLate).
 func (state *traceState) openEarly(call traceCall) {
-	name, _ := target(call.call, call.arguments, "")
+	name, _, _ := target(call.call, call.arguments, "")
 	marker, ok := strings.CutPrefix(name, traceMarker)
 	if !ok {
 		return
@@ -1312,40 +1318,85 @@ func (state *traceState) joinRun(run, last map[string]int, reads map[string]*pat
 	}
 }
 
-// target is the absolute path a call names and the rest of its arguments, or "".
-func target(call, arguments, directory string) (string, string) {
+// target is the absolute path a call names (kernelPath), the rest of its arguments, and the links its `..` stepped back
+// out of, or "".
+func target(call, arguments, directory string) (string, string, []string) {
 	base := directory
 	if atCalls[call] {
 		decoded, length, ok := directoryArgument(arguments)
 		if !ok {
-			return "", arguments
+			return "", arguments, nil
 		}
 		if decoded != "" {
 			base = unescape(decoded)
 		}
 		arguments = arguments[length:]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {
-		return "", arguments
+		return "", arguments, nil
 	}
 	quotedName, length, ok := quotedArgument(arguments)
 	if !ok {
-		return "", arguments
+		return "", arguments, nil
 	}
 	name := unescape(quotedName)
 	rest := arguments[length:]
 	if name == "" && strings.Contains(rest, "AT_EMPTY_PATH") {
 		if base == "" {
-			return "", rest
+			return "", rest, nil
 		}
-		return filepath.Clean(base), rest
+		return filepath.Clean(base), rest, nil
 	}
 	if !filepath.IsAbs(name) {
 		if base == "" {
-			return "", rest
+			return "", rest, nil
 		}
-		name = filepath.Join(base, name)
+		name = base + string(filepath.Separator) + name
 	}
-	return filepath.Clean(name), rest
+	landed, crossed := kernelPath(name)
+	return landed, rest, crossed
+}
+
+// kernelPath is name, an absolute path a call named, with its `.` and `..` taken as the kernel takes them: a `..` is
+// the parent of where the path so far lands, never the parent of how it's spelled. filepath.Clean takes `..` by the
+// spelling, so a read of link-deep/../link-inside, link-deep a link to nested/deeper, was keyed as link-inside beside
+// link-deep, a path the tree doesn't carry, where the kernel read nested/link-inside, and the run was refused as reading
+// an untracked file (chg_6p4j4p8f's node_fs_directory_inputs, Oct 18). Only a path so far that ends in a symbolic link
+// lands anywhere but its spelled parent: an earlier link in it is followed by any read through it (throughLink), and its
+// spelled parent resolves where the kernel's does. So a `..` out of a link returns that link among the crossed, the
+// read's whatever the landing, since a link repointed moves it; the path goes on from the link's target's parent, kept
+// as spelled where that's where the spelled parent lands, so a path that lands as it always did reads as it did; and a
+// dangling link stops the path there, as the kernel's lookup stops.
+func kernelPath(name string) (string, []string) {
+	if !slices.Contains(strings.Split(name, string(filepath.Separator)), "..") {
+		return filepath.Clean(name), nil
+	}
+	current := string(filepath.Separator)
+	var crossed []string
+	for _, part := range strings.Split(name, string(filepath.Separator)) {
+		switch part {
+		case "", ".":
+			continue
+		case "..":
+			spelled := filepath.Dir(current)
+			if info, err := os.Lstat(current); err != nil || info.Mode()&fs.ModeSymlink == 0 {
+				current = spelled
+				continue
+			}
+			crossed = append(crossed, current)
+			landed := resolved(current)
+			switch {
+			case landed == "":
+				return current, crossed
+			case resolved(spelled) != filepath.Dir(landed):
+				current = filepath.Dir(landed)
+			default:
+				current = spelled
+			}
+		default:
+			current = filepath.Join(current, part)
+		}
+	}
+	return current, crossed
 }
 
 // secondTarget is the path a rename, link or symlink writes: its second path argument.
@@ -1364,7 +1415,7 @@ func secondTarget(call, rest, directory string) string {
 		return filepath.Clean(name)
 	case "renameat", "renameat2", "linkat", "symlinkat":
 		rest = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(rest), ","))
-		name, _ := target("openat", rest, directory)
+		name, _, _ := target("openat", rest, directory)
 		return name
 	}
 	return ""
