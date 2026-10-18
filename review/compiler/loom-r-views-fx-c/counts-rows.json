@@ -1,0 +1,92 @@
+[
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p21.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p21.a | 3 | 3 | 7 | 13 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p60.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p60.a | 3 | 3 | 7 | 13 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p61.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p61.a | 4 | 4 | 7 | 14 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p23.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p23.a | 3 | 3 | 7 | 13 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p22_adapted.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p22_adapted.a | 3 | 3 | 6 | 11 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p59_adapted.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p59_adapted.a | 4 | 4 | 7 | 11 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p62_adapted.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p62_adapted.a | 4 | 4 | 7 | 11 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/lower/testdata/callable_producers/p135_tagged_unread.a",
+    "before": null,
+    "after": "| internal/lower/testdata/callable_producers/p135_tagged_unread.a | 4 | 4 | 7 | 11 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/callable_union_result_number.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/callable_union_result_number.a | 4 | 4 | 1 | 6 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/callable_union_result_string.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/callable_union_result_string.a | 4 | 4 | 2 | 7 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/callable_union_result_zero.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/callable_union_result_zero.a | 4 | 4 | 1 | 6 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/callable_union_result_both.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/callable_union_result_both.a | 17 | 17 | 5 | 26 | 7 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/loom_views_c/snapshot-original.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/loom_views_c/snapshot-original.a | 3 | 3 | 8 | 15 | 3 | 0 |"
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/snapshot-maybe-boolean.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/v2/snapshot-maybe-boolean.a | 6 | 6 | 9 | 24 | 2 | 0 |"
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/snapshot-maybe-number.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/v2/snapshot-maybe-number.a | 10 | 10 | 9 | 21 | 4 | 0 |"
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a",
+    "before": "| stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a | 5 | 5 | 15 | 22 | 4 | 0 |",
+    "after": "| stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a | 5 | 5 | 14 | 22 | 4 | 0 |"
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "before": "| stage3/interface-downcasts/v2/callable-producer-wrong.a | 2 | 0 | 5 | 4 | 2 | 0 |",
+    "after": "| stage3/interface-downcasts/v2/callable-producer-wrong.a | 3 | 3 | 6 | 11 | 3 | 0 |"
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/undefined-read-write.a",
+    "before": "| stage3/interface-downcasts/v2/undefined-read-write.a | 2 | 2 | 5 | 9 | 2 | 0 |",
+    "after": "| stage3/interface-downcasts/v2/undefined-read-write.a | 2 | 2 | 4 | 9 | 2 | 0 |"
+  }
+]

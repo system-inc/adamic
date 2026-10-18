@@ -1,0 +1,373 @@
+[
+  {
+    "name": "packed-snapshot-stale",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestViewSnapshotPayloadOwnership$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 21.635,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:35:11.262192167Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestViewSnapshotPayloadOwnership",
+        "Elapsed": 6.84
+      }
+    ]
+  },
+  {
+    "name": "native-direct-code",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableProducerRegistryFiltersDirectFunctions$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 12.574,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:35:23.837428579Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCallableProducerRegistryFiltersDirectFunctions",
+        "Elapsed": 0.03
+      }
+    ]
+  },
+  {
+    "name": "exact-producer-type",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2CallableProducerMutant$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 18.384,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:35:42.202282815Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCheckedViewV2CallableProducerMutant",
+        "Elapsed": 2.71
+      }
+    ]
+  },
+  {
+    "name": "ambiguous-producer",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.368,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:35:53.584709726Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerAmbiguousRefused",
+        "Elapsed": 0.03
+      }
+    ]
+  },
+  {
+    "name": "missing-abi-refusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerMethodShorthandRefused$|^TestCallableProducerExtraOptionalRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.468,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:36:05.037481498Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerExtraOptionalRefused",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T22:36:05.037659251Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerMethodShorthandRefused",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "name": "raw-union-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableUnionResultNumber$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 15.956,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:36:20.98969826Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCallableUnionResultNumber",
+        "Elapsed": 3.04
+      }
+    ]
+  },
+  {
+    "name": "lower-direct-code-fixed-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerCertificatesUseClosureThunks$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.69,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:36:32.693267015Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerCertificatesUseClosureThunks",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "name": "snapshot-retain-unmasked",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsCOriginal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 29.103,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:37:01.780917264Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLoomViewsCOriginal",
+        "Elapsed": 15.53
+      }
+    ]
+  },
+  {
+    "name": "tagged-lazy-check",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerTaggedUnreadMethod$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.421,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:37:13.213593564Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerTaggedUnreadMethod",
+        "Elapsed": 0.03
+      }
+    ]
+  },
+  {
+    "name": "unrecorded-unique-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerUniqueObjectResultRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 4.331,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:37:17.56357998Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerUniqueObjectResultRefused",
+        "Elapsed": 0.1
+      }
+    ]
+  },
+  {
+    "name": "unique-certificate-fixed-witness",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousCertificate$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.182,
+    "catchers": [
+      {
+        "Time": "2026-10-18T22:37:28.751789344Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestCallableProducerAmbiguousCertificate",
+        "Elapsed": 0.13
+      }
+    ]
+  },
+  {
+    "name": "snapshot-retain-control",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsCOriginal$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "expected_green": true,
+    "verified": true,
+    "seconds": 16.093,
+    "catchers": []
+  }
+]

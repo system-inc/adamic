@@ -1,0 +1,12 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -217,2 +217 @@
+-        value.payload = (adamic_value){0};
+-        if (boolean.present) { value.payload.boolean = boolean.boolean; }
++        value.payload.boolean = boolean.boolean;
+--- internal/native/view_unions_read.go
++++ internal/native/view_unions_read.go
+@@ -38,2 +38 @@
+-	e.line("else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);", snapshot, snapshot, boxed, snapshot)
+-	e.line("else %s = NULL;", boxed)
++	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)

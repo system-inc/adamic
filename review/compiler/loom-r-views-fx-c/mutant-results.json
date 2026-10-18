@@ -1,0 +1,242 @@
+[
+  {
+    "name": "packed-snapshot-stale",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestViewSnapshotPayloadOwnership$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 19.128
+  },
+  {
+    "name": "native-direct-code",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableProducerRegistryFiltersDirectFunctions$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 8.581
+  },
+  {
+    "name": "exact-producer-type",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewV2CallableProducerMutant$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 15.667
+  },
+  {
+    "name": "ambiguous-producer",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 9.087
+  },
+  {
+    "name": "missing-abi-refusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerMethodShorthandRefused$|^TestCallableProducerExtraOptionalRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 8.853
+  },
+  {
+    "name": "raw-union-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallableUnionResultNumber$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 11.312
+  },
+  {
+    "name": "lower-direct-code-fixed-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerCertificatesUseClosureThunks$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 8.93
+  },
+  {
+    "name": "snapshot-retain-unmasked",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsCOriginal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 24.106
+  },
+  {
+    "name": "tagged-lazy-check",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerTaggedUnreadMethod$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 8.944
+  },
+  {
+    "name": "unrecorded-unique-result",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerUniqueObjectResultRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 3.031
+  },
+  {
+    "name": "unique-certificate-fixed-witness",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousCertificate$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "expected_green": false,
+    "verified": true,
+    "seconds": 9.066
+  },
+  {
+    "name": "snapshot-retain-control",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsCOriginal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "expected_green": true,
+    "verified": true,
+    "seconds": 11.309
+  }
+]

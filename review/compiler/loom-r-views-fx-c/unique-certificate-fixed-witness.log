@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerAmbiguousCertificate
+=== PAUSE TestCallableProducerAmbiguousCertificate
+=== CONT  TestCallableProducerAmbiguousCertificate
+    callable_producers_assignable_test.go:105: ambiguous producer was certified
+--- FAIL: TestCallableProducerAmbiguousCertificate (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.139s
+FAIL
