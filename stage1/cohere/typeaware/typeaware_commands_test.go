@@ -164,11 +164,12 @@ func TestTypeAwareContextKillsCompilerGroup(t *testing.T) {
 	}
 }
 
-// Inventory probes use the same bound as builds, including subprocess cleanup.
+// Inventory probes use the same bound as builds, including subprocess cleanup: they are six's products' key-time work,
+// shared setup the unit's own budget bounds, never typeAwareChildLimit's 90 s for case work (#h4hrxpe).
 func typeAwareCommandOutput(command *exec.Cmd) ([]byte, error) {
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := typeAwareRunCommand(command)
+	err := typeAwareRunBuildCommand(command)
 	var exit *exec.ExitError
 	if errors.As(err, &exit) {
 		exit.Stderr = append([]byte(nil), stderr.Bytes()...)
