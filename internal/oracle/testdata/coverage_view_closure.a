@@ -1,0 +1,6 @@
+interface View {}
+function copy(value: View): void {
+ const result = { ...value };
+ console.log(Object.keys(result).join(","));
+}
+copy(() => 1);
