@@ -1,4 +1,8 @@
-"""Hold declaration provenance to stock TypeScript's three known callees."""
+"""Hold declaration provenance to stock TypeScript's three known callees.
+
+With --evidence it also writes the two results to evidence/, as the reproduce recipe does; without it, it writes
+nothing into the tree, as stage3/lane's TestAnyReturnsFixture runs it."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -41,12 +45,16 @@ def check(result):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--evidence', action='store_true', help='write evidence/fixture.json and evidence/mutant.json')
+    arguments = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix='any-returns-fixture-') as scratch:
         directory = Path(scratch)
         normal = inspect(directory)
         check(normal)
         assert normal['diagnostics'] == 0, 'fixture must be accepted by stock TypeScript'
-        (ROOT / 'evidence/fixture.json').write_text(json.dumps(normal, indent=2)+'\n')
+        if arguments.evidence:
+            (ROOT / 'evidence/fixture.json').write_text(json.dumps(normal, indent=2)+'\n')
         print('PASS: own -> tsc (body number, 5 bytes), JSON.parse -> lib.d.ts (16 bytes), require -> Node typings (20 bytes); one boundary each, total 41')
         mutant = inspect(directory, True)
         assert mutant['diagnostics'] == 0, 'mutant must reach the attribution assertion'
@@ -57,7 +65,8 @@ def main():
             print(f'CAUGHT lib-to-tsc mutant by declaration provenance assertion: {error}')
         else:
             raise AssertionError('lib-to-tsc mutant survived')
-        (ROOT / 'evidence/mutant.json').write_text(json.dumps(mutant, indent=2)+'\n')
+        if arguments.evidence:
+            (ROOT / 'evidence/mutant.json').write_text(json.dumps(mutant, indent=2)+'\n')
 
 
 if __name__ == '__main__':
