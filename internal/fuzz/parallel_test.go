@@ -107,20 +107,32 @@ func TestParallelRunnerCatchesWrongPath(t *testing.T) {
 
 // A leaked result graph must fail both Linux LSan and Darwin's counted rule.
 // Build real task results rather than immortal literal strings or fabricated count lines.
+// Run on a thread that exits before leak scanning: with one worker the result pointer
+// can survive on the main stack, so LSan can conservatively call it reachable.
+// Join the pool too, so no scheduler stack can keep a stale scope pointer alive.
 func TestParallelLeakCheckCatchesMutant(t *testing.T) {
 	t.Parallel()
 	const control = `#include "adamic.h"
 #include "parallel.h"
+#include <pthread.h>
 static adamic_value work(adamic_closure *self,adamic_value *arguments) {
  (void)self;return (adamic_value){.reference=adamic_string_from_number(arguments[0].number)};
 }
-int main(void) {
+static void *probe(void *unused) {
+ (void)unused;
  adamic_array *items=adamic_array_new(16,false);
  for(size_t i=0;i<16;i++) adamic_array_push(items,(adamic_value){.number=(double)i});
  adamic_closure *callback=adamic_closure_new(work,0);
  adamic_array *results=adamic_parallel_map(items,callback,true);
  adamic_release(results);adamic_release(callback);adamic_release(items);
- return 0;
+ adamic_parallel_shutdown();
+ adamic_heap_thread_end();
+ return NULL;
+}
+int main(void) {
+ pthread_t thread;
+ if (pthread_create(&thread,NULL,probe,NULL) != 0) { return 1; }
+ return pthread_join(thread,NULL) != 0;
 }
 `
 	for _, mutant := range []bool{false, true} {
@@ -139,14 +151,14 @@ int main(void) {
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
+			counted := filepath.Join(directory, "counted-proof")
+			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
 			checkout := &Checkout{}
 			for _, threads := range []string{"", "1"} {
 				report, err := checkout.leaks(binary, directory, threads)
 				if err != nil {
-					t.Fatal(err)
-				}
-				counted := filepath.Join(directory, "counted-proof")
-				if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
 					t.Fatal(err)
 				}
 				result := executeIsolated(directory, nativeEnvironment(threads), 20*time.Second, counted)
