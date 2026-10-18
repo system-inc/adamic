@@ -1,0 +1,28 @@
+{"Time":"2026-10-16T08:33:05.151700506Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-16T08:33:05.158319609Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks"}
+{"Time":"2026-10-16T08:33:05.158438684Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks","Output":"=== RUN   TestExplainOverloadFieldChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158793001Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks","Output":"=== PAUSE TestExplainOverloadFieldChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.15880473Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks"}
+{"Time":"2026-10-16T08:33:05.158810504Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks"}
+{"Time":"2026-10-16T08:33:05.158814035Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks","Output":"=== RUN   TestExplainOverloadValueChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158819776Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks","Output":"=== PAUSE TestExplainOverloadValueChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158822888Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks"}
+{"Time":"2026-10-16T08:33:05.158828337Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks"}
+{"Time":"2026-10-16T08:33:05.158938791Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks","Output":"=== RUN   TestExplainOverloadVisitorChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158946361Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks","Output":"=== PAUSE TestExplainOverloadVisitorChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.15894945Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks"}
+{"Time":"2026-10-16T08:33:05.158953262Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks"}
+{"Time":"2026-10-16T08:33:05.158956545Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks","Output":"=== CONT  TestExplainOverloadFieldChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158960087Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks"}
+{"Time":"2026-10-16T08:33:05.158962936Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks","Output":"=== CONT  TestExplainOverloadVisitorChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:05.158966612Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks"}
+{"Time":"2026-10-16T08:33:05.1589695Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks","Output":"=== CONT  TestExplainOverloadValueChecks\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:18.569055997Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks","Output":"--- PASS: TestExplainOverloadVisitorChecks (13.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:20.360147728Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadVisitorChecks","Elapsed":13.41}
+{"Time":"2026-10-16T08:33:20.360473783Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks","Output":"--- PASS: TestExplainOverloadValueChecks (15.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:23.526251624Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadValueChecks","Elapsed":15.2}
+{"Time":"2026-10-16T08:33:23.526340948Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks","Output":"--- PASS: TestExplainOverloadFieldChecks (18.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:23.526363835Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestExplainOverloadFieldChecks","Elapsed":18.37}
+{"Time":"2026-10-16T08:33:23.526366515Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:33:23.526820154Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t18.374s\n"}
+{"Time":"2026-10-16T08:33:23.527022023Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":18.375}

@@ -1,0 +1,86 @@
+[
+  {
+    "region": "hidden-01-large",
+    "hidden_before": 13625,
+    "hidden_after": 13625,
+    "revealed": 0,
+    "start": 68264,
+    "end": 90564,
+    "owner": "checker",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1387:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+    "raising": "latentFullSelected / LatentOwnDiagnosticsIn; checker isSignatureApplicable"
+  },
+  {
+    "region": "hidden-01-small",
+    "hidden_before": 6899,
+    "hidden_after": 6899,
+    "revealed": 0,
+    "start": 68264,
+    "end": 90564,
+    "owner": "checker",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1387:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+    "raising": "latentFullSelected / LatentOwnDiagnosticsIn; checker isSignatureApplicable"
+  },
+  {
+    "region": "hidden-05-large",
+    "hidden_before": 6078,
+    "hidden_after": 6078,
+    "revealed": 0,
+    "start": 35690,
+    "end": 35769,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2018.ts:828:9",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-05-small",
+    "hidden_before": 5748,
+    "hidden_after": 5748,
+    "revealed": 0,
+    "start": 144178,
+    "end": 144257,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2015.ts:3193:9",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-06",
+    "hidden_before": 11417,
+    "hidden_after": 3369,
+    "revealed": 8048,
+    "start": 61665,
+    "end": 61755,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/esDecorators.ts:1250:13",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-13",
+    "hidden_before": 7289,
+    "hidden_after": 7289,
+    "revealed": 0,
+    "start": 30237,
+    "end": 30435,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2017.ts:736:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/es2017.ts:736:5: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; prove every return for this overload's admitted arguments, preserving result variance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-14",
+    "hidden_before": 7102,
+    "hidden_after": 7102,
+    "revealed": 0,
+    "start": 455532,
+    "end": 462634,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/utilities.ts:11322:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/utilities.ts:11320:5: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; prove every return for this overload's admitted arguments, preserving result variance",
+    "raising": "censusOverload"
+  }
+]

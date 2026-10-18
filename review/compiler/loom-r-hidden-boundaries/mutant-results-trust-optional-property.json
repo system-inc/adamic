@@ -1,0 +1,29 @@
+{
+  "label": "mutant-results-trust-optional-property",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries/results-trust-optional-property-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadResultsRefusesOptionalResultProperty$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 17.687,
+  "tests": [
+    {
+      "name": "TestOverloadResultsRefusesOptionalResultProperty",
+      "action": "fail",
+      "seconds": 0.11
+    }
+  ]
+}

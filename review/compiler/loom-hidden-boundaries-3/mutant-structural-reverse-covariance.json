@@ -1,0 +1,29 @@
+{
+  "label": "mutant-structural-reverse-covariance",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/structural-reverse-covariance-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesReverseReadonlyVariance$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 25.599,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesReverseReadonlyVariance",
+      "action": "fail",
+      "seconds": 0.49
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "mutant": "drop-proof",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "trust-shape",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "reverse-covariance",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "mutant": "mutable-variance",
+    "exit": 1,
+    "caught": true
+  }
+]

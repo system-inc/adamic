@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -62,7 +62,7 @@
+ 	if flags&checker.TypeFlagsTypeParameter != 0 {
+ 		// Instantiations and class substitutions precede constraint-backed storage.
+ 		if substituted, known := l.substitution[proven]; known {
+-			return substituted, true
++			_ = substituted; return l.constraintStorage(proven)
+ 		}
+ 		return l.constraintStorage(proven)
+ 	}

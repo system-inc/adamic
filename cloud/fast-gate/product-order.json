@@ -1,6 +1,9 @@
 {
   "version": 1,
   "waits": {
+    "cmd/adamic TestProduct_CommandRuntimeCanonicalClosures": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
     "cmd/adamic TestProduct_CommandRuntimeSanitized": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],

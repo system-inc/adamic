@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a
+    oracle_test.go:743: not yet: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a:3:79: stage 0 can't lower assigning a field of a union of differently held members yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a
+    oracle_test.go:743: not yet: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a:3:36: stage 0 can't lower a generic function as a value yet
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.213s

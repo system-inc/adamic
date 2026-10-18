@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:14:57.02001886Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-18T00:14:57.028833145Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook"}
+{"Time":"2026-10-18T00:14:57.028971523Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Output":"=== RUN   TestProduct_FixtureOracleHook\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:57.029003734Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Output":"=== PAUSE TestProduct_FixtureOracleHook\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:57.029007718Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook"}
+{"Time":"2026-10-18T00:14:57.029011597Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook"}
+{"Time":"2026-10-18T00:14:57.029014353Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Output":"=== CONT  TestProduct_FixtureOracleHook\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:22.580645649Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Output":"    products_test.go:193: build stage3-fixture-oracle-hook fed93a05c2fd miss 21.64\n"}
+{"Time":"2026-10-18T00:15:22.81830598Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Output":"--- PASS: TestProduct_FixtureOracleHook (25.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:22.818483116Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestProduct_FixtureOracleHook","Elapsed":25.79}
+{"Time":"2026-10-18T00:15:22.818557672Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:22.846022798Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"ok  \tgithub.com/system-inc/adamic/stage3/fixtures\t25.825s\n"}
+{"Time":"2026-10-18T00:15:22.846572899Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":25.826999999999998}

@@ -1,0 +1,3 @@
+results-trust-shared-result caught [{'test': 'TestOverloadResultsRefusesSharedReadonlyResult', 'seconds': 0.28}, {'test': 'TestOverloadResultsRefusesSharedWritableResult', 'seconds': 0.29}]
+results-trust-result caught [{'test': 'TestOverloadResultsLiarStopsLiar', 'seconds': 0.89}, {'test': 'TestOverloadResultsLiarStopsEvaluateLiar', 'seconds': 1.35}]
+admission-trust-visitor-input NOT CAUGHT [{'test': 'TestOverloadStructuralRefusesVisitorDomainLiar', 'seconds': 0.31}]

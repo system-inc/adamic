@@ -1,0 +1,11 @@
+--- internal/lower/overload_visitor_calls.go
++++ internal/lower/overload_visitor_calls.go
+@@ -175,7 +175,7 @@
+ 		if local, known := l.locals[l.symbol(parameter.Name())]; known {
+ 			// A default-created array is not the caller's original TIn array.
+ 			if parameter.AsParameterDeclaration().Initializer == nil || l.visitorArrayElement(bindings[i]) == nil {
+-				l.localTypes[local] = bindings[i]
++				l.localTypes[local] = l.concrete(l.checker.GetTypeAtLocation(parameter))
+ 			}
+ 		}
+ 	}

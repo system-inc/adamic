@@ -1,0 +1,952 @@
+{
+  "label": "fixtures",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/(hidden_boundary_|hidden_wave2_method_destructuring|overload_|census_overload_binder|getters_census_)",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 53.593,
+  "tests": [
+    {
+      "name": "TestNativeAgreesWithNode_084",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_095",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_103",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_104",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_101",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_099",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_098",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_097",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_093",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_094",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_100",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_087",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_089",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_042",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_088",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_083",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_080",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_078",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_076",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_075",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_074",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_072",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_070",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_066",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_065",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_069",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_067",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_063",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_060",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_071",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_059",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_086",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_057",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_061",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_049",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_054",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_055",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_053",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_047",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_046",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_051",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_043",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_020",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_041",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_052",
+      "action": "pass",
+      "seconds": 0.02
+    },
+    {
+      "name": "TestNativeAgreesWithNode_038",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_019",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_018",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_037",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_016",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_013",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_035",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_029",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_033",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_005",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_032",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_009",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_030",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_008",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_027",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_026",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_006",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_007",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_028",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_024",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_127",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_025",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_115",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_117",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_125",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_114",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_124",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_123",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_113",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_122",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_108",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_022",
+      "action": "pass",
+      "seconds": 0.02
+    },
+    {
+      "name": "TestNativeAgreesWithNode_120",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_110",
+      "action": "pass",
+      "seconds": 0.02
+    },
+    {
+      "name": "TestNativeAgreesWithNode_001",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_002",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_119",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_118",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_112",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_000/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestNativeAgreesWithNode_102/internal/oracle/testdata/overload_visitors/original.a",
+      "action": "pass",
+      "seconds": 5.57
+    },
+    {
+      "name": "TestNativeAgreesWithNode_102",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_105/internal/oracle/testdata/overload_results_binding.a",
+      "action": "pass",
+      "seconds": 6.17
+    },
+    {
+      "name": "TestNativeAgreesWithNode_105",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_096/internal/oracle/testdata/overload_ancestor_directory.a",
+      "action": "pass",
+      "seconds": 6.06
+    },
+    {
+      "name": "TestNativeAgreesWithNode_096",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_000/internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+      "action": "pass",
+      "seconds": 6.36
+    },
+    {
+      "name": "TestNativeAgreesWithNode_000",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_092/internal/oracle/testdata/getters_census_callback_pair_methods.a",
+      "action": "pass",
+      "seconds": 0.2
+    },
+    {
+      "name": "TestNativeAgreesWithNode_092",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_106/internal/oracle/testdata/census_overload_binders.a",
+      "action": "pass",
+      "seconds": 1.6
+    },
+    {
+      "name": "TestNativeAgreesWithNode_106",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_090/internal/oracle/testdata/getters_census_closure_union_next.a",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestNativeAgreesWithNode_090",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_091/internal/oracle/testdata/overload_results_parameter.a",
+      "action": "pass",
+      "seconds": 1.1
+    },
+    {
+      "name": "TestNativeAgreesWithNode_091/internal/oracle/testdata/overload_array_to_map.a",
+      "action": "pass",
+      "seconds": 1.31
+    },
+    {
+      "name": "TestNativeAgreesWithNode_091/internal/oracle/testdata/overload_leading_comment_range.a",
+      "action": "pass",
+      "seconds": 1.15
+    },
+    {
+      "name": "TestNativeAgreesWithNode_091",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_079/internal/oracle/testdata/overload_values/module-valid.ts",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestNativeAgreesWithNode_082/internal/oracle/testdata/overload_visitors/original.ts",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestNativeAgreesWithNode_082",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_079/internal/oracle/testdata/overload_resolve_type_names.a",
+      "action": "pass",
+      "seconds": 1.1
+    },
+    {
+      "name": "TestNativeAgreesWithNode_079",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_081/internal/oracle/testdata/overload_visitors/helper.a",
+      "action": "pass",
+      "seconds": 0.98
+    },
+    {
+      "name": "TestNativeAgreesWithNode_081",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_077/internal/oracle/testdata/overload_values/order-valid.ts",
+      "action": "pass",
+      "seconds": 0.17
+    },
+    {
+      "name": "TestNativeAgreesWithNode_077/internal/oracle/testdata/census_overload_lie.a",
+      "action": "pass",
+      "seconds": 2.12
+    },
+    {
+      "name": "TestNativeAgreesWithNode_077",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_064/internal/oracle/testdata/overload_structural_evaluator.a",
+      "action": "pass",
+      "seconds": 1.44
+    },
+    {
+      "name": "TestNativeAgreesWithNode_064",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_068/internal/oracle/testdata/hidden_wave2_method_destructuring.a",
+      "action": "pass",
+      "seconds": 1.54
+    },
+    {
+      "name": "TestNativeAgreesWithNode_068",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_073/internal/oracle/testdata/overload_results_evaluate.a",
+      "action": "pass",
+      "seconds": 2.51
+    },
+    {
+      "name": "TestNativeAgreesWithNode_073",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_085/internal/oracle/testdata/overload_field_hatch/value-undefined.ts",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestNativeAgreesWithNode_085",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_056/internal/oracle/testdata/getters_census_closure_number_next.a",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestNativeAgreesWithNode_056",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_058/internal/oracle/testdata/overload_field_hatch/kind-valid.ts",
+      "action": "pass",
+      "seconds": 0.13
+    },
+    {
+      "name": "TestNativeAgreesWithNode_058/internal/oracle/testdata/overload_values/proven.a",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestNativeAgreesWithNode_062/internal/oracle/testdata/hidden_boundary_never_array.a",
+      "action": "pass",
+      "seconds": 1.05
+    },
+    {
+      "name": "TestNativeAgreesWithNode_062",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_045/internal/oracle/testdata/overload_visitors/overloaded-helper.ts",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestNativeAgreesWithNode_058/internal/oracle/testdata/overload_results_scalar.a",
+      "action": "pass",
+      "seconds": 0.94
+    },
+    {
+      "name": "TestNativeAgreesWithNode_058",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_045/internal/oracle/testdata/census_overload_binder_result_checked.a",
+      "action": "pass",
+      "seconds": 0.89
+    },
+    {
+      "name": "TestNativeAgreesWithNode_045",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_050/internal/oracle/testdata/overload_values/returned-valid.ts",
+      "action": "pass",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestNativeAgreesWithNode_050",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_021/internal/oracle/testdata/getters_census_lazy_object.a",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestNativeAgreesWithNode_021",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_044/internal/oracle/testdata/census_overload_contracts.a",
+      "action": "pass",
+      "seconds": 0.82
+    },
+    {
+      "name": "TestNativeAgreesWithNode_044",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_039/internal/oracle/testdata/getters_census_closure_number_methods.a",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestNativeAgreesWithNode_040/internal/oracle/testdata/overload_structural_block.a",
+      "action": "pass",
+      "seconds": 0.63
+    },
+    {
+      "name": "TestNativeAgreesWithNode_040",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_039/internal/oracle/testdata/overload_field_hatch/value-valid.ts",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestNativeAgreesWithNode_039",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_017/internal/oracle/testdata/overload_visitors/instantiations.ts",
+      "action": "pass",
+      "seconds": 0.09
+    },
+    {
+      "name": "TestNativeAgreesWithNode_011/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+      "action": "pass",
+      "seconds": 0.8
+    },
+    {
+      "name": "TestNativeAgreesWithNode_011",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_014/internal/oracle/testdata/overload_values/narrow-valid.ts",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestNativeAgreesWithNode_014",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_017/internal/oracle/testdata/hidden_boundary_optional_array_order.a",
+      "action": "pass",
+      "seconds": 0.36
+    },
+    {
+      "name": "TestNativeAgreesWithNode_017",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_015/internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+      "action": "pass",
+      "seconds": 0.84
+    },
+    {
+      "name": "TestNativeAgreesWithNode_015",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_012/internal/oracle/testdata/getters_census_class_map.a",
+      "action": "pass",
+      "seconds": 0.82
+    },
+    {
+      "name": "TestNativeAgreesWithNode_012/internal/oracle/testdata/overload_results_transform.a",
+      "action": "pass",
+      "seconds": 0.69
+    },
+    {
+      "name": "TestNativeAgreesWithNode_012",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_031/internal/oracle/testdata/overload_array_to_numeric_map.a",
+      "action": "pass",
+      "seconds": 1.08
+    },
+    {
+      "name": "TestNativeAgreesWithNode_031",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_034/internal/oracle/testdata/hidden_boundary_never_array_observations.a",
+      "action": "pass",
+      "seconds": 1
+    },
+    {
+      "name": "TestNativeAgreesWithNode_036/internal/oracle/testdata/overload_array_to_multimap.a",
+      "action": "pass",
+      "seconds": 1.07
+    },
+    {
+      "name": "TestNativeAgreesWithNode_036",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_048/internal/oracle/testdata/overload_callback_served.a",
+      "action": "pass",
+      "seconds": 4.78
+    },
+    {
+      "name": "TestNativeAgreesWithNode_048",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_034/internal/oracle/testdata/overload_sort_deduplicate.a",
+      "action": "pass",
+      "seconds": 1.27
+    },
+    {
+      "name": "TestNativeAgreesWithNode_126/internal/oracle/testdata/overload_inference_contracts.a",
+      "action": "pass",
+      "seconds": 0.89
+    },
+    {
+      "name": "TestNativeAgreesWithNode_126",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_010/internal/oracle/testdata/overload_mutate_map.a",
+      "action": "pass",
+      "seconds": 0.93
+    },
+    {
+      "name": "TestNativeAgreesWithNode_010",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_109/internal/oracle/testdata/getters_census_snapshot_next.a",
+      "action": "pass",
+      "seconds": 0.07
+    },
+    {
+      "name": "TestNativeAgreesWithNode_109",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_116/internal/oracle/testdata/overload_structural_fields.a",
+      "action": "pass",
+      "seconds": 0.9
+    },
+    {
+      "name": "TestNativeAgreesWithNode_116",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_121/internal/oracle/testdata/overload_trailing_comment_range.a",
+      "action": "pass",
+      "seconds": 0.86
+    },
+    {
+      "name": "TestNativeAgreesWithNode_121/internal/oracle/testdata/overload_original_node.a",
+      "action": "pass",
+      "seconds": 0.88
+    },
+    {
+      "name": "TestNativeAgreesWithNode_121",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_004/internal/oracle/testdata/hidden_boundary_generic_optional_array.a",
+      "action": "pass",
+      "seconds": 0.22
+    },
+    {
+      "name": "TestNativeAgreesWithNode_004",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_107/internal/oracle/testdata/overload_visitors/helper.ts",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestNativeAgreesWithNode_107",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_111/internal/oracle/testdata/overload_structural_factory.a",
+      "action": "pass",
+      "seconds": 0.82
+    },
+    {
+      "name": "TestNativeAgreesWithNode_111",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_003/internal/oracle/testdata/overload_visitors/overloaded-helper.a",
+      "action": "pass",
+      "seconds": 0.41
+    },
+    {
+      "name": "TestNativeAgreesWithNode_003",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_034/internal/oracle/testdata/getters_census_binary_inline.a",
+      "action": "pass",
+      "seconds": 28.79
+    },
+    {
+      "name": "TestNativeAgreesWithNode_034",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_023/internal/oracle/testdata/getters_census_throwing_object.a",
+      "action": "pass",
+      "seconds": 32.53
+    },
+    {
+      "name": "TestNativeAgreesWithNode_023",
+      "action": "pass",
+      "seconds": 0.01
+    }
+  ]
+}

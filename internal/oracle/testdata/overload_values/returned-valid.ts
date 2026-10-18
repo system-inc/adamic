@@ -1,0 +1,15 @@
+interface Result<T> { readonly value:T; }
+function make(value:string|number|undefined) {
+ function evaluate(input:string):Result<string|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined>;
+ function evaluate(input:string|number):Result<string|number|undefined> { return {value}; }
+ return evaluate;
+}
+const evaluate=make('word');
+const alias=evaluate;
+console.log(`${alias===evaluate}`);
+console.log(`${alias('text').value}`);
+console.log(`${alias(1).value}`);
+const second=make('other');
+console.log(`${second===evaluate}`);
+console.log(`${second('text').value}`);

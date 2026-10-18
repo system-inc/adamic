@@ -1,0 +1,62 @@
+{
+  "label": "cmd-adamic",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "./cmd/adamic",
+    "-run",
+    "^(TestCommandRuntimeProductKeyHoldsEveryPart|TestExplainOverloadFieldChecks|TestExplainOverloadValueChecks|TestExplainOverloadVisitorChecks|TestProduct_CommandRuntimeCanonicalClosures|TestProduct_CommandRuntimeSanitized|TestProduct_CommandRuntimeWASI|TestProduct_CommandRuntimeWASICounted)$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-parallel",
+    "4",
+    "-json"
+  ],
+  "exit": 0,
+  "seconds": 25.182,
+  "tests": [
+    {
+      "name": "TestProduct_CommandRuntimeWASICounted",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "name": "TestCommandRuntimeProductKeyHoldsEveryPart",
+      "action": "pass",
+      "seconds": 5.08
+    },
+    {
+      "name": "TestProduct_CommandRuntimeCanonicalClosures",
+      "action": "pass",
+      "seconds": 5.7
+    },
+    {
+      "name": "TestProduct_CommandRuntimeWASI",
+      "action": "skip",
+      "seconds": 0
+    },
+    {
+      "name": "TestProduct_CommandRuntimeSanitized",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestExplainOverloadVisitorChecks",
+      "action": "pass",
+      "seconds": 6.58
+    },
+    {
+      "name": "TestExplainOverloadValueChecks",
+      "action": "pass",
+      "seconds": 5.01
+    },
+    {
+      "name": "TestExplainOverloadFieldChecks",
+      "action": "pass",
+      "seconds": 14.3
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: go ready (0.094s)
+setup: submodules ready (0.107s)
+v24.19.0
+setup: node ready (0.115s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.018s
+setup: markdown dependencies ready (0.279s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.547s)
+setup: shared cache ready (1.618s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/census_overload_proof.go:137:53: l.overloadReturnCall undefined (type *lowering has no field or method overloadReturnCall)
+internal/lower/census_small.go:226:43: l.overloadDeferredParameter undefined (type *lowering has no field or method overloadDeferredParameter)
+internal/lower/census_small.go:226:89: l.overloadNullableParameter undefined (type *lowering has no field or method overloadNullableParameter)
+internal/lower/census_small.go:227:26: l.admitOverloadVisitor undefined (type *lowering has no field or method admitOverloadVisitor)
+internal/lower/census_small.go:238:171: l.overloadCallbackParameterRelation undefined (type *lowering has no field or method overloadCallbackParameterRelation)
+internal/lower/census_small.go:244:8: l.overloadStructuralProof undefined (type *lowering has no field or method overloadStructuralProof)
+internal/lower/census_small.go:245:13: l.overloadDirectUses undefined (type *lowering has no field or method overloadDirectUses)
+internal/lower/census_small.go:248:9: l.overloadHasDeferredParameters undefined (type *lowering has no field or method overloadHasDeferredParameters)
+internal/lower/census_small.go:249:14: l.overloadDirectUses undefined (type *lowering has no field or method overloadDirectUses)
+internal/lower/census_small.go:253:8: l.overloadFieldHatch undefined (type *lowering has no field or method overloadFieldHatch)
+internal/lower/census_small.go:253:8: too many errors
